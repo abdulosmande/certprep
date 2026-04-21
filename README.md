@@ -4,12 +4,12 @@ Interactive, browser-based mock exams for software testing and requirements engi
 
 ## Live exams
 
-**[→ Open the exam catalogue](https://YOUR-USERNAME.github.io/cert-exam-prep/)**
+**[→ Open the exam catalogue](https://abdulosmande.github.io/certprep/)**
 
 | Exam | Certification body | Questions | Points | Pass mark |
 |---|---|---|---|---|
-| [CT-GenAI Sample A](https://YOUR-USERNAME.github.io/certprep/istqb/ct-genai/istqb_ct_genai_mock_exam_v1.0.html) | ISTQB Specialist Level: Certified Tester – Testing with Generative AI (CT-GenAI) | 40 | 46 | 30 pts |
-| [CT-GenAI Sample](https://YOUR-USERNAME.github.io/certprep/istqb/ct-genai/astqb_ct_genai_mock_exam.html) | ASTQB Certified Tester: Certified Tester – Testing with Generative AI (CT-GenAI) | 40 | 46 | 30 pts |
+| [CT-GenAI ISTQB Sample V1.0](https://abdulosmande.github.io/certprep/istqb/ct-genai/istqb_ct_genai_mock_exam_v1.0.html) | ISTQB Specialist Level: Certified Tester – Testing with Generative AI (CT-GenAI) | 40 | 46 | 30 pts |
+| [CT-GenAI Sample ASTQB Sample](https://abdulosmande.github.io/certprep/istqb/ct-genai/astqb_ct_genai_mock_exam.html) | ASTQB Certified Tester: Certified Tester – Testing with Generative AI (CT-GenAI) | 40 | 46 | 30 pts |
 
 ## Features
 
