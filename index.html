@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cert-exam-prep — Certification Mock Exams</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12; --surface: #0e1420; --card: #111827; --border: #1e2840;
+    --accent: #38bdf8; --accent2: #818cf8; --text: #cbd5e1;
+    --muted: #475569; --heading: #f1f5f9;
+    --correct: #34d399; --warn: #fbbf24;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── BACKGROUND GRID ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(56,189,248,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56,189,248,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; z-index: 1;
+    max-width: 960px; margin: 0 auto;
+    padding: 5rem 2rem 3rem;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem; font-weight: 500;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(56,189,248,0.08);
+    border: 1px solid rgba(56,189,248,0.18);
+    padding: 0.3rem 0.9rem; border-radius: 99px;
+    display: inline-block; margin-bottom: 1.8rem;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 800; color: var(--heading);
+    line-height: 1.05; letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero-sub {
+    font-size: 1rem; color: var(--muted);
+    max-width: 520px; line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+  .hero-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.75rem; border-radius: 99px;
+    border: 1px solid var(--border);
+    color: var(--muted); background: var(--surface);
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    max-width: 960px; margin: 0 auto;
+    padding: 0 2rem;
+    position: relative; z-index: 1;
+  }
+  .section-divider hr {
+    border: none; border-top: 1px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 1.25rem;
+  }
+
+  /* ── EXAM GRID ── */
+  .exam-grid {
+    max-width: 960px; margin: 0 auto;
+    padding: 0 2rem 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    position: relative; z-index: 1;
+  }
+
+  .exam-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    text-decoration: none;
+    display: flex; flex-direction: column;
+    gap: 1rem;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    animation: fadeUp 0.4s ease both;
+  }
+  .exam-card:hover {
+    border-color: rgba(56,189,248,0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(56,189,248,0.08);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+  .card-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 0.22rem 0.6rem; border-radius: 4px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .badge-istqb  { background: rgba(56,189,248,0.1);  color: var(--accent);  border: 1px solid rgba(56,189,248,0.2); }
+  .badge-astqb  { background: rgba(129,140,248,0.1); color: var(--accent2); border: 1px solid rgba(129,140,248,0.2); }
+  .badge-coming { background: rgba(255,255,255,0.04); color: var(--muted);  border: 1px solid var(--border); }
+
+  .card-level {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem; color: var(--muted);
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem; font-weight: 700;
+    color: var(--heading); line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+  .exam-card.coming .card-title { color: var(--muted); }
+
+  .card-meta {
+    display: flex; gap: 0.5rem; flex-wrap: wrap;
+  }
+  .meta-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem; color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.18rem 0.5rem; border-radius: 4px;
+  }
+
+  .card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: auto; padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+  .card-pass {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem; color: var(--correct);
+  }
+  .card-arrow {
+    font-size: 0.85rem; color: var(--accent);
+    transition: transform 0.2s;
+  }
+  .exam-card:hover .card-arrow { transform: translateX(4px); }
+  .exam-card.coming .card-arrow { color: var(--muted); }
+
+  /* ── COMING SOON OVERLAY ── */
+  .exam-card.coming {
+    opacity: 0.55; pointer-events: none;
+    cursor: default;
+  }
+  .coming-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── FEATURES STRIP ── */
+  .features {
+    max-width: 960px; margin: 2rem auto 0;
+    padding: 0 2rem 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative; z-index: 1;
+  }
+  .feature {
+    background: var(--surface);
+    padding: 1.25rem 1.5rem;
+  }
+  .feature-icon { font-size: 1.2rem; margin-bottom: 0.5rem; }
+  .feature-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem; font-weight: 500;
+    color: var(--heading); letter-spacing: 0.04em;
+    margin-bottom: 0.25rem;
+  }
+  .feature-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    text-align: center;
+  }
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem; color: var(--muted);
+    line-height: 1.7;
+  }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--text); }
+
+  @media (max-width: 600px) {
+    .hero { padding: 3rem 1.25rem 2rem; }
+    .exam-grid, .section-divider, .features { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .features { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-eyebrow">cert-exam-prep</div>
+  <h1>Practice.<br><em>Pass.</em></h1>
+  <p class="hero-sub">Free, browser-based mock exams for software testing and requirements engineering certifications. No login. No install. Open a link and start the clock.</p>
+  <div class="hero-pills">
+    <span class="pill">ISTQB</span>
+    <span class="pill">ASTQB</span>
+    <span class="pill">CPRE · coming soon</span>
+    <span class="pill">Timed</span>
+    <span class="pill">Instant feedback</span>
+    <span class="pill">Mobile friendly</span>
+  </div>
+</section>
+
+<div class="section-divider">
+  <hr>
+  <div class="section-label">Available exams</div>
+</div>
+
+<div class="exam-grid">
+
+  <!-- ISTQB CT-GenAI Sample A -->
+  <a class="exam-card" href="istqb/ct-genai-sample-a.html" style="animation-delay:0.05s">
+    <div class="card-top">
+      <span class="card-badge badge-istqb">ISTQB</span>
+      <span class="card-level">Specialist Level</span>
+    </div>
+    <div class="card-title">Testing with Generative AI — Sample A</div>
+    <div class="card-meta">
+      <span class="meta-chip">40 questions</span>
+      <span class="meta-chip">46 pts</span>
+      <span class="meta-chip">60 min</span>
+      <span class="meta-chip">CT-GenAI v1.0</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-pass">Pass ≥ 65%</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a>
+
+  <!-- ASTQB CT-GenAI -->
+  <a class="exam-card" href="astqb/ct-genai-sample.html" style="animation-delay:0.1s">
+    <div class="card-top">
+      <span class="card-badge badge-astqb">ASTQB</span>
+      <span class="card-level">Certified Tester</span>
+    </div>
+    <div class="card-title">Testing with Generative AI — Sample</div>
+    <div class="card-meta">
+      <span class="meta-chip">40 questions</span>
+      <span class="meta-chip">46 pts</span>
+      <span class="meta-chip">60 min</span>
+      <span class="meta-chip">CT-GenAI v1.0</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-pass">Pass ≥ 30 pts</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a>
+
+  <!-- Coming soon placeholder -->
+  <div class="exam-card coming" style="animation-delay:0.15s">
+    <div class="card-top">
+      <span class="card-badge badge-coming">CPRE</span>
+      <span class="card-level">Foundation Level</span>
+    </div>
+    <div class="card-title">Requirements Engineering — Foundation</div>
+    <div class="card-meta">
+      <span class="meta-chip">FL v4.0</span>
+    </div>
+    <div class="card-footer">
+      <span class="coming-tag">Coming soon</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-divider" style="margin-top:2.5rem">
+  <hr>
+  <div class="section-label">How it works</div>
+</div>
+
+<div class="features">
+  <div class="feature">
+    <div class="feature-icon">⏱</div>
+    <div class="feature-title">Timed</div>
+    <div class="feature-desc">Countdown timer with colour warnings at 15 and 5 minutes remaining. Auto-submits on expiry.</div>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🌐</div>
+    <div class="feature-title">+15 min option</div>
+    <div class="feature-desc">Optional time extension for non-native English speakers, per ISTQB regulations.</div>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">✅</div>
+    <div class="feature-title">Instant feedback</div>
+    <div class="feature-desc">Correct answers revealed in green, wrong in red, with a full explanation for every question.</div>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">📊</div>
+    <div class="feature-title">Score summary</div>
+    <div class="feature-desc">Points earned, correct / wrong / skipped count, time used, and a clear pass/fail verdict.</div>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">📄</div>
+    <div class="feature-title">Exact wording</div>
+    <div class="feature-desc">Questions and answers taken verbatim from official sample exam PDFs. Nothing paraphrased.</div>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">📱</div>
+    <div class="feature-title">Works anywhere</div>
+    <div class="feature-desc">Single HTML files. No server, no framework, no login. Works offline once loaded.</div>
+  </div>
+</div>
+
+<footer>
+  <p>
+    Independent study aid — not affiliated with ISTQB®, ASTQB, IREB or any certification body.<br>
+    Question content sourced from publicly available sample exam documents.<br>
+    ISTQB® is a registered trademark of the International Software Testing Qualifications Board.<br>
+    <a href="https://github.com/YOUR-USERNAME/cert-exam-prep">github.com/YOUR-USERNAME/cert-exam-prep</a>
+  </p>
+</footer>
+
+</body>
+</html>

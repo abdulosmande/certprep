@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASTQB CT-GenAI — Mock Exam</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12; --surface: #0e1420; --card: #111827; --border: #1e2840;
+    --accent: #38bdf8; --accent2: #818cf8; --correct: #34d399;
+    --incorrect: #f87171; --warn: #fbbf24; --text: #cbd5e1;
+    --muted: #475569; --heading: #f1f5f9;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  /* START SCREEN */
+  #start-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(56,189,248,0.06) 0%, transparent 70%); }
+  .start-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 3.5rem 3rem; max-width: 540px; width: 100%; text-align: center; position: relative; overflow: hidden; }
+  .start-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(56,189,248,0.03) 0%, transparent 50%, rgba(129,140,248,0.03) 100%); pointer-events: none; border-radius: 20px; }
+  .start-badge { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.2); padding: 0.3rem 1rem; border-radius: 99px; display: inline-block; margin-bottom: 1.6rem; }
+  .start-card h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.9rem, 4.5vw, 2.8rem); font-weight: 800; color: var(--heading); line-height: 1.1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+  .start-card h1 em { font-style: normal; color: var(--accent); }
+  .start-subtitle { font-size: 0.88rem; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.7; }
+  .start-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 2.5rem; }
+  .meta-item { background: var(--surface); padding: 1.1rem 0.5rem; text-align: center; }
+  .meta-val { font-family: 'DM Mono', monospace; font-size: 1.35rem; font-weight: 500; color: var(--heading); display: block; }
+  .meta-lbl { font-size: 0.63rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.25rem; }
+  .btn-start { font-family: 'DM Mono', monospace; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.08em; padding: 1rem 2.5rem; background: var(--accent); color: #080c12; border: none; border-radius: 10px; cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; width: 100%; text-transform: uppercase; }
+  .btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(56,189,248,0.35); }
+  .start-note { font-size: 0.73rem; color: var(--muted); margin-top: 1rem; line-height: 1.6; }
+
+  /* TIME EXTENSION TOGGLE */
+  .time-option-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.65rem; font-family: 'DM Mono', monospace; }
+  .time-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .time-opt { background: var(--surface); padding: 0.85rem 0.5rem; text-align: center; cursor: pointer; transition: background 0.18s, color 0.18s; border: none; width: 100%; font-family: 'DM Mono', monospace; color: var(--muted); }
+  .time-opt:first-child { border-right: 1px solid var(--border); }
+  .time-opt.active { background: rgba(56,189,248,0.12); color: var(--heading); }
+  .time-opt-val { font-size: 1.25rem; font-weight: 500; color: inherit; display: block; line-height: 1.2; }
+  .time-opt-lbl { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; display: block; opacity: 0.7; }
+  .time-opt.active .time-opt-val { color: var(--accent); }
+  .time-ext-note { font-size: 0.68rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; padding: 0.6rem 0.9rem; background: rgba(129,140,248,0.06); border: 1px solid rgba(129,140,248,0.15); border-radius: 8px; }
+
+  /* EXAM SCREEN */
+  #exam-screen { display: none; }
+  header { background: rgba(11,16,28,0.96); border-bottom: 1px solid var(--border); padding: 0.85rem 2rem; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px); }
+  .header-inner { max-width: 920px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .header-left { display: flex; flex-direction: column; }
+  .exam-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .exam-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; }
+  .timer-block { display: flex; align-items: center; gap: 1rem; }
+  .timer { font-family: 'DM Mono', monospace; font-size: 2rem; font-weight: 500; color: var(--accent); letter-spacing: 0.04em; transition: color 0.3s; min-width: 95px; text-align: right; }
+  .timer.warn { color: var(--warn); }
+  .timer.danger { color: var(--incorrect); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .answered-count { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); text-align: right; line-height: 1.5; }
+  .answered-count span { color: var(--text); font-weight: 500; }
+  .header-buttons { display: flex; gap: 0.5rem; align-items: center; }
+  .progress-bar-wrap { max-width: 920px; margin: 0.5rem auto 0; height: 2px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 99px; transition: width 0.4s ease; width: 0%; }
+
+  /* MAIN */
+  main { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+  .exam-toolbar { display: flex; justify-content: flex-start; align-items: center; margin-bottom: 1.5rem; }
+  .toolbar-info { font-size: 0.8rem; color: var(--muted); }
+  .toolbar-info strong { color: var(--text); }
+  .btn-submit { font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; padding: 0.5rem 1.2rem; background: var(--accent); color: #080c12; border: none; border-radius: 7px; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; text-transform: uppercase; white-space: nowrap; }
+  .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(56,189,248,0.3); }
+  .btn-secondary { font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; padding: 0.5rem 1rem; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 7px; cursor: pointer; transition: color 0.15s, border-color 0.15s; text-transform: uppercase; white-space: nowrap; }
+  .btn-secondary:hover { color: var(--text); border-color: var(--muted); }
+
+  /* QUESTION CARDS */
+  .question-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; margin-bottom: 1rem; transition: border-color 0.25s; animation: fadeUp 0.2s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+  .question-card.correct-card   { border-color: rgba(52,211,153,0.4); }
+  .question-card.incorrect-card { border-color: rgba(248,113,113,0.4); }
+  .q-header { display: flex; gap: 0.9rem; align-items: flex-start; margin-bottom: 1.1rem; }
+  .q-meta { display: flex; flex-direction: column; gap: 0.3rem; flex-shrink: 0; }
+  .q-num { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; color: var(--accent); background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.18); border-radius: 5px; padding: 0.18rem 0.5rem; white-space: nowrap; }
+  .q-lo  { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--muted); background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
+  .q-pts { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--accent2); background: rgba(129,140,248,0.08); border: 1px solid rgba(129,140,248,0.18); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
+  .q-text { font-size: 0.92rem; color: var(--heading); line-height: 1.7; flex: 1; white-space: pre-wrap; }
+  .multi-hint { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.63rem; color: var(--accent2); letter-spacing: 0.06em; margin: 0.65rem 0 0.75rem; padding: 0.18rem 0.5rem; background: rgba(129,140,248,0.1); border: 1px solid rgba(129,140,248,0.2); border-radius: 4px; }
+  .options { display: flex; flex-direction: column; gap: 0.45rem; }
+
+  /* OPTION ROWS — click on div, not label, to prevent double-fire */
+  .option-row { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.7rem 1rem;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; transition: border-color 0.15s, background 0.15s; user-select: none; }
+  .option-row:hover:not(.disabled) { border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.03); }
+  .option-row.disabled { cursor: default; }
+
+  .option-marker { flex-shrink: 0; width: 17px; height: 17px; border-radius: 50%;
+    border: 2px solid var(--border); background: transparent; margin-top: 2px;
+    transition: border-color 0.15s, background 0.15s; display: flex; align-items: center; justify-content: center; }
+  .option-row.is-checkbox .option-marker { border-radius: 4px; }
+  .option-marker::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); opacity: 0; transition: opacity 0.15s; }
+  .option-row.is-checkbox .option-marker::after { border-radius: 2px; width: 8px; height: 8px; }
+
+  .option-row.selected { border-color: rgba(56,189,248,0.45); background: rgba(56,189,248,0.06); }
+  .option-row.selected .option-marker { border-color: var(--accent); }
+  .option-row.selected .option-marker::after { opacity: 1; }
+
+  .option-row.reveal-correct { border-color: var(--correct) !important; background: rgba(52,211,153,0.07) !important; }
+  .option-row.reveal-correct .option-marker { border-color: var(--correct); background: rgba(52,211,153,0.15); }
+  .option-row.reveal-correct .option-marker::after { background: var(--correct); opacity: 1; }
+
+  .option-row.reveal-wrong { border-color: var(--incorrect) !important; background: rgba(248,113,113,0.07) !important; }
+  .option-row.reveal-wrong .option-marker { border-color: var(--incorrect); background: rgba(248,113,113,0.15); }
+  .option-row.reveal-wrong .option-marker::after { background: var(--incorrect); opacity: 1; }
+
+  .option-text { font-size: 0.87rem; line-height: 1.55; color: var(--text); flex: 1; }
+
+  .result-tag { display: none; align-items: center; gap: 0.4rem; font-family: 'DM Mono', monospace; font-size: 0.67rem; font-weight: 500; letter-spacing: 0.04em; margin-top: 1rem; padding: 0.4rem 0.75rem; border-radius: 6px; }
+  .result-tag.show { display: flex; }
+  .result-tag.correct   { background: rgba(52,211,153,0.1);  color: var(--correct);   border: 1px solid rgba(52,211,153,0.25); }
+  .result-tag.incorrect { background: rgba(248,113,113,0.1); color: var(--incorrect); border: 1px solid rgba(248,113,113,0.25); }
+
+  .explanation { display: none; margin-top: 0.85rem; padding: 0.85rem 1rem; background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent2); border-radius: 0 6px 6px 0; font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+  .explanation.show { display: block; }
+
+  /* SUMMARY */
+  #summary { display: none; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 3rem 2.5rem; text-align: center; margin-top: 2rem; animation: fadeUp 0.4s ease; }
+  #summary h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--heading); margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+  .big-score { font-family: 'DM Mono', monospace; font-size: 4.8rem; font-weight: 500; color: var(--accent); line-height: 1; margin: 1rem 0 0.2rem; }
+  .sub { font-size: 0.86rem; color: var(--muted); margin-bottom: 0.6rem; }
+  .time-taken { font-family: 'DM Mono', monospace; font-size: 0.76rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .time-taken span { color: var(--text); }
+  .grade-badge { display: inline-block; padding: 0.4rem 1.2rem; border-radius: 8px; font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; margin-bottom: 2rem; }
+  .grade-badge.pass { background: rgba(52,211,153,0.12); color: var(--correct); border: 1px solid rgba(52,211,153,0.3); }
+  .grade-badge.fail { background: rgba(248,113,113,0.12); color: var(--incorrect); border: 1px solid rgba(248,113,113,0.3); }
+  .stat-row { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .stat .val { font-family: 'DM Mono', monospace; font-size: 1.7rem; font-weight: 500; color: var(--heading); }
+  .stat .lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.1rem; }
+
+  /* CONFIRM OVERLAY */
+  #confirm-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
+  #confirm-overlay.show { display: flex; }
+  .confirm-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; max-width: 420px; width: 90%; text-align: center; animation: fadeUp 0.22s ease; }
+  .confirm-box h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--heading); margin-bottom: 0.75rem; }
+  .confirm-box p { font-size: 0.86rem; color: var(--muted); margin-bottom: 1.75rem; line-height: 1.65; }
+  .confirm-btns { display: flex; gap: 0.75rem; justify-content: center; }
+  .btn-confirm-yes { font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; padding: 0.65rem 1.5rem; background: var(--accent); color: #080c12; border: none; border-radius: 8px; cursor: pointer; transition: transform 0.15s; }
+  .btn-confirm-yes:hover { transform: translateY(-1px); }
+  .btn-confirm-no { font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; padding: 0.65rem 1.5rem; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: color 0.15s; }
+  .btn-confirm-no:hover { color: var(--text); }
+
+  @media (max-width: 600px) {
+    header { padding: 0.75rem 1rem; }
+    main { padding: 1.25rem 0.9rem 3rem; }
+    .question-card { padding: 1.1rem 0.9rem; }
+    .start-card { padding: 2.5rem 1.5rem; }
+    .timer { font-size: 1.4rem; min-width: 75px; }
+    .stat-row { gap: 1.5rem; }
+    .start-meta { grid-template-columns: repeat(2, 1fr); }
+    .header-buttons { gap: 0.35rem; }
+    .btn-submit, .btn-secondary { font-size: 0.7rem; padding: 0.4rem 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="start-screen">
+  <div class="start-card">
+    <div class="start-badge">ASTQB Certified Tester</div>
+    <h1>Testing with<br><em>Generative AI</em></h1>
+    <p class="start-subtitle">ASTQB CT-GenAI v1.0 Sample Exam — Timed examination under simulated exam conditions. The timer begins the moment you press Start.</p>
+    <div class="start-meta">
+      <div class="meta-item"><span class="meta-val">40</span><div class="meta-lbl">Questions</div></div>
+      <div class="meta-item"><span class="meta-val" id="meta-minutes">60</span><div class="meta-lbl">Minutes</div></div>
+      <div class="meta-item"><span class="meta-val">46</span><div class="meta-lbl">Points</div></div>
+      <div class="meta-item"><span class="meta-val">30</span><div class="meta-lbl">To Pass</div></div>
+    </div>
+
+    <div class="time-option-label">Time allowance</div>
+    <div class="time-toggle">
+      <button class="time-opt active" id="opt-standard" onclick="selectTime(false)">
+        <span class="time-opt-val">60 min</span>
+        <span class="time-opt-lbl">Standard</span>
+      </button>
+      <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+        <span class="time-opt-val">75 min</span>
+        <span class="time-opt-lbl">+15 min extension</span>
+      </button>
+    </div>
+    <div class="time-ext-note" id="ext-note" style="display:none;">
+      &#9432;&nbsp; The 15-minute extension applies to candidates whose mother tongue is not English, as per ISTQB regulations.
+    </div>
+
+    <button class="btn-start" onclick="startExam()">&#9654; Start Exam</button>
+    <p class="start-note" id="start-note-txt">The clock counts down from 60:00. Submit before time runs out — the exam auto-submits when time expires.</p>
+  </div>
+</div>
+
+<!-- EXAM SCREEN -->
+<div id="exam-screen">
+  <header>
+    <div class="header-inner">
+      <div class="header-left">
+        <span class="exam-label">ASTQB CT-GenAI v1.0 · Sample Exam</span>
+        <span class="exam-title">Testing with Generative AI</span>
+      </div>
+      <div class="timer-block">
+        <div class="answered-count"><span id="answered-num">0</span>/40 answered</div>
+        <div class="timer" id="timer">60:00</div>
+        <div class="header-buttons">
+          <button class="btn-secondary" onclick="confirmReset()">&#8635; Reset</button>
+          <button class="btn-submit" onclick="confirmSubmit()">Submit</button>
+        </div>
+      </div>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill"></div></div>
+  </header>
+
+  <main>
+    <div class="exam-toolbar">
+      <div class="toolbar-info">40 questions &mdash; <strong>30 of 46 points</strong> required to pass</div>
+    </div>
+    <div id="questions-container"></div>
+    <div id="summary">
+      <h2>Exam Complete</h2>
+      <div class="big-score" id="final-score-pct">—</div>
+      <div class="sub" id="final-score-raw"></div>
+      <div class="time-taken">Time used: <span id="time-used">—</span></div>
+      <div class="grade-badge" id="grade-badge"></div>
+      <div class="stat-row">
+        <div class="stat"><div class="val" id="stat-correct">—</div><div class="lbl">Correct</div></div>
+        <div class="stat"><div class="val" id="stat-wrong">—</div><div class="lbl">Wrong</div></div>
+        <div class="stat"><div class="val" id="stat-skipped">—</div><div class="lbl">Skipped</div></div>
+      </div>
+      <button class="btn-secondary" onclick="confirmReset()">&#8635; Restart Exam</button>
+    </div>
+  </main>
+</div>
+
+<!-- CONFIRM OVERLAY -->
+<div id="confirm-overlay">
+  <div class="confirm-box">
+    <h3 id="confirm-title">Submit Exam?</h3>
+    <p id="confirm-msg"></p>
+    <div class="confirm-btns">
+      <button class="btn-confirm-no" onclick="closeConfirm()">Cancel</button>
+      <button class="btn-confirm-yes" id="confirm-yes-btn" onclick="doConfirm()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── QUESTION DATA (exact wording from ASTQB CT-GenAI v1.0 Sample Exam PDFs) ─
+const questions = [
+  {
+    id: 1, lo: 'GenAI-1.1.1', k: 'K1', pts: 1, multi: false,
+    text: 'Which of the following uses deep learning techniques to create new content?',
+    options: [
+      'a. Symbolic AI',
+      'b. Classical machine learning',
+      'c. Deep learning',
+      'd. Generative AI'
+    ],
+    answer: [3],
+    explanation: 'Generative AI uses deep learning techniques to create new data by learning and mimicking patterns from the training data.'
+  },
+  {
+    id: 2, lo: 'GenAI-1.1.2', k: 'K2', pts: 1, multi: false,
+    text: 'You have used the same prompt multiple times, but you have received different responses for the LLM. Why is this happening?',
+    options: [
+      'a. Because the prompt is incorrect',
+      'b. Because LLMs have non-deterministic behavior',
+      'c. Because the training data was faulty',
+      'd. Because LLMs are trained to always vary the response'
+    ],
+    answer: [1],
+    explanation: 'LLMs exhibit non-deterministic behavior due to the probabilistic nature of their inference mechanisms.'
+  },
+  {
+    id: 3, lo: 'GenAI-1.1.2', k: 'K2', pts: 1, multi: false,
+    text: 'How is tokenization related to embeddings?',
+    options: [
+      'a. Tokens are a numeric representation of how a given word is embedded into the model',
+      'b. Tokens represent characters, subwords, or words, and embeddings capture the semantic, syntactic, and contextual relationship of the tokens',
+      'c. Embeddings describe the text component in such a way that it can be tokenized for use within the model',
+      'd. Embeddings identify the non-deterministic behavior of a word component, which is then used to determine the positioning of its token using a vector to represent its position'
+    ],
+    answer: [1],
+    explanation: 'Tokens represent characters, subwords, or words. Embeddings capture the semantic, syntactic, and contextual relationships of those tokens.'
+  },
+  {
+    id: 4, lo: 'GenAI-1.1.3', k: 'K2', pts: 1, multi: false,
+    text: 'You need an LLM that will help with decision-making based on a process similar to human logic. Which type of LLM should you use?',
+    options: [
+      'a. Foundation LLM',
+      'b. Instruction-tuned LLM',
+      'c. Reasoning LLM',
+      'd. Ad-hoc LLM'
+    ],
+    answer: [2],
+    explanation: 'You need a reasoning LLM because that training method is designed to emulate human-like reasoning responses.'
+  },
+  {
+    id: 5, lo: 'GenAI-1.1.4', k: 'K2', pts: 1, multi: false,
+    text: 'Which of the following is an advantage of using an LLM augmented with vision-language models for developing test cases?',
+    options: [
+      'a. There is no advantage because this type of model is used primarily for military applications',
+      'b. It can create test cases that can include text and visual cues',
+      'c. It can edit images much faster and more accurately than a human',
+      'd. It can generate executable code from wireframes and screenshots'
+    ],
+    answer: [1],
+    explanation: 'It can create test cases that include textual data and visual cues, which increases the overall test coverage.'
+  },
+  {
+    id: 6, lo: 'GenAI-1.2.1', k: 'K2', pts: 1, multi: false,
+    text: 'You have created test automation that will be used to test driver\'s license applications. There is a huge amount of data available for this testing, but it will take too long to test with all of that data. How can an LLM help with this problem?',
+    options: [
+      'a. It can create new synthetic data that will protect private information',
+      'b. It can take the existing data and augment that with data that is missing according to the data rules',
+      'c. It can take the existing data and break it into smaller sets that will contain interesting variances',
+      'd. It can delete data that is duplicated and replace it with new data'
+    ],
+    answer: [2],
+    explanation: 'It can look at the existing data, analyze it, and break it into smaller sets that will contain representative and interesting data.'
+  },
+  {
+    id: 7, lo: 'GenAI-1.2.2', k: 'K2', pts: 1, multi: false,
+    text: 'Your organization is developing a test management tool that will use AI to generate, classify, and store test cases based on requirements, general testing knowledge, and previous issues found. Which of the following interaction models would be best to use?',
+    options: [
+      'a. Chatbots talking to the LLM',
+      'b. Chatbots talking to other chatbots that have been trained on your system',
+      'c. APIs of the LLM to allow the test task information to pass into and out of the LLM',
+      'd. APIs of the LLM to pass the test case information into the LLM to be stored there'
+    ],
+    answer: [2],
+    explanation: 'Using the APIs of the LLM will allow maximum usage of the LLM by passing the necessary data to and from it. The test case information would be stored in the test management system, not in the LLM. Chatbots would not be the most efficient or flexible access.'
+  },
+  {
+    id: 8, lo: 'GenAI-2.1.1', k: 'K2', pts: 1, multi: false,
+    text: 'Which of the following are the six components of an effective prompt?',
+    options: [
+      'a. Prompt Chain, Persona, Instruction, Assumptions, Constraints, Output Format',
+      'b. Role, Bias, Context, Instruction, Input Data, Constraints, Output Data',
+      'c. Persona, Background, Instruction, Input Data, Output Data, Assumptions',
+      'd. Role, Context, Instruction, Input Data, Constraints, Output Format'
+    ],
+    answer: [3],
+    explanation: 'The six components of an effective prompt are: Role, Context, Instruction, Input Data, Constraints, and Output Format.'
+  },
+  {
+    id: 9, lo: 'GenAI-2.1.1', k: 'K2', pts: 1, multi: false,
+    text: 'You have provided a structured prompt to a GenAI model regarding the creation of test cases. You have specified that you want to receive test cases in the following format:\n\n• Description of test\n• Reference to source\n• Steps to complete\n• Expected outcome\n\nThis is an example of what component of a structured prompt?',
+    options: [
+      'a. Role',
+      'b. Context',
+      'c. Instruction',
+      'd. Output format'
+    ],
+    answer: [3],
+    explanation: 'This is the output format that you are specifying — it defines the structure and fields the LLM response should use.'
+  },
+  {
+    id: 10, lo: 'GenAI-2.1.2', k: 'K2', pts: 1, multi: false,
+    text: 'If you have a test process with complex tasks and you will need to check intermediate results before proceeding, which prompting technique is the most appropriate?',
+    options: [
+      'a. Prompt chaining',
+      'b. Few-shot prompting',
+      'c. Zero-shot prompting',
+      'd. Meta prompting'
+    ],
+    answer: [0],
+    explanation: 'Prompt chaining allows the next prompt to be tuned based on the results of the preceding step, making it ideal when intermediate results need to be checked.'
+  },
+  {
+    id: 11, lo: 'GenAI-2.1.3', k: 'K2', pts: 1, multi: false,
+    text: 'Which of the following is true regarding a user prompt for an LLM?',
+    options: [
+      'a. It is set once at the start of the conversation',
+      'b. It is usually set by the developer',
+      'c. It usually changes with each interaction',
+      'd. It is user-independent, so the response will be consistent regardless of how the user words the prompt'
+    ],
+    answer: [2],
+    explanation: 'The user prompt is the interaction with the system, and this usually changes with each interaction. Options a) and b) are correct for system prompts, not user prompts.'
+  },
+  {
+    id: 12, lo: 'GenAI-2.2.1', k: 'K3', pts: 2, multi: false,
+    text: 'You are working on a replacement of an e-commerce system. You have been given a large set of test conditions to test. There is not adequate time to test all the conditions. You have a testing-trained LLM that you can use. How can you best use it in this situation?',
+    options: [
+      'a. The LLM can create an estimate for how long testing will take based on similar test conditions. This schedule can then be incorporated into the overall project schedule to allow adequate time for testing.',
+      'b. The LLM can be fed information regarding previous defects, end-user requirements, and payment regulations to let it determine the relative risk of all the test conditions. This can then be used to prioritize the testing.',
+      'c. The LLM can generate and execute all the test cases based on the test conditions, which will save significant time.',
+      'd. The LLM can generate test data to cover every possible purchasing scenario. This will ensure testing will not miss any corner cases, and that will help the schedule by eliminating any testing escapes.'
+    ],
+    answer: [1],
+    explanation: 'Since there isn\'t enough time, tests must be prioritized and executed in priority order so the most important tests run first. Option a) just creates a schedule — it doesn\'t help. Option c) is incorrect because the LLM cannot execute test cases. Option d) would make testing take longer.'
+  },
+  {
+    id: 13, lo: 'GenAI-2.2.2', k: 'K3', pts: 2, multi: false,
+    text: 'You have been given requirements in the form of wireframes of the GUI and user stories. You want to use these to create the test conditions for a set of tests. How should you use prompts to evaluate the inputs and create the test conditions?',
+    options: [
+      'a. Apply multimodal prompts',
+      'b. Set well-defined system parameters to define the graphics to be used',
+      'c. Apply prompt chaining',
+      'd. Use meta prompting so the prompts can be continuously refined'
+    ],
+    answer: [0],
+    explanation: 'Multimodal prompts are needed because the data provided is both graphics (wireframes) and text (user stories). System parameters do not define graphics. Prompt chaining may be useful later, but you first need to get the mixed-modality information into the system via multimodal prompts. Meta prompting is not about handling mixed input types.'
+  },
+  {
+    id: 14, lo: 'GenAI-2.2.3', k: 'K3', pts: 2, multi: false,
+    text: 'You have been testing versions of the same software over several years. Rather than the quality improving, it seems to just stay the same, with the same high number of defects being caught during testing for each release. How could AI help with this problem?',
+    options: [
+      'a. It could analyze test failures and prioritize the tests that failed last time so they are executed first for each new release.',
+      'b. It could use meta prompting to review each test case to determine if it is an effective test. Ineffective tests could then be removed from the overall test suite.',
+      'c. It could create large sets of test data that are used across releases of the product to ensure that data variance is not causing the repeated failures.',
+      'd. It could conduct root cause analysis over all the defects found across releases to determine the common causes. This information could then be used to improve development and analysis processes.'
+    ],
+    answer: [3],
+    explanation: 'The defects shouldn\'t be occurring in the first place. Root cause analysis will tell us what is breaking and why across releases, enabling improvements to development and analysis processes that address the root causes rather than just the symptoms.'
+  },
+  {
+    id: 15, lo: 'GenAI-2.2.4', k: 'K3', pts: 2, multi: false,
+    text: 'You are working on a critical project that is under the scrutiny of senior management. As a result, simple and clear reporting of testing progress is paramount. You are using the test reporting capabilities of your test management system, but any analysis of the issues and trends has to be done manually by you. How could AI help with this situation?',
+    options: [
+      'a. AI could analyze all the open defects and verify that the prioritization is correct based on keywords in the defect report.',
+      'b. AI could track which test cases are finding the most defects, so you could highlight those on your reports.',
+      'c. AI could analyze the defect and test case execution information and provide trending information and root cause analysis mapped to the use cases for the software.',
+      'd. AI would automatically email the existing dashboards to the pertinent executives to ensure they always have the latest information available. For example, defect reports would go to the development management, defect reports to the test management, etc.'
+    ],
+    answer: [2],
+    explanation: 'AI can analyze the large amount of information to pull out the necessary trending and root cause analysis, and by mapping findings to use cases, the importance of failures is easier to assess. Option a) is useful but doesn\'t address the full problem. Option b) only gives part of the picture. Option d) would be annoying and this information is already available.'
+  },
+  {
+    id: 16, lo: 'GenAI-2.2.5', k: 'K3', pts: 2, multi: false,
+    text: 'You are working on testing a new system. The requirements are high-level and lack detail. What prompting technique should you use to get started to get some ideas for how to progress with test case generation?',
+    options: [
+      'a. Prompt chaining',
+      'b. Few-shot prompting',
+      'c. Meta prompting',
+      'd. Zero-shot prompting'
+    ],
+    answer: [2],
+    explanation: 'Meta prompting is a good starting point here. You have a general description of what the software should do and what a test case should accomplish, so those inputs can be used. AI can then respond, and together you can build more test cases collaboratively.'
+  },
+  {
+    id: 17, lo: 'GenAI-2.3.1', k: 'K2', pts: 1, multi: false,
+    text: 'You are using GenAI to create test cases for you for a heavily rules-based application. You have requested that it use decision tables to build the test cases. Which metric would be the best one to use to determine how well it has done with this request?',
+    options: [
+      'a. Accuracy',
+      'b. Recall',
+      'c. Diversity',
+      'd. Time Efficiency'
+    ],
+    answer: [1],
+    explanation: 'The recall metric evaluates the completeness of the generated output with respect to a specific objective — in this case, using decision tables to comprehensively cover all the rules.'
+  },
+  {
+    id: 18, lo: 'GenAI-2.3.2', k: 'K2', pts: 1, multi: false,
+    text: 'You have been iteratively modifying your prompt for GenAI test case creation. You are still getting the same types of issues with the output, even though you keep refining the prompts and adding more information. What technique can you employ to use those issues to better evaluate and refine the prompts?',
+    options: [
+      'a. Iterative prompt modification',
+      'b. A/B testing of prompts',
+      'c. Output analysis',
+      'd. Adjusting prompt specificity'
+    ],
+    answer: [2],
+    explanation: 'At this point, you need to do some analysis on the issues to determine why you are seeing them occur repeatedly. Output analysis examines the outputs systematically to find patterns in the errors.'
+  },
+  {
+    id: 19, lo: 'GenAI-3.1.1', k: 'K1', pts: 1, multi: false,
+    text: 'Which of the following is a result of a reasoning error?',
+    options: [
+      'a. An output that favors certain types of information, approaches, or assumptions',
+      'b. An output that is based on misinterpretations of logical structures',
+      'c. An output that appears plausible but is factually incorrect or irrelevant',
+      'd. An output that is only partially complete'
+    ],
+    answer: [1],
+    explanation: 'A reasoning error produces an output that is based on misinterpretations of logical structures. Option a) describes a bias; option c) describes a hallucination.'
+  },
+  {
+    id: 20, lo: 'GenAI-3.1.2', k: 'K3', pts: 2, multi: false,
+    text: 'You are using GenAI to develop a test plan. You have fed it the requirements, high-level project plan, schedules, and tester profiles. Despite your instructions, when you ask it to generate the test schedule, it creates a new team member and puts them on the schedule to make the testing effort fit the project timeline. What is the problem, and what should you do about it?',
+    options: [
+      'a. This is likely a bias problem. You should give it a wider variety of requirements for similar systems so it generates a larger scope of tests.',
+      'b. This is likely a hallucination. You should instruct the AI model that this is incorrect so it learns.',
+      'c. This is likely a reasoning error. You should run the test cases against the test objects to verify if the expected results are valid.',
+      'd. This is likely a temperature problem. You should lower the temperature to allow a more specific focus.'
+    ],
+    answer: [1],
+    explanation: 'This is a hallucination — the AI model has fabricated a new team member. While that might seem creative, it won\'t really help with the schedule and the AI model must be taught that this is incorrect.'
+  },
+  {
+    id: 21, lo: 'GenAI-3.1.3', k: 'K2', pts: 1, multi: false,
+    text: 'In what way does comparing results across several different models help reduce hallucinations, reasoning errors, and biases?',
+    options: [
+      'a. You can combine the results into a superset of data, which will reduce the errors in the data',
+      'b. You can select the data that occurs with the highest frequency and know that it is the most accurate',
+      'c. You can compare different outputs from the same prompts to detect output errors and reliability',
+      'd. You can get the results faster by using multiple models concurrently'
+    ],
+    answer: [2],
+    explanation: 'By comparing the results from different models using the same prompts, you can tune the prompts, compare the outputs, and pick the most reliable results.'
+  },
+  {
+    id: 22, lo: 'GenAI-3.1.4', k: 'K1', pts: 1, multi: false,
+    text: 'How does setting a random seed value help improve reproducibility in LLM outputs?',
+    options: [
+      'a. By setting a lower seed value, the temperature setting is automatically increased, which narrows the probability distribution',
+      'b. By setting a higher seed value, more seeds are allowed to be used, which will promote larger output sets from the LLM, which can then be used to extract consistent data, which improves reproducibility',
+      'c. By setting a variable seed value, the random sequence values are increased, which results in a larger set of data, which is easier to recreate',
+      'd. By setting a seed value, the random number generator has the same starting point, which will ensure the same pseudo-random sequence is used, which improves reproducibility'
+    ],
+    answer: [3],
+    explanation: 'The seed value is used for the random number generator. If it always starts from the same seed value, it is more likely to use the same pseudo-sequence, which will improve the reproducibility of the outputs.'
+  },
+  {
+    id: 23, lo: 'GenAI-3.2.1', k: 'K2', pts: 1, multi: false,
+    text: 'If you have a GenAI tool that is processing sensitive customer data, what must you ensure?',
+    options: [
+      'a. It cannot store the data in an unencrypted form because it will be readable by anyone',
+      'b. It cannot store the data where it might be accessed by an unauthorized user, including another GenAI tool',
+      'c. It cannot modify and then restore the data because it will be incorrect and might be misleading for other users',
+      'd. It cannot access any sensitive data for any use'
+    ],
+    answer: [1],
+    explanation: 'The tool is presumably accessing the data because it needs to, but the risk is that it might store it somewhere that it could be accessed by another GenAI tool or unauthorized user.'
+  },
+  {
+    id: 24, lo: 'GenAI-3.2.2', k: 'K2', pts: 1, multi: false,
+    text: 'You\'ve been working on an application that processes employee leave requests. The data you are using contains the birth date of the employee, but you have replaced all the birth dates with a default date of 1/1/89. You are using GenAI within your company\'s databases to build new test data. You have now discovered that the test data contains birthdates again, and they are the real dates. This is an example of what type of data privacy issue?',
+    options: [
+      'a. Lack of control over data usage',
+      'b. Vulnerability to security attacks',
+      'c. Evidence of a malicious introduction of false data',
+      'd. Unintentional data exposure'
+    ],
+    answer: [3],
+    explanation: 'This is an unintentional exposure of private data — in this case, the birthdates of the employees. The control is still within the company, but the GenAI clearly accessed HR data it should not have used. There is no indication this was malicious.'
+  },
+  {
+    id: 25, lo: 'GenAI-3.2.2', k: 'K2', pts: 1, multi: false,
+    text: 'What type of attack vector is being used when the results of AI-generated data are rated incorrectly, intentionally?',
+    options: [
+      'a. Data exfiltration',
+      'b. Request manipulation',
+      'c. Data poisoning',
+      'd. Malicious code generation'
+    ],
+    answer: [2],
+    explanation: 'This is an example of data poisoning — intentionally providing incorrect ratings to corrupt the model\'s training data and future behavior.'
+  },
+  {
+    id: 26, lo: 'GenAI-3.2.3', k: 'K2', pts: 1, multi: false,
+    text: 'What is the purpose of data anonymization?',
+    options: [
+      'a. To only use and process the data that is legally permitted and use only the smallest amount needed',
+      'b. To mask or replace any private information with non-identifiable data',
+      'c. To implement strong encryption and strictly control data access',
+      'd. To ensure everyone is trained in the proper handling of data and is minimizing access'
+    ],
+    answer: [1],
+    explanation: 'Data anonymization means masking or replacing any private information with non-identifiable data so that individuals cannot be identified from the dataset.'
+  },
+  {
+    id: 27, lo: 'GenAI-3.3.1', k: 'K2', pts: 1, multi: false,
+    text: 'Which of the following GenAI activities takes about as much power as charging a smartphone?',
+    options: [
+      'a. Generating a letter to your bank',
+      'b. Creating "business" penguin pictures for a presentation',
+      'c. Creating only one penguin image',
+      'd. Generating a financial year summary report'
+    ],
+    answer: [2],
+    explanation: 'Creating just one image uses about the same power as charging a cell phone. Image generation is significantly more energy-intensive than text generation.'
+  },
+  {
+    id: 28, lo: 'GenAI-3.4.1', k: 'K1', pts: 1, multi: false,
+    text: 'Which of the following establishes a legal framework addressing AI risks and classifying applications by risk level?',
+    options: [
+      'a. ISO/IEC 42001:2023',
+      'b. ISO/IEC 23053:2022',
+      'c. EU AI Act',
+      'd. NIST AI Risk Management Framework'
+    ],
+    answer: [2],
+    explanation: 'The EU AI Act establishes a legal framework that addresses AI risks and classifies applications by risk level. The NIST AI Risk Management Framework concentrates on managing risk, focusing on fairness, transparency, and security — it is not a legal framework.'
+  },
+  {
+    id: 29, lo: 'GenAI-4.1.1', k: 'K2', pts: 1, multi: false,
+    text: 'Which part of the architecture in an LLM-powered test infrastructure is responsible for integrating multiple data sources?',
+    options: [
+      'a. The front-end',
+      'b. The LLM itself',
+      'c. The back-end',
+      'd. The data controller'
+    ],
+    answer: [2],
+    explanation: 'The back-end integrates multiple data sources, combining them with user input to prepare the prompt for the LLM.'
+  },
+  {
+    id: 30, lo: 'GenAI-4.1.2', k: 'K2', pts: 1, multi: false,
+    text: 'What are the two steps in RAG processing?',
+    options: [
+      'a. Input / Retrieval',
+      'b. Processing / Output',
+      'c. Access / Processing',
+      'd. Retrieval / Generation'
+    ],
+    answer: [3],
+    explanation: 'RAG stands for Retrieval-Augmented Generation. The two steps are Retrieval (fetching relevant information from a knowledge source) and Generation (using the LLM to produce a response incorporating that retrieved information).'
+  },
+  {
+    id: 31, lo: 'GenAI-4.1.3', k: 'K2', pts: 1, multi: false,
+    text: 'What does "orchestration" mean regarding LLM-powered agents?',
+    options: [
+      'a. It is when several agents work together in a coordinated manner to more efficiently solve complex problems',
+      'b. It is when more than three LLM-powered agents work independently to generate outputs that are then reviewed by another agent for accuracy and post-processing',
+      'c. It is when RAG is an integral part of an LLM-powered test infrastructure',
+      'd. It is a term for background processing that uses a combination of autonomous and semi-autonomous agents'
+    ],
+    answer: [0],
+    explanation: 'Orchestration refers to several agents working together in a coordinated manner to more efficiently solve complex problems. Options b), c), and d) are fictional definitions.'
+  },
+  {
+    id: 32, lo: 'GenAI-4.2.1', k: 'K2', pts: 1, multi: false,
+    text: 'How can overfitting compromise your model during fine-tuning?',
+    options: [
+      'a. It can make the LLM too generalized to be applicable and efficient',
+      'b. It can introduce hallucinations and biases',
+      'c. It can make the model unable or inaccurate when processing data that is new to it',
+      'd. It can create a lack of transparency regarding LLM decision-making'
+    ],
+    answer: [2],
+    explanation: 'Overfitting is when the model has become too specific to its training data and is unable to deal with data that is not within what it already knows, making it fail or perform poorly on new, unseen inputs.'
+  },
+  {
+    id: 33, lo: 'GenAI-4.2.2', k: 'K2', pts: 1, multi: false,
+    text: 'Which of the following LLM deployment types is most concerned with data privacy?',
+    options: [
+      'a. Chatbots',
+      'b. Commercial testing tools with AI components',
+      'c. In-house developed commercial test tools with AI components',
+      'd. Data privacy is a critical concern for all of these deployment types'
+    ],
+    answer: [3],
+    explanation: 'It depends more on the data being handled than the process that is handling it, so potentially any of these deployment types could have the most critical data privacy concern.'
+  },
+  {
+    id: 34, lo: 'GenAI-5.1.1', k: 'K1', pts: 1, multi: false,
+    text: 'How is the risk of using copyrighted data without proper authorization categorized when using shadow AI?',
+    options: [
+      'a. Information security weakness',
+      'b. Data privacy weakness',
+      'c. Compliance issues',
+      'd. Vague intellectual property'
+    ],
+    answer: [3],
+    explanation: 'This is categorized as vague intellectual property because shadow AI tools may have unclear licensing agreements and may use copyrighted data without proper authorization.'
+  },
+  {
+    id: 35, lo: 'GenAI-5.1.2', k: 'K2', pts: 1, multi: false,
+    text: 'Why is high-quality input data important when implementing an LLM-powered testing approach?',
+    options: [
+      'a. It will be faster with good data that produces fewer errors',
+      'b. It will produce reliable results',
+      'c. It will allow the largest possible data set to be built',
+      'd. It will ensure access is protected and limited to only the correct users'
+    ],
+    answer: [1],
+    explanation: 'High-quality input data is important because it will produce reliable results from the LLM-powered testing approach.'
+  },
+  {
+    id: 36, lo: 'GenAI-5.1.3', k: 'K2', pts: 1, multi: false,
+    text: 'You are working to convince your manager that a GenAI tool would be helpful in generating test reports. One of his issues is that he feels he could hire interns to write the test reports, and that would be faster than incorporating a new tool. You are sure that it will be able to write the reports faster and more accurately, freeing critical testing time.\n\nWhat is an important capability of the LLM that you should evaluate to be sure it will prove you right?',
+    options: [
+      'a. Model performance',
+      'b. Fine-tuning potential',
+      'c. Direct cost',
+      'd. Community and support'
+    ],
+    answer: [0],
+    explanation: 'You need to be sure the model will perform efficiently and accurately in the report generation tasks. Model performance is the key capability to evaluate to validate your claim.'
+  },
+  {
+    id: 37, lo: 'GenAI-5.1.4', k: 'K1', pts: 1, multi: false,
+    text: 'What is the first key phase when adopting GenAI into the test organization?',
+    options: [
+      'a. Discovery',
+      'b. Initiation and Training',
+      'c. Usage Definition',
+      'd. Exploitation and Iteration'
+    ],
+    answer: [0],
+    explanation: 'Discovery is the first key phase when adopting GenAI into the test organization.'
+  },
+  {
+    id: 38, lo: 'GenAI-5.2.1', k: 'K2', pts: 1, multi: false,
+    text: 'Why does a tester need to understand "prompt engineering" in order to work effectively with GenAI?',
+    options: [
+      'a. Because they will have a better grasp of the internal layers of the neural network',
+      'b. Because they need to understand what user prompts will need to be tested and the relative risk of each',
+      'c. Because they will be asked to generate new user prompts based on the AI-designed UI',
+      'd. Because they will need to design and refine the input prompts to guide the LLM'
+    ],
+    answer: [3],
+    explanation: 'A tester needs to understand prompt engineering because they will need to design and refine the input prompts to guide the LLM to produce useful and accurate outputs.'
+  },
+  {
+    id: 39, lo: 'GenAI-5.2.2', k: 'K1', pts: 1, multi: false,
+    text: 'When conducting GenAI training meetings with the testing team, what is an important learning method?',
+    options: [
+      'a. Discussing challenges and their resolutions',
+      'b. Highlighting erroneous prompts used within the team',
+      'c. Processing AI outputs to better analyze manual testing gaps',
+      'd. Promoting the use of AI methods and nominating an "AI champion of the week"'
+    ],
+    answer: [0],
+    explanation: 'One of the key methods highlighted in the syllabus is to discuss challenges as a team. While options b), c) and d) might also be informative, discussing challenges and their resolutions is the most important learning method.'
+  },
+  {
+    id: 40, lo: 'GenAI-5.2.3', k: 'K1', pts: 1, multi: false,
+    text: 'Who is usually responsible for ensuring that test teams maintain both traditional testing competencies and AI literacy?',
+    options: [
+      'a. Each tester',
+      'b. The senior testers',
+      'c. The test manager',
+      'd. The AI master'
+    ],
+    answer: [2],
+    explanation: 'This is usually the role of the test manager to be sure that the team as a whole has these capabilities. Individuals are responsible for their own capabilities and ensuring they are staying current with industry changes.'
+  }
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+const BASE_SECONDS = 60 * 60;
+const EXT_SECONDS  = 75 * 60;
+let timeExtended  = false;
+let TOTAL_SECONDS = BASE_SECONDS;
+let userAnswers   = questions.map(() => []);
+let timerInterval = null;
+let secondsLeft   = TOTAL_SECONDS;
+let examSubmitted = false;
+let pendingAction = null;
+
+// ─── TIME SELECTION ───────────────────────────────────────────────────────────
+function selectTime(extended) {
+  timeExtended  = extended;
+  TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+  document.getElementById('opt-standard').classList.toggle('active', !extended);
+  document.getElementById('opt-extended').classList.toggle('active',  extended);
+  document.getElementById('meta-minutes').textContent = extended ? '75' : '60';
+  document.getElementById('ext-note').style.display   = extended ? 'block' : 'none';
+  document.getElementById('start-note-txt').textContent =
+    extended
+      ? 'The clock counts down from 75:00 (standard 60 min + 15 min extension). Submit before time runs out — the exam auto-submits when time expires.'
+      : 'The clock counts down from 60:00. Submit before time runs out — the exam auto-submits when time expires.';
+}
+
+// ─── START ────────────────────────────────────────────────────────────────────
+function startExam() {
+  secondsLeft = TOTAL_SECONDS;
+  document.getElementById('timer').textContent = timeExtended ? '75:00' : '60:00';
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('exam-screen').style.display  = 'block';
+  renderQuestions();
+  timerInterval = setInterval(tickTimer, 1000);
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function renderQuestions() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'card-' + qi;
+    card.style.animationDelay = (qi * 0.012) + 's';
+
+    let optsHTML = '';
+    q.options.forEach((opt, oi) => {
+      const type     = q.multi ? 'checkbox' : 'radio';
+      const rowClass = q.multi ? 'option-row is-checkbox' : 'option-row';
+      optsHTML += `
+        <div class="${rowClass}" id="opt-${qi}-${oi}" data-qi="${qi}" data-oi="${oi}">
+          <input type="${type}" name="q${qi}" value="${oi}"
+                 id="inp-${qi}-${oi}"
+                 onchange="handleChange(${qi},${oi},this)"
+                 style="position:absolute;opacity:0;pointer-events:none;">
+          <span class="option-marker"></span>
+          <span class="option-text">${escHtml(opt)}</span>
+        </div>`;
+    });
+
+    const ptsLabel = q.pts > 1 ? q.pts + ' pts' : '1 pt';
+
+    card.innerHTML = `
+      <div class="q-header">
+        <div class="q-meta">
+          <span class="q-num">Q${q.id}</span>
+          <span class="q-lo">${q.lo}</span>
+          <span class="q-pts">${ptsLabel}</span>
+        </div>
+        <div class="q-text">${escHtml(q.text)}</div>
+      </div>
+      ${q.multi ? '<div class="multi-hint">SELECT ALL THAT APPLY</div>' : ''}
+      <div class="options">${optsHTML}</div>
+      <div class="result-tag" id="result-${qi}"></div>
+      <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>
+    `;
+    container.appendChild(card);
+  });
+
+  // Attach click listeners — avoids double-fire from label+input
+  document.querySelectorAll('.option-row').forEach(row => {
+    row.addEventListener('click', function() {
+      if (examSubmitted) return;
+      const qi  = parseInt(this.dataset.qi);
+      const oi  = parseInt(this.dataset.oi);
+      const inp = document.getElementById('inp-' + qi + '-' + oi);
+      if (questions[qi].multi) {
+        inp.checked = !inp.checked;
+      } else {
+        questions[qi].options.forEach((_, i) => {
+          document.getElementById('inp-' + qi + '-' + i).checked = false;
+        });
+        inp.checked = true;
+      }
+      syncAnswer(qi);
+    });
+  });
+}
+
+function escHtml(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/\n/g, '<br>');
+}
+
+function handleChange(qi, oi, inp) {
+  if (examSubmitted) { inp.checked = !inp.checked; return; }
+  syncAnswer(qi);
+}
+
+function syncAnswer(qi) {
+  userAnswers[qi] = [];
+  questions[qi].options.forEach((_, oi) => {
+    const inp = document.getElementById('inp-' + qi + '-' + oi);
+    if (inp && inp.checked) userAnswers[qi].push(oi);
+  });
+  questions[qi].options.forEach((_, oi) => {
+    const row = document.getElementById('opt-' + qi + '-' + oi);
+    if (row) row.classList.toggle('selected', userAnswers[qi].includes(oi));
+  });
+  updateProgress();
+}
+
+// ─── PROGRESS ────────────────────────────────────────────────────────────────
+function updateProgress() {
+  const answered = userAnswers.filter(a => a.length > 0).length;
+  document.getElementById('answered-num').textContent = answered;
+  document.getElementById('progress-fill').style.width = (answered / questions.length * 100) + '%';
+}
+
+// ─── TIMER ───────────────────────────────────────────────────────────────────
+function tickTimer() {
+  if (secondsLeft <= 0) { doSubmit(true); return; }
+  secondsLeft--;
+  const m = Math.floor(secondsLeft / 60), s = secondsLeft % 60;
+  const el = document.getElementById('timer');
+  el.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  if      (secondsLeft <= 300)  el.className = 'timer danger';
+  else if (secondsLeft <= 900)  el.className = 'timer warn';
+  else                          el.className = 'timer';
+}
+
+// ─── CONFIRM DIALOGS ─────────────────────────────────────────────────────────
+function confirmSubmit() {
+  const answered   = userAnswers.filter(a => a.length > 0).length;
+  const unanswered = questions.length - answered;
+  document.getElementById('confirm-title').textContent = 'Submit Exam?';
+  document.getElementById('confirm-msg').innerHTML = unanswered > 0
+    ? `You have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered>1?'s':''}</strong>. Unanswered questions count as wrong.<br><br>Submit anyway?`
+    : `All ${questions.length} questions answered. Ready to submit?`;
+  document.getElementById('confirm-yes-btn').textContent = 'Submit';
+  pendingAction = 'submit';
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function confirmReset() {
+  document.getElementById('confirm-title').textContent = 'Restart Exam?';
+  document.getElementById('confirm-msg').innerHTML = 'All answers and progress will be lost. The timer resets to ' + (timeExtended ? '75:00' : '60:00') + '.<br><br>Are you sure?';
+  document.getElementById('confirm-yes-btn').textContent = 'Restart';
+  pendingAction = 'reset';
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function closeConfirm() {
+  document.getElementById('confirm-overlay').classList.remove('show');
+  pendingAction = null;
+}
+
+function doConfirm() {
+  if (pendingAction === 'submit') doSubmit(false);
+  else if (pendingAction === 'reset') doReset();
+  closeConfirm();
+}
+
+// ─── SUBMIT ───────────────────────────────────────────────────────────────────
+function doSubmit(timedOut) {
+  if (examSubmitted) return;
+  examSubmitted = true;
+  clearInterval(timerInterval);
+  closeConfirm();
+
+  let correctCount = 0, totalPoints = 0, earnedPoints = 0;
+
+  questions.forEach((q, qi) => {
+    const correct   = q.answer.slice().sort().join(',');
+    const given     = userAnswers[qi].slice().sort().join(',');
+    const isCorrect = given !== '' && correct === given;
+    totalPoints  += q.pts;
+    if (isCorrect) { correctCount++; earnedPoints += q.pts; }
+
+    q.options.forEach((_, oi) => {
+      const row = document.getElementById('opt-' + qi + '-' + oi);
+      if (!row) return;
+      row.classList.add('disabled');
+      row.classList.remove('selected');
+      if (q.answer.includes(oi))             row.classList.add('reveal-correct');
+      else if (userAnswers[qi].includes(oi)) row.classList.add('reveal-wrong');
+    });
+
+    const rt   = document.getElementById('result-' + qi);
+    const expl = document.getElementById('expl-' + qi);
+    const card = document.getElementById('card-' + qi);
+    rt.classList.add('show');
+    expl.classList.add('show');
+
+    if (given === '') {
+      rt.classList.add('incorrect');
+      rt.innerHTML = '&mdash; Unanswered &middot; Correct: ' + q.answer.map(i => String.fromCharCode(65+i)).join(', ');
+      card.classList.add('incorrect-card');
+    } else if (isCorrect) {
+      rt.classList.add('correct');
+      rt.innerHTML = '&#10003; Correct' + (q.pts > 1 ? ' (+' + q.pts + ' pts)' : '');
+      card.classList.add('correct-card');
+    } else {
+      rt.classList.add('incorrect');
+      rt.innerHTML = '&#10007; Incorrect &middot; Correct: ' + q.answer.map(i => String.fromCharCode(65+i)).join(', ');
+      card.classList.add('incorrect-card');
+    }
+  });
+
+  // ASTQB pass = 30 out of 46 points (not percentage-based)
+  const pass     = earnedPoints >= 30;
+  const pct      = Math.round(earnedPoints / totalPoints * 100);
+  const skipped  = userAnswers.filter(a => a.length === 0).length;
+  const wrong    = questions.length - correctCount - skipped;
+
+  const usedSec  = TOTAL_SECONDS - secondsLeft;
+  const um = Math.floor(usedSec / 60), us = usedSec % 60;
+  const totalLabel = timeExtended ? '75:00' : '60:00';
+  const timeStr  = timedOut
+    ? totalLabel + ' (time expired)'
+    : String(um).padStart(2,'0') + ':' + String(us).padStart(2,'0');
+
+  if (timedOut) { const el = document.getElementById('timer'); el.textContent = '00:00'; el.className = 'timer danger'; }
+
+  document.getElementById('final-score-pct').textContent = earnedPoints + '/' + totalPoints;
+  document.getElementById('final-score-raw').textContent =
+    pct + '% · ' + correctCount + ' correct out of ' + questions.length + ' questions';
+  document.getElementById('time-used').textContent = timeStr;
+  const badge = document.getElementById('grade-badge');
+  badge.textContent = pass ? '✓ PASS (≥30 pts)' : '✗ FAIL (<30 pts)';
+  badge.className   = 'grade-badge ' + (pass ? 'pass' : 'fail');
+  document.getElementById('stat-correct').textContent = correctCount;
+  document.getElementById('stat-wrong').textContent   = wrong;
+  document.getElementById('stat-skipped').textContent = skipped;
+
+  document.getElementById('summary').style.display = 'block';
+  document.getElementById('summary').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── RESET ────────────────────────────────────────────────────────────────────
+function doReset() {
+  examSubmitted = false;
+  userAnswers   = questions.map(() => []);
+  secondsLeft   = TOTAL_SECONDS;
+  clearInterval(timerInterval);
+  document.getElementById('timer').textContent = timeExtended ? '75:00' : '60:00';
+  document.getElementById('timer').className   = 'timer';
+  document.getElementById('answered-num').textContent = '0';
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('summary').style.display = 'none';
+  renderQuestions();
+  timerInterval = setInterval(tickTimer, 1000);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
