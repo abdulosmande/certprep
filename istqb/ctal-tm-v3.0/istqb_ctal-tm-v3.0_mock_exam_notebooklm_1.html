@@ -250,56 +250,856 @@
 <script>
 // ─── QUESTION DATA (exact wording from CT-GenAI Sample Exam A PDF) ───────────
 const questions = [
-  {id:1,lo:'LO 1.1.1',k:'K2',pts:1,multi:false,text:'Sie erstellen ein Testkonzept für ein neues CRM-System. Was ist die wichtigste Aktivität zur Sicherstellung der Akzeptanz?',options:['Tool auswählen','Testfälle schreiben','Stakeholder-Konsens erzielen','Codeanalyse durchführen'],answer:[2],explanation:'Stakeholder-Konsens ist entscheidend.'},
-  {id:2,lo:'LO 1.1.2',k:'K2',pts:1,multi:false,text:'Was gehört zur Testüberwachung?',options:['Ressourcen umverteilen','Ist vs. Soll vergleichen','Abschlusskriterien definieren','Workflow definieren'],answer:[1],explanation:'Überwachung vergleicht Ist und Soll.'},
-  {id:3,lo:'LO 1.1.3',k:'K2',pts:1,multi:false,text:'Welche Aufgabe gehört zu Testabschlussaktivitäten?',options:['Risiken identifizieren','Testartefakte archivieren','Aufwand schätzen','Testdesign durchführen'],answer:[1],explanation:'Archivierung gehört dazu.'},
-  {id:4,lo:'LO 1.2.1',k:'K2',pts:1,multi:false,text:'Warum ist Stakeholderwissen wichtig?',options:['Budgetentscheidung','Erwartungen managen','Codefehler finden','Verantwortung verschieben'],answer:[1],explanation:'Erwartungsmanagement ist zentral.'},
-  {id:5,lo:'LO 1.2.3',k:'K2',pts:1,multi:false,text:'Herausforderung hybrider Modelle?',options:['Keine Doku','Synchronisation agil vs klassisch','Tester schreiben Code','Kein Risikoansatz'],answer:[1],explanation:'Synchronisation ist kritisch.'},
-  {id:6,lo:'LO 1.2.4',k:'K2',pts:1,multi:false,text:'Welches Modell nutzt Definition of Done?',options:['Wasserfall','V-Modell','Scrum','Inkrementell'],answer:[2],explanation:'Scrum nutzt DoD.'},
-  {id:7,lo:'LO 1.2.7',k:'K4',pts:3,multi:false,text:'Szenario: Kritisches Bremssystem, unvollständige Testbasis. Wichtigste Aktivität?',options:['Explorativ testen','Risiko-basiert steuern','Stoppen','Team reduzieren'],answer:[1],explanation:'Risikosteuerung entscheidend.'},
-  {id:8,lo:'LO 1.2.7',k:'K4',pts:3,multi:false,text:'Szenario: Medizin-App + Traceability. Beste Maßnahme?',options:['Daily ohne Doku','Regression + Traceability','Nur explorativ','Kein Tool'],answer:[1],explanation:'Traceability ist Pflicht.'},
-  {id:9,lo:'LO 1.3.1',k:'K2',pts:1,multi:false,text:'Reaktion auf hohes Risiko?',options:['Verzögern','Mehr testen','Ignorieren','Nur statisch'],answer:[1],explanation:'Testintensität erhöhen.'},
-  {id:10,lo:'LO 1.3.2',k:'K2',pts:1,multi:false,text:'Technik zur Risikoidentifikation?',options:['Code Review','Brainstorming','Schätzung','Fehlerbericht'],answer:[1],explanation:'Workshops sind Standard.'},
-  {id:11,lo:'LO 1.3.3',k:'K2',pts:1,multi:false,text:'Was bestimmt Risikostufe?',options:['Testeranzahl','Wahrscheinlichkeit und Schaden','UI Farbe','Planung'],answer:[1],explanation:'Standarddefinition.'},
-  {id:12,lo:'LO 1.3.4',k:'K4',pts:3,multi:false,text:'Szenario: Banking + Datenverlust. Maßnahme?',options:['GUI Tests','Funktional + Last + Security','Explorativ','Dokumentation'],answer:[1],explanation:'Tiefe Tests nötig.'},
-  {id:13,lo:'LO 1.3.5',k:'K2',pts:1,multi:false,text:'Schwergewichtige Verfahren?',options:['Informell','Formal und quantitativ','Nur kritisch','Kein Unterschied'],answer:[1],explanation:'Formalisiert.'},
-  {id:14,lo:'LO 1.3.6',k:'K2',pts:1,multi:false,text:'Erfolgsmetrik Risiko?',options:['Testfälle','Risikominderung','Überstunden','Pausen'],answer:[1],explanation:'Outcome zählt.'},
-  {id:15,lo:'LO 1.4.2',k:'K4',pts:3,multi:false,text:'Szenario: Instabil + Budget. Ansatz?',options:['Automatisieren','Risiko + Explorativ','Nicht testen','Nur manuell'],answer:[1],explanation:'Hybrid sinnvoll.'},
-  {id:16,lo:'LO 1.4.3',k:'K3',pts:2,multi:false,text:'SMART Ziel?',options:['Qualität verbessern','Alle kritischen Fehler bis Datum behoben','Mehr Fehler finden','System schnell'],answer:[1],explanation:'SMART erfüllt.'},
-  {id:17,lo:'LO 1.5.1',k:'K2',pts:1,multi:false,text:'Start IDEAL Modell?',options:['Diagnose','Initiierung','Abschluss','Toolwahl'],answer:[1],explanation:'Initiation zuerst.'},
-  {id:18,lo:'LO 1.5.2',k:'K2',pts:1,multi:false,text:'TMMi Charakteristik?',options:['Intuition','Reifegradmodell','Nur agil','KI ersetzt Team'],answer:[1],explanation:'Reifegradmodell.'},
-  {id:19,lo:'LO 1.5.3',k:'K2',pts:1,multi:false,text:'Analytischer Ansatz?',options:['Standards','Root Cause Analyse','Kopieren','Mehr Personal'],answer:[1],explanation:'Datenanalyse.'},
-  {id:20,lo:'LO 1.5.4',k:'K3',pts:2,multi:false,text:'Fehler spät entdeckt → Maßnahme?',options:['Entlassen','Frühe Reviews','Retrospektive streichen','Testphase verlängern'],answer:[1],explanation:'Shift Left.'},
-  {id:21,lo:'LO 1.6.1',k:'K2',pts:1,multi:false,text:'Tool Einführung Best Practice?',options:['Rollout sofort','Pilotprojekt','Einkauf entscheidet','Teuer ist besser'],answer:[1],explanation:'Pilot reduziert Risiko.'},
-  {id:22,lo:'LO 1.6.2',k:'K2',pts:1,multi:false,text:'Tool Auswahl Faktor?',options:['Logo','Toolchain Fit','Free Version','Handbuch'],answer:[1],explanation:'Integration wichtig.'},
-  {id:23,lo:'LO 1.6.3',k:'K4',pts:3,multi:false,text:'ROI Tool Szenario. Beste Aussage?',options:['B besser','A besser','Keine Automatisierung','Langfristig A'],answer:[1],explanation:'A höherer Nutzen laut Modell.'},
-  {id:24,lo:'LO 1.6.4',k:'K2',pts:1,multi:false,text:'Tool Anpassung Phase?',options:['Auswahl','Wartung','Pilot','Ausmusterung'],answer:[1],explanation:'Wartung.'},
-  {id:25,lo:'LO 1.6.5',k:'K2',pts:1,multi:false,text:'Welche Metrik automatisch?',options:['Stimmung','DDP','Meetings','Dokuqualität'],answer:[1],explanation:'DDP messbar.'},
-  {id:26,lo:'LO 2.1.2',k:'K2',pts:1,multi:false,text:'Fortschritt messen?',options:['LOC','Geplant vs ausgeführt','Alter','Clicks'],answer:[1],explanation:'Standard.'},
-  {id:27,lo:'LO 2.1.3',k:'K4',pts:3,multi:false,text:'95% bestanden, Risiken offen → Interpretation?',options:['Release','Gefährlich','Tester schuld','Mehr Tests'],answer:[1],explanation:'Trügerisch.'},
-  {id:28,lo:'LO 2.2.1',k:'K2',pts:1,multi:false,text:'Schätzfaktor?',options:['Temperatur','Komplexität','Parkplätze','Laptop'],answer:[1],explanation:'Treiber.'},
-  {id:29,lo:'LO 2.2.2',k:'K2',pts:1,multi:false,text:'Schätzung negativ beeinflusst?',options:['Stabil','Fluktuation','Kommunikation','Standards'],answer:[1],explanation:'Risiko.'},
-  {id:30,lo:'LO 2.2.3',k:'K4',pts:3,multi:false,text:'Agil + erfahren → Methode?',options:['3 Punkt','Planning Poker','LOC','Experte'],answer:[1],explanation:'Standard agil.'},
-  {id:31,lo:'LO 2.3.1',k:'K3',pts:2,multi:false,text:'Fehlerbericht Pflicht?',options:['Adresse','ID + Beschreibung','Foto','Kosten'],answer:[1],explanation:'Minimalanforderung.'},
-  {id:32,lo:'LO 2.3.2',k:'K2',pts:1,multi:false,text:'CCB Teilnehmer?',options:['Tester','Stakeholder','Kunde','Reinigung'],answer:[1],explanation:'Interdisziplinär.'},
-  {id:33,lo:'LO 2.3.3',k:'K2',pts:1,multi:false,text:'Agiles Fehlermanagement?',options:['Informell','Keine Fehler','20 Seiten','Scrum Master'],answer:[0],explanation:'Direktkommunikation.'},
-  {id:34,lo:'LO 2.3.4',k:'K2',pts:1,multi:false,text:'Hybrid Herausforderung?',options:['Kaffee','Tool Integration','Keine Fehler','Unfähigkeit'],answer:[1],explanation:'Integration.'},
-  {id:35,lo:'LO 2.3.6',k:'K2',pts:1,multi:false,text:'Viele abgelehnte Fehler →?',options:['Gut','Prozessproblem','Perfekt','Stimmung'],answer:[1],explanation:'Missverständnis.'},
-  {id:36,lo:'LO 3.1.1',k:'K2',pts:1,multi:false,text:'Fachkompetenz?',options:['Pünktlich','Testdesign','Grüßen','Tippen'],answer:[1],explanation:'Technik.'},
-  {id:37,lo:'LO 3.1.2',k:'K4',pts:3,multi:false,text:'Verteiltes Team → wichtigste Kompetenz?',options:['Physik','Kommunikation','Schlaflos','Geschichte'],answer:[1],explanation:'Kommunikation.'},
-  {id:38,lo:'LO 3.1.3',k:'K2',pts:1,multi:false,text:'Bewertung Bewerber?',options:['Essen','Praxisaufgabe','Würfeln','Selbstbewertung'],answer:[1],explanation:'Praxis zeigt Kompetenz.'},
-  {id:39,lo:'LO 3.1.6',k:'K2',pts:1,multi:false,text:'Motivation?',options:['Unklar','Anerkennung','Kritik','Überstunden'],answer:[1],explanation:'Motivation.'},
-  {id:40,lo:'LO 3.1.5',k:'K2',pts:1,multi:false,text:'Storming Phase?',options:['Ignorieren','Konflikte lösen','Kündigen','Regeln'],answer:[1],explanation:'Konfliktlösung.'},
-  {id:41,lo:'LO 3.2.1',k:'K2',pts:1,multi:false,text:'Externe Fehlerkosten?',options:['Unit Tests','Kundenkosten','Training','Miete'],answer:[1],explanation:'Extern.'},
-  {id:42,lo:'LO 3.2.2',k:'K3',pts:2,multi:false,text:'Mehrwert Testen?',options:['-5000','35000','50000','0'],answer:[1],explanation:'Berechnet.'},
-  {id:43,lo:'LO 1.2.5',k:'K2',pts:1,multi:false,text:'Teststrategie unterschiedlich?',options:['Name','Kontext','Lehrplan','Kein Unterschied'],answer:[1],explanation:'Kontext.'},
-  {id:44,lo:'LO 0.12',k:'K2',pts:1,multi:false,text:'Whole Team?',options:['Tester','Team','Manager','Wechsel'],answer:[1],explanation:'Gemeinsam.'},
-  {id:45,lo:'LO 1.2.1',k:'K2',pts:1,multi:false,text:'Medizin Norm?',options:['ISO9001','IEC62304','ISO14001','Kochbuch'],answer:[1],explanation:'Medizin Standard.'},
-  {id:46,lo:'LO 1.1.2',k:'K2',pts:1,multi:false,text:'Teststeuerung?',options:['Beobachten','Maßnahmen','Archivieren','Kommentieren'],answer:[1],explanation:'Steuerung.'},
-  {id:47,lo:'LO 1.1.2',k:'K2',pts:1,multi:false,text:'Umgebung fehlt → Maßnahme?',options:['Ignorieren','Plan anpassen','Urlaub','Abbruch'],answer:[1],explanation:'Anpassen.'},
-  {id:48,lo:'LO 1.3.1',k:'K2',pts:1,multi:false,text:'Produktrisiko?',options:['Tester','Fehlerhafte Funktion','Lieferung','Budget'],answer:[1],explanation:'Produktbezogen.'},
-  {id:49,lo:'LO 2.2.3',k:'K2',pts:1,multi:false,text:'Delphi Ziel?',options:['Chef entscheidet','Konsens','Schnell','Keine Schätzung'],answer:[1],explanation:'Konsens.'},
-  {id:50,lo:'LO 3.2.2',k:'K4',pts:3,multi:false,text:'Bestes Business Argument?',options:['Spaß','Kostenreduktion','Pflicht','Mehr Leute'],answer:[1],explanation:'ROI zählt.'}
+
+{
+id: 1,
+lo: "LO 1.1.1",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Sie erstellen ein Testkonzept für ein neues CRM-System. Welches ist laut ISTQB-Syllabus die wichtigste Aktivität während der Testplanung, um die Akzeptanz des Dokuments sicherzustellen?",
+options: [
+"Die Auswahl eines Testautomatisierungswerkzeugs.",
+"Die Erstellung einer detaillierten Testfalldokumentation.",
+"Das Erzielen eines Konsenses zwischen allen relevanten Stakeholdern.",
+"Die Durchführung einer statischen Code-Analyse."
+],
+answer: [2],
+explanation: "Stakeholder-Konsens ist entscheidend für die Akzeptanz."
+},
+
+{
+id: 2,
+lo: "LO 1.1.2",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Sie überwachen den Testfortschritt in einem sequenziellen Projekt. Welche Aktivität gehört primär zur Testüberwachung?",
+options: [
+"Die Neuzuweisung von Ressourcen aufgrund von Verzögerungen.",
+"Das Sammeln und Aufzeichnen von Testergebnissen im Vergleich zum Zeitplan.",
+"Die Festlegung der Testabschlusskriterien.",
+"Die Definition des Fehlerworkflows."
+],
+answer: [1],
+explanation: "Überwachung = Ist vs Soll."
+},
+
+{
+id: 3,
+lo: "LO 1.1.3",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Ein Projektleiter bittet Sie, die Testabschlussaktivitäten zu koordinieren. Welche Aufgabe gehört dazu?",
+options: [
+"Identifikation zukünftiger Risiken.",
+"Archivierung von Testartefakten.",
+"Schätzung des Testaufwands.",
+"Testdesign auswählen."
+],
+answer: [1],
+explanation: "Archivierung ist Teil des Testabschlusses."
+},
+
+{
+id: 4,
+lo: "LO 1.2.1",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Warum ist Stakeholderwissen entscheidend im Testmanagement?",
+options: [
+"Budgetentscheidung ermöglichen.",
+"Erwartungen managen und Teststrategie abstimmen.",
+"Fehler schneller finden.",
+"Verantwortung abgeben."
+],
+answer: [1],
+explanation: "Alignment mit Stakeholdern ist zentral."
+},
+
+{
+id: 5,
+lo: "LO 1.2.3",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Welche Herausforderung entsteht beim Wechsel zu einem hybriden Modell?",
+options: [
+"Keine Testplanung erlaubt.",
+"Synchronisation von agil und klassisch.",
+"Tester programmieren alles.",
+"Kein Risikomanagement."
+],
+answer: [1],
+explanation: "Hybrid = Koordination unterschiedlicher Modelle."
+},
+
+{
+id: 6,
+lo: "LO 1.2.4",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Welches Modell betont Definition of Done und geringe Dokumentation?",
+options: [
+"Wasserfall",
+"V-Modell",
+"Scrum",
+"Spiralmodell"
+],
+answer: [2],
+explanation: "Agile Modelle nutzen DoD."
+},
+
+{
+id: 7,
+lo: "LO 1.2.7",
+k: "K4",
+pts: 3,
+multi: false,
+text: "Szenario: Bremssystem, unvollständige Testbasis, 3 Monate bis Release. Was ist am wichtigsten?",
+options: [
+"Exploratives Testen ohne Doku.",
+"Risikobasierte Steuerung der Testprioritäten.",
+"Teststopp.",
+"Team reduzieren."
+],
+answer: [1],
+explanation: "Risiko-basierte Steuerung ist entscheidend."
+},
+
+{
+id: 8,
+lo: "LO 1.2.7",
+k: "K4",
+pts: 3,
+multi: false,
+text: "Szenario: Medizinische App mit regulatorischer Traceability. Was ist wichtig?",
+options: [
+"Daily Meetings ohne Protokoll.",
+"Regression + vollständige Traceability.",
+"Nur exploratives Testen.",
+"Kein Fehlermanagement."
+],
+answer: [1],
+explanation: "Traceability ist regulatorisch zwingend."
+},
+
+{
+id: 9,
+lo: "LO 1.3.1",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Wie reagieren Sie auf ein hohes Risiko?",
+options: [
+"Verzögern",
+"Testintensität erhöhen",
+"Ignorieren",
+"Nur statisch testen"
+],
+answer: [1],
+explanation: "Mehr Testtiefe erforderlich."
+},
+
+{
+id: 10,
+lo: "LO 1.3.2",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Welche Methode identifiziert Produktrisiken?",
+options: [
+"Code Review",
+"Brainstorming",
+"Schätzung",
+"Fehlerberichte"
+],
+answer: [1],
+explanation: "Workshops sind Standard."
+},
+
+{
+id: 11,
+lo: "LO 1.3.3",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Was bestimmt die Risikostufe?",
+options: [
+"Testeranzahl",
+"Wahrscheinlichkeit und Schaden",
+"UI Farbe",
+"Testdauer"
+],
+answer: [1],
+explanation: "Standardformel Risiko = Impact × Probability"
+},
+
+{
+id: 12,
+lo: "LO 1.3.4",
+k: "K4",
+pts: 3,
+multi: false,
+text: "Szenario: Online Banking, Risiko Datenverlust. Beste Maßnahme?",
+options: [
+"GUI Tests",
+"Funktional + Last + Security Tests",
+"Explorativ",
+"Dokumentation"
+],
+answer: [1],
+explanation: "Kombinierte Testarten nötig."
+},
+
+{
+id: 13,
+lo: "LO 1.3.5",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Schwergewichtige Verfahren zeichnen sich aus durch:",
+options: [
+"Informell",
+"Formal und quantitativ",
+"Nur kritisch",
+"Kein Unterschied"
+],
+answer: [1],
+explanation: "Formalisierung."
+},
+
+{
+id: 14,
+lo: "LO 1.3.6",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Welche Metrik zeigt Erfolg im risikobasierten Testen?",
+options: [
+"Testfälle",
+"Risikoreduktion",
+"Überstunden",
+"Kaffeepausen"
+],
+answer: [1],
+explanation: "Outcome zählt."
+},
+
+{
+id: 15,
+lo: "LO 1.4.2",
+k: "K4",
+pts: 3,
+multi: false,
+text: "Szenario: Instabile Anforderungen + Budgetdruck. Vorgehen?",
+options: [
+"Vollautomatisierung",
+"Risiko + explorativ",
+"Nicht testen",
+"Nur manuell"
+],
+answer: [1],
+explanation: "Hybridansatz sinnvoll."
+},
+
+{
+id: 16,
+lo: "LO 1.4.3",
+k: "K3",
+pts: 2,
+multi: false,
+text: "Welches Ziel ist SMART?",
+options: [
+"Qualität verbessern",
+"Alle kritischen Fehler bis Datum behoben",
+"Mehr Fehler finden",
+"Schnelles System"
+],
+answer: [1],
+explanation: "Spezifisch und messbar."
+},
+
+{
+id: 17,
+lo: "LO 1.5.1",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Start des IDEAL Modells?",
+options: [
+"Diagnose",
+"Initiierung",
+"Abschluss",
+"Toolwahl"
+],
+answer: [1],
+explanation: "Initiierung ist Startphase."
+},
+
+{
+id: 18,
+lo: "LO 1.5.2",
+k: "K2",
+pts: 1,
+multi: false,
+text: "TMMi ist ein:",
+options: [
+"Intuitionsmodell",
+"Reifegradmodell",
+"Agilframework",
+"KI System"
+],
+answer: [1],
+explanation: "Strukturiertes Reifegradmodell."
+},
+
+{
+id: 19,
+lo: "LO 1.5.3",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Analytischer Verbesserungsansatz nutzt:",
+options: [
+"Standards kopieren",
+"Root Cause Analysis",
+"Zufall",
+"Mehr Personal"
+],
+answer: [1],
+explanation: "Datenanalyse."
+},
+
+{
+id: 20,
+lo: "LO 1.5.4",
+k: "K3",
+pts: 2,
+multi: false,
+text: "Viele späte Fehler → Maßnahme?",
+options: [
+"Team entlassen",
+"Frühe Reviews",
+"Retrospektive streichen",
+"Mehr Endtests"
+],
+answer: [1],
+explanation: "Shift Left."
+},
+
+{
+id: 21,
+lo: "LO 1.6.1",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Best Practice Tool Einführung?",
+options: [
+"Rollout sofort",
+"Pilotprojekt",
+"Einkauf entscheidet",
+"Teuer ist besser"
+],
+answer: [1],
+explanation: "Pilot reduziert Risiko."
+},
+
+{
+id: 22,
+lo: "LO 1.6.2",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Wichtigstes Auswahlkriterium?",
+options: [
+"Logo",
+"Toolchain Integration",
+"Free Version",
+"Handbuch"
+],
+answer: [1],
+explanation: "Integration entscheidend."
+},
+
+{
+id: 23,
+lo: "LO 1.6.3",
+k: "K4",
+pts: 3,
+multi: false,
+text: "ROI Tool Analyse?",
+options: [
+"B besser",
+"A besser",
+"Keine Automatisierung",
+"Langfristig A"
+],
+answer: [1],
+explanation: "Modell zeigt A Vorteil."
+},
+
+{
+id: 24,
+lo: "LO 1.6.4",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Tool Lebenszyklus Phase Wartung?",
+options: [
+"Auswahl",
+"Wartung",
+"Pilot",
+"Abbruch"
+],
+answer: [1],
+explanation: "Evolution Phase."
+},
+
+{
+id: 25,
+lo: "LO 1.6.5",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Welche Metrik kann automatisch erfasst werden?",
+options: [
+"Stimmung",
+"DDP",
+"Meetings",
+"Dokuqualität"
+],
+answer: [1],
+explanation: "Defect Detection Percentage."
+},
+{
+id: 26,
+lo: "LO 2.1.2",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Welche Metrik hilft einem Testmanager primär, den Testfortschritt zu steuern?",
+options: [
+"Anzahl der insgesamt geschriebenen Codezeilen.",
+"Anzahl der geplanten vs. ausgeführten Testfälle.",
+"Durchschnittsalter der Testmanager in der Branche.",
+"Anzahl der Klicks auf der Firmenwebsite."
+],
+answer: [1],
+explanation: "Fortschritt wird durch geplante vs. ausgeführte Tests gemessen."
+},
+
+{
+id: 27,
+lo: "LO 2.1.3",
+k: "K4",
+pts: 3,
+multi: false,
+text: "Szenario: 95 % der Tests bestanden, aber 50 % der kritischen Risiken nicht abgedeckt. Interpretation?",
+options: [
+"Projekt ist bereit für Release.",
+"Irreführende Sicherheit, hohes Restrisiko.",
+"Tester haben zu langsam gearbeitet.",
+"Mehr unkritische Tests notwendig."
+],
+answer: [1],
+explanation: "Coverage der Risiken ist wichtiger als reine Passrate."
+},
+
+{
+id: 28,
+lo: "LO 2.2.1",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Welcher Faktor beeinflusst Testschätzungen wesentlich?",
+options: [
+"Raumtemperatur",
+"Komplexität und Erfahrung des Teams",
+"Anzahl Parkplätze",
+"Farbe der Laptops"
+],
+answer: [1],
+explanation: "Komplexität und Teamwissen sind zentrale Faktoren."
+},
+
+{
+id: 29,
+lo: "LO 2.2.2",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Was erhöht typischerweise den Testaufwand?",
+options: [
+"Stabile Umgebung",
+"Unklare Anforderungen und Fluktuation",
+"Gute Kommunikation",
+"Standardisierung"
+],
+answer: [1],
+explanation: "Unsicherheit erhöht Aufwand."
+},
+
+{
+id: 30,
+lo: "LO 2.2.3",
+k: "K4",
+pts: 3,
+multi: false,
+text: "Szenario: Agiles Team, erfahren, stabile Zusammenarbeit. Bestes Schätzverfahren?",
+options: [
+"3-Punkt-Schätzung allein durch Manager",
+"Planning Poker im Team",
+"LOC-basierte Schätzung",
+"Externer Berater ohne Kontext"
+],
+answer: [1],
+explanation: "Agil = kollaborative Schätzung."
+},
+
+{
+id: 31,
+lo: "LO 2.3.1",
+k: "K3",
+pts: 2,
+multi: false,
+text: "Was ist obligatorisch in einem Fehlerbericht?",
+options: [
+"Adresse des Entwicklers",
+"Eindeutige ID und Beschreibung der Abweichung",
+"Foto des Testers",
+"Kosten der Fehlerbehebung"
+],
+answer: [1],
+explanation: "Minimalanforderung ist ID + Beschreibung."
+},
+
+{
+id: 32,
+lo: "LO 2.3.2",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Wer nimmt typischerweise an einem Bug Board teil?",
+options: [
+"Nur Tester",
+"Testmanagement, Entwicklung, Produktmanagement",
+"Nur Kunde",
+"Reinigungspersonal"
+],
+answer: [1],
+explanation: "Cross-funktionales Gremium."
+},
+
+{
+id: 33,
+lo: "LO 2.3.3",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Fehlermanagement in agilen Projekten?",
+options: [
+"Informelle Kommunikation und schnelle Fixes",
+"Keine Fehler vorhanden",
+"20-seitige Reports",
+"Nur Scrum Master darf Fehler erfassen"
+],
+answer: [0],
+explanation: "Agil nutzt schnelle, direkte Kommunikation."
+},
+
+{
+id: 34,
+lo: "LO 2.3.4",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Herausforderung hybrides Fehlermanagement?",
+options: [
+"Kaffeequalität",
+"Tool-Integration und Priorisierung zwischen Teams",
+"Keine Fehler erlaubt",
+"Tester dürfen keine Reports schreiben"
+],
+answer: [1],
+explanation: "Integration ist zentrale Herausforderung."
+},
+
+{
+id: 35,
+lo: "LO 2.3.6",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Viele abgelehnte Fehlerberichte deuten auf?",
+options: [
+"Gutes System",
+"Prozess- oder Kommunikationsproblem",
+"Perfekte Qualität",
+"Motivation des Teams"
+],
+answer: [1],
+explanation: "Fehlklassifikation weist auf Prozessprobleme hin."
+},
+
+{
+id: 36,
+lo: "LO 3.1.1",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Beispiel für Fachkompetenz im Testteam?",
+options: [
+"Pünktlichkeit",
+"Beherrschung von Testdesigntechniken",
+"Freundliches Grüßen",
+"Schnelles Tippen"
+],
+answer: [1],
+explanation: "Technische Testmethoden sind Kernkompetenz."
+},
+
+{
+id: 37,
+lo: "LO 3.1.2",
+k: "K4",
+pts: 3,
+multi: false,
+text: "Szenario: Verteiltes Team (Onshore/Offshore). Kritische Kompetenz?",
+options: [
+"Quantenphysik",
+"Interkulturelle Kommunikation",
+"Dauerarbeit ohne Schlaf",
+"Mittelaltergeschichte"
+],
+answer: [1],
+explanation: "Kommunikation ist entscheidend in verteilten Teams."
+},
+
+{
+id: 38,
+lo: "LO 3.1.3",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Beste Methode zur Bewertung eines Bewerbers?",
+options: [
+"Lieblingsessen fragen",
+"Praktische Testaufgabe",
+"Würfeln",
+"Selbsteinschätzung"
+],
+answer: [1],
+explanation: "Praxis zeigt echte Kompetenz."
+},
+
+{
+id: 39,
+lo: "LO 3.1.6",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Typischer Motivationsfaktor?",
+options: [
+"Unklare Ziele",
+"Anerkennung und Herausforderung",
+"Ständige Kritik",
+"Unbezahlte Überstunden"
+],
+answer: [1],
+explanation: "Motivation durch Anerkennung."
+},
+
+{
+id: 40,
+lo: "LO 3.1.5",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Führung in Storming-Phase?",
+options: [
+"Konflikte ignorieren",
+"Konflikte aktiv lösen",
+"Team entlassen",
+"Mehr Regeln einführen"
+],
+answer: [1],
+explanation: "Konfliktmanagement ist zentral."
+},
+
+{
+id: 41,
+lo: "LO 3.2.1",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Externe Fehlerkosten sind?",
+options: [
+"Unit Tests",
+"Kundenreklamationen",
+"Schulungen",
+"Büromiete"
+],
+answer: [1],
+explanation: "Kosten beim Kunden nach Release."
+},
+
+{
+id: 42,
+lo: "LO 3.2.2",
+k: "K3",
+pts: 2,
+multi: false,
+text: "Mehrwert Testen Berechnung?",
+options: [
+"-5000",
+"35000",
+"50000",
+"0"
+],
+answer: [1],
+explanation: "Einsparung minus Kosten ergibt positiven Nutzen."
+},
+
+{
+id: 43,
+lo: "LO 1.2.5",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Warum unterscheiden sich Teststrategien?",
+options: [
+"Name",
+"Kontext, Ziele und Basis",
+"Lehrplan",
+"Kein Unterschied"
+],
+answer: [1],
+explanation: "Kontext bestimmt Strategie."
+},
+
+{
+id: 44,
+lo: "LO 0.12",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Whole Team Ansatz bedeutet?",
+options: [
+"Nur Tester verantwortlich",
+"Gesamtes Team verantwortlich",
+"Manager entscheidet allein",
+"Wöchentlicher Teamwechsel"
+],
+answer: [1],
+explanation: "Qualität ist Teamverantwortung."
+},
+
+{
+id: 45,
+lo: "LO 1.2.1",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Welche Norm ist im medizinischen Bereich relevant?",
+options: [
+"ISO 9001",
+"IEC 62304",
+"ISO 14001",
+"Kochbuch"
+],
+answer: [1],
+explanation: "IEC 62304 für Medizintechnik."
+},
+
+{
+id: 46,
+lo: "LO 1.1.2",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Was gehört zur Teststeuerung?",
+options: [
+"Nur beobachten",
+"Korrekturmaßnahmen einleiten",
+"Archivieren",
+"Kommentare schreiben"
+],
+answer: [1],
+explanation: "Steuerung bedeutet Eingreifen."
+},
+
+{
+id: 47,
+lo: "LO 1.1.2",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Testumgebung fehlt – Maßnahme?",
+options: [
+"Ignorieren",
+"Plan anpassen und Stakeholder informieren",
+"Urlaub",
+"Projekt abbrechen"
+],
+answer: [1],
+explanation: "Transparenz und Anpassung erforderlich."
+},
+
+{
+id: 48,
+lo: "LO 1.3.1",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Was ist ein Produktrisiko?",
+options: [
+"Tester fehlen",
+"Funktion liefert falsches Ergebnis",
+"Lieferverzug",
+"Budgetproblem"
+],
+answer: [1],
+explanation: "Produktbezogene Fehlfunktion."
+},
+
+{
+id: 49,
+lo: "LO 2.2.3",
+k: "K2",
+pts: 1,
+multi: false,
+text: "Ziel der Delphi Methode?",
+options: [
+"Manager entscheidet",
+"Konsens durch Experten",
+"Schnelle Schätzung",
+"Keine Schätzung"
+],
+answer: [1],
+explanation: "Kollektive Expertise."
+},
+
+{
+id: 50,
+lo: "LO 3.2.2",
+k: "K4",
+pts: 3,
+multi: false,
+text: "Welches Argument überzeugt Management am meisten?",
+options: [
+"Testen macht Spaß",
+"Kostenreduktion und Risikominimierung",
+"Pflicht",
+"Mehr Personal"
+],
+answer: [1],
+explanation: "Business Value + Risiko ist entscheidend."
+}
+
 ];
 
 // ─── STATE ────────────────────────────────────────────────────────────────────
