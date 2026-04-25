@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>ISTQB CTAL-TM Mock Exam</title>
+<style>
+body { font-family: Arial; max-width: 900px; margin: auto; padding:20px; background:#f5f7fa; }
+h1 { text-align:center; }
+.question { background:white; padding:20px; border-radius:10px; margin-bottom:20px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
+.meta { font-size:12px; color:gray; margin-bottom:10px; }
+button { padding:10px 15px; margin:5px; border:none; border-radius:5px; cursor:pointer; }
+.primary { background:#007bff; color:white; }
+.success { background:#28a745; color:white; }
+.warning { background:#ffc107; }
+.progress { margin-bottom:15px; }
+.hidden { display:none; }
+.correct { color:green; }
+.wrong { color:red; }
+</style>
+</head>
+
+<body>
+
+<h1>ISTQB CTAL-TM Mock Exam</h1>
+
+<div id="app"></div>
+
+<script>
+// ==========================
+// FULL QUESTION SET (SHORTENED DEMO STRUCTURE)
+// 👉 Replace with your full 50-array if needed
+// ==========================
+const questions = [
+  {id:1,lo:'LO 1.1.1',k:'K2',pts:1,multi:false,text:'Sie erstellen ein Testkonzept für ein neues CRM-System. Was ist die wichtigste Aktivität zur Sicherstellung der Akzeptanz?',options:['Tool auswählen','Testfälle schreiben','Stakeholder-Konsens erzielen','Codeanalyse durchführen'],answer:[2],explanation:'Stakeholder-Konsens ist entscheidend.'},
+  {id:2,lo:'LO 1.1.2',k:'K2',pts:1,multi:false,text:'Was gehört zur Testüberwachung?',options:['Ressourcen umverteilen','Ist vs. Soll vergleichen','Abschlusskriterien definieren','Workflow definieren'],answer:[1],explanation:'Überwachung vergleicht Ist und Soll.'},
+  {id:3,lo:'LO 1.1.3',k:'K2',pts:1,multi:false,text:'Welche Aufgabe gehört zu Testabschlussaktivitäten?',options:['Risiken identifizieren','Testartefakte archivieren','Aufwand schätzen','Testdesign durchführen'],answer:[1],explanation:'Archivierung gehört dazu.'},
+  {id:4,lo:'LO 1.2.1',k:'K2',pts:1,multi:false,text:'Warum ist Stakeholderwissen wichtig?',options:['Budgetentscheidung','Erwartungen managen','Codefehler finden','Verantwortung verschieben'],answer:[1],explanation:'Erwartungsmanagement ist zentral.'},
+  {id:5,lo:'LO 1.2.3',k:'K2',pts:1,multi:false,text:'Herausforderung hybrider Modelle?',options:['Keine Doku','Synchronisation agil vs klassisch','Tester schreiben Code','Kein Risikoansatz'],answer:[1],explanation:'Synchronisation ist kritisch.'},
+  {id:6,lo:'LO 1.2.4',k:'K2',pts:1,multi:false,text:'Welches Modell nutzt Definition of Done?',options:['Wasserfall','V-Modell','Scrum','Inkrementell'],answer:[2],explanation:'Scrum nutzt DoD.'},
+  {id:7,lo:'LO 1.2.7',k:'K4',pts:3,multi:false,text:'Szenario: Kritisches Bremssystem, unvollständige Testbasis. Wichtigste Aktivität?',options:['Explorativ testen','Risiko-basiert steuern','Stoppen','Team reduzieren'],answer:[1],explanation:'Risikosteuerung entscheidend.'},
+  {id:8,lo:'LO 1.2.7',k:'K4',pts:3,multi:false,text:'Szenario: Medizin-App + Traceability. Beste Maßnahme?',options:['Daily ohne Doku','Regression + Traceability','Nur explorativ','Kein Tool'],answer:[1],explanation:'Traceability ist Pflicht.'},
+  {id:9,lo:'LO 1.3.1',k:'K2',pts:1,multi:false,text:'Reaktion auf hohes Risiko?',options:['Verzögern','Mehr testen','Ignorieren','Nur statisch'],answer:[1],explanation:'Testintensität erhöhen.'},
+  {id:10,lo:'LO 1.3.2',k:'K2',pts:1,multi:false,text:'Technik zur Risikoidentifikation?',options:['Code Review','Brainstorming','Schätzung','Fehlerbericht'],answer:[1],explanation:'Workshops sind Standard.'},
+  {id:11,lo:'LO 1.3.3',k:'K2',pts:1,multi:false,text:'Was bestimmt Risikostufe?',options:['Testeranzahl','Wahrscheinlichkeit und Schaden','UI Farbe','Planung'],answer:[1],explanation:'Standarddefinition.'},
+  {id:12,lo:'LO 1.3.4',k:'K4',pts:3,multi:false,text:'Szenario: Banking + Datenverlust. Maßnahme?',options:['GUI Tests','Funktional + Last + Security','Explorativ','Dokumentation'],answer:[1],explanation:'Tiefe Tests nötig.'},
+  {id:13,lo:'LO 1.3.5',k:'K2',pts:1,multi:false,text:'Schwergewichtige Verfahren?',options:['Informell','Formal und quantitativ','Nur kritisch','Kein Unterschied'],answer:[1],explanation:'Formalisiert.'},
+  {id:14,lo:'LO 1.3.6',k:'K2',pts:1,multi:false,text:'Erfolgsmetrik Risiko?',options:['Testfälle','Risikominderung','Überstunden','Pausen'],answer:[1],explanation:'Outcome zählt.'},
+  {id:15,lo:'LO 1.4.2',k:'K4',pts:3,multi:false,text:'Szenario: Instabil + Budget. Ansatz?',options:['Automatisieren','Risiko + Explorativ','Nicht testen','Nur manuell'],answer:[1],explanation:'Hybrid sinnvoll.'},
+  {id:16,lo:'LO 1.4.3',k:'K3',pts:2,multi:false,text:'SMART Ziel?',options:['Qualität verbessern','Alle kritischen Fehler bis Datum behoben','Mehr Fehler finden','System schnell'],answer:[1],explanation:'SMART erfüllt.'},
+  {id:17,lo:'LO 1.5.1',k:'K2',pts:1,multi:false,text:'Start IDEAL Modell?',options:['Diagnose','Initiierung','Abschluss','Toolwahl'],answer:[1],explanation:'Initiation zuerst.'},
+  {id:18,lo:'LO 1.5.2',k:'K2',pts:1,multi:false,text:'TMMi Charakteristik?',options:['Intuition','Reifegradmodell','Nur agil','KI ersetzt Team'],answer:[1],explanation:'Reifegradmodell.'},
+  {id:19,lo:'LO 1.5.3',k:'K2',pts:1,multi:false,text:'Analytischer Ansatz?',options:['Standards','Root Cause Analyse','Kopieren','Mehr Personal'],answer:[1],explanation:'Datenanalyse.'},
+  {id:20,lo:'LO 1.5.4',k:'K3',pts:2,multi:false,text:'Fehler spät entdeckt → Maßnahme?',options:['Entlassen','Frühe Reviews','Retrospektive streichen','Testphase verlängern'],answer:[1],explanation:'Shift Left.'},
+  {id:21,lo:'LO 1.6.1',k:'K2',pts:1,multi:false,text:'Tool Einführung Best Practice?',options:['Rollout sofort','Pilotprojekt','Einkauf entscheidet','Teuer ist besser'],answer:[1],explanation:'Pilot reduziert Risiko.'},
+  {id:22,lo:'LO 1.6.2',k:'K2',pts:1,multi:false,text:'Tool Auswahl Faktor?',options:['Logo','Toolchain Fit','Free Version','Handbuch'],answer:[1],explanation:'Integration wichtig.'},
+  {id:23,lo:'LO 1.6.3',k:'K4',pts:3,multi:false,text:'ROI Tool Szenario. Beste Aussage?',options:['B besser','A besser','Keine Automatisierung','Langfristig A'],answer:[1],explanation:'A höherer Nutzen laut Modell.'},
+  {id:24,lo:'LO 1.6.4',k:'K2',pts:1,multi:false,text:'Tool Anpassung Phase?',options:['Auswahl','Wartung','Pilot','Ausmusterung'],answer:[1],explanation:'Wartung.'},
+  {id:25,lo:'LO 1.6.5',k:'K2',pts:1,multi:false,text:'Welche Metrik automatisch?',options:['Stimmung','DDP','Meetings','Dokuqualität'],answer:[1],explanation:'DDP messbar.'},
+  {id:26,lo:'LO 2.1.2',k:'K2',pts:1,multi:false,text:'Fortschritt messen?',options:['LOC','Geplant vs ausgeführt','Alter','Clicks'],answer:[1],explanation:'Standard.'},
+  {id:27,lo:'LO 2.1.3',k:'K4',pts:3,multi:false,text:'95% bestanden, Risiken offen → Interpretation?',options:['Release','Gefährlich','Tester schuld','Mehr Tests'],answer:[1],explanation:'Trügerisch.'},
+  {id:28,lo:'LO 2.2.1',k:'K2',pts:1,multi:false,text:'Schätzfaktor?',options:['Temperatur','Komplexität','Parkplätze','Laptop'],answer:[1],explanation:'Treiber.'},
+  {id:29,lo:'LO 2.2.2',k:'K2',pts:1,multi:false,text:'Schätzung negativ beeinflusst?',options:['Stabil','Fluktuation','Kommunikation','Standards'],answer:[1],explanation:'Risiko.'},
+  {id:30,lo:'LO 2.2.3',k:'K4',pts:3,multi:false,text:'Agil + erfahren → Methode?',options:['3 Punkt','Planning Poker','LOC','Experte'],answer:[1],explanation:'Standard agil.'},
+  {id:31,lo:'LO 2.3.1',k:'K3',pts:2,multi:false,text:'Fehlerbericht Pflicht?',options:['Adresse','ID + Beschreibung','Foto','Kosten'],answer:[1],explanation:'Minimalanforderung.'},
+  {id:32,lo:'LO 2.3.2',k:'K2',pts:1,multi:false,text:'CCB Teilnehmer?',options:['Tester','Stakeholder','Kunde','Reinigung'],answer:[1],explanation:'Interdisziplinär.'},
+  {id:33,lo:'LO 2.3.3',k:'K2',pts:1,multi:false,text:'Agiles Fehlermanagement?',options:['Informell','Keine Fehler','20 Seiten','Scrum Master'],answer:[0],explanation:'Direktkommunikation.'},
+  {id:34,lo:'LO 2.3.4',k:'K2',pts:1,multi:false,text:'Hybrid Herausforderung?',options:['Kaffee','Tool Integration','Keine Fehler','Unfähigkeit'],answer:[1],explanation:'Integration.'},
+  {id:35,lo:'LO 2.3.6',k:'K2',pts:1,multi:false,text:'Viele abgelehnte Fehler →?',options:['Gut','Prozessproblem','Perfekt','Stimmung'],answer:[1],explanation:'Missverständnis.'},
+  {id:36,lo:'LO 3.1.1',k:'K2',pts:1,multi:false,text:'Fachkompetenz?',options:['Pünktlich','Testdesign','Grüßen','Tippen'],answer:[1],explanation:'Technik.'},
+  {id:37,lo:'LO 3.1.2',k:'K4',pts:3,multi:false,text:'Verteiltes Team → wichtigste Kompetenz?',options:['Physik','Kommunikation','Schlaflos','Geschichte'],answer:[1],explanation:'Kommunikation.'},
+  {id:38,lo:'LO 3.1.3',k:'K2',pts:1,multi:false,text:'Bewertung Bewerber?',options:['Essen','Praxisaufgabe','Würfeln','Selbstbewertung'],answer:[1],explanation:'Praxis zeigt Kompetenz.'},
+  {id:39,lo:'LO 3.1.6',k:'K2',pts:1,multi:false,text:'Motivation?',options:['Unklar','Anerkennung','Kritik','Überstunden'],answer:[1],explanation:'Motivation.'},
+  {id:40,lo:'LO 3.1.5',k:'K2',pts:1,multi:false,text:'Storming Phase?',options:['Ignorieren','Konflikte lösen','Kündigen','Regeln'],answer:[1],explanation:'Konfliktlösung.'},
+  {id:41,lo:'LO 3.2.1',k:'K2',pts:1,multi:false,text:'Externe Fehlerkosten?',options:['Unit Tests','Kundenkosten','Training','Miete'],answer:[1],explanation:'Extern.'},
+  {id:42,lo:'LO 3.2.2',k:'K3',pts:2,multi:false,text:'Mehrwert Testen?',options:['-5000','35000','50000','0'],answer:[1],explanation:'Berechnet.'},
+  {id:43,lo:'LO 1.2.5',k:'K2',pts:1,multi:false,text:'Teststrategie unterschiedlich?',options:['Name','Kontext','Lehrplan','Kein Unterschied'],answer:[1],explanation:'Kontext.'},
+  {id:44,lo:'LO 0.12',k:'K2',pts:1,multi:false,text:'Whole Team?',options:['Tester','Team','Manager','Wechsel'],answer:[1],explanation:'Gemeinsam.'},
+  {id:45,lo:'LO 1.2.1',k:'K2',pts:1,multi:false,text:'Medizin Norm?',options:['ISO9001','IEC62304','ISO14001','Kochbuch'],answer:[1],explanation:'Medizin Standard.'},
+  {id:46,lo:'LO 1.1.2',k:'K2',pts:1,multi:false,text:'Teststeuerung?',options:['Beobachten','Maßnahmen','Archivieren','Kommentieren'],answer:[1],explanation:'Steuerung.'},
+  {id:47,lo:'LO 1.1.2',k:'K2',pts:1,multi:false,text:'Umgebung fehlt → Maßnahme?',options:['Ignorieren','Plan anpassen','Urlaub','Abbruch'],answer:[1],explanation:'Anpassen.'},
+  {id:48,lo:'LO 1.3.1',k:'K2',pts:1,multi:false,text:'Produktrisiko?',options:['Tester','Fehlerhafte Funktion','Lieferung','Budget'],answer:[1],explanation:'Produktbezogen.'},
+  {id:49,lo:'LO 2.2.3',k:'K2',pts:1,multi:false,text:'Delphi Ziel?',options:['Chef entscheidet','Konsens','Schnell','Keine Schätzung'],answer:[1],explanation:'Konsens.'},
+  {id:50,lo:'LO 3.2.2',k:'K4',pts:3,multi:false,text:'Bestes Business Argument?',options:['Spaß','Kostenreduktion','Pflicht','Mehr Leute'],answer:[1],explanation:'ROI zählt.'}
+];
+
+// ==========================
+// APP STATE
+// ==========================
+let current = 0;
+let answers = {};
+let showResults = false;
+
+// ==========================
+// RENDER
+// ==========================
+function render() {
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+
+  if (showResults) return renderResults();
+
+  const q = questions[current];
+
+  const div = document.createElement('div');
+  div.className = 'question';
+
+  div.innerHTML = `
+    <div class="meta">Frage ${current+1} / ${questions.length} | ${q.k} | ${q.pts} Punkte</div>
+    <p>${q.text}</p>
+    ${q.options.map((opt,i)=>`
+      <div>
+        <label>
+          <input type="${q.multi?'checkbox':'radio'}"
+                 name="q${q.id}"
+                 ${answers[q.id]?.includes(i)?'checked':''}
+                 onchange="selectAnswer(${q.id}, ${i}, ${q.multi})">
+          ${opt}
+        </label>
+      </div>
+    `).join('')}
+  `;
+
+  app.appendChild(div);
+
+  // NAV
+  const nav = document.createElement('div');
+
+  nav.innerHTML = `
+    <div class="progress">Fortschritt: ${Object.keys(answers).length} / ${questions.length}</div>
+
+    <button onclick="prev()">⬅ Zurück</button>
+    <button onclick="next()">Weiter ➡</button>
+    <button class="success" onclick="finish()">Abgeben</button>
+  `;
+
+  app.appendChild(nav);
+}
+
+// ==========================
+// ANSWER HANDLING
+// ==========================
+function selectAnswer(qid, index, multi) {
+  if (!answers[qid]) answers[qid] = [];
+
+  if (multi) {
+    if (answers[qid].includes(index)) {
+      answers[qid] = answers[qid].filter(i => i !== index);
+    } else {
+      answers[qid].push(index);
+    }
+  } else {
+    answers[qid] = [index];
+  }
+}
+
+// ==========================
+// NAVIGATION
+// ==========================
+function next() {
+  if (current < questions.length - 1) current++;
+  render();
+}
+function prev() {
+  if (current > 0) current--;
+  render();
+}
+
+// ==========================
+// RESULT CALC
+// ==========================
+function finish() {
+  showResults = true;
+  render();
+}
+
+function renderResults() {
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+
+  let score = 0;
+  let max = 0;
+
+  questions.forEach(q => {
+    max += q.pts;
+    const user = answers[q.id] || [];
+    const correct = JSON.stringify(user.sort()) === JSON.stringify(q.answer.sort());
+
+    if (correct) score += q.pts;
+  });
+
+  const percent = Math.round((score / max) * 100);
+  const passed = percent >= 65;
+
+  const summary = document.createElement('div');
+  summary.innerHTML = `
+    <h2>Ergebnis</h2>
+    <p><b>Punkte:</b> ${score} / ${max}</p>
+    <p><b>Prozent:</b> ${percent}%</p>
+    <p><b>Status:</b> <span class="${passed?'correct':'wrong'}">${passed?'BESTANDEN':'NICHT BESTANDEN'}</span></p>
+    <button onclick="review()">Antworten ansehen</button>
+  `;
+  app.appendChild(summary);
+}
+
+function review() {
+  const app = document.getElementById('app');
+  app.innerHTML = '<h2>Review</h2>';
+
+  questions.forEach(q => {
+    const user = answers[q.id] || [];
+    const correct = JSON.stringify(user.sort()) === JSON.stringify(q.answer.sort());
+
+    const div = document.createElement('div');
+    div.className = 'question';
+
+    div.innerHTML = `
+      <p><b>Frage ${q.id}:</b> ${q.text}</p>
+      <p class="${correct?'correct':'wrong'}">
+        Deine Antwort: ${user.map(i=>q.options[i]).join(', ') || '—'}
+      </p>
+      <p class="correct">
+        Richtige Antwort: ${q.answer.map(i=>q.options[i]).join(', ')}
+      </p>
+      <p><i>${q.explanation}</i></p>
+    `;
+
+    app.appendChild(div);
+  });
+}
+
+// ==========================
+render();
+</script>
+
+</body>
+</html>

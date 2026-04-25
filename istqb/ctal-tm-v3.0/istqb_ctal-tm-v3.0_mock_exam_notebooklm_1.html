@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISTQB CT-GenAI — Mock Exam</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12; --surface: #0e1420; --card: #111827; --border: #1e2840;
+    --accent: #38bdf8; --accent2: #818cf8; --correct: #34d399;
+    --incorrect: #f87171; --warn: #fbbf24; --text: #cbd5e1;
+    --muted: #475569; --heading: #f1f5f9;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  /* START SCREEN */
+  #start-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(56,189,248,0.06) 0%, transparent 70%); }
+  .start-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 3.5rem 3rem; max-width: 540px; width: 100%; text-align: center; position: relative; overflow: hidden; }
+  .start-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(56,189,248,0.03) 0%, transparent 50%, rgba(129,140,248,0.03) 100%); pointer-events: none; border-radius: 20px; }
+  .start-badge { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.2); padding: 0.3rem 1rem; border-radius: 99px; display: inline-block; margin-bottom: 1.6rem; }
+  .start-card h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.9rem, 4.5vw, 2.8rem); font-weight: 800; color: var(--heading); line-height: 1.1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+  .start-card h1 em { font-style: normal; color: var(--accent); }
+  .start-subtitle { font-size: 0.88rem; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.7; }
+  .start-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 2.5rem; }
+  .meta-item { background: var(--surface); padding: 1.1rem 0.5rem; text-align: center; }
+  .meta-val { font-family: 'DM Mono', monospace; font-size: 1.5rem; font-weight: 500; color: var(--heading); display: block; }
+  .meta-lbl { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.25rem; }
+  .btn-start { font-family: 'DM Mono', monospace; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.08em; padding: 1rem 2.5rem; background: var(--accent); color: #080c12; border: none; border-radius: 10px; cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; width: 100%; text-transform: uppercase; }
+  .btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(56,189,248,0.35); }
+  .start-note { font-size: 0.73rem; color: var(--muted); margin-top: 1rem; line-height: 1.6; }
+
+  /* TIME EXTENSION TOGGLE */
+  .time-option-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.65rem; font-family: 'DM Mono', monospace; }
+  .time-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .time-opt { background: var(--surface); padding: 0.85rem 0.5rem; text-align: center; cursor: pointer; transition: background 0.18s, color 0.18s; border: none; width: 100%; font-family: 'DM Mono', monospace; color: var(--muted); }
+  .time-opt:first-child { border-right: 1px solid var(--border); }
+  .time-opt.active { background: rgba(56,189,248,0.12); color: var(--heading); }
+  .time-opt-val { font-size: 1.25rem; font-weight: 500; color: inherit; display: block; line-height: 1.2; }
+  .time-opt-lbl { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; display: block; opacity: 0.7; }
+  .time-opt.active .time-opt-val { color: var(--accent); }
+  .time-ext-note { font-size: 0.68rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; padding: 0.6rem 0.9rem; background: rgba(129,140,248,0.06); border: 1px solid rgba(129,140,248,0.15); border-radius: 8px; }
+
+  /* EXAM SCREEN */
+  #exam-screen { display: none; }
+  header { background: rgba(11,16,28,0.96); border-bottom: 1px solid var(--border); padding: 0.85rem 2rem; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px); }
+  .header-inner { max-width: 920px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .header-left { display: flex; flex-direction: column; }
+  .exam-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .exam-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; }
+  .timer-block { display: flex; align-items: center; gap: 1rem; }
+  .timer { font-family: 'DM Mono', monospace; font-size: 2rem; font-weight: 500; color: var(--accent); letter-spacing: 0.04em; transition: color 0.3s; min-width: 95px; text-align: right; }
+  .timer.warn { color: var(--warn); }
+  .timer.danger { color: var(--incorrect); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .answered-count { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); text-align: right; line-height: 1.5; }
+  .answered-count span { color: var(--text); font-weight: 500; }
+  .header-buttons { display: flex; gap: 0.5rem; align-items: center; }
+  .progress-bar-wrap { max-width: 920px; margin: 0.5rem auto 0; height: 2px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 99px; transition: width 0.4s ease; width: 0%; }
+
+  /* MAIN */
+  main { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+  .exam-toolbar { display: flex; justify-content: flex-start; align-items: center; margin-bottom: 1.5rem; }
+  .toolbar-info { font-size: 0.8rem; color: var(--muted); }
+  .toolbar-info strong { color: var(--text); }
+  .btn-submit { font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; padding: 0.5rem 1.2rem; background: var(--accent); color: #080c12; border: none; border-radius: 7px; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; text-transform: uppercase; white-space: nowrap; }
+  .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(56,189,248,0.3); }
+  .btn-secondary { font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; padding: 0.5rem 1rem; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 7px; cursor: pointer; transition: color 0.15s, border-color 0.15s; text-transform: uppercase; white-space: nowrap; }
+  .btn-secondary:hover { color: var(--text); border-color: var(--muted); }
+
+  /* QUESTION CARDS */
+  .question-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; margin-bottom: 1rem; transition: border-color 0.25s; animation: fadeUp 0.2s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+  .question-card.correct-card   { border-color: rgba(52,211,153,0.4); }
+  .question-card.incorrect-card { border-color: rgba(248,113,113,0.4); }
+  .q-header { display: flex; gap: 0.9rem; align-items: flex-start; margin-bottom: 1.1rem; }
+  .q-meta { display: flex; flex-direction: column; gap: 0.3rem; flex-shrink: 0; }
+  .q-num { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; color: var(--accent); background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.18); border-radius: 5px; padding: 0.18rem 0.5rem; white-space: nowrap; }
+  .q-lo  { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--muted); background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
+  .q-pts { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--accent2); background: rgba(129,140,248,0.08); border: 1px solid rgba(129,140,248,0.18); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
+  .q-text { font-size: 0.92rem; color: var(--heading); line-height: 1.7; flex: 1; white-space: pre-wrap; }
+  .multi-hint { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.63rem; color: var(--accent2); letter-spacing: 0.06em; margin: 0.65rem 0 0.75rem; padding: 0.18rem 0.5rem; background: rgba(129,140,248,0.1); border: 1px solid rgba(129,140,248,0.2); border-radius: 4px; }
+  .options { display: flex; flex-direction: column; gap: 0.45rem; }
+
+  /* --- OPTION ROWS --- */
+  .option-row { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.7rem 1rem;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; transition: border-color 0.15s, background 0.15s; user-select: none; }
+  .option-row:hover:not(.disabled) { border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.03); }
+  .option-row.disabled { cursor: default; }
+
+  .option-marker { flex-shrink: 0; width: 17px; height: 17px; border-radius: 50%;
+    border: 2px solid var(--border); background: transparent; margin-top: 2px;
+    transition: border-color 0.15s, background 0.15s; display: flex; align-items: center; justify-content: center; }
+  .option-row.is-checkbox .option-marker { border-radius: 4px; }
+
+  .option-marker::after { content: ''; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent); opacity: 0; transition: opacity 0.15s; }
+  .option-row.is-checkbox .option-marker::after { border-radius: 2px; width: 8px; height: 8px; }
+
+  .option-row.selected { border-color: rgba(56,189,248,0.45); background: rgba(56,189,248,0.06); }
+  .option-row.selected .option-marker { border-color: var(--accent); }
+  .option-row.selected .option-marker::after { opacity: 1; }
+
+  .option-row.reveal-correct { border-color: var(--correct) !important; background: rgba(52,211,153,0.07) !important; }
+  .option-row.reveal-correct .option-marker { border-color: var(--correct); background: rgba(52,211,153,0.15); }
+  .option-row.reveal-correct .option-marker::after { background: var(--correct); opacity: 1; }
+
+  .option-row.reveal-wrong { border-color: var(--incorrect) !important; background: rgba(248,113,113,0.07) !important; }
+  .option-row.reveal-wrong .option-marker { border-color: var(--incorrect); background: rgba(248,113,113,0.15); }
+  .option-row.reveal-wrong .option-marker::after { background: var(--incorrect); opacity: 1; }
+
+  .option-text { font-size: 0.87rem; line-height: 1.55; color: var(--text); flex: 1; }
+
+  .result-tag { display: none; align-items: center; gap: 0.4rem; font-family: 'DM Mono', monospace; font-size: 0.67rem; font-weight: 500; letter-spacing: 0.04em; margin-top: 1rem; padding: 0.4rem 0.75rem; border-radius: 6px; }
+  .result-tag.show { display: flex; }
+  .result-tag.correct   { background: rgba(52,211,153,0.1);  color: var(--correct);   border: 1px solid rgba(52,211,153,0.25); }
+  .result-tag.incorrect { background: rgba(248,113,113,0.1); color: var(--incorrect); border: 1px solid rgba(248,113,113,0.25); }
+
+  .explanation { display: none; margin-top: 0.85rem; padding: 0.85rem 1rem; background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent2); border-radius: 0 6px 6px 0; font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+  .explanation.show { display: block; }
+
+  /* SUMMARY */
+  #summary { display: none; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 3rem 2.5rem; text-align: center; margin-top: 2rem; animation: fadeUp 0.4s ease; }
+  #summary h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--heading); margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+  .big-score { font-family: 'DM Mono', monospace; font-size: 4.8rem; font-weight: 500; color: var(--accent); line-height: 1; margin: 1rem 0 0.2rem; }
+  .sub { font-size: 0.86rem; color: var(--muted); margin-bottom: 0.6rem; }
+  .time-taken { font-family: 'DM Mono', monospace; font-size: 0.76rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .time-taken span { color: var(--text); }
+  .grade-badge { display: inline-block; padding: 0.4rem 1.2rem; border-radius: 8px; font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; margin-bottom: 2rem; }
+  .grade-badge.pass { background: rgba(52,211,153,0.12); color: var(--correct); border: 1px solid rgba(52,211,153,0.3); }
+  .grade-badge.fail { background: rgba(248,113,113,0.12); color: var(--incorrect); border: 1px solid rgba(248,113,113,0.3); }
+  .stat-row { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .stat .val { font-family: 'DM Mono', monospace; font-size: 1.7rem; font-weight: 500; color: var(--heading); }
+  .stat .lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.1rem; }
+
+  /* CONFIRM OVERLAY */
+  #confirm-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
+  #confirm-overlay.show { display: flex; }
+  .confirm-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; max-width: 420px; width: 90%; text-align: center; animation: fadeUp 0.22s ease; }
+  .confirm-box h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--heading); margin-bottom: 0.75rem; }
+  .confirm-box p { font-size: 0.86rem; color: var(--muted); margin-bottom: 1.75rem; line-height: 1.65; }
+  .confirm-btns { display: flex; gap: 0.75rem; justify-content: center; }
+  .btn-confirm-yes { font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; padding: 0.65rem 1.5rem; background: var(--accent); color: #080c12; border: none; border-radius: 8px; cursor: pointer; transition: transform 0.15s; }
+  .btn-confirm-yes:hover { transform: translateY(-1px); }
+  .btn-confirm-no { font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; padding: 0.65rem 1.5rem; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: color 0.15s; }
+  .btn-confirm-no:hover { color: var(--text); }
+
+  @media (max-width: 600px) {
+    header { padding: 0.75rem 1rem; }
+    main { padding: 1.25rem 0.9rem 3rem; }
+    .question-card { padding: 1.1rem 0.9rem; }
+    .start-card { padding: 2.5rem 1.5rem; }
+    .timer { font-size: 1.4rem; min-width: 75px; }
+    .stat-row { gap: 1.5rem; }
+    .header-buttons { gap: 0.35rem; }
+    .btn-submit, .btn-secondary { font-size: 0.7rem; padding: 0.4rem 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="start-screen">
+  <div class="start-card">
+    <div class="start-badge">ISTQB Advanced Level</div>
+    <h1>Certified Tester Advanced Level<br><em>Test Management (CTAL-TM) v3.0</em></h1>
+    <p class="start-subtitle">CT-GenAI Sample Exam Set A — Timed examination under simulated exam conditions. The timer begins the moment you press Start.</p>
+    <div class="start-meta">
+      <div class="meta-item"><span class="meta-val">50</span><div class="meta-lbl">Questions</div></div>
+      <div class="meta-item"><span class="meta-val" id="meta-minutes">120</span><div class="meta-lbl">Minutes</div></div>
+      <div class="meta-item"><span class="meta-val">65%</span><div class="meta-lbl">Pass Mark</div></div>
+    </div>
+
+    <div class="time-option-label">Time allowance</div>
+    <div class="time-toggle">
+      <button class="time-opt active" id="opt-standard" onclick="selectTime(false)">
+        <span class="time-opt-val">120 min</span>
+        <span class="time-opt-lbl">Standard</span>
+      </button>
+      <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+        <span class="time-opt-val">150 min</span>
+        <span class="time-opt-lbl">+30 min extension</span>
+      </button>
+    </div>
+    <div class="time-ext-note" id="ext-note" style="display:none;">
+      &#9432;&nbsp; The 15-minute extension applies to candidates whose mother tongue is not English, as per ISTQB regulations.
+    </div>
+
+    <button class="btn-start" onclick="startExam()">&#9654; Start Exam</button>
+    <p class="start-note" id="start-note-txt">The clock counts down from 120:00. Submit before time runs out — the exam auto-submits when time expires.</p>
+  </div>
+</div>
+
+<!-- EXAM SCREEN -->
+<div id="exam-screen">
+  <header>
+    <div class="header-inner">
+      <div class="header-left">
+        <span class="exam-label">ISTQB CTAL-TM · Sample Exam A</span>
+        <span class="exam-title">Certified Tester Advanced Level Test Management (CTAL-TM) v3.0</span>
+      </div>
+      <div class="timer-block">
+        <div class="answered-count"><span id="answered-num">0</span>/40 answered</div>
+        <div class="timer" id="timer">120:00</div>
+        <div class="header-buttons">
+          <button class="btn-secondary" onclick="confirmReset()">&#8635; Reset</button>
+          <button class="btn-submit" onclick="confirmSubmit()">Submit</button>
+        </div>
+      </div>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill"></div></div>
+  </header>
+
+  <main>
+    <div class="exam-toolbar">
+      <div class="toolbar-info">40 questions &mdash; <strong>65%</strong> required to pass &mdash; questions marked "select all that apply" may have multiple correct answers</div>
+    </div>
+    <div id="questions-container"></div>
+    <div id="summary">
+      <h2>Exam Complete</h2>
+      <div class="big-score" id="final-score-pct">—</div>
+      <div class="sub" id="final-score-raw"></div>
+      <div class="time-taken">Time used: <span id="time-used">—</span></div>
+      <div class="grade-badge" id="grade-badge"></div>
+      <div class="stat-row">
+        <div class="stat"><div class="val" id="stat-correct">—</div><div class="lbl">Correct</div></div>
+        <div class="stat"><div class="val" id="stat-wrong">—</div><div class="lbl">Wrong</div></div>
+        <div class="stat"><div class="val" id="stat-skipped">—</div><div class="lbl">Skipped</div></div>
+      </div>
+      <button class="btn-secondary" onclick="confirmReset()">&#8635; Restart Exam</button>
+    </div>
+  </main>
+</div>
+
+<!-- CONFIRM OVERLAY -->
+<div id="confirm-overlay">
+  <div class="confirm-box">
+    <h3 id="confirm-title">Submit Exam?</h3>
+    <p id="confirm-msg"></p>
+    <div class="confirm-btns">
+      <button class="btn-confirm-no" onclick="closeConfirm()">Cancel</button>
+      <button class="btn-confirm-yes" id="confirm-yes-btn" onclick="doConfirm()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── QUESTION DATA (exact wording from CT-GenAI Sample Exam A PDF) ───────────
+const questions = [
+  {id:1,lo:'LO 1.1.1',k:'K2',pts:1,multi:false,text:'Sie erstellen ein Testkonzept für ein neues CRM-System. Was ist die wichtigste Aktivität zur Sicherstellung der Akzeptanz?',options:['Tool auswählen','Testfälle schreiben','Stakeholder-Konsens erzielen','Codeanalyse durchführen'],answer:[2],explanation:'Stakeholder-Konsens ist entscheidend.'},
+  {id:2,lo:'LO 1.1.2',k:'K2',pts:1,multi:false,text:'Was gehört zur Testüberwachung?',options:['Ressourcen umverteilen','Ist vs. Soll vergleichen','Abschlusskriterien definieren','Workflow definieren'],answer:[1],explanation:'Überwachung vergleicht Ist und Soll.'},
+  {id:3,lo:'LO 1.1.3',k:'K2',pts:1,multi:false,text:'Welche Aufgabe gehört zu Testabschlussaktivitäten?',options:['Risiken identifizieren','Testartefakte archivieren','Aufwand schätzen','Testdesign durchführen'],answer:[1],explanation:'Archivierung gehört dazu.'},
+  {id:4,lo:'LO 1.2.1',k:'K2',pts:1,multi:false,text:'Warum ist Stakeholderwissen wichtig?',options:['Budgetentscheidung','Erwartungen managen','Codefehler finden','Verantwortung verschieben'],answer:[1],explanation:'Erwartungsmanagement ist zentral.'},
+  {id:5,lo:'LO 1.2.3',k:'K2',pts:1,multi:false,text:'Herausforderung hybrider Modelle?',options:['Keine Doku','Synchronisation agil vs klassisch','Tester schreiben Code','Kein Risikoansatz'],answer:[1],explanation:'Synchronisation ist kritisch.'},
+  {id:6,lo:'LO 1.2.4',k:'K2',pts:1,multi:false,text:'Welches Modell nutzt Definition of Done?',options:['Wasserfall','V-Modell','Scrum','Inkrementell'],answer:[2],explanation:'Scrum nutzt DoD.'},
+  {id:7,lo:'LO 1.2.7',k:'K4',pts:3,multi:false,text:'Szenario: Kritisches Bremssystem, unvollständige Testbasis. Wichtigste Aktivität?',options:['Explorativ testen','Risiko-basiert steuern','Stoppen','Team reduzieren'],answer:[1],explanation:'Risikosteuerung entscheidend.'},
+  {id:8,lo:'LO 1.2.7',k:'K4',pts:3,multi:false,text:'Szenario: Medizin-App + Traceability. Beste Maßnahme?',options:['Daily ohne Doku','Regression + Traceability','Nur explorativ','Kein Tool'],answer:[1],explanation:'Traceability ist Pflicht.'},
+  {id:9,lo:'LO 1.3.1',k:'K2',pts:1,multi:false,text:'Reaktion auf hohes Risiko?',options:['Verzögern','Mehr testen','Ignorieren','Nur statisch'],answer:[1],explanation:'Testintensität erhöhen.'},
+  {id:10,lo:'LO 1.3.2',k:'K2',pts:1,multi:false,text:'Technik zur Risikoidentifikation?',options:['Code Review','Brainstorming','Schätzung','Fehlerbericht'],answer:[1],explanation:'Workshops sind Standard.'},
+  {id:11,lo:'LO 1.3.3',k:'K2',pts:1,multi:false,text:'Was bestimmt Risikostufe?',options:['Testeranzahl','Wahrscheinlichkeit und Schaden','UI Farbe','Planung'],answer:[1],explanation:'Standarddefinition.'},
+  {id:12,lo:'LO 1.3.4',k:'K4',pts:3,multi:false,text:'Szenario: Banking + Datenverlust. Maßnahme?',options:['GUI Tests','Funktional + Last + Security','Explorativ','Dokumentation'],answer:[1],explanation:'Tiefe Tests nötig.'},
+  {id:13,lo:'LO 1.3.5',k:'K2',pts:1,multi:false,text:'Schwergewichtige Verfahren?',options:['Informell','Formal und quantitativ','Nur kritisch','Kein Unterschied'],answer:[1],explanation:'Formalisiert.'},
+  {id:14,lo:'LO 1.3.6',k:'K2',pts:1,multi:false,text:'Erfolgsmetrik Risiko?',options:['Testfälle','Risikominderung','Überstunden','Pausen'],answer:[1],explanation:'Outcome zählt.'},
+  {id:15,lo:'LO 1.4.2',k:'K4',pts:3,multi:false,text:'Szenario: Instabil + Budget. Ansatz?',options:['Automatisieren','Risiko + Explorativ','Nicht testen','Nur manuell'],answer:[1],explanation:'Hybrid sinnvoll.'},
+  {id:16,lo:'LO 1.4.3',k:'K3',pts:2,multi:false,text:'SMART Ziel?',options:['Qualität verbessern','Alle kritischen Fehler bis Datum behoben','Mehr Fehler finden','System schnell'],answer:[1],explanation:'SMART erfüllt.'},
+  {id:17,lo:'LO 1.5.1',k:'K2',pts:1,multi:false,text:'Start IDEAL Modell?',options:['Diagnose','Initiierung','Abschluss','Toolwahl'],answer:[1],explanation:'Initiation zuerst.'},
+  {id:18,lo:'LO 1.5.2',k:'K2',pts:1,multi:false,text:'TMMi Charakteristik?',options:['Intuition','Reifegradmodell','Nur agil','KI ersetzt Team'],answer:[1],explanation:'Reifegradmodell.'},
+  {id:19,lo:'LO 1.5.3',k:'K2',pts:1,multi:false,text:'Analytischer Ansatz?',options:['Standards','Root Cause Analyse','Kopieren','Mehr Personal'],answer:[1],explanation:'Datenanalyse.'},
+  {id:20,lo:'LO 1.5.4',k:'K3',pts:2,multi:false,text:'Fehler spät entdeckt → Maßnahme?',options:['Entlassen','Frühe Reviews','Retrospektive streichen','Testphase verlängern'],answer:[1],explanation:'Shift Left.'},
+  {id:21,lo:'LO 1.6.1',k:'K2',pts:1,multi:false,text:'Tool Einführung Best Practice?',options:['Rollout sofort','Pilotprojekt','Einkauf entscheidet','Teuer ist besser'],answer:[1],explanation:'Pilot reduziert Risiko.'},
+  {id:22,lo:'LO 1.6.2',k:'K2',pts:1,multi:false,text:'Tool Auswahl Faktor?',options:['Logo','Toolchain Fit','Free Version','Handbuch'],answer:[1],explanation:'Integration wichtig.'},
+  {id:23,lo:'LO 1.6.3',k:'K4',pts:3,multi:false,text:'ROI Tool Szenario. Beste Aussage?',options:['B besser','A besser','Keine Automatisierung','Langfristig A'],answer:[1],explanation:'A höherer Nutzen laut Modell.'},
+  {id:24,lo:'LO 1.6.4',k:'K2',pts:1,multi:false,text:'Tool Anpassung Phase?',options:['Auswahl','Wartung','Pilot','Ausmusterung'],answer:[1],explanation:'Wartung.'},
+  {id:25,lo:'LO 1.6.5',k:'K2',pts:1,multi:false,text:'Welche Metrik automatisch?',options:['Stimmung','DDP','Meetings','Dokuqualität'],answer:[1],explanation:'DDP messbar.'},
+  {id:26,lo:'LO 2.1.2',k:'K2',pts:1,multi:false,text:'Fortschritt messen?',options:['LOC','Geplant vs ausgeführt','Alter','Clicks'],answer:[1],explanation:'Standard.'},
+  {id:27,lo:'LO 2.1.3',k:'K4',pts:3,multi:false,text:'95% bestanden, Risiken offen → Interpretation?',options:['Release','Gefährlich','Tester schuld','Mehr Tests'],answer:[1],explanation:'Trügerisch.'},
+  {id:28,lo:'LO 2.2.1',k:'K2',pts:1,multi:false,text:'Schätzfaktor?',options:['Temperatur','Komplexität','Parkplätze','Laptop'],answer:[1],explanation:'Treiber.'},
+  {id:29,lo:'LO 2.2.2',k:'K2',pts:1,multi:false,text:'Schätzung negativ beeinflusst?',options:['Stabil','Fluktuation','Kommunikation','Standards'],answer:[1],explanation:'Risiko.'},
+  {id:30,lo:'LO 2.2.3',k:'K4',pts:3,multi:false,text:'Agil + erfahren → Methode?',options:['3 Punkt','Planning Poker','LOC','Experte'],answer:[1],explanation:'Standard agil.'},
+  {id:31,lo:'LO 2.3.1',k:'K3',pts:2,multi:false,text:'Fehlerbericht Pflicht?',options:['Adresse','ID + Beschreibung','Foto','Kosten'],answer:[1],explanation:'Minimalanforderung.'},
+  {id:32,lo:'LO 2.3.2',k:'K2',pts:1,multi:false,text:'CCB Teilnehmer?',options:['Tester','Stakeholder','Kunde','Reinigung'],answer:[1],explanation:'Interdisziplinär.'},
+  {id:33,lo:'LO 2.3.3',k:'K2',pts:1,multi:false,text:'Agiles Fehlermanagement?',options:['Informell','Keine Fehler','20 Seiten','Scrum Master'],answer:[0],explanation:'Direktkommunikation.'},
+  {id:34,lo:'LO 2.3.4',k:'K2',pts:1,multi:false,text:'Hybrid Herausforderung?',options:['Kaffee','Tool Integration','Keine Fehler','Unfähigkeit'],answer:[1],explanation:'Integration.'},
+  {id:35,lo:'LO 2.3.6',k:'K2',pts:1,multi:false,text:'Viele abgelehnte Fehler →?',options:['Gut','Prozessproblem','Perfekt','Stimmung'],answer:[1],explanation:'Missverständnis.'},
+  {id:36,lo:'LO 3.1.1',k:'K2',pts:1,multi:false,text:'Fachkompetenz?',options:['Pünktlich','Testdesign','Grüßen','Tippen'],answer:[1],explanation:'Technik.'},
+  {id:37,lo:'LO 3.1.2',k:'K4',pts:3,multi:false,text:'Verteiltes Team → wichtigste Kompetenz?',options:['Physik','Kommunikation','Schlaflos','Geschichte'],answer:[1],explanation:'Kommunikation.'},
+  {id:38,lo:'LO 3.1.3',k:'K2',pts:1,multi:false,text:'Bewertung Bewerber?',options:['Essen','Praxisaufgabe','Würfeln','Selbstbewertung'],answer:[1],explanation:'Praxis zeigt Kompetenz.'},
+  {id:39,lo:'LO 3.1.6',k:'K2',pts:1,multi:false,text:'Motivation?',options:['Unklar','Anerkennung','Kritik','Überstunden'],answer:[1],explanation:'Motivation.'},
+  {id:40,lo:'LO 3.1.5',k:'K2',pts:1,multi:false,text:'Storming Phase?',options:['Ignorieren','Konflikte lösen','Kündigen','Regeln'],answer:[1],explanation:'Konfliktlösung.'},
+  {id:41,lo:'LO 3.2.1',k:'K2',pts:1,multi:false,text:'Externe Fehlerkosten?',options:['Unit Tests','Kundenkosten','Training','Miete'],answer:[1],explanation:'Extern.'},
+  {id:42,lo:'LO 3.2.2',k:'K3',pts:2,multi:false,text:'Mehrwert Testen?',options:['-5000','35000','50000','0'],answer:[1],explanation:'Berechnet.'},
+  {id:43,lo:'LO 1.2.5',k:'K2',pts:1,multi:false,text:'Teststrategie unterschiedlich?',options:['Name','Kontext','Lehrplan','Kein Unterschied'],answer:[1],explanation:'Kontext.'},
+  {id:44,lo:'LO 0.12',k:'K2',pts:1,multi:false,text:'Whole Team?',options:['Tester','Team','Manager','Wechsel'],answer:[1],explanation:'Gemeinsam.'},
+  {id:45,lo:'LO 1.2.1',k:'K2',pts:1,multi:false,text:'Medizin Norm?',options:['ISO9001','IEC62304','ISO14001','Kochbuch'],answer:[1],explanation:'Medizin Standard.'},
+  {id:46,lo:'LO 1.1.2',k:'K2',pts:1,multi:false,text:'Teststeuerung?',options:['Beobachten','Maßnahmen','Archivieren','Kommentieren'],answer:[1],explanation:'Steuerung.'},
+  {id:47,lo:'LO 1.1.2',k:'K2',pts:1,multi:false,text:'Umgebung fehlt → Maßnahme?',options:['Ignorieren','Plan anpassen','Urlaub','Abbruch'],answer:[1],explanation:'Anpassen.'},
+  {id:48,lo:'LO 1.3.1',k:'K2',pts:1,multi:false,text:'Produktrisiko?',options:['Tester','Fehlerhafte Funktion','Lieferung','Budget'],answer:[1],explanation:'Produktbezogen.'},
+  {id:49,lo:'LO 2.2.3',k:'K2',pts:1,multi:false,text:'Delphi Ziel?',options:['Chef entscheidet','Konsens','Schnell','Keine Schätzung'],answer:[1],explanation:'Konsens.'},
+  {id:50,lo:'LO 3.2.2',k:'K4',pts:3,multi:false,text:'Bestes Business Argument?',options:['Spaß','Kostenreduktion','Pflicht','Mehr Leute'],answer:[1],explanation:'ROI zählt.'}
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+const BASE_SECONDS = 120 * 60;
+const EXT_SECONDS  = 150 * 60;
+let timeExtended  = false;
+let TOTAL_SECONDS = BASE_SECONDS;
+let userAnswers   = questions.map(() => []);
+let timerInterval = null;
+let secondsLeft   = TOTAL_SECONDS;
+let examSubmitted = false;
+let pendingAction = null;
+
+// ─── TIME SELECTION ───────────────────────────────────────────────────────────
+function selectTime(extended) {
+  timeExtended  = extended;
+  TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+  document.getElementById('opt-standard').classList.toggle('active', !extended);
+  document.getElementById('opt-extended').classList.toggle('active',  extended);
+  document.getElementById('meta-minutes').textContent = extended ? '150' : '120';
+  document.getElementById('ext-note').style.display   = extended ? 'block' : 'none';
+  document.getElementById('start-note-txt').textContent =
+    extended
+      ? 'The clock counts down from 150:00 (standard 120 min + 30 min extension). Submit before time runs out — the exam auto-submits when time expires.'
+      : 'The clock counts down from 120:00. Submit before time runs out — the exam auto-submits when time expires.';
+}
+
+// ─── START ────────────────────────────────────────────────────────────────────
+function startExam() {
+  secondsLeft = TOTAL_SECONDS;
+  const initDisplay = timeExtended ? '150:00' : '120:00';
+  document.getElementById('timer').textContent = initDisplay;
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('exam-screen').style.display  = 'block';
+  renderQuestions();
+  timerInterval = setInterval(tickTimer, 1000);
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function renderQuestions() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'card-' + qi;
+    card.style.animationDelay = (qi * 0.012) + 's';
+
+    // options HTML — no onclick on the row itself; we use a real <input> onchange
+    let optsHTML = '';
+    q.options.forEach((opt, oi) => {
+      const type     = q.multi ? 'checkbox' : 'radio';
+      const rowClass = q.multi ? 'option-row is-checkbox' : 'option-row';
+      optsHTML += `
+        <div class="${rowClass}" id="opt-${qi}-${oi}" data-qi="${qi}" data-oi="${oi}">
+          <input type="${type}" name="q${qi}" value="${oi}"
+                 id="inp-${qi}-${oi}"
+                 onchange="handleChange(${qi},${oi},this)"
+                 style="position:absolute;opacity:0;pointer-events:none;">
+          <span class="option-marker"></span>
+          <span class="option-text"><strong>${String.fromCharCode(65+oi)}.</strong> ${opt}</span>
+        </div>`;
+    });
+
+    const ptsLabel = q.pts > 1 ? q.pts + ' pts' : '1 pt';
+
+    card.innerHTML = `
+      <div class="q-header">
+        <div class="q-meta">
+          <span class="q-num">Q${q.id}</span>
+          <span class="q-lo">${q.lo}</span>
+          <span class="q-pts">${ptsLabel}</span>
+        </div>
+        <div class="q-text">${escHtml(q.text)}</div>
+      </div>
+      ${q.multi ? '<div class="multi-hint">SELECT ALL THAT APPLY</div>' : ''}
+      <div class="options">${optsHTML}</div>
+      <div class="result-tag" id="result-${qi}"></div>
+      <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>
+    `;
+    container.appendChild(card);
+  });
+
+  // Attach click listeners to option-row divs (avoids double-fire from label+input)
+  document.querySelectorAll('.option-row').forEach(row => {
+    row.addEventListener('click', function() {
+      if (examSubmitted) return;
+      const qi = parseInt(this.dataset.qi);
+      const oi = parseInt(this.dataset.oi);
+      const inp = document.getElementById('inp-' + qi + '-' + oi);
+      if (questions[qi].multi) {
+        inp.checked = !inp.checked;
+      } else {
+        // uncheck siblings first
+        questions[qi].options.forEach((_, i) => {
+          document.getElementById('inp-' + qi + '-' + i).checked = false;
+        });
+        inp.checked = true;
+      }
+      syncAnswer(qi);
+    });
+  });
+}
+
+function escHtml(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/\n/g, '<br>');
+}
+
+// Called by onchange (keyboard/assistive tech fallback) — keeps state in sync
+function handleChange(qi, oi, inp) {
+  if (examSubmitted) { inp.checked = !inp.checked; return; }
+  syncAnswer(qi);
+}
+
+function syncAnswer(qi) {
+  const q = questions[qi];
+  // Rebuild answer array from checked inputs
+  userAnswers[qi] = [];
+  q.options.forEach((_, oi) => {
+    const inp = document.getElementById('inp-' + qi + '-' + oi);
+    if (inp && inp.checked) userAnswers[qi].push(oi);
+  });
+  // Update visual selection state
+  q.options.forEach((_, oi) => {
+    const row = document.getElementById('opt-' + qi + '-' + oi);
+    if (!row) return;
+    row.classList.toggle('selected', userAnswers[qi].includes(oi));
+  });
+  updateProgress();
+}
+
+// ─── PROGRESS ────────────────────────────────────────────────────────────────
+function updateProgress() {
+  const answered = userAnswers.filter(a => a.length > 0).length;
+  document.getElementById('answered-num').textContent = answered;
+  document.getElementById('progress-fill').style.width = (answered / questions.length * 100) + '%';
+}
+
+// ─── TIMER ───────────────────────────────────────────────────────────────────
+function tickTimer() {
+  if (secondsLeft <= 0) { doSubmit(true); return; }
+  secondsLeft--;
+  const m = Math.floor(secondsLeft / 60), s = secondsLeft % 60;
+  const el = document.getElementById('timer');
+  el.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  if      (secondsLeft <= 300)  el.className = 'timer danger';
+  else if (secondsLeft <= 900)  el.className = 'timer warn';
+  else                          el.className = 'timer';
+}
+
+// ─── CONFIRM DIALOGS ─────────────────────────────────────────────────────────
+function confirmSubmit() {
+  const answered   = userAnswers.filter(a => a.length > 0).length;
+  const unanswered = questions.length - answered;
+  document.getElementById('confirm-title').textContent = 'Submit Exam?';
+  document.getElementById('confirm-msg').innerHTML = unanswered > 0
+    ? `You have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered>1?'s':''}</strong>. Unanswered questions count as wrong.<br><br>Submit anyway?`
+    : `All ${questions.length} questions answered. Ready to submit?`;
+  document.getElementById('confirm-yes-btn').textContent = 'Submit';
+  pendingAction = 'submit';
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function confirmReset() {
+  document.getElementById('confirm-title').textContent = 'Restart Exam?';
+  document.getElementById('confirm-msg').innerHTML = 'All answers and progress will be lost. The timer resets to ' + (timeExtended ? '150:00' : '120:00') + '.<br><br>Are you sure?';
+  document.getElementById('confirm-yes-btn').textContent = 'Restart';
+  pendingAction = 'reset';
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function closeConfirm() {
+  document.getElementById('confirm-overlay').classList.remove('show');
+  pendingAction = null;
+}
+
+function doConfirm() {
+  if (pendingAction === 'submit') doSubmit(false);
+  else if (pendingAction === 'reset') doReset();
+  closeConfirm();
+}
+
+// ─── SUBMIT ───────────────────────────────────────────────────────────────────
+function doSubmit(timedOut) {
+  if (examSubmitted) return;
+  examSubmitted = true;
+  clearInterval(timerInterval);
+  closeConfirm();
+
+  let correctCount = 0, totalPoints = 0, earnedPoints = 0;
+
+  questions.forEach((q, qi) => {
+    const correct   = q.answer.slice().sort().join(',');
+    const given     = userAnswers[qi].slice().sort().join(',');
+    const isCorrect = given !== '' && correct === given;
+    totalPoints  += q.pts;
+    if (isCorrect) { correctCount++; earnedPoints += q.pts; }
+
+    // Disable and reveal options
+    q.options.forEach((_, oi) => {
+      const row = document.getElementById('opt-' + qi + '-' + oi);
+      if (!row) return;
+      row.classList.add('disabled');
+      row.classList.remove('selected');
+      if (q.answer.includes(oi))           row.classList.add('reveal-correct');
+      else if (userAnswers[qi].includes(oi)) row.classList.add('reveal-wrong');
+    });
+
+    // Result tag
+    const rt   = document.getElementById('result-' + qi);
+    const expl = document.getElementById('expl-' + qi);
+    const card = document.getElementById('card-' + qi);
+    rt.classList.add('show');
+    expl.classList.add('show');
+
+    if (given === '') {
+      rt.classList.add('incorrect');
+      rt.innerHTML = '&mdash; Unanswered &middot; Correct: ' + q.answer.map(i => String.fromCharCode(65+i)).join(', ');
+      card.classList.add('incorrect-card');
+    } else if (isCorrect) {
+      rt.classList.add('correct');
+      rt.innerHTML = '&#10003; Correct' + (q.pts > 1 ? ' (+' + q.pts + ' pts)' : '');
+      card.classList.add('correct-card');
+    } else {
+      rt.classList.add('incorrect');
+      rt.innerHTML = '&#10007; Incorrect &middot; Correct: ' + q.answer.map(i => String.fromCharCode(65+i)).join(', ');
+      card.classList.add('incorrect-card');
+    }
+  });
+
+  const pct    = Math.round(earnedPoints / totalPoints * 100);
+  const pass   = pct >= 65;
+  const skipped = userAnswers.filter(a => a.length === 0).length;
+  const wrong  = questions.length - correctCount - skipped;
+
+  const usedSec = TOTAL_SECONDS - secondsLeft;
+  const um = Math.floor(usedSec / 60), us = usedSec % 60;
+  const totalLabel = timeExtended ? '150:00' : '120:00';
+  const timeStr = timedOut
+    ? totalLabel + ' (time expired)'
+    : String(um).padStart(2,'0') + ':' + String(us).padStart(2,'0');
+
+  if (timedOut) { const el = document.getElementById('timer'); el.textContent = '00:00'; el.className = 'timer danger'; }
+
+  document.getElementById('final-score-pct').textContent = pct + '%';
+  document.getElementById('final-score-raw').textContent =
+    earnedPoints + ' of ' + totalPoints + ' points · ' + correctCount + ' correct out of ' + questions.length + ' questions';
+  document.getElementById('time-used').textContent = timeStr;
+  const badge = document.getElementById('grade-badge');
+  badge.textContent = pass ? '✓ PASS (≥65%)' : '✗ FAIL (<65%)';
+  badge.className   = 'grade-badge ' + (pass ? 'pass' : 'fail');
+  document.getElementById('stat-correct').textContent = correctCount;
+  document.getElementById('stat-wrong').textContent   = wrong;
+  document.getElementById('stat-skipped').textContent = skipped;
+
+  document.getElementById('summary').style.display = 'block';
+  document.getElementById('summary').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── RESET ────────────────────────────────────────────────────────────────────
+function doReset() {
+  examSubmitted = false;
+  userAnswers   = questions.map(() => []);
+  secondsLeft   = TOTAL_SECONDS;
+  clearInterval(timerInterval);
+  document.getElementById('timer').textContent = timeExtended ? '150:00' : '120:00';
+  document.getElementById('timer').className   = 'timer';
+  document.getElementById('answered-num').textContent = '0';
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('summary').style.display = 'none';
+  renderQuestions();
+  timerInterval = setInterval(tickTimer, 1000);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
