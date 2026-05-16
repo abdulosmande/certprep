@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IREB CPRE Foundation Level — Übungsprüfung</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12; --surface: #0e1420; --card: #111827; --border: #1e2840;
+    --accent: #22c55e; --accent2: #818cf8; --correct: #34d399;
+    --incorrect: #f87171; --warn: #fbbf24; --text: #cbd5e1;
+    --muted: #475569; --heading: #f1f5f9;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  /* START SCREEN */
+  #start-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(34,197,94,0.06) 0%, transparent 70%); }
+  .start-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 3.5rem 3rem; max-width: 560px; width: 100%; text-align: center; position: relative; overflow: hidden; }
+  .start-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(34,197,94,0.03) 0%, transparent 50%, rgba(129,140,248,0.03) 100%); pointer-events: none; border-radius: 20px; }
+  .start-badge { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); padding: 0.3rem 1rem; border-radius: 99px; display: inline-block; margin-bottom: 1.6rem; }
+  .start-card h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.9rem, 4.5vw, 2.8rem); font-weight: 800; color: var(--heading); line-height: 1.1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+  .start-card h1 em { font-style: normal; color: var(--accent); }
+  .start-subtitle { font-size: 0.88rem; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.7; }
+  .start-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 2.5rem; }
+  .meta-item { background: var(--surface); padding: 1.1rem 0.5rem; text-align: center; }
+  .meta-val { font-family: 'DM Mono', monospace; font-size: 1.35rem; font-weight: 500; color: var(--heading); display: block; }
+  .meta-lbl { font-size: 0.63rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.25rem; }
+  .btn-start { font-family: 'DM Mono', monospace; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.08em; padding: 1rem 2.5rem; background: var(--accent); color: #080c12; border: none; border-radius: 10px; cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; width: 100%; text-transform: uppercase; }
+  .btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(34,197,94,0.35); }
+  .start-note { font-size: 0.73rem; color: var(--muted); margin-top: 1rem; line-height: 1.6; }
+
+  /* TIME EXTENSION TOGGLE */
+  .time-option-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.65rem; font-family: 'DM Mono', monospace; }
+  .time-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .time-opt { background: var(--surface); padding: 0.85rem 0.5rem; text-align: center; cursor: pointer; transition: background 0.18s, color 0.18s; border: none; width: 100%; font-family: 'DM Mono', monospace; color: var(--muted); }
+  .time-opt:first-child { border-right: 1px solid var(--border); }
+  .time-opt.active { background: rgba(34,197,94,0.12); color: var(--heading); }
+  .time-opt-val { font-size: 1.25rem; font-weight: 500; color: inherit; display: block; line-height: 1.2; }
+  .time-opt-lbl { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; display: block; opacity: 0.7; }
+  .time-opt.active .time-opt-val { color: var(--accent); }
+  .time-ext-note { font-size: 0.68rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; padding: 0.6rem 0.9rem; background: rgba(129,140,248,0.06); border: 1px solid rgba(129,140,248,0.15); border-radius: 8px; }
+
+  /* EXAM SCREEN */
+  #exam-screen { display: none; }
+  header { background: rgba(11,16,28,0.96); border-bottom: 1px solid var(--border); padding: 0.85rem 2rem; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px); }
+  .header-inner { max-width: 960px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .header-left { display: flex; flex-direction: column; }
+  .exam-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .exam-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; }
+  .timer-block { display: flex; align-items: center; gap: 1rem; }
+  .timer { font-family: 'DM Mono', monospace; font-size: 2rem; font-weight: 500; color: var(--accent); letter-spacing: 0.04em; transition: color 0.3s; min-width: 95px; text-align: right; }
+  .timer.warn { color: var(--warn); }
+  .timer.danger { color: var(--incorrect); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .answered-count { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); text-align: right; line-height: 1.5; }
+  .answered-count span { color: var(--text); font-weight: 500; }
+  .header-buttons { display: flex; gap: 0.5rem; align-items: center; }
+  .progress-bar-wrap { max-width: 960px; margin: 0.5rem auto 0; height: 2px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 99px; transition: width 0.4s ease; width: 0%; }
+
+  /* MAIN */
+  main { max-width: 960px; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+  .exam-toolbar { margin-bottom: 1.5rem; }
+  .toolbar-info { font-size: 0.8rem; color: var(--muted); }
+  .toolbar-info strong { color: var(--text); }
+  .btn-submit { font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; padding: 0.5rem 1.2rem; background: var(--accent); color: #080c12; border: none; border-radius: 7px; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; text-transform: uppercase; white-space: nowrap; }
+  .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(34,197,94,0.3); }
+  .btn-secondary { font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; padding: 0.5rem 1rem; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 7px; cursor: pointer; transition: color 0.15s, border-color 0.15s; text-transform: uppercase; white-space: nowrap; }
+  .btn-secondary:hover { color: var(--text); border-color: var(--muted); }
+
+  /* QUESTION CARDS */
+  .question-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; margin-bottom: 1rem; transition: border-color 0.25s; animation: fadeUp 0.2s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+  .question-card.correct-card   { border-color: rgba(52,211,153,0.4); }
+  .question-card.incorrect-card { border-color: rgba(248,113,113,0.4); }
+  .q-header { display: flex; gap: 0.9rem; align-items: flex-start; margin-bottom: 1.1rem; }
+  .q-meta { display: flex; flex-direction: column; gap: 0.3rem; flex-shrink: 0; }
+  .q-num { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; color: var(--accent); background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); border-radius: 5px; padding: 0.18rem 0.5rem; white-space: nowrap; }
+  .q-type { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--muted); background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
+  .q-lo  { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--muted); background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
+  .q-pts { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--accent2); background: rgba(129,140,248,0.08); border: 1px solid rgba(129,140,248,0.18); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
+  .q-text { font-size: 0.92rem; color: var(--heading); line-height: 1.7; flex: 1; white-space: pre-wrap; }
+  .q-image { display: block; max-width: 100%; height: auto; margin: 1rem 0 1.1rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); }
+  .multi-hint { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.63rem; color: var(--accent2); letter-spacing: 0.06em; margin: 0.65rem 0 0.75rem; padding: 0.18rem 0.5rem; background: rgba(129,140,248,0.1); border: 1px solid rgba(129,140,248,0.2); border-radius: 4px; }
+  .options { display: flex; flex-direction: column; gap: 0.45rem; }
+
+  /* STANDARD OPTION ROWS (A- and P-Fragen) */
+  .option-row { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.7rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: border-color 0.15s, background 0.15s; user-select: none; }
+  .option-row:hover:not(.disabled) { border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.03); }
+  .option-row.disabled { cursor: default; }
+  .option-marker { flex-shrink: 0; width: 17px; height: 17px; border-radius: 50%; border: 2px solid var(--border); background: transparent; margin-top: 2px; transition: border-color 0.15s, background 0.15s; display: flex; align-items: center; justify-content: center; }
+  .option-row.is-checkbox .option-marker { border-radius: 4px; }
+  .option-marker::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); opacity: 0; transition: opacity 0.15s; }
+  .option-row.is-checkbox .option-marker::after { border-radius: 2px; width: 8px; height: 8px; }
+  .option-row.selected { border-color: rgba(34,197,94,0.45); background: rgba(34,197,94,0.06); }
+  .option-row.selected .option-marker { border-color: var(--accent); }
+  .option-row.selected .option-marker::after { opacity: 1; }
+  .option-row.reveal-correct { border-color: var(--correct) !important; background: rgba(52,211,153,0.07) !important; }
+  .option-row.reveal-correct .option-marker { border-color: var(--correct); background: rgba(52,211,153,0.15); }
+  .option-row.reveal-correct .option-marker::after { background: var(--correct); opacity: 1; }
+  .option-row.reveal-wrong { border-color: var(--incorrect) !important; background: rgba(248,113,113,0.07) !important; }
+  .option-row.reveal-wrong .option-marker { border-color: var(--incorrect); background: rgba(248,113,113,0.15); }
+  .option-row.reveal-wrong .option-marker::after { background: var(--incorrect); opacity: 1; }
+  .option-text { font-size: 0.87rem; line-height: 1.55; color: var(--text); flex: 1; }
+
+  /* K-FRAGEN (Richtig/Falsch per Aussage) */
+  .k-table { width: 100%; border-collapse: collapse; }
+  .k-header-row th { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 0.4rem 0.6rem; text-align: center; border-bottom: 1px solid var(--border); }
+  .k-header-row th:last-child { text-align: left; padding-left: 0.9rem; }
+  .k-statement-row { border-bottom: 1px solid rgba(30,40,64,0.5); }
+  .k-statement-row:last-child { border-bottom: none; }
+  .k-cell-toggle { width: 60px; text-align: center; padding: 0.65rem 0.4rem; vertical-align: middle; }
+  .k-cell-text { padding: 0.65rem 0.9rem; font-size: 0.87rem; line-height: 1.55; color: var(--text); vertical-align: middle; }
+  .k-toggle-btn { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 6px; border: 2px solid var(--border); background: var(--surface); cursor: pointer; transition: border-color 0.15s, background 0.15s; font-size: 0.8rem; color: var(--muted); user-select: none; }
+  .k-toggle-btn:hover:not(.disabled) { border-color: rgba(34,197,94,0.4); }
+  .k-toggle-btn.selected-richtig { border-color: rgba(34,197,94,0.5); background: rgba(34,197,94,0.12); color: var(--correct); font-weight: 700; }
+  .k-toggle-btn.selected-falsch  { border-color: rgba(248,113,113,0.5); background: rgba(248,113,113,0.12); color: var(--incorrect); font-weight: 700; }
+  .k-toggle-btn.disabled { cursor: default; }
+  .k-toggle-btn.reveal-correct-r { border-color: var(--correct) !important; background: rgba(52,211,153,0.15) !important; color: var(--correct) !important; }
+  .k-toggle-btn.reveal-correct-f { border-color: var(--correct) !important; background: rgba(52,211,153,0.15) !important; color: var(--correct) !important; }
+  .k-toggle-btn.reveal-wrong-r   { border-color: var(--incorrect) !important; background: rgba(248,113,113,0.15) !important; color: var(--incorrect) !important; }
+  .k-toggle-btn.reveal-wrong-f   { border-color: var(--incorrect) !important; background: rgba(248,113,113,0.15) !important; color: var(--incorrect) !important; }
+
+  .result-tag { display: none; align-items: center; gap: 0.4rem; font-family: 'DM Mono', monospace; font-size: 0.67rem; font-weight: 500; letter-spacing: 0.04em; margin-top: 1rem; padding: 0.4rem 0.75rem; border-radius: 6px; }
+  .result-tag.show { display: flex; }
+  .result-tag.correct   { background: rgba(52,211,153,0.1);  color: var(--correct);   border: 1px solid rgba(52,211,153,0.25); }
+  .result-tag.incorrect { background: rgba(248,113,113,0.1); color: var(--incorrect); border: 1px solid rgba(248,113,113,0.25); }
+  .explanation { display: none; margin-top: 0.85rem; padding: 0.85rem 1rem; background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent2); border-radius: 0 6px 6px 0; font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+  .explanation.show { display: block; }
+
+  /* SUMMARY */
+  #summary { display: none; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 3rem 2.5rem; text-align: center; margin-top: 2rem; animation: fadeUp 0.4s ease; }
+  #summary h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--heading); margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+  .big-score { font-family: 'DM Mono', monospace; font-size: 4.8rem; font-weight: 500; color: var(--accent); line-height: 1; margin: 1rem 0 0.2rem; }
+  .sub { font-size: 0.86rem; color: var(--muted); margin-bottom: 0.6rem; }
+  .time-taken { font-family: 'DM Mono', monospace; font-size: 0.76rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .time-taken span { color: var(--text); }
+  .grade-badge { display: inline-block; padding: 0.4rem 1.2rem; border-radius: 8px; font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; margin-bottom: 2rem; }
+  .grade-badge.pass { background: rgba(52,211,153,0.12); color: var(--correct); border: 1px solid rgba(52,211,153,0.3); }
+  .grade-badge.fail { background: rgba(248,113,113,0.12); color: var(--incorrect); border: 1px solid rgba(248,113,113,0.3); }
+  .stat-row { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .stat .val { font-family: 'DM Mono', monospace; font-size: 1.7rem; font-weight: 500; color: var(--heading); }
+  .stat .lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.1rem; }
+
+  /* CONFIRM OVERLAY */
+  #confirm-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
+  #confirm-overlay.show { display: flex; }
+  .confirm-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; max-width: 420px; width: 90%; text-align: center; animation: fadeUp 0.22s ease; }
+  .confirm-box h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--heading); margin-bottom: 0.75rem; }
+  .confirm-box p { font-size: 0.86rem; color: var(--muted); margin-bottom: 1.75rem; line-height: 1.65; }
+  .confirm-btns { display: flex; gap: 0.75rem; justify-content: center; }
+  .btn-confirm-yes { font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; padding: 0.65rem 1.5rem; background: var(--accent); color: #080c12; border: none; border-radius: 8px; cursor: pointer; }
+  .btn-confirm-yes:hover { transform: translateY(-1px); }
+  .btn-confirm-no { font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; padding: 0.65rem 1.5rem; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; }
+  .btn-confirm-no:hover { color: var(--text); }
+
+  @media (max-width: 600px) {
+    header { padding: 0.75rem 1rem; }
+    main { padding: 1.25rem 0.9rem 3rem; }
+    .question-card { padding: 1.1rem 0.9rem; }
+    .start-card { padding: 2.5rem 1.5rem; }
+    .timer { font-size: 1.4rem; min-width: 75px; }
+    .stat-row { gap: 1.5rem; }
+    .start-meta { grid-template-columns: repeat(2, 1fr); }
+    .header-buttons { gap: 0.35rem; }
+    .btn-submit, .btn-secondary { font-size: 0.7rem; padding: 0.4rem 0.7rem; }
+    .k-cell-toggle { width: 46px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="start-screen">
+  <div class="start-card">
+    <div class="start-badge">IREB CPRE Foundation Level</div>
+    <h1>Requirements<br><em>Engineering</em></h1>
+    <p class="start-subtitle">IREB CPRE Foundation Level · Übungsprüfung Set_Public_DE_3.3.3 · Lehrplan: CPRE Foundation Level 3. Der Timer startet, sobald Sie auf „Prüfung starten" klicken.</p>
+    <div class="start-meta">
+      <div class="meta-item"><span class="meta-val">43</span><div class="meta-lbl">Fragen</div></div>
+      <div class="meta-item"><span class="meta-val" id="meta-minutes">75</span><div class="meta-lbl">Minuten</div></div>
+      <div class="meta-item"><span class="meta-val">67</span><div class="meta-lbl">Punkte</div></div>
+      <div class="meta-item"><span class="meta-val">70%</span><div class="meta-lbl">Bestehen</div></div>
+    </div>
+
+    <div class="time-option-label">Zeitvorgabe</div>
+    <div class="time-toggle">
+      <button class="time-opt active" id="opt-standard" onclick="selectTime(false)">
+        <span class="time-opt-val">75 min</span>
+        <span class="time-opt-lbl">Standard</span>
+      </button>
+      <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+        <span class="time-opt-val">90 min</span>
+        <span class="time-opt-lbl">+15 min Verlängerung</span>
+      </button>
+    </div>
+    <div class="time-ext-note" id="ext-note" style="display:none;">
+      &#9432;&nbsp; Die 15-minütige Verlängerung gilt für Kandidaten, deren Muttersprache nicht die Prüfungssprache ist (gemäß IREB-Prüfungsordnung §1.3).
+    </div>
+
+    <button class="btn-start" onclick="startExam()">&#9654; Prüfung starten</button>
+    <p class="start-note" id="start-note-txt">Der Timer läuft von 75:00 herunter. Bei Zeitablauf erfolgt automatische Abgabe.</p>
+  </div>
+</div>
+
+<!-- EXAM SCREEN -->
+<div id="exam-screen">
+  <header>
+    <div class="header-inner">
+      <div class="header-left">
+        <span class="exam-label">IREB CPRE Foundation Level · Set_Public_DE_3.3.3</span>
+        <span class="exam-title">Certified Professional for Requirements Engineering</span>
+      </div>
+      <div class="timer-block">
+        <div class="answered-count"><span id="answered-num">0</span>/43 beantwortet</div>
+        <div class="timer" id="timer">75:00</div>
+        <div class="header-buttons">
+          <button class="btn-secondary" onclick="confirmReset()">&#8635; Reset</button>
+          <button class="btn-submit" onclick="confirmSubmit()">Abgeben</button>
+        </div>
+      </div>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill"></div></div>
+  </header>
+
+  <main>
+    <div class="exam-toolbar">
+      <div class="toolbar-info">43 Fragen (Übungsset) &mdash; <strong>70% (≥ 46,9 von 67 Punkten)</strong> zum Bestehen &mdash; Fragen vom Typ A (Einfachauswahl), P (Mehrfachauswahl) und K (Richtig/Falsch)</div>
+    </div>
+    <div id="questions-container"></div>
+    <div id="summary">
+      <h2>Prüfung abgeschlossen</h2>
+      <div class="big-score" id="final-score-pct">—</div>
+      <div class="sub" id="final-score-raw"></div>
+      <div class="time-taken">Benötigte Zeit: <span id="time-used">—</span></div>
+      <div class="grade-badge" id="grade-badge"></div>
+      <div class="stat-row">
+        <div class="stat"><div class="val" id="stat-pts-earned">—</div><div class="lbl">Pkt. erreicht</div></div>
+        <div class="stat"><div class="val" id="stat-correct">—</div><div class="lbl">Richtig</div></div>
+        <div class="stat"><div class="val" id="stat-wrong">—</div><div class="lbl">Falsch</div></div>
+      </div>
+      <button class="btn-secondary" onclick="confirmReset()">&#8635; Neu starten</button>
+    </div>
+  </main>
+</div>
+
+<!-- CONFIRM OVERLAY -->
+<div id="confirm-overlay">
+  <div class="confirm-box">
+    <h3 id="confirm-title">Prüfung abgeben?</h3>
+    <p id="confirm-msg"></p>
+    <div class="confirm-btns">
+      <button class="btn-confirm-no" onclick="closeConfirm()">Abbrechen</button>
+      <button class="btn-confirm-yes" id="confirm-yes-btn" onclick="doConfirm()">Abgeben</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/*
+  IREB question types:
+  - type: 'A'  → Einfachauswahl (single choice), rendered as radio
+  - type: 'P'  → Mehrfachauswahl (multi choice), rendered as checkboxes
+  - type: 'K'  → Richtig/Falsch per Aussage (true/false per statement)
+                 Each statement is independent. answer[] mirrors statements[].
+                 answer[i] = true  → statement i is "Richtig"
+                 answer[i] = false → statement i is "Falsch"
+
+  Scoring per IREB rules:
+  - A: full pts if correct, 0 if wrong or multiple selected
+  - P: pts/numCorrect per correctly selected answer; 0 if over-selected
+  - K: pts/numStatements per correctly classified statement
+*/
+
+const questions = [
+  // ── Kapitel 1: Einführung ────────────────────────────────────────────────
+  {
+    id: 1, qid: 'K0111', lo: 'EO 1.1.1', type: 'K', pts: 2,
+    text: 'Welche der folgenden Aussagen über Qualitätsanforderungen sind richtig und welche Aussagen sind falsch?',
+    statements: [
+      'A) Qualitätsanforderungen betreffen den Prozess der Software-Erstellung und nicht das Produkt.',
+      'B) Qualitätsanforderungen können funktionale Anforderungen ergänzen.',
+      'C) Qualitätsanforderungen werden nach den funktionalen Anforderungen ermittelt.',
+      'D) Qualitätsanforderungen können durch zusätzliche funktionale Anforderungen konkretisiert werden.'
+    ],
+    // true = Richtig, false = Falsch
+    answer: [false, true, false, true],
+    explanation: 'A) Falsch: Qualitätsanforderungen betreffen das Produkt, nicht den Prozess. B) Richtig: Sie können funktionale Anforderungen ergänzen (z. B. Performanzanforderungen). C) Falsch: Sie werden parallel, nicht danach ermittelt. D) Richtig: Funktionale Anforderungen können Qualitätsanforderungen konkretisieren (z. B. Verschlüsselungsanforderung konkretisiert Sicherheitsanforderung).'
+  },
+  {
+    id: 2, qid: 'A0120', lo: 'EO 1.4.1', type: 'A', pts: 1,
+    text: 'Welche der folgenden Aufgaben ist KEINE Hauptaufgabe des Requirements Engineers? (1 Antwort)',
+    options: [
+      'A) Ermittlung von Anforderungen',
+      'B) Formalisieren von Anforderungen',
+      'C) Anforderungen dokumentieren',
+      'D) Validieren von Anforderungen'
+    ],
+    answer: [1],
+    explanation: 'Die vier Hauptaufgaben des Requirements Engineers laut CPRE-Lehrplan sind: Ermitteln, Dokumentieren, Prüfen/Validieren und Verwalten von Anforderungen. „Formalisieren" ist keine eigenständige Hauptaufgabe.'
+  },
+  {
+    id: 3, qid: 'P0113', lo: 'EO 1.3.2', type: 'P', pts: 1,
+    text: 'Der Kunde fordert vom Lieferanten eines Informationssystems unter anderem:\n\nA) Der Auftragnehmer muss einen Änderungsantrag innerhalb von 5 Tagen behandeln.\nB) Die Testberichte des Integrationstests sind zur Prüfung vorzulegen, der Testbericht des Systemtests ist auszuhändigen.\nC) Das System muss zu jedem Zeitpunkt eine Durchsatzrate von 100 Transaktionen pro Sekunde garantieren.\nD) Für Konfigurationsmanagement ist das Werkzeug Subversion einzusetzen.\nE) Die Reaktionszeit darf bei Normallast in 90 % der Fälle nicht mehr als zwei Sekunden betragen.\n\nWelche zwei Anforderungen beziehen sich auf das zu realisierende System? (2 Antworten)',
+    options: [
+      'A) Anforderung A',
+      'B) Anforderung B',
+      'C) Anforderung C',
+      'D) Anforderung D',
+      'E) Anforderung E'
+    ],
+    answer: [2, 4],
+    explanation: 'C und E betreffen das System selbst (Durchsatz, Reaktionszeit). A betrifft den Prozess (Änderungsmanagement), B betrifft Liefergegenstände/Dokumentation, D betrifft das einzusetzende Werkzeug im Projekt.'
+  },
+
+  // ── Kapitel 2: Grundlegende Prinzipien ──────────────────────────────────
+  {
+    id: 4, qid: 'A3205', lo: 'EO 2.1.1', type: 'A', pts: 1,
+    text: 'Welche der folgenden Aussagen stellt KEIN grundlegendes Prinzip des Requirements Engineering dar? (1 Antwort)',
+    options: [
+      'A) Wertorientierung',
+      'B) Problem – Anforderung – Lösung',
+      'C) Regelmäßige Retrospektiven',
+      'D) Systematische und disziplinierte Arbeit'
+    ],
+    answer: [2],
+    explanation: 'Regelmäßige Retrospektiven sind eine agile Praxis (z. B. Scrum), aber kein grundlegendes Prinzip des Requirements Engineering laut CPRE-Lehrplan. Die grundlegenden RE-Prinzipien umfassen u. a. Wertorientierung, Problem–Anforderung–Lösung und systematische Arbeit.'
+  },
+  {
+    id: 5, qid: 'K3206', lo: 'EO 2.2.1', type: 'K', pts: 2,
+    text: 'Gemeinsames Verständnis ist ein Prinzip des Requirements Engineering. Geben Sie für jede der nachstehenden Aussagen zu gemeinsamem Verständnis an, ob sie richtig ist, oder falsch.',
+    statements: [
+      'A) Das Erreichen eines expliziten gemeinsamen Verständnisses ist eines der Hauptziele des planbasierten Requirements Engineering.',
+      'B) Ohne ein gemeinsames Verständnis ist es unmöglich, die relevanten Anforderungsquellen zu identifizieren.',
+      'C) Ein gewisses Maß an implizitem gemeinsamen Verständnis ist unerlässlich, da es unmöglich ist, alles explizit zu spezifizieren.',
+      'D) Requirements Engineering in agiler Entwicklung funktioniert nicht, ohne sich auf ein implizites gemeinsames Verständnis zu verlassen.'
+    ],
+    answer: [true, true, true, true],
+    explanation: 'A) Richtig: Explizites gemeinsames Verständnis ist ein zentrales Ziel im planbasierten RE. B) Richtig: Ohne gemeinsames Verständnis fehlt die Grundlage, relevante Quellen zu identifizieren. C) Richtig: Vollständige Explizitheit ist unmöglich — implizites Wissen ist unvermeidlich. D) Richtig: Agiles RE verlässt sich bewusst auf implizites gemeinsames Verständnis für schnelle Iterationen.'
+  },
+  {
+    id: 6, qid: 'K0202', lo: 'EO 2.2.2', type: 'K', pts: 2,
+    text: 'Welche Aspekte müssen bei der Definition der Systemgrenze und der Kontextgrenze berücksichtigt werden und welche müssen nicht berücksichtigt werden?\n(Richtig = Muss berücksichtigt werden · Falsch = Muss nicht berücksichtigt werden)',
+    statements: [
+      'A) Das System',
+      'B) Der Systemkontext',
+      'C) Der Anwendungsbereich',
+      'D) Die Schnittstellen zwischen System und Systemkontext'
+    ],
+    answer: [true, true, true, true],
+    explanation: 'Alle vier Aspekte müssen berücksichtigt werden: Das System selbst (A), der Systemkontext (B), der Anwendungsbereich (C) und die Schnittstellen zwischen System und Kontext (D) sind notwendige Elemente bei der Definition von System- und Kontextgrenzen.'
+  },
+  {
+    id: 7, qid: 'A0207', lo: 'EO 2.2.2', type: 'A', pts: 1,
+    text: 'Im Verlaufe des Requirements Engineerings für eine Online-Datenbankanwendung stellt sich heraus, dass die Datenschutzbestimmungen nicht beachtet werden müssen, da die vom System bearbeiteten Daten anonymisiert sind.\n\nWas wird durch diese Erkenntnis beeinflusst? (1 Antwort)',
+    options: [
+      'A) Systemgrenze',
+      'B) Kontextgrenze',
+      'C) Systemschnittstellen',
+      'D) Applikationsgrenze'
+    ],
+    answer: [1],
+    explanation: 'Datenschutzbestimmungen sind Teil des Systemkontexts. Die Erkenntnis, dass sie nicht relevant sind, verändert die Kontextgrenze — jener Teil des Kontexts, der für das System relevant ist, wird neu gezogen.'
+  },
+
+  // ── Kapitel 3: Arbeitsprodukte ───────────────────────────────────────────
+  {
+    id: 8, qid: 'A3310', lo: 'EO 3.1.1', type: 'A', pts: 1,
+    text: 'Welche der folgenden Aussagen zu Arbeitsprodukten ist NICHT korrekt? (1 Antwort)',
+    options: [
+      'A) Jede aufgezeichnete Information, die während des Requirements Engineering erstellt wird, ist ein Arbeitsprodukt.',
+      'B) Aufgezeichnete Artefakte, die erhobene Informationen als Zwischen- oder Endergebnis beschreiben, sind Arbeitsprodukte.',
+      'C) User Storys, Aktivitätsdiagramme, Use Cases und Prototypen sind Arbeitsprodukte.',
+      'D) Nur endgültige Anforderungsdokumente, die einen festen Satz von Anforderungen beschreiben, sind Arbeitsprodukte.'
+    ],
+    answer: [3],
+    explanation: 'D ist nicht korrekt: Arbeitsprodukte umfassen alle aufgezeichneten Artefakte — auch Zwischenergebnisse wie Notizen, Skizzen, Gesprächsprotokolle und Entwürfe. Es müssen keine endgültigen Dokumente sein.'
+  },
+  {
+    id: 9, qid: 'A3311', lo: 'EO 3.4.6', type: 'A', pts: 1,
+    text: 'Welches der folgenden Konzepte kann NICHT in UML-Klassendiagrammen gefunden werden? (1 Antwort)',
+    options: [
+      'A) Assoziationen',
+      'B) Zustände',
+      'C) Multiplizitäten',
+      'D) Attribute'
+    ],
+    answer: [1],
+    explanation: 'Zustände gehören zu UML-Zustandsdiagrammen (State Machine Diagrams), nicht zu Klassendiagrammen. Assoziationen, Multiplizitäten und Attribute sind typische Bestandteile von UML-Klassendiagrammen.'
+  },
+  {
+    id: 10, qid: 'P0416', lo: 'EO 3.8.2', type: 'P', pts: 2,
+    text: 'Sie möchten ein Anforderungsdokument so gestalten, dass es für die Personen, die damit in weiteren Phasen des Entwicklungsprozesses arbeiten werden, besonders gut geeignet ist.\n\nWählen Sie aus den folgenden Sätzen die zwei besten Kombinationen der Rolle und ihrer Kriterien für die Anforderungen. (2 Antworten)',
+    options: [
+      'A) Für die Tester müssen die Anforderungen realisierbar sein.',
+      'B) Für die Entwickler müssen die Anforderungen leicht änderbar sein.',
+      'C) Für alle Beteiligten müssen die Anforderungen in einem Arbeitsprodukt konsistent sein.',
+      'D) Für den Projektmanager müssen die Anforderungen notwendig sein.',
+      'E) Für das Wartungspersonal müssen die Anforderungen priorisierbar sein.'
+    ],
+    answer: [2, 3],
+    explanation: 'C: Konsistenz ist für alle Beteiligten wichtig — widersprüchliche Anforderungen schaden jedem. D: Für den Projektmanager ist Notwendigkeit entscheidend — er priorisiert nach Projektzielen. Die anderen Kombinationen weisen falsche Rollenzuordnungen auf (z. B. Realisierbarkeit ist primär für Entwickler relevant, nicht Tester).'
+  },
+
+  // ── Kapitel 3 (Fortsetzung) ───────────────────────────────────────────────
+  {
+    id: 11, qid: 'P0417', lo: 'EO 3.1.2', type: 'P', pts: 2,
+    text: 'Ein Unternehmen will seinen Angebotserstellungsprozess durch ein Informationssystem unterstützen. Sie sind der für dieses Projekt verantwortliche Requirements Engineer. Bei Vorgesprächen mit verschiedenen Vertretern des Unternehmens fällt Ihnen unter anderem folgendes auf:\n\n• Sie verstehen die Fachsprache des Unternehmens teilweise nicht.\n• Es ist offensichtlich, dass auch die Unternehmensvertreter keine einheitliche Fachterminologie verwenden.\n• Ihr Hauptansprechpartner beim Unternehmen hat Ihnen deren Vorstellungen beschrieben, indem er die erwarteten Interaktionen zwischen Fachleuten und Informationssystem in Form von verschiedenen Abfolgen von Benutzerhandlungen und Systemreaktionen geschildert hat.\n\nWelche zwei der folgenden Vorgehensweisen sind in diesem Fall besonders geeignet, um die Anforderungen zu ermitteln und zu dokumentieren? (2 Antworten)',
+    options: [
+      'A) Erstellen eines Statecharts',
+      'B) Aufbau eines Glossars',
+      'C) Ermitteln und dokumentieren der Qualitätsanforderungen',
+      'D) Erstellen eines Use Case Diagramms und Spezifizieren der Use Cases',
+      'E) Erstellen und Erproben von Prototypen'
+    ],
+    answer: [1, 3],
+    explanation: 'B) Ein Glossar löst direkt das Problem der uneinheitlichen Fachterminologie und fehlenden Sprachkenntnisse. D) Use Case Diagramm + Use Case Spezifikation ist ideal, da der Ansprechpartner die Anforderungen bereits in Form von Benutzerhandlungen und Systemreaktionen (= Use Cases) geschildert hat. A) Statechart passt zu Zustandsübergängen, nicht zur geschilderten Situation. C) Qualitätsanforderungen sind nicht das primäre Problem. E) Prototypen wären hilfreich, gehören aber nicht zu den zwei besten Optionen hier.'
+  },
+  {
+    id: 12, qid: 'K0418', lo: 'EO 3.1.2', type: 'K', pts: 2,
+    text: 'Welche der folgenden Aussagen bezüglich der Auswahl von Notationen für die Darstellung von funktionalen Anforderungen treffen zu und welche treffen nicht zu?\n(Richtig = Trifft zu · Falsch = Trifft nicht zu)',
+    statements: [
+      'A) Stakeholder sollen die für ein Arbeitsprodukt verwendeten Notationen lesen können.',
+      'B) Diagramme sind in Projekten einzusetzen, in denen objektorientiert entwickelt wird.',
+      'C) Um eine optimale Kommunikation zu gewährleisten, sollte eine für die jeweilige Art der Anforderung angemessene Notation verwendet werden.',
+      'D) Grafische Notationen eignen sich gut für die Beschreibung von Systemanforderungen.'
+    ],
+    answer: [true, false, true, true],
+    explanation: 'A) Richtig: Notationen müssen für Stakeholder lesbar sein. B) Falsch: Diagramme sind nicht auf objektorientierte Projekte beschränkt — sie eignen sich für viele Entwicklungsparadigmen. C) Richtig: Die Notation sollte zur Art der Anforderung passen. D) Richtig: Grafische Notationen (z. B. UML) eignen sich gut für Systemanforderungen.'
+  },
+  {
+    id: 13, qid: 'K3423', lo: 'EO 3.8.2', type: 'K', pts: 2,
+    text: 'IREB definiert Qualitätskriterien für Arbeitsprodukte. Welche der folgenden Aussagen über Qualitätskriterien sind richtig und welche Aussagen sind falsch?',
+    statements: [
+      'A) Eine Anforderungsspezifikation ist nicht-redundant, wenn jede Anforderung nur einmal dokumentiert wird und sich nicht mit anderen überschneidet.',
+      'B) Ein Use Case Diagramm kann zu einem Aktivitätsdiagramm inkonsistent sein, auch wenn beide nicht-redundant sind.',
+      'C) Eine Anforderungsspezifikation ist konsistent, wenn keine einzelne Anforderung im Widerspruch zu anderen Anforderungen steht.',
+      'D) Eine Use Case Spezifikation ist konform, wenn sie alle relevanten Anforderungen an das Endprodukt enthält.'
+    ],
+    answer: [true, true, true, false],
+    explanation: 'A) Richtig: Nicht-Redundanz bedeutet, jede Anforderung ist nur einmal dokumentiert. B) Richtig: Zwei verschiedene Arbeitsprodukte können inkonsistent sein, auch wenn jedes intern nicht-redundant ist. C) Richtig: Konsistenz bedeutet Widerspruchsfreiheit innerhalb der Spezifikation. D) Falsch: Dies beschreibt Vollständigkeit (completeness), nicht Konformität. Konformität bedeutet die Einhaltung vorgegebener Standards oder Vorlagen.'
+  },
+  {
+    id: 14, qid: 'P0510', lo: 'EO 3.3.1', type: 'P', pts: 2,
+    text: 'Eine Satzschablone kann zur Dokumentation natürlichsprachiger Anforderungen verwendet werden. Sie wollen in Ihrem Projekt eine solche Satzschablone einführen und müssen Ihren Projektleiter von deren Vorteilen überzeugen.\n\nWelches sind die beiden besten Argumente? (2 Antworten)',
+    options: [
+      'A) Satzschablonen helfen, gut strukturierte Anforderungen zu dokumentieren, indem sie eine vordefinierte syntaktische Struktur bereitstellen.',
+      'B) Anforderungen, die in Übereinstimmung mit einer Satzschablone formuliert sind, enthalten keine unvollständigen Beziehungen.',
+      'C) Das Schreiben von Anforderungen mit Satzschablonen ist in kurzer Zeit erlernbar.',
+      'D) Das Verwenden einer Satzschablone liefert grundsätzlich einen größeren Informationsgehalt.',
+      'E) Anforderungen, die in Übereinstimmung mit einer Satzschablone geschrieben sind, stellen sicher, dass die Qualitätskriterien für Anforderungen erfüllt werden.'
+    ],
+    answer: [0, 2],
+    explanation: 'A) Richtig: Satzschablonen liefern eine vordefinierte syntaktische Struktur — das ist ihr Kernvorteil. C) Richtig: Gute Erlernbarkeit ist ein starkes praktisches Argument für den Projektleiter. B) Falsch: Satzschablonen verhindern keine unvollständigen Beziehungen. D) Falsch: Eine Schablone garantiert keinen größeren Informationsgehalt. E) Falsch: Satzschablonen verbessern die Struktur, garantieren aber nicht die Erfüllung aller Qualitätskriterien.'
+  },
+  {
+    id: 15, qid: 'A0508', lo: 'EO 3.2.1', type: 'A', pts: 1,
+    text: 'Sie erhalten die folgende Anforderung: „Das System Alpha soll alle Datensätze in allen Untermenüs anzeigen". Was ist das schwerwiegendste Problem bei dieser Anforderung? (1 Antwort)',
+    options: [
+      'A) Es wurde eine Passiv-Formulierung verwendet.',
+      'B) Es wurden Universalquantoren verwendet.',
+      'C) Die Anforderung hat unvollständige Bedingungen.',
+      'D) Es wurde Nominalisierung verwendet.'
+    ],
+    answer: [1],
+    explanation: '„Alle Datensätze in allen Untermenüs" enthält Universalquantoren (alle … alle). Universalquantoren sind schwerwiegende Sprachfehler in Anforderungen, da sie häufig nicht prüfbar und zu absolut sind. Passiv-Formulierungen sind weniger schwerwiegend; Nominalisierung und unvollständige Bedingungen sind hier nicht das Hauptproblem.'
+  },
+  {
+    id: 16, qid: 'K3520', lo: 'EO 3.3.1', type: 'K', pts: 2,
+    text: 'Welche der folgenden Aussagen zur Verwendung von vorlagenbasierten Arbeitsprodukten sind richtig und welche falsch?',
+    statements: [
+      'A) Vorlagen bieten ein Muster für die Strukturierung einzelner Anforderungen sowie ganzer Spezifikationen.',
+      'B) Vorlagenbasierte Arbeitsprodukte für einzelne Anforderungen können dazu beitragen, eine unvollständige Formulierung von Anforderungen in natürlicher Sprache zu verhindern.',
+      'C) Vorlagenbasierte Arbeitsprodukte sind von Natur aus inhaltlich besser als frei formulierte Anforderungen.',
+      'D) Vorlagen sind für alle Autoren einer Anforderungsspezifikation obligatorisch.'
+    ],
+    answer: [true, true, false, false],
+    explanation: 'A) Richtig: Vorlagen strukturieren sowohl einzelne Anforderungen als auch ganze Spezifikationen. B) Richtig: Vorlagen erzwingen eine Mindeststruktur, die unvollständige Formulierungen reduziert. C) Falsch: Vorlagen verbessern die Struktur, garantieren aber keinen besseren Inhalt. D) Falsch: Vorlagen sind empfohlen, aber nicht zwingend obligatorisch für alle Autoren.'
+  },
+  {
+    id: 17, qid: 'A3521', lo: 'EO 3.4.4', type: 'A', pts: 1,
+    text: 'Für das Flottenmanagement eines Kurierdienstes soll ein System entwickelt werden. Das System soll periodisch die Positionsdaten eines Fahrzeugs an die Zentraleinheit übermitteln. Die folgenden Anforderungen wurden dokumentiert:\n\nR1: „Das System sollte so lange in Betrieb sein, wie der Zündschlüssel im Zündschloss steckt."\nR2: „Das System sollte so lange in Betrieb sein, wie ein Fahrer auf dem Fahrersitz sitzt."\nR3: „Das System sollte auf \'Signal verloren\' umschalten, wenn weniger als drei Satelliten verfügbar sind."\n\nWelches Diagramm unterstützt diese Art von Anforderung am besten? (1 Antwort)',
+    options: [
+      'A) Zustandsdiagramm',
+      'B) Klassendiagramm',
+      'C) Kontextdiagramm',
+      'D) Use Case Diagramm'
+    ],
+    answer: [0],
+    explanation: 'Die Anforderungen R1–R3 beschreiben Zustände (in Betrieb, Signal verloren) und Zustandsübergänge (Bedingungen wie „Zündschlüssel steckt", „weniger als 3 Satelliten"). Zustandsdiagramme modellieren genau solche zustandsabhängigen Verhaltensweisen. Klassen-, Kontext- und Use Case Diagramme sind für diesen Zweck nicht geeignet.'
+  },
+  {
+    id: 18, qid: 'K0619', lo: 'EO 3.4.6', type: 'K', pts: 2,
+    text: 'Zur Förderung junger Schauspieler und Regisseure wird ein Wettbewerb für Kurzfilme durchgeführt. Dabei werden die besten drei Filme ausgezeichnet. Die eingereichten Filme dürfen maximal 20 Minuten lang sein und müssen die im folgenden Diagramm beschriebenen Einschränkungen beachten.\nStimmen die folgenden Aussagen mit dem obigen Diagramm überein?\n(Richtig = Stimmt überein · Falsch = Stimmt nicht überein)',
+    image: 'ireb_mock_18.png',
+    statements: [
+      'A) Drei Regisseure können bei einem Film gemeinsam Regie führen.',
+      'B) Ein Film kann einen einzigen Schauspieler haben.',
+      'C) Ein Regisseur kann bei zwei eingereichten Filmen Regie führen.',
+      'D) Ein Schauspieler kann in beliebig vielen Filmen auftreten.',
+      'E) Ein Film muss zehn Schauspieler haben.'
+    ],
+    answer: [false, true, true, true, false],
+    explanation: 'Aus dem Diagramm: Film-Regisseur-Multiplizität = 1..3 (1 bis 3 Regisseure pro Film). A) Falsch: Maximum sind 3 Regisseure — Aussage stimmt zwar inhaltlich, aber das Diagramm erlaubt max. 3, nicht „können gemeinsam" im Sinne einer Einschränkung — Korrektur: Stimmt nicht überein, da das Diagramm genau 1 Regisseur je Film zeigt (rechte Seite = 1). B) Richtig: Schauspieler-Multiplizität = 1..10 (mind. 1). C) Richtig: Regisseur-Seite = 1 (ein Regisseur kann mehrere Filme leiten, da keine obere Grenze auf der Regisseur-Seite). D) Richtig: 0..* auf der Film-Seite für Schauspieler. E) Falsch: Maximum ist 10, kein Minimum von 10.'
+  },
+  {
+    id: 19, qid: 'A0620', lo: 'EO 3.4.4', type: 'A', pts: 1,
+    text: 'Was zeigt ein Use Case Diagramm NICHT? (1 Antwort)',
+    options: [
+      'A) Die Prozessschritte einer Applikation',
+      'B) Die Akteure einer Applikation',
+      'C) Die Grenze zwischen einer Applikation zu ihrer Umgebung',
+      'D) Die Funktionalität einer Applikation'
+    ],
+    answer: [0],
+    explanation: 'Use Case Diagramme zeigen Akteure, Systemgrenzen und die angebotene Funktionalität (Use Cases), aber keine detaillierten Prozessschritte. Prozessschritte werden in Aktivitätsdiagrammen oder Use Case Beschreibungen dargestellt.'
+  },
+  {
+    id: 20, qid: 'K3605', lo: 'EO 3.4.5', type: 'K', pts: 2,
+    text: 'Ein Unternehmen möchte ein Autorisierungsverfahren für den Zugang zu vertraulichen Teilen des Intranets einführen, bei dem zeitlich begrenzte Passwörter vergeben werden. Es wird ein Zustandsdiagramm mit den Zuständen „nicht berechtigt", „Auftrag in Bearbeitung", „berechtigt" und „gesperrt" modelliert.\n(Richtig = Korrekt modelliert · Falsch = Falsch oder nicht modelliert)',
+    image: 'ireb_mock_20.png',
+    statements: [
+      'A) Benutzer im Status gesperrt können entsperrt werden, indem das Passwort des Benutzers zurückgesetzt wird.',
+      'B) Wenn ein Missbrauch für einen Benutzer im Status berechtigt festgestellt wurde, wird das Passwort des Benutzers gesperrt.',
+      'C) Wenn die Nutzungsfrist für einen Benutzer im Status berechtigt abgelaufen ist, wird das Passwort gelöscht und der Benutzer in den Status nicht berechtigt versetzt.',
+      'D) Wenn ein Antrag bewilligt wird, erhält der Nutzer eine Genehmigungsmail.'
+    ],
+    answer: [false, true, true, false],
+    explanation: 'A) Falsch/nicht modelliert: Im Diagramm werden gesperrte Benutzer nach Ablauf der Sperrfrist in „nicht berechtigt" versetzt (Passwort löschen), nicht durch Zurücksetzen entsperrt. B) Korrekt: Missbrauch festgestellt → Passwort sperren ist im Diagramm modelliert. C) Korrekt: Nutzungsfrist abgelaufen / Passwort löschen → nicht berechtigt ist korrekt modelliert. D) Falsch/nicht modelliert: Die Aktion beim Übergang „Antrag bewilligt" lautet „Passwort vergeben", nicht „Genehmigungsmail senden".'
+  },
+
+  // ── Kapitel 3 (Aktivitäts- und Modellierungsdiagramme) ───────────────────
+  {
+    id: 21, qid: 'K0643', lo: 'EO 3.4.7', type: 'K', pts: 2,
+    text: 'Das folgende Aktivitätsdiagramm beschreibt die Durchführung einer Messung.\n\nStimmen die folgenden Aussagen mit dem obigen Diagramm überein?\n(Richtig = Stimmt überein · Falsch = Stimmt nicht überein)',
+    image: 'ireb_mock_21.png',
+    statements: [
+      'A) Messeinrichtung initialisieren muss vor Anmeldung am Server durchführen erfolgen.',
+      'B) Anmeldung am Server durchführen erfolgt, sobald Zertifikate laden abgeschlossen ist.',
+      'C) Netzwerkverbindung initialisieren und Zertifikate laden müssen zum gleichen Zeitpunkt abgeschlossen werden.',
+      'D) Messeinrichtung deaktivieren wird ausgeführt, sobald Datenempfang bestätigt wahr ist.'
+    ],
+    answer: [false, true, false, true],
+    explanation: 'A) Stimmt nicht überein: Im Diagramm laufen Messeinrichtung initialisieren und Netzwerkvorbereitung parallel — es gibt keine Vorher-Nachher-Beziehung zu Anmeldung am Server. B) Stimmt überein: Nach Abschluss von Zertifikate laden folgt die Anmeldung am Server. C) Stimmt nicht überein: Netzwerkverbindung initialisieren und Zertifikate laden sind sequenziell, nicht synchron. D) Stimmt überein: Wenn Datenempfang bestätigt = wahr, wird Messeinrichtung deaktivieren ausgeführt.'
+  },
+  {
+    id: 22, qid: 'P0623', lo: 'EO 3.4.2', type: 'P', pts: 2,
+    text: 'Welche zwei wesentlichen Vorteile für das Requirements Engineering besitzen grafische Modelle (z. B. Use Case Modelle oder Zustandsmaschinen) gegenüber einer rein textuellen Spezifikation in natürlicher Sprache? (2 Antworten)',
+    options: [
+      'A) Modelle konzentrieren sich oft auf bestimmte Aspekte und reduzieren die kognitive Anstrengung für das Verständnis der Anforderungen.',
+      'B) Modelle erlauben eine vollständige Beschreibung eines geplanten Systems.',
+      'C) Modelle lassen sich leichter prüfen als natürliche Sprache und haben eine eingeschränkte Syntax, die mögliche Mehrdeutigkeiten und Auslassungen reduziert.',
+      'D) Modelle werden mit Werkzeugen erstellt, die ein Repository benutzen. Daher sind Modelle besser geeignet für das Management von Anforderungen.',
+      'E) Mit geeigneten Werkzeugen kann aus Modellen Source Code generiert werden, was den Aufwand für das Testen erspart.'
+    ],
+    answer: [0, 2],
+    explanation: 'A) Richtig: Grafische Modelle reduzieren kognitive Komplexität durch Fokussierung auf bestimmte Aspekte. C) Richtig: Die eingeschränkte Syntax von Modellen reduziert Mehrdeutigkeiten gegenüber natürlicher Sprache. B) Falsch: Kein Modell kann ein System vollständig beschreiben. D) Falsch: Repository-Nutzung ist kein inhärenter Vorteil grafischer Modelle gegenüber Text. E) Falsch: Code-Generierung ist kein allgemeiner RE-Vorteil und erspart nicht das Testen.'
+  },
+  {
+    id: 23, qid: 'K0624', lo: 'EO 3.4.7', type: 'K', pts: 2,
+    text: 'Bewerten Sie jede Aussage zu untenstehendem Diagramm, ob diese richtig oder falsch ist.',
+    image: 'ireb_mock_23.png',
+    statements: [
+      'A) Eine Route kann ohne die Abfrage von Verkehrsinformationen berechnet werden.',
+      'B) Eine Route kann nach der Abfrage von Verkehrsinformationen berechnet werden.',
+      'C) Der Wunsch nach dynamischer Routenführung kann durch das System ermittelt werden, ohne zuvor die GPS-Koordinaten ermitteln zu müssen.',
+      'D) Die Reihenfolge von Zieladresse eingeben und GPS-Koordinaten ermitteln ist beliebig.'
+    ],
+    answer: [true, true, false, true],
+    explanation: 'A) Richtig: Die Verkehrsinformationsabfrage ist optional (gestrichelte Linie / alternativer Pfad). B) Richtig: Die Route kann auch nach Abfrage von Verkehrsinformationen berechnet werden. C) Falsch: GPS-Koordinaten müssen zuerst ermittelt werden, bevor der Wunsch nach dynamischer Routenführung verarbeitet werden kann. D) Richtig: Beide Aktivitäten laufen parallel (Fork) — die Reihenfolge ist beliebig.'
+  },
+  {
+    id: 24, qid: 'P0626', lo: 'EO 3.4.4', type: 'P', pts: 2,
+    text: 'Sie modellieren die Anforderungen an ein zukünftiges Verwaltungssystem für Universitäten. Die Schritte des Einschreibens eines neuen Studierenden an einer Universität soll modellbasiert dokumentiert werden. Welche zwei der folgenden Diagramme eignen sich dafür am besten? (2 Antworten)',
+    options: [
+      'A) BPMN Diagramm',
+      'B) Laus-Ohl Diagramm',
+      'C) Aktivitätsdiagramm',
+      'D) Klassendiagramm',
+      'E) Use Case Diagramm'
+    ],
+    answer: [0, 2],
+    explanation: 'A) Richtig: BPMN ist speziell für die Modellierung von Geschäftsprozessabläufen konzipiert. C) Richtig: Aktivitätsdiagramme eignen sich hervorragend zur Darstellung von Prozessschritten und Abläufen. B) Falsch: „Laus-Ohl Diagramm" existiert nicht als anerkannte Notation. D) Falsch: Klassendiagramme beschreiben Datenstrukturen, keine Abläufe. E) Falsch: Use Case Diagramme zeigen die Funktionalität, aber nicht die detaillierten Schritte eines Prozesses.'
+  },
+  {
+    id: 25, qid: 'A0627', lo: 'EO 3.1.4', type: 'A', pts: 1,
+    text: 'Bei der Spezifizierung eines Systems sind verschiedene Aspekte zu berücksichtigen. Was wird unter dem Aspekt Funktion und Ablauf beschrieben? (1 Antwort)',
+    options: [
+      'A) Portabilität (Übertragbarkeit) des Systems',
+      'B) Reaktionen des Systems auf einen internen Statusübergang',
+      'C) Struktur von Ein- und Ausgabedaten',
+      'D) Transformation von Eingabedaten in Ausgabedaten'
+    ],
+    answer: [3],
+    explanation: 'Der Aspekt „Funktion und Ablauf" beschreibt, wie Eingabedaten in Ausgabedaten transformiert werden — also die funktionale Verarbeitung. Portabilität ist ein Qualitätsmerkmal. Reaktionen auf Statusübergänge sind Verhaltensbeschreibungen. Datenstrukturen gehören zum Aspekt „Daten".'
+  },
+
+  // ── Kapitel 4: Praktiken für die Erarbeitung von Anforderungen ───────────
+  {
+    id: 26, qid: 'A3409', lo: 'EO 4.3.2', type: 'A', pts: 1,
+    text: 'Sie wurden als Requirements Engineer in einem Unternehmen ernannt und sind dabei, detaillierte Anforderungen für einen Use Case zu ermitteln. Dazu durchlaufen Sie eine Reihe von Interviews mit verschiedenen Stakeholdern. Bei der Nachbereitung der Interviews stellen Sie eine Inkonsistenz in den Aussagen über die Anordnung von Funktionen im Menü auf der Benutzeroberfläche fest. Was ist der beste Weg, mit dieser Situation umzugehen? (1 Antwort)',
+    options: [
+      'A) Sie diskutieren diesen Befund mit einem verfügbaren Stakeholder und erhalten eine klare Aussage und halten dessen Empfehlung fest.',
+      'B) Sie laden alle beteiligten Stakeholder zu einem Treffen ein und erzielen eine Einigung in diesem Punkt.',
+      'C) Aufgrund Ihrer Erfahrung mit Benutzeroberflächen können Sie das Problem selbst lösen und so wertvolle Zeit sparen.',
+      'D) Sie leiten das Problem an den Product Owner weiter und überlassen ihm die Entscheidung in dieser Angelegenheit auf der Grundlage der Bewertung potenzieller Risiken.'
+    ],
+    answer: [1],
+    explanation: 'Bei einer Inkonsistenz zwischen verschiedenen Stakeholdern ist die beste Lösung, alle betroffenen Stakeholder zusammenzubringen und eine gemeinsame Einigung zu erzielen. Nur einen Stakeholder zu fragen (A) löst den Konflikt nicht vollständig. Die Entscheidung selbst treffen (C) überschreitet die Rolle des RE. Den Product Owner allein entscheiden zu lassen (D) umgeht den nötigen Konsens.'
+  },
+  {
+    id: 27, qid: 'P0309', lo: 'EO 4.1.2', type: 'P', pts: 1,
+    text: 'Welche zwei der folgenden Aussagen charakterisieren das Verhältnis zwischen einem Requirements Engineer und einem Stakeholder in der Rolle eines Testers am besten? (2 Antworten)',
+    options: [
+      'A) Der Requirements Engineer liefert Input für die Arbeit des Stakeholders.',
+      'B) Die Resultate des Requirements Engineer werden durch den Stakeholder verwaltet.',
+      'C) Stakeholder können dazu beitragen die Qualität der Arbeit des Requirements Engineers sicherzustellen.',
+      'D) Der Stakeholder überwacht die Arbeit des Requirements Engineers.',
+      'E) Die Arbeit des Requirements Engineers hängt nicht mit der genannten Stakeholder-Rolle zusammen.'
+    ],
+    answer: [0, 2],
+    explanation: 'A) Richtig: Der RE liefert Anforderungen als Input für den Tester (z. B. Testbasis). C) Richtig: Der Tester kann durch Validierung der Anforderungen die Qualität der RE-Arbeit sicherstellen. B) Falsch: Tester verwalten keine RE-Ergebnisse. D) Falsch: Tester überwachen den RE nicht. E) Falsch: Es besteht eine klare Arbeitsbeziehung.'
+  },
+  {
+    id: 28, qid: 'A0312', lo: 'EO 4.2.2', type: 'A', pts: 1,
+    text: 'Das Kano-Modell besagt, dass Basisanforderungen schwierig zu ermitteln sind.\n\nWelche der unten erwähnten Techniken ist die effektivste Erhebungstechnik für Basisanforderungen? (1 Antwort)',
+    options: [
+      'A) Prototyping',
+      'B) Fragebogen',
+      'C) Feldbeobachtung',
+      'D) Brainstorming'
+    ],
+    answer: [2],
+    explanation: 'Basisanforderungen sind selbstverständliche Erwartungen, die Stakeholder oft nicht explizit nennen, weil sie sie als gegeben voraussetzen. Feldbeobachtung ist am effektivsten, weil der RE das tatsächliche Verhalten und die impliziten Erwartungen der Nutzer direkt beobachten kann, ohne auf deren Artikulationsfähigkeit angewiesen zu sein.'
+  },
+  {
+    id: 29, qid: 'P0313', lo: 'EO 4.2.3', type: 'P', pts: 2,
+    text: 'Welche zwei der folgenden Aspekte müssen bei der Auswahl passender Erhebungstechniken am ehesten berücksichtigt werden? (2 Antworten)',
+    options: [
+      'A) Die Verfügbarkeit der beteiligten Personen.',
+      'B) Die Vorlieben des Requirements Engineers.',
+      'C) Die Kategorie der Anforderungen basierend auf der Kano-Klassifizierung.',
+      'D) Die Komplexität der benötigten Werkzeuge.',
+      'E) Die gewohnheitsmäßige Anwendung einer Technik.'
+    ],
+    answer: [0, 2],
+    explanation: 'A) Richtig: Die Verfügbarkeit der Stakeholder schränkt die Wahl der Technik direkt ein (z. B. Interviews nur bei verfügbaren Gesprächspartnern möglich). C) Richtig: Die Kano-Kategorie (Basis-, Leistungs-, Begeisterungsanforderung) beeinflusst, welche Technik die Anforderungen am besten zutage fördert. B, D, E: Vorlieben, Werkzeugkomplexität und Gewohnheit sind keine sachlichen Auswahlkriterien.'
+  },
+  {
+    id: 30, qid: 'A3410', lo: 'EO 4.3.2', type: 'A', pts: 1,
+    text: 'Welche der folgenden Techniken ist NICHT geeignet zur Lösung von Anforderungskonflikten? (1 Antwort)',
+    options: [
+      'A) Ober-sticht-Unter',
+      'B) Variantenbildung',
+      'C) Kompromiss',
+      'D) Stichprobe'
+    ],
+    answer: [3],
+    explanation: 'Stichproben sind eine statistische Methode zur Datenerhebung und haben keinen Bezug zur Konfliktlösung bei Anforderungen. Ober-sticht-Unter (hierarchische Entscheidung), Variantenbildung (parallele Alternativen) und Kompromiss (gegenseitiges Nachgeben) sind anerkannte Konfliktlösungstechniken im RE.'
+  },
+
+  // ── Kapitel 4 (Fortsetzung) ───────────────────────────────────────────────
+  {
+    id: 31, qid: 'K0324', lo: 'EO 4.2.2', type: 'K', pts: 2,
+    text: 'Welche der folgenden Aussagen über Ermittlungstechniken sind richtig und welche sind falsch?',
+    statements: [
+      'A) Ein Interview ist eine Erhebungstechnik.',
+      'B) Eine Analogietechnik ist eine Erhebungstechnik.',
+      'C) Systemarchäologie ist eine Beobachtungstechnik.',
+      'D) Apprenticing ist eine Beobachtungstechnik.'
+    ],
+    answer: [true, false, false, true],
+    explanation: 'A) Richtig: Interviews gehören zu den Erhebungstechniken. B) Falsch: Analogietechniken sind kreative Techniken, keine Erhebungstechniken. C) Falsch: Systemarchäologie ist eine Erhebungstechnik (Analyse bestehender Systeme), keine Beobachtungstechnik. D) Richtig: Apprenticing (Beobachten und Mitarbeiten beim Stakeholder) ist eine Beobachtungstechnik.'
+  },
+  {
+    id: 32, qid: 'A0720', lo: 'EO 4.3.1', type: 'A', pts: 1,
+    text: 'Ein Stakeholder fordert für ein international einzusetzendes Navigationssystem nur eine weibliche Stimme für die Sprachausgabe. Für einen anderen Stakeholder ist dies diskriminierend, und er fordert zusätzlich eine männliche Stimme.\n\nWelcher der folgenden Konflikttypen beschreibt diesen Konflikt am besten? (1 Antwort)',
+    options: [
+      'A) Beziehungskonflikt',
+      'B) Interessenkonflikt',
+      'C) Strukturkonflikt',
+      'D) Wertekonflikt'
+    ],
+    answer: [3],
+    explanation: 'Es geht um unterschiedliche Wertvorstellungen (Diskriminierung vs. keine Diskriminierung), nicht um persönliche Beziehungen, Interessen oder strukturelle Probleme. Wertekonflikte entstehen, wenn Stakeholder unterschiedliche moralische oder ethische Grundüberzeugungen haben.'
+  },
+  {
+    id: 33, qid: 'A0721', lo: 'EO 4.4.3', type: 'A', pts: 2,
+    text: 'In Ihrem Projekt wird ein neuartiges Bremssystem für Hochgeschwindigkeitszüge entwickelt.\n\nWelches Validierungsverfahren eignet sich am besten für diese Situation, in der die Systemanforderungen einer sicherheitskritischen Komponente validiert werden sollen? (1 Antwort)',
+    options: [
+      'A) A/B-Tests',
+      'B) Prototyp',
+      'C) Walkthrough',
+      'D) Inspektion'
+    ],
+    answer: [3],
+    explanation: 'Bei sicherheitskritischen Systemen ist die Inspektion das geeignetste Verfahren: Sie ist formal, systematisch, dokumentiert und von erfahrenen Gutachtern durchgeführt — was den hohen Qualitätsanforderungen gerecht wird. A/B-Tests und Prototypen sind für sicherheitskritische Bahnsysteme nicht geeignet. Ein Walkthrough ist weniger formell als eine Inspektion.'
+  },
+
+  // ── Kapitel 5: Prozess und Arbeitsstruktur ────────────────────────────────
+  {
+    id: 34, qid: 'P3504', lo: 'EO 5.2.1', type: 'P', pts: 2,
+    text: 'Welche zwei der unten genannten Facetten sind bei der Konfiguration eines RE-Prozesses am ehesten zu berücksichtigen? (2 Antworten)',
+    options: [
+      'A) Die Zeitfacette: linear vs. iterativ',
+      'B) Die Budgetfacette: knapp vs. großzügig',
+      'C) Die Zweckfacette: präskriptiv vs. explorativ',
+      'D) Die Methodikfacette: struktur- vs. prozessbasiert',
+      'E) Die Interaktionsfacette: teamgesteuert vs. individuell'
+    ],
+    answer: [0, 2],
+    explanation: 'A) Richtig: Die Zeitfacette (linear vs. iterativ) ist eine der grundlegenden IREB-Prozesskonfigurationsdimensionen. C) Richtig: Die Zweckfacette (präskriptiv vs. explorativ) ist ebenfalls eine der definierten IREB-Facetten. B), D) und E) sind keine im CPRE-Lehrplan definierten Prozesskonfigurationsfacetten.'
+  },
+  {
+    id: 35, qid: 'A3505', lo: 'EO 5.3.1', type: 'A', pts: 1,
+    text: 'Ausgehend von einer Analyse der Einflussfaktoren sollte eine geeignete Kombination von Prozessfacetten konfiguriert werden. In der Praxis treten häufig einige spezifische Kombinationen von Facetten auf.\n\nWelche der unten erwähnten Kombinationen wird NICHT als solche angesehen? (1 Antwort)',
+    options: [
+      'A) Produktorientierter RE-Prozess (iterativ, explorativ, marktorientiert)',
+      'B) Menschenorientierter RE-Prozess (linear, prozessbasiert, individuell)',
+      'C) Partizipativer RE-Prozess (iterativ, explorativ, kundenspezifisch)',
+      'D) Vertraglicher RE-Prozess (linear, präskriptiv, kundenspezifisch)'
+    ],
+    answer: [1],
+    explanation: 'Ein „Menschenorientierter RE-Prozess" ist keine im CPRE-Lehrplan definierte Prozesskombination. Die anerkannten Kombinationen sind: produktorientiert, partizipativ und vertraglich.'
+  },
+
+  // ── Kapitel 6: Praktiken für das Requirements Management ─────────────────
+  {
+    id: 36, qid: 'K0819', lo: 'EO 6.5.3', type: 'K', pts: 2,
+    text: 'Welche der folgenden Aussagen zu Sichten auf Anforderungen sind richtig und welche sind falsch?',
+    statements: [
+      'A) Nicht jeder Stakeholder muss Zugang zu allen Anforderungen haben.',
+      'B) Zur Unterstützung des Review-Prozesses können zusammengehörige Anforderungen gruppiert werden.',
+      'C) Anforderungen können für nicht autorisierte Stakeholder unsichtbar gemacht werden.',
+      'D) Es wird gewährleistet, dass mehrere Personen gleichzeitig an einer Spezifikation arbeiten können.'
+    ],
+    answer: [true, true, true, false],
+    explanation: 'A) Richtig: Sichten erlauben rollenbasierte Zugriffskontrolle. B) Richtig: Gruppierung unterstützt strukturierte Reviews. C) Richtig: Sichten können Anforderungen für bestimmte Stakeholder ausblenden. D) Falsch: Gleichzeitiges Bearbeiten ist eine Funktion des Versionsmanagementsystems, nicht von Anforderungssichten.'
+  },
+  {
+    id: 37, qid: 'A0820', lo: 'EO 6.6.1', type: 'A', pts: 1,
+    text: 'Mit der Verfolgbarkeit von Anforderungen werden unterschiedliche Ziele verfolgt.\n\nGeben Sie an, welche Aussage NICHT korrekt ist. (1 Antwort)',
+    options: [
+      'A) Verfolgbarkeit vereinfacht die Auswirkungsanalyse.',
+      'B) Verfolgbarkeit vereinfacht den Nachweis der Umsetzung.',
+      'C) Verfolgbarkeit vereinfacht den Export aus einem Anforderungsmanagement-Werkzeug.',
+      'D) Verfolgbarkeit vereinfacht das Auffinden des Ursprungs einer Anforderung.'
+    ],
+    answer: [2],
+    explanation: 'Der Export aus einem Werkzeug ist eine Werkzeugfunktion, kein Ziel der Verfolgbarkeit. Verfolgbarkeit dient der Auswirkungsanalyse (A), dem Umsetzungsnachweis (B) und der Rückverfolgung zum Ursprung (D).'
+  },
+  {
+    id: 38, qid: 'K0821', lo: 'EO 6.5.2', type: 'K', pts: 2,
+    text: 'Zusätzliche Informationen zu Anforderungen werden mit Hilfe von Attributen verwaltet. Ein Beispiel für eine solche zusätzliche Information ist ein eindeutiges Identifikationsmerkmal.\n\nWelche der folgenden Aussagen über den Zweck von eindeutigen Identifikationsmerkmalen sind richtig und welche sind falsch?\n\nEindeutige Identifikationsmerkmale sind hilfreich …',
+    statements: [
+      'A) … um den Gesamtumfang der Spezifikation abschätzen zu können.',
+      'B) … um eine eindeutige Kommunikationsgrundlage zu haben.',
+      'C) … um Referenzen zu anderen Anforderungen herzustellen.',
+      'D) … um Nachvollziehbarkeit zu anderen Entwicklungsartefakten herzustellen.'
+    ],
+    answer: [false, true, true, true],
+    explanation: 'A) Falsch: Der Umfang einer Spezifikation wird nicht durch IDs abgeschätzt — dafür sind andere Metriken zuständig. B) Richtig: IDs ermöglichen eine eindeutige Referenzierung in Gesprächen und Dokumenten. C) Richtig: IDs ermöglichen präzise Querverweise zwischen Anforderungen. D) Richtig: IDs sind Grundlage für Traceability-Links zu Code, Tests und anderen Artefakten.'
+  },
+  {
+    id: 39, qid: 'P0838', lo: 'EO 6.4.1', type: 'P', pts: 2,
+    text: 'Sie haben eine Anforderungsbasislinie erzeugt und an die Entwicklung übergeben. In der Zwischenzeit haben Stakeholder Änderungswünsche für Anforderungen dieser Basislinie (Baseline) eingereicht.\n\nWelche beiden der nachfolgenden Antworten stellen ein geeignetes Änderungsmanagement für Anforderungen dar? (2 Antworten)',
+    options: [
+      'A) Änderungen, die sich auf Anforderungen innerhalb der Basislinie beziehen, werden eingepflegt, indem neue Versionen der Anforderungen innerhalb dieser Anforderungsbasislinie erzeugt werden.',
+      'B) Bevor Anforderungen aufgrund von Änderungsanträgen angepasst werden, müssen die Auswirkungen der Änderungen identifiziert werden.',
+      'C) Änderungsanträge können jederzeit eingereicht und bei der Erstellung einer zukünftigen Basislinie für die Entwicklung berücksichtigt werden.',
+      'D) Zeitkritische Änderungsanträge werden weder analysiert noch bewertet, sondern umgehend an die Entwicklung übergeben.',
+      'E) Wenn die Entwicklung für geänderte Anforderungen noch nicht begonnen hat, kann die Änderung leicht bearbeitet werden, ohne eine neue Basislinie zu erstellen.'
+    ],
+    answer: [1, 2],
+    explanation: 'B) Richtig: Auswirkungsanalyse vor jeder Änderung ist eine Grundregel des Änderungsmanagements. C) Richtig: Änderungsanträge können gesammelt und in einer neuen Basislinie gebündelt werden. A) Falsch: Eine freigegebene Basislinie darf nicht direkt verändert werden. D) Falsch: Keine Änderung darf ohne Analyse weitergegeben werden. E) Falsch: Auch kleine Änderungen erfordern eine neue Basislinie zur Nachvollziehbarkeit.'
+  },
+  {
+    id: 40, qid: 'K0802', lo: 'EO 6.8.1', type: 'K', pts: 2,
+    text: 'Attribute werden verwendet, um zusätzliche Merkmale von Anforderungen zu verwalten. Ein Beispiel für ein Merkmal von Anforderungen stellt die Priorität dar.\n\nWelche der folgenden Aussagen über den Zweck einer Priorisierung von Anforderungen sind richtig, welche sind falsch?\n\nAnforderungen werden priorisiert …',
+    statements: [
+      'A) … um zu entscheiden, welche Anforderungen im nächsten Release umgesetzt werden sollen.',
+      'B) … um zu entscheiden, auf welche Anforderungen man sich beim Testen zuerst konzentrieren sollte.',
+      'C) … um zu dokumentieren, wie viel die Implementierung einer Anforderung kosten würde.',
+      'D) … um zu erkennen, welche Anforderungen wiederverwendet werden können.'
+    ],
+    answer: [true, true, false, false],
+    explanation: 'A) Richtig: Priorisierung steuert die Umsetzungsreihenfolge in Releases. B) Richtig: Testpriorisierung orientiert sich an der Anforderungspriorität. C) Falsch: Kosten werden durch Aufwandsschätzung ermittelt, nicht durch Priorisierung. D) Falsch: Wiederverwendbarkeit ist ein separates Attribut, kein Ziel der Priorisierung.'
+  },
+  {
+    id: 41, qid: 'A0804', lo: 'EO 6.4.1', type: 'A', pts: 1,
+    text: 'Versions- und Konfigurationsmanagement dienen der Verwaltung von Anforderungen und Anforderungsspezifikationen. Häufig verwendete Begriffe aus diesen Bereichen sind „Version" und „Basislinie".\n\nWählen Sie die beste Beschreibung für eine Basislinie (Baseline). (1 Antwort)',
+    options: [
+      'A) Eine Version einer Anforderung',
+      'B) Eine freigegebene Konfiguration einer einzelnen Anforderung',
+      'C) Eine freigegebene Konfiguration von Anforderungen',
+      'D) Eine noch nicht freigegebene Version einer Anforderungsspezifikation'
+    ],
+    answer: [2],
+    explanation: 'Eine Basislinie ist eine freigegebene (formal genehmigte) Konfiguration eines Satzes von Anforderungen, die als Grundlage für die weitere Entwicklung dient. Sie umfasst mehrere Anforderungen (nicht nur eine) und ist stets freigegeben (nicht unveröffentlicht).'
+  },
+
+  // ── Kapitel 7: Werkzeugunterstützung ─────────────────────────────────────
+  {
+    id: 42, qid: 'K0910', lo: 'EO 7.2.1', type: 'K', pts: 2,
+    text: 'Als Requirements Engineer für ein Unternehmen müssen Sie ein Werkzeug zur Unterstützung Ihres Requirements Engineering Prozesses auswählen.\n\nWelche der folgenden Aussagen sind in diesem Zusammenhang richtig und welche sind falsch?',
+    statements: [
+      'A) Das Werkzeug muss die im eingesetzten Requirements Engineering Prozess geforderten Artefakte unterstützen.',
+      'B) Die Auswahl eines Werkzeuges sollte den Nutzern des Werkzeuges überlassen werden.',
+      'C) Das Werkzeug muss den Benutzern helfen, ihre Testfälle als Teil des Requirements Engineering Prozesses so einzurichten, dass Shift-Left-Testing unterstützt wird.',
+      'D) Die Auswahl eines Werkzeuges wird auch durch die Werkzeugkette (z. B. Konfigurationsmanagement-Werkzeug) bestimmt, in der das Werkzeug genutzt werden soll.'
+    ],
+    answer: [true, false, false, true],
+    explanation: 'A) Richtig: Das Werkzeug muss die benötigten Artefakte des RE-Prozesses abbilden können. B) Falsch: Die Werkzeugauswahl ist eine Managemententscheidung, nicht allein Nutzersache. C) Falsch: Shift-Left-Testing ist kein obligatorisches Auswahlkriterium für ein RE-Werkzeug. D) Richtig: Die Integration in die bestehende Werkzeugkette ist ein wesentliches Auswahlkriterium.'
+  },
+  {
+    id: 43, qid: 'A0922', lo: 'EO 7.1.2', type: 'A', pts: 1,
+    text: 'Welche der folgenden Aufgaben gehört NICHT zu den Fähigkeiten eines Werkzeugs, das die Verwaltung von Anforderungen im Requirements Engineering Prozess unterstützt? (1 Antwort)',
+    options: [
+      'A) Verfolgung logischer Beziehungen zwischen Anforderungen',
+      'B) Modellierung der Anforderungen',
+      'C) Messung und Auswertung des Requirements Engineering Prozesses',
+      'D) Unterstützung bei der Priorisierung von Anforderungen'
+    ],
+    answer: [1],
+    explanation: 'Die Modellierung von Anforderungen (z. B. UML-Diagramme) ist Aufgabe von Modellierungswerkzeugen, nicht von Anforderungsmanagement-Werkzeugen. Anforderungsmanagement-Werkzeuge unterstützen Verfolgbarkeit (A), Prozessmessung (C) und Priorisierung (D).'
+  }
+];
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+const BASE_SECONDS = 75 * 60;
+const EXT_SECONDS  = 90 * 60;
+let timeExtended  = false;
+let TOTAL_SECONDS = BASE_SECONDS;
+let timerInterval = null;
+let secondsLeft   = TOTAL_SECONDS;
+let examSubmitted = false;
+let pendingAction = null;
+
+// userAnswers[qi]:
+//   A/P question: array of selected option indices
+//   K question:   array of 'richtig'|'falsch'|null per statement
+let userAnswers = questions.map(q =>
+  q.type === 'K' ? q.statements.map(() => null) : []
+);
+
+// ── UTILITIES ────────────────────────────────────────────────────────────────
+function escHtml(str) {
+  return str
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/\n/g, '<br>');
+}
+
+function isAnswered(qi) {
+  const q = questions[qi];
+  if (q.type === 'K') return userAnswers[qi].every(v => v !== null);
+  return userAnswers[qi].length > 0;
+}
+
+function totalPossiblePoints() {
+  return questions.reduce((s, q) => s + q.pts, 0);
+}
+
+// ── TIME SELECTION ────────────────────────────────────────────────────────────
+function selectTime(extended) {
+  timeExtended  = extended;
+  TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+  document.getElementById('opt-standard').classList.toggle('active', !extended);
+  document.getElementById('opt-extended').classList.toggle('active',  extended);
+  document.getElementById('meta-minutes').textContent = extended ? '90' : '75';
+  document.getElementById('ext-note').style.display   = extended ? 'block' : 'none';
+  document.getElementById('start-note-txt').textContent = extended
+    ? 'Der Timer läuft von 90:00 herunter (75 min + 15 min Verlängerung). Bei Zeitablauf erfolgt automatische Abgabe.'
+    : 'Der Timer läuft von 75:00 herunter. Bei Zeitablauf erfolgt automatische Abgabe.';
+}
+
+// ── START ─────────────────────────────────────────────────────────────────────
+function startExam() {
+  secondsLeft = TOTAL_SECONDS;
+  document.getElementById('timer').textContent = timeExtended ? '90:00' : '75:00';
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('exam-screen').style.display  = 'block';
+  renderQuestions();
+  timerInterval = setInterval(tickTimer, 1000);
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function renderQuestions() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'card-' + qi;
+    card.style.animationDelay = (qi * 0.015) + 's';
+
+    const ptsLabel = q.pts > 1 ? q.pts + ' Pkt' : '1 Pkt';
+    const typeLabel = q.type === 'A' ? 'A-Frage' : q.type === 'P' ? 'P-Frage' : 'K-Frage';
+
+    let bodyHTML = '';
+
+    if (q.type === 'K') {
+      // K-Frage: table with Richtig/Falsch toggle per statement
+      let rows = q.statements.map((stmt, si) => `
+        <tr class="k-statement-row" id="krow-${qi}-${si}">
+          <td class="k-cell-toggle">
+            <div class="k-toggle-btn" id="ktoggle-${qi}-${si}-r" data-qi="${qi}" data-si="${si}" data-val="richtig">R</div>
+          </td>
+          <td class="k-cell-toggle">
+            <div class="k-toggle-btn" id="ktoggle-${qi}-${si}-f" data-qi="${qi}" data-si="${si}" data-val="falsch">F</div>
+          </td>
+          <td class="k-cell-text">${escHtml(stmt)}</td>
+        </tr>`).join('');
+
+      bodyHTML = `
+        <table class="k-table">
+          <thead><tr class="k-header-row">
+            <th>R</th><th>F</th><th>Aussage</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+    } else if (q.type === 'P') {
+      const hint = `<div class="multi-hint">MEHRFACHAUSWAHL — ${q.answer.length} ANTWORTEN ERWARTET</div>`;
+      const opts = q.options.map((opt, oi) => `
+        <div class="option-row is-checkbox" id="opt-${qi}-${oi}" data-qi="${qi}" data-oi="${oi}">
+          <input type="checkbox" name="q${qi}" value="${oi}" id="inp-${qi}-${oi}"
+                 style="position:absolute;opacity:0;pointer-events:none;">
+          <span class="option-marker"></span>
+          <span class="option-text">${escHtml(opt)}</span>
+        </div>`).join('');
+      bodyHTML = hint + `<div class="options">${opts}</div>`;
+    } else {
+      // A-Frage
+      const opts = q.options.map((opt, oi) => `
+        <div class="option-row" id="opt-${qi}-${oi}" data-qi="${qi}" data-oi="${oi}">
+          <input type="radio" name="q${qi}" value="${oi}" id="inp-${qi}-${oi}"
+                 style="position:absolute;opacity:0;pointer-events:none;">
+          <span class="option-marker"></span>
+          <span class="option-text">${escHtml(opt)}</span>
+        </div>`).join('');
+      bodyHTML = `<div class="options">${opts}</div>`;
+    }
+
+    card.innerHTML = `
+      <div class="q-header">
+        <div class="q-meta">
+          <span class="q-num">F${q.id}</span>
+          <span class="q-type">${typeLabel}</span>
+          <span class="q-lo">${q.lo}</span>
+          <span class="q-pts">${ptsLabel}</span>
+        </div>
+        <div class="q-text">${escHtml(q.text)}</div>
+      </div>
+      ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagramm zu Frage ${q.id}"></center>` : ''}
+      ${bodyHTML}
+      <div class="result-tag" id="result-${qi}"></div>
+      <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>
+    `;
+    container.appendChild(card);
+  });
+
+  // Attach listeners — A and P
+  document.querySelectorAll('.option-row').forEach(row => {
+    row.addEventListener('click', function () {
+      if (examSubmitted) return;
+      const qi = parseInt(this.dataset.qi);
+      const oi = parseInt(this.dataset.oi);
+      const q  = questions[qi];
+      if (q.type === 'P') {
+        const inp = document.getElementById('inp-' + qi + '-' + oi);
+        inp.checked = !inp.checked;
+      } else {
+        q.options.forEach((_, i) => { document.getElementById('inp-' + qi + '-' + i).checked = false; });
+        document.getElementById('inp-' + qi + '-' + oi).checked = true;
+      }
+      syncOptionAnswer(qi);
+    });
+  });
+
+  // Attach listeners — K toggles
+  document.querySelectorAll('.k-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      if (examSubmitted || this.classList.contains('disabled')) return;
+      const qi  = parseInt(this.dataset.qi);
+      const si  = parseInt(this.dataset.si);
+      const val = this.dataset.val; // 'richtig' or 'falsch'
+      const cur = userAnswers[qi][si];
+      // Toggle: if already selected, deselect; else select
+      userAnswers[qi][si] = (cur === val) ? null : val;
+      syncKDisplay(qi, si);
+      updateProgress();
+    });
+  });
+}
+
+function syncOptionAnswer(qi) {
+  const q = questions[qi];
+  userAnswers[qi] = [];
+  q.options.forEach((_, oi) => {
+    const inp = document.getElementById('inp-' + qi + '-' + oi);
+    if (inp && inp.checked) userAnswers[qi].push(oi);
+  });
+  // Visual sync
+  q.options.forEach((_, oi) => {
+    const row = document.getElementById('opt-' + qi + '-' + oi);
+    if (row) row.classList.toggle('selected', userAnswers[qi].includes(oi));
+  });
+  updateProgress();
+}
+
+function syncKDisplay(qi, si) {
+  const val = userAnswers[qi][si];
+  const btnR = document.getElementById('ktoggle-' + qi + '-' + si + '-r');
+  const btnF = document.getElementById('ktoggle-' + qi + '-' + si + '-f');
+  if (!btnR || !btnF) return;
+  btnR.classList.toggle('selected-richtig', val === 'richtig');
+  btnF.classList.toggle('selected-falsch',  val === 'falsch');
+}
+
+// ── PROGRESS ──────────────────────────────────────────────────────────────────
+function updateProgress() {
+  const answered = questions.filter((_, qi) => isAnswered(qi)).length;
+  document.getElementById('answered-num').textContent = answered;
+  document.getElementById('progress-fill').style.width = (answered / questions.length * 100) + '%';
+}
+
+// ── TIMER ─────────────────────────────────────────────────────────────────────
+function tickTimer() {
+  if (secondsLeft <= 0) { doSubmit(true); return; }
+  secondsLeft--;
+  const m = Math.floor(secondsLeft / 60), s = secondsLeft % 60;
+  const el = document.getElementById('timer');
+  el.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  if      (secondsLeft <= 300) el.className = 'timer danger';
+  else if (secondsLeft <= 900) el.className = 'timer warn';
+  else                         el.className = 'timer';
+}
+
+// ── CONFIRM DIALOGS ───────────────────────────────────────────────────────────
+function confirmSubmit() {
+  const answered   = questions.filter((_, qi) => isAnswered(qi)).length;
+  const unanswered = questions.length - answered;
+  document.getElementById('confirm-title').textContent = 'Prüfung abgeben?';
+  document.getElementById('confirm-msg').innerHTML = unanswered > 0
+    ? `Sie haben noch <strong style="color:var(--warn)">${unanswered} unbeantwortete Frage${unanswered > 1 ? 'n' : ''}</strong>. Unbeantwortete Fragen ergeben 0 Punkte.<br><br>Trotzdem abgeben?`
+    : `Alle ${questions.length} Fragen beantwortet. Prüfung jetzt abgeben?`;
+  document.getElementById('confirm-yes-btn').textContent = 'Abgeben';
+  pendingAction = 'submit';
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function confirmReset() {
+  document.getElementById('confirm-title').textContent = 'Prüfung neu starten?';
+  document.getElementById('confirm-msg').innerHTML = 'Alle Antworten gehen verloren. Der Timer wird auf ' + (timeExtended ? '90:00' : '75:00') + ' zurückgesetzt.<br><br>Sicher?';
+  document.getElementById('confirm-yes-btn').textContent = 'Neu starten';
+  pendingAction = 'reset';
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function closeConfirm() {
+  document.getElementById('confirm-overlay').classList.remove('show');
+  pendingAction = null;
+}
+
+function doConfirm() {
+  if (pendingAction === 'submit') doSubmit(false);
+  else if (pendingAction === 'reset') doReset();
+  closeConfirm();
+}
+
+// ── SCORING ───────────────────────────────────────────────────────────────────
+function scoreQuestion(q, qi) {
+  if (q.type === 'A') {
+    const given = userAnswers[qi];
+    if (given.length !== 1) return 0;              // nothing or multiple selected
+    return given[0] === q.answer[0] ? q.pts : 0;
+  }
+  if (q.type === 'P') {
+    const given  = userAnswers[qi];
+    const numExp = q.answer.length;
+    if (given.length > numExp) return 0;           // over-selection → 0
+    const ptsPerCorrect = q.pts / numExp;
+    let earned = 0;
+    given.forEach(oi => { if (q.answer.includes(oi)) earned += ptsPerCorrect; });
+    return earned;
+  }
+  if (q.type === 'K') {
+    const numStmt    = q.statements.length;
+    const ptsPerStmt = q.pts / numStmt;
+    let earned = 0;
+    userAnswers[qi].forEach((val, si) => {
+      const expectRichtig = q.answer[si]; // true = Richtig
+      if (val === 'richtig' && expectRichtig)  earned += ptsPerStmt;
+      if (val === 'falsch'  && !expectRichtig) earned += ptsPerStmt;
+    });
+    return earned;
+  }
+  return 0;
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+function doSubmit(timedOut) {
+  if (examSubmitted) return;
+  examSubmitted = true;
+  clearInterval(timerInterval);
+  closeConfirm();
+
+  let totalEarned = 0;
+  let correctCount = 0;
+  let wrongCount   = 0;
+  const totalPts = totalPossiblePoints();
+
+  questions.forEach((q, qi) => {
+    const earned    = scoreQuestion(q, qi);
+    const isFullPts = earned >= q.pts - 0.001;
+    totalEarned += earned;
+    if (isFullPts && isAnswered(qi)) correctCount++;
+    else wrongCount++;
+
+    const rt   = document.getElementById('result-' + qi);
+    const expl = document.getElementById('expl-' + qi);
+    const card = document.getElementById('card-' + qi);
+    rt.classList.add('show');
+    expl.classList.add('show');
+
+    if (q.type === 'K') {
+      // Reveal K toggles
+      q.statements.forEach((_, si) => {
+        const expectRichtig = q.answer[si];
+        const given = userAnswers[qi][si];
+        const btnR = document.getElementById('ktoggle-' + qi + '-' + si + '-r');
+        const btnF = document.getElementById('ktoggle-' + qi + '-' + si + '-f');
+        if (!btnR || !btnF) return;
+        [btnR, btnF].forEach(b => b.classList.add('disabled'));
+        // Correct answer highlight
+        if (expectRichtig) btnR.classList.add('reveal-correct-r');
+        else               btnF.classList.add('reveal-correct-f');
+        // Wrong selection highlight
+        if (given === 'richtig' && !expectRichtig) btnR.classList.add('reveal-wrong-r');
+        if (given === 'falsch'  &&  expectRichtig) btnF.classList.add('reveal-wrong-f');
+      });
+      rt.classList.add(isFullPts ? 'correct' : 'incorrect');
+      rt.innerHTML = isFullPts
+        ? `&#10003; Richtig (+${q.pts} Pkt)`
+        : `&#10007; Teilweise/Falsch &middot; ${earned.toFixed(1)}/${q.pts} Pkt`;
+      card.classList.add(isFullPts ? 'correct-card' : 'incorrect-card');
+    } else {
+      // Reveal A/P options
+      q.options.forEach((_, oi) => {
+        const row = document.getElementById('opt-' + qi + '-' + oi);
+        if (!row) return;
+        row.classList.add('disabled');
+        row.classList.remove('selected');
+        if (q.answer.includes(oi))              row.classList.add('reveal-correct');
+        else if (userAnswers[qi].includes(oi))  row.classList.add('reveal-wrong');
+      });
+      if (!isAnswered(qi)) {
+        rt.classList.add('incorrect');
+        rt.innerHTML = '&mdash; Nicht beantwortet &middot; Korrekt: ' + q.answer.map(i => String.fromCharCode(65+i)).join(', ');
+        card.classList.add('incorrect-card');
+      } else if (isFullPts) {
+        rt.classList.add('correct');
+        rt.innerHTML = `&#10003; Richtig (+${q.pts} Pkt)`;
+        card.classList.add('correct-card');
+      } else {
+        rt.classList.add('incorrect');
+        rt.innerHTML = `&#10007; ${earned > 0 ? 'Teilweise korrekt' : 'Falsch'} &middot; ${earned.toFixed(1)}/${q.pts} Pkt &middot; Korrekt: ` + q.answer.map(i => String.fromCharCode(65+i)).join(', ');
+        card.classList.add('incorrect-card');
+      }
+    }
+  });
+
+  const pct  = Math.round(totalEarned / totalPts * 100);
+  const pass = pct >= 70;
+
+  const usedSec  = TOTAL_SECONDS - secondsLeft;
+  const um = Math.floor(usedSec / 60), us = usedSec % 60;
+  const totalLabel = timeExtended ? '90:00' : '75:00';
+  const timeStr  = timedOut
+    ? totalLabel + ' (Zeit abgelaufen)'
+    : String(um).padStart(2,'0') + ':' + String(us).padStart(2,'0');
+
+  if (timedOut) { const el = document.getElementById('timer'); el.textContent = '00:00'; el.className = 'timer danger'; }
+
+  document.getElementById('final-score-pct').textContent = pct + '%';
+  document.getElementById('final-score-raw').textContent =
+    totalEarned.toFixed(1) + ' von ' + totalPts + ' Punkten';
+  document.getElementById('time-used').textContent = timeStr;
+
+  const badge = document.getElementById('grade-badge');
+  badge.textContent = pass ? '✓ BESTANDEN (≥ 70%)' : '✗ NICHT BESTANDEN (< 70%)';
+  badge.className   = 'grade-badge ' + (pass ? 'pass' : 'fail');
+
+  document.getElementById('stat-pts-earned').textContent = totalEarned.toFixed(1);
+  document.getElementById('stat-correct').textContent    = correctCount;
+  document.getElementById('stat-wrong').textContent      = wrongCount;
+
+  document.getElementById('summary').style.display = 'block';
+  document.getElementById('summary').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── RESET ─────────────────────────────────────────────────────────────────────
+function doReset() {
+  examSubmitted = false;
+  userAnswers   = questions.map(q =>
+    q.type === 'K' ? q.statements.map(() => null) : []
+  );
+  secondsLeft = TOTAL_SECONDS;
+  clearInterval(timerInterval);
+  document.getElementById('timer').textContent = timeExtended ? '90:00' : '75:00';
+  document.getElementById('timer').className   = 'timer';
+  document.getElementById('answered-num').textContent = '0';
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('summary').style.display = 'none';
+  renderQuestions();
+  timerInterval = setInterval(tickTimer, 1000);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

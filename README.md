@@ -10,6 +10,7 @@ Interactive, browser-based mock exams for software testing and requirements engi
 |---|---|---|---|---|
 | [CT-GenAI ISTQB Sample V1.0](https://github.com/abdulosmande/certprep/blame/main/istqb/ct-genai/istqb_ct_genai_mock_exam_v1.0.html) | ISTQB Specialist Level: Certified Tester – Testing with Generative AI (CT-GenAI) | 40 | 46 | 30 pts |
 | [CT-GenAI ASTQB Sample](https://github.com/abdulosmande/certprep/blame/main/istqb/ct-genai/astqb_ct_genai_mock_exam.html) | ASTQB Certified Tester: Certified Tester – Testing with Generative AI (CT-GenAI) | 40 | 46 | 30 pts |
+| [IREB-CPRE Foundation level Sample](https://github.com/abdulosmande/certprep/blame/main/cpre/foundation/IREB_CPRE_FL_Questionnaire_Set_Public_DE_2025-09-11.html) | IREB Examination: Certified Professional for Requirements Engineering – Foundation Level | 46 | 70 | 49 pts |
 
 ## Features
 
