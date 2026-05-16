@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISTQB MAT — Übungsprüfung</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12; --surface: #0e1420; --card: #111827; --border: #1e2840;
+    --accent: #38bdf8; --accent2: #818cf8; --correct: #34d399;
+    --incorrect: #f87171; --warn: #fbbf24; --text: #cbd5e1;
+    --muted: #475569; --heading: #f1f5f9;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  #start-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(56,189,248,0.06) 0%, transparent 70%); }
+  .start-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 3.5rem 3rem; max-width: 540px; width: 100%; text-align: center; position: relative; overflow: hidden; }
+  .start-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(56,189,248,0.03) 0%, transparent 50%, rgba(129,140,248,0.03) 100%); pointer-events: none; border-radius: 20px; }
+  .start-badge { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.2); padding: 0.3rem 1rem; border-radius: 99px; display: inline-block; margin-bottom: 1.6rem; }
+  .start-card h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.9rem, 4.5vw, 2.8rem); font-weight: 800; color: var(--heading); line-height: 1.1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+  .start-card h1 em { font-style: normal; color: var(--accent); }
+  .start-subtitle { font-size: 0.88rem; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.7; }
+  .start-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 2.5rem; }
+  .meta-item { background: var(--surface); padding: 1.1rem 0.5rem; text-align: center; }
+  .meta-val { font-family: 'DM Mono', monospace; font-size: 1.35rem; font-weight: 500; color: var(--heading); display: block; }
+  .meta-lbl { font-size: 0.63rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.25rem; }
+  .btn-start { font-family: 'DM Mono', monospace; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.08em; padding: 1rem 2.5rem; background: var(--accent); color: #080c12; border: none; border-radius: 10px; cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; width: 100%; text-transform: uppercase; }
+  .btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(56,189,248,0.35); }
+  .start-note { font-size: 0.73rem; color: var(--muted); margin-top: 1rem; line-height: 1.6; }
+
+  .time-option-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.65rem; font-family: 'DM Mono', monospace; }
+  .time-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .time-opt { background: var(--surface); padding: 0.85rem 0.5rem; text-align: center; cursor: pointer; transition: background 0.18s, color 0.18s; border: none; width: 100%; font-family: 'DM Mono', monospace; color: var(--muted); }
+  .time-opt:first-child { border-right: 1px solid var(--border); }
+  .time-opt.active { background: rgba(56,189,248,0.12); color: var(--heading); }
+  .time-opt-val { font-size: 1.25rem; font-weight: 500; color: inherit; display: block; line-height: 1.2; }
+  .time-opt-lbl { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; display: block; opacity: 0.7; }
+  .time-opt.active .time-opt-val { color: var(--accent); }
+  .time-ext-note { font-size: 0.68rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; padding: 0.6rem 0.9rem; background: rgba(129,140,248,0.06); border: 1px solid rgba(129,140,248,0.15); border-radius: 8px; }
+
+  #exam-screen { display: none; }
+  header { background: rgba(11,16,28,0.96); border-bottom: 1px solid var(--border); padding: 0.85rem 2rem; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px); }
+  .header-inner { max-width: 920px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .header-left { display: flex; flex-direction: column; }
+  .exam-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .exam-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; }
+  .timer-block { display: flex; align-items: center; gap: 1rem; }
+  .timer { font-family: 'DM Mono', monospace; font-size: 2rem; font-weight: 500; color: var(--accent); letter-spacing: 0.04em; transition: color 0.3s; min-width: 95px; text-align: right; }
+  .timer.warn { color: var(--warn); }
+  .timer.danger { color: var(--incorrect); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .answered-count { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); text-align: right; line-height: 1.5; }
+  .answered-count span { color: var(--text); font-weight: 500; }
+  .header-buttons { display: flex; gap: 0.5rem; align-items: center; }
+  .progress-bar-wrap { max-width: 920px; margin: 0.5rem auto 0; height: 2px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 99px; transition: width 0.4s ease; width: 0%; }
+
+  main { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+  .exam-toolbar { margin-bottom: 1.5rem; }
+  .toolbar-info { font-size: 0.8rem; color: var(--muted); }
+  .toolbar-info strong { color: var(--text); }
+  .btn-submit { font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; padding: 0.5rem 1.2rem; background: var(--accent); color: #080c12; border: none; border-radius: 7px; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; text-transform: uppercase; white-space: nowrap; }
+  .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(56,189,248,0.3); }
+  .btn-secondary { font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; padding: 0.5rem 1rem; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 7px; cursor: pointer; transition: color 0.15s, border-color 0.15s; text-transform: uppercase; white-space: nowrap; }
+  .btn-secondary:hover { color: var(--text); border-color: var(--muted); }
+
+  .question-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; margin-bottom: 1rem; transition: border-color 0.25s; animation: fadeUp 0.2s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+  .question-card.correct-card   { border-color: rgba(52,211,153,0.4); }
+  .question-card.incorrect-card { border-color: rgba(248,113,113,0.4); }
+  .q-header { display: flex; gap: 0.9rem; align-items: flex-start; margin-bottom: 1.1rem; }
+  .q-meta { display: flex; flex-direction: column; gap: 0.3rem; flex-shrink: 0; }
+  .q-num { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; color: var(--accent); background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.18); border-radius: 5px; padding: 0.18rem 0.5rem; white-space: nowrap; }
+  .q-lo  { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--muted); background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
+  .q-pts { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--accent2); background: rgba(129,140,248,0.08); border: 1px solid rgba(129,140,248,0.18); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
+  .q-text { font-size: 0.92rem; color: var(--heading); line-height: 1.7; flex: 1; white-space: pre-wrap; }
+  .options { display: flex; flex-direction: column; gap: 0.45rem; }
+
+  .option-row { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.7rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: border-color 0.15s, background 0.15s; user-select: none; }
+  .option-row:hover:not(.disabled) { border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.03); }
+  .option-row.disabled { cursor: default; }
+  .option-marker { flex-shrink: 0; width: 17px; height: 17px; border-radius: 50%; border: 2px solid var(--border); background: transparent; margin-top: 2px; transition: border-color 0.15s, background 0.15s; display: flex; align-items: center; justify-content: center; }
+  .option-marker::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); opacity: 0; transition: opacity 0.15s; }
+  .option-row.selected { border-color: rgba(56,189,248,0.45); background: rgba(56,189,248,0.06); }
+  .option-row.selected .option-marker { border-color: var(--accent); }
+  .option-row.selected .option-marker::after { opacity: 1; }
+  .option-row.reveal-correct { border-color: var(--correct) !important; background: rgba(52,211,153,0.07) !important; }
+  .option-row.reveal-correct .option-marker { border-color: var(--correct); background: rgba(52,211,153,0.15); }
+  .option-row.reveal-correct .option-marker::after { background: var(--correct); opacity: 1; }
+  .option-row.reveal-wrong { border-color: var(--incorrect) !important; background: rgba(248,113,113,0.07) !important; }
+  .option-row.reveal-wrong .option-marker { border-color: var(--incorrect); background: rgba(248,113,113,0.15); }
+  .option-row.reveal-wrong .option-marker::after { background: var(--incorrect); opacity: 1; }
+  .option-text { font-size: 0.87rem; line-height: 1.55; color: var(--text); flex: 1; }
+
+  .result-tag { display: none; align-items: center; gap: 0.4rem; font-family: 'DM Mono', monospace; font-size: 0.67rem; font-weight: 500; letter-spacing: 0.04em; margin-top: 1rem; padding: 0.4rem 0.75rem; border-radius: 6px; }
+  .result-tag.show { display: flex; }
+  .result-tag.correct   { background: rgba(52,211,153,0.1);  color: var(--correct);   border: 1px solid rgba(52,211,153,0.25); }
+  .result-tag.incorrect { background: rgba(248,113,113,0.1); color: var(--incorrect); border: 1px solid rgba(248,113,113,0.25); }
+  .explanation { display: none; margin-top: 0.85rem; padding: 0.85rem 1rem; background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent2); border-radius: 0 6px 6px 0; font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+  .explanation.show { display: block; }
+
+  #summary { display: none; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 3rem 2.5rem; text-align: center; margin-top: 2rem; animation: fadeUp 0.4s ease; }
+  #summary h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--heading); margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+  .big-score { font-family: 'DM Mono', monospace; font-size: 4.8rem; font-weight: 500; color: var(--accent); line-height: 1; margin: 1rem 0 0.2rem; }
+  .sub { font-size: 0.86rem; color: var(--muted); margin-bottom: 0.6rem; }
+  .time-taken { font-family: 'DM Mono', monospace; font-size: 0.76rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .time-taken span { color: var(--text); }
+  .grade-badge { display: inline-block; padding: 0.4rem 1.2rem; border-radius: 8px; font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; margin-bottom: 2rem; }
+  .grade-badge.pass { background: rgba(52,211,153,0.12); color: var(--correct); border: 1px solid rgba(52,211,153,0.3); }
+  .grade-badge.fail { background: rgba(248,113,113,0.12); color: var(--incorrect); border: 1px solid rgba(248,113,113,0.3); }
+  .stat-row { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .stat .val { font-family: 'DM Mono', monospace; font-size: 1.7rem; font-weight: 500; color: var(--heading); }
+  .stat .lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.1rem; }
+
+  #confirm-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
+  #confirm-overlay.show { display: flex; }
+  .confirm-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; max-width: 420px; width: 90%; text-align: center; animation: fadeUp 0.22s ease; }
+  .confirm-box h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--heading); margin-bottom: 0.75rem; }
+  .confirm-box p { font-size: 0.86rem; color: var(--muted); margin-bottom: 1.75rem; line-height: 1.65; }
+  .confirm-btns { display: flex; gap: 0.75rem; justify-content: center; }
+  .btn-confirm-yes { font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; padding: 0.65rem 1.5rem; background: var(--accent); color: #080c12; border: none; border-radius: 8px; cursor: pointer; }
+  .btn-confirm-yes:hover { transform: translateY(-1px); }
+  .btn-confirm-no { font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; padding: 0.65rem 1.5rem; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; }
+  .btn-confirm-no:hover { color: var(--text); }
+
+  @media (max-width: 600px) {
+    header { padding: 0.75rem 1rem; }
+    main { padding: 1.25rem 0.9rem 3rem; }
+    .question-card { padding: 1.1rem 0.9rem; }
+    .start-card { padding: 2.5rem 1.5rem; }
+    .timer { font-size: 1.4rem; min-width: 75px; }
+    .stat-row { gap: 1.5rem; }
+    .start-meta { grid-template-columns: repeat(2, 1fr); }
+    .header-buttons { gap: 0.35rem; }
+    .btn-submit, .btn-secondary { font-size: 0.7rem; padding: 0.4rem 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="start-screen">
+  <div class="start-card">
+    <div class="start-badge">ISTQB Specialist Level</div>
+    <h1>Mobile Application<br><em>Tester</em></h1>
+    <p class="start-subtitle">ISTQB® Certified Tester Specialist – Mobile Application Tester (MAT) · Musterprüfung 2019 · Deutschsprachige Ausgabe. Der Timer startet, sobald Sie auf „Prüfung starten" klicken.</p>
+    <div class="start-meta">
+      <div class="meta-item"><span class="meta-val">40</span><div class="meta-lbl">Fragen</div></div>
+      <div class="meta-item"><span class="meta-val" id="meta-minutes">60</span><div class="meta-lbl">Minuten</div></div>
+      <div class="meta-item"><span class="meta-val">40</span><div class="meta-lbl">Punkte</div></div>
+      <div class="meta-item"><span class="meta-val">65%</span><div class="meta-lbl">Bestehen</div></div>
+    </div>
+
+    <div class="time-option-label">Zeitvorgabe</div>
+    <div class="time-toggle">
+      <button class="time-opt active" id="opt-standard" onclick="selectTime(false)">
+        <span class="time-opt-val">60 min</span>
+        <span class="time-opt-lbl">Standard</span>
+      </button>
+      <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+        <span class="time-opt-val">75 min</span>
+        <span class="time-opt-lbl">+15 min Verlängerung</span>
+      </button>
+    </div>
+    <div class="time-ext-note" id="ext-note" style="display:none;">
+      &#9432;&nbsp; Die 15-minütige Verlängerung gilt für Kandidaten, deren Muttersprache nicht die Prüfungssprache ist (gemäß ISTQB-Regelung).
+    </div>
+
+    <button class="btn-start" onclick="startExam()">&#9654; Prüfung starten</button>
+    <p class="start-note" id="start-note-txt">Der Timer läuft von 60:00 herunter. Bei Zeitablauf erfolgt automatische Abgabe.</p>
+  </div>
+</div>
+
+<!-- EXAM SCREEN -->
+<div id="exam-screen">
+  <header>
+    <div class="header-inner">
+      <div class="header-left">
+        <span class="exam-label">ISTQB MAT · Musterprüfung 2019</span>
+        <span class="exam-title">Mobile Application Tester</span>
+      </div>
+      <div class="timer-block">
+        <div class="answered-count"><span id="answered-num">0</span>/40 beantwortet</div>
+        <div class="timer" id="timer">60:00</div>
+        <div class="header-buttons">
+          <button class="btn-secondary" onclick="confirmReset()">&#8635; Reset</button>
+          <button class="btn-submit" onclick="confirmSubmit()">Abgeben</button>
+        </div>
+      </div>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill"></div></div>
+  </header>
+
+  <main>
+    <div class="exam-toolbar">
+      <div class="toolbar-info">40 Fragen · <strong>65% (≥ 26 von 40 Punkten)</strong> zum Bestehen · alle Fragen Einfachauswahl (1 Punkt)</div>
+    </div>
+    <div id="questions-container"></div>
+    <div id="summary">
+      <h2>Prüfung abgeschlossen</h2>
+      <div class="big-score" id="final-score-pct">—</div>
+      <div class="sub" id="final-score-raw"></div>
+      <div class="time-taken">Benötigte Zeit: <span id="time-used">—</span></div>
+      <div class="grade-badge" id="grade-badge"></div>
+      <div class="stat-row">
+        <div class="stat"><div class="val" id="stat-correct">—</div><div class="lbl">Richtig</div></div>
+        <div class="stat"><div class="val" id="stat-wrong">—</div><div class="lbl">Falsch</div></div>
+        <div class="stat"><div class="val" id="stat-skipped">—</div><div class="lbl">Offen</div></div>
+      </div>
+      <button class="btn-secondary" onclick="confirmReset()">&#8635; Neu starten</button>
+    </div>
+  </main>
+</div>
+
+<!-- CONFIRM OVERLAY -->
+<div id="confirm-overlay">
+  <div class="confirm-box">
+    <h3 id="confirm-title">Prüfung abgeben?</h3>
+    <p id="confirm-msg"></p>
+    <div class="confirm-btns">
+      <button class="btn-confirm-no" onclick="closeConfirm()">Abbrechen</button>
+      <button class="btn-confirm-yes" id="confirm-yes-btn" onclick="doConfirm()">Abgeben</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    id: 1, lo: 'MAT-1.1.1', k: 'K2', pts: 1,
+    text: 'Sie sind Qualitätsspezialist in einem Entwicklungsteam für mobile Applikationen. Für welchen der folgenden Zwecke wird die Analyse mobiler Nutzungsdaten in der Teststrategie oder im Testkonzept verwendet?',
+    options: [
+      'a) Zum Definieren der erwarteten Benutzerbasis der Applikation.',
+      'b) Zum Ableiten von Teststufen, Testfällen und Testdaten.',
+      'c) Zur Auswahl des Geräteportfolios und zur Priorisierung für die Testausführung.',
+      'd) Zur Auswahl des Applikationstyps und des zu befolgenden Entwicklungsmodells.'
+    ],
+    answer: [2],
+    explanation: 'Mobile Nutzungsdaten (z. B. welche Geräte, Betriebssysteme und Bildschirmauflösungen tatsächlich genutzt werden) fließen direkt in die Auswahl des Geräteportfolios und die Testpriorisierung ein.'
+  },
+  {
+    id: 2, lo: 'MAT-1.2.1', k: 'K2', pts: 1,
+    text: 'Ihr Team entwickelt eine kostenfreie App, mit der öffentlich zugängliche Nachrichten aus vom Benutzer ausgewählten Quellen gesammelt werden, sodass der Benutzer alle Nachrichten aus seinen Lieblingsquellen an einem einzigen Ort lesen kann. Welches der folgenden Geschäftsmodelle ist basierend auf diesen Informationen AM BESTEN geeignet?',
+    options: [
+      'a) Freemium App.',
+      'b) Anzeigenbasierte App.',
+      'c) Kostenpflichtige App.',
+      'd) Transaktionsbasierte App.'
+    ],
+    answer: [1],
+    explanation: 'Da die App kostenlos ist und Inhalte aggregiert (kein Verkauf, keine Transaktionen), ist das anzeigenbasierte Modell am naheliegendsten — Einnahmen werden durch das Einblenden von Werbung generiert.'
+  },
+  {
+    id: 3, lo: 'MAT-1.3.1', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Aussagen trifft auf Feature-Phones zu?',
+    options: [
+      'a) Feature-Phones bieten eingeschränkte Unterstützung für die Installation von Apps.',
+      'b) Feature-Phones ähneln Smartphones, sind jedoch größer.',
+      'c) Feature-Phones sind Smartphones der nächsten Generation mit erweiterten Funktionen.',
+      'd) Feature-Phones sind mit Kameras, GPS und anderen Sensoren ausgestattet.'
+    ],
+    answer: [0],
+    explanation: 'Feature-Phones sind einfache Mobiltelefone mit eingeschränkter Funktionalität. Sie bieten im Gegensatz zu Smartphones nur begrenzte oder keine Unterstützung für die Installation von Apps aus App-Stores.'
+  },
+  {
+    id: 4, lo: 'MAT-1.4.1', k: 'K2', pts: 1,
+    text: 'Ihr Team entwickelt ein Android-Spiel, das viele Gerätefunktionen wie Kamera, GPS und Geräteausrichtung nutzt. Welche der folgenden Antworten nennt den AM BESTEN geeigneten Applikationstyp, wenn die Verwendung gerätespezifischer Funktionen wesentlich ist?',
+    options: [
+      'a) Hybride Apps.',
+      'b) Mobile Web-Apps.',
+      'c) Native Apps.',
+      'd) Desktop-Apps.'
+    ],
+    answer: [2],
+    explanation: 'Native Apps haben direkten Zugriff auf gerätespezifische Hardware wie Kamera, GPS und Sensoren, da sie mit den plattformeigenen SDKs entwickelt werden. Hybride und Web-Apps haben nur eingeschränkten oder indirekten Zugriff.'
+  },
+  {
+    id: 5, lo: 'MAT-1.5.1', k: 'K2', pts: 1,
+    text: 'Welche Architekturentscheidungen passen zur jeweiligen Anwendung?\n\nA – Taschenlampen-App\nB – Chat-App\nC – Navigations-App\nD – Fernsehprogramm-App\n\n1 - Nie verbundene App\n2 - Teilstreckenverfahren\n3 - Immer verbundene App\n4 - Thin-Client',
+    options: [
+      'a) A4 - B2 - C1 - D3',
+      'b) A1 - B3 - C2 - D4',
+      'c) A4 - B4 - C2 - D3',
+      'd) A1 - B2 - C3 - D4'
+    ],
+    answer: [3],
+    explanation: 'Taschenlampe (A1): benötigt keine Verbindung. Chat (B2): Teilstrecke — Nachrichten können offline erstellt, dann gesendet werden. Navigation (C3): benötigt immer eine Verbindung für Echtzeit-Verkehrsdaten. TV-Programm (D4): Thin-Client, der Daten vom Server abruft.'
+  },
+  {
+    id: 6, lo: 'MAT-1.6.1', k: 'K3', pts: 1,
+    text: 'Ihre Analyse mobiler Nutzungsdaten zeigen, dass alle Ihre Benutzer das iPhone verwenden. Welche der folgenden Entscheidungen ist für Ihre Teststrategie AM BESTEN geeignet, wenn die App eine niedrige Risikostufe hat?',
+    options: [
+      'a) Einen Dienst für den Fernzugriff auf Geräte nutzen.',
+      'b) Den Einzelplattform-Ansatz verwenden.',
+      'c) Den Ansatz für maximale Überdeckung verwenden.',
+      'd) Ausschließlich iOS-Simulatoren verwenden.'
+    ],
+    answer: [1],
+    explanation: 'Da alle Nutzer iPhone verwenden und das Risiko niedrig ist, reicht der Einzelplattform-Ansatz (nur iOS) aus. Maximale Überdeckung wäre unverhältnismäßig aufwändig; nur Simulatoren sind bei niedrigem Risiko vertretbar, aber nicht die beste Option.'
+  },
+  {
+    id: 7, lo: 'MAT-1.7.1', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Antworten beschreibt KEINE Herausforderung beim Testen mobiler Apps?',
+    options: [
+      'a) Unbekannte Befehlsparameter für den Start der Applikation, die das Verhalten der Applikation ändern.',
+      'b) Verschiedene Benutzer und Benutzergruppen.',
+      'c) Mehrere Netzwerktypen und -anbieter.',
+      'd) Nichtverfügbarkeit von neu auf den Markt gebrachten Geräten, die den Einsatz von Emulatoren/Simulatoren erfordern.'
+    ],
+    answer: [0],
+    explanation: 'Unbekannte Befehlsparameter beim App-Start sind keine typische Herausforderung beim Testen mobiler Apps. Verschiedene Nutzergruppen, Netzwerkvielfalt und Geräteverfügbarkeit sind hingegen anerkannte Herausforderungen.'
+  },
+  {
+    id: 8, lo: 'MAT-1.8.1', k: 'K2', pts: 1,
+    text: 'Ein Unternehmen hat sich für das Crowdtesten entschieden. Welches der folgenden Risiken wird durch diese Entscheidung gemindert?',
+    options: [
+      'a) Nichtverfügbarkeit wichtiger Stakeholder während der Entwicklung.',
+      'b) Kosten für die Unterstützung mehrerer Plattformen.',
+      'c) Nichtverfügbarkeit wichtiger Geräte während des Tests.',
+      'd) Gute Bewertungen im App-Store des Plattformanbieters.'
+    ],
+    answer: [2],
+    explanation: 'Crowdtesting nutzt eine große Gemeinschaft von Testern mit verschiedensten realen Geräten — damit wird das Risiko gemindert, dass bestimmte wichtige Geräte nicht für Tests verfügbar sind.'
+  },
+  {
+    id: 9, lo: 'MAT-2.1.1', k: 'K2', pts: 1,
+    text: 'Welche nachstehend genannte Gerätehardware muss beim Testen einer nativen App zur Videokonferenz mit verschiedenen Gerätefunktionen bei der Testdurchführung AM WENIGSTEN Berücksichtigung finden?',
+    options: [
+      'a) Radioempfänger.',
+      'b) Integrierte Lautsprecher.',
+      'c) Integrierte Kamera.',
+      'd) Kopfhöreranschluss.'
+    ],
+    answer: [0],
+    explanation: 'Ein Radioempfänger ist für eine Videokonferenz-App irrelevant. Kamera, Lautsprecher und Kopfhöreranschluss sind hingegen direkt relevant für Audio- und Videoübertragung.'
+  },
+  {
+    id: 10, lo: 'MAT-2.1.3', k: 'K2', pts: 1,
+    text: 'Welche der folgenden potenziellen Auswirkungen wird NICHT durch eine Überhitzung eines Mobilgeräts beim Testen verursacht?',
+    options: [
+      'a) Die Applikation wird langsam.',
+      'b) Teile des Systems funktionieren nicht mehr.',
+      'c) Deinstallation der App.',
+      'd) Fehlerhafte Funktionalität von Apps.'
+    ],
+    answer: [2],
+    explanation: 'Überhitzung kann zu Verlangsamung, Systemausfällen und fehlerhafter Funktionalität führen, löst aber keine automatische Deinstallation einer App aus.'
+  },
+  {
+    id: 11, lo: 'MAT-2.1.4', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Aussagen ist KEIN gültiges Szenario zum Testen der Eingabesensoren eines Mobilgeräts?',
+    options: [
+      'a) Verifizieren der Empfangsqualität des GPS-Signals.',
+      'b) Verifizieren der korrekten Funktion des Gyroskops.',
+      'c) Validieren der vom Bewegungssensor bereitgestellten Daten.',
+      'd) Korrekte Bildschirmgröße im Quer- und Hochformat.'
+    ],
+    answer: [3],
+    explanation: 'Die Bildschirmgröße im Hoch- und Querformat ist kein Eingabesensor-Test, sondern ein Test der Displaydarstellung und der Orientierungsanpassung. GPS, Gyroskop und Bewegungssensor sind Eingabesensoren.'
+  },
+  {
+    id: 12, lo: 'MAT-2.1.5', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Antworten beschreibt Tests, die sich AUSSCHLIESSLICH auf verschiedene Eingabemethoden beziehen?',
+    options: [
+      'a) Wischen zum nächsten Bildschirm, Doppeltippen auf eine Schaltfläche, Scannen eines QR-Codes, Audioaufzeichnung.',
+      'b) Aufnehmen eines Fotos mit der Kamera, Verwenden der Bildschirmtastatur, Drucken des Bildschirminhalts, Verwenden der GPS-Koordinaten.',
+      'c) Objekt auf dem Bildschirm ziehen, Öffnen einer anderen App, Bilderfassung, Senden einer SMS an einen Freund.',
+      'd) Anzeigen von Geostandortdaten, Durchführen von Entfernungsmessungen, Verwenden einer TV-Fernbedienungs-App, Aufnehmen von Videos aus dem Internet.'
+    ],
+    answer: [0],
+    explanation: 'Wischen, Doppeltippen, QR-Code scannen und Audioaufzeichnung sind ausschließlich Eingabemethoden. Die anderen Optionen enthalten Ausgabeaktionen (Drucken, Anzeigen) oder systembezogene Aktionen.'
+  },
+  {
+    id: 13, lo: 'MAT-2.1.6', k: 'K2', pts: 1,
+    text: 'Sie arbeiten als Tester für mobile Applikationen für ein Unternehmen, das eine Navigations-App entwickelt. Eine der Anforderungen ist, dass die App sowohl im Hoch- als auch im Querformat ausgeführt wird und dem Benutzer in beiden Ausrichtungen dieselben Funktionen zur Verfügung stellt. Welche der folgenden Antworten listet die BESTEN Aspekte auf, die bei der Verifizierung der korrekten Funktionalität beim Ändern der Bildschirmausrichtung zu berücksichtigen sind?',
+    options: [
+      'a) Bewegungssensor, Sicherheitsprobleme, Richtigkeit der Ausgabedaten.',
+      'b) Gebrauchstauglichkeitsprobleme, Beibehaltung der Eingabedaten, Beibehaltung des aktuellen Zustands.',
+      'c) Mehrmaliges Umschalten der Bildschirmausrichtung, Probleme mit der Performanz, Funktionen der Benutzungsoberfläche.',
+      'd) WLAN-Unterbrechungen, Darstellungsprobleme in der grafischen Benutzungsoberfläche, Verlust eingegebener Daten.'
+    ],
+    answer: [1],
+    explanation: 'Beim Wechsel der Bildschirmausrichtung sind die Beibehaltung eingegebener Daten, der aktuelle App-Zustand und Gebrauchstauglichkeit die wichtigsten Aspekte. WLAN-Unterbrechungen und Sicherheitsprobleme sind keine ausrichtungsspezifischen Themen.'
+  },
+  {
+    id: 14, lo: 'MAT-2.1.7', k: 'K3', pts: 1,
+    text: 'Sie arbeiten als Testmanager für ein Bankunternehmen, das eine neue Version seiner Online-Banking-Software entwickelt. Diese Software wird als Web-App realisiert. Bei der Vorbereitung geeigneter Tests konzentrieren Sie sich auf die Fehlertoleranz der App in Bezug auf benutzerinitiierte Unterbrechungen. Welche drei der folgenden Testszenarien wären für diesen Zweck die BESTE Wahl?\n\ni. Batteriewarnungen anzeigen.\nii. Mobilgeräte in den Standby-Modus versetzen.\niii. Eingehende Sprachanrufe annehmen.\niv. Benachrichtigung über zu wenig Arbeitsspeicher.\nv. Gerät in den Nicht-Stören-Modus versetzen.',
+    options: [
+      'a) i – ii – iii',
+      'b) i – ii – iv',
+      'c) ii – iii – iv',
+      'd) ii – iii – v'
+    ],
+    answer: [3],
+    explanation: 'Benutzerinitierte Unterbrechungen sind: Standby-Modus (ii), eingehende Anrufe annehmen (iii) und Nicht-Stören-Modus (v). Batteriewarnungen (i) und Speichermeldungen (iv) sind systeminitiierte, nicht benutzerinitierte Unterbrechungen.'
+  },
+  {
+    id: 15, lo: 'MAT-2.1.8', k: 'K3', pts: 1,
+    text: 'Eine Krankenkasse hat eine aktualisierte Version ihrer Kunden-App veröffentlicht. Das Update enthält eine Funktion, mit der eine Apothekenrechnung gescannt und direkt an die Krankenkasse zur Zahlung gesendet werden kann. Als die Kunden das Update installierten, stellten sie jedoch fest, dass die Kamera nicht zum Scannen von Rechnungen aufgerufen werden konnte. Dieser Fehler wurde gemeldet und behoben. Jetzt müssen neue Tests entworfen und ausgeführt werden, und es müssen Fehlernachtests durchgeführt werden.\n\nWelcher der in den folgenden Antworten genannten Tests ist bei diesem Szenario der WICHTIGSTE?',
+    options: [
+      'a) Performanztest.',
+      'b) Testen der Barrierefreiheit.',
+      'c) Testen der Zugriffsberechtigung.',
+      'd) Testen der Installation.'
+    ],
+    answer: [2],
+    explanation: 'Der Fehler bestand darin, dass die Kamera nicht aufgerufen werden konnte — dies ist ein Problem der Zugriffsberechtigung (die App hatte keine oder falsche Berechtigungen für die Kamera). Der wichtigste Test ist daher das Testen der Zugriffsberechtigungen.'
+  },
+  {
+    id: 16, lo: 'MAT-2.2.1', k: 'K3', pts: 1,
+    text: 'Ihr Unternehmen bietet eine Nachrichten-App mit einer Benachrichtigungsfunktion zum Anzeigen aktueller Nachrichten mit einem Deep-Link zur entsprechenden Nachrichtenseite in der App. Kürzlich haben sich einige Nutzer der App darüber beschwert, dass zu erwartende Benachrichtigungen über hochaktuelle Nachrichten verzögert oder gar nicht angezeigt wurden. Die Grundursache für diesen Fehler wurde von den Entwicklern identifiziert und behoben. Welche funktionalen Tests würden Sie in Ihrer Rolle als Tester für mobile Applikationen vorsehen, um die ordnungsgemäße Funktion der behobenen Version der App zu validieren?\n\ni. Korrekte Anzeige der Benachrichtigung, wenn sich die App im Hintergrund befindet.\nii. Ausführen der Applikation bei schwachem Akku.\niii. Testen der Leistung der App, während die Benachrichtigung angezeigt wird.\niv. Durchführen von Gebrauchstauglichkeitstests für die behobene Version der App.\nv. Testen der Deep-Link-Funktion zur richtigen Nachrichtenseite der App.',
+    options: [
+      'a) i – iv – v',
+      'b) i – ii – iv',
+      'c) i – ii – v',
+      'd) ii – iii – iv'
+    ],
+    answer: [2],
+    explanation: 'Die relevanten funktionalen Tests sind: korrekte Anzeige der Benachrichtigung im Hintergrund (i), Verhalten bei schwachem Akku (ii, da dies Hintergrundprozesse beeinflussen kann) und die Deep-Link-Funktion (v). Gebrauchstauglichkeit (iv) und Leistungstests (iii) sind nicht primär funktional.'
+  },
+  {
+    id: 17, lo: 'MAT-2.2.2', k: 'K2', pts: 1,
+    text: 'Ihr Unternehmen entwickelt eine neue Version einer hybriden App für den Preisvergleich. Diese bietet Schnellzugriffsverknüpfungen zu umfassenden Funktionalitäten. Als Tester für mobile Applikationen ist es Ihre Aufgabe, die fehlerfreie Funktion dieser Schnellzugriffsverknüpfungen zu verifizieren. Welcher der folgenden Ansätze ist hierfür der BESTE?',
+    options: [
+      'a) Verifizieren des korrekten Verhaltens der Force Touch-Funktionalität der iOS-App.',
+      'b) Sicherstellen, dass die bevorzugten Lesezeichen in Mobile Chrome im Betriebssystem Android OS vorhanden sind.',
+      'c) Verifizieren, ob alle physischen Tasten eines mobilen Endgeräts wie erwartet funktionieren.',
+      'd) Verwenden eines geeigneten Werkzeugs zum Identifizieren defekter Links in der mobilen Web-App.'
+    ],
+    answer: [0],
+    explanation: 'Force Touch (iOS) bzw. App-Shortcuts sind die plattformeigene Implementierung von Schnellzugriffsverknüpfungen. Da es eine hybride App ist, ist die Verifikation der Force-Touch-Funktionalität der iOS-Plattform der beste Ansatz.'
+  },
+  {
+    id: 18, lo: 'MAT-2.2.4', k: 'K2', pts: 1,
+    text: 'Sie testen eine native iOS-App, die verschiedene Sensoren verwendet. Welche der folgenden Testarten trifft NICHT zu?',
+    options: [
+      'a) Performanztests.',
+      'b) Testen der Nutzung von Gerätefunktionen.',
+      'c) Browserübergreifendes Testen.',
+      'd) Testen der Gerätekompatibilität.'
+    ],
+    answer: [2],
+    explanation: 'Browserübergreifendes Testen ist nur für Web-Apps relevant, nicht für native iOS-Apps. Native Apps laufen nicht im Browser und müssen daher nicht auf verschiedene Browser getestet werden.'
+  },
+  {
+    id: 19, lo: 'MAT-2.2.5', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Testarten ist typisch für das Testen der Interoperabilität mit Betriebssystemversionen?',
+    options: [
+      'a) Testen auf Sicherheitsprobleme.',
+      'b) Testen auf Performanzprobleme.',
+      'c) Testen auf Einhaltung von Barrierefreiheitsstandards.',
+      'd) Testen der Abwärtskompatibilität.'
+    ],
+    answer: [3],
+    explanation: 'Interoperabilität mit verschiedenen Betriebssystemversionen bedeutet zu prüfen, ob die App auch auf älteren OS-Versionen funktioniert — das ist Abwärtskompatibilitätstesten.'
+  },
+  {
+    id: 20, lo: 'MAT-2.2.6', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Antworten beschreibt ein PRIMÄRES Testziel für das Testen der Koexistenz eines zu testenden Systems (SUT) mit anderen Apps auf dem Gerät?',
+    options: [
+      'a) Verifizieren, dass das SUT keine Benutzerdaten beschädigt.',
+      'b) Identifizieren vorhandener Sicherheitsprobleme beim Gerät.',
+      'c) Bewerten von Gebrauchstauglichkeitsproblemen im SUT.',
+      'd) Prüfen, ob das SUT die Barrierefreiheitsstandards erfüllt.'
+    ],
+    answer: [0],
+    explanation: 'Das primäre Ziel des Koexistenztestens ist die Verifikation, dass die App keine Daten anderer Apps beschädigt oder deren Funktionalität beeinträchtigt — also die Datensicherheit im Zusammenspiel mit anderen Apps.'
+  },
+  {
+    id: 21, lo: 'MAT-2.3.1', k: 'K2', pts: 1,
+    text: 'Sie entwickeln eine Testvorgehensweise für das Testen der Verbindungsfähigkeit auf verschiedenen mobilen Gerätetypen. Welche der folgenden Optionen sollten bei diesem Testansatz KEINE Berücksichtigung finden?',
+    options: [
+      'a) Das Wechseln von GSM in den Flugmodus und zurück zu GSM.',
+      'b) Das Initiieren eines Zahlungsvorgangs über NFC.',
+      'c) Die Nutzung von Bluetooth zum Koppeln mit Wearables.',
+      'd) Das Anschließen eines USB-Kabels an eine Stromversorgung.'
+    ],
+    answer: [3],
+    explanation: 'Das Anschließen eines USB-Kabels an eine Stromversorgung ist kein Test der Verbindungsfähigkeit (Konnektivität), sondern ein Ladevorgang. GSM, NFC und Bluetooth sind genuine Konnektivitätstechnologien.'
+  },
+  {
+    id: 22, lo: 'MAT-3.1.1', k: 'K3', pts: 1,
+    text: 'Sie haben die Aufgabe, Installationstests für eine Android-Applikation durchzuführen. Welcher der folgenden Installationstests sollte NICHT verwendet werden?',
+    options: [
+      'a) Ausführen der Datei App-Installer.exe auf dem mobilen Testgerät.',
+      'b) Das Gerät zur Installation an einen PC anschließen und Befehle für die Installation ausführen.',
+      'c) Installation aus dem Google Play Beta-Programm.',
+      'd) Sideloading durch Bereitstellen und Ausführen des Installationspakets auf einer SD-Karte.'
+    ],
+    answer: [0],
+    explanation: '.exe-Dateien sind Windows-Executables und können nicht auf Android-Geräten ausgeführt werden. Android verwendet .apk-Pakete. Die anderen Methoden (ADB, Google Play, Sideloading) sind valide Android-Installationswege.'
+  },
+  {
+    id: 23, lo: 'MAT-3.1.3', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Punkte sind potenzielle Sicherheitsprobleme für mobile Apps?\n\ni. Code-Injection über Eingabefelder.\nii. Unverschlüsselte Übertragung von Daten.\niii. App reagiert nicht nach einer Unterbrechung.\niv. Probleme beim Rendern nach Ändern der Geräteausrichtung.\nv. Überlappung von Bildschirmelementen auf kleinen Bildschirmen.',
+    options: [
+      'a) i und iii.',
+      'b) ii und v.',
+      'c) i und ii.',
+      'd) ii und iv.'
+    ],
+    answer: [2],
+    explanation: 'Code-Injection (i) und unverschlüsselte Datenübertragung (ii) sind klassische Sicherheitsprobleme. Die anderen Punkte (App-Absturz, Rendering-Fehler, UI-Überlappungen) sind Fehlfunktionen, aber keine Sicherheitsprobleme.'
+  },
+  {
+    id: 24, lo: 'MAT-3.1.4', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Vorgehensweisen werden Sie wahrscheinlich verwenden, um einen Performanztest des Zeitverhaltens einer App durchzuführen?',
+    options: [
+      'a) Instrumentierter Build, um genaue chronometrische Zahlen zu erhalten.',
+      'b) Lastgenerator zur Beobachtung des Serververhaltens unter hoher Last.',
+      'c) Ausführen der App auf einem Emulator/Simulator.',
+      'd) Ein Endgerät und eine Stoppuhr, um die Performanz des Geräts zu überprüfen.'
+    ],
+    answer: [0],
+    explanation: 'Ein instrumentierter Build ermöglicht präzise Zeitmessungen innerhalb der App durch eingebettete Messpunkte. Eine Stoppuhr ist zu ungenau; Emulatoren spiegeln keine echte Geräteleistung wider; Lastgeneratoren messen Serververhalten.'
+  },
+  {
+    id: 25, lo: 'MAT-3.1.5', k: 'K3', pts: 1,
+    text: 'Sie haben die Aufgabe, einen Gebrauchstauglichkeitstest für eine mobile App durchzuführen. Welchen der folgenden Schritte werden Sie NICHT ausführen?',
+    options: [
+      'a) Den Manager bitten, eine Testsitzung in einem Gebrauchstauglichkeitslabor zu reservieren.',
+      'b) Testen der App auf Konformität mit den Richtlinien für die Benutzungsschnittstellen.',
+      'c) Aktivieren der VoiceOver-Funktion des Geräts.',
+      'd) Informationen über die Erwartungen an das Look-and-Feel der Plattform einholen.'
+    ],
+    answer: [2],
+    explanation: 'VoiceOver ist eine Barrierefreiheitsfunktion für sehbehinderte Nutzer — sie gehört zum Barrierefreiheitstest, nicht zum Gebrauchstauglichkeitstest. Die anderen Schritte sind typische Gebrauchstauglichkeitstest-Aktivitäten.'
+  },
+  {
+    id: 26, lo: 'MAT-3.1.6', k: 'K1', pts: 1,
+    text: 'Wofür steht die Merkhilfe "CRUD" im Zusammenhang mit Datenvalidierungstests?',
+    options: [
+      'a) Copy, Rename, Update, Delete.',
+      'b) Create, Read, Undo, Delete.',
+      'c) Create, Read, Update, Delete.',
+      'd) Create, Read, Undo, Deploy.'
+    ],
+    answer: [2],
+    explanation: 'CRUD steht für Create, Read, Update, Delete — die vier grundlegenden Datenbankoperationen, die bei Datenvalidierungstests abgedeckt werden müssen.'
+  },
+  {
+    id: 27, lo: 'MAT-3.1.7', k: 'K2', pts: 1,
+    text: 'Sie führen Internationalisierungstests durch. Bei Ausführung der Tests sehen Sie teilweise Pseudo-Strings und teilweise englische Zeichenfolgen. Welche der folgenden Ursachen ist am WAHRSCHEINLICHSTEN?',
+    options: [
+      'a) Fehlende Übersetzungen.',
+      'b) Fest kodierte englische Zeichenfolgen.',
+      'c) Falsche Spracheinstellungen des Geräts.',
+      'd) Während des Builds ist ein Fehler aufgetreten.'
+    ],
+    answer: [1],
+    explanation: 'Pseudo-Strings entstehen beim Pseudolokalisierungs-Test, wenn Übersetzungsplatzhalter vorhanden sind. Wenn daneben noch englische Zeichenfolgen erscheinen, sind diese fest im Code einprogrammiert (hardcoded) und werden nicht aus der Übersetzungsdatei geladen.'
+  },
+  {
+    id: 28, lo: 'MAT-3.1.8', k: 'K2', pts: 1,
+    text: 'Warum sollten Tests der Barrierefreiheit bei mobilen Applikationen durchgeführt werden? Wählen Sie die BESTMÖGLICHSTE Antwort.',
+    options: [
+      'a) Um festzustellen, ob die App für Benutzer mit unterschiedlichen Bedürfnissen geeignet ist.',
+      'b) Weil es vom W3C Konsortium und von den jeweiligen Plattformanbietern verlangt wird.',
+      'c) Um die Applikation vollständig zu testen.',
+      'd) Da generische Testfälle existieren, die für jede Applikation ausgeführt werden müssen.'
+    ],
+    answer: [0],
+    explanation: 'Das primäre Ziel von Barrierefreiheitstests ist die Sicherstellung, dass die App für alle Nutzer — einschließlich Menschen mit Einschränkungen — nutzbar ist. Regulatorische Anforderungen (b) sind ein Nebenaspekt, nicht der Hauptzweck.'
+  },
+  {
+    id: 29, lo: 'MAT-3.2.2', k: 'K2', pts: 1,
+    text: 'Sie sind Tester in einem Team, das eine mobile App entwickelt. Ihr Team hat die aktuelle Version der App fertiggestellt und für den App-Store freigegeben. Welche der folgenden Aktivitäten ist Ihre nächste?',
+    options: [
+      'a) Archivieren der Testmittel.',
+      'b) Post-Release-Test.',
+      'c) App-Store Freigabetests.',
+      'd) Abschluss der Testaktivitäten.'
+    ],
+    answer: [1],
+    explanation: 'Nach der Freigabe für den App-Store folgen Post-Release-Tests, um sicherzustellen, dass die App in der realen Produktionsumgebung wie erwartet funktioniert. Testmittel werden archiviert und Aktivitäten abgeschlossen, aber erst nach den Post-Release-Tests.'
+  },
+  {
+    id: 30, lo: 'MAT-3.3.1', k: 'K1', pts: 1,
+    text: 'Sie sind ein neues Mitglied in einem Team, das mobile Applikationen testet. Ihr Teamleiter bittet Sie, folgendes jeweils 1 Stunde lang zu testen: Eingaben in die App, Funktionen der App, Unterbrechungen, usw. Welche der folgenden Methoden wendet der Teamleiter an?',
+    options: [
+      'a) Risikoorientiertes Testmanagement',
+      'b) Übertragung seiner Verantwortung an Sie.',
+      'c) Steuerung von Performanztests.',
+      'd) Sitzungsbasiertes Testmanagement.'
+    ],
+    answer: [3],
+    explanation: 'Sitzungsbasiertes Testmanagement (Session-Based Test Management) unterteilt explorative Tests in zeitlich begrenzte Sitzungen mit definierten Themen — genau das beschreibt das Szenario mit den 1-Stunden-Slots pro Testbereich.'
+  },
+  {
+    id: 31, lo: 'MAT-3.3.2', k: 'K2', pts: 1,
+    text: 'Bei welcher der folgenden Testmethoden handelt es sich um eine effektive Methode zur Durchführung von Feldtests?',
+    options: [
+      'a) Verwendung von Touren als eine Art explorativer Testverfahren.',
+      'b) Verwendung eines Vor-Ort-Labors für die Ausführung von Tests auf verschiedenen Smartphones.',
+      'c) Verwendung eines Cloud-basierten Vorgehens.',
+      'd) Verwendung eines Testwerkzeugs, um automatisierte Tests auf mobilen Browsern durchzuführen.'
+    ],
+    answer: [0],
+    explanation: 'Feldtests werden in realen Nutzungsumgebungen durchgeführt. Touren als exploratives Testverfahren sind dabei besonders geeignet, da sie strukturierte, aber flexible Erkundung realer Nutzungsszenarien ermöglichen.'
+  },
+  {
+    id: 32, lo: 'MAT-3.4.2', k: 'K2', pts: 1,
+    text: 'Warum wird beim Testen mobiler Applikationen die Testpyramide häufig umgedreht?',
+    options: [
+      'a) Komponententests sind bei mobilen Apps viel komplizierter. Daher ist es zweckmäßig, nur wenige Komponententests durchzuführen.',
+      'b) Aufgrund fehlender Werkzeugunterstützung für Komponenten- und Integrationstests für mobile Apps.',
+      'c) Mobile Apps sind immer monolithisch. Daher kann alles auf Systemebene getestet werden, und es ist nicht erforderlich, auf niedrigeren Teststufen zu testen.',
+      'd) Mobile Apps erfordern viele manuelle Tests, genau wie Gebrauchstauglichkeits- oder Feldtests.'
+    ],
+    answer: [3],
+    explanation: 'Bei mobilen Apps sind viele Tests — insbesondere Gebrauchstauglichkeits-, Feld- und Gerätetests — nur manuell durchführbar. Dadurch verschiebt sich das Verhältnis zugunsten manueller Tests auf höheren Teststufen, was die Pyramide umkehrt.'
+  },
+  {
+    id: 33, lo: 'MAT-4.1.1', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Aussagen über die Entwicklungsumgebungen zur Entwicklung mobiler Applikationen ist richtig?',
+    options: [
+      'a) iOS-Entwickler verwenden Visual Studio IDE als Entwicklungsumgebung.',
+      'b) Android-Entwickler verwenden die Universal Studio IDE, während iOS-Entwickler Xcode als Entwicklungsumgebung verwenden.',
+      'c) Android-Entwickler verwenden die Xcode IDE als Entwicklungsumgebung.',
+      'd) iOS-Entwickler verwenden die Xcode IDE als Entwicklungsumgebung.'
+    ],
+    answer: [3],
+    explanation: 'Xcode ist die offizielle IDE von Apple für die iOS- und macOS-Entwicklung. Android-Entwickler nutzen Android Studio (nicht Xcode oder Universal Studio).'
+  },
+  {
+    id: 34, lo: 'MAT-4.2.1', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Aufgaben kann in der Regel NICHT mit einem Software Development Kit (SDK) für mobile Applikationen ausgeführt werden?',
+    options: [
+      'a) Erstellen von Screenshots.',
+      'b) Entwerfen von Testfällen.',
+      'c) Senden zufälliger Ereignisse an die Applikation.',
+      'd) Erstellen virtueller Geräte.'
+    ],
+    answer: [1],
+    explanation: 'Das Entwerfen von Testfällen ist eine analytische, menschliche Aktivität und keine technische SDK-Funktion. SDKs bieten technische Werkzeuge wie Screenshot-Erstellung, Ereignissimulation und Emulator-Erstellung.'
+  },
+  {
+    id: 35, lo: 'MAT-4.3.1', k: 'K2', pts: 1,
+    text: 'Sie haben als Tester die Aufgabe, eine mobile App mit einer Client-Server-Architektur zu testen. Um die verfügbare Hardware besser nutzen zu können, beschließt das Unternehmen, zum Testen der grundlegenden Funktionen in den frühen Testphasen den PC des Mitarbeiters zu verwenden, ohne dass die Applikation mit einem echten Server verbunden ist.\n\nWelche der beschriebenen Testumgebungen sollte - gemäß Ihrer Empfehlung - der Entwickler der Android App in den frühen Testphasen der Entwicklung verwenden?',
+    options: [
+      'a) Den Server-Emulator auf dem PC des Entwicklers und den Simulator der mobilen Applikation auf einem echten Endgerät installieren.',
+      'b) Den Simulator der mobilen App auf einem der Android Virtual Device (AVD) Geräteemulatoren und den Server-Emulator auf dem PC des Entwicklers installieren.',
+      'c) Den Server-Simulator auf dem PC des Entwicklers und die mobile Applikation auf einem der Android Virtual Device (AVD) Geräteemulatoren installieren.',
+      'd) Den Server-Simulator und die emulierte mobile Applikation direkt auf dem PC des Entwicklers installieren.'
+    ],
+    answer: [2],
+    explanation: 'In frühen Testphasen auf dem Entwickler-PC: Der Server-Simulator läuft auf dem PC, die mobile App auf einem AVD (Android Virtual Device Emulator) — so wird keine echte Hardware benötigt und die Grundfunktionen können effizient getestet werden.'
+  },
+  {
+    id: 36, lo: 'MAT-4.4.1', k: 'K2', pts: 1,
+    text: 'Sie sind Testmanager im Geschäftsbereich Digitales Banking eines Fintech-Unternehmens, das mit der Aktualisierung der Android-basierten Mobile-Banking-App eines mittelständischen Finanzinstituts beauftragt ist. Das Upgrade beinhaltet einen innovativen Sicherheitsmechanismus, der Fingerabdruck- und Gesichtserkennungsfunktionen für eine verbesserte Sicherheit der App verwendet.\n\nWelcher der folgenden Ansätze ist für die Einrichtung eines Testlabors zum Testen dieses Upgrades der BESTE?',
+    options: [
+      'a) Einrichtung eines entlegenen Testlabors, um die neue innovative Mobile-Banking-App auf möglichst vielen Gerätetypen zu testen.',
+      'b) Einrichtung eines Vor-Ort-Labors, um die neuen einzigartigen gerätebezogenen Funktionen der innovativen Mobile-Banking-App effektiv zu testen.',
+      'c) Einrichtung eines entlegenen Testlabors, um die Mobile-Banking-App auf vielen verschiedenen Gerätetypen zu testen, sowie eines Vor-Ort-Labor, um die größtmögliche Zahl der möglichen Geräte abzudecken.',
+      'd) Einrichtung eines entlegenen Testlabors, um die neue innovative Mobile-Banking-App auf vielen Android Gerätetypen verschiedener Gerätehersteller zu testen, und um Kosten für das Unternehmen zu sparen.'
+    ],
+    answer: [1],
+    explanation: 'Fingerabdruck- und Gesichtserkennung sind biometrische, gerätespezifische Funktionen, die physische Sensoren erfordern und nicht remote simuliert werden können. Ein Vor-Ort-Labor mit echten Geräten ist daher zwingend notwendig.'
+  },
+  {
+    id: 37, lo: 'MAT-5.1.1', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Aussagen unterscheidet NICHT korrekt zwischen den gängigen Testautomatisierungsansätzen für das Testen mobiler Applikationen?',
+    options: [
+      'a) Agent-basierte Testansätze eignen sich am besten zum Ausführen mobiler Web-Apps, während gerätebasierte Tests für alle Arten mobiler Applikationen am besten geeignet sind.',
+      'b) Der Agent-basierte Testansatz verwendet eine vom Browser gesendete Zeichenkette, um einem Browser ein bestimmtes Gerät vorzutäuschen, während der gerätebasierte Testansatz auf einem bestimmten mobilen Endgerät ausgeführt werden muss.',
+      'c) Native Apps lassen sich am besten mit den allgemeinen Webapplikations-Automatisierungswerkzeugen testen, während mobile Apps spezifische Werkzeuge benötigen.',
+      'd) Die Funktionsweise des Agent-basierten Testansatzes besteht darin, die Browsereigenschaften zu imitieren, während die Funktionsweise des gerätebasierten Testansatzes auf dem tatsächlichen Browser basiert.'
+    ],
+    answer: [2],
+    explanation: 'Native Apps können NICHT mit allgemeinen Web-Automatisierungswerkzeugen getestet werden — sie benötigen plattformspezifische Werkzeuge (z. B. XCUITest für iOS, Espresso für Android). Diese Aussage ist daher falsch und korrekt ist die Antwort c).'
+  },
+  {
+    id: 38, lo: 'MAT-5.2.1', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Aussagen ist WAHR in Bezug auf die Skripterstellungsmethoden, die bei der Automatisierung mobiler Tests verwendet werden?',
+    options: [
+      'a) Das Erstellen von Skripten mithilfe der Objektidentifikation ist schneller als mithilfe der visuellen Erkennung und reduziert daher den für die Testausführung insgesamt erforderlichen Zeitaufwand.',
+      'b) Die objektbasierte Skripterstellung ist die zuverlässigere Methode zum Erstellen von Testautomatisierungscode, da das Testframework das richtige Objekt der mobilen Applikation unabhängig von dem zu testenden Gerät automatisch zuordnen kann.',
+      'c) Wenn Objektidentifizierung bei der Skripterstellung verwendet wird, erhöht dies den laufenden Wartungsaufwand, wenn sich der Softwarecode der App häufig ändert, und sich das auf die Vergleichsbilder auswirkt.',
+      'd) Wenn man sich bei der Skripterstellung auf optische Zeichenerkennung/Texterkennung und Objektelernen verlässt, stellt dies kein Risiko für die Zuverlässigkeit oder Robustheit der Testautomatisierung dar.'
+    ],
+    answer: [1],
+    explanation: 'Die objektbasierte Skripterstellung ist zuverlässiger, weil sie auf eindeutige Objekt-IDs zugreift, die unabhängig vom Gerät konsistent sind. Visuelle Erkennung (OCR) ist anfälliger für Abweichungen in Darstellung und Auflösung.'
+  },
+  {
+    id: 39, lo: 'MAT-5.3.1', k: 'K1', pts: 1,
+    text: 'Welcher der folgenden Faktoren spielt bei der Bewertung von Testautomatisierungswerkzeugen für das Testen mobiler Applikationen KEINE große Rolle?',
+    options: [
+      'a) Die Testautomatisierungsfähigkeiten der Tester, die das Werkzeug verwenden werden.',
+      'b) Die Automatisierungsanforderungen und -komplexitäten, z.B. die Verwendung neuer Funktionen wie FaceID, Fingerprint, Chatbots durch die App.',
+      'c) Es ist wichtig, Automatisierungsanforderungen und -komplexitäten zu berücksichtigen.',
+      'd) Fähigkeit des Testframeworks, unabhängig von anderen in der Organisation verwendeten Werkzeugen zu arbeiten.'
+    ],
+    answer: [3],
+    explanation: 'Die Unabhängigkeit eines Werkzeugs von anderen Organisationswerkzeugen spielt bei der Bewertung eine untergeordnete Rolle — im Gegenteil ist die Integration in bestehende Toolchains oft ein wichtiges Kriterium. Die anderen Faktoren (Testerkompetenzen, Anforderungskomplexität) sind zentrale Bewertungskriterien.'
+  },
+  {
+    id: 40, lo: 'MAT-5.4.1', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Aussagen spricht AM WENIGSTEN für die Verwendung eines entlegenen Testlabors?',
+    options: [
+      'a) Tests in späteren Phasen der App-Entwicklung, die in einem vollständigen Mobilgeräte-Testlabor durchgeführt werden müssen, werden am besten mit einem entlegenen Testlabor durchgeführt.',
+      'b) Ein entlegenes Mobilgeräte-Testlabor deckt höchstwahrscheinlich einen kleinen Satz der neuesten Geräte-/Betriebssystemkonfigurationen ab, damit Entwickler und Tester die frühen Entwurfsphasen der App schnell validieren können.',
+      'c) Entlegene Mobilgeräte-Testlabore stellen sicher, dass eine ausreichende Vielfalt an Geräten und Betriebssystemen zur Verfügung steht, damit Teams eine größere Vielfalt an Testgeräten für ihre Tests nutzen können.',
+      'd) Entlegene Labore sind besser für umfangreiche Tests geeignet, da sie in der Regel entworfen wurden, um sicherzustellen, dass Stabilitätsprobleme in den meisten Fällen aus dem Gesamtprozess eliminiert werden.'
+    ],
+    answer: [1],
+    explanation: 'Aussage b) beschreibt einen Nachteil (kleiner Gerätesatz), nicht einen Vorteil entlegener Testlabore — sie spricht also am wenigsten für deren Verwendung. Die anderen Aussagen beschreiben genuine Vorteile.'
+  }
+];
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+const BASE_SECONDS = 60 * 60;
+const EXT_SECONDS  = 75 * 60;
+let timeExtended  = false;
+let TOTAL_SECONDS = BASE_SECONDS;
+let userAnswers   = questions.map(() => []);
+let timerInterval = null;
+let secondsLeft   = TOTAL_SECONDS;
+let examSubmitted = false;
+let pendingAction = null;
+
+function selectTime(extended) {
+  timeExtended  = extended;
+  TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+  document.getElementById('opt-standard').classList.toggle('active', !extended);
+  document.getElementById('opt-extended').classList.toggle('active',  extended);
+  document.getElementById('meta-minutes').textContent = extended ? '75' : '60';
+  document.getElementById('ext-note').style.display   = extended ? 'block' : 'none';
+  document.getElementById('start-note-txt').textContent = extended
+    ? 'Der Timer läuft von 75:00 herunter (60 min + 15 min Verlängerung). Bei Zeitablauf erfolgt automatische Abgabe.'
+    : 'Der Timer läuft von 60:00 herunter. Bei Zeitablauf erfolgt automatische Abgabe.';
+}
+
+function startExam() {
+  secondsLeft = TOTAL_SECONDS;
+  document.getElementById('timer').textContent = timeExtended ? '75:00' : '60:00';
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('exam-screen').style.display  = 'block';
+  renderQuestions();
+  timerInterval = setInterval(tickTimer, 1000);
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+            .replace(/"/g,'&quot;').replace(/\n/g,'<br>');
+}
+
+function renderQuestions() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'card-' + qi;
+    card.style.animationDelay = (qi * 0.012) + 's';
+    const opts = q.options.map((opt, oi) => `
+      <div class="option-row" id="opt-${qi}-${oi}" data-qi="${qi}" data-oi="${oi}">
+        <input type="radio" name="q${qi}" id="inp-${qi}-${oi}"
+               style="position:absolute;opacity:0;pointer-events:none;">
+        <span class="option-marker"></span>
+        <span class="option-text">${escHtml(opt)}</span>
+      </div>`).join('');
+    card.innerHTML = `
+      <div class="q-header">
+        <div class="q-meta">
+          <span class="q-num">F${q.id}</span>
+          <span class="q-lo">${q.lo}</span>
+          <span class="q-pts">1 Pkt</span>
+        </div>
+        <div class="q-text">${escHtml(q.text)}</div>
+      </div>
+      <div class="options">${opts}</div>
+      <div class="result-tag" id="result-${qi}"></div>
+      <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>`;
+    container.appendChild(card);
+  });
+  document.querySelectorAll('.option-row').forEach(row => {
+    row.addEventListener('click', function () {
+      if (examSubmitted) return;
+      const qi = parseInt(this.dataset.qi);
+      const oi = parseInt(this.dataset.oi);
+      questions[qi].options.forEach((_, i) => {
+        document.getElementById('inp-' + qi + '-' + i).checked = false;
+      });
+      document.getElementById('inp-' + qi + '-' + oi).checked = true;
+      syncAnswer(qi);
+    });
+  });
+}
+
+function syncAnswer(qi) {
+  userAnswers[qi] = [];
+  questions[qi].options.forEach((_, oi) => {
+    if (document.getElementById('inp-' + qi + '-' + oi).checked) userAnswers[qi].push(oi);
+  });
+  questions[qi].options.forEach((_, oi) => {
+    document.getElementById('opt-' + qi + '-' + oi)
+      .classList.toggle('selected', userAnswers[qi].includes(oi));
+  });
+  updateProgress();
+}
+
+function updateProgress() {
+  const answered = userAnswers.filter(a => a.length > 0).length;
+  document.getElementById('answered-num').textContent = answered;
+  document.getElementById('progress-fill').style.width = (answered / questions.length * 100) + '%';
+}
+
+function tickTimer() {
+  if (secondsLeft <= 0) { doSubmit(true); return; }
+  secondsLeft--;
+  const m = Math.floor(secondsLeft / 60), s = secondsLeft % 60;
+  const el = document.getElementById('timer');
+  el.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  if      (secondsLeft <= 300) el.className = 'timer danger';
+  else if (secondsLeft <= 900) el.className = 'timer warn';
+  else                         el.className = 'timer';
+}
+
+function confirmSubmit() {
+  const answered   = userAnswers.filter(a => a.length > 0).length;
+  const unanswered = questions.length - answered;
+  document.getElementById('confirm-title').textContent = 'Prüfung abgeben?';
+  document.getElementById('confirm-msg').innerHTML = unanswered > 0
+    ? `Sie haben noch <strong style="color:var(--warn)">${unanswered} unbeantwortete Frage${unanswered>1?'n':''}</strong>. Unbeantwortete Fragen ergeben 0 Punkte.<br><br>Trotzdem abgeben?`
+    : `Alle ${questions.length} Fragen beantwortet. Prüfung jetzt abgeben?`;
+  document.getElementById('confirm-yes-btn').textContent = 'Abgeben';
+  pendingAction = 'submit';
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function confirmReset() {
+  document.getElementById('confirm-title').textContent = 'Prüfung neu starten?';
+  document.getElementById('confirm-msg').innerHTML = 'Alle Antworten gehen verloren. Der Timer wird auf ' + (timeExtended ? '75:00' : '60:00') + ' zurückgesetzt.<br><br>Sicher?';
+  document.getElementById('confirm-yes-btn').textContent = 'Neu starten';
+  pendingAction = 'reset';
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function closeConfirm() {
+  document.getElementById('confirm-overlay').classList.remove('show');
+  pendingAction = null;
+}
+
+function doConfirm() {
+  if (pendingAction === 'submit') doSubmit(false);
+  else if (pendingAction === 'reset') doReset();
+  closeConfirm();
+}
+
+function doSubmit(timedOut) {
+  if (examSubmitted) return;
+  examSubmitted = true;
+  clearInterval(timerInterval);
+  closeConfirm();
+
+  let correct = 0, wrong = 0, skipped = 0;
+  const total = questions.length;
+
+  questions.forEach((q, qi) => {
+    const given     = userAnswers[qi];
+    const isCorrect = given.length === 1 && given[0] === q.answer[0];
+    if (given.length === 0) skipped++;
+    else if (isCorrect) correct++;
+    else wrong++;
+
+    q.options.forEach((_, oi) => {
+      const row = document.getElementById('opt-' + qi + '-' + oi);
+      if (!row) return;
+      row.classList.add('disabled');
+      row.classList.remove('selected');
+      if (q.answer.includes(oi))           row.classList.add('reveal-correct');
+      else if (given.includes(oi))         row.classList.add('reveal-wrong');
+    });
+
+    const rt   = document.getElementById('result-' + qi);
+    const expl = document.getElementById('expl-' + qi);
+    const card = document.getElementById('card-' + qi);
+    rt.classList.add('show');
+    expl.classList.add('show');
+    if (given.length === 0) {
+      rt.classList.add('incorrect');
+      rt.innerHTML = '&mdash; Nicht beantwortet &middot; Korrekt: ' + String.fromCharCode(65 + q.answer[0]);
+      card.classList.add('incorrect-card');
+    } else if (isCorrect) {
+      rt.classList.add('correct');
+      rt.innerHTML = '&#10003; Richtig (+1 Pkt)';
+      card.classList.add('correct-card');
+    } else {
+      rt.classList.add('incorrect');
+      rt.innerHTML = '&#10007; Falsch &middot; Korrekt: ' + String.fromCharCode(65 + q.answer[0]);
+      card.classList.add('incorrect-card');
+    }
+  });
+
+  const pct  = Math.round(correct / total * 100);
+  const pass = pct >= 65;
+  const usedSec = TOTAL_SECONDS - secondsLeft;
+  const um = Math.floor(usedSec / 60), us = usedSec % 60;
+  const totalLabel = timeExtended ? '75:00' : '60:00';
+  const timeStr = timedOut
+    ? totalLabel + ' (Zeit abgelaufen)'
+    : String(um).padStart(2,'0') + ':' + String(us).padStart(2,'0');
+
+  if (timedOut) { const el = document.getElementById('timer'); el.textContent = '00:00'; el.className = 'timer danger'; }
+
+  document.getElementById('final-score-pct').textContent = pct + '%';
+  document.getElementById('final-score-raw').textContent = correct + ' von ' + total + ' Punkten';
+  document.getElementById('time-used').textContent = timeStr;
+  const badge = document.getElementById('grade-badge');
+  badge.textContent = pass ? '✓ BESTANDEN (≥ 65%)' : '✗ NICHT BESTANDEN (< 65%)';
+  badge.className   = 'grade-badge ' + (pass ? 'pass' : 'fail');
+  document.getElementById('stat-correct').textContent = correct;
+  document.getElementById('stat-wrong').textContent   = wrong;
+  document.getElementById('stat-skipped').textContent = skipped;
+
+  document.getElementById('summary').style.display = 'block';
+  document.getElementById('summary').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function doReset() {
+  examSubmitted = false;
+  userAnswers   = questions.map(() => []);
+  secondsLeft   = TOTAL_SECONDS;
+  clearInterval(timerInterval);
+  document.getElementById('timer').textContent = timeExtended ? '75:00' : '60:00';
+  document.getElementById('timer').className   = 'timer';
+  document.getElementById('answered-num').textContent = '0';
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('summary').style.display = 'none';
+  renderQuestions();
+  timerInterval = setInterval(tickTimer, 1000);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
