@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ISTQB CTFL v4.0 — Probeprüfung SET A</title>
+<title>ISTQB MAT — Übungsprüfung</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -76,18 +76,6 @@
   .q-lo  { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--muted); background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
   .q-pts { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--accent2); background: rgba(129,140,248,0.08); border: 1px solid rgba(129,140,248,0.18); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
   .q-text { font-size: 0.92rem; color: var(--heading); line-height: 1.7; flex: 1; white-space: pre-wrap; }
-
-  /* Optional image per question */
-  .q-image { display: block; max-width: 100%; height: auto; margin: 1rem 0 1.1rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); }
-
-  /* Optional table per question */
-  .q-table-wrap { margin: 1rem 0 1.1rem; overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
-  .q-table-wrap table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
-  .q-table-wrap th { background: rgba(56,189,248,0.08); color: var(--heading); font-family: 'DM Mono', monospace; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em; text-align: left; padding: 0.55rem 0.85rem; border-bottom: 1px solid var(--border); white-space: nowrap; }
-  .q-table-wrap td { color: var(--text); padding: 0.5rem 0.85rem; border-bottom: 1px solid rgba(30,40,64,0.5); vertical-align: top; line-height: 1.5; }
-  .q-table-wrap tr:last-child td { border-bottom: none; }
-  .q-table-wrap tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
-
   .options { display: flex; flex-direction: column; gap: 0.45rem; }
 
   .option-row { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.7rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: border-color 0.15s, background 0.15s; user-select: none; }
@@ -155,9 +143,9 @@
 <!-- START SCREEN -->
 <div id="start-screen">
   <div class="start-card">
-    <div class="start-badge">ISTQB Foundation Level</div>
-    <h1>CTFL v4.0<br><em>Probeprüfung</em></h1>
-    <p class="start-subtitle">ISTQB® Certified Tester Foundation Level v4.0 · SET A v2.2 · GTB Edition · Lehrplan CTFL v4.0. Der Timer startet, sobald Sie auf „Prüfung starten" klicken.</p>
+    <div class="start-badge">ISTQB Specialist Level</div>
+    <h1>Mobile Application<br><em>Tester</em></h1>
+    <p class="start-subtitle">ISTQB® Certified Tester Specialist – Mobile Application Tester (MAT) · Musterprüfung 2019 · Deutschsprachige Ausgabe. Der Timer startet, sobald Sie auf „Prüfung starten" klicken.</p>
     <div class="start-meta">
       <div class="meta-item"><span class="meta-val">40</span><div class="meta-lbl">Fragen</div></div>
       <div class="meta-item"><span class="meta-val" id="meta-minutes">60</span><div class="meta-lbl">Minuten</div></div>
@@ -190,8 +178,8 @@
   <header>
     <div class="header-inner">
       <div class="header-left">
-        <span class="exam-label">ISTQB CTFL v4.0 · SET A v2.2 · GTB Edition</span>
-        <span class="exam-title">Certified Tester Foundation Level</span>
+        <span class="exam-label">ISTQB MAT · Musterprüfung 2019</span>
+        <span class="exam-title">Mobile Application Tester</span>
       </div>
       <div class="timer-block">
         <div class="answered-count"><span id="answered-num">0</span>/40 beantwortet</div>
@@ -241,512 +229,484 @@
 <script>
 const questions = [
   {
-    id: 1, lo: 'FL-1.1.1', k: 'K1', pts: 1,
-    text: 'Welche der folgenden Aussagen beschreibt ein erreichbares Testziel?\n\nWählen Sie EINE Option! (1 aus 4)',
+    id: 1, lo: 'MAT-1.1.1', k: 'K2', pts: 1,
+    text: 'Sie sind Qualitätsspezialist in einem Entwicklungsteam für mobile Applikationen. Für welchen der folgenden Zwecke wird die Analyse mobiler Nutzungsdaten in der Teststrategie oder im Testkonzept verwendet?',
     options: [
-      'a) Es lässt sich nachweisen, dass das zu prüfende System keine Fehlerzustände mehr hat.',
-      'b) Es lässt sich nachweisen, dass es nach der produktiven Inbetriebnahme des Systems keine Fehlerwirkungen geben wird.',
-      'c) Die Risikostufe des Testobjekts ist verringert und Vertrauen in das Qualitätsniveau ist aufgebaut.',
-      'd) Durch eine Überprüfung lässt sich feststellen, dass alle Kombinationen von Eingabewerten getestet wurden.'
+      'a) Zum Definieren der erwarteten Benutzerbasis der Applikation.',
+      'b) Zum Ableiten von Teststufen, Testfällen und Testdaten.',
+      'c) Zur Auswahl des Geräteportfolios und zur Priorisierung für die Testausführung.',
+      'd) Zur Auswahl des Applikationstyps und des zu befolgenden Entwicklungsmodells.'
     ],
     answer: [2],
-    explanation: 'a) FALSCH – Es ist unmöglich zu beweisen, dass das System keine Fehlerzustände mehr hat (Grundsatz 1).\nb) FALSCH – Auch nach dem Release können Fehlerwirkungen auftreten (Grundsatz 1).\nc) KORREKT – Durch Testen werden Fehler aufgedeckt, was das Risiko verringert und Vertrauen in die Qualität schafft (CTFL v4.0, Abschnitt 1.1.1).\nd) FALSCH – Es ist unmöglich, alle Kombinationen von Eingabewerten zu testen (Grundsatz 2).'
+    explanation: 'Mobile Nutzungsdaten (z. B. welche Geräte, Betriebssysteme und Bildschirmauflösungen tatsächlich genutzt werden) fließen direkt in die Auswahl des Geräteportfolios und die Testpriorisierung ein.'
   },
   {
-    id: 2, lo: 'FL-1.1.2', k: 'K2', pts: 1,
-    text: 'Was ist der Hauptunterschied zwischen Testen und Debuggen?\n\nWählen Sie EINE Option! (1 aus 4)',
+    id: 2, lo: 'MAT-1.2.1', k: 'K2', pts: 1,
+    text: 'Ihr Team entwickelt eine kostenfreie App, mit der öffentlich zugängliche Nachrichten aus vom Benutzer ausgewählten Quellen gesammelt werden, sodass der Benutzer alle Nachrichten aus seinen Lieblingsquellen an einem einzigen Ort lesen kann. Welches der folgenden Geschäftsmodelle ist basierend auf diesen Informationen AM BESTEN geeignet?',
     options: [
-      'a) Testen ist der Prozess der Fehlersuche, während Debugging der Prozess der Fehlerbehebung ist.',
-      'b) Beim Testen werden Anforderungen überprüft, während beim Debugging der Entwurf überprüft wird.',
-      'c) Testen ist der Prozess des Ausführens von Software, während das Debugging der Prozess der Analyse der Software ist.',
-      'd) Testen ist der Prozess der Fehlervermeidung, während das Debugging der Prozess der Fehlerbeseitigung ist.'
+      'a) Freemium App.',
+      'b) Anzeigenbasierte App.',
+      'c) Kostenpflichtige App.',
+      'd) Transaktionsbasierte App.'
+    ],
+    answer: [1],
+    explanation: 'Da die App kostenlos ist und Inhalte aggregiert (kein Verkauf, keine Transaktionen), ist das anzeigenbasierte Modell am naheliegendsten — Einnahmen werden durch das Einblenden von Werbung generiert.'
+  },
+  {
+    id: 3, lo: 'MAT-1.3.1', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Aussagen trifft auf Feature-Phones zu?',
+    options: [
+      'a) Feature-Phones bieten eingeschränkte Unterstützung für die Installation von Apps.',
+      'b) Feature-Phones ähneln Smartphones, sind jedoch größer.',
+      'c) Feature-Phones sind Smartphones der nächsten Generation mit erweiterten Funktionen.',
+      'd) Feature-Phones sind mit Kameras, GPS und anderen Sensoren ausgestattet.'
     ],
     answer: [0],
-    explanation: 'a) KORREKT – Debugging umfasst das Auffinden, Analysieren und Beseitigen der Ursachen von Fehlern in einer Komponente oder einem System (CTFL v4.0, Abschnitt 1.1.2).\nb) FALSCH – Testen und Debugging sind nicht auf die Überprüfung von Anforderungen und Entwurf beschränkt.\nc) FALSCH – Beide beinhalten Ausführung und Analyse von Software.\nd) FALSCH – Beide zielen auf Fehlervermeidung und -beseitigung ab.'
+    explanation: 'Feature-Phones sind einfache Mobiltelefone mit eingeschränkter Funktionalität. Sie bieten im Gegensatz zu Smartphones nur begrenzte oder keine Unterstützung für die Installation von Apps aus App-Stores.'
   },
   {
-    id: 3, lo: 'FL-1.3.1', k: 'K2', pts: 1,
-    text: 'Sie sind Mitglied eines Teams, das ein neues System testet. Ihnen ist aufgefallen, dass seit mehreren Iterationen keine Änderungen an den bestehenden Regressionstestfällen vorgenommen und keine neuen Fehler durch einen Regressionstest aufgedeckt wurden. Ihr Vorgesetzter ist zufrieden, aber Sie sind es nicht.\n\nWelcher Grundsatz des Testens erklärt Ihre Skepsis in dieser Situation AM BESTEN?\n\nWählen Sie EINE Option! (1 aus 4)',
+    id: 4, lo: 'MAT-1.4.1', k: 'K2', pts: 1,
+    text: 'Ihr Team entwickelt ein Android-Spiel, das viele Gerätefunktionen wie Kamera, GPS und Geräteausrichtung nutzt. Welche der folgenden Antworten nennt den AM BESTEN geeigneten Applikationstyp, wenn die Verwendung gerätespezifischer Funktionen wesentlich ist?',
     options: [
-      'a) Alte Tests verlieren an Wirksamkeit.',
-      'b) Trugschluss: "Keine Fehler" bedeuten ein brauchbares System.',
-      'c) Häufung von Fehlerzuständen.',
-      'd) Vollständiges Testen ist nicht möglich.'
+      'a) Hybride Apps.',
+      'b) Mobile Web-Apps.',
+      'c) Native Apps.',
+      'd) Desktop-Apps.'
     ],
-    answer: [0],
-    explanation: 'a) KORREKT – Wenn dieselben Tests immer wieder wiederholt werden, finden sie irgendwann keine neuen Fehler mehr (CTFL v4.0, Abschnitt 1.3, Punkt 5).\nb) FALSCH – Dieser Grundsatz besagt etwas über den Irrglauben, dass das Beheben vieler Fehler den Erfolg eines Systems garantiert.\nc) FALSCH – Dieser Grundsatz besagt, dass eine kleine Anzahl von Komponenten die meisten Fehler enthält.\nd) FALSCH – Dieser Grundsatz besagt, dass nicht alle Kombinationen von Eingaben testbar sind.'
+    answer: [2],
+    explanation: 'Native Apps haben direkten Zugriff auf gerätespezifische Hardware wie Kamera, GPS und Sensoren, da sie mit den plattformeigenen SDKs entwickelt werden. Hybride und Web-Apps haben nur eingeschränkten oder indirekten Zugriff.'
   },
   {
-    id: 4, lo: 'FL-1.4.1', k: 'K2', pts: 1,
-    text: 'Sie arbeiten in einem Team, das eine mobile Anwendung für Essensbestellungen entwickelt. In der aktuellen Iteration hat das Team beschlossen, die Zahlungsfunktionalität zu implementieren.\n\nWelche der folgenden Aktivitäten gehören zur Testanalyse?\n\nWählen Sie EINE Option! (1 aus 4)',
+    id: 5, lo: 'MAT-1.5.1', k: 'K2', pts: 1,
+    text: 'Welche Architekturentscheidungen passen zur jeweiligen Anwendung?\n\nA – Taschenlampen-App\nB – Chat-App\nC – Navigations-App\nD – Fernsehprogramm-App\n\n1 - Nie verbundene App\n2 - Teilstreckenverfahren\n3 - Immer verbundene App\n4 - Thin-Client',
     options: [
-      'a) Die Aufwandsschätzung für den Test der Integration der mobilen Anwendung mit dem Zahlungsdienst durchführen.',
-      'b) Die Entscheidung, ob getestet wird, inwieweit Zahlungen zwischen mehreren Nutzern aufgeteilt werden können.',
-      'c) Mittels Grenzwertanalyse werden die Testdaten für die Testfälle abgeleitet, die die korrekte Zahlungsabwicklung für den zulässigen minimalen Betrag überprüfen.',
-      'd) Die Abweichung zwischen dem tatsächlichen und dem erwarteten Ergebnis nach der Ausführung eines Testfalls analysieren.'
-    ],
-    answer: [1],
-    explanation: 'a) FALSCH – Aufwandsschätzung ist Teil der Testplanung (CTFL v4.0, Abschnitt 5.1.4).\nb) KORREKT – Dies ist ein Beispiel für die Definition von Testbedingungen, die Teil der Testanalyse sind (CTFL v4.0, Abschnitt 1.4.1).\nc) FALSCH – Ableitung von Testdaten mittels Testverfahren ist Teil des Testentwurfs oder der Testrealisierung.\nd) FALSCH – Analyse von Abweichungen nach der Testausführung ist Teil der Testdurchführung.'
-  },
-  {
-    id: 5, lo: 'FL-1.4.4', k: 'K2', pts: 1,
-    text: 'Welche der folgenden Aussagen beschreibt AM BESTEN, wie ein Mehrwert durch Etablierung und Aufrechterhaltung der Verfolgbarkeit zwischen Testbasis und den Testmitteln erzielt wird?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Wartungstests können basierend auf Änderungen der ursprünglichen Anforderungen vollständig automatisiert werden.',
-      'b) Es kann effizienter bestimmt werden, ob die angestrebte Überdeckung auch tatsächlich erreicht wurde.',
-      'c) Die Testmanagementrolle kann feststellen, welche Tester die Fehler mit dem höchsten Schweregrad gefunden haben.',
-      'd) Codebereiche, die möglicherweise durch Seiteneffekte einer Änderung beeinflusst werden, können durch Regressionstests gezielt überprüft werden.'
-    ],
-    answer: [1],
-    explanation: 'a) FALSCH – Verfolgbarkeit hilft bei der Verknüpfung von Anforderungen mit Testfällen, nicht bei der Automatisierung.\nb) KORREKT – Wenn Testfälle mit Anforderungen verknüpft sind, kann festgestellt werden, ob nicht überdeckte Anforderungen durch neue Testfälle abgedeckt werden (CTFL v4.0, Abschnitt 1.4.4).\nc) FALSCH – Verfolgbarkeit liefert keine Informationen darüber, welche Tester bestimmte Fehler gefunden haben.\nd) FALSCH – Verfolgbarkeit deckt keine Codebereiche ab, die durch Seiteneffekte beeinflusst werden.'
-  },
-  {
-    id: 6, lo: 'FL-1.4.5', k: 'K2', pts: 1,
-    text: 'Welche der folgenden Aussagen vergleicht AM BESTEN die verschiedenen Rollen beim Testen?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Die Rolle des Testens führt Testfälle aus, die Testmanagementrolle plant und überwacht die Testaktivitäten und meldet die Abweichungen an alle Tester.',
-      'b) Die Rolle des Testens führt die Aktivitäten der Testanalyse sowie des Testentwurfs aus und erstellt und führt Testfälle aus, die Testmanagementrolle koordiniert die Testressourcen und berichtet an die Stakeholder.',
-      'c) Die Rolle des Testens entscheidet über die zu automatisierenden Tests und priorisiert Testfälle, die Testmanagementrolle analysiert Risiken und setzt Prioritäten für die Tests.',
-      'd) Die Rolle des Testens führt statische und dynamische Komponententests durch, die Testmanagementrolle führt Systemtests und Abnahmetests durch.'
-    ],
-    answer: [1],
-    explanation: 'a) FALSCH – Das Melden von Abweichungen ist der Rolle des Testens zugeordnet, nicht der Testmanagementrolle.\nb) KORREKT – Die Rolle des Testens entwirft, erstellt und führt Testfälle aus; die Testmanagementrolle koordiniert Ressourcen und erstattet Bericht (CTFL v4.0, Abschnitt 1.4.5).\nc) FALSCH – Die Priorisierung von Testfällen obliegt nicht allein der Rolle des Testens.\nd) FALSCH – Die Testmanagementrolle führt keine Tests durch, sondern überwacht sie.'
-  },
-  {
-    id: 7, lo: 'FL-1.5.3', k: 'K2', pts: 1,
-    text: 'Welche der folgenden Aussagen erklärt AM BESTEN einen Vorteil der Unabhängigkeit des Testens?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Der Einsatz eines unabhängigen Testteams ermöglicht es der Projektleitung, dem Testteam die Verantwortung für die Qualität des Endprodukts zu übertragen.',
-      'b) Wenn man sich ein externes Testteam leisten kann, dann hat das den Vorteil, dass dieses externe Team nicht so leicht von den Bedenken des Projektmanagements und der Notwendigkeit, strikte Liefertermine einzuhalten, beeinflusst werden kann.',
-      'c) Ein unabhängiges Testteam kann getrennt von den Entwicklern arbeiten, muss nicht durch Änderungen der Projektanforderungen abgelenkt werden und kann die Kommunikation mit den Entwicklern auf die Fehlerberichterstattung über das Fehlermanagementsystem beschränken.',
-      'd) Wenn Spezifikationen Mehrdeutigkeiten und Ungereimtheiten enthalten, treffen Entwickler Annahmen über ihre Interpretation, und ein unabhängiges Testteam kann nützlich sein, um diese Annahmen und die Interpretation der Entwickler zu hinterfragen.'
+      'a) A4 - B2 - C1 - D3',
+      'b) A1 - B3 - C2 - D4',
+      'c) A4 - B4 - C2 - D3',
+      'd) A1 - B2 - C3 - D4'
     ],
     answer: [3],
-    explanation: 'a) FALSCH – Qualität sollte in der Verantwortung aller Beteiligten liegen, nicht allein des Testteams.\nb) FALSCH – Externe Teams müssen ebenfalls Lieferfristen einhalten.\nc) FALSCH – Isoliertes Arbeiten ist eine schlechte Praxis; gute Kommunikation ist essenziell.\nd) KORREKT – Spezifikationen sind nie perfekt. Ein unabhängiges Testteam kann die Annahmen der Entwickler hinterfragen und überprüfen (CTFL v4.0, Abschnitt 1.5.3).'
+    explanation: 'Taschenlampe (A1): benötigt keine Verbindung. Chat (B2): Teilstrecke — Nachrichten können offline erstellt, dann gesendet werden. Navigation (C3): benötigt immer eine Verbindung für Echtzeit-Verkehrsdaten. TV-Programm (D4): Thin-Client, der Daten vom Server abruft.'
   },
   {
-    id: 8, lo: 'FL-1.5.2', k: 'K1', pts: 1,
-    text: 'Wie zeigt sich der Whole-Team-Ansatz in der Interaktion zwischen Testern und Fachbereichsvertretern?\n\nWählen Sie EINE Option! (1 aus 4)',
+    id: 6, lo: 'MAT-1.6.1', k: 'K3', pts: 1,
+    text: 'Ihre Analyse mobiler Nutzungsdaten zeigen, dass alle Ihre Benutzer das iPhone verwenden. Welche der folgenden Entscheidungen ist für Ihre Teststrategie AM BESTEN geeignet, wenn die App eine niedrige Risikostufe hat?',
     options: [
-      'a) Fachbereichsvertreter entscheiden gemeinsam mit der Projektleitung über die Ansätze zur Testautomatisierung.',
-      'b) Tester helfen Fachbereichsvertretern bei der Festlegung der Teststrategie.',
-      'c) Die Beteiligung von Fachbereichsvertretern ist nicht Teil des Whole-Team-Ansatzes.',
-      'd) Tester helfen Fachbereichsvertretern bei der Erstellung geeigneter Abnahmetests.'
-    ],
-    answer: [3],
-    explanation: 'a) FALSCH – Der Testautomatisierungsansatz wird von Testern mit Entwicklern und Fachbereichsvertretern definiert.\nb) FALSCH – Die Teststrategie wird in Zusammenarbeit mit Entwicklern festgelegt.\nc) FALSCH – Tester, Entwickler und Fachbereichsvertreter sind alle Teil des Whole-Team-Ansatzes.\nd) KORREKT – Tester arbeiten eng mit Fachbereichsvertretern zusammen, um geeignete Abnahmetests zu erstellen (CTFL v4.0, Abschnitt 1.5.2).'
-  },
-  {
-    id: 9, lo: 'FL-2.1.2', k: 'K1', pts: 1,
-    text: 'Welche der folgenden Aussagen beschreibt AM BESTEN eine gute Praktik für das Testen, die für alle Softwareentwicklungslebenszyklen gilt?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Testen sollte erst nach Abschluss der Entwicklung durchgeführt werden.',
-      'b) Testen sollte unter Federführung der Entwicklung durchgeführt werden.',
-      'c) Testen sollte frühzeitig im Entwicklungsprozess beginnen.',
-      'd) Testen sollte in einer Entwicklungstestumgebung durchgeführt werden.'
-    ],
-    answer: [2],
-    explanation: 'a) FALSCH – Spätes Testen erhöht die Kosten für die Fehlerbehebung.\nb) FALSCH – Entwickler erkennen möglicherweise ihre eigenen Fehler nicht.\nc) KORREKT – Frühzeitiges Testen ermöglicht die frühe Erkennung von Fehlern und minimiert die Behebungskosten (CTFL v4.0, Abschnitt 2.1.2).\nd) FALSCH – Testen in einer Entwicklungsumgebung ist nicht repräsentativ genug.'
-  },
-  {
-    id: 10, lo: 'FL-2.1.3', k: 'K1', pts: 1,
-    text: 'Welche der folgenden Aussagen beschreibt AM BESTEN den Ansatz der abnahmetestgetriebenen Entwicklung (ATDD)?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) In der ATDD werden Akzeptanzkriterien typischerweise basierend auf dem Format GIVEN/WHEN/THEN erstellt.',
-      'b) Bei ATDD werden zunächst die Testfälle entwickelt und dann die Software inkrementell gegen die Testfälle und definierten Akzeptanzkriterien implementiert.',
-      'c) Bei ATDD werden Tests aus Akzeptanzkriterien als Teil des Systementwurfs abgeleitet.',
-      'd) Bei ATDD basieren die Tests auf dem gewünschten Verhalten der Software, was es für die Teammitglieder einfacher macht, die Tests und die definierten Akzeptanzkriterien zu verstehen.'
-    ],
-    answer: [2],
-    explanation: 'a) FALSCH – Das GIVEN/WHEN/THEN-Format wird häufiger in BDD verwendet.\nb) FALSCH – Das ist die Beschreibung der testgetriebenen Entwicklung (TDD).\nc) KORREKT – Bei ATDD werden Tests anhand von Akzeptanzkriterien als Teil des Systementwurfs abgeleitet und erstellt (CTFL v4.0, Abschnitt 2.1.3).\nd) FALSCH – Das gewünschte Verhalten ist ein Merkmal der verhaltensgesteuerten Entwicklung (BDD).'
-  },
-  {
-    id: 11, lo: 'FL-2.1.5', k: 'K2', pts: 1,
-    text: 'Welche der folgenden Aussagen ist KEIN Beispiel für den Shift-Left-Ansatz?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Benutzeranforderungen werden überprüft, bevor sie von den Stakeholdern formell akzeptiert werden.',
-      'b) Komponententestfälle werden erstellt, bevor der zugehörige Code programmiert wird.',
-      'c) Der Performanztest einer Komponente wird während des Komponententests ausgeführt.',
-      'd) Nicht-funktionale Tests werden, wenn möglich, beginnend auf der Ebene der Systemtests ausgeführt.'
-    ],
-    answer: [3],
-    explanation: 'a) FALSCH – Frühe Überprüfung ist ein Beispiel für Shift-Left.\nb) FALSCH – TDD (testgetriebene Entwicklung) ist ein Beispiel für Shift-Left.\nc) FALSCH – Frühe nicht-funktionale Tests sind ein Beispiel für Shift-Left.\nd) KORREKT – Nicht-funktionale Tests ERST ab Systemebene ist KEIN Shift-Left; Shift-Left bedeutet möglichst frühzeitiges Testen auf niedrigeren Teststufen (CTFL v4.0, Abschnitt 2.1.5).'
-  },
-  {
-    id: 12, lo: 'FL-2.1.6', k: 'K2', pts: 1,
-    text: 'Welches der folgenden Argumente ist AM BESTEN geeignet, um Ihren Vorgesetzten davon zu überzeugen, am Ende eines jeden Releasezyklus eine Retrospektive durchzuführen?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Retrospektiven sind heutzutage sehr beliebt und unsere Kunden würden es zu schätzen wissen, wenn wir sie in unsere Prozesse aufnehmen würden.',
-      'b) Die regelmäßige Durchführung von Retrospektiven spart dem Unternehmen Geld, da die Vertreter der Endnutzer kein unmittelbares Feedback über das Produkt geben.',
-      'c) Die bei der Retrospektive festgestellten Prozessschwächen können während der Retrospektive analysiert werden und als Aufgabenliste für das Programm zur kontinuierlichen Prozessverbesserung des Unternehmens dienen.',
-      'd) Retrospektiven ermöglichen es dem Team, sich gegenseitig zu loben und zu motivieren, was die Arbeitsmoral und die Produktivität erhöhen.'
-    ],
-    answer: [2],
-    explanation: 'a) FALSCH – Beliebtheit ist kein strategisches Argument für den Vorgesetzten.\nb) FALSCH – Endnutzer geben in Retrospektiven kein Produktfeedback; daher kein finanzieller Gewinn.\nc) KORREKT – Regelmäßige Retrospektiven mit Folgeaktivitäten sind entscheidend für die kontinuierliche Verbesserung (CTFL v4.0, Abschnitt 2.1.6).\nd) FALSCH – Soziale Aspekte sind zwar wichtig, spiegeln aber nicht die Hauptziele wider.'
-  },
-  {
-    id: 13, lo: 'FL-2.2.1', k: 'K2', pts: 1,
-    text: 'Welche Arten von Fehlerzuständen (1–4) werden in welchen Teststufen (A–D) AM EHESTEN gefunden?\n\n1. Fehlerzustände, wenn das Systemverhalten von den geschäftlichen Anforderungen abweicht\n2. Fehlerzustände in der Kommunikation zwischen Komponenten\n3. Fehlerzustände in einer isolierten Komponente\n4. Fehlerzustände in einer nicht korrekt implementierten User-Story\n\nA. Komponententest\nB. Komponentenintegrationstest\nC. Systemtest\nD. Abnahmetests\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) 1D, 2B, 3A, 4C',
-      'b) 1D, 2B, 3C, 4A',
-      'c) 1B, 2A, 3D, 4C',
-      'd) 1C, 2A, 3B, 4D'
-    ],
-    answer: [0],
-    explanation: 'a) KORREKT – Abnahmetests prüfen geschäftliche Anforderungen (1D); Komponentenintegrationstests prüfen Kommunikation zwischen Komponenten (2B); Komponententests prüfen isolierte Komponenten (3A); Systemtests prüfen User-Story-Implementierungen (4C) (CTFL v4.0, Abschnitt 2.2.1).'
-  },
-  {
-    id: 14, lo: 'FL-2.3.1', k: 'K2', pts: 1,
-    text: 'Die Teststrategie Ihres Unternehmens sieht vor, dass die Datenmigration zum Nachfolgesystem getestet werden muss, sobald ein System außer Betrieb genommen wird.\n\nMit welcher Testaktivität wird diese Anforderung AM EHESTEN erfüllt?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Wartungstest',
-      'b) Regressionstest',
-      'c) Komponententest',
-      'd) Komponentenintegrationstest'
-    ],
-    answer: [0],
-    explanation: 'a) KORREKT – Datenmigration bei Außerbetriebnahme eines Systems ist ein Auslöser für Wartungstests (CTFL v4.0, Abschnitt 2.3).\nb) FALSCH – Regressionstests prüfen, ob Korrekturen ungewollte Seiteneffekte haben.\nc) FALSCH – Komponententests konzentrieren sich auf einzelne Komponenten.\nd) FALSCH – Komponentenintegrationstests prüfen Interaktionen zwischen Komponenten.'
-  },
-  {
-    id: 15, lo: 'FL-3.1.2', k: 'K2', pts: 1,
-    text: 'Welche der folgenden Optionen ist KEIN Vorteil des statischen Testens?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Die Bewertung und Behebung der durch eine statische Analyse aufgedeckten Anomalien kann erheblichen Zeit- und Ressourcenaufwand erfordern.',
-      'b) Die Behebung von Fehlerzuständen, die bei statischen Tests gefunden werden, ist in der Regel wesentlich kostengünstiger als die Behebung von Fehlern, die bei dynamischen Tests gefunden werden.',
-      'c) Das Finden von Programmierfehlern, die bei dynamischen Tests möglicherweise nicht gefunden werden.',
-      'd) Das Aufdecken von Lücken und Unstimmigkeiten in den Anforderungen.'
-    ],
-    answer: [0],
-    explanation: 'a) KORREKT (= KEIN Vorteil) – Der erhebliche Zeit- und Ressourcenaufwand für die Bewertung statischer Analyseergebnisse ist ein möglicher Nachteil (CTFL v4.0, Abschnitt 3.1.2).\nb) FALSCH – Das ist ein klarer Vorteil des statischen Testens.\nc) FALSCH – Das ist ein Vorteil; statisches Testen findet Fehler, die dynamisch schwer erreichbar sind.\nd) FALSCH – Das Aufdecken von Anforderungslücken ist ein Vorteil des statischen Testens.'
-  },
-  {
-    id: 16, lo: 'FL-3.2.1', k: 'K1', pts: 1,
-    text: 'Welcher der folgenden Punkte ist ein Vorteil von frühem und häufigem Feedback durch Stakeholder?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Es verbessert den Testprozess für zukünftige Projekte.',
-      'b) Es zwingt die Kunden dazu, ihre Anforderungen basierend auf den abgestimmten Risiken zu priorisieren.',
-      'c) Nur so lässt sich die Qualität der Änderungen im Prozess messen.',
-      'd) Es hilft, Missverständnisse bei den Anforderungen zu vermeiden.'
-    ],
-    answer: [3],
-    explanation: 'a) FALSCH – Feedback kann Prozesse verbessern, aber dafür muss es nicht früh oder häufig kommen.\nb) FALSCH – Feedback dient nicht zur Priorisierung von Anforderungen.\nc) FALSCH – Prozessqualität kann auf verschiedene Weisen gemessen werden.\nd) KORREKT – Frühes und häufiges Feedback ermöglicht die frühzeitige Aufdeckung potenzieller Qualitätsprobleme wie missverstandene Anforderungen (CTFL v4.0, Abschnitt 3.2.1).'
-  },
-  {
-    id: 17, lo: 'FL-3.2.4', k: 'K2', pts: 1,
-    text: 'Die in Ihrem Unternehmen durchgeführten Reviews weisen die folgenden Eigenschaften auf:\n• Der Hauptzweck ist die Kommunikation oder die Schulung der Gutachter.\n• Die Sitzung wird vom Autor des Arbeitsergebnisses geleitet.\n• Es gibt eine individuelle Vorbereitung der Reviewer (Gutachter).\n• Ein Reviewbericht kann erstellt werden.\n\nWelche der folgenden Arten eines Reviews wird AM EHESTEN verwendet?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Informelles Review',
-      'b) Walkthrough',
-      'c) Technisches Review',
-      'd) Inspektion'
+      'a) Einen Dienst für den Fernzugriff auf Geräte nutzen.',
+      'b) Den Einzelplattform-Ansatz verwenden.',
+      'c) Den Ansatz für maximale Überdeckung verwenden.',
+      'd) Ausschließlich iOS-Simulatoren verwenden.'
     ],
     answer: [1],
-    explanation: 'b) KORREKT – Der Walkthrough wird vom Autor geleitet, dient der Kommunikation und Schulung der Gutachter, erlaubt individuelle Vorbereitung und kann einen Reviewbericht erstellen (CTFL v4.0, Abschnitt 3.2.4). Bei der Inspektion darf der Autor die Sitzung nicht leiten; beim technischen Review nur ausnahmsweise.'
+    explanation: 'Da alle Nutzer iPhone verwenden und das Risiko niedrig ist, reicht der Einzelplattform-Ansatz (nur iOS) aus. Maximale Überdeckung wäre unverhältnismäßig aufwändig; nur Simulatoren sind bei niedrigem Risiko vertretbar, aber nicht die beste Option.'
   },
   {
-    id: 18, lo: 'FL-3.2.5', k: 'K1', pts: 1,
-    text: 'Welche der folgenden Aussagen ist KEIN Faktor, der zu einem erfolgreichen Review beiträgt?\n\nWählen Sie EINE Option! (1 aus 4)',
+    id: 7, lo: 'MAT-1.7.1', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Antworten beschreibt KEINE Herausforderung beim Testen mobiler Apps?',
     options: [
-      'a) Die Teilnehmer sollten sich ausreichend Zeit für das Review nehmen.',
-      'b) Eine Aufteilung großer Arbeitsprodukte in kleine Teile wird empfohlen, damit die Reviewer (Gutachter) nicht die Konzentration verlieren.',
-      'c) Klare Ziele und messbare Endekriterien werden für das Review festgelegt.',
-      'd) Das Management wirkt persönlich mit bei der Kommunikation der Befunde.'
-    ],
-    answer: [3],
-    explanation: 'a) FALSCH – Angemessene Zeit ist ein Erfolgsfaktor (CTFL v4.0, Abschnitt 3.2.5).\nb) FALSCH – Aufteilung in kleine Teile ist ein Erfolgsfaktor.\nc) FALSCH – Klare Ziele und messbare Endekriterien sind ein Erfolgsfaktor.\nd) KORREKT – Management soll den Reviewprozess unterstützen, sollte aber nicht persönlich bei der Kommunikation der Befunde beteiligt sein (CTFL v4.0, Abschnitt 3.2.5).'
-  },
-  {
-    id: 19, lo: 'FL-4.1.1', k: 'K2', pts: 1,
-    text: 'Welcher der folgenden Punkte ist ein Merkmal erfahrungsbasierter Testverfahren?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Testfälle werden auf der Grundlage detaillierter Entwurfsinformationen erstellt.',
-      'b) Zur Messung des Überdeckungsgrads werden die Anzahl der im Test geprüften Schnittstellen verwendet.',
-      'c) Die Verfahren beruhen in hohem Maße auf den Kenntnissen des Testers über die Software und die Geschäftsdomäne.',
-      'd) Die Testfälle werden verwendet, um Abweichungen von den Anforderungen zu identifizieren.'
-    ],
-    answer: [2],
-    explanation: 'a) FALSCH – Dies ist ein Merkmal von White-Box-Testverfahren.\nb) FALSCH – Schnittstellenüberdeckung ist ein White-Box-Merkmal.\nc) KORREKT – Erfahrungsbasierte Testverfahren beruhen auf dem Wissen und der Erfahrung des Testers über die Software und die Geschäftsdomäne (CTFL v4.0, Abschnitt 4.1).\nd) FALSCH – Dies ist ein typisches Merkmal von Black-Box-Testverfahren.'
-  },
-  {
-    id: 20, lo: 'FL-4.2.1', k: 'K3', pts: 1,
-    text: 'Sie testen die Software für eine unbeaufsichtigte amerikanische Zapfsäule. Nachdem die Zapfpistole abgehoben und die gewünschte Kraftstoffsorte ausgewählt wurde, gibt der Kunde die gewünschte Kraftstoffmenge in Gallonen über ein Tastenfeld ein. Das Tastenfeld erlaubt nur die Eingabe von Ziffern. Pro Zapfvorgang kann zwischen 0,1 und 50,0 Gallonen getankt werden.\n\nWelche der folgenden Antworten repräsentiert eine minimale Menge von Eingabewerten, die alle gültigen und ungültigen Äquivalenzklassen für die Kraftstoffmenge überdeckt?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) 0,0; 20,0; 60,0',
-      'b) 0,0; 0,1; 50,0',
-      'c) 0,0; 0,1; 50,0; 70,0',
-      'd) -0,1; 0,0; 0,1; 49,9; 50,0; 50,1'
+      'a) Unbekannte Befehlsparameter für den Start der Applikation, die das Verhalten der Applikation ändern.',
+      'b) Verschiedene Benutzer und Benutzergruppen.',
+      'c) Mehrere Netzwerktypen und -anbieter.',
+      'd) Nichtverfügbarkeit von neu auf den Markt gebrachten Geräten, die den Einsatz von Emulatoren/Simulatoren erfordern.'
     ],
     answer: [0],
-    explanation: 'Es gibt drei Äquivalenzklassen: ungültig (0,0 Gallonen = kein Verkauf), gültig (0,1–50,0 Gallonen) und ungültig (>50,0 Gallonen).\na) KORREKT – Diese Werte decken genau eine Äquivalenzklasse pro Testfall ab (CTFL v4.0, Abschnitt 4.2.1).\nb) FALSCH – Die ungültige Klasse >50,0 wird nicht abgedeckt.\nc) FALSCH – Zwei Werte für die gültige Klasse, nicht minimal.\nd) FALSCH – Deckt Grenzwerte statt Äquivalenzklassen ab.'
+    explanation: 'Unbekannte Befehlsparameter beim App-Start sind keine typische Herausforderung beim Testen mobiler Apps. Verschiedene Nutzergruppen, Netzwerkvielfalt und Geräteverfügbarkeit sind hingegen anerkannte Herausforderungen.'
   },
   {
-    id: 21, lo: 'FL-4.2.2', k: 'K3', pts: 1,
-    text: 'Sie testen ein E-Commerce-System, das Lebensmittel verkauft. Unabhängig von den Einheiten ist die kleinste gültige Bestellmenge 0,5 Einheiten und die größte gültige Bestellmenge 25,0 Einheiten. Die Genauigkeit der Bestellmenge beträgt 0,1 Einheiten.\n\nWelche der folgenden Eingabewerte decken nur die Grenzwerte mit der 2-Wert-Grenzwertanalyse für die Bestellmenge ab?\n\nWählen Sie EINE Option! (1 aus 4)',
+    id: 8, lo: 'MAT-1.8.1', k: 'K2', pts: 1,
+    text: 'Ein Unternehmen hat sich für das Crowdtesten entschieden. Welches der folgenden Risiken wird durch diese Entscheidung gemindert?',
     options: [
-      'a) 0,3; 24,9; 25,2',
-      'b) 0,4; 0,5; 0,6; 24,9; 25,0; 25,1',
-      'c) 0,4; 0,5; 25,0; 25,1',
-      'd) 0,5; 0,6; 24,9; 25,0'
+      'a) Nichtverfügbarkeit wichtiger Stakeholder während der Entwicklung.',
+      'b) Kosten für die Unterstützung mehrerer Plattformen.',
+      'c) Nichtverfügbarkeit wichtiger Geräte während des Tests.',
+      'd) Gute Bewertungen im App-Store des Plattformanbieters.'
     ],
     answer: [2],
-    explanation: 'Die 2-Wert-Grenzwertanalyse definiert je Grenze zwei Überdeckungselemente: den Grenzwert und den engsten Nachbarn der angrenzenden Klasse.\nc) KORREKT – 0,4 (ungültig), 0,5 (Grenzwert), 25,0 (Grenzwert), 25,1 (ungültig) — vier Grenzwerte der 2-Wert-Methode (CTFL v4.0, Abschnitt 4.2.2).\na) FALSCH – Deckt Äquivalenzklassen, nicht Grenzwerte ab.\nb) FALSCH – Entspricht der 3-Wert-Methode.\nd) FALSCH – Alle vier Werte liegen in der gültigen Klasse.'
+    explanation: 'Crowdtesting nutzt eine große Gemeinschaft von Testern mit verschiedensten realen Geräten — damit wird das Risiko gemindert, dass bestimmte wichtige Geräte nicht für Tests verfügbar sind.'
   },
   {
-    id: 22, lo: 'FL-4.2.3', k: 'K3', pts: 1,
-    text: 'Neu eingestellte Mitarbeitende einer Firma können individuelle Ziele vereinbaren, an deren Erreichung die Auszahlung einer Prämie gekoppelt ist. Diese Prämie wird erst ausgezahlt, wenn sie länger als ein Jahr im Unternehmen beschäftigt sind\n\nWelcher der folgenden Testfälle beschreibt eine in der Praxis gültige, durchführbare Situation und fehlt in der oben aufgeführten Entscheidungstabelle?\n\nWählen Sie EINE Option! (1 aus 4)',
-    table: `<table>
-      <thead><tr><th>Testfall-ID</th><th></th><th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th></tr></thead>
-      <tbody>
-        <tr><td>Bedingung1</td><td>Beschäftigung länger als ein Jahr?</td><td>"J"</td><td>"N"</td><td>"N"</td><td>"J"</td><td>"N"</td></tr>
-        <tr><td>Bedingung2</td><td>Ziel vereinbart?                  </td><td>"N"</td><td>"N"</td><td>"J"</td><td>"J"</td><td>"J"</td></tr>
-        <tr><td>Bedingung3</td><td>Ziel erreicht?                    </td><td>"N"</td><td>"N"</td><td>"J"</td><td>"J"</td><td>"N"</td></tr>
-        <tr><td>Aktion</td><td>Auszahlung der Prämie?                </td><td>"N"</td><td>"N"</td><td>"N"</td><td>"J"</td><td>"N"</td></tr>
-      </tbody>
-    </table>`,
+    id: 9, lo: 'MAT-2.1.1', k: 'K2', pts: 1,
+    text: 'Welche nachstehend genannte Gerätehardware muss beim Testen einer nativen App zur Videokonferenz mit verschiedenen Gerätefunktionen bei der Testdurchführung AM WENIGSTEN Berücksichtigung finden?',
     options: [
-      'a) B1=J, B2=N, B3=J, Auszahlung=N',
-      'b) B1=J, B2=J, B3=N, Auszahlung=J',
-      'c) B1=N, B2=N, B3=J, Auszahlung=N',
-      'd) B1=J, B2=J, B3=N, Auszahlung=N'
-    ],
-    answer: [3],
-    explanation: 'a) FALSCH – Wenn kein Ziel vereinbart wurde, kann es nicht erreicht werden; undurchführbare Kombination.\nb) FALSCH – Die Aktion ist fachlich falsch: Nichterreichen des Ziels → keine Prämie.\nc) FALSCH – Wenn kein Ziel vereinbart, kann es nicht erreicht werden; undurchführbar.\nd) KORREKT – Ziel vereinbart (J), aber nicht erreicht (N), Beschäftigung > 1 Jahr (J) → keine Prämie (N). Gültige, praxisrelevante Situation, die in der Tabelle fehlt (CTFL v4.0, Abschnitt 4.2.3).'
-  },
-  {
-    id: 23, lo: 'FL-4.2.4', k: 'K3', pts: 1,
-    text: 'Welche der folgenden Aussagen zum Zustandsübergangsdiagramm und der dargestellten Tabelle von Testfällen ist WAHR?\n\nWählen Sie EINE Option! (1 aus 4)',
-    image: 'SET_A_v2.1_GTB/image_23.png',
-    table: `<table>
-          <thead><tr><th>Testfall-ID</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
-          <tbody>
-            <tr><td>Startzustand</td><td>S1</td><td>S2</td><td>S2</td><td>S3</td><td>S3</td></tr>
-            <tr><td>Eingabe</td><td>Power On</td><td>Power Off</td><td>RC On</td><td>RC Off</td><td>Power Off</td></tr>
-            <tr><td>Endzustand</td><td>S2</td><td>S1</td><td>S3</td><td>S2</td><td>S1</td></tr>
-          </tbody>
-        </table>`,
-    options: [
-      'a) Die Testfälle führen alle Übergänge im Zustandsübergangsdiagramm aus, damit wird 100% Überdeckung aller Übergänge erreicht.',
-      'b) Die Testfälle führen alle gültigen Übergänge im Zustandsübergangsdiagramm aus. Damit wird 100% 0-Switch-Überdeckung erreicht.',
-      'c) Die Testfälle führen nur einige der gültigen Übergänge im Zustandsübergangsdiagramm aus. Damit liegt die 0-Switch-Überdeckung unter 100%.',
-      'd) Testfall 2 ist für 100% 0-Switch-Überdeckung nicht erforderlich, da Zustand S1 bereits durch Testfall 5 überdeckt wurde.'
-    ],
-    answer: [1],
-    explanation: 'Die fünf Testfälle decken genau alle fünf gültigen Übergänge ab (S1→S2, S2→S1, S2→S3, S3→S2, S3→S1).\nb) KORREKT – Alle gültigen Übergänge werden ausgeführt → 100% 0-Switch-Überdeckung (CTFL v4.0, Abschnitt 4.2.4).\na) FALSCH – Keine ungültigen Übergänge werden ausgeführt.\nc) FALSCH – Alle gültigen Übergänge werden ausgeführt.\nd) FALSCH – Bei 0-Switch-Überdeckung zählen Übergänge, nicht Zustände.'
-  },
-  {
-    id: 24, lo: 'FL-4.3.1', k: 'K2', pts: 1,
-    text: 'Welche der folgenden Aussagen ist eine Beschreibung für eine Anweisungsüberdeckung?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Es handelt sich um eine Metrik zur Berechnung und Messung des prozentualen Anteils der ausgeführten Testfälle.',
-      'b) Es handelt sich um eine Metrik, die den prozentualen Anteil, der bereits durch Testfälle ausgeführten Anweisungen im Code angibt.',
-      'c) Es handelt sich um eine Metrik zur Messung der Anzahl der durch Testfälle ausgeführten Anweisungen im Code, die keine Fehlerwirkung aufgedeckt haben.',
-      'd) Es handelt sich um eine Metrik, die eine Wahr/Falsch-Bestätigung gibt, ob alle Anweisungen durch ausgeführte Testfälle abgedeckt sind.'
-    ],
-    answer: [1],
-    explanation: 'b) KORREKT – Anweisungsüberdeckung = (durch Testfälle ausgeführte Anweisungen / Gesamtanzahl ausführbarer Anweisungen) × 100% (CTFL v4.0, Abschnitt 4.3.1).\na) FALSCH – Es geht um Anweisungen, nicht um Testfälle.\nc) FALSCH – Die Überdeckung misst ausgeführte Anweisungen, unabhängig von Fehlerwirkungen.\nd) FALSCH – Es ist eine prozentuale Metrik, keine Wahr/Falsch-Aussage.'
-  },
-  {
-    id: 25, lo: 'FL-4.3.3', k: 'K2', pts: 1,
-    text: 'Welche der folgenden Aussagen trifft NICHT auf White-Box-Tests zu?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) White-Box-Test ist ein Test, der auf der Analyse der internen Struktur einer Komponente oder eines Systems basiert.',
-      'b) White-Box-Überdeckungsmetriken können helfen, zusätzliche Tests zu identifizieren, um die Codeüberdeckung zu erhöhen.',
-      'c) White-Box-Testverfahren können ergänzend zu den Black-Box-Testverfahren eingesetzt werden, um das Vertrauen in den Code zu stärken.',
-      'd) White-Box-Tests können helfen, nicht implementierte Anforderungen zu identifizieren.'
-    ],
-    answer: [3],
-    explanation: 'a) FALSCH – Korrekte Definition des White-Box-Tests.\nb) FALSCH – Überdeckungsmetriken helfen beim Identifizieren zusätzlicher Tests.\nc) FALSCH – Komplementärer Einsatz mit Black-Box-Tests wird sogar empfohlen.\nd) KORREKT – White-Box-Tests können KEINE fehlenden Implementierungen identifizieren, da sie auf der vorhandenen Struktur beruhen (CTFL v4.0, Abschnitt 4.3.3).'
-  },
-  {
-    id: 26, lo: 'FL-4.4.1', k: 'K2', pts: 1,
-    text: 'Welche der folgenden Aussagen beschreibt AM BESTEN das Konzept der intuitiven Testfallermittlung?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Bei der intuitiven Testfallermittlung nutzen Sie Ihr Wissen über und Ihre Erfahrung mit in der Vergangenheit gefundenen Fehlerzuständen und -wirkungen und typischen Fehlhandlungen von Entwicklern.',
-      'b) Bei der intuitiven Testfallermittlung werden Ihre persönlichen Erfahrungen mit der Entwicklung und den Fehlhandlungen, die Sie als Entwickler gemacht haben, genutzt.',
-      'c) Bei der intuitiven Testfallermittlung müssen Sie sich vorstellen, dass Sie der Benutzer des Testobjekts sind und Fehlerwirkungen erraten, die der Benutzer bei der Interaktion mit dem Testobjekt machen könnte.',
-      'd) Bei der intuitiven Testfallermittlung müssen Sie die Entwicklungsaufgabe schnell selbst durchführen, um die Fehlerzustände und -wirkungen zu erkennen, die ein Entwickler machen könnte.'
+      'a) Radioempfänger.',
+      'b) Integrierte Lautsprecher.',
+      'c) Integrierte Kamera.',
+      'd) Kopfhöreranschluss.'
     ],
     answer: [0],
-    explanation: 'a) KORREKT – Intuitive Testfallermittlung (Error Guessing) basiert auf Erfahrungen mit vergangenen Fehlern und typischen Entwicklerfehlhandlungen (CTFL v4.0, Abschnitt 4.4.1).\nb) FALSCH – Das Verfahren setzt keine persönliche Entwicklererfahrung voraus.\nc) FALSCH – Es ist kein reines Usability-Verfahren.\nd) FALSCH – Das eigene Durchführen der Entwicklungsaufgabe ist unpraktisch und kein Error Guessing.'
+    explanation: 'Ein Radioempfänger ist für eine Videokonferenz-App irrelevant. Kamera, Lautsprecher und Kopfhöreranschluss sind hingegen direkt relevant für Audio- und Videoübertragung.'
   },
   {
-    id: 27, lo: 'FL-4.4.2', k: 'K2', pts: 1,
-    text: 'In Ihrem Projekt hat sich die Freigabe einer brandneuen Anwendung verzögert und die Testdurchführung hat spät begonnen, aber Sie verfügen über sehr detailliertes Fachwissen und gute analytische Fähigkeiten. Die vollständige Anforderungsspezifikation wurde noch nicht an Sie weitergegeben und die Geschäftsleitung bittet um die Vorlage erster Testergebnisse.\n\nWelches Testverfahren ist in dieser Situation AM BESTEN geeignet?\n\nWählen Sie EINE Option! (1 aus 4)',
+    id: 10, lo: 'MAT-2.1.3', k: 'K2', pts: 1,
+    text: 'Welche der folgenden potenziellen Auswirkungen wird NICHT durch eine Überhitzung eines Mobilgeräts beim Testen verursacht?',
     options: [
-      'a) Checklistenbasiertes Testen',
-      'b) Intuitive Testfallermittlung',
-      'c) Exploratives Testen',
-      'd) Anweisungstest'
+      'a) Die Applikation wird langsam.',
+      'b) Teile des Systems funktionieren nicht mehr.',
+      'c) Deinstallation der App.',
+      'd) Fehlerhafte Funktionalität von Apps.'
     ],
     answer: [2],
-    explanation: 'a) FALSCH – Für ein neues Produkt gibt es noch keine passende Checkliste.\nb) FALSCH – Ohne ausreichende Produktkenntnisse ist Error Guessing schwierig.\nc) KORREKT – Exploratives Testen ist besonders geeignet, wenn nur wenige Spezifikationen vorliegen und der Zeitplan eng ist (CTFL v4.0, Abschnitt 4.4.2).\nd) FALSCH – Anweisungstest erfordert Zugang zum Code und ist zeitaufwendig.'
+    explanation: 'Überhitzung kann zu Verlangsamung, Systemausfällen und fehlerhafter Funktionalität führen, löst aber keine automatische Deinstallation einer App aus.'
   },
   {
-    id: 28, lo: 'FL-4.5.2', k: 'K2', pts: 1,
-    text: 'Welche der folgenden Aktivitäten beschreibt AM BESTEN die Art und Weise, wie Akzeptanzkriterien für eine User-Story formuliert werden können?\n\nWählen Sie EINE Option! (1 aus 4)',
+    id: 11, lo: 'MAT-2.1.4', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Aussagen ist KEIN gültiges Szenario zum Testen der Eingabesensoren eines Mobilgeräts?',
     options: [
-      'a) Durchführung von Retrospektiven zur Ermittlung der tatsächlichen Bedürfnisse der Stakeholder in Bezug auf eine bestimmte User-Story.',
-      'b) Verwendung des Formats GIVEN/WHEN/THEN zur Beschreibung einer beispielhaften Testbedingung im Zusammenhang mit einer bestimmten User-Story.',
-      'c) Mündliche Kommunikation, um das Risiko zu verringern, dass die Akzeptanzkriterien von anderen missverstanden werden.',
-      'd) Dokumentieren von Risiken im Zusammenhang mit einer bestimmten User-Story in einem Testkonzept, um das risikobasierte Testen dieser User-Story zu erleichtern.'
-    ],
-    answer: [1],
-    explanation: 'a) FALSCH – Retrospektiven dienen der Prozessverbesserung, nicht der Dokumentation von Akzeptanzkriterien.\nb) KORREKT – GIVEN/WHEN/THEN ist eine Standardmethode zur Dokumentation von Akzeptanzkriterien für User-Storys (CTFL v4.0, Abschnitt 4.5.2).\nc) FALSCH – Mündliche Kommunikation erlaubt keine physische Dokumentation.\nd) FALSCH – Akzeptanzkriterien beschreiben Erfüllungsbedingungen, keine Risiken.'
-  },
-  {
-    id: 29, lo: 'FL-4.5.3', k: 'K3', pts: 1,
-    text: 'Ihr Team verfolgt den Ansatz der abnahmetestgetriebenen Entwicklung (ATDD) und analysiert die folgende User-Story, um Testfälle zu erstellen:\n\n„Als registrierter Kunde möchte ich meine bisherigen Bestellungen auf der Website des Unternehmens einsehen können, um einen Überblick über meine Einkäufe zu behalten."\n\nIhr Team ermittelt die folgende Liste von Testfällen. Welcher der Testfälle ist für diese User-Story NICHT relevant?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Eingabe: Der Kunde loggt sich ein und klickt auf „Bestellhistorie anzeigen". Erwartete Ausgabe: Das System zeigt eine Liste aller früheren Bestellungen mit Datum, Bestellnummer und Gesamtkosten.',
-      'b) Eingabe: Der eingeloggte Kunde klickt auf eine Bestellung in der Liste. Erwartete Ausgabe: Das System zeigt die einzelnen gekauften Artikel mit Preis und Menge an.',
-      'c) Eingabe: Der eingeloggte Kunde klickt auf „Aufsteigend sortieren". Erwartete Ausgabe: Das System zeigt die Bestellhistorie aufsteigend nach Bestellnummer.',
-      'd) Eingabe: Ein neu registrierter Kunde loggt sich ein und gibt eine erste Bestellung ein. Erwartete Ausgabe: Das System akzeptiert die Bestellung und legt die zugehörigen Daten ab.'
+      'a) Verifizieren der Empfangsqualität des GPS-Signals.',
+      'b) Verifizieren der korrekten Funktion des Gyroskops.',
+      'c) Validieren der vom Bewegungssensor bereitgestellten Daten.',
+      'd) Korrekte Bildschirmgröße im Quer- und Hochformat.'
     ],
     answer: [3],
-    explanation: 'a) FALSCH – Relevant: prüft Bestellhistorie für registrierte Kunden.\nb) FALSCH – Relevant: prüft den Überblick über Einkäufe.\nc) FALSCH – Relevant: prüft Sortierfunktion der Bestellhistorie.\nd) KORREKT – Ein neu registrierter Kunde hat keine Bestellhistorie; dieser Testfall ist für die User-Story NICHT relevant (CTFL v4.0, Abschnitt 4.5.3).'
+    explanation: 'Die Bildschirmgröße im Hoch- und Querformat ist kein Eingabesensor-Test, sondern ein Test der Displaydarstellung und der Orientierungsanpassung. GPS, Gyroskop und Bewegungssensor sind Eingabesensoren.'
   },
   {
-    id: 30, lo: 'FL-5.1.2', k: 'K1', pts: 1,
-    text: 'Wie schaffen Tester einen Mehrwert für die Iterationsplanung?\n\nWählen Sie EINE Option! (1 aus 4)',
+    id: 12, lo: 'MAT-2.1.5', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Antworten beschreibt Tests, die sich AUSSCHLIESSLICH auf verschiedene Eingabemethoden beziehen?',
     options: [
-      'a) Die Tester bestimmen die Priorität der zu entwickelnden User-Storys.',
-      'b) Die Tester konzentrieren sich nur auf die Verfeinerung der funktionalen Aspekte des zu prüfenden Systems.',
-      'c) Die Tester beteiligen sich an der Risikoanalyse und bestimmen die Testbarkeit von User-Storys.',
-      'd) Die Tester ermöglichen die Freigabe qualitativ hochwertiger Software durch frühzeitigen Testentwurf während der Releaseplanung.'
-    ],
-    answer: [2],
-    explanation: 'a) FALSCH – Prioritäten für User-Storys werden vom Fachbereichsvertreter zusammen mit dem Entwicklungsteam festgelegt.\nb) FALSCH – Tester konzentrieren sich auf funktionale UND nicht-funktionale Aspekte.\nc) KORREKT – Tester schaffen Mehrwert durch Risikoanalyse und Bewertung der Testbarkeit von User-Storys (CTFL v4.0, Abschnitt 5.1.2).\nd) FALSCH – Frühzeitiger Testentwurf findet nicht während der Releaseplanung statt.'
-  },
-  {
-    id: 31, lo: 'FL-5.1.3', k: 'K2', pts: 1,
-    text: 'Welche der folgenden Optionen sind Endekriterien für den Test eines Systems?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Testumgebung ist einsatzbereit.',
-      'b) Anmeldung am Testobjekt durch den Tester ist möglich.',
-      'c) Erwartete Fehlerdichte ist erreicht und Fehlerzustände sind berichtet worden.',
-      'd) Anforderungen sind in das Format GIVEN/WHEN/THEN übersetzt worden.'
-    ],
-    answer: [2],
-    explanation: 'a) FALSCH – Einsatzbereitschaft der Testumgebung ist ein Eingangskriterium.\nb) FALSCH – Anmeldung am Testobjekt ist ein Eingangskriterium.\nc) KORREKT – Erwartete Fehlerdichte und vollständige Fehlerberichterstattung sind Endekriterien (CTFL v4.0, Abschnitt 5.1.3).\nd) FALSCH – Testbare Anforderungen sind ein Eingangskriterium.'
-  },
-  {
-    id: 32, lo: 'FL-5.1.4', k: 'K3', pts: 1,
-    text: 'Ihr Team verwendet das Drei-Punkt-Schätzungsverfahren, um den Testaufwand für eine neue, risikoreiche Funktion zu schätzen. Es wurden die folgenden Schätzungen vorgenommen:\n• optimistischste Schätzung: 2 Personenstunden\n• wahrscheinlichste Schätzung: 11 Personenstunden\n• pessimistischste Schätzung: 14 Personenstunden\n\nWie lautet die endgültige Schätzung?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) 9 Personenstunden',
-      'b) 10 Personenstunden',
-      'c) 11 Personenstunden',
-      'd) 14 Personenstunden'
-    ],
-    answer: [1],
-    explanation: 'Formel: E = (optimistisch + 4 × wahrscheinlich + pessimistisch) / 6\nE = (2 + (4 × 11) + 14) / 6 = (2 + 44 + 14) / 6 = 60 / 6 = 10\nb) KORREKT – 10 Personenstunden (CTFL v4.0, Abschnitt 5.1.4).'
-  },
-  {
-    id: 33, lo: 'FL-5.1.5', k: 'K3', pts: 1,
-    text: 'Sie testen eine mobile Applikation. Gegeben ist die folgende Liste von Testfällen, Prioritäten (kleinere Zahl = höhere Priorität) und Abhängigkeiten:\n\nWelcher der folgenden Testfälle soll als dritter ausgeführt werden?\n\nWählen Sie EINE Option! (1 aus 4)',
-    table: `<table>
-              <thead><tr><th>Testfall-ID</th><th>Abgedeckte Testbedingung</th><th>Priorität</th><th>logisch abhängig von</th></tr></thead>
-              <tbody>
-                <tr><td>TF001</td><td>Art des Essens auswählen</td><td>3</td><td>keinem</td></tr>
-                <tr><td>TF002</td><td>Restaurant auswählen/td><td>2</td><td>TF001</td></tr>
-                <tr><td>TF003</td><td>Wegbeschreibung bekommen</td><td>1</td><td>TF002</td></tr>
-                <tr><td>TF004</td><td>Restaurant anrufen</td><td>2</td><td>TF002</td></tr>
-                <tr><td>TF005</td><td>Reservierung vornehmen</td><td>3</td><td>TF002</td></tr>
-              </tbody>
-            </table>`,
-    options: [
-      'a) TF003',
-      'b) TF005',
-      'c) TF002',
-      'd) TF001'
+      'a) Wischen zum nächsten Bildschirm, Doppeltippen auf eine Schaltfläche, Scannen eines QR-Codes, Audioaufzeichnung.',
+      'b) Aufnehmen eines Fotos mit der Kamera, Verwenden der Bildschirmtastatur, Drucken des Bildschirminhalts, Verwenden der GPS-Koordinaten.',
+      'c) Objekt auf dem Bildschirm ziehen, Öffnen einer anderen App, Bilderfassung, Senden einer SMS an einen Freund.',
+      'd) Anzeigen von Geostandortdaten, Durchführen von Entfernungsmessungen, Verwenden einer TV-Fernbedienungs-App, Aufnehmen von Videos aus dem Internet.'
     ],
     answer: [0],
-    explanation: 'Reihenfolge unter Berücksichtigung von Abhängigkeiten und Prioritäten:\n1. TF001 (Abhängigkeit: keiner; muss zuerst)\n2. TF002 (Abhängigkeit: TF001)\n3. TF003 (Priorität 1 = höchste, abhängig von TF002)\na) KORREKT – TF003 wird als dritter ausgeführt (CTFL v4.0, Abschnitt 5.1.5).'
+    explanation: 'Wischen, Doppeltippen, QR-Code scannen und Audioaufzeichnung sind ausschließlich Eingabemethoden. Die anderen Optionen enthalten Ausgabeaktionen (Drucken, Anzeigen) oder systembezogene Aktionen.'
   },
   {
-    id: 34, lo: 'FL-5.1.7', k: 'K2', pts: 1,
-    text: 'Betrachten Sie die folgenden Tests (1–4) und Testquadranten (A–D):\n\n1. Gebrauchstauglichkeitstest\n2. Komponententest\n3. Funktionaler Test\n4. Zuverlässigkeitstest\n\nA. Q1: Technologieorientierung, Unterstützung des Teams\nB. Q2: Geschäftlich orientiert, Unterstützung des Teams\nC. Q3: Geschäftlich orientiert, kritische Betrachtung des Produkts\nD. Q4: Technologieorientierung, kritische Betrachtung des Produkts\n\nWie lassen sich die Testkategorien den Testquadranten zuordnen?\n\nWählen Sie EINE Option! (1 aus 4)',
+    id: 13, lo: 'MAT-2.1.6', k: 'K2', pts: 1,
+    text: 'Sie arbeiten als Tester für mobile Applikationen für ein Unternehmen, das eine Navigations-App entwickelt. Eine der Anforderungen ist, dass die App sowohl im Hoch- als auch im Querformat ausgeführt wird und dem Benutzer in beiden Ausrichtungen dieselben Funktionen zur Verfügung stellt. Welche der folgenden Antworten listet die BESTEN Aspekte auf, die bei der Verifizierung der korrekten Funktionalität beim Ändern der Bildschirmausrichtung zu berücksichtigen sind?',
     options: [
-      'a) 1C, 2A, 3B, 4D',
-      'b) 1D, 2A, 3C, 4B',
-      'c) 1C, 2B, 3D, 4A',
-      'd) 1D, 2B, 3C, 4A'
-    ],
-    answer: [0],
-    explanation: 'Gebrauchstauglichkeit → Q3 (1C); Komponententest → Q1 (2A); Funktionaler Test → Q2 (3B); Zuverlässigkeitstest → Q4 (4D).\na) KORREKT (CTFL v4.0, Abschnitt 5.1.7).'
-  },
-  {
-    id: 35, lo: 'FL-5.2.4', k: 'K2', pts: 1,
-    text: 'Im Rahmen einer Risikoanalyse wurde das folgende Risiko ermittelt:\n• Risiko: Zu lange Antwortzeit bei der Bereitstellung eines Suchergebnisses\n• Eintrittswahrscheinlichkeit: mittel; Schadensausmaß: hoch\n• Reaktion: Ein unabhängiges Testteam führt Performanztests durch; eine Stichprobe von Endnutzern führt Alpha- und Beta-Tests durch.\n\nWelche Art von Maßnahmen wurde oben vorgeschlagen, um auf das ermittelte Risiko zu reagieren?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Risikoakzeptanz',
-      'b) Notfallplan',
-      'c) Risikominderung',
-      'd) Risikotransfer'
-    ],
-    answer: [2],
-    explanation: 'a) FALSCH – Das Risiko wird nicht akzeptiert; es werden Maßnahmen ergriffen.\nb) FALSCH – Es werden keine Notfallpläne vorgeschlagen.\nc) KORREKT – Performanztests und Beta-Tests sind Maßnahmen zur Risikominderung (CTFL v4.0, Abschnitt 5.2.4).\nd) FALSCH – Das Risiko wird gemindert, nicht übertragen.'
-  },
-  {
-    id: 36, lo: 'FL-5.3.2', k: 'K2', pts: 1,
-    text: 'Welche der folgenden Aussagen zum Zweck und Inhalt von Testberichten ist zutreffend?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Testabschlussberichte werden in regelmäßigen Abständen erstellt und verteilt, um die Stakeholder hinsichtlich des Fortschrittes zu informieren.',
-      'b) Ein Testfortschrittsbericht beinhaltet u. a. die Bewertung der Qualität des Produkts sowie etwaige Abweichungen vom Zeitplan.',
-      'c) Ein Testabschlussbericht wird erstellt, wenn eine Teststufe abgeschlossen wurde, und baut auf Testfortschrittsberichten und zusätzlichen Daten auf.',
-      'd) Testfortschrittsberichte werden während des Testabschlusses erstellt, um die Erfüllung der Endekriterien belegen zu können.'
-    ],
-    answer: [2],
-    explanation: 'a) FALSCH – Regelmäßige Berichte sind Testfortschrittsberichte, nicht Testabschlussberichte.\nb) FALSCH – Produktqualitätsbewertung ist typischer Inhalt des Testabschlussberichts.\nc) KORREKT – Testabschlussberichte werden beim Abschluss inhaltlich ähnlicher Aufgaben erstellt und bauen auf Fortschrittsberichten auf (CTFL v4.0, Abschnitt 5.3.2).\nd) FALSCH – Testfortschrittsberichte werden kontinuierlich während Testüberwachung und -steuerung erstellt.'
-  },
-  {
-    id: 37, lo: 'FL-5.4.1', k: 'K2', pts: 1,
-    text: 'Sie müssen eines der automatisierten Testskripte aktualisieren, um es an eine neue Anforderung anzupassen.\n\nWelcher Prozess schreibt vor, dass Sie eine neue Version des Testskripts in der Versionsverwaltung erstellen?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Management der Verfolgbarkeit',
-      'b) Wartungstest',
-      'c) Konfigurationsmanagement',
-      'd) Anforderungsmanagement'
-    ],
-    answer: [2],
-    explanation: 'a) FALSCH – Verfolgbarkeit beschreibt Beziehungen zwischen Arbeitsprodukten, nicht Versionen desselben Arbeitsprodukts.\nb) FALSCH – Wartungstest betrifft das Testen von Änderungen, nicht die Versionierung.\nc) KORREKT – Konfigurationsmanagement umfasst die Versionsverwaltung aller Testelemente (CTFL v4.0, Abschnitt 5.4).\nd) FALSCH – Anforderungsmanagement betrifft das Erheben und Verwalten von Anforderungen.'
-  },
-  {
-    id: 38, lo: 'FL-5.5.1', k: 'K3', pts: 1,
-    text: 'Sie haben in Ihrer Rolle als Projektleiter den folgenden Fehlerbericht von den Entwicklern weitergeleitet bekommen, weil sie die beschriebene Anomalie nicht reproduzieren können.\n\nID 713-20230401 · Abgelehnt\nTitel: Anwendung hängt sich auf\nBeschreibung: Die Anwendung hängt sich nach der Eingabe von "Testeingabe: $ä" im Feld Name auf dem Bildschirm zur Erstellung eines neuen Benutzers auf. Mit mehreren Testadministratorkonten versucht, dasselbe Problem. Keine Fehlermeldung; Protokoll enthält fatale Fehlermeldung (siehe Anhang). Basierend auf TC-1305 sollte die Anwendung die Eingaben akzeptieren und den Benutzer erstellen. Bezug zu REQ-0012. Bitte mit hoher Priorität beheben.\n\nWelche wichtigen Informationen, die für die Entwickler nützlich gewesen wären, fehlen in diesem Fehlerbericht?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Erwartetes Ergebnis und tatsächliches Ergebnis',
-      'b) Referenzen und Fehlerstatus',
-      'c) Testumgebung und Testobjekt (inkl. Version)',
-      'd) Priorität und Schweregrad'
-    ],
-    answer: [2],
-    explanation: 'a) FALSCH – Erwartetes Ergebnis ("Benutzer erstellen") und tatsächliches Ergebnis ("Anwendung hängt sich auf") sind vorhanden.\nb) FALSCH – Referenzen (TC-1305, REQ-0012) und Fehlerstatus (Abgelehnt) sind vorhanden.\nc) KORREKT – Es fehlen Informationen über die Testumgebung und die Version des Testobjekts (CTFL v4.0, Abschnitt 5.5).\nd) FALSCH – Priorität (hoch) und allgemeiner Schweregrad (viele Konten betroffen) sind implizit vorhanden.'
-  },
-  {
-    id: 39, lo: 'FL-6.1.1', k: 'K2', pts: 1,
-    text: 'Welche Testaktivitäten unterstützt ein Werkzeug zur Erstellung von Testdaten?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Testüberwachung und Teststeuerung',
-      'b) Testanalyse und Testentwurf',
-      'c) Testentwurf und Testrealisierung',
-      'd) Testabschluss'
-    ],
-    answer: [2],
-    explanation: 'a) FALSCH – Testüberwachung und -steuerung umfassen keine Testdatenerstellung.\nb) FALSCH – In der Testanalyse werden Anforderungen an Testdaten definiert, die Erstellung erfolgt erst in der Testrealisierung.\nc) KORREKT – Werkzeuge für Testentwurf und Testrealisierung erleichtern die Erstellung von Testfällen, Testdaten und Testläufen (CTFL v4.0, Abschnitt 6.1).\nd) FALSCH – Testabschluss findet nach der Durchführung statt; Testdaten werden dann nicht mehr erstellt.'
-  },
-  {
-    id: 40, lo: 'FL-6.2.1', k: 'K1', pts: 1,
-    text: 'Welcher Punkt ist ein mögliches Risiko bei der Testautomatisierung?\n\nWählen Sie EINE Option! (1 aus 4)',
-    options: [
-      'a) Es kann zu unbekannten Nebenwirkungen im operativen Betrieb kommen.',
-      'b) Es bestehen unrealistische Erwartungen hinsichtlich der Funktionalität eines Werkzeugs.',
-      'c) Testwerkzeuge sind möglicherweise nicht zuverlässig genug.',
-      'd) Es kann die verfügbare Zeit für manuelle Tests auf Dauer reduziert sein.'
+      'a) Bewegungssensor, Sicherheitsprobleme, Richtigkeit der Ausgabedaten.',
+      'b) Gebrauchstauglichkeitsprobleme, Beibehaltung der Eingabedaten, Beibehaltung des aktuellen Zustands.',
+      'c) Mehrmaliges Umschalten der Bildschirmausrichtung, Probleme mit der Performanz, Funktionen der Benutzungsoberfläche.',
+      'd) WLAN-Unterbrechungen, Darstellungsprobleme in der grafischen Benutzungsoberfläche, Verlust eingegebener Daten.'
     ],
     answer: [1],
-    explanation: 'a) FALSCH – Testautomatisierung führt zu keinen unbekannten Nebenwirkungen im Betrieb.\nb) KORREKT – Unrealistische Erwartungen (z. B. dass ein Werkzeug alle Probleme löst) sind ein bekanntes Risiko der Testautomatisierung (CTFL v4.0, Abschnitt 6.2).\nc) FALSCH – Werkzeuge müssen sorgfältig ausgewählt werden, damit man sich auf sie verlassen kann.\nd) FALSCH – Zeitersparnis bei manuellen Tests ist auf Dauer ein Vorteil, kein Risiko.'
+    explanation: 'Beim Wechsel der Bildschirmausrichtung sind die Beibehaltung eingegebener Daten, der aktuelle App-Zustand und Gebrauchstauglichkeit die wichtigsten Aspekte. WLAN-Unterbrechungen und Sicherheitsprobleme sind keine ausrichtungsspezifischen Themen.'
+  },
+  {
+    id: 14, lo: 'MAT-2.1.7', k: 'K3', pts: 1,
+    text: 'Sie arbeiten als Testmanager für ein Bankunternehmen, das eine neue Version seiner Online-Banking-Software entwickelt. Diese Software wird als Web-App realisiert. Bei der Vorbereitung geeigneter Tests konzentrieren Sie sich auf die Fehlertoleranz der App in Bezug auf benutzerinitiierte Unterbrechungen. Welche drei der folgenden Testszenarien wären für diesen Zweck die BESTE Wahl?\n\ni. Batteriewarnungen anzeigen.\nii. Mobilgeräte in den Standby-Modus versetzen.\niii. Eingehende Sprachanrufe annehmen.\niv. Benachrichtigung über zu wenig Arbeitsspeicher.\nv. Gerät in den Nicht-Stören-Modus versetzen.',
+    options: [
+      'a) i – ii – iii',
+      'b) i – ii – iv',
+      'c) ii – iii – iv',
+      'd) ii – iii – v'
+    ],
+    answer: [3],
+    explanation: 'Benutzerinitierte Unterbrechungen sind: Standby-Modus (ii), eingehende Anrufe annehmen (iii) und Nicht-Stören-Modus (v). Batteriewarnungen (i) und Speichermeldungen (iv) sind systeminitiierte, nicht benutzerinitierte Unterbrechungen.'
+  },
+  {
+    id: 15, lo: 'MAT-2.1.8', k: 'K3', pts: 1,
+    text: 'Eine Krankenkasse hat eine aktualisierte Version ihrer Kunden-App veröffentlicht. Das Update enthält eine Funktion, mit der eine Apothekenrechnung gescannt und direkt an die Krankenkasse zur Zahlung gesendet werden kann. Als die Kunden das Update installierten, stellten sie jedoch fest, dass die Kamera nicht zum Scannen von Rechnungen aufgerufen werden konnte. Dieser Fehler wurde gemeldet und behoben. Jetzt müssen neue Tests entworfen und ausgeführt werden, und es müssen Fehlernachtests durchgeführt werden.\n\nWelcher der in den folgenden Antworten genannten Tests ist bei diesem Szenario der WICHTIGSTE?',
+    options: [
+      'a) Performanztest.',
+      'b) Testen der Barrierefreiheit.',
+      'c) Testen der Zugriffsberechtigung.',
+      'd) Testen der Installation.'
+    ],
+    answer: [2],
+    explanation: 'Der Fehler bestand darin, dass die Kamera nicht aufgerufen werden konnte — dies ist ein Problem der Zugriffsberechtigung (die App hatte keine oder falsche Berechtigungen für die Kamera). Der wichtigste Test ist daher das Testen der Zugriffsberechtigungen.'
+  },
+  {
+    id: 16, lo: 'MAT-2.2.1', k: 'K3', pts: 1,
+    text: 'Ihr Unternehmen bietet eine Nachrichten-App mit einer Benachrichtigungsfunktion zum Anzeigen aktueller Nachrichten mit einem Deep-Link zur entsprechenden Nachrichtenseite in der App. Kürzlich haben sich einige Nutzer der App darüber beschwert, dass zu erwartende Benachrichtigungen über hochaktuelle Nachrichten verzögert oder gar nicht angezeigt wurden. Die Grundursache für diesen Fehler wurde von den Entwicklern identifiziert und behoben. Welche funktionalen Tests würden Sie in Ihrer Rolle als Tester für mobile Applikationen vorsehen, um die ordnungsgemäße Funktion der behobenen Version der App zu validieren?\n\ni. Korrekte Anzeige der Benachrichtigung, wenn sich die App im Hintergrund befindet.\nii. Ausführen der Applikation bei schwachem Akku.\niii. Testen der Leistung der App, während die Benachrichtigung angezeigt wird.\niv. Durchführen von Gebrauchstauglichkeitstests für die behobene Version der App.\nv. Testen der Deep-Link-Funktion zur richtigen Nachrichtenseite der App.',
+    options: [
+      'a) i – iv – v',
+      'b) i – ii – iv',
+      'c) i – ii – v',
+      'd) ii – iii – iv'
+    ],
+    answer: [2],
+    explanation: 'Die relevanten funktionalen Tests sind: korrekte Anzeige der Benachrichtigung im Hintergrund (i), Verhalten bei schwachem Akku (ii, da dies Hintergrundprozesse beeinflussen kann) und die Deep-Link-Funktion (v). Gebrauchstauglichkeit (iv) und Leistungstests (iii) sind nicht primär funktional.'
+  },
+  {
+    id: 17, lo: 'MAT-2.2.2', k: 'K2', pts: 1,
+    text: 'Ihr Unternehmen entwickelt eine neue Version einer hybriden App für den Preisvergleich. Diese bietet Schnellzugriffsverknüpfungen zu umfassenden Funktionalitäten. Als Tester für mobile Applikationen ist es Ihre Aufgabe, die fehlerfreie Funktion dieser Schnellzugriffsverknüpfungen zu verifizieren. Welcher der folgenden Ansätze ist hierfür der BESTE?',
+    options: [
+      'a) Verifizieren des korrekten Verhaltens der Force Touch-Funktionalität der iOS-App.',
+      'b) Sicherstellen, dass die bevorzugten Lesezeichen in Mobile Chrome im Betriebssystem Android OS vorhanden sind.',
+      'c) Verifizieren, ob alle physischen Tasten eines mobilen Endgeräts wie erwartet funktionieren.',
+      'd) Verwenden eines geeigneten Werkzeugs zum Identifizieren defekter Links in der mobilen Web-App.'
+    ],
+    answer: [0],
+    explanation: 'Force Touch (iOS) bzw. App-Shortcuts sind die plattformeigene Implementierung von Schnellzugriffsverknüpfungen. Da es eine hybride App ist, ist die Verifikation der Force-Touch-Funktionalität der iOS-Plattform der beste Ansatz.'
+  },
+  {
+    id: 18, lo: 'MAT-2.2.4', k: 'K2', pts: 1,
+    text: 'Sie testen eine native iOS-App, die verschiedene Sensoren verwendet. Welche der folgenden Testarten trifft NICHT zu?',
+    options: [
+      'a) Performanztests.',
+      'b) Testen der Nutzung von Gerätefunktionen.',
+      'c) Browserübergreifendes Testen.',
+      'd) Testen der Gerätekompatibilität.'
+    ],
+    answer: [2],
+    explanation: 'Browserübergreifendes Testen ist nur für Web-Apps relevant, nicht für native iOS-Apps. Native Apps laufen nicht im Browser und müssen daher nicht auf verschiedene Browser getestet werden.'
+  },
+  {
+    id: 19, lo: 'MAT-2.2.5', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Testarten ist typisch für das Testen der Interoperabilität mit Betriebssystemversionen?',
+    options: [
+      'a) Testen auf Sicherheitsprobleme.',
+      'b) Testen auf Performanzprobleme.',
+      'c) Testen auf Einhaltung von Barrierefreiheitsstandards.',
+      'd) Testen der Abwärtskompatibilität.'
+    ],
+    answer: [3],
+    explanation: 'Interoperabilität mit verschiedenen Betriebssystemversionen bedeutet zu prüfen, ob die App auch auf älteren OS-Versionen funktioniert — das ist Abwärtskompatibilitätstesten.'
+  },
+  {
+    id: 20, lo: 'MAT-2.2.6', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Antworten beschreibt ein PRIMÄRES Testziel für das Testen der Koexistenz eines zu testenden Systems (SUT) mit anderen Apps auf dem Gerät?',
+    options: [
+      'a) Verifizieren, dass das SUT keine Benutzerdaten beschädigt.',
+      'b) Identifizieren vorhandener Sicherheitsprobleme beim Gerät.',
+      'c) Bewerten von Gebrauchstauglichkeitsproblemen im SUT.',
+      'd) Prüfen, ob das SUT die Barrierefreiheitsstandards erfüllt.'
+    ],
+    answer: [0],
+    explanation: 'Das primäre Ziel des Koexistenztestens ist die Verifikation, dass die App keine Daten anderer Apps beschädigt oder deren Funktionalität beeinträchtigt — also die Datensicherheit im Zusammenspiel mit anderen Apps.'
+  },
+  {
+    id: 21, lo: 'MAT-2.3.1', k: 'K2', pts: 1,
+    text: 'Sie entwickeln eine Testvorgehensweise für das Testen der Verbindungsfähigkeit auf verschiedenen mobilen Gerätetypen. Welche der folgenden Optionen sollten bei diesem Testansatz KEINE Berücksichtigung finden?',
+    options: [
+      'a) Das Wechseln von GSM in den Flugmodus und zurück zu GSM.',
+      'b) Das Initiieren eines Zahlungsvorgangs über NFC.',
+      'c) Die Nutzung von Bluetooth zum Koppeln mit Wearables.',
+      'd) Das Anschließen eines USB-Kabels an eine Stromversorgung.'
+    ],
+    answer: [3],
+    explanation: 'Das Anschließen eines USB-Kabels an eine Stromversorgung ist kein Test der Verbindungsfähigkeit (Konnektivität), sondern ein Ladevorgang. GSM, NFC und Bluetooth sind genuine Konnektivitätstechnologien.'
+  },
+  {
+    id: 22, lo: 'MAT-3.1.1', k: 'K3', pts: 1,
+    text: 'Sie haben die Aufgabe, Installationstests für eine Android-Applikation durchzuführen. Welcher der folgenden Installationstests sollte NICHT verwendet werden?',
+    options: [
+      'a) Ausführen der Datei App-Installer.exe auf dem mobilen Testgerät.',
+      'b) Das Gerät zur Installation an einen PC anschließen und Befehle für die Installation ausführen.',
+      'c) Installation aus dem Google Play Beta-Programm.',
+      'd) Sideloading durch Bereitstellen und Ausführen des Installationspakets auf einer SD-Karte.'
+    ],
+    answer: [0],
+    explanation: '.exe-Dateien sind Windows-Executables und können nicht auf Android-Geräten ausgeführt werden. Android verwendet .apk-Pakete. Die anderen Methoden (ADB, Google Play, Sideloading) sind valide Android-Installationswege.'
+  },
+  {
+    id: 23, lo: 'MAT-3.1.3', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Punkte sind potenzielle Sicherheitsprobleme für mobile Apps?\n\ni. Code-Injection über Eingabefelder.\nii. Unverschlüsselte Übertragung von Daten.\niii. App reagiert nicht nach einer Unterbrechung.\niv. Probleme beim Rendern nach Ändern der Geräteausrichtung.\nv. Überlappung von Bildschirmelementen auf kleinen Bildschirmen.',
+    options: [
+      'a) i und iii.',
+      'b) ii und v.',
+      'c) i und ii.',
+      'd) ii und iv.'
+    ],
+    answer: [2],
+    explanation: 'Code-Injection (i) und unverschlüsselte Datenübertragung (ii) sind klassische Sicherheitsprobleme. Die anderen Punkte (App-Absturz, Rendering-Fehler, UI-Überlappungen) sind Fehlfunktionen, aber keine Sicherheitsprobleme.'
+  },
+  {
+    id: 24, lo: 'MAT-3.1.4', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Vorgehensweisen werden Sie wahrscheinlich verwenden, um einen Performanztest des Zeitverhaltens einer App durchzuführen?',
+    options: [
+      'a) Instrumentierter Build, um genaue chronometrische Zahlen zu erhalten.',
+      'b) Lastgenerator zur Beobachtung des Serververhaltens unter hoher Last.',
+      'c) Ausführen der App auf einem Emulator/Simulator.',
+      'd) Ein Endgerät und eine Stoppuhr, um die Performanz des Geräts zu überprüfen.'
+    ],
+    answer: [0],
+    explanation: 'Ein instrumentierter Build ermöglicht präzise Zeitmessungen innerhalb der App durch eingebettete Messpunkte. Eine Stoppuhr ist zu ungenau; Emulatoren spiegeln keine echte Geräteleistung wider; Lastgeneratoren messen Serververhalten.'
+  },
+  {
+    id: 25, lo: 'MAT-3.1.5', k: 'K3', pts: 1,
+    text: 'Sie haben die Aufgabe, einen Gebrauchstauglichkeitstest für eine mobile App durchzuführen. Welchen der folgenden Schritte werden Sie NICHT ausführen?',
+    options: [
+      'a) Den Manager bitten, eine Testsitzung in einem Gebrauchstauglichkeitslabor zu reservieren.',
+      'b) Testen der App auf Konformität mit den Richtlinien für die Benutzungsschnittstellen.',
+      'c) Aktivieren der VoiceOver-Funktion des Geräts.',
+      'd) Informationen über die Erwartungen an das Look-and-Feel der Plattform einholen.'
+    ],
+    answer: [2],
+    explanation: 'VoiceOver ist eine Barrierefreiheitsfunktion für sehbehinderte Nutzer — sie gehört zum Barrierefreiheitstest, nicht zum Gebrauchstauglichkeitstest. Die anderen Schritte sind typische Gebrauchstauglichkeitstest-Aktivitäten.'
+  },
+  {
+    id: 26, lo: 'MAT-3.1.6', k: 'K1', pts: 1,
+    text: 'Wofür steht die Merkhilfe "CRUD" im Zusammenhang mit Datenvalidierungstests?',
+    options: [
+      'a) Copy, Rename, Update, Delete.',
+      'b) Create, Read, Undo, Delete.',
+      'c) Create, Read, Update, Delete.',
+      'd) Create, Read, Undo, Deploy.'
+    ],
+    answer: [2],
+    explanation: 'CRUD steht für Create, Read, Update, Delete — die vier grundlegenden Datenbankoperationen, die bei Datenvalidierungstests abgedeckt werden müssen.'
+  },
+  {
+    id: 27, lo: 'MAT-3.1.7', k: 'K2', pts: 1,
+    text: 'Sie führen Internationalisierungstests durch. Bei Ausführung der Tests sehen Sie teilweise Pseudo-Strings und teilweise englische Zeichenfolgen. Welche der folgenden Ursachen ist am WAHRSCHEINLICHSTEN?',
+    options: [
+      'a) Fehlende Übersetzungen.',
+      'b) Fest kodierte englische Zeichenfolgen.',
+      'c) Falsche Spracheinstellungen des Geräts.',
+      'd) Während des Builds ist ein Fehler aufgetreten.'
+    ],
+    answer: [1],
+    explanation: 'Pseudo-Strings entstehen beim Pseudolokalisierungs-Test, wenn Übersetzungsplatzhalter vorhanden sind. Wenn daneben noch englische Zeichenfolgen erscheinen, sind diese fest im Code einprogrammiert (hardcoded) und werden nicht aus der Übersetzungsdatei geladen.'
+  },
+  {
+    id: 28, lo: 'MAT-3.1.8', k: 'K2', pts: 1,
+    text: 'Warum sollten Tests der Barrierefreiheit bei mobilen Applikationen durchgeführt werden? Wählen Sie die BESTMÖGLICHSTE Antwort.',
+    options: [
+      'a) Um festzustellen, ob die App für Benutzer mit unterschiedlichen Bedürfnissen geeignet ist.',
+      'b) Weil es vom W3C Konsortium und von den jeweiligen Plattformanbietern verlangt wird.',
+      'c) Um die Applikation vollständig zu testen.',
+      'd) Da generische Testfälle existieren, die für jede Applikation ausgeführt werden müssen.'
+    ],
+    answer: [0],
+    explanation: 'Das primäre Ziel von Barrierefreiheitstests ist die Sicherstellung, dass die App für alle Nutzer — einschließlich Menschen mit Einschränkungen — nutzbar ist. Regulatorische Anforderungen (b) sind ein Nebenaspekt, nicht der Hauptzweck.'
+  },
+  {
+    id: 29, lo: 'MAT-3.2.2', k: 'K2', pts: 1,
+    text: 'Sie sind Tester in einem Team, das eine mobile App entwickelt. Ihr Team hat die aktuelle Version der App fertiggestellt und für den App-Store freigegeben. Welche der folgenden Aktivitäten ist Ihre nächste?',
+    options: [
+      'a) Archivieren der Testmittel.',
+      'b) Post-Release-Test.',
+      'c) App-Store Freigabetests.',
+      'd) Abschluss der Testaktivitäten.'
+    ],
+    answer: [1],
+    explanation: 'Nach der Freigabe für den App-Store folgen Post-Release-Tests, um sicherzustellen, dass die App in der realen Produktionsumgebung wie erwartet funktioniert. Testmittel werden archiviert und Aktivitäten abgeschlossen, aber erst nach den Post-Release-Tests.'
+  },
+  {
+    id: 30, lo: 'MAT-3.3.1', k: 'K1', pts: 1,
+    text: 'Sie sind ein neues Mitglied in einem Team, das mobile Applikationen testet. Ihr Teamleiter bittet Sie, folgendes jeweils 1 Stunde lang zu testen: Eingaben in die App, Funktionen der App, Unterbrechungen, usw. Welche der folgenden Methoden wendet der Teamleiter an?',
+    options: [
+      'a) Risikoorientiertes Testmanagement',
+      'b) Übertragung seiner Verantwortung an Sie.',
+      'c) Steuerung von Performanztests.',
+      'd) Sitzungsbasiertes Testmanagement.'
+    ],
+    answer: [3],
+    explanation: 'Sitzungsbasiertes Testmanagement (Session-Based Test Management) unterteilt explorative Tests in zeitlich begrenzte Sitzungen mit definierten Themen — genau das beschreibt das Szenario mit den 1-Stunden-Slots pro Testbereich.'
+  },
+  {
+    id: 31, lo: 'MAT-3.3.2', k: 'K2', pts: 1,
+    text: 'Bei welcher der folgenden Testmethoden handelt es sich um eine effektive Methode zur Durchführung von Feldtests?',
+    options: [
+      'a) Verwendung von Touren als eine Art explorativer Testverfahren.',
+      'b) Verwendung eines Vor-Ort-Labors für die Ausführung von Tests auf verschiedenen Smartphones.',
+      'c) Verwendung eines Cloud-basierten Vorgehens.',
+      'd) Verwendung eines Testwerkzeugs, um automatisierte Tests auf mobilen Browsern durchzuführen.'
+    ],
+    answer: [0],
+    explanation: 'Feldtests werden in realen Nutzungsumgebungen durchgeführt. Touren als exploratives Testverfahren sind dabei besonders geeignet, da sie strukturierte, aber flexible Erkundung realer Nutzungsszenarien ermöglichen.'
+  },
+  {
+    id: 32, lo: 'MAT-3.4.2', k: 'K2', pts: 1,
+    text: 'Warum wird beim Testen mobiler Applikationen die Testpyramide häufig umgedreht?',
+    options: [
+      'a) Komponententests sind bei mobilen Apps viel komplizierter. Daher ist es zweckmäßig, nur wenige Komponententests durchzuführen.',
+      'b) Aufgrund fehlender Werkzeugunterstützung für Komponenten- und Integrationstests für mobile Apps.',
+      'c) Mobile Apps sind immer monolithisch. Daher kann alles auf Systemebene getestet werden, und es ist nicht erforderlich, auf niedrigeren Teststufen zu testen.',
+      'd) Mobile Apps erfordern viele manuelle Tests, genau wie Gebrauchstauglichkeits- oder Feldtests.'
+    ],
+    answer: [3],
+    explanation: 'Bei mobilen Apps sind viele Tests — insbesondere Gebrauchstauglichkeits-, Feld- und Gerätetests — nur manuell durchführbar. Dadurch verschiebt sich das Verhältnis zugunsten manueller Tests auf höheren Teststufen, was die Pyramide umkehrt.'
+  },
+  {
+    id: 33, lo: 'MAT-4.1.1', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Aussagen über die Entwicklungsumgebungen zur Entwicklung mobiler Applikationen ist richtig?',
+    options: [
+      'a) iOS-Entwickler verwenden Visual Studio IDE als Entwicklungsumgebung.',
+      'b) Android-Entwickler verwenden die Universal Studio IDE, während iOS-Entwickler Xcode als Entwicklungsumgebung verwenden.',
+      'c) Android-Entwickler verwenden die Xcode IDE als Entwicklungsumgebung.',
+      'd) iOS-Entwickler verwenden die Xcode IDE als Entwicklungsumgebung.'
+    ],
+    answer: [3],
+    explanation: 'Xcode ist die offizielle IDE von Apple für die iOS- und macOS-Entwicklung. Android-Entwickler nutzen Android Studio (nicht Xcode oder Universal Studio).'
+  },
+  {
+    id: 34, lo: 'MAT-4.2.1', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Aufgaben kann in der Regel NICHT mit einem Software Development Kit (SDK) für mobile Applikationen ausgeführt werden?',
+    options: [
+      'a) Erstellen von Screenshots.',
+      'b) Entwerfen von Testfällen.',
+      'c) Senden zufälliger Ereignisse an die Applikation.',
+      'd) Erstellen virtueller Geräte.'
+    ],
+    answer: [1],
+    explanation: 'Das Entwerfen von Testfällen ist eine analytische, menschliche Aktivität und keine technische SDK-Funktion. SDKs bieten technische Werkzeuge wie Screenshot-Erstellung, Ereignissimulation und Emulator-Erstellung.'
+  },
+  {
+    id: 35, lo: 'MAT-4.3.1', k: 'K2', pts: 1,
+    text: 'Sie haben als Tester die Aufgabe, eine mobile App mit einer Client-Server-Architektur zu testen. Um die verfügbare Hardware besser nutzen zu können, beschließt das Unternehmen, zum Testen der grundlegenden Funktionen in den frühen Testphasen den PC des Mitarbeiters zu verwenden, ohne dass die Applikation mit einem echten Server verbunden ist.\n\nWelche der beschriebenen Testumgebungen sollte - gemäß Ihrer Empfehlung - der Entwickler der Android App in den frühen Testphasen der Entwicklung verwenden?',
+    options: [
+      'a) Den Server-Emulator auf dem PC des Entwicklers und den Simulator der mobilen Applikation auf einem echten Endgerät installieren.',
+      'b) Den Simulator der mobilen App auf einem der Android Virtual Device (AVD) Geräteemulatoren und den Server-Emulator auf dem PC des Entwicklers installieren.',
+      'c) Den Server-Simulator auf dem PC des Entwicklers und die mobile Applikation auf einem der Android Virtual Device (AVD) Geräteemulatoren installieren.',
+      'd) Den Server-Simulator und die emulierte mobile Applikation direkt auf dem PC des Entwicklers installieren.'
+    ],
+    answer: [2],
+    explanation: 'In frühen Testphasen auf dem Entwickler-PC: Der Server-Simulator läuft auf dem PC, die mobile App auf einem AVD (Android Virtual Device Emulator) — so wird keine echte Hardware benötigt und die Grundfunktionen können effizient getestet werden.'
+  },
+  {
+    id: 36, lo: 'MAT-4.4.1', k: 'K2', pts: 1,
+    text: 'Sie sind Testmanager im Geschäftsbereich Digitales Banking eines Fintech-Unternehmens, das mit der Aktualisierung der Android-basierten Mobile-Banking-App eines mittelständischen Finanzinstituts beauftragt ist. Das Upgrade beinhaltet einen innovativen Sicherheitsmechanismus, der Fingerabdruck- und Gesichtserkennungsfunktionen für eine verbesserte Sicherheit der App verwendet.\n\nWelcher der folgenden Ansätze ist für die Einrichtung eines Testlabors zum Testen dieses Upgrades der BESTE?',
+    options: [
+      'a) Einrichtung eines entlegenen Testlabors, um die neue innovative Mobile-Banking-App auf möglichst vielen Gerätetypen zu testen.',
+      'b) Einrichtung eines Vor-Ort-Labors, um die neuen einzigartigen gerätebezogenen Funktionen der innovativen Mobile-Banking-App effektiv zu testen.',
+      'c) Einrichtung eines entlegenen Testlabors, um die Mobile-Banking-App auf vielen verschiedenen Gerätetypen zu testen, sowie eines Vor-Ort-Labor, um die größtmögliche Zahl der möglichen Geräte abzudecken.',
+      'd) Einrichtung eines entlegenen Testlabors, um die neue innovative Mobile-Banking-App auf vielen Android Gerätetypen verschiedener Gerätehersteller zu testen, und um Kosten für das Unternehmen zu sparen.'
+    ],
+    answer: [1],
+    explanation: 'Fingerabdruck- und Gesichtserkennung sind biometrische, gerätespezifische Funktionen, die physische Sensoren erfordern und nicht remote simuliert werden können. Ein Vor-Ort-Labor mit echten Geräten ist daher zwingend notwendig.'
+  },
+  {
+    id: 37, lo: 'MAT-5.1.1', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Aussagen unterscheidet NICHT korrekt zwischen den gängigen Testautomatisierungsansätzen für das Testen mobiler Applikationen?',
+    options: [
+      'a) Agent-basierte Testansätze eignen sich am besten zum Ausführen mobiler Web-Apps, während gerätebasierte Tests für alle Arten mobiler Applikationen am besten geeignet sind.',
+      'b) Der Agent-basierte Testansatz verwendet eine vom Browser gesendete Zeichenkette, um einem Browser ein bestimmtes Gerät vorzutäuschen, während der gerätebasierte Testansatz auf einem bestimmten mobilen Endgerät ausgeführt werden muss.',
+      'c) Native Apps lassen sich am besten mit den allgemeinen Webapplikations-Automatisierungswerkzeugen testen, während mobile Apps spezifische Werkzeuge benötigen.',
+      'd) Die Funktionsweise des Agent-basierten Testansatzes besteht darin, die Browsereigenschaften zu imitieren, während die Funktionsweise des gerätebasierten Testansatzes auf dem tatsächlichen Browser basiert.'
+    ],
+    answer: [2],
+    explanation: 'Native Apps können NICHT mit allgemeinen Web-Automatisierungswerkzeugen getestet werden — sie benötigen plattformspezifische Werkzeuge (z. B. XCUITest für iOS, Espresso für Android). Diese Aussage ist daher falsch und korrekt ist die Antwort c).'
+  },
+  {
+    id: 38, lo: 'MAT-5.2.1', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Aussagen ist WAHR in Bezug auf die Skripterstellungsmethoden, die bei der Automatisierung mobiler Tests verwendet werden?',
+    options: [
+      'a) Das Erstellen von Skripten mithilfe der Objektidentifikation ist schneller als mithilfe der visuellen Erkennung und reduziert daher den für die Testausführung insgesamt erforderlichen Zeitaufwand.',
+      'b) Die objektbasierte Skripterstellung ist die zuverlässigere Methode zum Erstellen von Testautomatisierungscode, da das Testframework das richtige Objekt der mobilen Applikation unabhängig von dem zu testenden Gerät automatisch zuordnen kann.',
+      'c) Wenn Objektidentifizierung bei der Skripterstellung verwendet wird, erhöht dies den laufenden Wartungsaufwand, wenn sich der Softwarecode der App häufig ändert, und sich das auf die Vergleichsbilder auswirkt.',
+      'd) Wenn man sich bei der Skripterstellung auf optische Zeichenerkennung/Texterkennung und Objektelernen verlässt, stellt dies kein Risiko für die Zuverlässigkeit oder Robustheit der Testautomatisierung dar.'
+    ],
+    answer: [1],
+    explanation: 'Die objektbasierte Skripterstellung ist zuverlässiger, weil sie auf eindeutige Objekt-IDs zugreift, die unabhängig vom Gerät konsistent sind. Visuelle Erkennung (OCR) ist anfälliger für Abweichungen in Darstellung und Auflösung.'
+  },
+  {
+    id: 39, lo: 'MAT-5.3.1', k: 'K1', pts: 1,
+    text: 'Welcher der folgenden Faktoren spielt bei der Bewertung von Testautomatisierungswerkzeugen für das Testen mobiler Applikationen KEINE große Rolle?',
+    options: [
+      'a) Die Testautomatisierungsfähigkeiten der Tester, die das Werkzeug verwenden werden.',
+      'b) Die Automatisierungsanforderungen und -komplexitäten, z.B. die Verwendung neuer Funktionen wie FaceID, Fingerprint, Chatbots durch die App.',
+      'c) Es ist wichtig, Automatisierungsanforderungen und -komplexitäten zu berücksichtigen.',
+      'd) Fähigkeit des Testframeworks, unabhängig von anderen in der Organisation verwendeten Werkzeugen zu arbeiten.'
+    ],
+    answer: [3],
+    explanation: 'Die Unabhängigkeit eines Werkzeugs von anderen Organisationswerkzeugen spielt bei der Bewertung eine untergeordnete Rolle — im Gegenteil ist die Integration in bestehende Toolchains oft ein wichtiges Kriterium. Die anderen Faktoren (Testerkompetenzen, Anforderungskomplexität) sind zentrale Bewertungskriterien.'
+  },
+  {
+    id: 40, lo: 'MAT-5.4.1', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Aussagen spricht AM WENIGSTEN für die Verwendung eines entlegenen Testlabors?',
+    options: [
+      'a) Tests in späteren Phasen der App-Entwicklung, die in einem vollständigen Mobilgeräte-Testlabor durchgeführt werden müssen, werden am besten mit einem entlegenen Testlabor durchgeführt.',
+      'b) Ein entlegenes Mobilgeräte-Testlabor deckt höchstwahrscheinlich einen kleinen Satz der neuesten Geräte-/Betriebssystemkonfigurationen ab, damit Entwickler und Tester die frühen Entwurfsphasen der App schnell validieren können.',
+      'c) Entlegene Mobilgeräte-Testlabore stellen sicher, dass eine ausreichende Vielfalt an Geräten und Betriebssystemen zur Verfügung steht, damit Teams eine größere Vielfalt an Testgeräten für ihre Tests nutzen können.',
+      'd) Entlegene Labore sind besser für umfangreiche Tests geeignet, da sie in der Regel entworfen wurden, um sicherzustellen, dass Stabilitätsprobleme in den meisten Fällen aus dem Gesamtprozess eliminiert werden.'
+    ],
+    answer: [1],
+    explanation: 'Aussage b) beschreibt einen Nachteil (kleiner Gerätesatz), nicht einen Vorteil entlegener Testlabore — sie spricht also am wenigsten für deren Verwendung. Die anderen Aussagen beschreiben genuine Vorteile.'
   }
 ];
 
@@ -811,8 +771,6 @@ function renderQuestions() {
         </div>
         <div class="q-text">${escHtml(q.text)}</div>
       </div>
-      ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagramm zu Frage ${q.id}"></center>` : ''}
-      ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ''}
       <div class="options">${opts}</div>
       <div class="result-tag" id="result-${qi}"></div>
       <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>`;
@@ -899,6 +857,7 @@ function doSubmit(timedOut) {
   closeConfirm();
 
   let correct = 0, wrong = 0, skipped = 0;
+  const total = questions.length;
 
   questions.forEach((q, qi) => {
     const given     = userAnswers[qi];
@@ -912,8 +871,8 @@ function doSubmit(timedOut) {
       if (!row) return;
       row.classList.add('disabled');
       row.classList.remove('selected');
-      if (q.answer.includes(oi))       row.classList.add('reveal-correct');
-      else if (given.includes(oi))     row.classList.add('reveal-wrong');
+      if (q.answer.includes(oi))           row.classList.add('reveal-correct');
+      else if (given.includes(oi))         row.classList.add('reveal-wrong');
     });
 
     const rt   = document.getElementById('result-' + qi);
@@ -921,10 +880,9 @@ function doSubmit(timedOut) {
     const card = document.getElementById('card-' + qi);
     rt.classList.add('show');
     expl.classList.add('show');
-
     if (given.length === 0) {
       rt.classList.add('incorrect');
-      rt.innerHTML = '&mdash; Nicht beantwortet &middot; Korrekt: ' + String.fromCharCode(97 + q.answer[0]) + ')';
+      rt.innerHTML = '&mdash; Nicht beantwortet &middot; Korrekt: ' + String.fromCharCode(65 + q.answer[0]);
       card.classList.add('incorrect-card');
     } else if (isCorrect) {
       rt.classList.add('correct');
@@ -932,14 +890,13 @@ function doSubmit(timedOut) {
       card.classList.add('correct-card');
     } else {
       rt.classList.add('incorrect');
-      rt.innerHTML = '&#10007; Falsch &middot; Korrekt: ' + String.fromCharCode(97 + q.answer[0]) + ')';
+      rt.innerHTML = '&#10007; Falsch &middot; Korrekt: ' + String.fromCharCode(65 + q.answer[0]);
       card.classList.add('incorrect-card');
     }
   });
 
-  const total = questions.length;
-  const pct   = Math.round(correct / total * 100);
-  const pass  = pct >= 65;
+  const pct  = Math.round(correct / total * 100);
+  const pass = pct >= 65;
   const usedSec = TOTAL_SECONDS - secondsLeft;
   const um = Math.floor(usedSec / 60), us = usedSec % 60;
   const totalLabel = timeExtended ? '75:00' : '60:00';
