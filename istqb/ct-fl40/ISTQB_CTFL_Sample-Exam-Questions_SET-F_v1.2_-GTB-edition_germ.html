@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISTQB CTFL v4.0 — Probeprüfung SET F</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12; --surface: #0e1420; --card: #111827; --border: #1e2840;
+    --accent: #38bdf8; --accent2: #818cf8; --correct: #34d399;
+    --incorrect: #f87171; --warn: #fbbf24; --text: #cbd5e1;
+    --muted: #475569; --heading: #f1f5f9;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  #start-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(56,189,248,0.06) 0%, transparent 70%); }
+  .start-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 3.5rem 3rem; max-width: 540px; width: 100%; text-align: center; position: relative; overflow: hidden; }
+  .start-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(56,189,248,0.03) 0%, transparent 50%, rgba(129,140,248,0.03) 100%); pointer-events: none; border-radius: 20px; }
+  .start-badge { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.2); padding: 0.3rem 1rem; border-radius: 99px; display: inline-block; margin-bottom: 1.6rem; }
+  .start-card h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.9rem, 4.5vw, 2.8rem); font-weight: 800; color: var(--heading); line-height: 1.1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+  .start-card h1 em { font-style: normal; color: var(--accent); }
+  .start-subtitle { font-size: 0.88rem; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.7; }
+  .start-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 2.5rem; }
+  .meta-item { background: var(--surface); padding: 1.1rem 0.5rem; text-align: center; }
+  .meta-val { font-family: 'DM Mono', monospace; font-size: 1.35rem; font-weight: 500; color: var(--heading); display: block; }
+  .meta-lbl { font-size: 0.63rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.25rem; }
+  .btn-start { font-family: 'DM Mono', monospace; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.08em; padding: 1rem 2.5rem; background: var(--accent); color: #080c12; border: none; border-radius: 10px; cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; width: 100%; text-transform: uppercase; }
+  .btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(56,189,248,0.35); }
+  .start-note { font-size: 0.73rem; color: var(--muted); margin-top: 1rem; line-height: 1.6; }
+  .time-option-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.65rem; font-family: 'DM Mono', monospace; }
+  .time-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .time-opt { background: var(--surface); padding: 0.85rem 0.5rem; text-align: center; cursor: pointer; transition: background 0.18s, color 0.18s; border: none; width: 100%; font-family: 'DM Mono', monospace; color: var(--muted); }
+  .time-opt:first-child { border-right: 1px solid var(--border); }
+  .time-opt.active { background: rgba(56,189,248,0.12); color: var(--heading); }
+  .time-opt-val { font-size: 1.25rem; font-weight: 500; color: inherit; display: block; line-height: 1.2; }
+  .time-opt-lbl { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; display: block; opacity: 0.7; }
+  .time-opt.active .time-opt-val { color: var(--accent); }
+  .time-ext-note { font-size: 0.68rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; padding: 0.6rem 0.9rem; background: rgba(129,140,248,0.06); border: 1px solid rgba(129,140,248,0.15); border-radius: 8px; }
+
+  #exam-screen { display: none; }
+  header { background: rgba(11,16,28,0.96); border-bottom: 1px solid var(--border); padding: 0.85rem 2rem; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px); }
+  .header-inner { max-width: 920px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .header-left { display: flex; flex-direction: column; }
+  .exam-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .exam-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; }
+  .timer-block { display: flex; align-items: center; gap: 1rem; }
+  .timer { font-family: 'DM Mono', monospace; font-size: 2rem; font-weight: 500; color: var(--accent); letter-spacing: 0.04em; transition: color 0.3s; min-width: 95px; text-align: right; }
+  .timer.warn { color: var(--warn); }
+  .timer.danger { color: var(--incorrect); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .answered-count { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); text-align: right; line-height: 1.5; }
+  .answered-count span { color: var(--text); font-weight: 500; }
+  .header-buttons { display: flex; gap: 0.5rem; align-items: center; }
+  .progress-bar-wrap { max-width: 920px; margin: 0.5rem auto 0; height: 2px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 99px; transition: width 0.4s ease; width: 0%; }
+
+  main { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+  .exam-toolbar { margin-bottom: 1.5rem; }
+  .toolbar-info { font-size: 0.8rem; color: var(--muted); }
+  .toolbar-info strong { color: var(--text); }
+  .btn-submit { font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; padding: 0.5rem 1.2rem; background: var(--accent); color: #080c12; border: none; border-radius: 7px; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; text-transform: uppercase; white-space: nowrap; }
+  .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(56,189,248,0.3); }
+  .btn-secondary { font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; padding: 0.5rem 1rem; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 7px; cursor: pointer; transition: color 0.15s, border-color 0.15s; text-transform: uppercase; white-space: nowrap; }
+  .btn-secondary:hover { color: var(--text); border-color: var(--muted); }
+
+  .question-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; margin-bottom: 1rem; transition: border-color 0.25s; animation: fadeUp 0.2s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+  .question-card.correct-card   { border-color: rgba(52,211,153,0.4); }
+  .question-card.incorrect-card { border-color: rgba(248,113,113,0.4); }
+  .q-header { display: flex; gap: 0.9rem; align-items: flex-start; margin-bottom: 1.1rem; }
+  .q-meta { display: flex; flex-direction: column; gap: 0.3rem; flex-shrink: 0; }
+  .q-num { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; color: var(--accent); background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.18); border-radius: 5px; padding: 0.18rem 0.5rem; white-space: nowrap; }
+  .q-lo  { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--muted); background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
+  .q-pts { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--accent2); background: rgba(129,140,248,0.08); border: 1px solid rgba(129,140,248,0.18); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
+  .q-text { font-size: 0.92rem; color: var(--heading); line-height: 1.7; flex: 1; white-space: pre-wrap; }
+  .q-image { display: block; max-width: 100%; height: auto; margin: 1rem 0 1.1rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); }
+  .q-table-wrap { margin: 1rem 0 1.1rem; overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
+  .q-table-wrap table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+  .q-table-wrap th { background: rgba(56,189,248,0.08); color: var(--heading); font-family: 'DM Mono', monospace; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em; text-align: left; padding: 0.55rem 0.85rem; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .q-table-wrap td { color: var(--text); padding: 0.5rem 0.85rem; border-bottom: 1px solid rgba(30,40,64,0.5); vertical-align: top; line-height: 1.5; }
+  .q-table-wrap tr:last-child td { border-bottom: none; }
+  .q-table-wrap tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
+  .options { display: flex; flex-direction: column; gap: 0.45rem; }
+
+  .option-row { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.7rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: border-color 0.15s, background 0.15s; user-select: none; }
+  .option-row:hover:not(.disabled) { border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.03); }
+  .option-row.disabled { cursor: default; }
+  .option-marker { flex-shrink: 0; width: 17px; height: 17px; border-radius: 50%; border: 2px solid var(--border); background: transparent; margin-top: 2px; transition: border-color 0.15s, background 0.15s; display: flex; align-items: center; justify-content: center; }
+  .option-marker::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); opacity: 0; transition: opacity 0.15s; }
+  .option-row.selected { border-color: rgba(56,189,248,0.45); background: rgba(56,189,248,0.06); }
+  .option-row.selected .option-marker { border-color: var(--accent); }
+  .option-row.selected .option-marker::after { opacity: 1; }
+  .option-row.reveal-correct { border-color: var(--correct) !important; background: rgba(52,211,153,0.07) !important; }
+  .option-row.reveal-correct .option-marker { border-color: var(--correct); background: rgba(52,211,153,0.15); }
+  .option-row.reveal-correct .option-marker::after { background: var(--correct); opacity: 1; }
+  .option-row.reveal-wrong { border-color: var(--incorrect) !important; background: rgba(248,113,113,0.07) !important; }
+  .option-row.reveal-wrong .option-marker { border-color: var(--incorrect); background: rgba(248,113,113,0.15); }
+  .option-row.reveal-wrong .option-marker::after { background: var(--incorrect); opacity: 1; }
+  .option-text { font-size: 0.87rem; line-height: 1.55; color: var(--text); flex: 1; }
+
+  .result-tag { display: none; align-items: center; gap: 0.4rem; font-family: 'DM Mono', monospace; font-size: 0.67rem; font-weight: 500; letter-spacing: 0.04em; margin-top: 1rem; padding: 0.4rem 0.75rem; border-radius: 6px; }
+  .result-tag.show { display: flex; }
+  .result-tag.correct   { background: rgba(52,211,153,0.1);  color: var(--correct);   border: 1px solid rgba(52,211,153,0.25); }
+  .result-tag.incorrect { background: rgba(248,113,113,0.1); color: var(--incorrect); border: 1px solid rgba(248,113,113,0.25); }
+  .explanation { display: none; margin-top: 0.85rem; padding: 0.85rem 1rem; background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent2); border-radius: 0 6px 6px 0; font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+  .explanation.show { display: block; }
+
+  #summary { display: none; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 3rem 2.5rem; text-align: center; margin-top: 2rem; animation: fadeUp 0.4s ease; }
+  #summary h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--heading); margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+  .big-score { font-family: 'DM Mono', monospace; font-size: 4.8rem; font-weight: 500; color: var(--accent); line-height: 1; margin: 1rem 0 0.2rem; }
+  .sub { font-size: 0.86rem; color: var(--muted); margin-bottom: 0.6rem; }
+  .time-taken { font-family: 'DM Mono', monospace; font-size: 0.76rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .time-taken span { color: var(--text); }
+  .grade-badge { display: inline-block; padding: 0.4rem 1.2rem; border-radius: 8px; font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; margin-bottom: 2rem; }
+  .grade-badge.pass { background: rgba(52,211,153,0.12); color: var(--correct); border: 1px solid rgba(52,211,153,0.3); }
+  .grade-badge.fail { background: rgba(248,113,113,0.12); color: var(--incorrect); border: 1px solid rgba(248,113,113,0.3); }
+  .stat-row { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .stat .val { font-family: 'DM Mono', monospace; font-size: 1.7rem; font-weight: 500; color: var(--heading); }
+  .stat .lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.1rem; }
+
+  #confirm-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
+  #confirm-overlay.show { display: flex; }
+  .confirm-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; max-width: 420px; width: 90%; text-align: center; animation: fadeUp 0.22s ease; }
+  .confirm-box h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--heading); margin-bottom: 0.75rem; }
+  .confirm-box p { font-size: 0.86rem; color: var(--muted); margin-bottom: 1.75rem; line-height: 1.65; }
+  .confirm-btns { display: flex; gap: 0.75rem; justify-content: center; }
+  .btn-confirm-yes { font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; padding: 0.65rem 1.5rem; background: var(--accent); color: #080c12; border: none; border-radius: 8px; cursor: pointer; }
+  .btn-confirm-yes:hover { transform: translateY(-1px); }
+  .btn-confirm-no { font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; padding: 0.65rem 1.5rem; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; }
+  .btn-confirm-no:hover { color: var(--text); }
+
+  @media (max-width: 600px) {
+    header { padding: 0.75rem 1rem; }
+    main { padding: 1.25rem 0.9rem 3rem; }
+    .question-card { padding: 1.1rem 0.9rem; }
+    .start-card { padding: 2.5rem 1.5rem; }
+    .timer { font-size: 1.4rem; min-width: 75px; }
+    .stat-row { gap: 1.5rem; }
+    .start-meta { grid-template-columns: repeat(2, 1fr); }
+    .header-buttons { gap: 0.35rem; }
+    .btn-submit, .btn-secondary { font-size: 0.7rem; padding: 0.4rem 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="start-screen">
+  <div class="start-card">
+    <div class="start-badge">ISTQB Foundation Level</div>
+    <h1>CTFL v4.0<br><em>Probeprüfung SET F</em></h1>
+    <p class="start-subtitle">ISTQB® Certified Tester Foundation Level v4.0 · SET F v1.2 · GTB-Edition · CTFL-Lehrplan v4.0. Der Timer startet, sobald Sie auf „Prüfung starten" klicken.</p>
+    <div class="start-meta">
+      <div class="meta-item"><span class="meta-val">40</span><div class="meta-lbl">Fragen</div></div>
+      <div class="meta-item"><span class="meta-val" id="meta-minutes">60</span><div class="meta-lbl">Minuten</div></div>
+      <div class="meta-item"><span class="meta-val">40</span><div class="meta-lbl">Punkte</div></div>
+      <div class="meta-item"><span class="meta-val">65%</span><div class="meta-lbl">Bestehen</div></div>
+    </div>
+    <div class="time-option-label">Zeitvorgabe</div>
+    <div class="time-toggle">
+      <button class="time-opt active" id="opt-standard" onclick="selectTime(false)">
+        <span class="time-opt-val">60 min</span>
+        <span class="time-opt-lbl">Standard</span>
+      </button>
+      <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+        <span class="time-opt-val">75 min</span>
+        <span class="time-opt-lbl">+15 min Verlängerung</span>
+      </button>
+    </div>
+    <div class="time-ext-note" id="ext-note" style="display:none;">
+      &#9432;&nbsp; Die 15-minütige Verlängerung gilt für Kandidaten, deren Muttersprache nicht die Prüfungssprache ist (gemäß ISTQB-Regelung).
+    </div>
+    <button class="btn-start" onclick="startExam()">&#9654; Prüfung starten</button>
+    <p class="start-note" id="start-note-txt">Der Timer läuft von 60:00 herunter. Bei Zeitablauf erfolgt automatische Abgabe.</p>
+  </div>
+</div>
+
+<!-- EXAM SCREEN -->
+<div id="exam-screen">
+  <header>
+    <div class="header-inner">
+      <div class="header-left">
+        <span class="exam-label">ISTQB CTFL v4.0 · SET F v1.2 · GTB-Edition</span>
+        <span class="exam-title">Certified Tester Foundation Level</span>
+      </div>
+      <div class="timer-block">
+        <div class="answered-count"><span id="answered-num">0</span>/40 beantwortet</div>
+        <div class="timer" id="timer">60:00</div>
+        <div class="header-buttons">
+          <button class="btn-secondary" onclick="confirmReset()">&#8635; Reset</button>
+          <button class="btn-submit" onclick="confirmSubmit()">Abgeben</button>
+        </div>
+      </div>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill"></div></div>
+  </header>
+  <main>
+    <div class="exam-toolbar">
+      <div class="toolbar-info">40 Fragen · <strong>65% (≥ 26 von 40 Punkten)</strong> zum Bestehen · alle Fragen Einfachauswahl (1 Punkt)</div>
+    </div>
+    <div id="questions-container"></div>
+    <div id="summary">
+      <h2>Prüfung abgeschlossen</h2>
+      <div class="big-score" id="final-score-pct">—</div>
+      <div class="sub" id="final-score-raw"></div>
+      <div class="time-taken">Benötigte Zeit: <span id="time-used">—</span></div>
+      <div class="grade-badge" id="grade-badge"></div>
+      <div class="stat-row">
+        <div class="stat"><div class="val" id="stat-correct">—</div><div class="lbl">Richtig</div></div>
+        <div class="stat"><div class="val" id="stat-wrong">—</div><div class="lbl">Falsch</div></div>
+        <div class="stat"><div class="val" id="stat-skipped">—</div><div class="lbl">Offen</div></div>
+      </div>
+      <button class="btn-secondary" onclick="confirmReset()">&#8635; Neu starten</button>
+    </div>
+  </main>
+</div>
+
+<!-- CONFIRM OVERLAY -->
+<div id="confirm-overlay">
+  <div class="confirm-box">
+    <h3 id="confirm-title">Prüfung abgeben?</h3>
+    <p id="confirm-msg"></p>
+    <div class="confirm-btns">
+      <button class="btn-confirm-no" onclick="closeConfirm()">Abbrechen</button>
+      <button class="btn-confirm-yes" id="confirm-yes-btn" onclick="doConfirm()">Abgeben</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    id: 1, lo: 'FL-1.1.1', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Optionen beschreibt KEIN typisches Testziel?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Fehlerwirkungen auslösen und Fehlerzustände aufdecken',
+      'b) Vertrauen in das Qualitätsniveau des Testobjekts schaffen',
+      'c) Verringerung des Risikos einer unzureichenden Testumgebung',
+      'd) Erfüllung vertraglicher, gesetzlicher oder regulatorischer Anforderungen'
+    ],
+    answer: [2],
+    explanation: 'a) FALSCH – Das ist ein typisches Testziel (CTFL V4.0, Abschnitt 1.1.1, Aufzählungspunkt 2).\nb) FALSCH – Das ist ebenfalls ein typisches Testziel (Abschnitt 1.1.1, Aufzählungspunkt 8).\nc) KORREKT – Das ist kein typisches, im Lehrplan aufgeführtes Testziel. Stattdessen wird in Aufzählungspunkt 4 das Verringern des Risikos einer unzureichenden Softwarequalität aufgeführt.\nd) FALSCH – Das ist ein typisches Testziel (Abschnitt 1.1.1, Aufzählungspunkt 6).'
+  },
+  {
+    id: 2, lo: 'FL-1.2.3', k: 'K2', pts: 1,
+    text: 'Ein im Büro klingelndes Telefon lenkt einen Softwareentwickler ab, was dazu führt, dass er die Logik zur Prüfung der Einhaltung der Obergrenze einer Eingabevariablen falsch programmiert. Später, während des Systemtests, stellt ein Tester fest, dass dieses Eingabefeld ungültige Eingabewerte akzeptiert.\n\nWelcher der folgenden Begriffe beschreibt die fehlerhaft programmierte Logik zur Prüfung der Einhaltung der Obergrenze als Fehler im Code in diesem Szenario zutreffend?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Grundursache',
+      'b) Fehlerwirkung',
+      'c) Fehlhandlung',
+      'd) Fehlerzustand'
+    ],
+    answer: [3],
+    explanation: 'a) FALSCH – Die Grundursache ist die Ablenkung, nicht die fehlerhaft programmierte Logik.\nb) FALSCH – Die Akzeptanz von ungültigen Eingaben ist eine Fehlerwirkung.\nc) FALSCH – Die Fehlhandlung ist der Denkfehler, der dazu geführt hat, dass der Fehlerzustand in den Code eingebaut wurde.\nd) KORREKT – Das Problem im Code ist ein Fehlerzustand (CTFL V4.0, Abschnitt 1.2.3, 2. Absatz).'
+  },
+  {
+    id: 3, lo: 'FL-1.4.1', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Aktivitäten findet während der Aktivität „Testanalyse" des Testprozesses statt?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Identifikation der erforderlichen Infrastruktur und Werkzeuge',
+      'b) Erstellen von Testsuiten basierend auf den Testskripten',
+      'c) Analyse der „Lessons Learned" zur Prozessverbesserung',
+      'd) Bewerten der Testbasis hinsichtlich Testbarkeit'
+    ],
+    answer: [3],
+    explanation: 'a) FALSCH – Diese Aktivität wird im „Testentwurf" durchgeführt.\nb) FALSCH – Diese Aktivität wird in der „Testrealisierung" durchgeführt.\nc) FALSCH – Diese Aktivität wird im „Testabschluss" durchgeführt.\nd) KORREKT – Diese Aktivität wird in der „Testanalyse" durchgeführt: „Die Testanalyse umfasst die Analyse der Testbasis, um testbare Merkmale zu identifizieren …" (CTFL V4.0, Abschnitt 1.4.1).'
+  },
+  {
+    id: 4, lo: 'FL-1.3.1', k: 'K2', pts: 1,
+    text: 'Generell gilt, dass nach dem Pareto-Prinzip überdurchschnittlich viele Fehlerzustände oft in wenigen Bereichen eines Systems gefunden werden. Die entsprechenden Ausfälle führen häufig dazu, dass das System unbrauchbar wird.\n\nWelcher der folgenden Grundsätze des Testens ist hier beschrieben?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Testen ist kontextabhängig.',
+      'b) Fehlerzustände treten gehäuft auf.',
+      'c) Tests nutzen sich ab.',
+      'd) Trugschluss: „Keine Fehler" bedeutet ein brauchbares System.'
+    ],
+    answer: [1],
+    explanation: 'a) FALSCH – Dieser Grundsatz besagt nur, dass Testen in unterschiedlichen Kontexten unterschiedlich praktiziert wird.\nb) KORREKT – Dieser Grundsatz besagt, dass eine kleine Anzahl von Komponenten die meisten entdeckten Fehlerzustände enthält (CTFL V4.0, Abschnitt 1.3, 4. Grundsatz).\nc) FALSCH – Dieser Grundsatz besagt, dass Tests nach oftmaliger Wiederholung zunehmend ineffektiv werden.\nd) FALSCH – Dieser Grundsatz fokussiert darauf, dass selbst ein gründlich verifiziertes System die Erwartungen der Benutzer noch nicht erfüllen könnte.'
+  },
+  {
+    id: 5, lo: 'FL-1.5.1', k: 'K2', pts: 1,
+    text: 'Welche der folgenden allgemeinen Kompetenzen ist für die Weitergabe von entdeckten Fehlerwirkungen an die betroffenen Entwickler BESONDERS WICHTIG?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Testwissen',
+      'b) Kritisches Denken',
+      'c) Sorgfalt',
+      'd) Kommunikationsfähigkeit'
+    ],
+    answer: [3],
+    explanation: 'a) FALSCH – Testwissen ist notwendig, um die Effektivität des Testens zu steigern, z. B. durch den Einsatz von Testverfahren.\nb) FALSCH – Kritisches Denken ist wichtig zur Steigerung der Effektivität, z. B. um Annahmen zu hinterfragen.\nc) FALSCH – Sorgfalt ist wichtig, um Fehlerzustände zu entdecken, insbesondere schwer zu entdeckende.\nd) KORREKT – Kommunikationsfähigkeit ist für die effektive Weitergabe von Informationen an Stakeholder wichtig (CTFL V4.0, Abschnitt 1.5.1, 3. Aufzählungspunkt).'
+  },
+  {
+    id: 6, lo: 'FL-1.4.3', k: 'K2', pts: 1,
+    text: 'Ordnen Sie die richtige Beschreibung von A bis D zu ihrer entsprechenden Testressource 1 bis 4:\n\nA. Eine Menge von Testfällen oder Testskripten, die in einem bestimmten Testzyklus ausgeführt werden sollen\nB. Eine Abfolge von Anweisungen für die Durchführung eines Tests\nC. Enthält die erwarteten Ergebnisse\nD. Die Dokumentation eines Ziels und der Agenda einer Testsitzung\n\n1. Testsuite\n2. Testfall\n3. Testskript\n4. Test-Charta\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) 1A, 2C, 3B, 4D',
+      'b) 1D, 2B, 3A, 4C',
+      'c) 1A, 2C, 3D, 4B',
+      'd) 1D, 2C, 3B, 4A'
+    ],
+    answer: [0],
+    explanation: 'a) KORREKT:\nTestsuite (1A): Eine Menge von Testskripten, die in einem bestimmten Testlauf ausgeführt werden sollen.\nTestfall (2C): Enthält u. a. erwartete Ergebnisse.\nTestskript (3B): Eine Abfolge von Anweisungen für die Durchführung eines Tests.\nTest-Charta (4D): Die Dokumentation eines Ziels und der Agenda einer Testsitzung.\n(CTFL V4.0, Abschnitt 1.4.3 / Glossar)'
+  },
+  {
+    id: 7, lo: 'FL-1.4.4', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Aussagen beschreibt AM BESTEN, wie Verfolgbarkeit zwischen der Testbasis, den Testmitteln, den Testergebnissen und den Fehlerzuständen das Testen unterstützt?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Die Durchführung einer Auswirkungsanalyse liefert Informationen über die Qualität des Systems unter Test.',
+      'b) Die Analyse der Verfolgbarkeit zwischen Testfällen und Testergebnissen liefert Informationen über die Vollständigkeit von Testfällen.',
+      'c) Die Analyse der Verfolgbarkeit hilft bei der Durchführung einer Auswirkungsanalyse von Änderungen und bei der Auswahl geeigneter Testfälle für Regressionstests.',
+      'd) Die Analyse der Verfolgbarkeit zwischen den Anforderungen und den Testfällen hilft bei der Analyse des Restrisikos.'
+    ],
+    answer: [2],
+    explanation: 'a) FALSCH – Die Auswirkungsanalyse liefert keine Informationen über die Qualität, sondern über die Auswirkung von Änderungen.\nb) FALSCH – Die Verfolgbarkeit zwischen Testfällen und Anforderungen gibt Auskunft über die Vollständigkeit, nicht zwischen Testfällen und Testergebnissen.\nc) KORREKT – Die Analyse der Verfolgbarkeit hilft bei der Auswirkungsanalyse und der Auswahl von Testfällen für Regressionstests (CTFL V4.0, Abschnitt 1.4.4).\nd) FALSCH – Die Bewertung von Restrisiken erfolgt eher durch die Verfolgbarkeit von Testergebnissen zu Risiken.'
+  },
+  {
+    id: 8, lo: 'FL-1.5.2', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Aussagen stellt einen Vorteil des Whole-Team-Ansatzes dar?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Jedes Teammitglied darf eine beliebige Aufgabe übernehmen.',
+      'b) Jedes Teammitglied ist für die Qualität verantwortlich.',
+      'c) Jedes Teammitglied arbeitet separat an seiner eigenen Aufgabe.',
+      'd) Jedes Teammitglied hat eine festgelegte Rolle und Verantwortung.'
+    ],
+    answer: [1],
+    explanation: 'a) FALSCH – Jedes Teammitglied kann jede Aufgabe ausführen, die es kann (nicht die es möchte).\nb) KORREKT – Der Whole-Team-Ansatz fördert die gemeinsame Verantwortung für die Qualität (CTFL V4.0, Abschnitt 1.5.2).\nc) FALSCH – Jedes Teammitglied arbeitet eng mit anderen zusammen, nicht separat.\nd) FALSCH – Jedes Teammitglied hat keine feste Rolle, sondern kann flexibel verschiedene Aufgaben übernehmen.'
+  },
+  {
+    id: 9, lo: 'FL-2.1.1', k: 'K2', pts: 1,
+    text: 'Sie arbeiten als Tester in einem Team, das mit einem sequenziellen Softwareentwicklungszyklus (SDLC) arbeitet.\n\nWie wirkt sich die Wahl dieses SDLC-Modells auf die zeitliche Planung der Tests aus?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Dynamische Tests (Unit-Tests) können nicht in frühen Phasen dieses SDLC durchgeführt werden.',
+      'b) Statische Tests können nicht in frühen Phasen in diesem SDLC durchgeführt werden.',
+      'c) Die Testplanung kann nicht in frühen Phasen in diesem SDLC durchgeführt werden.',
+      'd) Abnahmetests können in frühen Phasen in diesem SDLC durchgeführt werden.'
+    ],
+    answer: [0],
+    explanation: 'a) KORREKT – In sequenziellen Modellen wird der ausführbare Code in späteren Phasen erstellt, so dass dynamische Tests nicht in frühen Phasen durchgeführt werden können (CTFL V4.0, Abschnitt 2.1.1, 2. Absatz).\nb) FALSCH – Statische Tests, insbesondere Reviews, können immer früh im SDLC durchgeführt werden.\nc) FALSCH – Die Testplanung sollte in einer frühen Phase durchgeführt werden.\nd) FALSCH – Abnahmetests können nicht durchgeführt werden, wenn kein funktionierendes Produkt vorhanden ist.'
+  },
+  {
+    id: 10, lo: 'FL-2.1.2', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Aussagen ist eine gute Testpraktik, die für alle Softwareentwicklungslebenszyklen (SDLC) gilt?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Tester müssen Entwickler besonders bei den Softwareentwicklungsaktivitäten begleiten, für die es keine zugehörigen Testaktivitäten gibt.',
+      'b) Tester sollten dabei unterstützen, unterschiedliche Testziele für jede Teststufe zu definieren, und eigene Testumfänge und Testtiefen für jede Teststufe festzulegen.',
+      'c) Tester sollten erst mit der Testanalyse und dem Testentwurf beginnen, wenn die Anforderungen und Spezifikationen vollständig implementiert wurden.',
+      'd) Tester sollten keine Reviews von Arbeitsergebnissen durchführen, um sich auf die Testdurchführung konzentrieren zu können.'
+    ],
+    answer: [1],
+    explanation: 'a) FALSCH – Zu jeder Softwareentwicklungsaktivität gibt es eine entsprechende Testaktivität.\nb) KORREKT – Dies ist eine der guten Testpraktiken, die im Lehrplan beschrieben werden (CTFL V4.0, Abschnitt 2.1.2, 2. Aufzählungspunkt).\nc) FALSCH – Tester werden in das Review von Arbeitsergebnissen einbezogen, sobald Entwürfe verfügbar sind.\nd) FALSCH – Tester sollten Reviews durchführen, um den Shift-Left-Ansatz zu unterstützen.'
+  },
+  {
+    id: 11, lo: 'FL-2.1.3', k: 'K1', pts: 1,
+    text: 'Welcher der folgenden Test-First-Ansätze verwendet üblicherweise das Gegeben/Wenn/Dann-Format, um die gewünschte Reaktion einer Anwendung auszudrücken?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Testgetriebene Entwicklung (TDD)',
+      'b) Abnahmetestgetriebene Entwicklung (ATDD)',
+      'c) Verhaltensgetriebene Entwicklung (BDD)',
+      'd) Kontinuierliche Integration / kontinuierliche Auslieferung (CI/CD)'
+    ],
+    answer: [2],
+    explanation: 'a) FALSCH – TDD leitet die Codierung von Testfällen ab, die nicht notwendigerweise in natürlicher Sprache geschrieben sind.\nb) FALSCH – ATDD leitet Tests aus Abnahmekriterien ab, die nicht notwendigerweise das Gegeben/Wenn/Dann-Format verwenden.\nc) KORREKT – BDD verwendet das Gegeben/Wenn/Dann-Format (CTFL V4.0, Abschnitt 2.1.3).\nd) FALSCH – CI/CD sind technische Praktiken, keine Test-First-Ansätze.'
+  },
+  {
+    id: 12, lo: 'FL-2.1.4', k: 'K2', pts: 1,
+    text: 'Was sind die Vorteile von DevOps?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Schnellere Produktfreigabe und kürzere Produkteinführungszeit',
+      'b) Schnelle Rückmeldung durch ausschließliche Fokussierung auf funktionale Tests',
+      'c) Durch Shift-Left kann die Anzahl der Regressionstests minimiert werden.',
+      'd) Kostengünstige Implementierung des Testautomatisierungs-Frameworks'
+    ],
+    answer: [0],
+    explanation: 'a) KORREKT – Schnellere Produktfreigaben und kürzere Markteinführungszeiten sind Vorteile von DevOps (CTFL V4.0, Abschnitt 2.1.4).\nb) FALSCH – DevOps lenkt den Blick verstärkt auch auf nicht-funktionale Qualitätsmerkmale.\nc) FALSCH – Nicht die Anzahl der Regressionstests wird minimiert, sondern das Risiko durch automatisierte Regression.\nd) FALSCH – Die Einrichtung eines Testautomatisierungs-Frameworks erfordert immer Investitionen.'
+  },
+  {
+    id: 13, lo: 'FL-2.2.2', k: 'K2', pts: 1,
+    text: 'Sie arbeiten als Tester in einem Projekt an einer mobilen Anwendung für Essensbestellungen. Eine Kundenanforderung mit hoher Priorität lautet:\n\n„In 95 % der Fälle muss die Bestellung in weniger als 10 Sekunden bearbeitet werden."\n\nSie haben eine Reihe von Testfällen erstellt, in denen Sie eine zufällige Anzahl von Bestellungen ausgeführt, die Bearbeitungszeit gemessen und die Testergebnisse mit den Anforderungen verglichen haben.\n\nWelche Art von Test haben Sie durchgeführt?\n\nWählen Sie die BESTE Option! (1 aus 4)',
+    options: [
+      'a) Funktional, da die Testfälle die geschäftlichen Anforderungen des Kunden an das System abdecken.',
+      'b) Nicht-funktional, da die Testfälle die Performanz des Systems messen.',
+      'c) Explorativ, da die genaue Bearbeitungszeit nicht definiert wurde.',
+      'd) Strukturell, da die interne Struktur des Programms zur Messung der Bearbeitungszeit bekannt sein muss.'
+    ],
+    answer: [1],
+    explanation: 'a) FALSCH – Bei einem Performanztest testen Sie nicht das „Was", sondern das „Wie" des Systems.\nb) KORREKT – Dies ist ein Beispiel für einen Performanztest, eine Art des nicht-funktionalen Testens (CTFL V4.0, Abschnitt 2.2.2).\nc) FALSCH – Explorative Tests sind sinnvoll wenn es keine hinreichende Spezifikation gibt — hier ist sie gegeben.\nd) FALSCH – Performanztests können ohne Kenntnis der internen Struktur durchgeführt werden.'
+  },
+  {
+    id: 14, lo: 'FL-2.2.3', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Aussagen über Fehlernachtests und Regressionstests ist korrekt?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Die Anzahl der Regressionstests nimmt mit dem Projektfortschritt zu, wohingegen die Anzahl der Fehlernachtests mit dem Projektfortschritt abnimmt.',
+      'b) Regressionstests werden erstellt und durchgeführt, wenn das Testobjekt korrigiert wird, während Fehlernachtests immer dann durchgeführt werden, wenn das Testobjekt erweitert wird.',
+      'c) Regressionstests werden durchgeführt, um zu prüfen, ob die Betriebsumgebung unverändert ist, während Fehlernachtests darauf abzielen, Änderungen am Testobjekt zu testen.',
+      'd) Regressionstests befassen sich mit möglichen negativen Auswirkungen von Änderungen auf unveränderte Bereiche, während Fehlernachtests sich mit den positiven Auswirkungen korrigierender Änderungen befassen.'
+    ],
+    answer: [3],
+    explanation: 'a) FALSCH – Eine Aussage zur Entwicklung der Fehlernachtests im Projektverlauf ist nicht möglich; sie hängen von behobenen Fehlerzuständen ab.\nb) FALSCH – Diese Aussage vertauscht die Zuordnung.\nc) FALSCH – Regressionstests beziehen grundsätzlich das Testobjekt selbst ein.\nd) KORREKT – Regressionstests prüfen mögliche negative Auswirkungen von Änderungen; Fehlernachtests bestätigen, dass ursprüngliche Fehlerzustände behoben wurden (CTFL V4.0, Abschnitt 2.2.3).'
+  },
+  {
+    id: 15, lo: 'FL-3.1.1', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Arbeitsprodukte können NICHT im Rahmen eines Projektes mit einem statischen Test geprüft werden?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Testfälle und ausführbare Testskripte',
+      'b) Anforderungsspezifikation und Akzeptanzkriterien',
+      'c) Rechtlich geschützter ausführbarer Code von Drittanbietern',
+      'd) Projektdokumentation und Modelle'
+    ],
+    answer: [2],
+    explanation: 'a) FALSCH – Testfälle und Testskripte können durch statischen Test geprüft werden.\nb) FALSCH – Anforderungsspezifikationen und Akzeptanzkriterien können durch statischen Test geprüft werden.\nc) KORREKT – Ausführbarer Code eines Drittanbieters, der rechtlich geschützt ist, darf nicht mit einem statischen Test geprüft werden (CTFL V4.0, Abschnitt 3.1.1, 3. Absatz).\nd) FALSCH – Projektdokumentationen und Modelle können durch statischen Test geprüft werden.'
+  },
+  {
+    id: 16, lo: 'FL-3.1.3', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Aussagen trifft auf die Unterschiede zwischen statischem und dynamischem Test zu?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Beim statischen Test werden Fehlerwirkungen gefunden.',
+      'b) Beim statischen Test wird unzureichende Softwareperformanz gemessen.',
+      'c) Das ausschließliche Ziel beim statischen Test ist es, Fehlerzustände so früh wie möglich zu erkennen.',
+      'd) Eine unzureichende Überdeckung von IT-Sicherheitsanforderungen kann durch den statischen Test leichter aufgedeckt werden.'
+    ],
+    answer: [3],
+    explanation: 'a) FALSCH – Fehlerwirkungen werden durch dynamische Tests gefunden.\nb) FALSCH – Zur Messung der Performanz muss die Software ausgeführt werden (dynamisches Testen).\nc) FALSCH – Das Ziel sowohl des statischen als auch des dynamischen Testens ist frühzeitiges Erkennen von Fehlerzuständen.\nd) KORREKT – Dies ist ein Beispiel für eine Lücke in der Überdeckung, die bei statischen Tests leichter gefunden wird (CTFL V4.0, Abschnitt 3.1.3, 2. Absatz, 7. Aufzählungspunkt).'
+  },
+  {
+    id: 17, lo: 'FL-3.2.2', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Aussagen über formale Reviews (z. B. Inspektionen) ist zutreffend?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Das technische Review wird vom Autor geleitet.',
+      'b) Der Reviewprozess besteht aus mehreren Aktivitäten, wie z. B. Planung, Kommunikation und Analyse, Behebung und Berichterstattung.',
+      'c) Die zu prüfenden Arbeitsergebnisse werden während der Reviewsitzung verteilt.',
+      'd) Fehlerzustände, die bei einem Review gefunden werden, werden nicht gemeldet, da sie bei dynamischen Tests sowieso gefunden werden.'
+    ],
+    answer: [1],
+    explanation: 'a) FALSCH – Ein technisches Review wird von einem Moderator geleitet, nicht vom Autor.\nb) KORREKT – Formale Reviews folgen einem strukturierten Prozess mit mehreren Aktivitäten (CTFL V4.0, Abschnitt 3.2.2, 3. Absatz).\nc) FALSCH – Die zu überprüfenden Arbeitsergebnisse sollten so früh wie möglich verteilt werden.\nd) FALSCH – Fehlerzustände aus Reviews sollten berichtet werden; viele sind bei dynamischen Tests nicht oder schwer zu finden.'
+  },
+  {
+    id: 18, lo: 'FL-3.2.3', k: 'K1', pts: 1,
+    text: 'Welche Aufgaben kann das Management bei einem formalen Review (z. B. Inspektion) übernehmen?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Gegebenenfalls Überarbeitung des Review-Objekts nach dem Review',
+      'b) Entscheiden, was überprüft werden soll',
+      'c) Sicherstellung der effektiven Durchführung von Reviewsitzungen und ggf. Mediation',
+      'd) Aufzeichnung von Review-Informationen wie z. B. Review-Entscheidungen'
+    ],
+    answer: [1],
+    explanation: 'a) FALSCH – Dies liegt in der Verantwortung des Autors.\nb) KORREKT – Das Management kann entscheiden, was geprüft werden soll (CTFL V4.0, Abschnitt 3.2.3, 1. Aufzählungspunkt).\nc) FALSCH – Dies ist die Aufgabe des Moderators.\nd) FALSCH – Dies ist die Aufgabe des Protokollanten.'
+  },
+  {
+    id: 19, lo: 'FL-4.1.1', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Aussagen beschreibt einen Vorteil von Black-Box-Testverfahren gegenüber White-Box-Testverfahren?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Black-Box-Testverfahren können die interne Struktur und Verarbeitung des Testobjekts überprüfen.',
+      'b) Black-Box-Testverfahren können unabhängig von der Implementierung der Software durchgeführt werden.',
+      'c) Black-Box-Testverfahren nutzen das Wissen und die Erfahrung der Tester besser aus.',
+      'd) Black-Box-Testverfahren können ohne Anpassung durchgeführt werden, obwohl das geforderte Verhalten des Testobjekts geändert wurde.'
+    ],
+    answer: [1],
+    explanation: 'a) FALSCH – Das beschreibt White-Box-Testverfahren.\nb) KORREKT – Black-Box-Testverfahren können unabhängig von der Implementierung durchgeführt werden (CTFL V4.0, Abschnitt 4.1, 3. Absatz).\nc) FALSCH – Erfahrungsbasierte Testverfahren nutzen das Wissen der Tester besser aus.\nd) FALSCH – Das Gegenteil ist wahr: Bei Änderungen am spezifizierten Verhalten müssen die Testfälle angepasst werden.'
+  },
+  {
+    id: 20, lo: 'FL-4.2.1', k: 'K3', pts: 1,
+    text: 'Eine Fitness-App misst die Anzahl der täglich zurückgelegten Schritte und gibt dazu Feedback:\n\n• Bis einschließlich 1000: Couch Potato!\n• Über 1000 bis einschließlich 2000: Komm in die Puschen!\n• Über 2000 bis einschließlich 4000: Die Richtung stimmt!\n• Über 4000 bis einschließlich 6000: Gut gemacht!\n• Über 6000: Super!\n\nWelche der folgenden Gruppen von Testeingabewerten würde für DIE HÖCHSTE Überdeckung von Äquivalenzklassen sorgen?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) 0, 1000, 2000, 3000, 4000',
+      'b) 1000, 2001, 4000, 4001, 6000',
+      'c) 123, 2345, 3456, 4567, 5678',
+      'd) 666, 999, 2222, 5555, 6666'
+    ],
+    answer: [3],
+    explanation: 'Die fünf gültigen Äquivalenzklassen: (1) 0–1000, (2) 1001–2000, (3) 2001–4000, (4) 4001–6000, (5) 6001–MaxInt.\na) 0(1), 1000(1), 2000(2), 3000(3), 4000(3) → 3 Klassen = 60%\nb) 1000(1), 2001(3), 4000(3), 4001(4), 6000(4) → 3 Klassen = 60%\nc) 123(1), 2345(3), 3456(3), 4567(4), 5678(4) → 3 Klassen = 60%\nd) KORREKT – 666(1), 999(1), 2222(3), 5555(4), 6666(5) → 4 Klassen = 80% (CTFL V4.0, Abschnitt 4.2.1)'
+  },
+  {
+    id: 21, lo: 'FL-4.2.2', k: 'K3', pts: 1,
+    text: 'Sie testen ein System, das die Endnote für Kursteilnehmer berechnet:\n\n• 0–50 Punkte: nicht bestanden\n• 51–70 Punkte: ausreichend\n• 71–90 Punkte: gut\n• 91–100 Punkte: sehr gut\n\nVorhandene Testfälle:\n\nWie hoch ist die Überdeckung der 2-Wert-Grenzwertanalyse, die mit den vorhandenen Testfällen erreicht wird?\n\nWählen Sie EINE Option! (1 aus 4)',
+    table: `<table>
+      <thead><tr><th>Testfall-ID</th><th>Gesamtpunktzahl</th><th>Endnote</th></tr></thead>
+      <tbody>
+        <td>TF1</td><td>91</td> <td>sehr gut</td>       </tr>
+        <td>TF2</td><td>50</td> <td>nicht bestanden</td></tr>
+        <td>TF3</td><td>70</td> <td>ausreichend</td>    </tr>
+        <td>TF4</td><td>100</td><td>sehr gut</td>       </tr>
+        <td>TF5</td><td>90</td> <td>gut</td>            </tr>
+        <td>TF6</td><td>0</td>  <td>nicht bestanden</td></tr>
+      </tbody>
+    </table>`,
+    options: [
+      'a) 60 %',
+      'b) 75 %',
+      'c) 33,3 %',
+      'd) 100 %'
+    ],
+    answer: [0],
+    explanation: 'a) KORREKT – Die 8 Grenzwerte (inkl. Nachbarn) sind: 0, 50, 51, 70, 71, 90, 91, 100 plus -1 und 101 als ungültige Nachbarn → 10 Überdeckungselemente. Die 6 Testfälle decken je einen dieser 10 Grenzwerte ab → 6/10 = 60% (CTFL V4.0, Abschnitt 4.2.2).\nb) FALSCH – 6/8 = 75% (ohne -1 und 101).\nc) FALSCH – 6/18 = 33,3% (wäre 3-Wert-Methode).\nd) FALSCH – Keine 100%.'
+  },
+  {
+    id: 22, lo: 'FL-4.2.3', k: 'K3', pts: 1,
+    text: 'Sie testen ein CRM-System für einen Fahrrad-Tagesverleih:\n\n• Jeder kann ein Fahrrad ausleihen, aber nur Mitglieder erhalten 20 % Rabatt.\n• Wird die Rückgabefrist versäumt, kann der Rabatt nicht genutzt werden.\n• Nach 15 Ausleihen erhalten Mitglieder ein T-Shirt geschenkt.\n\nEntscheidungstabelle (J=Wahr, N=Falsch, X=Aktion):\n\nWelche Regel entspricht NICHT den Anforderungen?\n\nWählen Sie EINE Option! (1 aus 4)',
+    table: `<table>
+      <thead><tr><th>Bedingungen</th><th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>R5</th><th>R6</th><th>R7</th><th>R8</th></tr></thead>
+      <tbody>
+        <td>ist Mitglied</td>    <td>J</td> <td>J</td> <td>J</td> <td>J</td> <td>N</td> <td>N</td> <td>N</td> <td>N</td> </tr>
+        <td>Frist versäumt</td>  <td>J</td> <td>N</td> <td>J</td> <td>N</td> <td>J</td> <td>N</td> <td>J</td> <td>N</td> </tr>
+        <td>15. Ausleihe</td>    <td>N</td> <td>N</td> <td>J</td> <td>J</td> <td>N</td> <td>N</td> <td>J</td> <td>J</td> </tr>
+        <td>Aktionen</td>        <td></td>  <td></td>  <td></td>  <td></td>  <td> </td> <td></td>  <td></td>  <td></td>  </tr>
+        <td>20 % Rabatt</td>     <td></td>  <td>X</td> <td></td>  <td>X</td> <td></td>  <td></td>  <td></td>  <td></td>  </tr>
+        <td>Geschenk-T-Shirt</td><td></td>  <td></td>  <td>X</td> <td>X</td> <td></td>  <td></td>  <td></td>  <td>X</td> </tr>
+      </tbody>
+    </table>`,
+    options: [
+      'a) R4',
+      'b) R2',
+      'c) R6',
+      'd) R8'
+    ],
+    answer: [3],
+    explanation: 'a) FALSCH – Ein Mitglied ohne Fristversäumnis, 15. Ausleihe: erhält Rabatt + T-Shirt. Korrekt.\nb) FALSCH – Ein Mitglied ohne Fristversäumnis, nicht 15. Ausleihe: erhält Rabatt. Korrekt.\nc) FALSCH – Nichtmitglieder erhalten keinen Rabatt, auch ohne Fristversäumnis. Korrekt.\nd) KORREKT – R8: Nichtmitglied, keine Frist, 15. Ausleihe → T-Shirt. Nur Mitglieder können ein T-Shirt erhalten! Diese Kombination ist nicht korrekt (CTFL V4.0, Abschnitt 4.2.3).'
+  },
+  {
+    id: 23, lo: 'FL-4.2.4', k: 'K3', pts: 1,
+    text: 'Sie testen ein System, dessen Lebenszyklus durch ein Zustandsübergangsdiagramm modelliert wird. Das System startet im INIT-Zustand und beendet seinen Betrieb im OFF-Zustand.\n\nDas Diagramm hat folgende Übergänge:\n\nWas ist die MINDESTZAHL von Testfällen, um eine Überdeckung der gültigen Übergänge von 100 % zu erreichen (0-Switch-Überdeckung)?\n\nWählen Sie EINE Option! (1 aus 4)',
+    image: 'SET-F_v1.2_GTB/mock_23.png',
+    options: [
+      'a) 2',
+      'b) 3',
+      'c) 4',
+      'd) 7'
+    ],
+    answer: [1],
+    explanation: 'Die Übergänge „test" und „run" können nicht im gleichen Testfall vorkommen. Nach „run" gibt es zwei Ausgänge zum OFF-Zustand (über „error" und über „pause"). Mindestens drei Testfälle sind erforderlich:\nTF1: test, done\nTF2: run, error, done\nTF3: run, pause, resume, pause, done\nb) KORREKT – 3 Testfälle (CTFL V4.0, Abschnitt 4.2.4).'
+  },
+  {
+    id: 24, lo: 'FL-4.3.1', k: 'K2', pts: 1,
+    text: 'Ihre Testsuite erreicht eine Anweisungsüberdeckung von 100 %. Was bedeutet das?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Eine beliebig ausgewählte Anweisung im Code wurde mindestens einmal ausgeführt.',
+      'b) Jede Testsuite, die mehr Testfälle als Ihre Testsuite enthält, erreicht ebenfalls eine Anweisungsüberdeckung von 100 %.',
+      'c) Jeder Zweig des Codes wurde mindestens einmal ausgeführt.',
+      'd) Jede Kombination von Eingabewerten im Code wurde getestet.'
+    ],
+    answer: [0],
+    explanation: 'a) KORREKT – Bei 100 % Anweisungsüberdeckung muss jede Anweisung mindestens einmal ausgeführt worden sein (CTFL V4.0, Abschnitt 4.3.1).\nb) FALSCH – Der Überdeckungsgrad hängt davon ab, was getestet wird, nicht von der Anzahl der Testfälle.\nc) FALSCH – 100 % Anweisungsüberdeckung garantiert keine 100 % Zweigüberdeckung.\nd) FALSCH – Erschöpfendes Testen ist nicht möglich (Grundsatz 2 des Testens).'
+  },
+  {
+    id: 25, lo: 'FL-4.3.2', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Aussagen über Zweigtests ist zutreffend?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Wenn ein Programm nur bedingungslose Kontrollübergänge enthält, kann eine 100 %ige Zweigüberdeckung erreicht werden, ohne einen einzigen Testfall ausführen zu müssen.',
+      'b) Wenn ein Zweig mit einem Testfall ausgeführt wird, werden alle Fehlerzustände darin aufgedeckt.',
+      'c) Wenn eine 100 %ige Anweisungsüberdeckung erreicht wird, dann wird auch eine 100 %ige Zweigüberdeckung erreicht.',
+      'd) Wenn eine 100 %ige Zweigüberdeckung erreicht wird, dann werden alle Entscheidungsergebnisse eines jeden bedingten Kontrollübergangs des Codes ausgeführt.'
+    ],
+    answer: [3],
+    explanation: 'a) FALSCH – Es ist immer noch mindestens ein Testfall erforderlich, da es mindestens einen (unbedingten) Zweig gibt.\nb) FALSCH – Fehlerzustände, die bestimmte Pfade erfordern, werden nicht zwingend erkannt.\nc) FALSCH – 100 % Zweigüberdeckung schließt 100 % Anweisungsüberdeckung ein, nicht andersherum.\nd) KORREKT – Jedes Entscheidungsergebnis eines bedingten Kontrollübergangs entspricht einem Zweig (CTFL V4.0, Abschnitt 4.3.2).'
+  },
+  {
+    id: 26, lo: 'FL-4.4.2', k: 'K2', pts: 1,
+    text: 'Was ist der Zweck einer Test-Charta beim sitzungsbasierten explorativen Testen?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Die Test-Charta legt die Testziele für die Testsitzung fest.',
+      'b) Die Test-Charta dokumentiert die durchgeführten Schritte und die gewonnenen Erkenntnisse.',
+      'c) Die Test-Charta ist häufig in Form von Fragen formuliert.',
+      'd) Die Test-Charta bewertet die Testergebnisse nach der Testsitzung.'
+    ],
+    answer: [0],
+    explanation: 'a) KORREKT – Die Test-Charta legt die Testziele für die Testsitzung fest (CTFL V4.0, Abschnitt 4.4.2, 2. Absatz, 3. Satz).\nb) FALSCH – Das ist die Aufgabe der Testsitzungsblätter.\nc) FALSCH – Fragen können Teil einer Test-Charta sein, sind aber keine Hauptfunktion.\nd) FALSCH – Die Testergebnisse werden in der Nachbesprechung diskutiert, nicht durch die Test-Charta bewertet.'
+  },
+  {
+    id: 27, lo: 'FL-4.4.3', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Aussagen ist AM EHESTEN ein Vorteil des Testens anhand von Checklisten?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Es ermöglicht eine hohe Wiederholbarkeit der Tests.',
+      'b) Es bietet einen strukturierten Ansatz für das Testen, ohne dass detaillierte Testfälle erforderlich sind.',
+      'c) Es deckt alle Anforderungen an das Testobjekt ab.',
+      'd) Es unterstützt funktionale und nicht-funktionale Tests.'
+    ],
+    answer: [3],
+    explanation: 'a) FALSCH – Da Tester unterschiedliche Wege wählen können, ist identische Wiederholung unwahrscheinlich.\nb) FALSCH – Checklistenbasiertes Testen erfordert keine detaillierten Testfälle — das ist eine Eigenschaft, kein Vorteil.\nc) FALSCH – Checklisten können unvollständig oder veraltet sein.\nd) KORREKT – Checklisten können verschiedene Testarten inkl. nicht-funktionale Tests unterstützen (CTFL V4.0, Abschnitt 4.4.3, 2. Absatz, 3. Satz).'
+  },
+  {
+    id: 28, lo: 'FL-4.5.1', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Aussagen beschreibt NICHT den kollaborativen Ansatz beim Schreiben von User-Storys?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) User-Storys beinhalten die Aspekte Fachlichkeit, Entwicklung und Testen.',
+      'b) User-Storys werden von Fachbereichsvertretern, Entwicklern und Testern gemeinsam erstellt.',
+      'c) Akzeptanzkriterien für User-Storys sind speziell von Testern zu erstellen, um die Unabhängigkeit des Tests zu gewährleisten.',
+      'd) User-Storys werden in einem Sprint so erstellt, dass sie unabhängig, verhandelbar, nützlich, abschätzbar, klein und testbar sind.'
+    ],
+    answer: [2],
+    explanation: 'a) FALSCH – Diese Aussage stimmt: Kollaboratives Schreiben umfasst alle Aspekte.\nb) FALSCH – Diese Aussage stimmt: Alle Beteiligten erstellen die User-Storys gemeinsam.\nc) KORREKT – Diese Aussage ist falsch: Akzeptanzkriterien sind ein Ergebnis von Diskussionen aller Stakeholder, nicht ausschließlich von Testern (CTFL V4.0, Abschnitt 4.5.2, 1. Absatz, 3. Satz).\nd) FALSCH – Diese Aussage stimmt: Das INVEST-Prinzip.'
+  },
+  {
+    id: 29, lo: 'FL-4.5.3', k: 'K3', pts: 1,
+    text: 'Sie verwenden ATDD und entwerfen Testfälle basierend auf der folgenden User-Story:\n\n„Als regulärer oder spezieller Benutzer möchte ich meine elektronische Etagenkarte für den Zutritt zu bestimmten Etagen nutzen können."\n\nAkzeptanzkriterien:\nAC1: Normale Benutzer haben Zugang zu den Etagen 1 bis 3.\nAC2: Etage 4 ist nur für spezielle Benutzer zugänglich.\nAC3: Spezielle Benutzer haben alle Zugriffsrechte von regulären Benutzern.\n\nWelcher Testfall ist DER SINNVOLLSTE, um AC3 zu testen?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Überprüfen Sie, ob ein regulärer Benutzer Zugang zu den Etagen 1 und 3 hat.',
+      'b) Stellen Sie sicher, dass ein regulärer Benutzer keinen Zugang zur Etage 4 hat.',
+      'c) Überprüfen Sie, ob ein spezieller Benutzer Zugang zur Etage 5 hat.',
+      'd) Überprüfen Sie, ob ein spezieller Benutzer Zugang zu den Etagen 1, 2 und 3 hat.'
+    ],
+    answer: [3],
+    explanation: 'a) FALSCH – Wir prüfen die Rechte eines speziellen, nicht eines regulären Benutzers.\nb) FALSCH – Wir prüfen die Zugriffsrechte für einen speziellen, nicht für einen regulären Benutzer.\nc) FALSCH – Etage 5 ist in den Akzeptanzkriterien nicht beschrieben.\nd) KORREKT – So kann geprüft werden, ob ein spezieller Benutzer Zugriff auf Etagen hat, die für reguläre Benutzer zugänglich sind (CTFL V4.0, Abschnitt 4.5.3).'
+  },
+  {
+    id: 30, lo: 'FL-5.1.1', k: 'K2', pts: 1,
+    text: 'Betrachten Sie die folgende Festlegung eines Testkonzepts:\n\n„Die korrekte Funktionsweise von Komponenten wird mit Hilfe von Komponententests und Komponentenintegrationstests überprüft. Es muss der Nachweis erbracht werden, dass für jede als kritisch eingestufte Komponente eine 100 %ige Zweigüberdeckung erreicht wird."\n\nZu welchem Teil des Testkonzepts gehört diese Festlegung?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Testumgebung',
+      'b) Risikoverzeichnis',
+      'c) Kontext des Testens',
+      'd) Testansatz'
+    ],
+    answer: [3],
+    explanation: 'a) FALSCH – Die Testumgebung beschreibt Hardware, Software und Netzwerke für die Tests.\nb) FALSCH – Das Risikoverzeichnis listet identifizierte Risiken auf.\nc) FALSCH – Der Kontext des Testens beschreibt Hintergrund, Zweck und Stakeholder.\nd) KORREKT – Der Testansatz enthält Informationen über Teststufen, zu erhebende Metriken und Endekriterien (CTFL V4.0, Abschnitt 5.1.1, 3. Absatz, 6. Aufzählungspunkt).'
+  },
+  {
+    id: 31, lo: 'FL-5.1.4', k: 'K3', pts: 1,
+    text: 'Folgende User-Story wurde vorgegeben:\n\n„Als Vorsitzender möchte ich, dass auf alle Daten, die ich hochlade, von keinem anderen Benutzer des Systems zugegriffen werden kann."\n\nIn der ersten Runde des Planungspokers wurden folgende Schätzungen vergeben:\nKunden: 5 | Entwickler: 5 | Tester: 20\n\nWas ist DER BESTE nächste Schritt in dieser Planungsrunde?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Da die Schätzungen der Kunden und der Entwickler übereinstimmen, kann das Team davon ausgehen, dass sie gut sind. Der Planungspoker wird beendet.',
+      'b) Das Team diskutiert gemeinsam, warum kein Konsens über die Schätzungen erreicht wurde. Eine weitere Runde Planungspoker folgt.',
+      'c) Da der Kunde am Ende das System erhält, ist bei solchen Konflikten seine Schätzung entscheidend. Der Planungspoker wird beendet.',
+      'd) Der Planungspoker wird so lange fortgesetzt, bis alle Schätzungen der beteiligten Vertreter den exakt gleichen Wert haben.'
+    ],
+    answer: [1],
+    explanation: 'a) FALSCH – Kunde und Entwickler haben möglicherweise etwas übersehen; die Abweichung muss diskutiert werden.\nb) KORREKT – Der Planungspoker sollte fortgesetzt werden, bis alle Beteiligten mit der Schätzung einverstanden sind (CTFL V4.0, Abschnitt 5.1.4, Breitband-Delphi).\nc) FALSCH – Das gesamte Team sollte der Schätzung zustimmen.\nd) FALSCH – Exakt gleiche Schätzungen sind nicht notwendig; Regeln können für Abweichungen definiert werden.'
+  },
+  {
+    id: 32, lo: 'FL-5.1.6', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Aussagen über die Testpyramide trifft zu?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Die Testpyramide legt den Schwerpunkt auf eine kleine Anzahl von Tests auf den unteren Teststufen.',
+      'b) Je mehr man sich der Spitze der Pyramide nähert, desto weniger granular sollte das Testen sein.',
+      'c) Die Testpyramide hat genau 3 Testschichten und umfasst immer Unit-Tests, Integrationstests und End-to-End-Tests.',
+      'd) High-Level-End-to-End-Tests sind anwendernah und daher in der Regel schneller als Tests auf den unteren Schichten.'
+    ],
+    answer: [1],
+    explanation: 'a) FALSCH – Die Testpyramide legt den Schwerpunkt auf eine GRÖSSERE Anzahl von Tests in den unteren Teststufen.\nb) KORREKT – „Je höher die Ebene, desto geringer ist die Testgranularität" (CTFL V4.0, Abschnitt 5.1.6, 4. Satz).\nc) FALSCH – „Die Anzahl und Benennung der Schichten können variieren" (CTFL V4.0, Abschnitt 5.1.6, 8. Satz).\nd) FALSCH – High-Level-Tests sind in der Regel langsamer als Tests aus den unteren Schichten.'
+  },
+  {
+    id: 33, lo: 'FL-5.1.5', k: 'K3', pts: 1,
+    text: 'Folgende Prioritäten und Abhängigkeiten der Testfälle sind gegeben:\n\nTF1: Priorität Hoch, technische Abhängigkeit von TF4\nTF2: Priorität Niedrig, keine Abhängigkeit\nTF3: Priorität Hoch, technische Abhängigkeit von TF4\nTF4: Priorität Mittel, keine Abhängigkeit\nTF5: Priorität Niedrig, logische Abhängigkeit von TF2\nTF6: Priorität Mittel, logische Abhängigkeit von TF5\n\nWelcher der folgenden Testausführungspläne berücksichtigt AM BESTEN die Prioritäten sowie die technischen und logischen Abhängigkeiten?\n\nWählen Sie EINE Option! (1 aus 4)',
+    table: `<table>
+      <thead><tr><th>Testfall-ID</th><th>Priorität</th><th>Technische Abhängigkeit von:</th><th>Logische Abhängigkeit von:</th></tr></thead>
+      <tbody>
+        <td>TF1</td><td>Hoch</td>   <td>TF4</td><td></td>   </tr>
+        <td>TF2</td><td>Niedrig</td><td></td>   <td></td>   </tr>
+        <td>TF3</td><td>Hoch</td>   <td></td>   <td>TF4</td></tr>
+        <td>TF4</td><td>Mittel</td> <td></td>   <td></td>   </tr>
+        <td>TF5</td><td>Niedrig</td><td></td>   <td>TF2</td></tr>
+        <td>TF6</td><td>Mittel</td> <td>TF5</td><td></td>   </tr>
+      </tbody>
+    </table>`,
+    options: [
+      'a) TF1 – TF3 – TF4 – TF6 – TF2 – TF5',
+      'b) TF4 – TF3 – TF1 – TF2 – TF5 – TF6',
+      'c) TF4 – TF1 – TF3 – TF5 – TF6 – TF2',
+      'd) TF4 – TF2 – TF5 – TF1 – TF3 – TF6'
+    ],
+    answer: [1],
+    explanation: 'TF1 und TF3 haben höchste Priorität, hängen aber von TF4 ab → zuerst TF4, dann TF1/TF3 (Reihenfolge zwischen beiden beliebig). TF6 hängt von TF5, TF5 von TF2 ab → danach TF2 – TF5 – TF6.\nOptimale Pläne: TF4–TF1–TF3–TF2–TF5–TF6 oder TF4–TF3–TF1–TF2–TF5–TF6.\nb) KORREKT (CTFL V4.0, Abschnitt 5.1.5).'
+  },
+  {
+    id: 34, lo: 'FL-5.1.7', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Testarten gehört zum Quadranten Q2 – „geschäftsorientiert, Unterstützung des Teams" – im Testquadranten-Modell?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Komponentenintegrationstests',
+      'b) User-Story-basierte Tests',
+      'c) Nicht-funktionale Tests',
+      'd) Explorative Tests'
+    ],
+    answer: [1],
+    explanation: 'a) FALSCH – Komponentenintegrationstests gehören zum Quadranten Q1 (technologieorientiert, Unterstützung des Teams).\nb) KORREKT – User-Story-basierte Tests gehören zum Quadranten Q2 (CTFL V4.0, Abschnitt 5.1.7).\nc) FALSCH – Nicht-funktionale Tests gehören zum Quadranten Q4 (technologieorientiert, kritische Betrachtung des Produkts).\nd) FALSCH – Explorative Tests gehören zum Quadranten Q3 (geschäftsorientiert, kritische Betrachtung des Produkts).'
+  },
+  {
+    id: 35, lo: 'FL-5.2.2', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Aussagen stellt ein Projektrisiko dar?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Das Management versetzt zwei erfahrene Tester in ein anderes Projekt.',
+      'b) Das System entspricht nicht den Standards der funktionalen Sicherheit.',
+      'c) Die Reaktionszeit des Systems übersteigt die Anforderungen der Benutzer.',
+      'd) Das System kann nicht barrierefrei genutzt werden.'
+    ],
+    answer: [0],
+    explanation: 'a) KORREKT – Projektrisiken können das Projektergebnis beeinflussen, indem sie die verfügbaren Testressourcen reduzieren (CTFL V4.0, Abschnitt 5.2.2, 2. Absatz, 2. Aufzählungspunkt).\nb) FALSCH – Produktrisiko.\nc) FALSCH – Produktrisiko.\nd) FALSCH – Produktrisiko.'
+  },
+  {
+    id: 36, lo: 'FL-5.4.1', k: 'K2', pts: 1,
+    text: 'Sie arbeiten als Projektleiter an einem bankinternen Softwareprojekt. Folgender Prozess wurde eingeführt:\n\n1. Entwickler behebt Fehler und erstellt experimentellen Build.\n2. Peer-Entwickler überprüft und bestätigt die Fehlerbehebung.\n3. Tester bestätigt Fehlerbehebung in der Entwicklungsumgebung.\n4. Einmal täglich wird ein neues Release in der Testumgebung installiert.\n5. Derselbe Tester testet die Fehlerbehebung in der Testumgebung.\n\nTrotzdem fällt eine große Anzahl von in Schritt 3 bestätigten Korrekturen bei Schritt 5 durch. Sie haben Fehler in Schritt 3 ausgeschlossen.\n\nWelcher Teil des Prozesses sollte als Nächstes überprüft werden?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Die Aktivität von Entwicklern, die in Schritt 2 möglicherweise nicht ausreichend getestet wurde.',
+      'b) Die Aktivität von Testern, die möglicherweise unklar darüber sind, was in Schritt 5 zu testen ist.',
+      'c) Das Konfigurationsmanagement, das möglicherweise die Integrität des Produkts in Schritt 4 nicht aufrechterhält.',
+      'd) Die Aktivität von Entwicklern, die die Fehler in Schritt 1 möglicherweise nicht korrekt beheben.'
+    ],
+    answer: [2],
+    explanation: 'a) FALSCH – Wenn Schritt 2 unzureichend wäre, würde der Test in Schritt 3 nicht bestanden werden.\nb) FALSCH – Derselbe Tester aus Schritt 3 wiederholt den Test in Schritt 5.\nc) KORREKT – Das Konfigurationsmanagement bewahrt die Integrität der Software. Wenn ein Test aus Schritt 3 in Schritt 5 fehlschlägt, ist etwas zwischen diesen Schritten anders (CTFL V4.0, Abschnitt 5.4).\nd) FALSCH – Wenn Schritt 1 fehlerhaft wäre, würde der Test in Schritt 3 nicht erfolgreich sein.'
+  },
+  {
+    id: 37, lo: 'FL-5.3.2', k: 'K2', pts: 1,
+    text: 'Welche der folgenden Aussagen aus einem wöchentlichen Testfortschrittsbericht ist für die Stakeholder im Rahmen der Testüberwachung und Teststeuerung NICHT relevant?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Die Ausfallzeit der Testumgebung im Berichtszeitraum hat sich um 20 % auf 25 Stunden erhöht.',
+      'b) Die Zeit für die Bereitstellung der Statistiken zu den Überdeckungsmetriken konnte im Berichtszeitraum um 35 % auf 72 Minuten reduziert werden.',
+      'c) Die Durchführung der Testfälle liegt aktuell 6 Tage hinter dem Plan.',
+      'd) Aus den Ergebnissen der Testdurchführung wurden neue Produktrisiken abgeleitet, die noch zu bewerten sind.'
+    ],
+    answer: [1],
+    explanation: 'a) FALSCH – Der Ausfall der Testumgebung ist ein kritisches Hindernis und zu berichten.\nb) KORREKT – Metriken sind wichtig, aber nicht der Aufwand ihrer Ermittlung. Verbesserungen bei der Statistikbereitstellung sind keine relevante Information für Stakeholder (CTFL V4.0, Abschnitt 5.3.2).\nc) FALSCH – Der Stand der Testdurchführung ist projektbezogen und für die Steuerung relevant.\nd) FALSCH – Neue Risiken wirken sich auf die Produktqualität aus und sind relevant.'
+  },
+  {
+    id: 38, lo: 'FL-5.5.1', k: 'K3', pts: 1,
+    text: 'Eine Kollegin hat den folgenden Fehlerbericht erstellt und Sie um ein Review gebeten:\n\nID: br00_23_12\nTitel: Fehlermeldung beim Login mit leerem Namen nicht korrekt\nAutor: Lisa van der Vaart (Test Engineer)\nTestobjekt: build v00812\nTestumgebung: cfg_full_02\nAufdeckender Testfall: sys_128\nBeschreibung: Nach einem Login-Versuch mit leerem Namen gibt das System die Fehlermeldung „falsches Passwort" zurück. Stattdessen hätte „Name darf nicht leer sein" erscheinen müssen.\nSchweregrad: niedrig | Priorität: mittel | Status: neu\n\nWelchen der folgenden Verbesserungsvorschläge wollen Sie Ihrer Kollegin AM EHESTEN geben?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Der Titel beschreibt den Inhalt nicht korrekt.',
+      'b) Schweregrad und Priorität müssten gleich sein, da Ersteres Letzteres bedingt.',
+      'c) Sie haben diesen Fehler noch nicht beobachtet. Daher ist der Status nicht „neu".',
+      'd) Der folgende Eintrag fehlt: Datum des Fehlerberichts: 19.12.2023'
+    ],
+    answer: [3],
+    explanation: 'a) FALSCH – Der Titel beschreibt die Beobachtung korrekt.\nb) FALSCH – Schweregrad und Priorität können unterschiedlich sein (z. B. kosmetischer Fehler, der Kunden stark stört).\nc) FALSCH – Der Status „neu" ist korrekt für einen neu angelegten Fehlerbericht.\nd) KORREKT – Das Datum zeigt an, wie aktuell die Beobachtung ist und sollte im Fehlerbericht enthalten sein (CTFL V4.0, Abschnitt 5.5, 3. Absatz, 3. Aufzählungspunkt).'
+  },
+  {
+    id: 39, lo: 'FL-6.1.1', k: 'K2', pts: 1,
+    text: 'Welches der folgenden Testwerkzeuge ist AM NÜTZLICHSTEN für die Berichterstattung über die Anzahl der Fehlerzustände im Testobjekt?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Testmanagementwerkzeug',
+      'b) Werkzeug für den statischen Test',
+      'c) Werkzeug für die Testüberdeckung',
+      'd) Werkzeug zur Unterstützung der Skalierbarkeit'
+    ],
+    answer: [0],
+    explanation: 'a) KORREKT – Testmanagementwerkzeuge unterstützen u. a. Übersichten zu Fehlerzuständen (CTFL V4.0, Abschnitt 6.1, 1. Aufzählungspunkt).\nb) FALSCH – Werkzeuge für statische Tests unterstützen Reviews und statische Analysen.\nc) FALSCH – Überdeckungswerkzeuge messen die Testüberdeckung, nicht das Fehlermanagement.\nd) FALSCH – Skalierbarkeits-Werkzeuge unterstützen das operative Testen.'
+  },
+  {
+    id: 40, lo: 'FL-6.2.1', k: 'K1', pts: 1,
+    text: 'Welche der folgenden Aussagen stellt einen potenziellen Nutzen der Testautomatisierung dar?\n\nWählen Sie EINE Option! (1 aus 4)',
+    options: [
+      'a) Testautomatisierung ermöglicht eine objektivere Bereitstellung von Messungen, die für Menschen zu kompliziert in ihrer Ermittlung sind.',
+      'b) Für Testautomatisierung kann man sehr genau den Aufwand für die Einführung, Wartung und Schulung abschätzen.',
+      'c) Testautomatisierung erhöht das Vertrauen in die Testergebnisse, denn es vermeidet menschliches kritisches Denken.',
+      'd) Testautomatisierung entspricht immer den regulatorischen Anforderungen und Sicherheitsstandards.'
+    ],
+    answer: [0],
+    explanation: 'a) KORREKT – „Objektivere Bewertung und Bereitstellung von Messungen, die für Menschen zu kompliziert in ihrer Ermittlung sind" ist ein Nutzen der Testautomatisierung (CTFL V4.0, Abschnitt 6.2, 2. Absatz, 3. Aufzählungspunkt).\nb) FALSCH – Ungenaue Schätzungen sind ein Risiko der Testautomatisierung.\nc) FALSCH – Zu starkes Vertrauen und Vernachlässigung des kritischen Denkens sind ein Risiko.\nd) FALSCH – Wahl eines ungeeigneten Werkzeugs, das nicht regulatorischen Anforderungen entspricht, ist ein Risiko.'
+  }
+];
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+const BASE_SECONDS = 60 * 60;
+const EXT_SECONDS  = 75 * 60;
+let timeExtended  = false;
+let TOTAL_SECONDS = BASE_SECONDS;
+let userAnswers   = questions.map(() => []);
+let timerInterval = null;
+let secondsLeft   = TOTAL_SECONDS;
+let examSubmitted = false;
+let pendingAction = null;
+
+function selectTime(extended) {
+  timeExtended  = extended;
+  TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+  document.getElementById('opt-standard').classList.toggle('active', !extended);
+  document.getElementById('opt-extended').classList.toggle('active',  extended);
+  document.getElementById('meta-minutes').textContent = extended ? '75' : '60';
+  document.getElementById('ext-note').style.display   = extended ? 'block' : 'none';
+  document.getElementById('start-note-txt').textContent = extended
+    ? 'Der Timer läuft von 75:00 herunter (60 min + 15 min Verlängerung). Bei Zeitablauf erfolgt automatische Abgabe.'
+    : 'Der Timer läuft von 60:00 herunter. Bei Zeitablauf erfolgt automatische Abgabe.';
+}
+
+function startExam() {
+  secondsLeft = TOTAL_SECONDS;
+  document.getElementById('timer').textContent = timeExtended ? '75:00' : '60:00';
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('exam-screen').style.display  = 'block';
+  renderQuestions();
+  timerInterval = setInterval(tickTimer, 1000);
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+            .replace(/"/g,'&quot;').replace(/\n/g,'<br>');
+}
+
+function renderQuestions() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'card-' + qi;
+    card.style.animationDelay = (qi * 0.012) + 's';
+    const opts = q.options.map((opt, oi) => `
+      <div class="option-row" id="opt-${qi}-${oi}" data-qi="${qi}" data-oi="${oi}">
+        <input type="radio" name="q${qi}" id="inp-${qi}-${oi}"
+               style="position:absolute;opacity:0;pointer-events:none;">
+        <span class="option-marker"></span>
+        <span class="option-text">${escHtml(opt)}</span>
+      </div>`).join('');
+    card.innerHTML = `
+      <div class="q-header">
+        <div class="q-meta">
+          <span class="q-num">F${q.id}</span>
+          <span class="q-lo">${q.lo}</span>
+          <span class="q-pts">1 Pkt</span>
+        </div>
+        <div class="q-text">${escHtml(q.text)}</div>
+      </div>
+      ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagramm zu Frage ${q.id}"></center>` : ''}
+      ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ''}
+      <div class="options">${opts}</div>
+      <div class="result-tag" id="result-${qi}"></div>
+      <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>`;
+    container.appendChild(card);
+  });
+  document.querySelectorAll('.option-row').forEach(row => {
+    row.addEventListener('click', function () {
+      if (examSubmitted) return;
+      const qi = parseInt(this.dataset.qi);
+      const oi = parseInt(this.dataset.oi);
+      questions[qi].options.forEach((_, i) => {
+        document.getElementById('inp-' + qi + '-' + i).checked = false;
+      });
+      document.getElementById('inp-' + qi + '-' + oi).checked = true;
+      syncAnswer(qi);
+    });
+  });
+}
+
+function syncAnswer(qi) {
+  userAnswers[qi] = [];
+  questions[qi].options.forEach((_, oi) => {
+    if (document.getElementById('inp-' + qi + '-' + oi).checked) userAnswers[qi].push(oi);
+  });
+  questions[qi].options.forEach((_, oi) => {
+    document.getElementById('opt-' + qi + '-' + oi)
+      .classList.toggle('selected', userAnswers[qi].includes(oi));
+  });
+  updateProgress();
+}
+
+function updateProgress() {
+  const answered = userAnswers.filter(a => a.length > 0).length;
+  document.getElementById('answered-num').textContent = answered;
+  document.getElementById('progress-fill').style.width = (answered / questions.length * 100) + '%';
+}
+
+function tickTimer() {
+  if (secondsLeft <= 0) { doSubmit(true); return; }
+  secondsLeft--;
+  const m = Math.floor(secondsLeft / 60), s = secondsLeft % 60;
+  const el = document.getElementById('timer');
+  el.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  if      (secondsLeft <= 300) el.className = 'timer danger';
+  else if (secondsLeft <= 900) el.className = 'timer warn';
+  else                         el.className = 'timer';
+}
+
+function confirmSubmit() {
+  const answered   = userAnswers.filter(a => a.length > 0).length;
+  const unanswered = questions.length - answered;
+  document.getElementById('confirm-title').textContent = 'Prüfung abgeben?';
+  document.getElementById('confirm-msg').innerHTML = unanswered > 0
+    ? `Sie haben noch <strong style="color:var(--warn)">${unanswered} unbeantwortete Frage${unanswered>1?'n':''}</strong>. Unbeantwortete Fragen ergeben 0 Punkte.<br><br>Trotzdem abgeben?`
+    : `Alle ${questions.length} Fragen beantwortet. Prüfung jetzt abgeben?`;
+  document.getElementById('confirm-yes-btn').textContent = 'Abgeben';
+  pendingAction = 'submit';
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function confirmReset() {
+  document.getElementById('confirm-title').textContent = 'Prüfung neu starten?';
+  document.getElementById('confirm-msg').innerHTML = 'Alle Antworten gehen verloren. Der Timer wird auf ' + (timeExtended ? '75:00' : '60:00') + ' zurückgesetzt.<br><br>Sicher?';
+  document.getElementById('confirm-yes-btn').textContent = 'Neu starten';
+  pendingAction = 'reset';
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function closeConfirm() {
+  document.getElementById('confirm-overlay').classList.remove('show');
+  pendingAction = null;
+}
+
+function doConfirm() {
+  if (pendingAction === 'submit') doSubmit(false);
+  else if (pendingAction === 'reset') doReset();
+  closeConfirm();
+}
+
+function doSubmit(timedOut) {
+  if (examSubmitted) return;
+  examSubmitted = true;
+  clearInterval(timerInterval);
+  closeConfirm();
+
+  let correct = 0, wrong = 0, skipped = 0;
+
+  questions.forEach((q, qi) => {
+    const given     = userAnswers[qi];
+    const isCorrect = given.length === 1 && given[0] === q.answer[0];
+    if (given.length === 0) skipped++;
+    else if (isCorrect) correct++;
+    else wrong++;
+
+    q.options.forEach((_, oi) => {
+      const row = document.getElementById('opt-' + qi + '-' + oi);
+      if (!row) return;
+      row.classList.add('disabled');
+      row.classList.remove('selected');
+      if (q.answer.includes(oi))       row.classList.add('reveal-correct');
+      else if (given.includes(oi))     row.classList.add('reveal-wrong');
+    });
+
+    const rt   = document.getElementById('result-' + qi);
+    const expl = document.getElementById('expl-' + qi);
+    const card = document.getElementById('card-' + qi);
+    rt.classList.add('show');
+    expl.classList.add('show');
+
+    const labels = ['a', 'b', 'c', 'd'];
+    if (given.length === 0) {
+      rt.classList.add('incorrect');
+      rt.innerHTML = '&mdash; Nicht beantwortet &middot; Korrekt: ' + labels[q.answer[0]] + ')';
+      card.classList.add('incorrect-card');
+    } else if (isCorrect) {
+      rt.classList.add('correct');
+      rt.innerHTML = '&#10003; Richtig (+1 Pkt)';
+      card.classList.add('correct-card');
+    } else {
+      rt.classList.add('incorrect');
+      rt.innerHTML = '&#10007; Falsch &middot; Korrekt: ' + labels[q.answer[0]] + ')';
+      card.classList.add('incorrect-card');
+    }
+  });
+
+  const total = questions.length;
+  const pct   = Math.round(correct / total * 100);
+  const pass  = pct >= 65;
+  const usedSec = TOTAL_SECONDS - secondsLeft;
+  const um = Math.floor(usedSec / 60), us = usedSec % 60;
+  const totalLabel = timeExtended ? '75:00' : '60:00';
+  const timeStr = timedOut
+    ? totalLabel + ' (Zeit abgelaufen)'
+    : String(um).padStart(2,'0') + ':' + String(us).padStart(2,'0');
+
+  if (timedOut) { const el = document.getElementById('timer'); el.textContent = '00:00'; el.className = 'timer danger'; }
+
+  document.getElementById('final-score-pct').textContent = pct + '%';
+  document.getElementById('final-score-raw').textContent = correct + ' von ' + total + ' Punkten';
+  document.getElementById('time-used').textContent = timeStr;
+  const badge = document.getElementById('grade-badge');
+  badge.textContent = pass ? '✓ BESTANDEN (≥ 65%)' : '✗ NICHT BESTANDEN (< 65%)';
+  badge.className   = 'grade-badge ' + (pass ? 'pass' : 'fail');
+  document.getElementById('stat-correct').textContent = correct;
+  document.getElementById('stat-wrong').textContent   = wrong;
+  document.getElementById('stat-skipped').textContent = skipped;
+
+  document.getElementById('summary').style.display = 'block';
+  document.getElementById('summary').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function doReset() {
+  examSubmitted = false;
+  userAnswers   = questions.map(() => []);
+  secondsLeft   = TOTAL_SECONDS;
+  clearInterval(timerInterval);
+  document.getElementById('timer').textContent = timeExtended ? '75:00' : '60:00';
+  document.getElementById('timer').className   = 'timer';
+  document.getElementById('answered-num').textContent = '0';
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('summary').style.display = 'none';
+  renderQuestions();
+  timerInterval = setInterval(tickTimer, 1000);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
