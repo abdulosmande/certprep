@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISTQB CT-SEC — Sample Exam</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c12; --surface: #0e1420; --card: #111827; --border: #1e2840;
+    --accent: #38bdf8; --accent2: #818cf8; --correct: #34d399;
+    --incorrect: #f87171; --warn: #fbbf24; --text: #cbd5e1;
+    --muted: #475569; --heading: #f1f5f9;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  #start-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(56,189,248,0.06) 0%, transparent 70%); }
+  .start-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 3.5rem 3rem; max-width: 540px; width: 100%; text-align: center; position: relative; overflow: hidden; }
+  .start-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(56,189,248,0.03) 0%, transparent 50%, rgba(129,140,248,0.03) 100%); pointer-events: none; border-radius: 20px; }
+  .start-badge { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.2); padding: 0.3rem 1rem; border-radius: 99px; display: inline-block; margin-bottom: 1.6rem; }
+  .start-card h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.9rem, 4.5vw, 2.8rem); font-weight: 800; color: var(--heading); line-height: 1.1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+  .start-card h1 em { font-style: normal; color: var(--accent); }
+  .start-subtitle { font-size: 0.88rem; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.7; }
+  .start-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 2.5rem; }
+  .meta-item { background: var(--surface); padding: 1.1rem 0.5rem; text-align: center; }
+  .meta-val { font-family: 'DM Mono', monospace; font-size: 1.35rem; font-weight: 500; color: var(--heading); display: block; }
+  .meta-lbl { font-size: 0.63rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.25rem; }
+  .btn-start { font-family: 'DM Mono', monospace; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.08em; padding: 1rem 2.5rem; background: var(--accent); color: #080c12; border: none; border-radius: 10px; cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; width: 100%; text-transform: uppercase; }
+  .btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(56,189,248,0.35); }
+  .start-note { font-size: 0.73rem; color: var(--muted); margin-top: 1rem; line-height: 1.6; }
+
+  .time-option-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.65rem; font-family: 'DM Mono', monospace; }
+  .time-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .time-opt { background: var(--surface); padding: 0.85rem 0.5rem; text-align: center; cursor: pointer; transition: background 0.18s, color 0.18s; border: none; width: 100%; font-family: 'DM Mono', monospace; color: var(--muted); }
+  .time-opt:first-child { border-right: 1px solid var(--border); }
+  .time-opt.active { background: rgba(56,189,248,0.12); color: var(--heading); }
+  .time-opt-val { font-size: 1.25rem; font-weight: 500; color: inherit; display: block; line-height: 1.2; }
+  .time-opt-lbl { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; display: block; opacity: 0.7; }
+  .time-opt.active .time-opt-val { color: var(--accent); }
+  .time-ext-note { font-size: 0.68rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; padding: 0.6rem 0.9rem; background: rgba(129,140,248,0.06); border: 1px solid rgba(129,140,248,0.15); border-radius: 8px; }
+
+  #exam-screen { display: none; }
+  header { background: rgba(11,16,28,0.96); border-bottom: 1px solid var(--border); padding: 0.85rem 2rem; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px); }
+  .header-inner { max-width: 960px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .header-left { display: flex; flex-direction: column; }
+  .exam-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .exam-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; }
+  .timer-block { display: flex; align-items: center; gap: 1rem; }
+  .timer { font-family: 'DM Mono', monospace; font-size: 2rem; font-weight: 500; color: var(--accent); letter-spacing: 0.04em; transition: color 0.3s; min-width: 95px; text-align: right; }
+  .timer.warn { color: var(--warn); }
+  .timer.danger { color: var(--incorrect); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .answered-count { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); text-align: right; line-height: 1.5; }
+  .answered-count span { color: var(--text); font-weight: 500; }
+  .header-buttons { display: flex; gap: 0.5rem; align-items: center; }
+  .progress-bar-wrap { max-width: 960px; margin: 0.5rem auto 0; height: 2px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 99px; transition: width 0.4s ease; width: 0%; }
+
+  main { max-width: 960px; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+  .exam-toolbar { margin-bottom: 1.5rem; }
+  .toolbar-info { font-size: 0.8rem; color: var(--muted); }
+  .toolbar-info strong { color: var(--text); }
+  .btn-submit { font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; padding: 0.5rem 1.2rem; background: var(--accent); color: #080c12; border: none; border-radius: 7px; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; text-transform: uppercase; white-space: nowrap; }
+  .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(56,189,248,0.3); }
+  .btn-secondary { font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; padding: 0.5rem 1rem; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 7px; cursor: pointer; transition: color 0.15s, border-color 0.15s; text-transform: uppercase; white-space: nowrap; }
+  .btn-secondary:hover { color: var(--text); border-color: var(--muted); }
+
+  .question-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; margin-bottom: 1rem; transition: border-color 0.25s; animation: fadeUp 0.2s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+  .question-card.correct-card   { border-color: rgba(52,211,153,0.4); }
+  .question-card.incorrect-card { border-color: rgba(248,113,113,0.4); }
+  .q-header { display: flex; gap: 0.9rem; align-items: flex-start; margin-bottom: 1.1rem; }
+  .q-meta { display: flex; flex-direction: column; gap: 0.3rem; flex-shrink: 0; }
+  .q-num { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; color: var(--accent); background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.18); border-radius: 5px; padding: 0.18rem 0.5rem; white-space: nowrap; }
+  .q-pts { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--accent2); background: rgba(129,140,248,0.08); border: 1px solid rgba(129,140,248,0.18); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
+  .q-text { font-size: 0.92rem; color: var(--heading); line-height: 1.7; flex: 1; white-space: pre-wrap; }
+  .options { display: flex; flex-direction: column; gap: 0.45rem; }
+
+  .option-row { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.7rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: border-color 0.15s, background 0.15s; user-select: none; }
+  .option-row:hover:not(.disabled) { border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.03); }
+  .option-row.disabled { cursor: default; }
+  .option-marker { flex-shrink: 0; width: 17px; height: 17px; border-radius: 50%; border: 2px solid var(--border); background: transparent; margin-top: 2px; transition: border-color 0.15s, background 0.15s; display: flex; align-items: center; justify-content: center; }
+  .option-marker::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); opacity: 0; transition: opacity 0.15s; }
+  .option-row.selected { border-color: rgba(56,189,248,0.45); background: rgba(56,189,248,0.06); }
+  .option-row.selected .option-marker { border-color: var(--accent); }
+  .option-row.selected .option-marker::after { opacity: 1; }
+  .option-row.reveal-correct { border-color: var(--correct) !important; background: rgba(52,211,153,0.07) !important; }
+  .option-row.reveal-correct .option-marker { border-color: var(--correct); background: rgba(52,211,153,0.15); }
+  .option-row.reveal-correct .option-marker::after { background: var(--correct); opacity: 1; }
+  .option-row.reveal-wrong { border-color: var(--incorrect) !important; background: rgba(248,113,113,0.07) !important; }
+  .option-row.reveal-wrong .option-marker { border-color: var(--incorrect); background: rgba(248,113,113,0.15); }
+  .option-row.reveal-wrong .option-marker::after { background: var(--incorrect); opacity: 1; }
+  .option-text { font-size: 0.87rem; line-height: 1.55; color: var(--text); flex: 1; }
+
+  .result-tag { display: none; align-items: center; gap: 0.4rem; font-family: 'DM Mono', monospace; font-size: 0.67rem; font-weight: 500; letter-spacing: 0.04em; margin-top: 1rem; padding: 0.4rem 0.75rem; border-radius: 6px; }
+  .result-tag.show { display: flex; }
+  .result-tag.correct   { background: rgba(52,211,153,0.1);  color: var(--correct);   border: 1px solid rgba(52,211,153,0.25); }
+  .result-tag.incorrect { background: rgba(248,113,113,0.1); color: var(--incorrect); border: 1px solid rgba(248,113,113,0.25); }
+  .explanation { display: none; margin-top: 0.85rem; padding: 0.85rem 1rem; background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent2); border-radius: 0 6px 6px 0; font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+  .explanation.show { display: block; }
+
+  #summary { display: none; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 3rem 2.5rem; text-align: center; margin-top: 2rem; animation: fadeUp 0.4s ease; }
+  #summary h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--heading); margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+  .big-score { font-family: 'DM Mono', monospace; font-size: 4.8rem; font-weight: 500; color: var(--accent); line-height: 1; margin: 1rem 0 0.2rem; }
+  .sub { font-size: 0.86rem; color: var(--muted); margin-bottom: 0.6rem; }
+  .time-taken { font-family: 'DM Mono', monospace; font-size: 0.76rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .time-taken span { color: var(--text); }
+  .grade-badge { display: inline-block; padding: 0.4rem 1.2rem; border-radius: 8px; font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; margin-bottom: 2rem; }
+  .grade-badge.pass { background: rgba(52,211,153,0.12); color: var(--correct); border: 1px solid rgba(52,211,153,0.3); }
+  .grade-badge.fail { background: rgba(248,113,113,0.12); color: var(--incorrect); border: 1px solid rgba(248,113,113,0.3); }
+  .stat-row { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .stat .val { font-family: 'DM Mono', monospace; font-size: 1.7rem; font-weight: 500; color: var(--heading); }
+  .stat .lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.1rem; }
+
+  #confirm-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
+  #confirm-overlay.show { display: flex; }
+  .confirm-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; max-width: 420px; width: 90%; text-align: center; animation: fadeUp 0.22s ease; }
+  .confirm-box h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--heading); margin-bottom: 0.75rem; }
+  .confirm-box p { font-size: 0.86rem; color: var(--muted); margin-bottom: 1.75rem; line-height: 1.65; }
+  .confirm-btns { display: flex; gap: 0.75rem; justify-content: center; }
+  .btn-confirm-yes { font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; padding: 0.65rem 1.5rem; background: var(--accent); color: #080c12; border: none; border-radius: 8px; cursor: pointer; }
+  .btn-confirm-yes:hover { transform: translateY(-1px); }
+  .btn-confirm-no { font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; padding: 0.65rem 1.5rem; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; }
+  .btn-confirm-no:hover { color: var(--text); }
+
+  @media (max-width: 600px) {
+    header { padding: 0.75rem 1rem; }
+    main { padding: 1.25rem 0.9rem 3rem; }
+    .question-card { padding: 1.1rem 0.9rem; }
+    .start-card { padding: 2.5rem 1.5rem; }
+    .timer { font-size: 1.4rem; min-width: 75px; }
+    .stat-row { gap: 1.5rem; }
+    .start-meta { grid-template-columns: repeat(2, 1fr); }
+    .header-buttons { gap: 0.35rem; }
+    .btn-submit, .btn-secondary { font-size: 0.7rem; padding: 0.4rem 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="start-screen">
+  <div class="start-card">
+    <div class="start-badge">ISTQB Advanced Level</div>
+    <h1>Security<br><em>Testing</em></h1>
+    <p class="start-subtitle">ISTQB® Certified Tester Advanced Level – Security Testing (CT-SEC) · Sample Exam v1.0 GA · March 2016. The timer starts as soon as you click Start Exam.</p>
+    <div class="start-meta">
+      <div class="meta-item"><span class="meta-val">45</span><div class="meta-lbl">Questions</div></div>
+      <div class="meta-item"><span class="meta-val" id="meta-minutes">120</span><div class="meta-lbl">Minutes</div></div>
+      <div class="meta-item"><span class="meta-val">80</span><div class="meta-lbl">Points</div></div>
+      <div class="meta-item"><span class="meta-val">65%</span><div class="meta-lbl">To pass</div></div>
+    </div>
+
+    <div class="time-option-label">Time allowance</div>
+    <div class="time-toggle">
+      <button class="time-opt active" id="opt-standard" onclick="selectTime(false)">
+        <span class="time-opt-val">120 min</span>
+        <span class="time-opt-lbl">Standard</span>
+      </button>
+      <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+        <span class="time-opt-val">150 min</span>
+        <span class="time-opt-lbl">+30 min extension</span>
+      </button>
+    </div>
+    <div class="time-ext-note" id="ext-note" style="display:none;">
+      &#9432;&nbsp; The 30-minute extension applies to candidates whose native language is not the exam language, per ISTQB regulations.
+    </div>
+
+    <button class="btn-start" onclick="startExam()">&#9654; Start Exam</button>
+    <p class="start-note" id="start-note-txt">The timer counts down from 120:00. The exam auto-submits when time expires.</p>
+  </div>
+</div>
+
+<!-- EXAM SCREEN -->
+<div id="exam-screen">
+  <header>
+    <div class="header-inner">
+      <div class="header-left">
+        <span class="exam-label">ISTQB CT-SEC · Sample Exam v1.0 GA · March 2016</span>
+        <span class="exam-title">Advanced Level Security Testing</span>
+      </div>
+      <div class="timer-block">
+        <div class="answered-count"><span id="answered-num">0</span>/45 answered</div>
+        <div class="timer" id="timer">120:00</div>
+        <div class="header-buttons">
+          <button class="btn-secondary" onclick="confirmReset()">&#8635; Reset</button>
+          <button class="btn-submit" onclick="confirmSubmit()">Submit</button>
+        </div>
+      </div>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill"></div></div>
+  </header>
+
+  <main>
+    <div class="exam-toolbar">
+      <div class="toolbar-info">45 questions · <strong>65% (≥ 52 of 80 points)</strong> required to pass · questions worth 1, 2 or 3 points</div>
+    </div>
+    <div id="questions-container"></div>
+    <div id="summary">
+      <h2>Exam Complete</h2>
+      <div class="big-score" id="final-score-pct">—</div>
+      <div class="sub" id="final-score-raw"></div>
+      <div class="time-taken">Time used: <span id="time-used">—</span></div>
+      <div class="grade-badge" id="grade-badge"></div>
+      <div class="stat-row">
+        <div class="stat"><div class="val" id="stat-pts">—</div><div class="lbl">Points</div></div>
+        <div class="stat"><div class="val" id="stat-correct">—</div><div class="lbl">Correct</div></div>
+        <div class="stat"><div class="val" id="stat-wrong">—</div><div class="lbl">Wrong</div></div>
+        <div class="stat"><div class="val" id="stat-skipped">—</div><div class="lbl">Skipped</div></div>
+      </div>
+      <button class="btn-secondary" onclick="confirmReset()">&#8635; Restart Exam</button>
+    </div>
+  </main>
+</div>
+
+<!-- CONFIRM OVERLAY -->
+<div id="confirm-overlay">
+  <div class="confirm-box">
+    <h3 id="confirm-title">Submit Exam?</h3>
+    <p id="confirm-msg"></p>
+    <div class="confirm-btns">
+      <button class="btn-confirm-no" onclick="closeConfirm()">Cancel</button>
+      <button class="btn-confirm-yes" id="confirm-yes-btn" onclick="doConfirm()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    id: 1, pts: 1,
+    text: 'Which of the following is a purpose of a security audit?',
+    options: [
+      'a. To prevent users from using simple passwords',
+      'b. To reveal insufficient patch updates provided by the vendor',
+      'c. To halt unauthorized intruders from accessing the system',
+      'd. To require users to change their password after a predetermined set of days'
+    ],
+    answer: [1],
+    explanation: 'B is correct as keeping the patch updates current on the system is one of the purposes of a security audit. The others are good practices, but not the purpose of the security audit.'
+  },
+  {
+    id: 2, pts: 3,
+    text: 'You are responsible for ensuring that new vendors brought on externally for the project are fully compliant with government mandated guidelines as part of your risk assessment. On which stakeholders should you primarily focus to ensure these outside vendors continue to comply?',
+    options: [
+      'a. Customers, users, and vendors to ensure there is good communication between them',
+      'b. Public users and vendors who will follow the law as it applies to the source of information',
+      'c. Federal and local agencies that communicate guidelines to follow',
+      'd. Both internal and external sources that will use the information for further analyzing the risk'
+    ],
+    answer: [2],
+    explanation: 'C is correct as this is the source of the guidelines. The guidelines may change so it\'s important to keep the communications channels open with these folks. A, B and D all need to be informed, but the information needs to come from the federal and local agencies.'
+  },
+  {
+    id: 3, pts: 1,
+    text: 'Which of the following is a consequence of a policy that minimizes access to a system or device to acceptable levels?',
+    options: [
+      'a. More devices are added to mitigate the impact',
+      'b. Proper controls of self-provisioning devices such as routers are prohibited',
+      'c. Devices that do not conform are removed from the wireless network',
+      'd. Access to the VPN is severely restricted'
+    ],
+    answer: [2],
+    explanation: 'C is correct. When this policy is implemented, non-conforming devices will be removed until they conform. A is not correct as this would not be an expected result. B is not correct because these controls will be encouraged. D is not correct because access will be controlled, not severely limited.'
+  },
+  {
+    id: 4, pts: 3,
+    text: 'Your role as the Security Administrator is to help your organization understand the effectiveness of security policies and procedures across the enterprise. You will report your effectiveness findings to Senior Management after your analysis has been completed. Which of the following is the optimum strategy to accomplish this?',
+    options: [
+      'a. Implement a static analysis evaluation independently for both policies and procedures',
+      'b. Analyze the results from a security test to validate effectiveness',
+      'c. Evaluate security test results that focus on current threats and attacks',
+      'd. Evaluate the static test results for new and emerging software threats'
+    ],
+    answer: [1],
+    explanation: 'B is correct. You should analyze the results of a security test to see if the policies and procedures have been followed and are effective. A is not correct because the static analysis should be over the code, if anything. C is not correct because the focus shouldn\'t just be on current threats and attacks, but also on configurations, etc. D is not correct because the focus is not just on the emerging threats.'
+  },
+  {
+    id: 5, pts: 1,
+    text: 'If an organization experiences a security breach and legal action results, how does it help the organization to have done security testing?',
+    options: [
+      'a. It can show that the organization has done due diligence to try to prevent such an incident',
+      'b. The documentation from the security testing can be used to track down the perpetrator',
+      'c. Since any important information would have been backed up before security testing, this backup can be used to restore any compromised information',
+      'd. By tracing through the documented tests, the security testing team can discover how the breach was possible'
+    ],
+    answer: [0],
+    explanation: 'A is correct per the syllabus. B is not correct because this information would probably not be helpful. C is not correct because the backup would likely be out of date and the information was not necessarily corrupted, but rather stolen or viewed. D is not correct because, although this may help point to areas where testing was not sufficient, it will not support the organization\'s defense of legal actions.'
+  },
+  {
+    id: 6, pts: 1,
+    text: 'Which of the following is a correct statement?',
+    options: [
+      'a. Information assurance is a part of security testing',
+      'b. Information assurance and security testing are two terms for the same thing',
+      'c. Security testing is a part of information assurance',
+      'd. The two terms refer to different areas of security'
+    ],
+    answer: [2],
+    explanation: 'C is correct; security testing is a part of the larger area of information assurance.'
+  },
+  {
+    id: 7, pts: 2,
+    text: 'You are working at a bank as part of the security testing team. During a recent security audit it was noted that the user\'s passwords were not strong enough. Since that time, a new set of requirements has been issued to ensure password strength. Given this information, what would be a reasonable set of security objectives for general password rule testing?\n\n1. Verify that passwords meet the requirements for length\n2. Verify that passwords meet the requirements for usage of characters, numbers, letters and capitalization\n3. Verify that passwords can be retried three times\n4. Verify that passwords cannot be re-used within a one year timeframe\n5. Verify that passwords must be reset every three months\n6. Verify that the user can request to have their password emailed to them\n7. Verify that the system administrator can reset a locked password',
+    options: [
+      'a. 1, 2, 3, 4',
+      'b. 1, 2, 4, 5',
+      'c. 3, 4, 6, 7',
+      'd. 4, 5, 6, 7'
+    ],
+    answer: [1],
+    explanation: 'B is correct because all of these are valid security objectives. A is not correct because 3 is functional rather than security-related (unless it locks them out, but we don\'t know that from this description). C is not correct because 6 and 7 are both functional rather than specific security requirements. D is not correct for the same reason as C.'
+  },
+  {
+    id: 8, pts: 2,
+    text: 'Your company recently made headlines after a security breach resulted in confidential customer information being stolen. Management has reacted with an edict that the scope of the security testing objectives needs to be expanded immediately. While you agree that something needs to be done, you are worried that this approach may be too reactive and may not result in the testing that is needed. According to the syllabus, what is a reasonable concern if these initiatives are implemented?',
+    options: [
+      'a. The testing will still miss issues because it will not be well-focused',
+      'b. The testing will be outsourced so that it can be done more efficiently',
+      'c. The testing scope may be too large and there may not be adequate resources to complete it',
+      'd. The testing objectives are not clearly defined and may miss the same issues as previously escaped to production'
+    ],
+    answer: [2],
+    explanation: 'C is correct per the syllabus as this is a common problem when the objectives are broadly defined. A and D are reasonable concerns, but you don\'t know when or how the test objectives will be defined, so this may be controllable. B is always a possibility and may be the right thing to do in this case, but there has been no indication that outsourcing will occur at this time.'
+  },
+  {
+    id: 9, pts: 3,
+    text: 'You have just accepted a job to create a security testing team for a company that handles sensitive medical information that is shared between doctors and hospitals. You have noticed that the security around this information is not sufficient to protect it from hackers or even accidental exposure. The person who had your job previously brought in a number of consultants to do testing, but the findings were not documented and no changes were implemented. In fact, you don\'t even know what the coverage was from the testing. You have presented your findings to the executive management team. While they have agreed in principle that they need security testing, they have not allocated the necessary budget or time to the project. What should be your first step toward getting the executives aligned with the work that needs to be done?',
+    options: [
+      'a. Create a detailed list of all the possible security holes and present these to the executives',
+      'b. Provide a summary of the testing approach that you propose and give examples of how the testing will be conducted',
+      'c. Bring in the legal team to explain what a security breach could cost the organization',
+      'd. Create a security policy and security testing policy and demonstrate how that aligns with your proposed testing approach'
+    ],
+    answer: [3],
+    explanation: 'D is correct. At this point, the organization needs a high level policy and plan to move forward. Without this policy, the testing may continue to be sporadic and high level support and funding will be difficult. A and C are not correct at this point although they might be useful if you have trouble getting funding when you work to implement the policy. B is not right because you need an overall policy before you define the approach.'
+  },
+  {
+    id: 10, pts: 2,
+    text: 'You have just come from a meeting where there was much discussion regarding the security approach of the organization. One of the points of emphasis was the importance of testing to ensure that data is protected from fraudulent access, particularly credit card information. You have been asked to prepare a set of testing objectives that will help address this risk area. One of your tasks is to ensure that you are covering all the concerns of the stakeholders. Which stakeholder group is most likely to see the benefits from your efforts?',
+    options: [
+      'a. Executive management',
+      'b. Compliancy officers',
+      'c. Business customers',
+      'd. Regulatory officers'
+    ],
+    answer: [2],
+    explanation: 'C is correct. The business customers will be most concerned with protection from fraudulent access as it is their data that is vulnerable. You would hope that A, B and D would also be involved, but this is not usually their primary benefit.'
+  },
+  {
+    id: 11, pts: 2,
+    text: 'As a Security Administrator you are responsible for all aspects of the security process, including testing. For this particular process you are to use conceptual tests as a basis for manual tests and execute these from an external vendor\'s perspective. Which security testing process does this most parallel?',
+    options: [
+      'a. Security test creation of conditions and objectives',
+      'b. Security test implementation',
+      'c. Overall evaluating and reporting of security testing',
+      'd. Security test analysis and design'
+    ],
+    answer: [1],
+    explanation: 'B is correct. The use of the conceptual tests to create the manual tests and perform the execution is part of the security test implementation. A and D are not correct because this has already been done with the creation of the conceptual tests. C will occur after the tests have been executed.'
+  },
+  {
+    id: 12, pts: 3,
+    text: 'You have been developing a security test plan for a system that will store medical information for patients and will transfer that data to specialist doctors. You have covered the following areas in your plan:\n\n• Scope (what\'s in scope and out of scope)\n• Roles and assignments\n• Responsibilities (vendors vs. internal)\n• High level schedule\n• Environment requirements and setup\n• List of necessary authorizations and approvals\n\nWhat information do you still need to supply in this test plan to meet the minimum requirements as noted in the syllabus?',
+    options: [
+      'a. A list of the necessary credentials and training for the personnel who will be conducting the testing',
+      'b. A schedule showing the time that will be required to design, run and evaluate the security tests',
+      'c. A copy of the regulatory standards that must be met by this system',
+      'd. A list of the individuals who will be doing the testing and their contact information in the event of a security breach'
+    ],
+    answer: [1],
+    explanation: 'B is correct per the syllabus. A might be needed but that is not one of the minimum requirements and may already be understood in the roles and responsibilities section. C is not correct because the standards might be referenced but not included in the plan. D is not correct because this level of detail does not belong in the plan and the individual testers should not be contacted during a breach.'
+  },
+  {
+    id: 13, pts: 2,
+    text: 'Which of the following test cases would best test a system\'s security procedure?',
+    options: [
+      'a. Three unsuccessful login attempts will generate a lock-out message. Contact your manager or the System Administrator so they can give you a temporary password over the phone. You must then change the temporary password upon logging in. You log out then log back in using your newly created password.',
+      'b. You receive a lock-out message after several attempts to log in. You call IT support to obtain a new password. You log in with the temporary password, log back out, then log in again and enter a new password.',
+      'c. After several attempts you are locked out of the system. You use a password that worked previously. However, it no longer works. You attempt to create a new password but you are now locked out. A complete reboot of the machine is the next step to take you to the prompt to re-enter the password.',
+      'd. After the first attempt to use an invalid password you immediately pull up a list of passwords on your notepad on your PC to ensure you are using the correct one. You try another password from the list and it works.'
+    ],
+    answer: [0],
+    explanation: 'A is correct. B and C are not correct because of the word "several". D is not correct because this would definitely not be a good security practice.'
+  },
+  {
+    id: 14, pts: 1,
+    text: 'Which of the following are main characteristics of an effective security test environment?',
+    options: [
+      'a. Closely tied to production systems to enhance security at all points',
+      'b. Isolates different old versions of the operating systems for use in the environment',
+      'c. Mimics the production environment in terms of access rights',
+      'd. Includes all production environment plug-ins as well as other plug-ins not in the production environment in order to ensure the most comprehensive setup'
+    ],
+    answer: [2],
+    explanation: 'C is correct because the closer the test environment mimics production, the more valid the testing will be. This is particularly true when it comes to access rights and delegation settings. A is not correct because the systems don\'t need to be and probably shouldn\'t be connected. B may be useful, but is not a main characteristic. D is not correct because it includes plug-ins that are not in production which could result in both false positives and false negatives.'
+  },
+  {
+    id: 15, pts: 1,
+    text: 'What is a significant concern when seeking approval for the security testing tools?',
+    options: [
+      'a. Some countries prohibit the use of certain security testing tools',
+      'b. Ensure the approval process for security testing tools can be bypassed on an exception basis in cases where a malicious event is in progress',
+      'c. The risks of the tool are rarely known before it is procured and are better discovered when the tool is in use',
+      'd. Because security testing tool risks are usually known, there is no need for a mitigating strategy'
+    ],
+    answer: [0],
+    explanation: 'A is correct. While some tools are quite good and effective for testing, they may be prohibited by some countries and some organizations. B is not correct because there is always a danger of deploying a sub-optimal tool to deal with a crisis — a complete bypass is risky. C and D are not correct because there may be unknown risks from tools and it\'s better to do the due diligence in tool selection.'
+  },
+  {
+    id: 16, pts: 3,
+    text: 'You are reviewing a set of security test results run on a product that is going through final testing before release to production. This is an update of a version that is currently in production. The application just tested was your e-commerce site, and it has a defect that allows cross-site scripting. Which of the following is the proper set of steps you should take?',
+    options: [
+      'a. Report the problem to the developer, add it to the stakeholder report, and continue testing for other types of defects',
+      'b. Test if the problem exists in the current production version, document the defect in a secure system, notify the developer, continue testing for other XSS defects',
+      'c. Investigate the extent of the problem by conducting further tests on the planned release with particular concentration on other XSS issues, conduct static analysis on the code',
+      'd. Inform management, document the defect and include it in your weekly status report to stakeholders, continue testing for other security defects to determine the extent of the security issues'
+    ],
+    answer: [1],
+    explanation: 'B is correct. The first priority is to see if the problem exists in the production version. The defect should be documented only in a secure defect tracking system since the problem may exist in production. Since one XSS issue was found, there may be others so continued testing is warranted. A is not correct because the defect should not be publicized in the stakeholder report. C is not correct because while further testing is needed, notification is critical. D is not correct because of the stakeholder reporting.'
+  },
+  {
+    id: 17, pts: 1,
+    text: 'At what point in the SDLC should there be checking to ensure that proper secure coding practices have been followed?',
+    options: [
+      'a. Component testing',
+      'b. Integration testing',
+      'c. System testing',
+      'd. Security acceptance testing'
+    ],
+    answer: [0],
+    explanation: 'A is correct. The checking should be done as soon as the code is written.'
+  },
+  {
+    id: 18, pts: 2,
+    text: 'You have been asked by the business analyst to help with defining the requirements for the security aspects of a system. This is a safety-critical system that stores medical information for patients and supplies this information to health professionals at hospitals, doctors\' offices and ambulances. At what point in the lifecycle should the security requirements be documented and at what level of detail?',
+    options: [
+      'a. They should not be documented formally because of the need to protect the security implementation within the code from outsiders',
+      'b. They should be documented in a detailed and unambiguous way in the requirements documents during the requirements phase',
+      'c. They should be documented during the design phase when the code approach is known rather than at the requirements phase when the approach is not known',
+      'd. They should be restricted to the functional access and availability requirements from the user\'s perspective and should be documented during the requirements phase'
+    ],
+    answer: [1],
+    explanation: 'B is correct. A is not correct, although it is important that the documented requirements be protected from those who do not need to know. C is not correct because although they may be refined at the design level, they should be initially captured during the requirements definition phase. D is not correct because security requirements also need to include secure coding practices, etc.'
+  },
+  {
+    id: 19, pts: 3,
+    text: 'A deficiency has been discovered in production. If an unauthorized user copies a URL from a session of an authorized user, the unauthorized user can paste the URL into their session and continue to process with the authorized user\'s rights. In the case that was reported, the unauthorized user was able to use the authorized user\'s URL to change the system administration password. In order to close this gap, the developers will check the session ID and the user ID anytime a URL is used.\n\nWhat is a realistic concern for this fix?',
+    options: [
+      'a. It will not fix the problem and session hijacking will still be possible',
+      'b. It will fix the problem, but the usability may be adversely affected',
+      'c. It will fix the problem, but performance may be adversely affected',
+      'd. It will not fix the problem and will expose a new vulnerability with session IDs'
+    ],
+    answer: [2],
+    explanation: 'C is correct. It is likely that this level of checking will slow down the system because it will have to check on each screen change. A and D are not correct because the fix should fix the problem. B is not correct because there should be no impact to usability (unless you are the hacker!).'
+  },
+  {
+    id: 20, pts: 1,
+    text: 'During component level testing, why should the security tester review compiler warnings?',
+    options: [
+      'a. Because these indicate security problems that must be fixed',
+      'b. Because these indicate potential issues that should be investigated',
+      'c. Because these indicate coding issues that will cause functional defects',
+      'd. Because these indicate poor programming practices that will increase maintainability'
+    ],
+    answer: [1],
+    explanation: 'B is correct. From a security testing standpoint, compiler warnings indicate potential issues that could lead to security gaps. A is not correct because warnings do not necessarily require a fix. C and D may be true, but are not related to security testing.'
+  },
+  {
+    id: 21, pts: 2,
+    text: 'You have been testing a system that has 20 defined components. You have done extensive security testing on each of the components. The system is now ready to move into component integration security testing. How should you approach this testing?',
+    options: [
+      'a. Since component integration testing is concerned with the summation of the vulnerabilities of the individual components, conducting the same tests on the integrated components is the best approach.',
+      'b. The main risk is now in the integration of the components themselves, so testing should cover each interface and verify that there are no vulnerabilities in the interfaces and the components should also be retested.',
+      'c. It is likely that new vulnerabilities are present with the integrated components as well as with the larger system and infrastructure that is now testable, so testing should expand to include these new areas.',
+      'd. Since the components are now integrated, the security risks will be reduced because the possible interactions are now limited so only the integration points should be tested and no component re-testing is needed.'
+    ],
+    answer: [2],
+    explanation: 'C is correct. New vulnerabilities may be present with the integrated components and new testing areas are likely to be available. A is not correct because component integration testing is not the sum of the individual components. B is not correct because the testing should not be limited to just the interfaces and the original components. D is not correct because security risks are likely to be increased, not decreased.'
+  },
+  {
+    id: 22, pts: 3,
+    text: 'You are creating security test cases to check for SQL injection on an input field that allows up to 5 alphanumeric characters. You are planning to apply equivalence partitioning to reduce the number of test cases you will need to execute. Given this information, which of the following is the minimum set of inputs you would need to use to test this field?',
+    options: [
+      'a. bbbbb, 12345, \'',
+      'b. %, \', @, ab123',
+      'c. \', ab123',
+      'd. \''
+    ],
+    answer: [2],
+    explanation: 'C is correct as this has one test for SQL injection and one for a valid input. This is the minimum number of tests. A and B have more than the minimum number and D doesn\'t have enough tests because it doesn\'t test the valid input. It would be advisable to do more testing on the various characters that can support SQL injection, but this question asks to apply EP and get the minimum number of test cases.'
+  },
+  {
+    id: 23, pts: 2,
+    text: 'You have been given the following requirement for security testing.\n\nA user will be allowed to request their password. If they make this request, they must answer two of their three security questions correctly. If they answer correctly, a link will be sent to their email. The link will take them to a page where they can reset their password. Once reset, they can login with the new password. The link must be disabled 1 hour after it is sent. The user is allowed only two password requests without a reset, after which they will have to call the help desk. For any other errors, the user ID is locked and must be unlocked by the help desk.\n\nWhich of the following is the minimum list of test conditions to adequately test the functional security covered by this requirement?',
+    options: [
+      'a. Invalid user; valid user; 2 correct answers; 2 incorrect answers; good email; bad email; reset with good password; reset with bad password; link good; link expired; two requests without reset; three requests without reset',
+      'b. Valid user; 2 correct answers; good email; reset with good password; link good; two requests without reset',
+      'c. Invalid user; 2 incorrect answers; bad email; reset with bad password; link expired; three requests without reset',
+      'd. Buffer overflow on each input field; SQL injection on each input field; XSS on the login page and reset password page, invalid user; valid user; 2 correct answers; 2 incorrect answers; good email; bad email; reset with good password; reset with bad password; link good; link expired; two requests without reset; three requests without reset'
+    ],
+    answer: [0],
+    explanation: 'A is correct as it covers the main scenarios for the functional security specified in the requirement. B tests only on the valid tests. C tests only the error conditions. D expands into attack testing as well as functional testing.'
+  },
+  {
+    id: 24, pts: 2,
+    text: 'A user will be allowed to request their password. If they make this request, they must answer two of their three security questions correctly. If they answer correctly, a link will be sent to their email address. The link must be disabled one hour after it is sent. The user is allowed only two password requests without a reset, after which he will have to call the helpdesk. For any other errors, the user ID is locked and must be unlocked by the help desk.\n\nWhich of the following is a valid set of acceptance criteria for this requirement?\n\n1. User can reset password if less than three requests have been made since last reset, and two security questions are answered correctly, and the link is used to reset and a valid password is entered.\n2. More than two requests results in user ID locked.\n3. More than two requests without a reset results in user ID locked.\n4. More than two security questions missed results in error.\n5. More than two security questions missed, user ID is locked.\n6. If email error is received by the system, user ID is locked.\n7. If invalid password is entered on reset, the user is prompted with the proper rules.\n8. Reset password can be used to log into the system.',
+    options: [
+      'a. 1, 2, 4, 6, 7, 8',
+      'b. 1, 2, 3, 4, 5, 6, 7, 8',
+      'c. 3, 5, 6, 7, 8',
+      'd. 1, 3, 5, 6, 8'
+    ],
+    answer: [3],
+    explanation: 'D is correct because it provides the acceptance criteria based on the requirement. 7 is tempting and would be logical, but it is not specified in the requirement. 2 is incorrect where 3 is correct. 4 is incorrect where 5 is correct.'
+  },
+  {
+    id: 25, pts: 2,
+    text: 'You are implementing procedures for evaluating system hardening in an effort to test the system\'s security effectiveness. What procedure might you follow to ensure the hardening mechanisms put in place are working as expected?',
+    options: [
+      'a. Closely monitor various security performance reports and metrics to determine if the correct level of access and authentication is achieved',
+      'b. Frequently audit strong authentication to ensure a high level of intrusion protection is maintained at all times',
+      'c. Evaluate the hardware components that have been hardened and compare these to other hardened software components to ensure equilibrium is being achieved',
+      'd. Enlist a known hacker to conduct an independent assessment of the hardening effectiveness'
+    ],
+    answer: [0],
+    explanation: 'A is correct. There are security performance reports and metrics available that can be used to determine if you have achieved the right level of hardening. B is not correct because strong authentication is just one aspect of hardening. C is not correct because equilibrium is not needed — the more critical areas may warrant better hardening. D is not correct because there is the danger of the hacker not telling you what is found.'
+  },
+  {
+    id: 26, pts: 1,
+    text: 'What are key attributes of security authentication of a medium complexity IT system?',
+    options: [
+      'a. It verifies that the user has the correct profile and corresponding rights to access limited parts of the system',
+      'b. It is key in identifying the amount of system resources the user can utilize',
+      'c. It verifies that user entering the system is legitimate',
+      'd. It uses common credentials among users to gain entry into the system'
+    ],
+    answer: [2],
+    explanation: 'C is correct. It verifies that the user is legitimate and authorized. A is not correct because it is not looking at access rights. B is not correct because system resource utilization is not a consideration. D is not correct because common credential verification should not be used — each individual should have unique credentials.'
+  },
+  {
+    id: 27, pts: 2,
+    text: 'Typical encryption mechanisms are vulnerable to threats which makes it important to understand their effectiveness at any given time. Identify which of the following you should implement to gain confidence in your encryption mechanisms?',
+    options: [
+      'a. Evaluate cryptographic keys to ensure they are at least 256 bits in size',
+      'b. Ensure you are applying random algorithms to generate random numbers where possible',
+      'c. Develop tests that ensure symmetric encryption is used in the right modes',
+      'd. Remove all WEP protocols to see how the system performs'
+    ],
+    answer: [2],
+    explanation: 'C is correct per the syllabus. A is not correct because a minimum of 768 bits should be used. B is not correct because the random algorithm is easy to crack. D is not correct because WEP protocols should be left in place, not removed.'
+  },
+  {
+    id: 28, pts: 1,
+    text: 'Which is true of the relationship between a firewall and a network zone?',
+    options: [
+      'a. Both a network zone and firewall focus on the size of data that is being passed through',
+      'b. A network zone communicates through safe protocol options while a firewall ensures those protocols are safe',
+      'c. A sub-network can be considered a network zone and a firewall can be traffic monitoring software',
+      'd. A network zone blocks malicious traffic from an untrusted zone which the firewall does not filter'
+    ],
+    answer: [2],
+    explanation: 'C is correct per the syllabus. A is incorrect because network zones do not focus on size of data. B is not correct — network zones are parts of the configuration of the firewall and define the authorized flow of data between networks. D is not correct because the firewall blocks the traffic, not the network zone.'
+  },
+  {
+    id: 29, pts: 2,
+    text: 'Which of the following would you apply to most effectively test the abilities of an intrusion detection tool?',
+    options: [
+      'a. Develop a series of scenarios based on past experience',
+      'b. Use tests that generate malicious traffic to add new intrusive specifications',
+      'c. Apply it to situations of known malicious traffic',
+      'd. Use it in conjunction with other IDS products when possible'
+    ],
+    answer: [1],
+    explanation: 'B is correct because these tests can be used to add new intrusive specifications which were formerly considered to be authorized traffic. A and C might be useful, but will not be as effective as B in making sure the tool will work for the future as well as the present. D is true for usage, but not for testing.'
+  },
+  {
+    id: 30, pts: 1,
+    text: 'Which of the following is a main disadvantage to malware scanning tools?',
+    options: [
+      'a. They only detect certain levels of malware',
+      'b. They can only detect malware that is known to the tool',
+      'c. They tend to be overly complex to run',
+      'd. They do not provide updating and reporting capabilities'
+    ],
+    answer: [1],
+    explanation: 'B is correct. The malware tool can only detect malware that it already knows about. C is generally not true — the tools are normally easy to run. D is not correct because the tools provide the ability to update themselves with new findings and to produce reports.'
+  },
+  {
+    id: 31, pts: 2,
+    text: 'You need to remove personal identification numbers from a legacy system in order to reduce risk during testing. Part of your data obfuscation plan includes verifying how effectively the data is masked. Which of the following is the most effective approach to use?',
+    options: [
+      'a. Manually verify in the database that the data targeted for obfuscation is no longer understandable for logical human interpretation',
+      'b. Design a brute force attack on the obfuscated data',
+      'c. Substitute the sensitive data with random data of varying string lengths',
+      'd. Enlist the development teams to generate a program to stress the database for vulnerabilities'
+    ],
+    answer: [1],
+    explanation: 'B is correct per the syllabus. A brute force or dictionary attack can be used to see if personal information is still accessible. A is not correct because it is generally not feasible because of the amount of data and time it would take. C is not correct because this is more of an anonymizing exercise and the field length might be limited. D is not correct because we are not trying to stress test the database itself.'
+  },
+  {
+    id: 32, pts: 1,
+    text: 'What is often considered the weakest link in software security?',
+    options: [
+      'a. The lack of a consistent and comprehensive security training plan',
+      'b. The effort necessary to maintain document and procedure updates in order to keep up with continuing security threats',
+      'c. The behavior of humans',
+      'd. The constant advancement in malicious techniques'
+    ],
+    answer: [2],
+    explanation: 'C is correct. It\'s the people and their behavior that is the weakest link. A, B and D are concerns, but C is the weakest link in the security chain.'
+  },
+  {
+    id: 33, pts: 1,
+    text: 'Which of the following is a potential security risk?',
+    options: [
+      'a. Publishing an accounting department\'s organization chart on the company\'s web site',
+      'b. Posting birthday wishes for a co-worker on Facebook',
+      'c. Posting the company phone directory on the company Intranet',
+      'd. Posting professional experience in a LinkedIn profile'
+    ],
+    answer: [0],
+    explanation: 'A is correct. This information could be used to determine approval chains for invoice approvals which could then be used to create and approve fake invoices if the accounting system can be hacked. B is incorrect because the birth date should not be used in any employee information such as a password. C is incorrect because the company intranet should be behind the firewall. D is not correct because this information is unlikely to be useful to a hacker.'
+  },
+  {
+    id: 34, pts: 2,
+    text: 'You are responsible for security testing your company\'s financial application. You have recently received email from a person who claims to have hacked into the system using Shodan and has discovered that you are running an out-of-date and vulnerable OS on one of your servers. You have checked and the hacker is correct. You have made sure the server has been updated. Your preliminary check has shown no trace of how the hacker got into your system. Should you be concerned?',
+    options: [
+      'a. No, this is a "white hat" hacker and means no harm to your company',
+      'b. No, you have fixed the vulnerability so the system is now safe',
+      'c. Yes, your security testing is not sufficient and you need to re-run your tests to see what was missed',
+      'd. Yes, since the hacker didn\'t admit how he got in the system, he can still access it and may decide to exploit the vulnerability next time'
+    ],
+    answer: [3],
+    explanation: 'D is correct and that is your biggest point of concern. A is not correct and could be a dangerous assumption. B is not correct because the hacker still has access to the system. C may be true, but re-running the same tests is not going to help with this issue.'
+  },
+  {
+    id: 35, pts: 1,
+    text: 'Why is an attack from inside the organization particularly worrisome?',
+    options: [
+      'a. The attacker is likely driven by curiosity and will be unrelenting',
+      'b. The attacker is likely bored at work and will continue hacking the system for entertainment',
+      'c. The attacker is already inside the firewall and is an authorized system user',
+      'd. The attacker is likely to launch a DOS attack which will cripple the servers'
+    ],
+    answer: [2],
+    explanation: 'C is correct. The biggest threat here is that the external protections are useless because the attacker is already inside the system. A and B are more likely to occur with an external attacker. D is not the most likely attack — generally internal users are after information they can sell or use to embarrass the company.'
+  },
+  {
+    id: 36, pts: 3,
+    text: 'You are working in an organization where system administration access to the servers is highly restricted. Only three long-term and trusted employees know the root passwords. Recently, there have been several odd occurrences. An unknown program called "IKnowYourBirthday" was found running and emailing birthday greetings to staff members with correct birth dates. Later, the corporate phone list was hacked and all numbers changed to 867-5309. The new file had been created by "root". The root password has now been changed and determined to have been set to the lead system administrator\'s dog\'s name.\n\nFurther investigation shows the problems started shortly after virus-infected emails were detected. What should you do now as your next step of investigation?',
+    options: [
+      'a. Look to see if the HR birthdate information was accessed from outside the system, and if so, trace the IP address',
+      'b. Verify if the lead system administrator\'s dog\'s name is posted somewhere in social media',
+      'c. Check the suspicious email that was sent and try to trace the IP address',
+      'd. Check the personnel files of the other two system administrators to see if there is an indication that they are unhappy'
+    ],
+    answer: [2],
+    explanation: 'C is correct. It\'s the best place to start because it appears that this might have been where the problem originated. If C doesn\'t find anything, then A and D would be the next likely paths to pursue since it\'s possible this is an internal attack (D) or that the attacks are separate and the birthdate information might provide some information (A). B might be pursued, but it would be easier to just ask the sys admin who would know the dog\'s name.'
+  },
+  {
+    id: 37, pts: 2,
+    text: 'During testing of an upgrade, you have discovered that it is possible to create a man-in-the-middle attack that can change the amount charged to customers on your e-commerce web site. Your tester successfully changed the amount so that customers were all getting a 10% discount. What should you do first?',
+    options: [
+      'a. The tester should be discouraged from creating these types of attacks as they are not realistic in the production environment',
+      'b. Immediately inform management that the attack was created by the test team as part of testing, in case it is detected',
+      'c. Work with the developers to implement checks such as SSL-strip to ensure certificates are valid and not self-signed',
+      'd. Check production to see if the vulnerability is also in the production code'
+    ],
+    answer: [3],
+    explanation: 'D is correct. The first priority is to see if the vulnerability is in the production code and get the problem fixed immediately. C should be the next step to ensure the developers are coding correctly. A is incorrect because this is exactly what security testers should be doing. B is incorrect because management permission should always be obtained prior to testing, not afterward.'
+  },
+  {
+    id: 38, pts: 1,
+    text: 'Why is it important to reassess security risk expectations on a frequent basis?',
+    options: [
+      'a. Stakeholders have to be educated on all security risks at all times',
+      'b. Stakeholders will make business decisions based on associated security risk levels',
+      'c. Users must develop a manual-based risk mitigation plan',
+      'd. Both user and stakeholder expectations regarding security should be kept from changing'
+    ],
+    answer: [1],
+    explanation: 'B is correct. Stakeholders often have to make business decisions regarding the security risk level that is acceptable and any necessary mitigation plans. A is not correct because everyone doesn\'t need to know everything. C is not correct because a manual-based risk mitigation plan is not feasible. D is not correct because expectations should change.'
+  },
+  {
+    id: 39, pts: 1,
+    text: 'Which of the following is an important aspect of security test results?',
+    options: [
+      'a. They are published for users and stakeholders to access in order to help them better understand risk',
+      'b. They should be shared with developers across the enterprise in order to mitigate risk for future development projects',
+      'c. The fewer people that know the better',
+      'd. Results should always be classified by criticality'
+    ],
+    answer: [2],
+    explanation: 'C is correct. The results from security tests should be kept confidential and access to the results should be tightly controlled. This is because the outcome of the tests often identify weaknesses in the current system under test and often the same issues exist with the production system. A is not correct because of the need to tightly control access. B is not correct because only limited parts of the report should be made available to developers. D is true, but is not the most important aspect.'
+  },
+  {
+    id: 40, pts: 3,
+    text: 'You are finalizing your security test status report for a project that is ready for deployment into production. There is a high degree of risk for this project due to the nature of the system. As a result, you want to place particular emphasis on risk. Based on this, what is the best way to articulate risk on your report?',
+    options: [
+      'a. A descriptive risk assessment included in the summary',
+      'b. Overall risk included in the last section of the report',
+      'c. Risk impact described in the summary and later detailed in terms of specific vulnerabilities',
+      'd. Risk impact is not part of the summary of the report'
+    ],
+    answer: [2],
+    explanation: 'C is correct. The risk impact should be described in the summary and detailed later in the report by discussing specific vulnerabilities. A is not correct because the details should not be in the summary. B is not correct because the information should not be recorded only at the end of the report. D is not correct because this is an important part of the report.'
+  },
+  {
+    id: 41, pts: 1,
+    text: 'In what way are dynamic security analysis tools different from general dynamic analysis tools?',
+    options: [
+      'a. The security tools probe the system rather than just the application under test',
+      'b. The security tools work the same in dynamic or static mode',
+      'c. The security tools are better suited to detect problems such as memory leaks',
+      'd. The security tools need to be tailored to the language in which the application is implemented'
+    ],
+    answer: [0],
+    explanation: 'A is correct. B is incorrect because there are both dynamic and static analysis security tools. C is incorrect because memory leaks are detected by the general dynamic analysis tools, not the security specific ones. D is incorrect because this is true of all static analysis tools.'
+  },
+  {
+    id: 42, pts: 3,
+    text: 'You have been given the job of testing the organization\'s firewall. You have reviewed the implementation plan and steps, verified the configuration has been set up as instructed by the firewall vendor and have conducted port scanning. Your organization is particularly concerned about denial of service (DOS) attacks, particularly since they had one when the old firewall was in place. What type of testing should you conduct to help detect unexpected behavior that could be exploited by a DOS attack?',
+    options: [
+      'a. Create tests that will send malformed network packets or fuzzed data and see if they are detected and rejected by the firewall',
+      'b. Implement automated tests to stress test the servers to test the failover capabilities',
+      'c. Test the encryption and decryption algorithms to determine if they are fast enough to deal with the load of a DOS attack',
+      'd. Conduct software component hardening to ensure the attack surface is reduced as much as possible'
+    ],
+    answer: [0],
+    explanation: 'A is correct as both of these techniques are used to test firewalls. B and C are incorrect because the goal is to prevent the attack rather than let it get through the firewall. D is incorrect because software component hardening will help the individual software components, but not the firewall and its implementation.'
+  },
+  {
+    id: 43, pts: 1,
+    text: 'If you have acquired a tool that is used under the GNU General Public License, which of the following is an important consideration for tool maintenance?',
+    options: [
+      'a. Reliability of the vendor and ability to provide support',
+      'b. Frequency and availability of updates from the vendor',
+      'c. Technical capabilities of your team to support and customize the tool for your environment',
+      'd. License cost and support contract cost'
+    ],
+    answer: [2],
+    explanation: 'C is correct. The GNU license is free and it is an open source community so there is no vendor. A and B are incorrect because there is no vendor. D is incorrect because the tool is free although you may have development costs in customizing the tool for your needs.'
+  },
+  {
+    id: 44, pts: 1,
+    text: 'Which of the following is a benefit of conforming to security testing standards?',
+    options: [
+      'a. They are consistent and easy to follow as they are separate and independent from project goals and objectives',
+      'b. They are the building blocks for future security testing, eliminating the need to start from scratch',
+      'c. They outline an effective offense to meet threats before they enter the system',
+      'd. They allow for latitude in security practices since threats are always changing dynamically'
+    ],
+    answer: [1],
+    explanation: 'B is correct. A is not correct because security standards may be mentioned in the project goals and objectives. C is not correct because they are defensive in nature. D is not correct because they define certain standards that help define practices — the standards should be responsive to changes in the threats.'
+  },
+  {
+    id: 45, pts: 1,
+    text: 'What are advantages to imposing security standards in contracts?',
+    options: [
+      'a. They provide each party a legal exit when an unforeseen security issue adversely affects the product',
+      'b. They provide a starting place for both parties to begin their negotiations',
+      'c. They are a convenient way to make public the agreement between parties',
+      'd. They can change as standards change, even when the contract is finalized'
+    ],
+    answer: [1],
+    explanation: 'B is correct. By defining the security standards, each party can then determine what is required and further specify those requirements. A is not correct because it\'s too late then! C is not correct because the security agreements are likely to be kept private. D is not correct because contracts don\'t usually change in this way.'
+  }
+];
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+const BASE_SECONDS = 120 * 60;
+const EXT_SECONDS  = 150 * 60;
+let timeExtended  = false;
+let TOTAL_SECONDS = BASE_SECONDS;
+let userAnswers   = questions.map(() => []);
+let timerInterval = null;
+let secondsLeft   = TOTAL_SECONDS;
+let examSubmitted = false;
+let pendingAction = null;
+
+const TOTAL_PTS = questions.reduce((s, q) => s + q.pts, 0); // 80
+
+function selectTime(extended) {
+  timeExtended  = extended;
+  TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+  document.getElementById('opt-standard').classList.toggle('active', !extended);
+  document.getElementById('opt-extended').classList.toggle('active',  extended);
+  document.getElementById('meta-minutes').textContent = extended ? '150' : '120';
+  document.getElementById('ext-note').style.display   = extended ? 'block' : 'none';
+  document.getElementById('start-note-txt').textContent = extended
+    ? 'The timer counts down from 150:00 (120 min + 30 min extension). The exam auto-submits when time expires.'
+    : 'The timer counts down from 120:00. The exam auto-submits when time expires.';
+}
+
+function startExam() {
+  secondsLeft = TOTAL_SECONDS;
+  document.getElementById('timer').textContent = timeExtended ? '150:00' : '120:00';
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('exam-screen').style.display  = 'block';
+  renderQuestions();
+  timerInterval = setInterval(tickTimer, 1000);
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+            .replace(/"/g,'&quot;').replace(/\n/g,'<br>');
+}
+
+function renderQuestions() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'card-' + qi;
+    card.style.animationDelay = (qi * 0.012) + 's';
+    const opts = q.options.map((opt, oi) => `
+      <div class="option-row" id="opt-${qi}-${oi}" data-qi="${qi}" data-oi="${oi}">
+        <input type="radio" name="q${qi}" id="inp-${qi}-${oi}"
+               style="position:absolute;opacity:0;pointer-events:none;">
+        <span class="option-marker"></span>
+        <span class="option-text">${escHtml(opt)}</span>
+      </div>`).join('');
+    const ptsLabel = q.pts > 1 ? q.pts + ' pts' : '1 pt';
+    card.innerHTML = `
+      <div class="q-header">
+        <div class="q-meta">
+          <span class="q-num">Q${q.id}</span>
+          <span class="q-pts">${ptsLabel}</span>
+        </div>
+        <div class="q-text">${escHtml(q.text)}</div>
+      </div>
+      <div class="options">${opts}</div>
+      <div class="result-tag" id="result-${qi}"></div>
+      <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>`;
+    container.appendChild(card);
+  });
+  document.querySelectorAll('.option-row').forEach(row => {
+    row.addEventListener('click', function () {
+      if (examSubmitted) return;
+      const qi = parseInt(this.dataset.qi);
+      const oi = parseInt(this.dataset.oi);
+      questions[qi].options.forEach((_, i) => {
+        document.getElementById('inp-' + qi + '-' + i).checked = false;
+      });
+      document.getElementById('inp-' + qi + '-' + oi).checked = true;
+      syncAnswer(qi);
+    });
+  });
+}
+
+function syncAnswer(qi) {
+  userAnswers[qi] = [];
+  questions[qi].options.forEach((_, oi) => {
+    if (document.getElementById('inp-' + qi + '-' + oi).checked) userAnswers[qi].push(oi);
+  });
+  questions[qi].options.forEach((_, oi) => {
+    document.getElementById('opt-' + qi + '-' + oi)
+      .classList.toggle('selected', userAnswers[qi].includes(oi));
+  });
+  updateProgress();
+}
+
+function updateProgress() {
+  const answered = userAnswers.filter(a => a.length > 0).length;
+  document.getElementById('answered-num').textContent = answered;
+  document.getElementById('progress-fill').style.width = (answered / questions.length * 100) + '%';
+}
+
+function tickTimer() {
+  if (secondsLeft <= 0) { doSubmit(true); return; }
+  secondsLeft--;
+  const m = Math.floor(secondsLeft / 60), s = secondsLeft % 60;
+  const el = document.getElementById('timer');
+  el.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  if      (secondsLeft <= 300)  el.className = 'timer danger';
+  else if (secondsLeft <= 900)  el.className = 'timer warn';
+  else                          el.className = 'timer';
+}
+
+function confirmSubmit() {
+  const answered   = userAnswers.filter(a => a.length > 0).length;
+  const unanswered = questions.length - answered;
+  document.getElementById('confirm-title').textContent = 'Submit Exam?';
+  document.getElementById('confirm-msg').innerHTML = unanswered > 0
+    ? `You have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered>1?'s':''}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+    : `All ${questions.length} questions answered. Ready to submit?`;
+  document.getElementById('confirm-yes-btn').textContent = 'Submit';
+  pendingAction = 'submit';
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function confirmReset() {
+  document.getElementById('confirm-title').textContent = 'Restart Exam?';
+  document.getElementById('confirm-msg').innerHTML = 'All answers will be lost. The timer resets to ' + (timeExtended ? '150:00' : '120:00') + '.<br><br>Are you sure?';
+  document.getElementById('confirm-yes-btn').textContent = 'Restart';
+  pendingAction = 'reset';
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function closeConfirm() {
+  document.getElementById('confirm-overlay').classList.remove('show');
+  pendingAction = null;
+}
+
+function doConfirm() {
+  if (pendingAction === 'submit') doSubmit(false);
+  else if (pendingAction === 'reset') doReset();
+  closeConfirm();
+}
+
+function doSubmit(timedOut) {
+  if (examSubmitted) return;
+  examSubmitted = true;
+  clearInterval(timerInterval);
+  closeConfirm();
+
+  let earnedPts = 0, correct = 0, wrong = 0, skipped = 0;
+
+  questions.forEach((q, qi) => {
+    const given     = userAnswers[qi];
+    const isCorrect = given.length === 1 && given[0] === q.answer[0];
+    if (given.length === 0) skipped++;
+    else if (isCorrect) { correct++; earnedPts += q.pts; }
+    else wrong++;
+
+    q.options.forEach((_, oi) => {
+      const row = document.getElementById('opt-' + qi + '-' + oi);
+      if (!row) return;
+      row.classList.add('disabled');
+      row.classList.remove('selected');
+      if (q.answer.includes(oi))       row.classList.add('reveal-correct');
+      else if (given.includes(oi))     row.classList.add('reveal-wrong');
+    });
+
+    const rt   = document.getElementById('result-' + qi);
+    const expl = document.getElementById('expl-' + qi);
+    const card = document.getElementById('card-' + qi);
+    rt.classList.add('show');
+    expl.classList.add('show');
+
+    if (given.length === 0) {
+      rt.classList.add('incorrect');
+      rt.innerHTML = '&mdash; Unanswered &middot; Correct: ' + String.fromCharCode(97 + q.answer[0]) + ')';
+      card.classList.add('incorrect-card');
+    } else if (isCorrect) {
+      rt.classList.add('correct');
+      rt.innerHTML = `&#10003; Correct (+${q.pts} pt${q.pts>1?'s':''})`;
+      card.classList.add('correct-card');
+    } else {
+      rt.classList.add('incorrect');
+      rt.innerHTML = `&#10007; Incorrect &middot; Correct: ` + String.fromCharCode(97 + q.answer[0]) + ')';
+      card.classList.add('incorrect-card');
+    }
+  });
+
+  const pct  = Math.round(earnedPts / TOTAL_PTS * 100);
+  const pass = pct >= 65;
+  const usedSec = TOTAL_SECONDS - secondsLeft;
+  const um = Math.floor(usedSec / 60), us = usedSec % 60;
+  const totalLabel = timeExtended ? '150:00' : '120:00';
+  const timeStr = timedOut
+    ? totalLabel + ' (time expired)'
+    : String(um).padStart(2,'0') + ':' + String(us).padStart(2,'0');
+
+  if (timedOut) { const el = document.getElementById('timer'); el.textContent = '00:00'; el.className = 'timer danger'; }
+
+  document.getElementById('final-score-pct').textContent = pct + '%';
+  document.getElementById('final-score-raw').textContent = earnedPts + ' of ' + TOTAL_PTS + ' points · ' + correct + ' correct of ' + questions.length + ' questions';
+  document.getElementById('time-used').textContent = timeStr;
+  const badge = document.getElementById('grade-badge');
+  badge.textContent = pass ? '✓ PASS (≥ 65%)' : '✗ FAIL (< 65%)';
+  badge.className   = 'grade-badge ' + (pass ? 'pass' : 'fail');
+  document.getElementById('stat-pts').textContent     = earnedPts;
+  document.getElementById('stat-correct').textContent = correct;
+  document.getElementById('stat-wrong').textContent   = wrong;
+  document.getElementById('stat-skipped').textContent = skipped;
+
+  document.getElementById('summary').style.display = 'block';
+  document.getElementById('summary').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function doReset() {
+  examSubmitted = false;
+  userAnswers   = questions.map(() => []);
+  secondsLeft   = TOTAL_SECONDS;
+  clearInterval(timerInterval);
+  document.getElementById('timer').textContent = timeExtended ? '150:00' : '120:00';
+  document.getElementById('timer').className   = 'timer';
+  document.getElementById('answered-num').textContent = '0';
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('summary').style.display = 'none';
+  renderQuestions();
+  timerInterval = setInterval(tickTimer, 1000);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

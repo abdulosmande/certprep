@@ -34,6 +34,7 @@
     background-size: 60px 60px; pointer-events: none;
   }
 
+  /* ── HERO ── */
   .hero { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 5rem 2rem 3rem; }
   .hero-eyebrow {
     font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500;
@@ -47,10 +48,20 @@
   .hero-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .pill { font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.08em; padding: 0.3rem 0.75rem; border-radius: 99px; border: 1px solid var(--border); color: var(--muted); background: var(--surface); }
 
+  /* ── SECTION DIVIDER ── */
   .section-divider { max-width: 960px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
-  .section-divider hr { border: none; border-top: 1px solid var(--border); margin-bottom: 2.5rem; }
-  .section-label { font-family: 'DM Mono', monospace; font-size: 0.62rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem; }
+  .section-divider hr { border: none; border-top: 1px solid var(--border); margin-bottom: 2rem; }
+  .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 0.62rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+  .section-lang-tag {
+    font-family: 'DM Mono', monospace; font-size: 0.6rem; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 0.18rem 0.65rem; border-radius: 99px;
+  }
+  .lang-en { background: rgba(56,189,248,0.08); color: var(--accent); border: 1px solid rgba(56,189,248,0.2); }
+  .lang-de { background: rgba(251,191,36,0.08); color: var(--warn);   border: 1px solid rgba(251,191,36,0.2); }
 
+  /* ── EXAM GRID ── */
   .exam-grid { max-width: 960px; margin: 0 auto; padding: 0 2rem 1rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; position: relative; z-index: 1; }
 
   .exam-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; text-decoration: none; display: flex; flex-direction: column; gap: 1rem; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; animation: fadeUp 0.4s ease both; }
@@ -78,12 +89,14 @@
   .exam-card.coming .card-arrow { color: var(--muted); }
   .coming-tag { font-family: 'DM Mono', monospace; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 
+  /* ── FEATURES ── */
   .features { max-width: 960px; margin: 2rem auto 0; padding: 0 2rem 4rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; position: relative; z-index: 1; }
   .feature { background: var(--surface); padding: 1.25rem 1.5rem; }
   .feature-icon { font-size: 1.2rem; margin-bottom: 0.5rem; }
   .feature-title { font-family: 'DM Mono', monospace; font-size: 0.72rem; font-weight: 500; color: var(--heading); letter-spacing: 0.04em; margin-bottom: 0.25rem; }
   .feature-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
 
+  /* ── FOOTER ── */
   footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 1.5rem 2rem; text-align: center; }
   footer p { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); line-height: 1.7; }
   footer a { color: var(--muted); text-decoration: none; }
@@ -112,31 +125,16 @@
   </div>
 </section>
 
+<!-- ══ ENGLISH EXAMS ══════════════════════════════════════════════════════ -->
 <div class="section-divider">
   <hr>
-  <div class="section-label">Available exams</div>
+  <div class="section-header">
+    <div class="section-label">Available exams</div>
+    <span class="section-lang-tag lang-en">English</span>
+  </div>
 </div>
 
 <div class="exam-grid">
-
-  <!-- ISTQB CT-FL40 Sample A -->
-  <a class="exam-card" href="istqb/ct-fl40/ISTQB_CTFL40_Sample-Exam-Questions_SET_A_v2.2_germ.html" style="animation-delay:0.05s">
-    <div class="card-top">
-      <span class="card-badge badge-istqb">ISTQB</span>
-      <span class="card-level">Certified Tester — Foundation Level</span>
-    </div>
-    <div class="card-title">Certified Tester Foundation Level v4.0 — Sample A (V2.2 German)</div>
-    <div class="card-meta">
-      <span class="meta-chip">40 questions</span>
-      <span class="meta-chip">40 pts</span>
-      <span class="meta-chip">60 min</span>
-      <span class="meta-chip">CT-FL v4.0</span>
-    </div>
-    <div class="card-footer">
-      <span class="card-pass">Pass ≥ 26 pts</span>
-      <span class="card-arrow">→</span>
-    </div>
-  </a>
 
   <!-- ISTQB CT-GenAI Sample A -->
   <a class="exam-card" href="istqb/ct-genai/istqb_ct_genai_mock_exam_v1.0.html" style="animation-delay:0.05s">
@@ -176,46 +174,8 @@
     </div>
   </a>
 
-  <!-- ISTQB CT-MAT -->
-  <a class="exam-card" href="istqb/ct-mat/istqb_ct_mat_mock_exam_V2019_German.html" style="animation-delay:0.15s">
-    <div class="card-top">
-      <span class="card-badge badge-istqb">ISTQB</span>
-      <span class="card-level">Certified Tester — Specialist Level</span>
-    </div>
-    <div class="card-title">Mobile Application Testing — Version 2019 (German)</div>
-    <div class="card-meta">
-      <span class="meta-chip">40 questions</span>
-      <span class="meta-chip">40 pts</span>
-      <span class="meta-chip">60 min</span>
-      <span class="meta-chip">CT-MAT 2019</span>
-    </div>
-    <div class="card-footer">
-      <span class="card-pass">Pass ≥ 26 pts</span>
-      <span class="card-arrow">→</span>
-    </div>
-  </a>
-
-  <!-- IREB CPRE FL -->
-  <a class="exam-card" href="cpre/foundation/IREB_CPRE_FL_Questionnaire_Set_Public_DE_2025-09-11.html" style="animation-delay:0.2s">
-    <div class="card-top">
-      <span class="card-badge badge-ireb">IREB</span>
-      <span class="card-level">CPRE — Foundation Level</span>
-    </div>
-    <div class="card-title">Certified Professional for Requirements Engineering — Foundation Level (German)</div>
-    <div class="card-meta">
-      <span class="meta-chip">43 questions</span>
-      <span class="meta-chip">67 pts</span>
-      <span class="meta-chip">75 min</span>
-      <span class="meta-chip">CPRE FL v3.3.3</span>
-    </div>
-    <div class="card-footer">
-      <span class="card-pass">Pass ≥ 70%</span>
-      <span class="card-arrow">→</span>
-    </div>
-  </a>
-
-  <!-- Coming soon: CT-SEC -->
-  <div class="exam-card coming" style="animation-delay:0.25s">
+  <!-- Coming soon: CT-SEC (English) -->
+  <div class="exam-card coming" style="animation-delay:0.15s">
     <div class="card-top">
       <span class="card-badge badge-coming">ISTQB</span>
       <span class="card-level">Certified Tester — Specialist Level</span>
@@ -230,8 +190,95 @@
     </div>
   </div>
 
-</div><!-- /.exam-grid -->
+</div><!-- /.exam-grid English -->
 
+<!-- ══ GERMAN EXAMS ═══════════════════════════════════════════════════════ -->
+<div class="section-divider" style="margin-top:2.5rem">
+  <hr>
+  <div class="section-header">
+    <div class="section-label">Available exams</div>
+    <span class="section-lang-tag lang-de">Deutsch</span>
+  </div>
+</div>
+
+<div class="exam-grid">
+
+  <!-- ISTQB CT-FL v4.0 SET A -->
+  <a class="exam-card" href="istqb/ct-fl40/ISTQB_CTFL40_Sample-Exam-Questions_SET_A_v2.2_germ.html" style="animation-delay:0.05s">
+    <div class="card-top">
+      <span class="card-badge badge-istqb">ISTQB</span>
+      <span class="card-level">Certified Tester — Foundation Level</span>
+    </div>
+    <div class="card-title">Certified Tester Foundation Level v4.0 — SET A (V2.2)</div>
+    <div class="card-meta">
+      <span class="meta-chip">40 Fragen</span>
+      <span class="meta-chip">40 Pkt</span>
+      <span class="meta-chip">60 min</span>
+      <span class="meta-chip">CT-FL v4.0</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-pass">Bestehen ≥ 26 Pkt</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a>
+
+  <!-- ISTQB CT-MAT -->
+  <a class="exam-card" href="istqb/ct-mat/istqb_ct_mat_mock_exam_V2019_German.html" style="animation-delay:0.1s">
+    <div class="card-top">
+      <span class="card-badge badge-istqb">ISTQB</span>
+      <span class="card-level">Certified Tester — Specialist Level</span>
+    </div>
+    <div class="card-title">Mobile Application Testing — Version 2019</div>
+    <div class="card-meta">
+      <span class="meta-chip">40 Fragen</span>
+      <span class="meta-chip">40 Pkt</span>
+      <span class="meta-chip">60 min</span>
+      <span class="meta-chip">CT-MAT 2019</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-pass">Bestehen ≥ 26 Pkt</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a>
+
+  <!-- IREB CPRE FL -->
+  <a class="exam-card" href="cpre/foundation/IREB_CPRE_FL_Questionnaire_Set_Public_DE_2025-09-11.html" style="animation-delay:0.15s">
+    <div class="card-top">
+      <span class="card-badge badge-ireb">IREB</span>
+      <span class="card-level">CPRE — Foundation Level</span>
+    </div>
+    <div class="card-title">Certified Professional for Requirements Engineering — Foundation Level</div>
+    <div class="card-meta">
+      <span class="meta-chip">43 Fragen</span>
+      <span class="meta-chip">67 Pkt</span>
+      <span class="meta-chip">75 min</span>
+      <span class="meta-chip">CPRE FL v3.3.3</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-pass">Bestehen ≥ 70%</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a>
+
+  <!-- Coming soon: ISTQB CTAL-TM (German) -->
+  <div class="exam-card coming" style="animation-delay:0.2s">
+    <div class="card-top">
+      <span class="card-badge badge-coming">ISTQB</span>
+      <span class="card-level">Certified Tester — Advanced Level</span>
+    </div>
+    <div class="card-title">Certified Tester Advanced Level — Test Manager (CTAL-TM v3.0)</div>
+    <div class="card-meta">
+      <span class="meta-chip">CTAL-TM v3.0</span>
+    </div>
+    <div class="card-footer">
+      <span class="coming-tag">Coming soon</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </div>
+
+</div><!-- /.exam-grid Deutsch -->
+
+<!-- ══ HOW IT WORKS ═══════════════════════════════════════════════════════ -->
 <div class="section-divider" style="margin-top:2.5rem">
   <hr>
   <div class="section-label">How it works</div>
