@@ -1,0 +1,1972 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CT-GaMe v1.0.1 — Sample Exam 1.0.1</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Specialist Level</div>
+        <h1>CT-GaMe v1.0.1<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">ISTQB® Certified Tester Game Testing · Sample Exam 1.0.1 · Syllabus v1.0.1. The timer starts when you begin the exam.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">60</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Source: ISTQB® — ISTQB_CT-GaMe_SampleExam_v1.0.1.pdf; ISTQB_CT-GaMe_SampleExam-Answers_v1.0.1.pdf. Copyright © ISTQB®. Questions, tables, diagrams and rationales follow these sources. Authors are acknowledged in the source PDFs.</p>
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">60 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">75 min</span>
+            <span class="time-opt-lbl">+25% practice time</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optional practice allowance: 25% extra time (15 minutes).</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 60:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CT-GaMe v1.0.1 · Sample Exam 1.0.1</span
+            >
+            <span class="exam-title">Certified Tester – Game Testing</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 answered
+            </div>
+            <div class="timer" id="timer">60:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 questions (40 points) · <strong>65% (≥ 26 of 40 points)</strong>
+            to pass · each question is worth one point and some questions are
+            multi-select (see marking on each question)
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "GaMe-1.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "What are the goals of game testing?\n\nSelect TWO options.",
+    "options": [
+      "a) To test the contribution of interestness of the game to the final evaluation on the market",
+      "b) To test all player’s action sequences in the game",
+      "c) To verify that the game meets specified requirements",
+      "d) To test performance of the game",
+      "e) To discover all possible defects prior to end users"
+    ],
+    "answer": [
+      2,
+      3
+    ],
+    "explanation": "a) Is not correct. Interestness is not a quality attribute and cannot be objectively evaluated. Evaluation on the market is not a testing goal.\n\nb) Is not correct. According to the second principle of testing, it is not possible to test all combinations, thus it cannot be a goal.\n\nc) Is correct. Like almost all types of testing, game testing pursues the goal to test the object against requirements.\n\nd) Is correct. Performance testing is one of the goals of game testing.\n\ne) Is not correct. It is not possible to find all defects at any stage of the software development lifecycle."
+  },
+  {
+    "id": 2,
+    "lo": "GaMe-1.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following options is a defect that is MOST specific for video games?\n\nSelect ONE option.",
+    "options": [
+      "a) Application not starting",
+      "b) Object is hovering another object",
+      "c) Object not found in database",
+      "d) User cannot log in after updating application version"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. This is a common defect for any type of application.\n\nb) Is correct. Visual hovering is a specific behavior exactly in video games where the user interacts with video objects.\n\nc) Is not correct. This is a common defect for any application using a database. Video games very often don't use a database.\n\na) Is not correct. This is a common defect for any application"
+  },
+  {
+    "id": 3,
+    "lo": "GaMe-1.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements related to game product risks is TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) Cheating option may lead to unfair advantage and resentment of other users",
+      "b) Multiplayer games require ad hoc testing",
+      "c) Planing test schedule according to release plan helps to avoid overload of game testers",
+      "d) To mitigate performance risks it is required to have as many control devices as possible"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Games are dependent on the user's opinion more than other software.\n\nb) Is not correct. Ad hoc testing not aims for multiplayer features of games, but covers a variety of interactions of game mechanics.\n\nc) Is not correct. This activity covers project risks.\n\nd) Is not correct. It mitigates only a risk of controllers variety, but not a performance risk."
+  },
+  {
+    "id": 4,
+    "lo": "GaMe-1.1.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following BEST describes the difference between \"Game testing\" and \"Playing game\"?\n\nSelect ONE option.",
+    "options": [
+      "a) User starts the game to pass it or have a good time, while tester verifies that the game meets requirements written in the specification",
+      "b) Game testing is the same as playing the game several times to verify as much scenarios as possible",
+      "c) User may end the game at any time, while tester must pass the game to the end",
+      "d) User may save game state, while the tester should pass the game without saving its state"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Indeed, the tester should verify the game against requirements.\n\nb) Is not correct. Verifying as many scenarios as possible may not lead to achievement of full requirements coverage.\n\nc) Is not correct. Passing the game to the end may not lead to achievement of full requirements coverage.\n\nd) Is not correct. Testers also may save game state while testing. There is also a type of game testing verifying game resuming after saving the state."
+  },
+  {
+    "id": 5,
+    "lo": "GaMe-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "What type of mechanics is NOT used in games?\n\nSelect ONE option.",
+    "options": [
+      "a) Gameplay mechanics",
+      "b) Non-gameplay mechanics",
+      "c) Client mechanics",
+      "d) Player mechanics"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Gameplay mechanics are used in games. This is the name of a mechanic when the user consciously interacts with the gaming system.\n\nb) Is not correct. Non-gameplay mechanics are used in games. This is the name of a mechanic when the player cannot influence the state of the game environment.\n\nc) Is not correct. Client mechanics are used in games. This is the name of a mechanic when processing of the user's actions occurs exclusively on the user's device.\n\nd) Is correct. There is no such type of mechanics like “Player mechanics” in game testing."
+  },
+  {
+    "id": 6,
+    "lo": "GaMe-2.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is relevant to testing core game mechanics?\n\nSelect ONE option.",
+    "options": [
+      "a) Restarting the game after its crush",
+      "b) The ability to save the game at a certain point",
+      "c) The issuance of an increased reward for the best result in the race",
+      "d) The ability to jump over an obstacle in a platformer game"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. This is recoverability testing.\n\nb) Is not correct. The ability to save the game at a certain point is a functionality, not core game mechanics.\n\nc) Is not correct. This is a meta game mechanics.\n\nd) Is correct. This is the core game mechanics, because jumping mechanics are a common feature of platform games."
+  },
+  {
+    "id": 7,
+    "lo": "GaMe-2.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements are true?\n\nI. Testing of client and server mechanics is usually carried out white box testing\n\nII. Client mechanics in multiplayer games can be tested without the participation of the server\n\nIII. The possibility of modifying the game client by the player himself is not considered a serious defect in single-player games\n\nIV. Testers perform functional and non-functional testing when testing server mechanics\n\nV. A tester needs a user interface to test server mechanics\n\nSelect ONE option.",
+    "options": [
+      "a) I, IV, V are correct, II, III - are not correct",
+      "b) II, V are correct, I, III, IV - are not correct",
+      "c) II, III, IV are correct, I, V - are not correct",
+      "d) I, III are correct, II, IV, V - are not correct"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "1 - Is false. Testing of the work of client mechanics is usually carried out black box testing. 2 - Is true. Some client mechanics in multiplayer games don't affect other players. They are processed only on the client-side and verified by functional tests without server involvement. 3 - Is true. If the player has deliberately made changes to the game client, this will only change his personal gameplay and will not affect the interests of other independent users. 4 - Is true. Testing server mechanics includes for example functional testing, performance testing and security testing. 5 - Is false. The tester generally does not need a user interface to test server mechanics. Testing takes place in server consoles or using special tools. Therefore\n\na) Is not correct.\n\nb) Is not correct.\n\nc) Is correct.\n\nd) Is not correct."
+  },
+  {
+    "id": 8,
+    "lo": "GaMe-2.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which approach is the most effective for testing the interaction of game mechanics on the production stage?\n\nSelect ONE option.",
+    "options": [
+      "a) Compatibility testing",
+      "b) Performance testing",
+      "c) Ad hoc testing",
+      "d) Integration testing"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Compatibility testing relates to component interaction, not game mechanics.\n\nb) Is not correct. Performance testing aims for performance but not game mechanics interaction.\n\nc) Is correct. Ad hoc testing is effective where the number of ways of interaction between mechanics and various components of the game.\n\nd) Is not correct. Integration testing aims for interaction between components but not game mechanics interaction."
+  },
+  {
+    "id": 9,
+    "lo": "GaMe-2.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is NOT affected by defects in game mechanics?\n\nSelect ONE option.",
+    "options": [
+      "a) The sales price of the game",
+      "b) The possibility of passing the game",
+      "c) The general perception of the game by the player",
+      "d) The gameplay"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. The presence or absence of defects in the game does not affect its sales price.\n\nb) Is not correct. If, due to a malfunction of the game mechanics, the player cannot perform the required action, he will not be able to complete the game.\n\nc) Is not correct. A defect in the game mechanics can prevent the player from immersing himself in the game and will negatively affect the perception of the game.\n\nd) Is not correct. A defect in the game mechanics can directly affect the gameplay."
+  },
+  {
+    "id": 10,
+    "lo": "GaMe-2.2.4",
+    "k": "K3",
+    "pts": 1,
+    "text": "Match test steps to game saving types.\n\nI. Autosave\n\nII. Checkpoint\n\nIII. Stationary saving\n\nIV. Manual saving\n\nA) Press the save game state button; Check the correctness of the format and location of the file; Test if the game state was restored successfully.\n\nB) Reach the save point; Check the correctness of the format and location of the file; Test if the game state was restored successfully.\n\nC) Reach the save point; Initiate game state saving; Check the correctness of the format and location of the file; Test if the game state was restored successfully.\n\nD) Reach autosave conditions; Check the correctness of the format and location of the file; Test if the game state was restored successfully.\n\nSelect ONE option.",
+    "options": [
+      "a) 1D, 2B, 3C, 4A",
+      "b) 1D, 2С, 3B, 4A",
+      "c) 1C, 2B, 3D, 4A",
+      "d) 1A, 2B, 3D, 4C"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. All steps correspond to saving types.\n\nb) Is not correct. User does not initiate saving in the checkpoint type of saving.\n\nc) Is not correct. There are no autosave conditions in the stationary saving type.\n\nd) Is not correct. There are no autosave conditions in the stationary saving type"
+  },
+  {
+    "id": 11,
+    "lo": "GaMe-3.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT the graphic content of the game product?\n\nSelect ONE option.",
+    "options": [
+      "a) Video game level",
+      "b) 3D editor",
+      "c) Textures",
+      "d) Collisions"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. This is graphic content of the game product.\n\nb) Is correct. It is not the graphic content of the game product. Is a working tool.\n\nc) Is not correct. This is graphic content of the game product.\n\nd) Is not correct. This is graphic content of the game product."
+  },
+  {
+    "id": 12,
+    "lo": "GaMe-3.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT a graphic defect?\n\nSelect ONE option.",
+    "options": [
+      "a) Lack of texture",
+      "b) Low detail of the object next to the character",
+      "c) Collision grid visibility",
+      "d) Unexpected closure of a video game"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Lack of texture is a graphic defect because it is part of the model.\n\nb) Is not correct. This is a graphical defect, because the object should be of high quality near the character, and low in the distance.\n\nc) Is not correct. The visibility of the collision grid is a graphical defect as the collision grid is used to define the boundaries of an object when it collides with another. It shouldn't be visible.\n\nd) Is correct. This is a non-graphics technical defect."
+  },
+  {
+    "id": 13,
+    "lo": "GaMe-3.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT an example of a historical validity defect?\n\nSelect ONE option.",
+    "options": [
+      "a) Appearance of a national leader in a game does not match his/her real-life photos",
+      "b) One of the weapon models in a game is used and operates differently than its real prototype",
+      "c) Weaponry and ammunition in a game do not match a real armed conflict event shown in a game",
+      "d) A game shows an alternative version of a historical event"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. It might be done due to localization needs or not to violate regional laws.\n\nb) Is not correct. This is an example of a historical validity defect.\n\nc) Is not correct. This is an example of a historical validity defect.\n\nd) Is correct. This is a part of an imaginary game story that does not pretend to be a true story. ."
+  },
+  {
+    "id": 14,
+    "lo": "GaMe-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Choose the incorrect statement from the following options:\n\nSelect ONE option.",
+    "options": [
+      "a) Artists perform artistic testing when reviewing game objects",
+      "b) Testers perform artistic testing after the final export of models to the engine",
+      "c) Testers perform artistic testing before the export of models to the engine",
+      "d) Players perform artistic testing when participating in playtests"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct..Artists perform artistic testing when reviewing game objects.\n\nb) Is not correct. Testers perform artistic testing after the final export of models to the engine\n\nc) Is correct. Testers perform artistic testing AFTER the final export of models to the engine but not BEFORE.\n\nd) Is not correct. Players perform artistic testing when participating in playtests"
+  },
+  {
+    "id": 15,
+    "lo": "GaMe-3.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Who performs Technical Testing on Graphics?\n\nSelect ONE option.",
+    "options": [
+      "a) Testers, developers, and technical artists",
+      "b) Testers, developers, technical writers, and technical artists",
+      "c) Testers as well as technical artists",
+      "d) Testers, technical writers, and technical artists"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Developers do not participate in technical testing of graphics.\n\nb) Is not correct. Developers do not participate in technical testing of graphics. Technical writers are not concerned with technical testing of graphics.\n\nc) Is correct. Technical testing of graphics is done by testers and technical artists.\n\nd) Is not correct. Technical writers are not concerned with technical testing of graphics."
+  },
+  {
+    "id": 16,
+    "lo": "GaMe-3.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT a graphics testing tool?\n\nSelect ONE option.",
+    "options": [
+      "a) Save editor",
+      "b) In-game video capture tools",
+      "c) In-game content editors",
+      "d) Graphics tablet"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. The save editor is used to edit the state of the game, certain items of the character's equipment or equipment. Not used for testing graphics.\n\nb) Is not correct. In-game video capture tools used to test models, graphics.\n\nc) Is not correct. In-game content editors used to test models, graphics.\n\nd) Is not correct. Graphics tablet is a specialized input device used to control the cursor instead of the mouse."
+  },
+  {
+    "id": 17,
+    "lo": "GaMe-3.3.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Match test steps to graphics production steps.\n\nI. Creation of greybox\n\nII. Creation of visible geometry\n\nIII. Texturing the model\n\nIV. Review of LoD and collision model of the object\n\nV. Exporting model to game engine\n\nVI. Placement of objects on the map\n\nVII. Creating and placing effects\n\nA) Visual splash testing when game object falls into water\n\nB) Testing objects for their \"hanging\" and recessed under the map (terrain)\n\nC) Exporting model to game engine, testing the parameters of the game object, visual evaluation of the object by testers, some duplicate tests of artists and modelers\n\nD) Testing collision models in terms of impact on gameplay, both artists and level designers are involved in evaluation of quality of the models\n\nE) Testing the overall color palette of the model, testing for visible texture seams. The texture is accepted by the art director or artist\n\nF) Testing the model of a graphical object for the presence of duplicated geometry, extremely excessive or minimal detail, all the necessary details to increase the realism of the model\n\nG) Testing the model of a graphical object for consistency and correctness of the sizes of its parts\n\nSelect ONE option.",
+    "options": [
+      "a) 1B ,2F, 3E, 4D, 5C, 6G, 7A",
+      "b) 1E ,2F, 3G, 4D, 5C, 6B, 7A",
+      "c) 1G ,2F, 3E, 4A, 5C, 6B, 7D",
+      "d) 1G ,2F, 3E, 4D, 5C, 6B, 7A"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Testing of objects for their \"hanging\" and deepening under the map (relief) takes place at a later stage. The \"gray box\" stage does not involve placing objects on the game map\n\nb) Is not correct. The stage of covering the model with textures does not involve testing for the correct size of its parts, this is carried out at earlier stages.\n\nc) Is not correct. The appearance of splashes as a result of a game item falling into water is not a test of the object collision model.\n\nd) Is correct."
+  },
+  {
+    "id": 18,
+    "lo": "GaMe-4.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is NOT a sound content of game product?\n\nSelect ONE option.",
+    "options": [
+      "a) Music level",
+      "b) Musical score",
+      "c) Ambient sound",
+      "d) Sound effects"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. This is a characteristic of the sound content of the game product.\n\nb) Is correct. It is not the sound content of the game product. Musical score is not distributed with the game even if it exists during creating the game..\n\nc) Is not correct. This is the sound content of the game product.\n\nd) Is not correct. This is the sound content of the game product."
+  },
+  {
+    "id": 19,
+    "lo": "GaMe-4.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT a sound defect?\n\nSelect ONE option.",
+    "options": [
+      "a) Missing sound effect",
+      "b) Lack of sound of the object/environment",
+      "c) Time delay of audio playback",
+      "d) Missing binding between music and sound effect"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. This is a sound defect.\n\nb) Is not correct. This is a sound defect.\n\nc) Is not correct. This is a sound defect.\n\nd) Is correct. Sound effects are binded to game actions while music plays in the background"
+  },
+  {
+    "id": 20,
+    "lo": "GaMe-4.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT a defect in the audio content?\n\nSelect ONE option.",
+    "options": [
+      "a) The effect sound is too loud and does not match the volume level in the game settings",
+      "b) Missing sound effect",
+      "c) Playing the wrong sound",
+      "d) Incorrect playback of correct sound"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. This is not a sound defect but a video game settings defect.\n\nb) Is not correct. This is a sound content defect.\n\nc) Is not correct. This is a sound content defect.\n\nd) Is not correct. This is a sound content defect."
+  },
+  {
+    "id": 21,
+    "lo": "GaMe-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following checks is NOT used in content-auditory testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Appropriation of the sound to the object and the setting",
+      "b) The level (volume) of each sound file must be the same",
+      "c) The tester reviews the available documentation for a specific sound object, examines the requirements for sound design",
+      "d) If a location or scene is filled with various details, this is also emphasized by the voice acting"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. This is the essence of the content-auditory testing.\n\nb) Is not correct. A barely audible explosion of a dynamite stick or a fallen rock can disrupt the immersion in the virtual world, as well as an obvious stomp on the pavement, but when moving on the sand or the deafening cry of an NPC located at a considerable distance.\n\nc) Is correct. These are preparatory actions before testing.\n\nd) Is not correct. In a large office, one can hear the hum of system units, the hum of printers, the noise of air conditioners, the pressing of buttons on keyboards, and the conversations of workers. In the foundry, there will be almost no quiet sounds, but the rumble of metal parts, the clanking of the conveyor belt, various knocks and rattles will appear. The field of warfare must contain the shouts of the attackers, the shouts of the wounded, the sounds of gunfire and explosions, the roar of equipment engines and the whistle of passing shells."
+  },
+  {
+    "id": 22,
+    "lo": "GaMe-4.5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Choose the correct statement regarding sound testing tools from the following:\n\nSelect ONE option.",
+    "options": [
+      "a) Map/location editor allows to test sound effects “zones” on the map",
+      "b) Sound card allows to play the music",
+      "c) Piano allows to compare music in the game with original sound theme",
+      "d) Sound settings wizard allows to test volume changing"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Map/location editor actually allows to test sound effects “zones” on the map.\n\nb) Is not correct. Sound card is not a test tool but a component of the computer system.\n\nc) Is not correct. Piano is not a software or hardware testing tool.\n\nd) Is not correct. Sound setting wizard is a functionality of the game but not a tool.",
+    "sourceNote": "Source discrepancy: the summary key lists b), but the detailed answer and rationale identify a) as correct and explain why b) is incorrect. This exam follows the detailed rationale."
+  },
+  {
+    "id": 23,
+    "lo": "GaMe-4.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT used in testing the mix of music and sounds?\n\nSelect ONE option.",
+    "options": [
+      "a) Testing the timeliness of the sounds in relation to what is happening on the screen",
+      "b) Testing the accuracy of the location of the sound source",
+      "c) Testing the quality of sounds effects",
+      "d) Testing the sense of presence and realism of what is happening on the screen"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. This relates to compliance of sound with game scenes.\n\nb) Is not correct. This relates to testing of physical file location.\n\nc) Is correct. Even a high-quality and seemingly appropriate sound can cause confusion and irritation to the player if the final mixing is not done correctly.\n\nd) Is not correct. This is Content-auditory Testing."
+  },
+  {
+    "id": 24,
+    "lo": "GaMe-4.3.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT validated when testing the mixed music of a game?\n\nSelect ONE option.",
+    "options": [
+      "a) Combination of all audio components with each other",
+      "b) The volume of individual sounds",
+      "c) Ability to turn on and off music",
+      "d) Timeliness of playing sounds relative to what is happening in the game"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Checking the combination of all sound components with each other is the main purpose of testing the mastered music.\n\nb) Is not correct. For example, the tester has to make sure that the sound of an explosion is louder than the sound of human speech.\n\nc) Is correct. This is an objective of the sound integration testing stage.\n\nd) Is not correct. If the sound does not correspond in time to what is happening on the screen, this affects the player's immersion in the game."
+  },
+  {
+    "id": 25,
+    "lo": "GaMe-4.4.4",
+    "k": "K3",
+    "pts": 1,
+    "text": "When checking sound objects, the tester must carry out the procedures and actions necessary to obtain complete information about how correctly the sound is configured in a particular version of the game. What does the tester's list of actions directly depend on?\n\nSelect ONE option.",
+    "options": [
+      "a) The list of actions depends on the tasks assigned to the tester by the art director and technical artist",
+      "b) The list of actions depends on the number of objects in the current video game release",
+      "c) The list of actions directly depends on which objects you want to test",
+      "d) The list of actions depends on the checklist obtained from the game console manufacturer"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. The art director and technical artist are responsible for the graphics, while the tester needs to check the entire level, location, and video game. All aspects.\n\nb) Is not correct. Checks must be done regardless of the release.\n\nc) Is correct. For the final check of the sound design of the weapon added to the client, the tester performs a number of actions: adding a weapon if it is not initially available in the client, uploading new content to the test map and the entire list of actions required to check all sounds associated with the weapon as much as possible.\n\nd) Is not correct. A checklist must be passed in order for game console manufacturers to release the game to their store and allow it to be installed on their game consoles."
+  },
+  {
+    "id": 26,
+    "lo": "GaMe-5.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is NOT a game level component?\n\nSelect ONE option.",
+    "options": [
+      "a) Structural geometry",
+      "b) Main menu",
+      "c) Sound accompaniment",
+      "d) Lighting"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Structural geometry is part of the models and part of the video game level.\n\nb) Is correct. The main menu refers to the game as a whole and is the starting point for the player, but does not refer to the video game level.\n\nc) Is not correct. Soundtrack is an integral part of the video game level and is configured together with the rest of the content of the video game level.\n\nd) Is not correct. Correct placement of lighting objects on a level is one of the main tasks of a level designer."
+  },
+  {
+    "id": 27,
+    "lo": "GaMe-5.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is a game level defect?\n\nSelect ONE option.",
+    "options": [
+      "a) Inability to save gameplay",
+      "b) Inoperability of the game at a certain screen resolution",
+      "c) The inability to enter the building by the game character due to the fact that he is stuck in road textures",
+      "d) Graphics artifacts"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Failure to save gameplay is a defect in the game state save system, but does not apply to the game level.\n\nb) Is not correct. Defective game settings that do not support a specific screen resolution.\n\nc) Is correct. Jamming in textures - a defect in violation of the collision mesh of an object located on the game level.\n\nd) Is not correct. Graphic artifacts can be not only a level defect, but also spread to the main menu, launcher and other game entities."
+  },
+  {
+    "id": 28,
+    "lo": "GaMe-5.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "At what stage of creating a game level is the playtest carried out?\n\nSelect ONE option.",
+    "options": [
+      "a) Level prototyping",
+      "b) Prototyping geometry",
+      "c) Creation of the final version",
+      "d) Creating a patch version"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Usually, at the stage of the prototype of the level, a playtest is performed.\n\nb) Is not correct. There is no point in conducting a playtest at the geometry prototype stage.\n\nc) Is not correct. The playtest must be carried out earlier than the final version of the level.\n\nd) Is not correct. There is no playtest of the entire level for the patch version, only the current fix."
+  },
+  {
+    "id": 29,
+    "lo": "GaMe-5.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is a level designers’ responsibility?\n\nSelect ONE option.",
+    "options": [
+      "a) Correctness of textures, lighting and other visual effects",
+      "b) Checking whether a player can play a given map without facing technical and artistic defects",
+      "c) Checking the authenticity of the soundtrack",
+      "d) Correctness of the geometry and shape of the level, the location of objects and trigger points, the size of the shelters"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. The artist or techie artist is responsible for the correctness of textures, lighting and other visual effects.\n\nb) Is not correct. A vague answer that does not answer specifically the question posed.\n\nc) Is not correct. This is an element of historical accuracy testing.\n\nd) Is correct. The level designer is responsible for the correct functioning of all models at the level, the correct execution of scripts and various effects."
+  },
+  {
+    "id": 30,
+    "lo": "GaMe-5.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT a game level testing tool?\n\nSelect ONE option.",
+    "options": [
+      "a) Save editor",
+      "b) Level editor",
+      "c) 3D editor",
+      "d) Game engine"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. The save editor is a tool for testing a player's ability to save their current gameplay, regardless of game level.\n\nb) Is not correct. The level editor is a testing tool for game levels.\n\nc) Is not correct. With the help of the 3D editor, it is possible to check the correctness of the shapes of objects, collision mesh, texture mapping and other properties. It is a level testing tool.\n\nd) Is not correct. The game engine is used to test the logic of the interaction of level objects, the correctness of scripting and the behavior of the logic of objects."
+  },
+  {
+    "id": 31,
+    "lo": "GaMe-6.1.3",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following BEST describes difference between physical and sensor based controllers?\n\nSelect ONE option.",
+    "options": [
+      "a) Physical controllers contain only mechanical or membrane actuators",
+      "b) Buttons of physical controllers have purposes those don't depend on the application under test",
+      "c) Sensor based controllers can be equiped with sensors that read the position of the controller in space, respond to touch, voice",
+      "d) Sensor based controllers designed to transmit various commands to a computer, phone or other electronic equipment"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Modern mouse devices can use a semiconductor laser as a sensor.\n\nb) Is not correct. Purpose can be very different depending on the application under test, but the basic principles are usually common.\n\nc) Is correct. In addition to traditional physical methods of inputting information, controllers can be equipped with various sensors.\n\nd) Is not correct. Sensor based controllers not only transmit various types of information but also determine it."
+  },
+  {
+    "id": 32,
+    "lo": "GaMe-6.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is an example of the typical input devices (guaranteed to comply with gaming devices)?\n\nSelect ONE option.",
+    "options": [
+      "a) Microphone",
+      "b) Steering wheel",
+      "c) Touch screen",
+      "d) Joystick"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Microphone or headset is used as an ADDITIONAL input device.\n\nb) Is not correct. Steering wheel is used only for civilian flight simulators.\n\nc) Is correct. Touch screens are used in phones, PDAs, portable consoles and modern slot machines and considered as typical input devices.\n\nd) Is not correct. Joystick was originally a universal gaming device but since times joystick became a specialized device for games in the flight simulator genre."
+  },
+  {
+    "id": 33,
+    "lo": "GaMe-6.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "What input device provides the most precise information for testing purposes about the player's position in space?\n\nSelect ONE option.",
+    "options": [
+      "a) Webcam",
+      "b) Dance platform",
+      "c) Fishing rod controller",
+      "d) Motion capture device"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Webcam is dedicated to capture and transmit video and cannot provide exact player’s position.\n\nb) Is not correct. Dance platform doesn’t provide player’s positioning, it only reacts on button pressing.\n\nc) Is not correct. Sensor based controllers can be equipped with sensors that read the position of the controller in space, not the player.\n\nd) Is correct. Motion capture devices designed to transmit motion data to a computer, phone or other electronic equipment."
+  },
+  {
+    "id": 34,
+    "lo": "GaMe-6.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT a defect in a game product related to the specifics of game controllers?\n\nSelect ONE option.",
+    "options": [
+      "a) Incorrect localization of security requirements for the Nintendo Switch Joy Con controller imposed by the publisher",
+      "b) Sony DualShock 4 controller is regarded as a full-fledged sound output device due to an outdated version of drivers",
+      "c) Lack of replacement of a tooltip when switching controllers during the game",
+      "d) Factory defect that leads to drifting of gamepad sticks without user intervention"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. This is a localization defect of software.\n\nb) Is not correct. This is a defect of drivers dedicated to game controllers.\n\nc) Is not correct. This is a defect of software that handles game controllers.\n\nd) Is not correct. This is a defect of manufacturing game controllers."
+  },
+  {
+    "id": 35,
+    "lo": "GaMe-6.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT a task for UX specialists and testers?\n\nSelect ONE option.",
+    "options": [
+      "a) Verifying the X, A and ⬜, X buttons are used as “agree” buttons",
+      "b) Finding a controller that gives the player a significant advantage over others",
+      "c) Measuring time required to achieve next level",
+      "d) Examining compliance to generally accepted conventions"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Testers need to make sure that the developers are using traditional layouts for popular controllers.\n\nb) Is not correct. Testers need to make sure that the use of any controller does not give the player a significant advantage over others.\n\nc) Is correct. Game designers are interested in this information to properly design game levels.\n\nd) Is not correct. UI/UX specialists develop an interface that will not only be pleasing to the eye and functionally convenient, but will also comply with generally accepted conventions, or standards of the genre."
+  },
+  {
+    "id": 36,
+    "lo": "GaMe-7.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "What are the main objectives of internationalization and localization?\n\nSelect ONE option.",
+    "options": [
+      "a) To give the players an opportunity to choose a preferred language in the game language settings",
+      "b) To ensure that all the game content is translated properly to be used in target region",
+      "c) To support regional, linguistic or cultural references and adapt the game content to the culture of a country",
+      "d) To ensure that the game content comply with the regional laws"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. The language and translation do not guarantee adaptation to the culture of a country.\n\nb) Is not correct. Translation by itself does not ensure localization and is only a part of it.\n\nc) Is correct. Adaptation to the culture of a country/region is the main objective of localization.\n\nd) Is not correct. The legal compliance is only a part of localization."
+  },
+  {
+    "id": 37,
+    "lo": "GaMe-7.1.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "The localization testing steps are performed to ensure...\n\nSelect ONE option.",
+    "options": [
+      "a) An opportunity to translate the game to the target language after release",
+      "b) A technical support to regional, linguistic or cultural references",
+      "c) That no player will be offended by rude language and improper jokes",
+      "d) Adaptation of a gaming software to the culture of a country"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Internationalization creates an opportunity to translate a game to the target language after release.\n\nb) Is not correct. Internationalization ensures technical support to regional, linguistic or cultural references.\n\nc) Is not correct. These cannot be ensured by localization.\n\nd) Is correct. Localization stages are performed specifically to ensure adaptation of gaming software to the culture of a country."
+  },
+  {
+    "id": 38,
+    "lo": "GaMe-7.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following can be classified as a potential cause for a localization defect related to regional law violation?\n\nSelect ONE option.",
+    "options": [
+      "a) Revealingly dressed characters and vulgar language is used",
+      "b) Historical events are misinterpreted",
+      "c) Images of religious origin are used",
+      "d) All of the above"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Is an incomplete answer.\n\nb) Is not correct. Is an incomplete answer.\n\nc) Is not correct. Is an incomplete answer.\n\nd) Is correct. All the above can potentially cause a localization defect."
+  },
+  {
+    "id": 39,
+    "lo": "GaMe-7.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT a software to use during localization testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Translation memory software",
+      "b) Visual string comparison tools",
+      "c) Graphic editor",
+      "d) Automatic string comparison tools"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. TMS is one of the main tools used during the translation and localization testing.\n\nb) Is not correct. Visual string comparison is used to compare strings of reference and target localization.\n\nc) Is correct. Graphic editors are used for localization not for localization testing.\n\nd) Is not correct. Automatic string comparison is used to obtain data on the presence of defects of any kind in the checked localization."
+  },
+  {
+    "id": 40,
+    "lo": "GaMe-7.3.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "Match testing actions with localization testing types.\n\nI. \"Box\" localization\n\nII. Interface localization\n\nIII. Text localization\n\nIV. Graphic localization\n\nA) Testing translation of description and screenshots of the game in the store\n\nB) Testing translation of menu items, buttons labels, help page\n\nC) Testing translation of game subtitles\n\nD) Testing translation of newspapers, shop signs, notes\n\nSelect ONE option.",
+    "options": [
+      "a) 1A, 2B, 3C, 4D",
+      "b) 1B, 2C, 3A, 4D",
+      "c) 1C, 2A, 3C, 4B",
+      "d) 1D, 2B, 3C, 4A"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. All actions correspond to localization testing types.\n\nb) Is not correct. Testing translation of menu items, buttons labels and help page is Interface localization testing type\n\nc) Is not correct. Testing translation of description and screenshots of the game in the store is \"Box\" localization testing type\n\nd) Is not correct. Testing translation of newspapers, shop signs, notes is graphic localization testing type"
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 60 * 60;
+      const EXT_SECONDS = 75 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "75"
+          : "60";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 75:00 (60 minutes + 25% practice time). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 60:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Open to enlarge</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagram for Question ${q.id}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

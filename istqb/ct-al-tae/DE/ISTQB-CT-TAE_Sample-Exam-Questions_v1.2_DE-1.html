@@ -1,0 +1,1971 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CT-TAE · 2019 — Probeprüfung v1.2 DE (Deutsch)</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .q-text, .option-text, .header-left { min-width: 0; overflow-wrap: anywhere; }
+      .meta-lbl { overflow-wrap: anywhere; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    </style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Advanced Level</div>
+        <h1>CT-TAE · 2019<br /><em>Probeprüfung</em></h1>
+        <p class="start-subtitle">
+          ISTQB® Certified Tester Testautomatisierungsentwickler (CT-TAE) ·
+          Probeprüfung v1.2 DE · GTB-Edition · CT-TAE-Lehrplan v1.0 DE (2019). Der
+          Timer startet, sobald Sie auf „Prüfung starten“ klicken.
+        </p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Fragen</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">90</span>
+            <div class="meta-lbl">Minuten</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">75</span>
+            <div class="meta-lbl">Punkte</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Bestehen</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Quelle: ISTQB® / German Testing Board, Probeprüfung v1.2 DE (17.05.2022), Lehrplan v1.0 DE 2019. Copyright © ISTQB®. Fragen und Begründungen wurden aus den bereitgestellten Fragen- und Antwort-PDFs übernommen.</p>
+        <div class="time-option-label">Prüfungsdauer</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">90 Min.</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">112,5 Min.</span>
+            <span class="time-opt-lbl">+25 % Übungszeit</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optionale Verlängerung der Übungszeit um 25 %: 22 Minuten und 30 Sekunden zusätzlich.</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Prüfung starten
+        </button>
+        <p class="start-note" id="start-note-txt">
+          Der Timer zählt von 90:00 herunter. Nach Ablauf der Zeit wird
+          die Prüfung automatisch abgegeben.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CT-TAE · 2019 · Probeprüfung v1.2 DE · GTB-Edition</span
+            >
+            <span class="exam-title">Certified Tester – Testautomatisierungsentwickler</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 beantwortet
+            </div>
+            <div class="timer" id="timer">90:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Zurücksetzen
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Abgeben
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 Fragen (75 Punkte) · <strong>Bestanden ab 49 von 75 Punkten (65 %)</strong>
+            · Je Frage sind 1–3 Punkte möglich. Die Anzahl der auszuwählenden Antworten
+            steht bei jeder Frage.
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Prüfung abgeschlossen</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Benötigte Zeit: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Richtig</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Falsch</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Unbeantwortet</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Neustart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Prüfung abgeben?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Abbrechen
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Abgeben
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "ALTA-E-1.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Sie diskutieren mit dem Projektmanagement über die Einführung einer Testautomatisierung. Welche Aussagen über die Vorteile und Beschränkungen einer Testautomatisierung sind korrekt?\n\nWählen Sie ZWEI Antworten. (2 aus 5)",
+    "options": [
+      "a) Die Rückmeldung bezüglich der Softwarequalität dauert länger, da die Bestimmung der Testergebnisse üblicherweise durch den Tester erfolgt.",
+      "b) Mittels Testautomatisierung ist es möglich Tests durchzuführen, die sich manuell nicht oder nur sehr umständlich durchführen ließen.",
+      "c) Automatisierte Tests müssen sehr präzise formuliert sein, da nur maschineninterpretierbare Ergebnisse und/oder Testorakel von der Testautomatisierung verarbeitet werden können.",
+      "d) Automatisierte Testmittel müssen fortlaufend gewartet werden, um aktuell zu sein. Dieser Wartungsaufwand schlägt sich nachteilig auf die Kosten für den Test an sich nieder.",
+      "e) Ohnehin knappe Testressourcen werden ineffizient genutzt, weil sie für die Testautomatisierung gebraucht werden und nicht mehr für manuelle Tests zur Verfügung stehen."
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "explanation": "a) FALSCH – Dies ist ein negierter Vorteil und somit eine fachlich falsche Antwort, siehe Lehrplan Aufzählungen in Kapitel 1.1\n\nb) KORREKT – da sie entweder Vorteile oder Beschränkungen der Testautomatisierung sind, siehe Lehrplan Aufzählungen in Kapitel 1.1\n\nc) KORREKT – da sie entweder Vorteile oder Beschränkungen der Testautomatisierung sind, siehe Lehrplan Aufzählungen in Kapitel 1.1\n\nd) FALSCH – Dies ist ein Nachteil der Testautomatisierung, kein Vorteil oder Beschränkung, siehe Lehrplan Aufzählungen in Kapitel 1.1\n\ne) FALSCH – Dies ist ein negierter Vorteil und somit eine fachlich falsche Antwort, siehe Lehrplan Aufzählungen in Kapitel 1.1"
+  },
+  {
+    "id": 2,
+    "lo": "ALTA-E-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welcher der folgenden Aussagen beschreibt einen wichtigen technischen Erfolgsfaktor für jedes größere Automatisierungsprojekt?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Um die Wartbarkeit und Effizienz der Testautomatisierung zu erhöhen, sollten automatisierte Testskripte möglichst einfach implementiert, verteilt und geändert werden können.",
+      "b) Die Testautomatisierungsarchitektur muss die Automatisierung aller manuellen Tests unterstützen, damit die Testautomatisierung langfristig einen positiven Nutzwert erzielt.",
+      "c) Die Testautomatisierungsstrategie muss sicherstellen, dass verschiedene Bereiche des Systems unter Test auf die gleiche Art und Weise automatisiert getestet werden können.",
+      "d) Beim automatisierten GUI-Test sollten Daten und Steuerungselemente für die Interaktion eng mit dem Layout der GUI gekoppelt sein."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Vgl. Lehrplan, Kapitel 1.2, 5. Listenpunkt „Planung der Softwareverteilung“: „Es muss sichergestellt werden, dass Testskripte problemlos verteilt, geändert und erneut verteilt werden können.“ Vgl. Lehrplan, Kapitel 1.2, Unterpunkt „Testbarkeit des SUT“: „Ein wichtiger Erfolgsfaktor für die Testautomatisierung ist die möglichst einfache Implementierung und Verteilung automatisierter Testskripte.“\n\nb) FALSCH – Es müssen nicht alle manuellen Tests zwingend automatisiert werden. Vgl. Lehrplan, Kapitel 6.1 “Kriterien für die Automatisierung”.\n\nc) FALSCH – Vgl. Lehrplan Kapitel 1.2, Unterpunkt „Testautomatisierungsstrategie“: „Möglicherweise ist die Testautomatisierungsstrategie nicht gleichermaßen auf alte und neue/geänderte Bereiche des SUT anwendbar.“\n\nd) FALSCH – Die Automatisierung ist einfacher und nachhaltiger bei Entkopplung. Vgl. Lehrplan, Kapitel 1.2, Unterpunkt „Testbarkeit des SUT“: Im Falle des automatisierten GUI-Testens kann dies beispielsweise bedeuten, die Elemente und Daten für die Interaktion mit der GUI soweit wie möglich von ihrem Layout zu entkoppeln.“"
+  },
+  {
+    "id": 3,
+    "lo": "ALTA-E-2.1.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie entscheiden über eine Testautomatisierung für den automatisierten funktionalen Test eines hochgradig komplexen Systems, das nach seiner Inbetriebnahme für viele Jahre produktiv sein wird. Sie haben eine sorgfältige Werkzeugevaluation vorgenommen. Dabei kam heraus, dass keines der angebotenen Werkzeuge für die Testautomatisierung verwendet werden kann, da keines mit den proprietären Schnittstellen des Systems kompatibel ist. Gemeinsam mit den Entwicklern haben Sie beschlossen, dass Kompatibilität am ehesten über Test Hooks zu erreichen wäre.\n\nWelche beiden Überlegungen hinsichtlich dieser Vorgehensweise sind am EHESTEN zutreffend?\n\nWählen Sie ZWEI Antworten. (2 aus 5)",
+    "options": [
+      "a) Wenn Test Hooks vor der Freigabe des Systems nicht deaktiviert oder entfernt werden, könnten sie ein IT-Sicherheitsrisiko darstellen.",
+      "b) Test Hooks können erst zu einem späten Zeitpunkt im Projekt entwickelt werden, so dass eine Übergangslösung benötigt wird, um nicht in Verzug zu geraten.",
+      "c) Der hohe Aufwand für die Entwicklung der Testautomatisierung ist aufgrund des beabsichtigen langen Produktivbetriebs des Systems unrentabel.",
+      "d) Bei der Verwendung von Test Hooks ist das Risiko falsch-positive Ergebnisse zu erzeugen höher, aufgrund des hohen Intrusionsgrades.",
+      "e) Aufgrund des niedrigen Intrusionsgrades bei der Verwendung von Test Hooks werden die Testergebnisse nicht repräsentativ für das Produktivsystem sein."
+    ],
+    "answer": [
+      0,
+      3
+    ],
+    "explanation": "a) KORREKT – Verbleiben Test Hooks im ausgelieferten Produkt, kann dies ein IT- Sicherheitsrisiko darstellen. Vgl. Lehrplan Kapitel 3.2, Unterpunkt „Testschnittstellen im Softwareprodukt“: „Es ist allerdings wichtig sich davon zu überzeugen, dass die Schnittstellen keine Sicherheitsrisiken darstellen.“\n\nb) FALSCH – Test Hooks können bereits nach Entwurf der Software erstellt werden, auch wenn die SUT selbst noch nicht so weit ist.\n\nc) FALSCH – Ein hochgradig komplexes System mit langer Lebensdauer rechtfertig die Entwicklung der Testautomatisierung.\n\nd) KORREKT – Die Entwicklung von Test Hooks bedeutet ein höheren Intrusionsgrad, der dazu führen kann, dass die Testautomatisierung falsch-positive Ergebnisse produziert, die im normalen Betrieb des Systems nicht auftreten. Vgl. Lehrplan Kapitel 2.1, erster Satz: „Höhere Intrusionsgrade weisen das Risiko auf, falsch-positive Ergebnisse (Fehlalarme) zu erzeugen,“\n\ne) FALSCH – Test Hooks führen stets zu einem höheren Intrusionsgrad, nicht zu einem niedrigeren."
+  },
+  {
+    "id": 4,
+    "lo": "ALTA-E-2.1.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Für ein Produktivsystem haben Sie nachträglich eine Testautomatisierung über die grafische Benutzungsschnittstelle (GUI) des Systems eingeführt. Das System bietet geschäftskritische Dienste für das Unternehmen an. Die Weiterentwicklung des Systems wurde genehmigt und die Entwickler planen, die neuen Funktionen teilweise mit Fremdsoftware zu realisieren. Diese Fremdsoftware wurde bereits seitens des Herstellers ausgiebig getestet, dennoch bereitet die Interoperabilität des Systems mit der Fremdsoftware Probleme. Die Integration der Fremdsoftware mit dem bestehenden System erfolgt über eine API. Die bestehende Testautomatisierung muss erweitert werden, um die Schnittstellen zwischen dem System und der Fremdsoftware testen zu können.\n\nWelches ist der BESTE Ansatz für die Erweiterung der Testautomatisierung?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Umstellung der bestehenden automatisierten GUI-Tests auf automatisierte API-Tests, damit auch die Integration der Fremdsoftware effektiv getestet werden kann.",
+      "b) Entwickeln von API-Tests über die Schnittstelle der Fremdsoftware, um analysieren zu können, wo genau die Schwierigkeiten bei der Integration der Fremdsoftware bestehen.",
+      "c) Entwickeln von automatisierten GUI-Tests für die Fremdsoftware, um die korrekte Funktionsweise der Fremdsoftware zu evaluieren.",
+      "d) Um Tests auf der Komponententeststufe einfacher zu automatisieren, sollten Test Hooks bereitgestellt werden."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Es gibt keinen Grund, die bestehenden GUI-Tests des Systems in API-Tests umzuwandeln. Vielmehr sollte ggf. die Testautomatisierungsstrategie angepasst werden, siehe Lehrplan Kapitel 2.1: SUT-Faktoren mit Einfluss auf die Testautomatisierung. Der beste Ansatz für das Problem wird jedoch in Antwort b) beschrieben.\n\nb) KORREKT – Da es augenscheinlich Schwierigkeiten mit der Interoperabilität der beiden Systeme gibt, sollten Interoperabilitätstest entwickelt werden und über dieselbe API ausgeführt werden, die auch im Produktivbetrieb verwendet wird. Vgl. Lehrplan Kapitel 2.1, 2. Listenpunkt „Fremdsoftware“.\n\nc) FALSCH – Es gibt überhaupt keinen Anhaltspunkt dafür, dass die Fremdsoftware eine grafische Benutzungsoberfläche anbietet und ist nicht Teil ihres Testautomatisierungslösung, laut Aufgabenstellung erfolgt die Anbindung über eine API.\n\nd) FALSCH – Das Problem ist laut Aufgabenstellung die Interoperabilität, so dass die Bereitstellung von Test Hooks hier nicht der beste Ansatz ist. Es sollten vielmehr Interoperabilitätstest entwickelt werden, siehe Antwort c)."
+  },
+  {
+    "id": 5,
+    "lo": "ALTA-E-2.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie evaluieren kommerzielle Testautomatisierungswerkzeuge für den funktionalen Test. Das von Ihnen bevorzugte Werkzeug bietet ein günstiges Kosten-Nutzen-Verhältnis. Darüber hinaus sind Sie davon überzeugt, dass das Werkzeug auch Ihre anderen technischen Kriterien vollends erfüllt. Das Werkzeug bietet jedoch eine Vielzahl von Funktionen, von denen viele gar nicht benötigt werden. Diese vielen Funktionen machen das Werkzeug aus Ihrer Sicht für den Einsatz übermäßig komplex und verwirrend.\n\nWie gehen Sie AM EHESTEN weiter bei der Auswahl der Werkzeuge vor?\n\nWählen Sie ZWEI Antworten. (2 aus 5)",
+    "options": [
+      "a) Sie führen Upgrades-Tests aus, um zu prüfen, ob durch die Vielzahl an Funktionen Probleme bei der Migration zu erwarten sind.",
+      "b) Sie prüfen, ob das Werkzeug so konfigurierbar ist, dass nicht benötigte Funktionen deaktiviert werden können.",
+      "c) Sie nehmen den Support vom Anbieter in Anspruch, um ihre Prozesse besser auf die Funktionen des Werkzeugs abzustimmen.",
+      "d) Sie recherchieren in Foren der Benutzer-Community, ob es Shortcuts gibt.",
+      "e) Sie suchen nach einem alternativen Werkzeug mit stärkerem Fokus auf den benötigten Funktionsumfang und ähnlich günstigem Kosten-Nutzen-Verhältnis."
+    ],
+    "answer": [
+      1,
+      4
+    ],
+    "explanation": "a) FALSCH – Das kann gemacht werden, wenn Update-Probleme zu erwarten sind, Ihr Problem sind aber die Vielzahl von Funktionen. Zur Lösung des Problems sind daher b) und e) besser geeignet.\n\nb) KORREKT – Werkzeuge sind häufig konfigurierbar und ermöglichen die Ausblendung nicht verwendeter Funktionen. Vgl. Lehrplan, Kapitel 2.2, Tabelle, Tabellenspalte „Mögliche Lösungen“ des Problems „Die Anwendung des Werkzeugs ist sehr komplex.“\n\nc) FALSCH – Der Support kann Sie darin unterstützen, dass Werkzeug anzupassen oder die Funktionalität einzuschränken (wenn möglich), allerdings kann der Support nicht Ihre Prozesse optimieren. Die Antworten b) und e) sind besser geeignet, ihr Problem zu lösen.\n\nd) FALSCH – Foren helfen eher bei konkreten Problemstellungen wie z. B. bei Fragen bzgl. der Schnittstellen oder Konflikten mit anderen Systemen, siehe Lehrplan, Kapitel 2.2, Tabelle. Foren lösen aber nicht Ihr Komplexitätsproblem. Hierzu sind b) und e) besser geeignet.\n\ne) KORREKT – Wenn es gar keine Lösung für das Problem gibt, sollten sie nach alternativen Werkzeugen gucken. Vgl. Lehrplan, Kapitel 2.2, Tabellenspalte „Mögliche Lösungen“ des Problems „Die Anwendung des Werkzeugs ist sehr komplex.“"
+  },
+  {
+    "id": 6,
+    "lo": "ALTA-E-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Sie sind in einem Testautomatisierungsprojekt dafür verantwortlich, den bisherigen manuellen Test eines Systems unter Test (SUT) auf Testautomatisierung umzustellen, da der manuelle Test zunehmend ressourcenintensiver wird. Der manuelle Test erfolgte über die grafische Benutzungsschnittstelle (GUI) und ließe sich gut durchführen. Die automatisierten Tests sollen zukünftig direkt über die Programmierschnittstelle (API) mit dem SUT kommunizieren. Ein kompatibles API-Testwerkzeug haben Sie bereits ausgewählt und Sie versprechen sich eine enorme Effizienzsteigerung durch dessen Einsatz. Bei der Analyse der API stellen Sie erstaunt fest, dass sich eine Automatisierung nur sehr aufwändig umsetzen ließe.\n\nWelche der nachfolgenden Empfehlungen sollten Sie dem Projektmanager aussprechen, um das ausgewählte Werkzeug so schnell wie möglich einsetzen zu können?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Implementierung von Test Hooks, um effizientere Testschnittstellen für die Testautomatisierung bereitzustellen.",
+      "b) Beibehalten der manuellen Testausführung, da die Automatisierung zu viel Zeit beanspruchen würde.",
+      "c) Auswahl eines geeigneteren API-Testwerkzeugs, um die technische Kompatibilität zwischen der Testautomatisierung und dem SUT weiter zu erhöhen.",
+      "d) Implementierung eines eigenen GUI-Testwerkzeugs, da der manuelle Test über die GUI ja problemlos möglich war."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Vgl. Lehrplan Kapitel 2.3, S. 21: „Lösungen für eine bessere Auslegung auf Automatisierbarkeit können die Entwicklung von Programmcode und Aufrufe an APIs erfordern“. Durch die Implementierung von Test Hooks lässt sich die Automatisierbarkeit eines SUT effizient erhöhen.\n\nb) FALSCH – Dies ist nun keine zu empfehlende Lösung; die Umstellung auf Automatisierung soll ja gerade aus dem Gesichtspunkt heraus erfolgen, weil der manuelle Test zu ressourcenintensiv ist (vgl. Lehrplan Kapitel 1.1. S13. In der Liste zu den Vorteilen einer Testautomatisierung).\n\nc) FALSCH – Die Kompatibilität des API-Testwerkzeugs muss nicht erhöht werden. Die Kompatibilität ist gegeben, das ergibt sich aus der Aufgabenstellung, zweiter Absatz: „Ein kompatibles API-Testwerkzeug haben Sie bereits ausgewählt…“.\n\nd) FALSCH – Vgl. Aufgabenstellung: „… um das ausgewählte Werkzeug so schnell wie möglich einsetzen zu können…“ Diese Lösung steht nicht zur Debatte, da die Implementierung eines eigenen GUI-Testwerkzeugs sehr anspruchsvoll und zeitintensiv ist. Zudem wurde ja bereits entschieden, dass die Testautomatisierung über die API erfolgen soll."
+  },
+  {
+    "id": 7,
+    "lo": "ALTA-E-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Bei der Ausarbeitung einer Testautomatisierungsstrategie ist die Bewertung der Testbarkeit des Systems unter Test (SUT) von zentraler Bedeutung, um u. a. Entscheidungen bezüglich der Testautomatisierungsarchitektur und des Testautomatisierungsansatzes zu treffen.\n\nWelche Merkmale sind für die Bewertung der Testbarkeit des Systems unter Test VON GRÖSSTER Bedeutung?\n\nWählen Sie ZWEI Antworten. (2 aus 5)",
+    "options": [
+      "a) Übertragbarkeit",
+      "b) Steuerbarkeit",
+      "c) Wartbarkeit",
+      "d) Beobachtbarkeit",
+      "e) Gebrauchstauglichkeit"
+    ],
+    "answer": [
+      1,
+      3
+    ],
+    "explanation": "a) FALSCH – Übertragbarkeit hat nichts mit der Auslegung auf Testbarkeit zu tun, siehe Begründung zu Antwort b).\n\nb) KORREKT – Steuerbarkeit und Beobachtbarkeit eines SUT muss gegeben sein, um es effektiv (und automatisiert) testen zu können (vgl. Lehrplan Kapitel 2.3, S. 20 und S. 21). Durch eine frühzeitige Berücksichtigung der Steuerbarkeit und Beobachtbarkeit wird sichergestellt, dass das SUT bereits bei Entwurf über Schnittstellen verfügt, die die Testbarkeit des SUT effektiv erhöhen.\n\nc) FALSCH – Testbarkeit ist ein Teilmerkmal des Qualitätsmerkmals Wartbarkeit, so beeinflusst eine gute Testbarkeit eines SUT auch dessen Wartbarkeit, siehe Lehrplan Kapitel 2.3. In der Fragenstellung wird aber nach Merkmalen für die Testbarkeit gefragt.\n\nd) KORREKT – Siehe Begründung zu Antwort b)\n\ne) FALSCH – Gebrauchstauglichkeit hat nichts mit der Auslegung auf Testbarkeit zu tun, siehe Begründung zu Antwort b)."
+  },
+  {
+    "id": 8,
+    "lo": "ALTA-E-3.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Auf welcher Schicht der generische Testautomatisierungsarchitektur (gTAA) sollte Werkzeugunterstützung für den manuellen oder automatisierten Entwurf von Testfällen und/oder Testdaten erfolgen?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Testentwurfsschicht",
+      "b) Testdefinitionsschicht",
+      "c) Testgenerierungsschicht",
+      "d) Testflexibilitätsschicht"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Diese Schicht existiert in der gTAA nicht, siehe Lehrplan Kapitel 3.1.1: Die gTAA im Überblick.\n\nb) FALSCH – Die Testdefinitionsschicht bietet keine Unterstützung für den manuellen oder automatisierten Entwurf von Testfällen und Testdaten, sondern für die Spezifizierung bzw. Implementierung von Testfällen und Testdaten, siehe Lehrplan Kapitel 3.1.1: Die gTAA im Überblick.\n\nc) KORREKT – Vgl. Lehrplan Kapitel 3.1.2, S. 25. Der automatisierte oder manuelle Entwurf von Testfällen und Testdaten sollte durch Werkzeuge auf der Testgenerierungsschicht unterstützt werden.\n\nd) FALSCH – Diese Schicht existiert in der gTAA nicht, siehe Lehrplan Kapitel 3.1.1: Die gTAA im Überblick."
+  },
+  {
+    "id": 9,
+    "lo": "ALTA-E-3.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie wurden mit dem Entwurf einer Testautomatisierungsarchitektur (TAA) beauftragt. Die Testautomatisierungsstrategie wurde von einer externen Beratungsfirma erstellt und umfasst u. a. folgende Anforderungen, die Ihre TAA berücksichtigen muss:\n\n1. Die TAA muss technologieübergreifende Unabhängigkeit bieten, da die automatisierte Testsuite sehr wahrscheinlich in verschiedenen Testumgebungen und gegen verschiedene Zieltechnologien ausgeführt wird.\n\n2. Die Testmittel müssen übertragbar und wiederverwendbar sein.\n\n3. Herstellerunabhängigkeit wird bevorzugt.\n\n4. Es ist wichtig, dass die TAA anfallende Wartungskosten minimiert.\n\n5. Fachexperten ohne Programmierkenntnisse sollen in der Lage sein, automatisierte Tests zu analysieren, modifizieren und implementieren. Das Projektbudget ist in den nächsten zwei Jahren vergleichsweise groß. Nach dieser Zeit wird das Budget jedoch schrumpfen.\n\nWelche der folgenden Überlegungen sollte Sie angesichts dieser Anforderungen AM EHESTEN beim Entwurf der TAA berücksichtigen?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Es sollte die strukturierte Skripterstellung eingesetzt werden, da durch bessere Modularisierbarkeit die Wartung der automatisierten Testskripte minimiert wird.",
+      "b) Es sollten die Kommunikationsprotokolle analysiert werden, über die mit dem System unter Test kommuniziert werden kann, damit die TAA in möglichst vielen Testumgebungen einsetzbar ist.",
+      "c) Es sollte eine umfassende Werkzeugsuite eines namenhaften Herstellers akquiriert werden, da das Budget vergleichsweise groß ist und die Testautomatisierung augenscheinlich auf eine längere Laufzeit ausgelegt ist.",
+      "d) Es sollte ein Testautomatisierungsansatz gewählt werden, der auf Abstraktion beruht. Dadurch werden sowohl technologische Unabhängigkeit, di Übertragbarkeit bzw. Wiederverwendung als auch die Modifizierbarkeit durch Fachexperten ohne Programmierkenntnissen adressiert."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Es ist zwar korrekt, dass die strukturierte Skripterstellung sich grundsätzlich positiv auf den Wartungsaufwand und die Wiederverwendbarkeit auswirkt, allerdings sind strukturierte Skripterstellungsansätze zumeist weder technologieunabhängig, noch von Fachexperten ohne Programmierkenntnisse zu verstehen, da meist Programmierkenntnisse erforderlich sind, Lehrplan, Kapitel 3.2.2 Absatz “Strukturierte Skripterstellung”.\n\nb) FALSCH – Natürlich ist Kompatibilität bezüglich der Kommunikationsprotokolle des Systems unter Test (SUT) ein wichtiger Aspekt bei einer Testautomatisierung. Allerdings fällt diese Aufgabe während der Realisierung einer bestimmten Testautomatisierungslösung für eine bestimmte bzw. konkrete Zieltechnologie an und nicht während des Entwurfs der überspannenden Testautomatisierungsarchitektur, siehe Lehrplan, Kapitel 3.2.1 “Einführung in den TAA-Entwurf\", erste Aufzählung, letzter Aufzählungspunkt. Eine andere Überlegung ist hier zutreffender, siehe Begründung zu d).\n\nc) FALSCH – Es wird in dem Szenario Herstellerunabhängigkeit angestrebt, siehe Aufgabenstellung. Die Empfehlung, eine umfangreiche Werkzeugsuite eines Herstellers zu akquirieren, widerspricht somit der Testautomatisierungsstrategie.\n\nd) KORREKT – Die Abstraktion wird typischerweise gebraucht, um die genannten Ziele zu erreichen. Vgl. Lehrplan Kapitel 3.2.1, Unterpunkt „Ermitteln von Bereichen, in denen Abstraktion Vorteile bieten kann“, gesamter erster Absatz."
+  },
+  {
+    "id": 10,
+    "lo": "ALTA-E-3.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Warum ist es beim Entwurf der Testautomatisierungsarchitektur sinnvoll, die Testdefinitionsschicht von der Testausführungsschicht zu separieren?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Die Trennung der beiden Schichten erhöht die Ausführungsgeschwindigkeit.",
+      "b) Die Testdefinitionen können erstellt werden, ohne zu wissen, welches Werkzeug für die Ausführung verwendet wird.",
+      "c) Der Testdefinitionsschicht können während der Ausführung ggf. Testfälle hinzugefügt werden.",
+      "d) Die Testdefinitionsschicht liefert die notwendige Anbindung, damit die Tests gegen unterschiedliche Schnittstellen des Systems unter Tests ausgeführt werden können."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Die Trennung der beiden hat nichts mit der Ausführungsgeschwindigkeit zu tun.\n\nb) KORREKT – Durch die Trennung der Definition von der Ausführung ist die Definition immun für die Auswahl und Verwendung von Werkzeugen. Wird ein anderes Werkzeug verwendet, muss die Testdefinition nicht geändert werden – nur die Ausführungsschicht ändert sich. Siehe dazu im Lehrplan Abschnitt 3.1.1.\n\nc) FALSCH – Bei der Ausführung werden keine Testfälle hinzugefügt.\n\nd) FALSCH – Die Anbindung an das System unter Test (SUT) wird von der Adaptierungsschicht bereitgestellt."
+  },
+  {
+    "id": 11,
+    "lo": "ALTA-E-3.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Überlegungen muss während des Entwurfs und der Umsetzung der Testadaptierungsschicht berücksichtigt werden?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Auswahl des Interpretations- oder Kompilierungsansatzes für die Testdefinitionen",
+      "b) Entscheidung für einen datengetriebenen, schlüsselwortgetriebenen, musterbasierten oder modellgetriebenen Ansatz für die Erstellung der Testdefinitionen",
+      "c) Entscheidung, ob der Testentwurf automatisiert oder manuell erfolgen soll",
+      "d) Bewertung und Umsetzung der Steuerbarkeit und Beobachtbarkeit des SUT über dessen Testschnittstellen"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Dies ist eine Überlegung für die Testausführungsschicht (vgl. Lehrplan Kapitel 3.2.1, „Vergleich und Gegenüberstellung verschiedener Entwurfs-/Architekturansätze“, Unterpunkt „Überlegungen im Hinblick auf die Testausführungsschicht“.\n\nb) FALSCH – Dies ist eine Überlegung für die Testdefinitionsschicht (vgl. Lehrplan Kapitel 3.2.1, „Vergleich und Gegenüberstellung verschiedener Entwurfs-/Architekturansätze“, Unterpunkt „Überlegungen im Hinblick auf die Testdefinitionsschicht“.\n\nc) FALSCH – Dies ist eine Überlegung für die Testgenerierungsschicht (vgl. Lehrplan Kapitel 3.2.1, „Vergleich und Gegenüberstellung verschiedener Entwurfs-/ Architekturansätze“, Unterpunkt „Überlegungen im Hinblick auf die Testgenerierungsschicht“.\n\nd) KORREKT – Vgl. Lehrplan Kapitel 3.2.1 „Vergleich und Gegenüberstellung verschiedener Entwurfs-/Architekturansätze“, Unterpunkt „Überlegungen im Hinblick auf die Testadaptierungsschicht“"
+  },
+  {
+    "id": 12,
+    "lo": "ALTA-E-3.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welches ist der geeignete Zeitpunkt, um bei einem Testautomatisierungsprojekt rechtliche und/oder standardbezogene Anforderungen eines Systems unter Test zu berücksichtigen?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Bei der Implementierung einer Testautomatisierungslösung",
+      "b) Bei der Auswahl des Testautomatisierungsansatzes",
+      "c) Beim Entwurf einer Testautomatisierungsarchitektur",
+      "d) Beim Erstellen eines Testautomatisierungsframework"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Sicherstellung der Konformität zu rechtlichen oder standardbezogenen Vorgaben muss bereits früher erfolgen, nämlich während des Entwurfs des TAA (siehe Begründung zu Antwort c) oder aber im Rahmen der Wartung, siehe Lehrplan, Kapitel 4.3, erster Absatz\n\nb) FALSCH – Sicherstellung der Konformität zu rechtlichen oder standardbezogenen Vorgaben muss bereits früher erfolgen, nämlich während des Entwurfs des TAA. Siehe Begründung zu Antwort c). Die Auswahl des Testautomatisierungsansatzes erfolgt zwar im Zuge des TAA-Entwurfs, hat im Prinzip aber nichts mit der Berücksichtigung von Normen oder Standards zu tun, siehe Lehrplan, Kapitel 3.2.1, 2. Absatz Spiegelstriche zu Anforderungen für einen Testautomatisierungsansatz.\n\nc) KORREKT – Vgl. Lehrplan Kapitel 3.2.3, Absatz: SUT-Standards und rechtliche Vorgaben: „Neben den technischen Aspekten eines SUT müssen beim TAA-Entwurf u. U. rechtliche und/oder standardbezogene Vorgaben berücksichtigt werden, um die Konformität der TAA zu garantieren.“\n\nd) FALSCH – Sicherstellung der Konformität zu rechtlichen oder standardbezogenen Vorgaben muss bereits früher erfolgen, nämlich während des Entwurfs des TAA. Siehe Begründung zu Antwort c). Für die Realisierung einer TAS kann ein TAF verwendet werden, muss aber nicht (vgl. Lehrplan, 3.1 “Einführung in die gTAA”). Somit wäre eine TAF nicht unbedingt geeignet, um rechtliche und standardbezogene Anforderungen zu berücksichtigen."
+  },
+  {
+    "id": 13,
+    "lo": "ALTA-E-3.2.4",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie werden zu einem Projekt hinzugezogen, das sich derzeit im Benutzer- Abnahmetest (UAT – User Acceptance Test) befindet. Die Testfälle entsprechen mehr oder weniger den Geschäftsprozessen, die das Verhalten des Systems unter Test (SUT) sehr präzise spezifizieren. Diese werden im Rahmen des UAT häufig wiederholt ausgeführt. Ihre Aufgabe besteht nun darin, eine Testautomatisierungslösung (TAS) für den automatisierten Regressionstest der Geschäftsprozesse zu koordinieren. Die Testfälle sollen in einer für fachliche Stakeholder verständlichen Form dargestellt werden und gleichzeitig die automatisierte Ausführung ermöglichen. Die Entwickler haben bereits einzelne Aktionen und Abläufe der Geschäftsprozesses implementiert, so dass die technische Anbindung an das SUT gegeben ist. Ihre TAS soll auf diesen bestehenden Implementierungen aufsetzen.\n\nWelche Testautomatisierungsansätze sind in dieser Situation AM GEEIGNETESTEN?\n\nWählen Sie ZWEI Antworten. (2 aus 5)",
+    "options": [
+      "a) Lineare Skripterstellung",
+      "b) Schlüsselwortgetriebene Skripterstellung",
+      "c) Prozessgetriebene Skripterstellung",
+      "d) Modellbasiertes Testen",
+      "e) Strukturierte Skripterstellung"
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "explanation": "a) FALSCH – Die lineare Skripterstellung trennt die Fachlogik üblicherweise nicht von technischen Details und ist daher in dieser Situation nicht die beste Lösung. Vgl. Lehrplan Kapitel 3.2.2, Abschnitt Lineare Skripterstellung Testen\n\nb) KORREKT – Die Abbildung von Geschäftsszenarien mit Schlüsselwörtern ist in dieser Situation ein möglicher Ansatz. Schlüsselwortgetriebenes Testen bringt Abstraktion zwischen Fachlichkeit und Technologie ein. Die Tatsache, dass bereits einige Aktionen und Abläufe der Geschäftsprozesse samt Kommunikation mit dem System unter Teste implementiert wurde, ermöglicht die Wiederverwendung dieser Implementierungen auf der Testadaptierungsschicht. Vgl. Lehrplan, Kapitel 3.2.2, Abschnitt Schlüsselwortgetriebenes Testen.\n\nc) KORREKT – Die prozessgetriebene Skripterstellung kann in dieser Situation sehr gut verwendet werden. Durch die detaillierte Spezifikation lassen sich die Prozesse einfach identifizieren und umsetzen. Stakeholder sind auch ohne IT-Kenntnisse in der Lage diese zu verstehen. Vgl. Lehrplan, Kapitel 3.2.2, Abschnitt Prozessgetriebene Skripterstellung.\n\nd) FALSCH – Die Einführung von Modellierungs- und modellbasierten Testwerkzeugen ist in der Aufgabe nicht geplant und kurzfristig auch nicht umsetzbar. Vgl. Lehrplan, Kapitel 3.2.2, Abschnitt Modellbasiertes Testen.\n\ne) FALSCH – Die strukturierte Skripterstellung geht in der Regel davon aus, dass Programmierkenntnisse erforderlich sind, um die Skripte zu erstellen und zu verstehen. Dadurch ist dieser Ansatz nicht so gut geeignet in der gegebenen Situation wie das schlüsselwortgetriebene Testen oder die prozessgetriebene Skripterstellung. Vgl. Lehrplan, Kapitel 3.2.2, Abschnitt Prozessgetriebene Skripterstellung."
+  },
+  {
+    "id": 14,
+    "lo": "ALTA-E-3.2.4",
+    "k": "K4",
+    "pts": 3,
+    "text": "Ein Desktop-Client-System, das viele Jahre produktiv war und nun technisch veraltet ist, soll eine Reihe von Infrastruktur-Migrationen und -Aktualisierungen durchlaufen. Ihre Aufgabe ist es, diese Modernisierung mittels einer eigens zu diesem Zweck eingeführten Testautomatisierung funktional abzusichern. Sie benötigen eine einfache und schnelle Lösung. Die Wartbarkeit der automatisierten Tests ist kein kritischer Punkt, weil keine funktionalen Änderungen für das modernisierte System vorgesehen sind und die Testautomatisierungslösung nach Abschluss der Arbeit nicht weitergeführt werden soll.\n\nWelcher der folgenden Testautomatisierungsansätze eignet sich in dieser Situation AM EHESTEN?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Prozessgetriebene Skripterstellung für die Implementierung der Testskripte und datengetriebenes Testen für den Umgang mit Eingabedaten.",
+      "b) Modellbasiertes Testen für die Erstellung der automatisierten Tests und schlüsselwortgetriebenes Testen für die Durchführung.",
+      "c) Mitschnitt für die Aufzeichnung der grundlegenden Interaktionen zwischen Benutzer und System und prozessgetriebene Skripterstellung für Erhöhung des Abstraktionsniveaus in der Testautomatisierung.",
+      "d) Mitschnitt für die Aufzeichnung der grundlegenden Interaktionen zwischen Benutzer und System und lineare Skripterstellung für die Durchführung der aufgezeichneten Skripte."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Prozessgetriebene Skripterstellung lässt sich zwar hervorragend mit datengetriebenem Testen kombinieren, allerdings erfordert die Kombination dieser beiden Ansätze eine gewisse Zeit durch die Einbringung der Abstraktion in den Eingabedaten und den Aktionen (siehe im Lehrplan, Kapitel 3.2.1, jeweils unter den “Kontras” der beiden genannten Ansätze). Da die Automatisierung nicht weitergeführt werden soll nach Abschluss der Arbeiten ist dieser Ansatz in der aktuellen Situation nicht die beste Lösung.\n\nb) FALSCH – Ebenfalls eine sehr sinnvolle Kombination, allerdings nicht in dem gegebenen Szenario. Sowohl modellbasiertes Testen als auch schlüsselwortgetriebenes Testen erfordern höhere Investitionen, insbesondere für die Erstellung der Testmodelle für den modellbasierten Testentwurf, sowie die Implementierung der Schlüsselwort- Implementierungen im Testadapter (siehe im Lehrplan, Kapitel 3.2.1, jeweils unter den “Kontras” der beiden genannten Ansätze).\n\nc) FALSCH – Grundsätzlich ist der Mittschnittansatz immer eine gute Option, um die konkreten Interaktionen zwischen Benutzer und System unter Test schnell zu erfassen, siehe auch Begründung zur Antwort d). Die Ableitung von prozessgetriebenen Testdefinitionen aus den mitgeschnittenen Skripten stellt allerdings einen Mehraufwand dar (Einbringung von Abstraktion), der in diesem Szenario nicht gerechtfertigt ist (siehe im Lehrplan, Kapitel 3.2.1, unter “Kontras” des Ansatzes).\n\nd) KORREKT – Es ist nur wenig Vorbereitung nötig, und Wartungsfragen spielen bei diesem Projekt keine Rolle. Die Verwendung der aufgezeichneten Skripte für die lineare Skripterstellung und Durchführung ist in der gegebenen Situation der beste Kompromiss zwischen Bedarf und Ergebnis (siehe im Lehrplan, Kapitel 3.2.1, jeweils unter den “Pros” der beiden genannten Ansätze)."
+  },
+  {
+    "id": 15,
+    "lo": "ALTA-E-3.3.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Ihr Unternehmen entwickelt industrielle Schneidemaschinen für Buchbindereien. Teil dieser Schneidemaschine ist ein funktionales Sicherheitssystem, welches die Einhaltung des Unfallschutzes am Arbeitsplatz überwacht und dafür sorgt, dass der Schneideprozess erst durch den Werker ausgelöst werden kann, wenn alle Schutzvorkehrungen aktiviert wurden. Dieses funktionale Sicherheitssystem muss von einer Zertifizierungsbehörde abgenommen und zugelassen werde. Der Auditor der Zulassungsbehörde hat Ihrem Unternehmen mitgeteilt, welche Anforderungen für den Entwurf gelten und die Durchführung der Zulassungstests stellt:\n\n1. Der Testentwurf und die Bestimmungen der Überdeckung sollen automatisiert auf Basis von Modellen erfolgen, welche die für die Zulassung relevanten Anforderungen und Testbedingungen formalisieren.\n\n2. Fachexperten sollen in der Lage sein, die Testfälle zu lesen und bei Bedarf zu modifizieren. Daher sollten die automatisieren Tests nicht mit einer Programmiersprache geskriptet werden.\n\n3. Abweichungen sollten möglichst einfach durch einen automatisierten Vergleich von tatsächlichen und erwarteten Werten erkannt werden. Sie müssen nun eine Testautomatisierungsarchitektur entwerfen, die die Bedarfe bzw. Erwartungen des Auditors umsetzt.\n\nWelche der nachfolgenden Testautomatisierungsarchitekturen und Verantwortlichkeiten entsprechen diesen Bedarfen AM EHESTEN? (Fortsetzung auf der nächsten Seite)\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Textuelle Spezifikation der Testbedingungen und manueller Entwurf der Testfälle durch den Fachexperten. Implementierung der Testdefinitionen mittels eines Unittest-Frameworks durch die Entwickler und automatisierte Ausführung der Unittests aus der Entwicklungsumgebung heraus.",
+      "b) Erstellung von Testmodellen durch den Fachexperten, welche die entsprechenden Anforderungen und Testbedingungen umsetzen. Einsatz eines Testgenerators, der automatisiert aus den Modellen schlüsselwortgetriebene Testfälle erzeugt. Implementierung automatisierter Verifikationspunkte durch die Entwickler.",
+      "c) Erstellung von Testmodellen durch die Entwickler. Fachexperten leiten manuell strukturierte Testskripte aus den Testmodellen ab, die unmittelbar gegen die API des Sicherheitssystems ausgeführt werden können. Die Entwickler erfassen manuell während der Durchführung die Abweichungen von tatsächlichem und erwartetem Wert.",
+      "d) Verwendung des Mitschnittansatzes zur Erstellung linearer Testskripte. Die Aufzeichnung und Durchführung der automatisierten Testskripte erfolgt über die grafische Benutzungsschnittstelle. Einfügung von Verifikationspunkten in die linearen Testskripte, die von dem Mitschnittwerkzeug angeboten werden."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Diese Testautomatisierungsarchitektur passt nicht so gut zu den Anforderungen, wie die aus Antwort b). Siehe Begründung zu Antwort b) für weitere Details.\n\nb) KORREKT – Diese Überlegungen bez. der späteren Testautomatisierungsarchitektur erfüllen die Anforderungen des Auditors am besten. Zu Anforderung 1: Die Erstellung von UML-Modellen, sowie die automatisierte Generierung von Tests aus diesen Modellen erfolgt durch entsprechenden Werkzeugeinsatz auf der Testgenerierungsschicht (Kapitel 3.2.2 Absatz “Modellbasiertes Testen”). Zu Anforderung 2: Dadurch, dass schlüsselwortbasiertes Testen verwendet wird, ist die Wahrscheinlichkeit hoch, dass die Schlüsselwort-Testfälle von Fachexperten einfach analysiert, verstanden und ggf. modifiziert werden können (Kapitel 3.2.2 Absatz “Schlüsselwortgetriebenes Testen”). Zu Anforderung 3: Das TAEs die (mitunter technisch anspruchsvollen) Verifikationspunkte implementieren, die für den automatisierten Vergleich von erwartetem und tatsächlichen Wert eingesetzt werden, ist eher die Regel als die Ausnahme (Kapitel 5.3 “Protokollierung von TAS und SUT”).\n\nc) FALSCH – Diese Testautomatisierungsarchitektur passt nicht so gut zu den Anforderungen, wie die aus Antwort b). Siehe Begründung zu Antwort b) für weitere Details.\n\nd) FALSCH – Diese Testautomatisierungsarchitektur passt nicht so gut zu den Anforderungen, wie die aus Antwort b). Siehe Begründung zu Antwort b) für weitere Details."
+  },
+  {
+    "id": 16,
+    "lo": "ALTA-E-3.3.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie sind zuständig für den Aufbau einer Testautomatisierungsarchitektur (TAA) für den Systemtest eines Projektverwaltungssystems. Der Benutzer verwendet das System über eine Web-Oberfläche, die auch für den automatisierten Test verwendet werden soll. Die internen Daten des Systems werden in einer handelsüblichen SQL-Datenbank verwaltet. Komponenten Ihrer Testumgebung sind die üblichen Web-Browser sowie die aktuellen Versionen der gängigsten Datenbanken. Für den Testentwurf planen Sie einen modellbasierten Testansatz einzusetzen.\n\nWelche der folgenden Komponenten oder Werkzeuge wird in Ihrer TAA NICHT benötigt?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Der Datenbank-Simulator (Mock) in der Testadaptierungsschicht",
+      "b) Der Testgenerator in der Testgenerierungsschicht",
+      "c) Die GUI-Anbindung in der Testadaptierungsschicht",
+      "d) Die Testdefinitionen in der Testdefinitionsschicht"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Die Datenbanken sind laut Szenario Bestandteil der Testautomatisierungsarchitektur (siehe Aufgabenstellung) und daher im Systemtest ganz klar etwaigen Simulatoren vorzuziehen.\n\nb) FALSCH – Der Testgenerator ist dafür zuständig, Testfälle automatisiert aus den Testmodellen abzuleiten. Er ist in dem genannten Szenario zwingend notwendig vgl. Lehrplan, Kapitel 3.1.1 Absatz “Diese Schichten können, müssen aber nicht in einer TAS vorhanden sein”\n\nc) FALSCH – Die Systemtests sollen als automatisierte GUI-Tests umgesetzt werden. Die Anbindung an die jeweilige GUI-Technologie innerhalb die Testadaptierungsschicht ist daher obligatorisch vgl. Lehrplan, Kapitel 3.1.1 Absatz “Diese Schichten können, müssen aber nicht in einer TAS vorhanden sein”\n\nd) FALSCH – Die Testfall-Definitionen sind für die Durchführung der Tests erforderlich und sind Teil des modellbasierten Ansatzes (siehe Lehrplan, Kapitel 3.1.1 Absatz “Diese Schichten können, müssen aber nicht in einer TAS vorhanden sein” bzw. Kapitel 3.2.1 Absatz “Modellbasiertes Testen”)."
+  },
+  {
+    "id": 17,
+    "lo": "ALTA-E-3.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen zur Wiederverwendung von Testmitteln über verschiedene Testautomatisierungsprojekte hinweg ist richtig?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Wiederverwendung wird während des Entwurfs der TAA definiert und durch die Arbeiten im Rahmen des TAS-Lebenszyklus gewartet und optimiert.",
+      "b) Wiederverwendung wird durch die gTAA implementiert und während des Entwurfs der TAA gewartet und optimiert.",
+      "c) Wiederverwendung kann nur für Testmittel erreicht werden, die auf der Testausführungsschicht existieren.",
+      "d) Wiederverwendbare Testmittel sind selbsterklärend und bedürfen daher keiner ausführlichen Dokumentation."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Siehe Lehrplan Kapitel 3.3.4: „Die Auslegung auf Wiederverwendbarkeit ist vorrangig eine Angelegenheit für die TAA; die Wartung und Verbesserungsmaßnahmen zur Wiederverwendung fallen hingegen in den TAS-Lebenszyklus.“\n\nb) FALSCH – Diese Aussage macht keinen Sinn. Die gTAA forciert grundsätzlich den Wiederverwendungsgedanken über die Schichten hinweg (siehe Kapitel 3.1), allerdings wird Wiederverwendung während des Entwurfs der TAA definiert und durch die Arbeiten mit der TAS gewartet und optimiert (siehe Kapitel 3.3.4 “Einbau von Wiederverwendbarkeit in die TAS”, S43).\n\nc) FALSCH – Es können auch andere Testmittel bzw. TAS-Artefakte wiederverwendet werden, die mit der Testausführungsschicht unmittelbar nichts zu tun haben. Vgl. Lehrplan Kapitel 3.3.4, S. 41, bspw. Testmodelle, Adapter-Implementierungen).\n\nd) FALSCH – Diese Aussage widerspricht dem Lehrplan (vgl. Lehrplan Kapitel 3.3.4, S. 41, letzter Absatz, zweiter Aufzählungspunkt). Es kann zwar grundsätzlich selbsterklärende Testmittel bzw. TAS-Artefakte geben (bspw. Testmodelle oder auch prozessgetriebene Testskripte), allerdings lässt sich diese Aussage nicht auf alle relevanten TAS-Artefakte verallgemeinern. Die Dokumentation von Testmitteln bzw. TAS-Artefakte, die auf Wiederverwendung ausgelegt sein sollen, ist üblicherweise ein wichtiger Beitrag, um diese Testmittel bzw. TAS-Artefakte tatsächlich auch in anderen Kontexten einsetzen zu können."
+  },
+  {
+    "id": 18,
+    "lo": "ALTA-E-4.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Ihr Unternehmen plant die Einführung einer Testautomatisierung und hat Sie mit der Leitung des Automatisierungsprojektes beauftragt. Im Unternehmen gibt es unterschiedliche Projekte, von denen einige von einer Automatisierung der Testausführung profitieren würden. Um die Effektivität der Automatisierung zu erproben, beschließen Sie, ein Pilotprojekt durchzuführen.\n\nWelches der folgenden Projekte ist AM BESTEN dafür geeignet?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Projekt A, das bereits im Verzug ist. Durch die Automatisierung hoffen Sie, noch in der gesetzten Frist zu liefern, und damit einen großen Automatisierungserfolg nachzuweisen.",
+      "b) Projekt B, das sich noch im Prototyping befindet. In dieser frühen Phase ist das Projekt noch unstabil, und sie hoffen, mit der Automatisierung eine große Zahl Fehler zu finden.",
+      "c) Projekt C, das eine erprobte und ausgereifte Standardanwendung Ihrer Firma ist. Mit dieser Auswahl hoffen Sie, die Testautomatisierungslösung in einem realistischen Szenario erproben zu können.",
+      "d) Projekt D, das von Ihrem Kollegen als privates Projekt gestartet wurde und eine minimale funktionale Ergänzung für das Projekt C adressiert. Sie erhoffen sich, dass sich schnelle Automatisierungserfolge aufgrund der Einfachheit des Projekts einstellen."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Projekt A ist ein kritisches Projekt und sollte nicht als Pilot verwendet werden. Vgl. Lehrplan Kapitel 4.1.1, Unterpunkt „Ermittlung eines geeigneten Projekts“, erster Listenaufzählungspunkt: „Es darf kein kritisches Projekt sein. Wenn die Verteilung der TAS zu Verzögerungen führt, darf dies keine ernsten Folgen für kritische Projekte haben.“\n\nb) FALSCH – Projekt B ist als ein junges, instabiles Projekt kein guter Kandidat für den Piloten. Vgl. Lehrplan Kapitel 6.1, Unterunkt „Eignung der Automatisierung für die Phase des Softwareprodukt-Lebenszyklus“, erster Absatz: „In den frühen Phasen seiner Entwicklung ändert sich das System u. U. so schnell, dass die Implementierung einer automatisierten Testlösung nicht möglich ist. Bildschirm-Layouts und Bedienelemente werden fortwährend optimiert. In einer sich derart dynamisch wandelnden Umgebung kann die Automatisierung eine kontinuierliche Nachbesserung erfordern, was weder effizient noch effektiv ist.“\n\nc) KORREKT – Projekt C repräsentiert ein realistisches Projekt des Unternehmens. Vgl. Lehrplan Kapitel 4.1.1, Unterpunkt „Ermittlung eines geeigneten Projekts“, letzter Listenaufzählungspunkt: „Das SUT des Pilotprojekts muss eine gute Referenz für die anderen Projekte des Unternehmens bilden.“\n\nd) FALSCH – Projekt D ist ein triviales Projekt. Triviale Projekte sollten niemals für eine Pilotierung verwendet werden. Vgl. Lehrplan Kapitel 4.1.1. Unterpunkt „Ermittlung eines geeigneten Projektes“, zweiter Listenpunkt: „Es darf kein triviales Projekt sein. Ein triviales Projekt ist keine gute Wahl, weil ein Erfolg bei dessen Bereitstellung nicht automatisch bedeutet, dass auch die Bereitstellung komplexerer Projekte gelingt, und daher der Erkenntnisgewinn gering ist.“"
+  },
+  {
+    "id": 19,
+    "lo": "ALTA-E-4.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie wurden beauftragt, die Pilotierung einer neuen oder angepassten Testautomatisierungslösung (TAS) durchzuführen. Sie haben ein geeignetes Pilotprojekt ermittelt (durchschnittliche Größe und Kosten), den Pilotversuch geplant (wie ein Entwicklungsprojekt) und ihn durchgeführt.\n\nWas ist nach Abschluss der aktiven Arbeiten im Pilotprojekt WAHRSCHEINLICH Ihr nächster Schritt?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Durchführung eines weiteren Pilotversuchs, welches sich auf einem zeitkritischen Pfad befindet, um sicherzustellen, dass die TAS auch in Stresssituationen einwandfrei funktioniert.",
+      "b) Durchführung eines weiteren Pilotversuchs an einem trivialen Projekt, um sicherzustellen, dass der Zeitbedarf, die die Inbetriebnahme, die Wartung und Verteilung der TAS erfordert, bei kleinen Projekten nicht unangemessen hoch ist.",
+      "c) Evaluierung der Ergebnisse unter Einbeziehung aller Beteiligten und relevanten Entscheidungsträger, um deren Sichtweisen zu hören und mögliche Chancen sowie Risiken beim Einsatz der TAS zu diskutieren.",
+      "d) Evaluierung der Ergebnisse nur mit dem Pilotierungs-Team, um fokussiert zu bleiben und Anfertigung eines Berichtes über das geplante Rollout für das Management."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Zeit- bzw. erfolgskritische Projekte sollten niemals für eine Pilotierung verwendet werden. Vgl. Lehrplan Kapitel 4.1.1. Unterpunkt „Ermittlung eines geeigneten Projektes“, erster Listenpunkt: „Es darf kein kritisches Projekt sein. Wenn die Verteilung der TAS zu Verzögerungen führt, darf dies keine ernsten Folgen für kritische Projekte haben. Die Verteilung der TAS ist am Anfang mit hohem Zeitaufwand verbunden. Daran sollte das Projektteam immer denken.“\n\nb) FALSCH – Triviale Projekte sollten niemals für eine Pilotierung verwendet werden. Vgl. Lehrplan Kapitel 4.1.1. Unterpunkt „Ermittlung eines geeigneten Projektes“, zweiter Listenpunkt: „Es darf kein triviales Projekt sein. Ein triviales Projekt ist keine gute Wahl, weil ein Erfolg bei dessen Bereitstellung nicht automatisch bedeutet, dass auch die Bereitstellung komplexerer Projekte gelingt, und daher der Erkenntnisgewinn gering ist.“\n\nc) KORREKT – Es ist wichtig, vor dem nächsten Schritt Feedback von allen Beteiligten einzuholen, inklusive den Entscheidungsträgern bzw. dem Management. Vgl. Lehrplan Kapitel 4.1.1. Unterpunkt „Ermittlung eines geeigneten Projektes“, dritter Listenpunkt: „Alle Beteiligten (einschließlich Management) müssen in den Auswahlprozess einbezogen werden“\n\nd) FALSCH – Das wird zwar passieren, aber der Bericht für das Management sollte erst erstellt werden, wenn Feedback von den Beteiligten vorliegt, inklusive den Entscheidungsträgern bzw. dem Management. Vgl. Lehrplan Kapitel 4.1.1 Unterpunkt „Ermittlung eines geeigneten Projektes“, dritter Listenpunkt: „Alle Beteiligten (einschließlich Management) müssen in den Auswahlprozess einbezogen werden“"
+  },
+  {
+    "id": 20,
+    "lo": "ALTA-E-4.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Ihr Team ist derzeit damit beschäftigt die Testautomatisierungslösung (TAS) für den Systemtest eines service-orientierten Systems unter Test erstmalig einzusetzen und die manuellen Tests auf Automatisierung umzustellen. Während der Pilotierung konnten Sie sicherstellen, dass technische Kompatibilität gegeben ist; als Testautomatisierungsansatz wurde sich für die strukturierte Skripterstellung entschieden. Das Pilotierungspersonal hat dies als Schwachstelle identifiziert und empfohlen, unmittelbar auf den schlüsselwortgetriebenen Ansatz aufzusetzen. Sie sind dafür verantwortlich, den neuen Ansatz für die Erstverteilung umzusetzen. Die TAS ist für das schlüsselwortgetriebene Testen ausgelegt, allerdings hat niemand in Ihrem Team praktische Erfahrungen in der Verwendung dieses Automatisierungsansatzes.\n\nWelches der folgenden Risiken ist in der beschriebenen Situation bei der Erstverteilung zu erwarten und wie könnte dieses Risiko gemindert werden?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Es wird sehr wahrscheinlich zu Verzögerungen in der Inbetriebnahme kommen, da zunächst ein neues Werkzeug akquiriert werden muss, welches das schlüsselwortgetriebene Testen unterstützt. Das Risiko kann gemindert werden, indem die Werkzeugbewertung möglichst schnell umgesetzt wird.",
+      "b) Es besteht das Risiko, dass die Schlüsselwörter mit zu hoher oder nicht zielführender Abstraktion spezifiziert werden, da niemand in dem Team Erfahrung mit diesem Ansatz hat. Das Risiko kann gemindert werden, indem es klare Prozesse und Verantwortlichkeiten im Umgang mit den Schlüsselwörtern hinsichtlich Spezifikation und/oder Anpassung gibt.",
+      "c) Es besteht das Risiko, dass die Anpassung der Testsuite auf den schlüsselwortgetriebenen Ansatz zu weiteren Verzögerungen führt. Das Risiko kann minimiert werden, indem weitere Piloten für den neuen Automatisierungsansatz durchgeführt werden.",
+      "d) Es besteht das Risiko, dass die zur Verfügung stehende Zeit für die Ausführung der Regressionstestsuite nicht ausreicht, um die umgestellten Tests auszuführen. Dieses Risiko kann gemindert werden, in dem auf eine Ausführungsreihenfolge der Test für die Durchführung verzichtet wird und frühzeitig die Möglichkeiten der Parallelisierung und Virtualisierung ausgelotet werden."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Dieses Risiko ist in dem beschriebenen Szenario wahrscheinlich nicht zu erwarten, da die Testautomatisierungslösung eindeutig auf schlüsselwortgetriebenes Testen ausgelegt ist. Die Werkzeugauswahl findet in einer frühen Phase statt vgl. Lehrplan, Kapitel 2.2 “Bewertung und Auswahl von Werkzeugen”. Es ist in dem beschriebenen Szenario nicht zu erwarten, dass eine erneute Werkzeugevaluation stattfinden muss.\n\nb) KORREKT – Schlüsselwörter gehen (fast) immer mit Abstraktion einher. Die Bestimmung des richtigen Abstraktionsniveaus kann schwierig sein und ist nicht zu unterschätzen vgl. Lehrplan, Kapitel 3.2.2, Absatz zu “Schlüsselwortgetriebenes Testen”. Die Risikominderungsstrategie unterstützt die Beherrschung dieses Risikos, indem die Spezifikation oder Anpassung an den Schlüsselwörtern durch einen Prozess zielführend koordiniert und verwaltet wird.\n\nc) FALSCH – In dem beschriebenen Szenario steht klar, dass die Umstellung der Tests erst vorgenommen werden soll. Das Risiko, dass die Anpassung der automatisierten Testsuite zu Verzögerungen führt (vgl. Lehrplan, Kapitel 4.2 “Strategien für die Bewertung und Begrenzung von Risiken”), ist also nicht vorhanden, da es noch gar keine automatisierte Testsuite gibt, die angepasst werden kann. Auch der Risikominderungsansatz macht keinen Sinn. Die Durchführung weiterer Piloten würde erst zu einer Verzögerung führen.\n\nd) FALSCH – Das Risiko ist zwar generell denkbar und auch die Risikominderungsstrategien sind in jedem Fall wirksam, um das Risiko zu beherrschen (vgl. Lehrplan, Kapitel 4.2 “Strategien für die Bewertung und Begrenzung von Risiken”). Allerdings gibt es in diesem Szenario (siehe Aufgabenstellung) keinen Hinweis darauf, dass die Ausführungszeit stark limitiert ist oder zu viele Testfälle auf einmal umgestellt werden."
+  },
+  {
+    "id": 21,
+    "lo": "ALTA-E-4.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Die Testautomatisierungslösung (TAS), für die Sie zuständig sind, hat ein Update erhalten. Das Update enthält sowohl neue Funktionalität als auch Fehlerkorrekturen. Sie wollen sicherstellen, dass dieses Update keine nachteiligen Auswirkungen auf die Ausführbarkeit der bestehenden Testsuiten hat.\n\nWie sollten Sie AM EHESTEN vorgehen?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Prüfen Sie vor der Verteilung der TAS, dass die Testsuiten immer noch ausführbar sind und nehmen Sie notwendige Anpassungen vor.",
+      "b) Überprüfen Sie im Rahmen eines Reviews, dass sich die verwendeten Verfahren für das Hoch- und Herunterfahren der Testumgebung durch das Update nicht geändert haben.",
+      "c) Stellen Sie sicher, dass sich die Schnittstellen der in der Testadaptierungsschicht verwendeten Komponenten nicht geändert haben.",
+      "d) Dokumentieren Sie die Änderungen der TAS in den Release Notes des Systems unter Test."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Die Überprüfung der Ausführbarkeit der bestehenden Testsuiten ist ein wichtiger Schritt bei einer Wartungsverteilung der Testautomatisierungslösung. Vgl. Lehrplan Kapitel 4.2, zweiter Absatz, dritter Listenpunkt: „Prüfen, ob die Testsuite in Abstimmung auf die neue Version der TAS geändert werden muss“\n\nb) FALSCH – Natürlich dürfen sich Verfahren zum Hoch- und Herunterfahren der Testumgebung im Rahmen eines Updates ändern und können z. B. auch Teil einer Fehlerkorrektur sein, wenn es entsprechende Eingriffs- oder Konfigurationsmöglichkeiten gibt vgl. Lehrplan, Kapitel 1.2, Absatz “Testautomatisierungsframework (TAF)”, 3. Punkt.\n\nc) FALSCH – Natürlich können sich Schnittstellen im Rahmen eines Updates ändern, sie sollten aber möglichst abwärtskompatibel sein (vgl. Lehrplan, Kapitel 3.1, Spiegelstrich “Erweiterbarkeit” bzw. Wikipedia “Open-Closed-Prinzip”).\n\nd) FALSCH – Dokumentation ist zwar wichtig, allerdings ergibt es keinen Sinn, die Änderungen einer Testautomatisierungslösung in den Release Notes des Systems unter Tests zu dokumentieren. Die Dokumentation ist vor allem für andere TAEs gedacht (vgl. Lehrplan, Kapitel 4.2, letzter Spiegelstrich)"
+  },
+  {
+    "id": 22,
+    "lo": "ALTA-E-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Warum ist es vorteilhaft die automatisierten Testmittel einer Testautomatisierung mit Namenskonventionen zu versehen?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Namenskonventionen ermöglichen eine schnellere Ausführung der Testautomatisierung.",
+      "b) Namenskonventionen unterstützen die Analysierbarkeit und Modifizierbarkeit von Testmitteln, insbesondere für neue Projektmitglieder.",
+      "c) Namenskonventionen vermeiden die Risiken bei der Wartungsverteilung, insbesondere die Notwendigkeit Platzhalter und Simulatoren anzupassen.",
+      "d) Namenskonventionen ermöglichen die Trennung der Testskripte vom Testautomatisierungsframework."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Namenskonventionen haben keinen Einfluss auf die Ausführungsgeschwindigkeit, sondern erhöhen die Analysierbarkeit, die Modifizierbarkeit und das Verständnis, siehe Lehrplan Kapitel 4.3.2, fünfter Absatz.\n\nb) KORREKT – Namenskonventionen erhöhen vor allem die Analysierbarkeit, die Modifizierbarkeit und das Verständnis, insbesondere für neue Projektmitglieder. Vgl. Lehrplan Kapitel 4.3.2, fünfter Absatz.\n\nc) FALSCH – Namenskonventionen haben keinen Einfluss auf Risiken bei der Wartungsverteilung, sondern erhöhen die Analysierbarkeit, die Modifizierbarkeit und das Verständnis, siehe Lehrplan Kapitel 4.3.2, fünfter Absatz.\n\nd) FALSCH – Namenskonventionen haben keinen Einfluss auf die Kapselung zwischen Testskripten und TAF, sondern erhöhen die Analysierbarkeit, die Modifizierbarkeit und das Verständnis, siehe Lehrplan Kapitel 4.3.2, fünfter Absatz."
+  },
+  {
+    "id": 23,
+    "lo": "ALTA-E-5.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Setzen Sie die aufgezählten Metriken jeweils in Beziehung zu der am EHESTEN passenden Aussage? Metriken:\n\n1. Aufwand für die Erstellung automatisierter Tests\n\n2. Aufwand für die Wartung automatisierter Tests\n\n3. Ausführungszeit automatisierter Tests\n\n4. Überdeckungsgrad des Quellcodes Aussagen:\n\nA. Diese Metrik bildet die Summe aller automatisierten Tests ab, die bei jedem neuen Release des Systems unter Test geändert werden muss.\n\nB. Die benötigten Daten können mittels eines Konfigurationsmanagementsystem erfasst werden.\n\nC. Mit dieser Metrik kann gezeigt werden, welcher Fortschritt bei dem Testautomatisierungsprojekt erzielt wird.\n\nD. Es gibt bei dieser Metrik keinen absoluten Prozentwert, der einen angemessenen Überdeckungsgrad signalisiert.\n\nE. Eine sehr einfache Metrik, welche die Zeit erfasst, die für die Ausführung der automatisierten Tests insgesamt benötigt wird. F. Die Berechnung der Entwicklungskosten für die Testautomatisierung kann anhand der durchschnittlichen Entwicklungszeit vorgenommen werden.\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) 1E, 2A, 3C, 4D",
+      "b) 1F, 2A, 3B, 4C",
+      "c) 1C, 2B, 3B, 4A",
+      "d) 1F, 2A, 3E, 4D"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Siehe Begründung zur Antwort d).\n\nb) FALSCH – Siehe Begründung zur Antwort d).\n\nc) FALSCH – Siehe Begründung zur Antwort d).\n\nd) KORREKT – Der Aufwand für die Erstellung automatisierter Tests über die durchschnittliche Entwicklungszeit berechnet werden kann (1F), der Aufwand für die Wartung geht aus der Summe aller zu ändernden Tests hervor (2A), die Ausführungszeit ist die Zeit für die Ausführung aller automatisierter Tests (3E) und beim Überdeckungsgrad gibt es keine absoluten Prozentwerte, die einen angemessenen Überdeckungsgrad signalisieren (4D). Vgl. Lehrplan Kapitel 5.1."
+  },
+  {
+    "id": 24,
+    "lo": "ALTA-E-5.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche Aussagen zu internen und externen Metriken sind korrekt?\n\nWählen Sie ZWEI Antworten. (2 aus 5)",
+    "options": [
+      "a) Interne Metriken werden vom Testmanager ausgewählt, um den Testfortschritt gegenüber der im Testkonzept hinterlegten Testplanung zu eruieren.",
+      "b) Externen Metriken messen die Auswirkungen einer Testautomatisierungslösung auf andere Aktivitäten des Testprozesses.",
+      "c) Die Anzahl der automatisierten Tests gibt den Überdeckungsgrad des Systems unter Tests (SUT) im Hinblick auf seine Anforderungen an.",
+      "d) Die Wirksamkeit und Effizienz der Testautomatisierungslösung im Hinblick auf die Erfüllung ihrer Ziele wird durch interne Metriken gemessen.",
+      "e) Die Metrik Skriptmetriken ist eine externe Metrik, da sie sich auf die Vermessung von automatisierten Testskripten konzentriert."
+    ],
+    "answer": [
+      1,
+      3
+    ],
+    "explanation": "a) FALSCH – Siehe Begründungen zu Antwort b) und d). Zu diesem Zweck werden externe Metriken verwendet.\n\nb) KORREKT – Siehe Lehrplan Kapitel 5.1, zweiter Absatz: „Mit externen Metriken werden die Auswirkungen der TAS auf andere Aktivitäten gemessen (besonders die Testaktivitäten)“\n\nc) FALSCH – Die Anzahl der automatisierten Tests reicht alleine nicht aus, um die Überdeckung des SUT zu bestimmen. Dazu müssen auch die weiterhin oder noch manuell ausgeführten Testfälle hinzugezogen werden. Siehe Lehrplan Kapitel 5.1, Unterpunkt „Anzahl der automatisierten Testfälle“: „Dabei ist jedoch auch zu bedenken, dass die bloße Anzahl der automatisierten Testfälle noch nicht viel besagt, z. B. geht aus ihr nicht hervor, ob die Testüberdeckung gestiegen ist.“\n\nd) KORREKT – Siehe Lehrplan Kapitel 5.1, zweiter Absatz: „Interne Metriken werden für die Messung der Wirksamkeit und Effizienz der TAS im Hinblick auf die Erfüllung ihrer Ziele benutzt“\n\ne) FALSCH – Siehe Begründungen zu Antwort b) und d). Außerdem ist die Skriptmetrik eine interne Metrik."
+  },
+  {
+    "id": 25,
+    "lo": "ALTA-E-5.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Welche Darstellungsform für die Bewertung des Fortschritts der automatisierten Testausführung können die Stakeholder des Managements AM SCHNELLSTEN erfassen?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Kalkulationstabellen im Spreadsheetformat",
+      "b) Grafische Darstellungen z. B. in Form von Ampeln",
+      "c) Detaillierte Testprotokolle mit Prozentangabe der Ausführung",
+      "d) JSON-Struktur, die unmittelbar von den Testausführungswerkzeugen erzeugt werden"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Die grafische Darstellung erlaubt eine noch schnellere Erfassung, siehe Antwort b).\n\nb) KORREKT – Die grafische Darstellung mit Farben ist besonders geeignet, den Testfortschritt zu visualisieren. Vgl. Lehrplan Kapitel 5.2, letzter Absatz: „Testergebnisse sollten grafisch aufbereitet werden. Man sollte beispielsweise überlegen, Probleme in der Testausführung farblich zu signalisieren. So ließe sich der Fortschritt der Testausführung/-automatisierung z. B. in Form einer Ampel veranschaulichen. Auf diese Weise können Entscheidungen auf Basis gemeldeter Informationen getroffen werden. Vor allem das Management ist an grafischen Zusammenfassungen interessiert, um das Testergebnis auf einen Blick erfassen zu können.“\n\nc) FALSCH – Die grafische Darstellung erlaubt eine noch schnellere Erfassung, siehe Antwort b).\n\nd) FALSCH – Die grafische Darstellung erlaubt eine noch schnellere Erfassung, siehe Antwort b)."
+  },
+  {
+    "id": 26,
+    "lo": "ALTA-E-5.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie starten die Ausführung einer automatisierten Regressionstestsuite normalerweise am Ende des Arbeitstages, weil es ein länger laufender Test ist. Gelegentlich wird der Test bis zum Beginn des nächsten Werktags jedoch nicht abgeschlossen, obwohl er eigentlich innerhalb von fünf Stunden nach Beginn beendet sein sollte. Es scheint, dass einer oder mehrere Regressionstests deutlich länger benötigen als angenommen.\n\nWie lässt sich AM EFFIZIENTESTEN ermitteln, welche der Regressionstests diesen Zeitverzug verschulden?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Sie starten den Regressionstest zu Beginn Ihres Arbeitstages und überwachen ihn manuell.",
+      "b) Sie automatisieren die Verifikationsfunktionen bis auf die tiefste technische Detailebene, so dass diese die tatsächlichen und erwarteten Ergebnisse automatisiert vergleichen und die jeweilige Abweichung hervorheben.",
+      "c) Sie teilen Ihre Mitarbeiter zu einer Nachtschicht ein, in der sie den Test während der Ausführung überwachen.",
+      "d) Sie automatisieren die Erfassung des Startzeitpunktes, sowie der Dauer und ggf. des Endzeitpunktes der Tests innerhalb Ihrer Testautomatisierungslösung."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Das wäre kein effizientes Vorgehen und würde Sie bei Ihrer täglichen Arbeit blockieren, deutlich effizienter wäre dagegen Antwort d).\n\nb) FALSCH – Die Implementierung von Vergleichsfunktionen ist zwar ein guter Ansatz und sollte, insbesondere bei komplexen Vergleichen, wenn möglich eingesetzt werden. (vgl. Lehrplan Kapitel 5.2, Unterpunkt „Funktionen der Automatisierung, die das Messen und die Berichterstattung unterstützen“, dritter Absatz: „Dieser Vergleich wird im Allgemeinen am besten von einem Testwerkzeug vorgenommen.“) Allerdings lässt sich so nicht herausfinden, welcher Test zu langsam läuft bzw. den Zeitverzug verschuldet.\n\nc) FALSCH – Das wäre im Gegenzug zu Antwort d) nicht effektiv und würde ggf. keine gute Stimmung bei den Mitarbeitern erzeugen, die eine Nachschicht einlegen müssen.\n\nd) KORREKT – Die Erfassung der Start- und Endzeitpunkte, sowie der Dauer eines Tests ist in dieser Situation eine äußerst effiziente Möglichkeit rasch zu ermitteln, welcher der Tests zu langsam läuft bzw. den Zeitverzug verschuldet. Vgl. Lehrplan Kapitel 5.2, erster Absatz: „Ein Beispiel: Die Erweiterung der zugrunde liegenden Testmittel um die Aufzeichnung der Start- und Endzeit der Testausführung lässt sich gut auf alle Tests anwenden.“"
+  },
+  {
+    "id": 27,
+    "lo": "ALTA-E-5.3.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie haben eine automatisierten Regressionstestsuite zusammengestellt, die das Systems unter Test funktional gut in Tiefe und Breite überdeckt. Die Testsuite besteht aus knapp 500 Tests und wurde bisher ohne jegliche Probleme ausgeführt. Bei der letzten Durchführung schlugen jedoch einige Tests fehl.\n\nWelche Informationen wären AM HILFREICHSTEN, um die aktuellen Probleme besser lokalisieren zu können?\n\n1. Konfigurationsdaten der SUT wie z. B. Software-/Firmwareversionen\n\n2. Start- und Endzeit der Testsuite\n\n3. Fehlerdichte des Automatisierungscodes\n\n4. Protokollierung wichtiger Aktionen eines Testfalls, die während der Testausführung ausgeführt wurden, um eine Reproduktion des Tests zu ermöglichen\n\n5. Alle für weitere Analysen wichtigen Informationen wie Crash Dumps und Stack Traces, Screenshots, Fehlermeldungen usw.\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) 1, 2, 3",
+      "b) 2, 4, 5",
+      "c) 2, 3, 5",
+      "d) 1, 4, 5"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Siehe Erläuterung zu Antwort d).\n\nb) FALSCH – Siehe Erläuterung zu Antwort d).\n\nc) FALSCH – Siehe Erläuterung zu Antwort d).\n\nd) KORREKT – Das wären die hilfreichsten Informationen für eine mehrstufige Analyse (vgl. Lehrplan Kapitel 5.3, Aufzählung). Die Start- und Endzeit der Testsuite sind eher irrelevant für die Lokalisierung der Probleme, auch die Informationen über die Fehlerdichte des Automatisierungscodes ist nicht besonders hilfreich."
+  },
+  {
+    "id": 28,
+    "lo": "ALTA-E-5.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche wichtigen Informationen sollte ein Testausführungsbericht enthalten?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Eine präzise Beschreibung der Einzelheiten durchgeführter Testschritte",
+      "b) Informationen zur Entwicklungsumgebung, mit der das System unter Test entwickelt wurde.",
+      "c) Einzelheiten den Grad der Anforderungsüberdeckung, der von den automatisierten Tests erreicht wurde.",
+      "d) Die Ursache auftretender Abweichungen, also warum ein Test fehlgeschlagen ist."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Eine präzise Information über durchgeführte Testschritte ist Bestandteil eines Testprotokolls. Vgl. Lehrplan Kapitel 5.3, siebter Listenpunkt: „Alle Aktionen, die ein Testfall ausführt, müssen so protokolliert werden, dass die Protokolldatei (oder Teile von ihr) wiedergegeben werden kann, damit die Tests mit exakt denselben Schritten und demselben Timing erneut ausgeführt werden können.“\n\nb) FALSCH – Die Informationen zur Entwicklungsumgebung des Systems unter Test ist für den Testausführungsbericht irrelevant. Die Testumgebung ist ein wichtiger Punkt, der in einem Testausführungsbericht erwähnt werden sollte. Vgl. Lehrplan, Kapitel 5.4, Unterpunkt „Inhalt der Bericht“: „Der Testausführungsbericht muss eine Zusammenfassung enthalten, die einen Überblick über die Ergebnisse der Ausführung, das getestete System und die Umgebung gibt, in der die Tests ausgeführt wurden.“\n\nc) FALSCH – Der Grad sowie der Status der Überdeckung der Anforderungen ist Bestandteil von Testfortschritts- bzw. Testabschlussberichten, nicht des Testausführungsberichts (siehe Kapitel 5.4).\n\nd) KORREKT – Der Grund einer Fehlerwirkung bzw. eines fehlgeschlagenen Tests sollte Teil des Testausführungsberichts sein. Vgl. Lehrplan Kapitel 5.4, Unterpunkt „Inhalt der Berichte\": \"Im Bericht muss angegeben sein, welche Tests fehlgeschlagen sind und warum. … Sie muss die Ursache des Fehlschlagens untersuchen, die zugehörigen Probleme melden, deren Behebung nachverfolgen und prüfen, ob die Behebung richtig umgesetzt wurde.“"
+  },
+  {
+    "id": 29,
+    "lo": "ALTA-E-6.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie wurden beauftragt, die Testautomatisierung für ein Steuerfinanzsystem zu implementieren, das sich seit zwei Jahren im Produktivbetrieb befindet und dies mittelfristig auch bleiben wird. Das System ist relativ stabil, setzt auf Standardtechnologien auf. In vierteljährlichen Abständen erfolgen geplante Updates. Die Qualität der Software ist extrem wichtig. Das Unternehmen arbeitet nach dem V-Modell seit vielen Jahren. Die Qualität der vierteljährlich gelieferten Releases ist gut. Die manuellen Tester haben bislang plausibel anonymisierte Produktivdaten verwendet. Da es kein passendes Werkzeug für diesen Prozess gab, wurden die Produktivdaten in einer Abfolge festgelegter Aktionen bei jedem Update manuell anonymisiert. Die Notwendigkeit, stets die neuesten Produktivdaten zu verwenden, kommt aus einer gesetzlichen Forderung, die nicht umgangen werden darf.\n\nWelcher der folgenden Punkte ist vor diesem Hintergrund DIE WAHRSCHEINLICH GRÖSSTE Herausforderung für den Erfolg der Testautomatisierung?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Der Reifegrad des Testprozesses ist zu niedrig für die Einführung einer Testautomatisierung",
+      "b) Die aktuelle Lebensphase des Systems unter Test (SUT) eignet sich nicht mehr für eine Testautomatisierung",
+      "c) Die Steuerbarkeit des Systems unter Test wird sich sehr wahrscheinlich als problematisch herausstellen",
+      "d) Die Testautomatisierung muss mit der Komplexität der Testdatenanonymisierung in geeigneter Weise umgehen können"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Der Prozess ist strukturiert, regelkonform und wiederholbar (Einsatz V-Modell seit vielen Jahren) und deswegen kein Problem. Vgl. Lehrplan, Kap.6.1, Abschnitt Reifegrad des Testprozesses\n\nb) FALSCH – Das ist ein guter Zeitpunkt für die Automatisierung, weil die Software stabil ist, vierteljährlich aktualisiert wird und nach zwei Jahren die Außerbetriebnahme noch nicht zu erwarten ist, siehe Lehrplan, Kap. 6.1, Abschnitt „Eignung der Testautomatisierung für die Phase…\n\nc) FALSCH – Es gibt in diesem Szenario laut Aufgabenstellung keinen Hinweis darauf, dass das SUT sich nicht durch eine Testautomatisierung steuern lässt.\n\nd) KORREKT – Der manuelle Prozess der Produktivdatenanonymisierung macht die Testautomatisierung erheblich komplexer. Um auch in Bezug auf die Testdaten die Effizienz der Automatisierung zu erhöhen, würde es die Implementierung eines eigenen Werkzeugs bedürfen."
+  },
+  {
+    "id": 30,
+    "lo": "ALTA-E-6.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Was ist die gebräuchlichste Basis für einen automatisierten Testfall im Kontext einer Umstellung von manuellem auf automatisiertes Testen?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Die generische Testautomatisierungsarchitektur",
+      "b) Das System unter Test (SUT)",
+      "c) Ein oder mehrere manuelle Testfälle",
+      "d) Funktionale Anforderungen des SUT"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Die gTAA hat nichts mit der Umstellung auf automatisierte Tests zu tun, sondern sie basiert auf wiederkehrenden Konzepten, Schritten und Ansätzen bei der Automatisierung des Testens siehe Lehrplan Kapitel 3.1 Einführung in die gTAA.\n\nb) FALSCH – Das SUT hat nichts mit der Umstellung auf automatisierte Tests zu tun. Es ist allenfalls die Testbarkeit des SUT für die Automatisierung relevant, aber keine Basis (Lehrplan Kapitel 1.2, Testbarkeit des SUT).\n\nc) KORREKT – Bei der Umstellung von manuelles auf automatisiertes Testen bilden üblicherweise manuelle Tests die Grundlage für die Erstellung automatisierter Tests. Vgl. Lehrplan Kapitel 6.1: „Traditionell haben Unternehmen meist nur manuelle Testfälle entwickelt. Entschließt man sich, auf eine automatisierte Testumgebung umzustellen, muss man den aktuellen Zustand der manuellen Tests bewerten und den effektivsten Ansatz für die Automatisierung dieser Testressourcen ermitteln.“\n\nd) FALSCH – Anforderungen sind zwar die gebräuchlichste Basis für das Testen, haben aber mit der Umstellung auf automatisiertes Testen nichts zu tun. Die Basis für die Umstellung sind eher manuelle Testfälle vgl. Kapitel 6 “Überführung des manuellen Testens in eine automatisierte Umgebung”"
+  },
+  {
+    "id": 31,
+    "lo": "ALTA-E-6.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Was ist ein anzustrebendes Überdeckungsziel automatisierter Regressionstests, um möglichst zuverlässig sicherzustellen, dass der Großteil der bestehenden Funktionalität keinem Regress unterlag?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) 100% Anweisungsüberdeckung bei Regressionstests im Systemtest",
+      "b) Überdeckung nur der funktional sicherheitskritischen Anforderungen auf jeder Teststufe",
+      "c) Überdeckung des Standardverhaltens, aller alternativen Verhalten und der Ausnahmeverhalten eines Anwendungsfalls im Komponententest",
+      "d) Idealerweise Überdeckung des Systems unter Test in Breite und Tiefe auf jeder Teststufe, wobei die Überdeckung der Regressionstest über die Zeit üblicherweise zunimmt"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Eine ausgiebige Anweisungsüberdeckung wird üblicherweise eher für sicherheitskritische Systeme verlangt, und dies auch eher im Komponenten- oder Integrationstest. Zudem ist Erreichung von 100% Prozent Anweisungsüberdeckung eher bei sehr einfachen Systemen möglich, siehe Lehrplan, Kapitel 5, Absatz “Codeüberdeckung (Code Coverage)”.\n\nb) FALSCH – Nicht bei jedem SUT ist die funktionale Sicherheit wirklich relevant. Funktionale Sicherheit wird daher vom Lehrplan auch nicht thematisiert.\n\nc) FALSCH – Auf Komponententestebene wird üblicherweise nicht die Überdeckung von Anwendungsfällen verfolgt. Dies geschieht üblicherweise auf System-/Abnahmeteststufe. (vgl. Lehrplan, Kapitel 2.1, Absatz “SUT-Schnittstellen\")\n\nd) KORREKT – Die zunehmende Überdeckung eines Systems unter Test in Breite und Tiefe über verschiedene Teststufen hinweg sorgt dafür, dass Regressionen auf den verschiedenen Stufen rasch und zuverlässig ernannt werden. Vgl. Lehrplan Kapitel 6.2, Unterpunkt „SUT-Überdeckung“: „Zur Gewährleistung der allgemeinen Qualität des SUT müssen Tests entworfen werden, die das SUT in möglichst großer Breite und Tiefe abdecken.“"
+  },
+  {
+    "id": 32,
+    "lo": "ALTA-E-6.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Warum ist es oftmals einfacher, die Testautomatisierung für neue Funktionalität umzusetzen, als bestehende manuelle Tests auf eine Automatisierung umzustellen?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Weil neue Funktionalität üblicherweise automatisiert getestet werden muss, und man daher nicht umhinkommt, sich frühzeitig mit der Automatisierung der neuen Funktionalität auseinanderzusetzen.",
+      "b) Weil die Möglichkeit besteht, von Anfang an auf die Auslegung auf Testbarkeit und Auslegung auf Automatisierbarkeit einzuwirken, so dass die Tests sich effizienter automatisieren lassen.",
+      "c) Weil die Regressionstests für die bestehende Funktionalität bereits Informationen liefern, wie neue Funktionalität zukünftig automatisiert getestet werden kann.",
+      "d) Weil es nicht notwendig ist, sich über die Kompatibilität der neuen Funktionalitäten mit der Testautomatisierungslösung Gedanken zu machen, da die Kompatibilität mit dem System unter Test ja bereits gegeben ist."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Es ist nicht zwingend erforderlich, Tests für neue Funktionalität direkt zu automatisieren. Vgl. Lehrplan Kapitel 6.1, zweiter Absatz: „Nicht alle Tests können oder müssen automatisiert werden. Mitunter ist auch die erste Iteration eines Tests manuell.“\n\nb) KORREKT – Vgl. Lehrplan Kapitel 6.3, erster Absatz: „Oftmals ist es einfacher, Testfälle für neue Funktionen zu automatisieren, deren Implementierung noch nicht abgeschlossen ist (oder besser: noch gar nicht begonnen hat). Die Testentwickler können den Entwicklern und Architekten somit erläutern, was in den neuen Funktionen benötigt wird, damit sie von der Testautomatisierungslösung wirksam und effizient getestet werden können.“\n\nc) FALSCH – Tests zur bestehenden Funktionalität geben keinen Aufschluss darüber, dass neue Funktionalität auf exakt die gleiche Weise in das System unter Test integriert wird. Oftmals wird neue Funktionalität mit einer neuen Bibliothek, Technologie, über eine andere Schnittstelle oder ein neues Interaktionsparadigma erbracht, die ggf. direkt bzgl. Testautomatisierung betrachtet werden, siehe Begründung zu Antwort b).\n\nd) FALSCH – Kompatibilität mit dem System unter Test muss immer geprüft werden. Vgl. Lehrplan Kapitel 6.3, vierter Absatz: „Darüber hinaus müssen die Kompatibilität mit bestehenden Testwerkzeugen und ggf. alternative Lösungen ermittelt werden.“"
+  },
+  {
+    "id": 33,
+    "lo": "ALTA-E-6.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche Aussage über die Automatisierung von Fehlernachtests trifft AM EHESTEN zu?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Fehlernachtests werden automatisiert, um Lücken bei der Überdeckung der Anforderungen mit automatisierten Tests zu schließen.",
+      "b) Wenn automatisierte Fehlernachtests Bestandteil einer automatisierten Regressionstestsuite werden, dann helfen Sie sicherzustellen, dass die Fehlerkorrektur auch in späteren Releases funktioniert.",
+      "c) Es ist oftmals leichter Fehlernachtest zu automatisieren, da der TAE auf den Entwurf der zu testenden Funktion Einfluss nehmen kann und die Automatisierung somit erleichtert wird.",
+      "d) Die Automatisierung von Fehlernachtests ermöglicht die effiziente Durchführung der Tests, die bei jedem neuen Release oder jeder Iteration absichern, dass keine unerwünschten Seiteneffekte in die Implementierung eingeschleust wurden."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Es kann zwar Lücken in der Testautomatisierung geben, das ist aber nicht der Hauptgrund für die Automatisierung von Fehlernachtests (siehe Lehrplan, Kapitel 6.4 “Faktoren bei der Automatisierung von Fehlernachtests”). Die Antwort b) ist hier zudem zutreffender.\n\nb) KORREKT – Diese Aussage trifft auf die Automatisierung von Fehlernachtests zu. Vgl. Lehrplan Kapitel 6.4, zweiter Absatz: „Fehler können sich von Release zu Release fortpflanzen, was möglichweise ein Zeichen für ein Problem mit dem Konfigurationsmanagement ist. Fehlernachtests zählen daher zu den bevorzugten Kandidaten für eine Automatisierung. Durch die Automatisierung kann die Ausführungszeit für Fehlernachtests verkürzt werden. Der Fehlernachtest kann den bestehenden automatisierten Regressionstests hinzugefügt werden und sie ergänzen.“\n\nc) FALSCH – Diese Aussage trifft auf die Automatisierung des Testens neuer Funktionen zu, nicht aber auf die Automatisierung von Fehlernachtests. Vgl. Lehrplan, Kapitel 6.3, erster Satz: „Oftmals ist es einfacher, Testfälle für neue Funktionen zu automatisieren, deren Implementierung noch nicht abgeschlossen ist (oder besser: noch gar nicht begonnen hat).“\n\nd) FALSCH – Diese Aussage trifft auf die Automatisierung von Regressionstests zu. Vgl. ISTQB-/GTB-Glossar: „Eine Art änderungsbezogenes Testen um festzustellen, ob in unveränderten Bereichen der Software Fehlerzustände eingebaut oder freigelegt wurden.“"
+  },
+  {
+    "id": 34,
+    "lo": "ALTA-E-7.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie sind verantwortlich für den automatisierten Regressionstest auf Systemtestebene für eine Industrie 4.0-Anwendung im Bereich des Internet-of-Things. Zu diesem Zweck haben Sie die Produktivumgebung mit Software-Simulatoren nachgebaut. Sie stellen fest, dass die automatisierten Tests für das System unter Test bei verschiedenen Durchläufen unterschiedliche Ergebnisse produzieren. Nach Analyse der Testautomatisierungslösung und der automatisierten Testfälle sind Sie überzeugt, dass die Testumgebung für die wechselhaften Ergebnisse verantwortlich ist, diese also vermutlich nicht stabil läuft. Allerdings ist ihnen (noch) nicht klar, warum bzw. wann die Testumgebung sich fehlerhaft verhält.\n\nWelche der nachfolgenden Optionen ist die EFFIZIENTESTE Lösung, um die Funktionsfähigkeit der Testumgebung zu verifizieren, bevor der eigentliche Regressionstest gestartet wird?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Zusammenstellung und Ausführung einer Smoke-Testsuite mit Tests, die bekanntermaßen bestanden werden, und Verifizieren, dass sie nach wie vor bestanden werden",
+      "b) Zusammenstellung und Ausführung einer Smoke-Testsuite mit Tests, die bekanntermaßen fehlschlagen, und Verifizieren, dass sie nach wie vor fehlschlagen",
+      "c) Zusammenstellung und Ausführung einer Smoke-Testsuite mit Tests, die bekanntermaßen bestanden werden und Tests, die bekanntermaßen fehlschlagen und Verifizieren, dass die Tests nach wie vor bestanden werden bzw. fehlschlagen.",
+      "d) Entwurf von Komponenten- und Systemtests für die Testautomatisierungslösung, um sicherzustellen, dass diese funktional korrekt arbeitet."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Der Umfang der Tests wäre begrenzt und würde keine ausreichende Überdeckung bieten im Gegensatz zu Antwort c).\n\nb) FALSCH – Der Umfang der Tests wäre begrenzt und würde keine ausreichende Überdeckung bieten im Gegensatz zu Antwort c).\n\nc) KORREKT – Der Aufbau einer Smoke-Testsuite, um die Funktionsfähigkeit der Testautomatisierungslösung oder der Testumgebung zu verifizieren, ist eine pragmatische und kostengünstige Lösung, da die auszuführenden Tests ja bereits vorhanden sind (siehe Lehrplan Kapitel 7.2 Verifizieren der automatisierten Testsuite, Liste im ersten Absatz). Mittelfristig sollte der Grund für das unzuverlässige Verhalten der Testumgebung gefunden werden.\n\nd) FALSCH – Sie haben bereits analysiert, dass die Testumgebung die wechselhaften Ergebnisse produziert; der Entwurf umfassender Tests für die Testautomatisierungslösung ist zwar generell eine gute Idee (Lehrplan, Kapitel 7.2 Verifizieren der automatisierten Testsuite), in dem gegebenen Kontext aber nicht die effizienteste Lösung, siehe Antwort c)."
+  },
+  {
+    "id": 35,
+    "lo": "ALTA-E-7.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie testen ein System automatisiert, das durch monatliche Service Packs aktualisiert wird. Dies zieht für gewöhnlich eine Anpassung der Konfiguration der Testautomatisierungslösung (TAS) nach sich. Sie testen mehrere Versionen des Systems unter Test (SUT) parallel in unterschiedlichen Testumgebungen. Ihre TAS ist komplex und Sie müssen sicherstellen, dass sie über die verschiedenen Testumgebungen hinweg konsistent konfiguriert wird.\n\nWie stellen Sie sicher, dass die TAS in den verschiedenen Testumgebungen stets identisch konfiguriert wird?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Die Tester aktualisieren die jeweiligen TAS in den verschiedenen Testumgebungen manuell, immer dann, wenn die Service Packs auf das SUT aufgespielt werden.",
+      "b) Rückkehr zum manuellen Testen, um die Schwierigkeiten mit den verschiedenen Testumgebungen gar nicht erst aufkommen zu lassen.",
+      "c) Installation der TAS in die jeweilige Testumgebung der verschiedenen Versionen des SUT von einem zentralen Repository aus.",
+      "d) Entwicklung eines Werkzeugs zur Verfolgung historischer Testergebnisse."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Diese Lösung führt zu einem erheblichen Mehraufwand, wenn tatsächlich jeder Tester eigens dafür verantwortlich ist, die Testautomatisierungslösungen in den verschiedenen Testumgebungen zu aktualisieren. Zudem garantiert dies mitnichten eine wirkliche identische Konfiguration der Testautomatisierungslösungen in den jeweiligen Testumgebungen (vgl. Lehrplan Kapitel 7.1 “Installation, Einrichtung, Konfiguration und Anpassung von Testwerkzeugen”).\n\nb) FALSCH – Die Rückkehr zum manuellen Test ist keine gute Option, siehe auch Ziele/Vorteile einer Testautomatisierung im Lehrplan, Kapitel 1.1.\n\nc) KORREKT – Das Laden einer Kopie aus einem Repository garantiert eine konsistent konfigurierte Testautomatisierungslösung. Vgl. Lehrplan Kapitel 7.1, Unterpunkt „Installation, Einrichtung, Konfiguration und Anpassung von Testwerkzeugen“, zweiter Absatz: „Die automatisierte Installation (oder das Kopieren) von einem zentralen Repository hat Vorteile. Es kann garantiert werden, dass Tests an unterschiedlichen SUTs mit derselben Version der TAS und ggf. derselben Konfiguration der TAS durchgeführt wurden.“\n\nd) FALSCH – Die Nachverfolgung historischer Daten veranschaulicht nur das Symptom der inkonsistenten Ergebnisse und geht an der Aufgabenstellung vorbei."
+  },
+  {
+    "id": 36,
+    "lo": "ALTA-E-7.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie arbeiten an der Automatisierung der eigenverantwortlichen Tests (EVT) für das Fachmodul Notfalldatenmanagement im Kontext der elektronischen Gesundheitskarte. Für die EVT haben sie seit längerem eine zuverlässig laufende Testautomatisierungslösung (TAS) im Einsatz. Ihr Prozess sieht zudem ein technisches Pair-Review mit Fokus auf die korrekte Umsetzung der automatisierten Tests bzgl. der zu überdeckenden Testbedingungen vor. Die TAS wurde aufgrund geänderter gesetzlicher Vorgaben zügig um weitere Steuerungs- und Verifikationsfunktionen ergänzt. Zahlreiche EVT mussten daraufhin umgestellt werden. Das Ergebnis der EVT war zufriedenstellend, so dass Sie der Freigabe des Systems zustimmen konnten. Für den Abnahmetest ist der Auftraggeber verantwortlich. Hierzu verwendete dieser seine eigene TAS. Es stellte sich heraus, dass zahlreiche Funktionen, die bei den EVT bestanden wurden, im Abnahmetest fehlschlugen. Ihre ersten Analysen kamen zu dem Ergebnis, dass insbesondere die automatisierten Tests fehlerhafte Ergebnisse lieferten, die die neuen Steuerungs- und Verifikationsfunktionen nutzten.\n\nWas ist der WAHRSCHEINLICHSTE Grund für die hohe Anzahl der falsch- negativen Ergebnisse im EVT?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Der Abstraktionsgrad der strukturierten Testskripte ist zu gering, dadurch ist die Wahrscheinlichkeit hoch, dass die Verifikationsfunktionen fehlerhaft eingebunden wurden.",
+      "b) Die Vorbedingungen für die Tests konnten nicht adäquat realisiert werden, so dass die Tests in einer fehlerhaft konfigurierten Testumgebung ausgeführt wurden.",
+      "c) Die neuen Funktionen der TAS scheinen nicht ausreichend verifiziert worden zu sein, so dass die Tests, die diese verwenden, fehlerhaft sind.",
+      "d) Die Tester, die für die Implementierung der Testskripte verantwortlich waren, haben diese in Bezug auf die Anforderungen bzw. Testbedingungen fehlerhaft umgesetzt."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Es gibt in der Aufgabenstellung keinen Hinweis darauf, dass die strukturierte Skripterstellung die fehlerhafte Implementierung der Verifikationsfunktionen begünstigt. Wahrscheinlicher wäre daher Antwort c).\n\nb) FALSCH – Es gibt in der Aufgabenstellung keinen Hinweis darauf, dass die Testumgebung instabil oder fehlerhaft läuft, weil Vorbedingungen nicht richtig umgesetzt wurden (Lehrplan, Kapitel 7.1, Absatz “Konnektivität gegenüber internen und externen Systemen/Schnittstellen”). Wahrscheinlicher wäre daher Antwort c).\n\nc) KORREKT – Es wurden unter Zeitdruck neue Funktionen einer bestehenden Testautomatisierungslösung hinzugefügt. Aufgrund einer gesetzlichen Änderung mussten diese neuen Funktionen fortan verwendet werden. Es ist daher am wahrscheinlichsten, dass diese neuen Funktionen nicht ausreichend verifiziert wurden. Zudem wurde es von Ihnen versäumt, die Ergebnisse genau dieser Tests stichprobenartig zu untersuchen. Vgl. Lehrplan Kapitel 7.2, Unterpunkt „Verifizieren neuer Tests mit Fokus auf neuen Funktionen des Frameworks“: „Wenn eine neue Funktion der TAS in Testfällen erstmalig verwendet wird, sollte es genau überprüft und überwacht werden, um sicherzustellen, dass die Funktionen ordnungsgemäß funktionieren.“\n\nd) FALSCH – Die eigenverantwortlichen Tests wurden einem Pair-Review unterzogen, bevor sie freigegeben bzw. ausgeführt wurden, siehe Aufgabenstellung. Daher ist es nicht sehr wahrscheinlich, dass die Tests in so hoher Zahl fehlerhaft umgesetzt wurden."
+  },
+  {
+    "id": 37,
+    "lo": "ALTA-E-7.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Fortsetzung des Szenarios von Frage 36: Nachdem Sie die Probleme mit den neuen Funktionen in den Griff bekommen haben, stehen Sie vor einer neuen Herausforderung. Kürzlich schlugen zahlreiche Tests mit dem Testergebnis „Technischer Fehler“ fehl bzw. konnten nicht korrekt ausgeführt werden. Nach genauerer Analyse fiel Ihnen auf, dass die Tests, die den technischen Fehler erzeugt haben, von einem externen Server der Krankenkassen abhängig sind, der den Herstellern für die Testausführung zur Verfügung gestellt wurde. Dieser Server liefert, passend zu einer Versichertennummer eines Patienten, die entsprechenden Notfall- und Stammdaten des Patienten zurück. Der Server ist allerdings nicht Teil des Tests, d. h., sein Verhalten wird nicht durch die Testfälle verifiziert. Zudem schlugen auch nicht alle Tests technisch fehl, die den Server anfragten. In einer weiteren Analysesitzung der Testprotokolle wurde erkennbar, dass eine bestimmte Anzahl der durchgeführten Tests sowohl technisch einwandfrei als auch mit dem Testergebnis „Bestanden“ durchliefen, bevor der technische Fehler auftrat.\n\nWelche der nachfolgenden Schritte sind in dieser Situation sinnvoll?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Es sollte der Grad der Intrusion der technisch fehlschlagenden Tests überprüft werden, und ggf. erhöht werden, um auszuschließen, dass die technisch fehlschlagenden Tests nicht aufgrund zu niedriger Intrusion erzeugt werden.",
+      "b) Ausführung einer Smoke-Testsuite mit Tests, die bekanntermaßen bestanden werden und Tests, die bekanntermaßen fehlschlagen, und sicherstellen, dass die Tests immer noch bestanden werden bzw. fehlschlagen.",
+      "c) Überprüfen, ob die Testautomatisierungslösung aus einem zentralen Repository installiert werden kann, damit die Testautomatisierungslösung in allen Testumgebungen in der gleichen Konfiguration läuft.",
+      "d) Es sollte die externe Konnektivität zum Server vor jedem Test als Teil der Vorbedingungen dieser Tests überprüft werden. Zudem sollten Möglichkeiten ausgelotet werden, ob und wie die Nichtverfügbarkeit des Servers in den Vorbedingungen der Tests korrigiert werden kann."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Üblicherweise wird ein zu hoher Intrusionsgrad mit fehlerhaften Testergebnissen in Verbindung gesetzt, also falsch positiven oder falsch negativen Ergebnissen. In der Antwort ist genau das Gegenteil argumentiert, siehe Lehrplan Kapitel 2.1, Spiegelstrich “Grad der Intrusion”.\n\nb) FALSCH – Dies macht in dieser Situation keinen Sinn. Die Ausführung einer solchen Smoke-Testsuite böte sich eher an, um bspw. Änderungen, die in der TAS oder den automatisierten Testmitteln eingebracht wurden, kostengünstig und effektiv zu ermitteln (Lehrplan Kapitel 7.2, “Ausführung von Testskripten mit bekannten Bestanden- und Fehlgeschlagen-Ergebnissen \"). Das wird aber in diesem Szenario nicht thematisiert. Näherliegend ist daher Antwort d).\n\nc) FALSCH – Dies macht in dieser Situation keinen Sinn. Die Funktionalität der Testautomatisierungslösung scheint korrekt zu sein, der externer Server ist zwar Bestandteil der Testumgebung, aber laut Aufgabenstellung nicht Teil der Testautomatisierungslösung und muss auch nicht installiert werden, da er von den Krankenkassen bereitgestellt wird.\n\nd) KORREKT – Einer oder mehrere der zuvor ausgeführten und bestandenen Testfälle haben den externen Server der Krankenkassen in einen Fehlerzustand gesetzt. Da der externe Server der Krankenkassen nur Informationen bereitstellt, selbst aber nicht Teil der Verifikation ist, schlägt sich der Ausfall des Servers nicht in den Testergebnissen nieder. Wenn der Server nicht mehr zur Verfügung steht, können einige Tests technisch nicht mehr einwandfrei durchgeführt werden. Um diesem Problem vorzubeugen, sollte zu Beginn eines jeden Testfalls die Verfügbarkeit des externen Servers, also die externe Konnektivität, überprüft und ggf. wiederhergestellt werden, bevor die darauf basierenden Tests ausgeführt werden (vgl. Lehrplan, Kapitel 7.1, Absatz “Konnektivität gegenüber internen und externen Systemen/Schnittstellen”)."
+  },
+  {
+    "id": 38,
+    "lo": "ALTA-E-8.1.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie haben die automatisierten Tests in Ihrem Projekt evaluiert und festgestellt, dass die TAEs eine Vielzahl von Methoden und Vorgehensweisen genutzt haben, um die Wiederherstellung des Systems nach Fehlern zu handhaben. Diese Variabilität erhöht den Wartungsaufwand der verschiedenen Testsuiten erheblich.\n\nWelche Optimierungsmaßnahme würde in dieser Situation DEN GRÖSSTEN Nutzen bringen?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Implementieren eines einheitlichen Fehlerwiederherstellungs-Mechanismus in der TAS und Einbindung in die zentralen Funktionen der Testautomatisierungslösung.",
+      "b) Anlegen einer Bibliothek mit verschiedenen Fehlerwiederherstellungs- Mechanismen, damit eine bessere skriptübergreifende Wiederverwendung gegeben ist",
+      "c) Wechsel zu einem schlüsselwortgetriebenen Ansatz mit der Wiederherstellung als eines der Schlüsselwörter",
+      "d) Verbesserung des Wartemechanismus in den Testskripten, um durch zu hohe Intrusion Fehlerzustände im SUT zu vermeiden"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Den größten Nutzen bringt eine Verbesserung durch die Implementierung und Verwendung von Skripten mit zwei Schritten. Ein Fehlerwiederherstellungsprozess ist zu etablieren und zu verwenden. Vgl. Lehrplan, Kapitel 8.1, Absatz “Skripterstellung”, Abschnitt „Statt den Skripterstellungsumsatz komplett umzustellen …“ 1. und 2. Punkt.\n\nb) FALSCH – da zwar eine Testbibliothek mit Schritten für die Fehlerwiederherstellung zur Verfügung gestellt wird (Punkt 2, Lehrplan, Kapitel 8.1, Absatz “Skripterstellung”), eine Konsolidierung (Punkt 1, Lehrplan, Kapitel 8.1, Absatz “Skripterstellung”) aber nicht erfolgt, da die bestehenden Testfälle nicht einheitlich auf diese Schritte umgestellt werden im Gegensatz zu Antwort a).\n\nc) FALSCH – Eine Umstellung des Automatisierungsansatzes für die einheitliche Verwendung eines Wiederherstellungsprozesses ist nicht erforderlich. Im Grund ist diese Antwort identisch zu A oder B, nur mit einem wesentlich größeren Aufwand und auch ohne Garantie, dass dieses Schlüsselwort auch wirklich einheitlich verwendet wird. Der Testautomatisierungsansatz kann zwar grundsätzlich auch geändert werden (vgl. Lehrplan, Kapitel 8.1, Absatz “Skripterstellung”), allerdings bringen hier andere Maßnahmen einen größeren Nutzen, siehe Antwort a).\n\nd) FALSCH – Es lässt in der Aufgabenstellung nichts darauf schließen, dass ein optimierter Umgang mit Wartezeiten (Lehrplan, Kapitel 8.1, Absatz “Skripterstellung”, 3. Punkt) das Problem der Behandlung von Systemfehlern löst."
+  },
+  {
+    "id": 39,
+    "lo": "ALTA-E-8.1.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie wurden beratend zu einem Testautomatisierungsteam hinzugezogen, um die Effizienz der eingesetzten Testautomatisierungslösung (TAS) zu analysieren und Optimierungspotenziale zu identifizieren. Sie begleiteten das Testteam in ihrem Tagesgeschäft und kamen zu folgenden Beobachtungen: - Die Testautomatisierung wird ausschließlich für Regressionstests eingesetzt. - Der Testautomatisierungsansatz basiert auf dem schlüsselwortgetriebenen Testen. - Die Regressionstestsuite besteht aus mehreren Tausend automatisierten Testfällen, die das System unter Test (SUT) in Tiefe und Breite funktional gut überdeckt. - Die Regressionstestsuite ist in mehrere Testsuiten sinnvoll aufgeteilt und wird parallel ausgeführt. - Der durchschnittliche Wartungsbedarf je Testfall liegt bei dem angestrebten EMTE-Faktor. - Die Dokumentation der Wartungs- und Inbetriebnahmeprozesse ist angemessen.\n\nWas sollte Ihrer Meinung nach nun der nächste Schritt sein?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Es sollte die Architektur des SUT genauer analysiert werden und ggf. Änderungen erbeten werden, um die Testbarkeit des SUT zu erhöhen. Dadurch könnte auch teilweise auf Dokumentation der Testmittel verzichtet werden.",
+      "b) Es sollte Aufwand in die Optimierung der Ausführungszeit der Regressionstest investiert werden, damit die mehreren Tausend Regressionstests effizienter ausgeführt werden. Dies führt zu einer verbesserten Auslastung der TAS.",
+      "c) Um den durchschnittlichen Wartungsbedarf der Testfälle zu minimieren, sollte auf einen höherwertigen Testautomatisierungsansatz umgestellt werden. Dadurch ließe sich der durchschnittliche Wartungsbedarf vermutlich reduzieren.",
+      "d) Es sollte genauer analysiert werden, ob es Doppelungen bei den Schlüsselwörtern und deren Implementierungen gibt. Durch Entfernung bzw. Konsolidierung etwaiger Doppelungen ließe sich der durchschnittliche Wartungsbedarf vermutlich reduzieren."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Die Architektur bzw. Testbarkeit des SUT stellt augenscheinlich kein Optimierungspotenzial da, da die Überdeckung des SUT in Tiefe und Breite gegeben ist. Auch kann dadurch natürlich nicht per se auf Dokumentation verzichtet werden (vgl. Lehrplan Kapitel 4.3.2, Absatz “Überlegungen zur Dokumentation”).\n\nb) FALSCH – Es gibt in dem Szenario keinen Anhaltspunkt dafür, dass die Ausführungszeit der Regressionstestsuite ein sinnvolles Optimierungspotenzial bietet. Laut der Aufgabenbeschreibung sind die Regressionstestsuiten sinnvoll zusammengestellt und werden bereits parallel durchgeführt.\n\nc) FALSCH – Der Testautomatisierungsansatz ist bereits auf recht hohem Abstraktionsniveau. Es müsste zwar überprüft werden, ob die Spezifikation der Schlüsselwörter optimiert werden könne, allerdings wäre dieser Ansatz mit einem erheblichen Aufwand für die Überarbeitung der Schlüsselwörter, der Schlüsselwort- Testfälle, sowie der Schlüsselwort-Implementierungen notwendig (siehe Lehrplan, Kapitel 3.2.2. Absatz “Schlüsselwortgetriebenes Testen”).\n\nd) KORREKT – Die Analyse der Schlüsselwörter auf Doppelungen oder Überschneidungen ist ein probates Mittel, um die Testmittel wartungsfreundlicher zu gestalten. Vgl. Lehrplan Kapitel 8.1, Unterpunkt „Skripterstellung“, erster Listenpunkt: „Testfälle die ähnliche Handlungsabfolgen enthalten, sollten diese Schritte nicht mehrmals implementieren. Vielmehr sollten diese Schritte zu einer Funktion zusammengefasst und in eine Bibliothek aufgenommen werden, damit sie wiederverwendet werden können. Diese Bibliotheksfunktionen können dann von verschiedenen Testfällen verwendet werden. Das verbessert die Wartungsfähigkeit der Testmittel.“"
+  },
+  {
+    "id": 40,
+    "lo": "ALTA-E-8.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie haben eine Analyse Ihrer Testautomatisierungslösung (TAS) hinsichtlich möglicher Optimierungspotentiale vorgenommen. Dabei haben Sie festgestellt, dass die TAS zwar einwandfrei funktioniert, die Effizienz, insbesondere der zentralen Funktionen, aber noch gesteigert werden könnte. Zudem stellen Sie fest, dass die TAS seit mehreren Releases nicht mehr aktualisiert wurde.\n\nWelche der nachfolgenden Überlegungen ist AM SINNVOLLSTEN, um die Effizienz der TAS zu verbessern?\n\nWählen Sie EINE Antwort. (1 aus 4)",
+    "options": [
+      "a) Sicherstellen einheitlicher Namenskonventionen für neue Testmittel",
+      "b) Ein Wechsel zu einem flexibleren Testautomatisierungsansatzes in der Testautomatisierungsarchitektur",
+      "c) Sicherstellen, dass die neuesten Funktionsbibliotheken eingebunden werden und die TAS vor Verteilung verifizieren",
+      "d) Beauftragen eines externen Dienstleisters mit Expertise im Bereich von Software-Architekturen, um Optimierungspotentiale zu identifizieren"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Grundsätzlich sind Namenskonventionen eine gute Praktik, allerdings geht es nicht um die Wartbarkeit der Testmittel, sondern um die Effizienz der Testautomatisierungslösung, insbesondere der zentralen Funktionsbibliotheken, siehe Antwort c).\n\nb) FALSCH – Die Änderung der Testautomatisierungsarchitektur sollte stets gut überdacht sein und eher als Reaktion auf Änderungen im System unter Test vorgenommen werden (vgl. Lehrplan Kapitel 8.2, Unterpunkt „Refaktorisieren der TAA in Reaktion auf Änderungen im SUT“).\n\nc) KORREKT – Die Verwendung der neuesten Funktionsbibliotheken verbessert in der Regel die Effizienz. Zudem sollten Änderungen stets durch einen Regressionstest der Testautomatisierung als Teil der Wartungsverteilung vorgenommen werden. Vgl. Lehrplan Kapitel 8.2, Unterpunkt „Erhöhung der Effizienz und Wirksamkeit der zentralen TAS-Funktionsbibliotheken“\n\nd) FALSCH – Es mag helfen, einen externen Dienstleister hinzuzuziehen, was aber zusätzliche Kosten verursacht. Zudem ist die Analyse durch Sie bereits erfolgt, daher ist eine andere Maßnahme sinnvoller, siehe Antwort c)."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 90 * 60;
+      const EXT_SECONDS = 90 * 60 * 1.25;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "112,5"
+          : "90";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "Der Timer zählt von 112:30 herunter (90 Minuten + 25 % Übungszeit). Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben."
+          : "Der Timer zählt von 90:00 herunter. Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${escHtml(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} Punkt${q.pts > 1 ? "e" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${escHtml(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="${escHtml(q.imageAlt || ('Abbildung zu Frage ' + q.id))}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Prüfung abgeben?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `Es sind noch <strong style="color:var(--warn)">${unanswered} Frage${unanswered > 1 ? "n" : ""} unbeantwortet</strong>. Unbeantwortete Fragen ergeben 0 Punkte.<br><br>Trotzdem abgeben?`
+            : `Alle ${questions.length} Fragen sind beantwortet. Prüfung jetzt abgeben?`;
+        document.getElementById("confirm-yes-btn").textContent = "Abgeben";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Prüfung neu starten?";
+        document.getElementById("confirm-msg").innerHTML =
+          "Alle Antworten gehen verloren. Der Timer wird zurückgesetzt auf " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Möchten Sie fortfahren?";
+        document.getElementById("confirm-yes-btn").textContent = "Neu starten";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Unbeantwortet &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Richtig (+" + q.pts + (q.pts > 1 ? " Punkte)" : " Punkt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Falsch &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (Zeit abgelaufen)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " von " + totalPoints + " Punkten (" + correctCount + " von " + questions.length + " Fragen richtig)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ BESTANDEN (≥ 49 Punkte)"
+          : "✗ NICHT BESTANDEN (< 49 Punkte)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

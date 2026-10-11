@@ -1,0 +1,1984 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CT-ATLaS v2.0 — Sample Exam 2.0</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Advanced Level</div>
+        <h1>CT-ATLaS v2.0<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">ISTQB® Certified Tester Agile Test Leadership at Scale · Sample Exam 2.0 · Syllabus v2.0. The timer starts when you begin the exam.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">120</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">71</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Source: ISTQB® — ISTQB_CT-ATLaS_Sample-Exam-Questions_v2.0.pdf; ISTQB_CT-ATLaS_Sample-Exam-Answers_v2.0.pdf. Copyright © ISTQB®. Questions, tables, diagrams and rationales follow these sources. Authors are acknowledged in the source PDFs.</p>
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">120 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">150 min</span>
+            <span class="time-opt-lbl">+25% practice time</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optional practice allowance: 25% extra time (30 minutes).</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 120:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CT-ATLaS v2.0 · Sample Exam 2.0</span
+            >
+            <span class="exam-title">Certified Tester – Agile Test Leadership at Scale</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 answered
+            </div>
+            <div class="timer" id="timer">120:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 questions (71 points) · <strong>65% (≥ 47 of 71 points)</strong>
+            to pass · points vary per question (1–3) and some questions are
+            multi-select (see marking on each question)
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "ATLaS-1.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is the best example of test management at scale with a quality assistance approach?\n\nSelect ONE option.",
+    "options": [
+      "a) Test process improvement activities that continuously focus on the number of defects found in software systems.",
+      "b) System testing is conducted manually by a separate team.",
+      "c) Tests spanning multiple teams are planned by a test department.",
+      "d) A group of people in different roles in the organization who collaborate to identify and solve quality related problems."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a. Incorrect. This is not the BEST example. Quality assistance has a broader scope and is shifting the focus from defect detection to defect prevention.\n\nb. Incorrect. Quality assistance is enabling the agile teams to do system testing in collaboration and is breaking down testing silos.\n\nc. Incorrect. More in line with traditional test management, where a test manager is responsible for test planning.\n\nd. Correct. Broader focus than testing and making quality everyone’s responsibility."
+  },
+  {
+    "id": 2,
+    "lo": "ATLaS-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Why is quality coaching an important skill?\n\nSelect ONE option.",
+    "options": [
+      "a) It supports an organization’s transformation toward business agility.",
+      "b) It reduces the burden on the individual in the test management role.",
+      "c) It helps negotiate funding at the executive level to increase the head count in a test department.",
+      "d) Developers will not succeed with built-in quality if testers do not coach them."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a. Correct. Quality coaching is an important part of a quality assistance approach, which fosters business agility.\n\nb. Incorrect. Test managers can benefit from a collaborative quality approach, but having responsibility for quality and testing as a way to minimize the workload on test managers is not the reason why quality coaching is an important skill.\n\nc. Incorrect. Quality coaching is not the same as negotiation.\n\nd. Incorrect. While testers coaching developers is certainly one of the behaviors that often provides value, it is not mandatory that dedicated tester roles provide the needed coaching, nor that all builtin quality efforts require tester involvement."
+  },
+  {
+    "id": 3,
+    "lo": "ATLaS-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Five teams responsible for the same solution have experienced numerous delays due to defects being identified during the period in which the last two teams are finishing their user stories and are starting to integrate them. In most cases the three other teams started development ahead of the two other teams, but needed to wait for the other two teams to catch up. Each team is implementing a part of the same epic.\n\nWhich of the following statements BEST describes the teams’ situation as part of a value stream?\n\nSelect ONE option.",
+    "options": [
+      "a) Each team needs to investigate and improve its own processes to minimize the delays.",
+      "b) The teams would like to add another team to conduct testing after each integration.",
+      "c) The teams can allocate more time between each integration for troubleshooting and resolving integration defects.",
+      "d) The problems experienced by the teams are part of the working steps in an operational value stream and cannot be resolved by the teams.]"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a. Incorrect. The scenario states that the integration between the teams is a problem. Each team focusing on its own process probably would not help, although minimizing delays that stop teams from integrating each other's work can be a long-term solution.\n\nb. Incorrect. Having system teams, test teams, or integration teams can be necessary or helpful, depending on context. It is not clear, though, that this is the solution in the scenario and a current state value stream should be mapped first.\n\nc. Correct. If integration creates problems, teams need to focus on that. As an additional focus, teams should use their time to improve on integration issues, but it is still important to troubleshoot if the current state of a value stream has quality problems.\n\nd. Incorrect. The working steps described are part of a development value stream and not an operational value stream."
+  },
+  {
+    "id": 4,
+    "lo": "ATLaS-2.1.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "A company uses system engineers to install and customize a complex software product at several different customer sites. An important checkpoint for the company is an acceptance test conducted at the customer site, after which billing can start. After an initial workshop, a draft operational value stream map was produced, see below: [[asset:p8-1]]\n\nWhat would be the next step in the value stream mapping process?\n\nSelect ONE option.",
+    "options": [
+      "a) Agree on what service group the installation process belongs to.",
+      "b) Set a goal for improving the value stream.",
+      "c) Check that all relevant steps are included in the map.",
+      "d) Add the development value streams."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a. Incorrect. Defining the product or service group to which a value stream belongs is usually done before creating the current situation map.\n\nb. Incorrect. The value stream should be analyzed in the current state before setting improvement goals.\n\nc. Correct. The current state needs to be analyzed to ensure no steps are missing.\n\nd. Incorrect. There is no indication that seeing the working steps of development value streams would make the current state map of the operational value stream any clearer."
+  },
+  {
+    "id": 5,
+    "lo": "ATLaS-2.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are observing one tester at work. She is verifying a web application that displays clients’ information using specific colors, depending on their credit score. She has two screens. On screen 1, she scrolls several times through an extensive list of clients. She goes through 23 of them to find one who has the profile she wants to verify. It takes 6 minutes. Then, on screen 2, knowing the client’s first and last name, she researches that client on the web application, clicks on a button to load the client’s profile, and verifies visually the display of the information with the correct colors. It takes 1 minute.\n\nWhich of the following types of waste can be found in the scenario?\n\nSelect ONE option.",
+    "options": [
+      "a) Waiting",
+      "b) Correction",
+      "c) Non-utilized talent",
+      "d) Motion"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a. Incorrect. The times stated do not indicate a lot of wait time, considering the processing that the tester does.\n\nb. Incorrect. The tester has not experienced a failure that could indicate defects that unnecessarily need correction.\n\nc. Incorrect. There is no indication of non- utilized talent.\n\nd. Correct. Scrolling down a list several times could indicate excessive motion.",
+    "sourceNote": "The answer rationale table lists 2 points for this question. The question paper and answer-key summary both specify 3 points; this exam uses 3 points."
+  },
+  {
+    "id": 6,
+    "lo": "ATLaS-3.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "While conducting a pilot project to assess the implementation of a new approach to improve the design process of new software components for a commercial website, members of the agile team complete the Check step, but do not achieve the planned results.\n\nWhich of the following should be chosen as the next step in the PDCA cycle?\n\nSelect ONE option.",
+    "options": [
+      "a) Choose the approach providing the best result and proceed to the Act step.",
+      "b) Choose another approach and repeat the Do and Check steps.",
+      "c) Go back to the Plan step and create a strategy based on a new hypothesis.",
+      "d) Select options b or c, depending on the relative success of the Do step."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a. Incorrect. It is important that the expected outcomes are met before proceeding to the Act step and not to simply use the best result obtained in the Do step.\n\nb. Incorrect. This may still not provide an optimal solution, depending on the expected outcomes.\n\nc. Incorrect. This could indeed be a valid option, but there could also be a more effective solution covered in the Do step.\n\nd. Correct. The expected outcomes should always be the determining factor when deciding the next action in the Check step. An optimal solution might be obtained through a complete replan or by simply selecting a different approach."
+  },
+  {
+    "id": 7,
+    "lo": "ATLaS-3.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following shows how organizational learning can be promoted?\n\nSelect ONE option.",
+    "options": [
+      "a) Documenting the result of an experiment in a local team repository.",
+      "b) Changing the organizational business strategy from cutting costs to market expansion.",
+      "c) Giving financial awards for the number of improvement ideas raised per month.",
+      "d) Making improvement ideas visible at an organizational level in a Kanban board to encourage discussions and experiments on how to improve across the organization."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a. Incorrect. Holding repositories locally is generally an obstacle for collaborative learning.\n\nb. Incorrect. Singling out a specific business goal like cost cutting or market expansion is not likely to promote organizational learning in a broad sense.\n\nc. Incorrect. Financial awards can generate negative impacts on the goal of creating safe, transparent environments that foster improvement.\n\nd. Correct. Using improvement boards at different levels of the organization can help make ongoing improvements more visible, thereby fostering collaboration on organization-wide learning."
+  },
+  {
+    "id": 8,
+    "lo": "ATLaS-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are in an organization where multiple agile teams have been working to deliver a system that will provide an online banking system for an investment bank. A problem arises whereby if a single team tries to alleviate a problem, the solution most often causes new or recurrent problems for other teams. The organization management has now requested that the team ensures that root cause analysis is included within problem solving in QA and testing in order to prevent waste.\n\nWhich of the following would NOT likely be performed during this problem-solving approach aimed at preventing waste?\n\nSelect ONE option.",
+    "options": [
+      "a) Figure out what negative events are occurring. Then find out how technical systems are contributing to key points of failure.",
+      "b) Utilize the Five Whys to explore the underlying cause and effect of particular problems.",
+      "c) Make use of Pareto charts and fishbone diagrams.",
+      "d) Set up isolated test environments for each team to ensure they cannot interfere."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a. Incorrect. Root cause analysis is a useful technique for understanding and solving a problem and you start by figuring out what negative events are occurring. Understanding technical systems is important in systems thinking.\n\nb. Incorrect. Five Whys is a problem-solving method that explores the underlying cause and effect of particular problems. The primary goal is to determine the root cause of a defect or a problem by successively asking the question “Why?”.\n\nc. Incorrect. Basic root cause analysis techniques in lean include Five Whys, Pareto charts, and fishbone diagrams.\n\nd. Correct. To establish new test environments before even knowing what the problem is can be seen as waste."
+  },
+  {
+    "id": 9,
+    "lo": "ATLaS-3.2.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "[[asset:p10-1]] Read the suggestions for how to improve the causal loop diagram and evaluate each of the suggestions individually.\n\nWhich TWO suggestions would improve the causal loop diagram (CLD) the most?\n\nSelect TWO options.",
+    "options": [
+      "a) Customer complaints should be enhanced with the number of last month’s complaints.",
+      "b) Change “random coverage” to “risk-based coverage.”",
+      "c) Rename the variable “poor state of test budget” to “test budget” and change causal links from – to + accordingly to make the diagram easier to understand.",
+      "d) The negative link between “product quality” and “customer complaints” is not a genuine causal relationship and should be further explained with additional variables.",
+      "e) The R loop should be a balancing loop because it contains two minus paths."
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "explanation": "a. Incorrect. Adding number of complaints for a certain month will not improve the diagram.\n\nb. Correct. It is unclear why “random coverage” should raise “product quality.”\n\nc. Correct. It is helpful to choose nouns in the more positive sense, so that the concept of decreasing or raising the variable is clearer.\n\nd. Incorrect. That good product quality helps to avoid customer complaints is causal.\n\ne. Incorrect. Loops with an even number of minus signs are reinforcing loops."
+  },
+  {
+    "id": 10,
+    "lo": "ATLaS-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "An organization wants to shift to a quality culture and mindset.\n\nWhich of the following activities shows how skills supporting a quality assistance approach can BEST be applied by an agile test leader to help the organization change?\n\nSelect ONE option.",
+    "options": [
+      "a) Coaching sessions with leaders to explore what they believe prevents continuous improvement of quality.",
+      "b) Facilitating delivery optimization discussions within a retrospective.",
+      "c) Organizing pairing sessions so that the team members learn new techniques from each other.",
+      "d) Helping a group who recently experienced a serious problem in the performance of a core process to identify where, within that process, they could eliminate waste."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a. Correct. Coaching leaders can help identify structural problems which is the responsibility of leaders to handle. It is therefore a good example of a skill required for quality assistance across the organization.\n\nb. Incorrect. Delivery optimization from a retrospective is at the team level not the organizational level. Plus, facilitation is not a key skill for culture and mindset change across the organization.\n\nc. Incorrect. Pairing within teams is not an organizational change, but training at team level.\n\nd. Incorrect. Eliminating waste once is probably not going to result in a change in mindset and culture. It would need to be done continuously over a period of time."
+  },
+  {
+    "id": 11,
+    "lo": "ATLaS-2.1.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "The sales, manufacturing, help desk, and agile test teams are discussing an operational value stream which the agile test team supports in their role as 3rd line support. The agile test teams working mainly for the development value stream also collaborate with the help desk to understand the operational value stream they support. The four groups draw a map of the operational value stream with the following three working steps:\n\n• Pre-order: Selling team pre-order consulting\n\n• Implementation: Product implementation with dedicated manufacturing consultants\n\n• Maintenance contract: Product usage phase with user help desk acting as main customer contact Maintenance Pre-order Implementation contract In each of the working steps, help requests for technical information or support can arise for the agile test teams. The group wants to understand how well the agile test teams support their colleagues in the three working steps.\n\nWhich of the following activities could help them gain insights and improve the current state map above?\n\nSelect ONE option.",
+    "options": [
+      "a) Visualize an additional order type for orders requested by management and add lead time information for each working step and the total lead time.",
+      "b) Add the number of open help requests as inventory for each working step in the operational value stream.",
+      "c) Add identified non-value-adding working step to make bottlenecks more visible.",
+      "d) Make sure all relevant reports from the continuous integration pipeline are visible in the value stream map."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a. Incorrect. There is no indication that orders requested by management impact collaboration between the operational and development value streams which is the reason for the value stream mapping exercise.\n\nb. Correct. Knowing the numbers of open requests per working step might indicate bottlenecks for the operational value stream and where the agile test team can improve their support.\n\nc. Incorrect. The non-value adding step is not directly related to how the agile test team is supporting their colleagues.\n\nd. Incorrect. Most likely details regarding the build process of the development value stream are irrelevant for the operational value stream."
+  },
+  {
+    "id": 12,
+    "lo": "ATLaS-2.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "You have been appointed to review part of a development value stream to help the teams optimize the flow efficiency. [[asset:p12-1]] Based on the above current state map which shows the last part of the value stream, which TWO of the following improvement goals would you recommend?\n\nSelect TWO options.",
+    "options": [
+      "a) Decrease the processing time of all steps by 30%.",
+      "b) Incorporate security checks as part of the development earlier in the value stream and remove the “Release Approval” step.",
+      "c) Combine “Build Verification Test (BVT)” and “Pre Prod Testing” into one step.",
+      "d) Increase the percent complete and accurate (%C&A) of the “Release Approval” step by 5%.",
+      "e) Decrease the wait time of the “BVT” step by 50%."
+    ],
+    "answer": [
+      1,
+      4
+    ],
+    "explanation": "a. Incorrect. Recommending a factor for all steps does not consider where the problems are located. Furthermore, decreasing processing time by 30% may be very hard to achieve in some of the working steps and it will probably result in a lower improvement of the flow efficiency than several of the other options.\n\nb. Correct. This will result in a significant decrease in the lead time because the security department is no longer a bottleneck and the processing time related to approvals is not really value-adding from a customer perspective.\n\nc. Incorrect. They are different kinds of activities in different test environments with different people performing the steps, so they cannot just be combined.\n\nd. Incorrect. Although increasing the quality of the work performed is normally a good thing, because this is a non-value-adding but needed activity at best and the goal of the increase is insignificant compared to some of the other goals, it would be better to find a way to remove the step.\n\ne. Correct. If the testing team could start build verification test (BVT) earlier then that would improve the flow efficiency."
+  },
+  {
+    "id": 13,
+    "lo": "ATLaS-3.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "A company offering software-as-a-service (SaaS) is struggling to sell its software to large companies because its SaaS solutions do not meet customer expectations for security. The product manager wants to run a PDCA cycle to avoid a similar situation in the future. The product manager holds a meeting with relevant salespeople, the enterprise architect, the compliance officer, and the data protection officer. They discuss what the reasons could be for not having anticipated the need for technical security and how they close this gap. They conclude that the teams in the development value stream have not properly understood the need, despite the many checklists and guidelines on technical security. According to a normal PDCA cycle, what would be the next step?\n\nSelect ONE option.",
+    "options": [
+      "a) The product manager and enterprise architect start to talk with the teams to explain the importance and urgency of developing features that address the gap.",
+      "b) The data protection officer reviews the checklists to see if something is missing.",
+      "c) The salespeople start updating their sales material so it is ready once the agreed security improvements have been implemented by the teams.",
+      "d) The product manager calls for another meeting with people from the relevant teams to better understand the problem and decide how to improve."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a. Incorrect. The group is jumping to the Do step (solution execution) without having validated their understanding of the problem with the people who are supposed to not have understood the needs.\n\nb. Incorrect. Updating current processes is part of the Act step and is performed after the Do and Check steps.\n\nc. Incorrect. This has nothing to do with process improvement to avoid the same problem in the future. It is preparation for addressing the current sales problem.\n\nd. Correct. The Plan step is not completed because the people who are supposedly part of the problem have not been involved in identifying and discussing what the real problem is."
+  },
+  {
+    "id": 14,
+    "lo": "ATLaS-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is an example of how systems thinking supports a quality assistance approach?\n\nSelect ONE option.",
+    "options": [
+      "a) Analyzing in a systemic way can help to find test management practices that are a burden to the organization.",
+      "b) An agile test leader escalates problems spanning multiple agile teams to senior management because the agile test leader does not have the authority to solve systemic problems.",
+      "c) Using the Five Whys technique to identify the number of developers needed to support test automation.",
+      "d) By analyzing an organization as a system, quality assistance avoids dealing with the technical systems which are often too complex to change."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a. Correct. Systems thinking can help to identify test management practices that are only locally optimized.\n\nb. Incorrect. It is expected that an agile test leader has the authority to help solve such problems. If the agile test leader is not able to help, or if the problem justifies it, it is also okay to escalate problems to senior/top management.\n\nc. Incorrect. While the Five Whys can help understand core problems with test automation, it is not the best technique for determining the number of developers needed to support test automation.\n\nd. Incorrect. Systems thinking can address technical systems, and quality assistance as an approach includes technical solutions."
+  },
+  {
+    "id": 15,
+    "lo": "ATLaS-3.2.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "A company has several agile teams working on its popular online store. The product manager and product owners (together called product management) are constantly bringing new items to the product backlog to add new functionality, ignoring tasks the software development teams had marked as important enablers. This includes tasks needed to improve reliability. During the last multi-team retrospective, the following causal loop diagram (CLD) was created to understand the consequences of product management continuing to prioritize the business tasks. Additional business + + Schedule Open issues in tasks outside the pressure business backlog backlog – B + + + Completion Customer Overtime rate satisfaction + – delay – Available employees R – Tasks of improving – Desired product the reliability of the quality system\n\nWhich TWO conclusions would you choose after studying the diagram?\n\nSelect TWO options.",
+    "options": [
+      "a) Some tasks to improve the reliability of the system must be prioritized and completed to increase customer satisfaction.",
+      "b) The business tasks and the reliability tasks should be analyzed in separate causal loop diagrams.",
+      "c) If the development team works additional overtime, they can also do reliability tasks in parallel with the business tasks outside of the backlog.",
+      "d) The continuous addition of prioritized business tasks results in more team overtime. In the long run, this will decrease the number of employees available to do business tasks.",
+      "e) The reinforcing loop shows how an increase in reliability tasks results in increased customer satisfaction and more available employees."
+    ],
+    "answer": [
+      0,
+      3
+    ],
+    "explanation": "a. Correct. The causal relationships in the diagram show that if the tasks of improving reliability decrease because they are implemented, the product quality will increase and result in an increase in customer satisfaction.\n\nb. Incorrect. If there is a causal relationship between the variables, they should be analyzed together in the same CLD to give a broader view of the system.\n\nc. Incorrect. Proper planning is necessary. Technical tasks to improve reliability also take time. The development team will not be able to do two types of tasks at the same time (business and technical) as shown in the CLD. The CLD shows that the more overtime, the fewer available employees and hence fewer improving reliability tasks that get completed.\n\nd. Correct. There is a delay indicator between the overtime and available employees which shows it is an effect that will happen after some time.\n\ne. Incorrect. The reinforcing loop is incorrect as it is not a loop."
+  },
+  {
+    "id": 16,
+    "lo": "ATLaS-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Including DevOps practices in the organizational test strategy offers several advantages. Which of the following statements are correct and which are incorrect?\n\ni) DevOps allows tests to be executed in an operations environment while minimizing the risk of disrupting the business.\n\nii) DevOps offers practices such as chaos engineering to test and improve system resilience.\n\niii) In DevOps the responsibility for testing in production shifts from QC to the operations team.\n\niv) DevOps can provide an analysis of the current state of a CI/CD pipeline using Value Stream Mapping.\n\nv) Organizations incorporating DevOps practices have more engaged employees due to the higher level of test automation\n\nSelect ONE option.",
+    "options": [
+      "a) i and ii are correct, iii, iv and v are incorrect.",
+      "b) i, iv are correct, ii, iii and v are incorrect.",
+      "c) ii, iv, and v are correct, i and iii are incorrect.",
+      "d) iii and v are correct, ii, i and iv are incorrect."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "i) Correct. DevOps offers new ways of testing in production while mitigating the risks. One benefit is that it presents an opportunity for the development team to do some testing themselves in production environments.\n\nii) Correct. DevOps system environments are built for resilience. Chaos engineering is one way to foster resilience. If environments are resilient more testing in production can be possible.\n\niii) Incorrect. Shifting of testing responsibility to the operations team who might not have testing competencies is not a wise decision and goes against the agile principles of shared responsibility.\n\niv) Incorrect. The purpose of value stream mapping is not to analyze the state of the DevOps pipeline.\n\nv) Incorrect. Although this could be the case this is not necessarily an advantage that organizations experience."
+  },
+  {
+    "id": 17,
+    "lo": "ATLaS-4.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is the BEST example of how an organizational test strategy is created and evolved in a value-driven organization?\n\nSelect ONE option.",
+    "options": [
+      "a) Since regression averse test strategies naturally come with high component testing coverage, a tester community of practice can vote with dot stickers to reduce functional regression testing on the system testing level.",
+      "b) A company using model-based testing interviews testers to reduce dependency on models because models are a heavyweight form of documentation that is not necessary in agile development.",
+      "c) An executive management team creates the organizational test strategy to which several agile test leaders provide input.",
+      "d) A group of people representing relevant functions and organizational units create the organizational test strategy facilitated by an agile test leader."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a. Incorrect. The concept in regression-averse test strategy is to manage the risk of regression using various techniques including automated regression tests at different levels. Thorough regression tests at the component level are helpful but cannot substitute systematic regression tests at the system level.\n\nb. Incorrect. Model-based testing provides a variety of company stakeholders with advantages. Decisions on creating and evolving a test strategy for model-based testing should not only be based on a subset of testers but should include a variety of stakeholders.\n\nc. Incorrect. The executive management team should set the direction and goal for the organizational test strategy but not define it and then ask agile test leaders for input.\n\nd. Correct. It is important that the organizational test strategy is created in a cross-functional collaboration, so it is not just a strategy which testers implement but that everyone in the organization takes ownership of it."
+  },
+  {
+    "id": 18,
+    "lo": "ATLaS-4.1.3",
+    "k": "K3",
+    "pts": 2,
+    "text": "A company starts a transition to establish business agility based on an agile scaling framework. To support this transition, the company will look for a new and agile test leader with experience at the organizational level. Consider the following statements about responsibilities of an agile test leader. An agile test leader should be able to:\n\ni) speak up in the case of dysfunctions.\n\nii) assign testing tasks.\n\niii) involve various disciplines along the entire value stream.\n\niv) facilitate the decision of which test activities should be consolidated and centralized in a system team.\n\nv) schedule tests and report progress to stakeholders.\n\nWhich one of the following combinations of responsibilities is correct?\n\nSelect ONE option.",
+    "options": [
+      "a) i, iii, iv are correct.",
+      "b) ii, iii, iv and v are correct.",
+      "c) i, ii and v are correct.",
+      "d) ii and iii are correct."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "i. Correct. This is also the responsibility of an agile test leader. To make it clear, it is given as a correct option in this sample question.\n\nii. Incorrect. This used to be the responsibility of a test manager, but now an agile test leader facilitates and coaches teams to build quality in.\n\niii. Correct. Everyone is responsible for quality and as the agile test leader it is important to involve various roles and functions along the entire value stream.\n\niv. Correct. How test activities are organized in different types of teams is often described in the organizational strategy. An agile test leader does not mandate the organizational test strategy alone but is responsible for ensuring others are involved in the development and implementation of an organizational test strategy.\n\nv. Incorrect. These are traditional test management tasks for which the teams are now responsible."
+  },
+  {
+    "id": 19,
+    "lo": "ATLaS-4.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are an agile test leader working at the organizational level of an organization introducing an agile scaling framework.\n\nWhich of following activities will fit your role, the level and to the introduction of an agile scaling framework?\n\nSelect TWO options.",
+    "options": [
+      "a) Facilitate multi-team retrospectives and process improvement.",
+      "b) Help analyze trade-offs related to quality and testing by participating in the organizational budgeting process.",
+      "c) Help teams to identify waste using value stream mapping.",
+      "d) Support integration of automated tests into the continuous delivery pipeline.",
+      "e) Balance and optimize the introduction of new software, hardware and shelf ware to leverage business agility."
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "explanation": "a. Incorrect. This would typically be performed by a multi-team facilitator. However, the agile test leader could be involved or do it in the case that there is nobody else.\n\nb. Correct. An agile test leader focus on organizational level and help ensure the organizational test strategy is aligned with the business strategy. This could include funding of strategic initiatives.\n\nc. Correct. Value stream mapping is used on an organizational level to understand how the organization creates and delivers value to customers. One type of waste is rework which can be caused by defects.\n\nd. Incorrect. These activities are on an operational level.\n\ne. Incorrect. This would be done by business and architectural roles in collaboration."
+  },
+  {
+    "id": 20,
+    "lo": "ATLaS-5.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You have recently been appointed to take up a role as an agile test leader at a company that intends to scale agile across the organization.\n\nWhich of the following statements best exemplifies a response to the challenges you will face as you take on your role and drive agile scaling?\n\nSelect ONE option.",
+    "options": [
+      "a) Make sure that end-to-end testing in dedicated test teams stops within a period of 6 months in order to avoid it being a bottleneck in favor of testing in the scrum teams.",
+      "b) Eliminate the use of mock-ups and prototypes as techniques for exploring business requirements, as they will no longer be necessary.",
+      "c) Introduce specialized teams to test functional requirements based on actual user stories to enhance improvement of overall quality.",
+      "d) Expect to spend time with teams to find ways to align their metrics on product quality if relevant stakeholders feel that the messages coming from agile teams are unclear."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a. Incorrect. Moving responsibility for end-to-end testing will most likely require that the scrum teams are trained and the knowledge is transferred from the dedicated test team. Therefore, setting a strict deadline is not advisable.\n\nb. Incorrect. Even if user stories start in a negotiable format, mock-ups can make good sense as a refinement result. Prototypes might even be more necessary in the context of scaled agile product development, because they can enable early testing.\n\nc. Incorrect. Specialized teams are more often focusing on non-functional requirements. It is more effective that functional requirements are covered by the teams developing the functionality.\n\nd. Correct. When agile teams' quality messages are unclear, agile test leaders and agile test team leaders must strive for transparency."
+  },
+  {
+    "id": 21,
+    "lo": "ATLaS-5.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are in a public organization that has contracted an external software development company to deliver an enterprise-wide test automation framework that is used by multiple agile teams.\n\nWhich of the following statements is helpful in showing how test efforts can be coordinated across teams in both organizations?\n\nSelect ONE option.",
+    "options": [
+      "a) Cross-team refinement in a shared product backlog that is accessible by the agile teams and the vendor would be a good way to decompose the backlog and reduce cross-team dependencies, as the external provider is tasked with delivering exactly what is ordered by the teams.",
+      "b) The vendor could be invited to quarterly release planning meetings, to align the product roadmap of the test automation framework with the needs of the agile teams that are using the solution.",
+      "c) It is NOT necessary for the teams in the public organization to understand the external party’s ways of working as long as all teams agree to collaborate.",
+      "d) Visualizing technical debt across teams with impediment boards or risk boards does not create awareness in situations where several teams are accumulating similar debts."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a. Incorrect. While it can be a good idea to have shared product backlogs even with vendors, it is not done in order to verify that the delivery is exactly the thing that was ordered.\n\nb. Correct. Meetings in large groups where agile team members are highly approachable and roadmap forecasts are made transparent can help with alignment when technology does not - or does not yet - allow agile teams to work independently.\n\nc. Incorrect. Good intention to collaborate is not sufficient to effectively coordinate. It requires an understanding of each party’s ways of working. Although one goal is for agile teams to be able to work without having to understand the internals of the other teams, the technical and organizational maturity level cannot be expected to reach that level of maturity in all cases.\n\nd. Incorrect. Impediment or risk boards are instruments to visualize issues hindering or jeopardizing the value delivery of agile teams. Sharing impediment or risk boards between teams is helpful in a situation where several teams are affected by the same technical issues, because there will be synergies if different teams tackle these issues in a joint effort or if teams reuse solutions found by other teams."
+  },
+  {
+    "id": 22,
+    "lo": "ATLaS-5.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "A DevOps transformation struggles to improve the time it takes for customers to start using newly developed minimum viable products (MVPs) in their environments.\n\nWhat might be the best metric for members of a product management organization to use to improve the maturity of the software development process?\n\nSelect ONE option.",
+    "options": [
+      "a) Scrum masters are responsible for improving stream-aligned teams, it is not the responsibility of product owners to improve the development process, and metrics are not required.",
+      "b) In a customer-centric view business value is the most important focus point. Product owners can contribute to improving the development process by providing transparency about the customer feedback to MVP deployments.",
+      "c) Product management should encourage the tracking of user retention and adoption rates on newly deployed MVPs. Even if this does not provide direct feedback on the generated business value, it can help streamline development and deliver MVPs that will be used.",
+      "d) The product owners must make sure that the products developed is a business success. Performance metrics could be added to the backlog to measure business success."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a. Incorrect. Early feedback from customers using MVPs is a great help in the development process. Because product owners are well prepared to know what keeps customers from using software versions, they should help make these reasons transparent.\n\nb. Incorrect In this scenario, business value feedback from customers is a very lagging indicator because MVPs are not being used. It is not always the best idea to rely on lagging indicators.\n\nc. Correct. If the adoption of MVPs is at stake, the retention and adoption rates can be a way to track flow in order to help improve DevOps practices.\n\nd. Incorrect. Metrics that help organizations accelerate delivery and performance are not focusing on business success, but on deployment frequency, lead time for changes, change failure rate, time spent to restore a service and reliability."
+  },
+  {
+    "id": 23,
+    "lo": "ATLaS-5.1.4",
+    "k": "K4",
+    "pts": 3,
+    "text": "In your organization several agile teams are struggling with system integration testing. Although the teams plan to collaboratively perform End-to-End (E2E) testing at the end of each iteration, most of the iteration is spent by teams developing and testing their own software. Additionally, individual teams sometimes fail to fully implement the agreed-upon scope of an iteration making their system incompatible with the output of other teams. The teams then perform E2E testing following a big bang approach but there is often not enough time to localize and resolve all communication issues and interface mismatches between systems. As a result, there were several releases where the agile teams failed to deliver a fully integrated solution so hotfixes or rollbacks were required to restore the functionality of business processes. As an agile test leader, you are asked by corporate management to address this situation in order to achieve more stable releases without sacrificing time to market.\n\nWhich recommendations would be most likely to be helpful in the scenario described?\n\nSelect TWO options.",
+    "options": [
+      "a) Advise the teams to focus on running their own tests within iterations and perform E2E testing within a dedicated phase before each planned release.",
+      "b) Establish a team of external testers to take care of E2E testing.",
+      "c) Investigate whether coordination between teams is a problem for E2E testing. If so, try to refine the product backlog using big room planning to address dependencies between teams.",
+      "d) Support discussions on backlog for architecture and infrastructure revisions to support independent testing and release of system components.",
+      "e) Conduct a management review before every rollout to ensure that E2E testing has been properly performed."
+    ],
+    "answer": [
+      2,
+      3
+    ],
+    "explanation": "a. Incorrect: Deferring E2E tests to a later phase would weaken the Definitions of Done (DoDs) because the collective output of each iteration would not represent an integrated and releasable solution.\n\nb. Incorrect: Delegating E2E tests to a separate test team is likely to decrease flow and reduce the agile teams’ sense of responsibility for delivering an integrated solution.\n\nc. Correct: Slicing small and independent backlog items reduces the dependencies between teams and enables more tests to be performed locally before the E2E tests.\n\nd. Correct: Decoupling the system components increases the flexibility for testing and releasing different configurations which is helpful if individual teams cannot fully implement and test the intended scope.\n\ne. Incorrect: Although stopping a rollout in the case of inadequate E2E testing can be a last resort to prevent an interruption of business, the real challenge is to prevent inadequate E2E testing in the first place."
+  },
+  {
+    "id": 24,
+    "lo": "ATLaS-5.1.5",
+    "k": "K4",
+    "pts": 3,
+    "text": "To fulfill legal requirements, your product must pass a standardized accessibility test as part of acceptance testing. Because accessibility problems found late during acceptance testing may endanger the scheduled release date, the organization wants to perform accessibility testing earlier in the development value stream. In the current setup all knowledge about the accessibility standard is available in a centralized team, that also does the accessibility testing. However, the centralized team does not have enough people to do more accessibility testing at this earlier stage.\n\nWhich recommendation would be helpful in the scenario described to find accessibility problems earlier?\n\nSelect ONE option.",
+    "options": [
+      "a) A crowd testing event of disabled people could be organized with the help of an enabling team.",
+      "b) The team knowledgeable about the accessibility standard could start to act as an enabling team and spread knowledge into the stream aligned teams.",
+      "c) Since there is no knowledge about the accessibility standard in the stream-aligned teams, the accessibility testing has to be treated as a complicated subsystem. The team members of the complicated subsystem team could join sprint planning meetings of the streamaligned teams to find options for starting the accessibility test earlier.",
+      "d) An agile test leader must strengthen the centralized team with resources. Then the centralized team will be able to complete accessibility testing earlier."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a. Incorrect. Exploratory testing events with people outside the stream aligned teams can be helpful, and enabling teams could facilitate such events. These kinds of events, though, would not help to avoid finding deviations from the accessibility standard early.\n\nb. Correct. If stream-aligned teams gain knowledge of the accessibility standard, they have the opportunity to conduct technical reviews early on, perhaps as part of a CI pipeline.\n\nc. Incorrect. There is no indication that a standard for accessibility is knowledge that could not be integrated into stream-aligned teams.\n\nd. Incorrect. There is a risk that accessibility testing cannot be conducted early by the centralized team due to lack of knowledge which the stream-aligned teams have. To avoid relying on knowledge sharing between the teams it would be a better solution that the centralized team behave like an enablement team and help the stream-aligned teams perform some accessibility testing early. This supports a built-in quality mindset and is probably a better long-term solution."
+  },
+  {
+    "id": 25,
+    "lo": "ATLaS-1.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Alex has recently been appointed as the delivery quality manager in a custom software development company. He noticed the excessive number of complaints from the users about system failures, so he decided to implement several measures to address the issue.\n\nWhich ONE of the following BEST demonstrates his QUALITY ASSISTANCE approach?\n\nSelect ONE option.",
+    "options": [
+      "a) Increase the number of testers in project teams to improve coverage and prevent escaped defects.",
+      "b) Assign accountability for delivery quality to respective project team leads.",
+      "c) Setup a web-based dashboard to monitor and control quality assurance and quality control (QC) activities of individual teams.",
+      "d) Educate and train project teams to adopt methods that are customer-focused."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a. Incorrect. The focus here is on improving coverage (belongs to quality control (QC)), which may not necessarily improve system quality. Also, it is at task/project level and not concerning overall quality.\n\nb. Incorrect. This action is to make individuals, not all, responsible for quality. It is silo-based and not an organizational approach.\n\nc. Incorrect. The intention here is to control things and not to assist teams to improve quality practices.\n\nd. Correct. This is customer-focused and done to help team members to learn and use relevant quality improvement methods across the entire organization."
+  },
+  {
+    "id": 26,
+    "lo": "ATLaS-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "An organization which is in the middle of a digital transformation has started to use Value Stream Mapping (VSM) to analyze its work processes. The agile test leader is also working in this value stream. The main area of attention is the release of a mobile application for which the following value stream was identified: [[asset:p20-1]] Should the agile test leader participate in the analysis of such a value stream?\n\nSelect ONE option.",
+    "options": [
+      "a) Yes, by collaborating with others to identify and analyze value streams, agile test leaders help improve both quality and flow of value.",
+      "b) No, the value stream was created incorrectly. It cannot contain a mix of elements from both operational and development value streams.",
+      "c) Yes, but the agile test leader should only work with static data from past releases in order to avoid drawing the wrong conclusions.",
+      "d) No, because the agile test leader does not need to drill into the details of the entire stream in order to analyze the working steps associated with quality and testing."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a. Correct. An agile test leader can contribute knowledge regarding quality and testing when analyzing the working steps in a value stream.\n\nb. Incorrect. In some cases, the operational and development value streams can be the same. An agile test leader can also participate in analyzing both kinds.\n\nc. Incorrect. There is no limit for an agile test leader to only work with static data. An agile test leader can work with current state and also create ideas about the future state too.\n\nd. Incorrect. An agile test leader should work with all working steps in a value stream."
+  },
+  {
+    "id": 27,
+    "lo": "ATLaS-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "In a DevOps cycle that include the stages of monitor, plan, test, and operate, which of the following actions should be AVOIDED when contributing from a test perspective?\n\nSelect ONE option.",
+    "options": [
+      "a) Inquiring about the test stage and asking probing questions to understand if the activities in this stage are necessary for a staged approach.",
+      "b) Inquiring as to which tools from the monitoring stage could potentially add value to test environments and conducting a brief online research to explore relevant tools.",
+      "c) Asking the team which backlog items addressing the needs of test environments should be emphasized in the plan stage and making tickets on another team’s backlog for communicating that early.",
+      "d) Exploring communication channels with operations specialists and offering to learn about their tools."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a. Incorrect. It is acceptable to ask probing questions to understand if the activities performed are needed in a staged approach.\n\nb. Incorrect. It is acceptable to look for re-usage of tools where relevant.\n\nc. Correct. It is not good practice to add things to another team’s backlog as a means of communication. It should be discussed with the other team first, so they take ownership. Minimizing dependencies if technically and organizationally practical is also something to pursue.\n\nd. Incorrect. It is fine to explore communication channels and get a deeper understanding of their area of work."
+  },
+  {
+    "id": 28,
+    "lo": "ATLaS-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following activities is an example of activities associated with the exploration stage in a DevOps cycle and which should be supported by the organizational test strategy?\n\nSelect ONE option.",
+    "options": [
+      "a) Discussing that a certain minimum viable product (MVP) does not provide the expected value to stakeholders.",
+      "b) Implementing a common static analysis tool to improve code quality.",
+      "c) Promoting a test-first mindset and zero-defect culture.",
+      "d) Closely monitoring the feature toggle management tool to increase the resilience of production environments."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a. Correct. It is important to support the testing of business hypotheses and hypotheses testing capabilities might need strengthening.\n\nb. Incorrect. This is not part of the exploration stage but later stages.\n\nc. Incorrect. Again, part of later stages. Test-first is here seen as used in coding. It is not meant as early testing of business needs.\n\nd. Incorrect. The focus on technical tools which are part of later stages."
+  },
+  {
+    "id": 29,
+    "lo": "ATLaS-4.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is an example of an organizational test strategy being implemented using a tailoring up approach?\n\nSelect ONE option.",
+    "options": [
+      "a) The teams in the organization agree on a minimum definition of done for features. The agile test leader facilitates learning sessions where the teams reflect on how the organizational test strategy supports them and discuss what could be useful to include.",
+      "b) The agile test leader presents the organizational test strategy document in a Community of Practice meeting and asks the teams to create a local version of it. The teams describe their implementation of the organizational test strategy and if they are deviating from it.",
+      "c) The teams have their own test strategy which they have developed over time. They share it with the agile test leader on a yearly basis. The agile test leader is responsible for circulating good ideas between teams.",
+      "d) The agile test leader facilitates a workshop with relevant representatives from the entire organization to discuss how the organizational test strategy can support the business strategy. The participants then generate ideas on how the test strategy could be implemented and share the ideas with the rest of the organization."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a. Correct. The teams share a minimum definition and then build on that based on what is useful. This could have been a definition of done.\n\nb. Incorrect. Although the agile test leader is using a CoP as a forum, the behavior follows a tailoring-down approach. The teams have to justify why they are deviating from the strategy.\n\nc. Incorrect. There is no organizational test strategy because each team just has its own. Furthermore, the agile test leader takes the responsibility for circulating good ideas which means the teams are not sharing that responsibility.\n\nd. Incorrect. Although there are representatives from the entire organization it is this group who creates the organizational test strategy and asks the teams to implement some of the generated ideas. This resembles a tailoring-down approach."
+  },
+  {
+    "id": 30,
+    "lo": "ATLaS-4.1.3",
+    "k": "K3",
+    "pts": 2,
+    "text": "Your company has used Agile software development in the development teams for years with some success. The teams take more responsibility and are able to develop new functionality or update existing functionality on a quarterly basis. The business strategy for the next two years is to enter a new market abroad. Being able to adapt the products to the new market will be critical in order to gain a foothold. Therefore, the company needs to improve its ability to sense the market and substantially shorten the lead time. It has been suggested to assess the agile maturity of the organization. Together with a group of leaders you are responsible for conducting the first assessment. Your responsibility is to ensure the assessment covers how testing supports the business and technical needs.\n\nWhich of the following activities would you suggest as input to the group of leaders?\n\nSelect ONE option.",
+    "options": [
+      "a) Send a questionnaire to all leaders with questions about how testing is performed in their area of the organization.",
+      "b) In the group of leaders, map the value streams and define some improvement initiatives to decrease wait times between steps.",
+      "c) Engage an external company which specializes in test maturity assessments and ask them to conduct a series of interviews and present their findings.",
+      "d) Ensure the assessment involves people from the entire value stream and that the assessment covers multiple aspects, not just aspects related to lead time."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a. Incorrect. Because the goal is to improve how it discovers and acts on market trends, it is not a good idea to only involve leaders in the assessment. Therefore, this answer is not the best option.\n\nb. Incorrect. This is a VSM exercise where the focus is on reducing wait times. VSM is not a way to assess the agile maturity of the organization and by focusing on wait time there is a high risk that other important aspects will not be covered in the maturity assessment.\n\nc. Incorrect. This way of conducting assessments has a tendency to disengage people in the organization. As the goal is to improve the organization’s ability to sense the market it is important that people who are close to the products and the market are engaged.\n\nd. Correct. Involving the full value stream is important as it is not just about sensing the market trends but also reducing lead time. Furthermore, the suggestion is to take a holistic perspective and not just to focus on wait times."
+  },
+  {
+    "id": 31,
+    "lo": "ATLaS-4.1.3",
+    "k": "K3",
+    "pts": 2,
+    "text": "You have been asked to lead a SELF-ASSESSMENT initiative in a group of leaders to assess the agile maturity from a testing perspective on an organizational level.\n\nWhich of the following describes BEST some of the steps and the order in which these steps should be performed?\n\nSelect ONE option.",
+    "options": [
+      "a) Conduct an individual interview with each leader, perform self-assessment, go through the conclusions with relevant stakeholders.",
+      "b) Review questions from existing surveys and adjust questions where relevant, fill out the questionnaire together, discuss results and insights, create an action plan, share results with the rest of the organization.",
+      "c) Schedule the self-assessment with the group, decide when the next self-assessment will take place, assess maturity in the group, define improvement actions.",
+      "d) Decide what to improve, conduct an assessment using an external facilitator, analyze gaps based on the external facilitator’s assessment, discuss conclusions with stakeholders, set the date for the next assessment."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a. Incorrect. By conducting interviews separately with each leader, the agile test leader is the only one who sees the collective picture, which is not the point of self-assessment in a group.\n\nb. Correct. This answer contains one or more steps from planning selfassessment, conducting self-assessment and concluding selfassessment in a realistic sequence.\n\nc. Incorrect. The suggested steps in BOK include the step “agree when to conduct the next self-assessment\" towards the end in concluding selfassessment.\n\nd. Incorrect. Starting with deciding what to improve before doing the assessment will influence the assessment. Furthermore, it is not a selfassessment, but an assessment performed by an external facilitator."
+  },
+  {
+    "id": 32,
+    "lo": "ATLaS-4.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Some of the agile teams in an organization frequently express concerns that their product owners heavily prioritize functional backlog items on the teams’ backlogs, which results in user story risk assessments being continually postponed. Assuming these concerns are valid, what actions can agile test leaders take to encourage long-term solutions?\n\nSelect ONE option.",
+    "options": [
+      "a) Implementing participatory budgeting at the operational level can highlight the need for allocating time to risk assessments.",
+      "b) Serving as a practice leader at the product level and participating in product owner communities of practice (CoPs) can help emphasize the importance and added value of risk assessments to all product owners within the product development teams.",
+      "c) Promoting test effort estimations at the organizational level can increase transparency and showcase the added value of all tests.",
+      "d) Introducing a management improvement service at the operational level can facilitate better discussions around prioritization."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a. Incorrect. Participatory budgeting happens on the organizational level and is not meant to finance specific activities such as risk assessments.\n\nb. Correct. Practice leadership is typical at the product level and CoPs can help to distribute practices.\n\nc. Incorrect. It is not evident why there should be a rise in transparency, or why promoting effort estimation, which is a responsibility of the team in agile software development, necessitates support at the organizational level.\n\nd. Incorrect. A management improvement service is neither on the operational level nor is it meant to regularly facilitate everyday work."
+  },
+  {
+    "id": 33,
+    "lo": "ATLaS-4.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "As the test leader for a test automation team performing test automation in system testing for a product, you overhear a conversation in which a scrum master asserts that any interference with her team's definition of done by the organization is unacceptable. In addition to talking directly with the scrum master, appropriate reactions could be:\n\nSelect TWO options.",
+    "options": [
+      "a) Look for ways to make your test automation in system testing optional for teams to encourage quality ownership at the operational level.",
+      "b) Collaborate with members of scrum master sync events to discuss how agile scaling frameworks see the team's responsibility for defining \"done\" and what your organization's view of it should be.",
+      "c) Work with testers who are part of the agile teams to add some entry criteria to the start of your test automation in system testing to better address potential deficiencies in some teams' definitions of done.",
+      "d) Make room in your test team's backlog to study the agile scaling framework's perspective on testing, so that members of your test automation team can share that perspective as they collaborate with the stream aligned teams.",
+      "e) Promote value stream mapping by providing examples of value stream aspects found in agile scaling frameworks as well as a future state map with clear accountabilities for definition of done."
+    ],
+    "answer": [
+      1,
+      3
+    ],
+    "explanation": "a. Incorrect. While it can help to integrate testing capabilities and freedom to choose appropriate tools into stream aligned teams at the operational level, at the product level there is often a need for alignment between teams.\n\nb. Correct. Relevant agile scaling frameworks go beyond viewing DoD as purely a team responsibility.\n\nc. Incorrect. This would not be a good long-term solution as it focuses on local optimization of the system test.\n\nd. Correct. Strengthening coaching skills can be helpful.\n\ne. Incorrect. This is not an appropriate use case for value stream mapping."
+  },
+  {
+    "id": 34,
+    "lo": "ATLaS-5.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A value-driven organization is creating a large product platform which includes a website used by the company’s customers (private consumers). Smaller companies can sell their services (e.g., online stores, cellular communications, medicine) through the organization's website. The platform imposes general requirements for performance, page opening speed and latency. These requirements affect the lead time of new features. Not all teams have perfomance testing engineers, and it is necessary to pass the mandatory performance Definition of Done (DoD) in order to deploy a release in production.\n\nWhich of the following statements describes a testing challenge with performance testing in the scenario above?\n\nSelect ONE option.",
+    "options": [
+      "a) Performance testing in an agile team can be time-consuming because they do not have enough knowledge about performance testing. By giving performance testing to a specialized team, the specialized team may become a bottleneck resulting in the agile team having to wait a long time for their turn.",
+      "b) Testers with good knowledge of the business domain can execute testing processes with a focus on early pilots with several private consumers instead of going to production with all clients. It helps to understand the user scenario and check performance issues.",
+      "c) The agile teams are not aware of the performance efficiency requirements and that these requirements must be tested as part of a delivery. Therefore, the agile teams take longer to produce an increment which can then be deployed to production.",
+      "d) Because performance testing tools are expensive it is not possible to have all agile teams using the tools."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a. Correct. A frequent challenge when it is necessary to conduct performance testing by an agile team or a separate specialized team.\n\nb. Incorrect. Checking the functionality with private consumers may not give the desired load and the performance problems that arise when replicating the functionality for a large number of users/clients will not be checked.\n\nc. Incorrect, Non-functional performance requirements are part of the definition of done.\n\nd. Incorrect. This challenge is not specific to agile at scale but is a general challenge which can apply to a single team."
+  },
+  {
+    "id": 35,
+    "lo": "ATLaS-5.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "In an organization, the cost of reducing technical debt increases every year, and the agile delivery teams struggle with reducing it. They would like to coordinate testing across agile and non-agile teams in order to address the technical debt.\n\nWhich of the following statements BEST describes a practice which an agile test leader can use to help the teams coordinate testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Create a training course for a wide audience (developers, testers) on good coding practices like design patterns.",
+      "b) Introduce the concept of working with one, shared backlog across agile and non-agile teams.",
+      "c) Ensure that the technical debt is coordinated at the level of the organization's technology strategy and not at the operational level where testing is performed.",
+      "d) Visualize the areas with the most technical debt using impediment and risk boards."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a. Incorrect. An agile test leader does not have the technical knowledge and skills to create a training course in development practices.\n\nb. Correct. Having a shared view of what the teams need to deliver together supports a discussion of the work that needs to be done during various planning events.\n\nc. Incorrect. Although major investments in removing technical debt would need to be part of the technology strategy, it is not helping the teams here and now with coordinating the test activities.\n\nd. Incorrect. Visualizing where the most technical debt is does not necessarily help coordinate testing activities across agile and non-agile teams in the same manner that a shared backlog would."
+  },
+  {
+    "id": 36,
+    "lo": "ATLaS-5.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "The company is releasing a new version of a mobile app. The management of the company asks you to provide quality metrics that reflect both the maturity of the teams that have been involved in the project for a long time, as well as the quality of the product being released to the market from customer perspective. You engage with the project as an agile test leader.\n\nWhich set of metrics do you suggest using?\n\nSelect ONE option.",
+    "options": [
+      "a) Outcomes in terms of business value: Customer satisfaction, percentage of missed defects in the production. Maturity metrics for teams: Using all practices from organizations maturity team model, lead time for changes.",
+      "b) Outcomes in terms of business value: Process, Wait and Lead time for Customer value. Maturity metrics for teams: Number of releases using canary deployment, adoption rate of agile processes",
+      "c) Outcomes in terms of business value: Customer satisfaction. Maturity metrics for teams: percentage coverage of the new and all code, lead time for changes.",
+      "d) Outcomes in terms of business value: Customer satisfaction, lead time for customer value. Maturity metrics for teams: Adoption rate of agile processes, team happiness, maturity level."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a. Incorrect. The percentage of missed defects in the production is not a metric for outcomes in terms of business value. Lead time for changes provide a metric for outputs in terms of delivery and performance rather than maturity.\n\nb. Incorrect. When talking about outcomes in terms of business value, importance is placed on lead time for customer value. The number of releases using canary deployment of these metrics are primarily the metrics of the production process (and how well the DevOps processes are built).\n\nc. Incorrect. Percentage coverage of the new and all code - first of all, a metric that relates to the production process and how developers (but not the whole team, the metrics of the whole team is important here) relate to code coverage.\n\nd. Correct. The metrics are outcomes in terms of business value: Customer Satisfaction, Lead time for Customer Value. Maturity metrics for teams: Adoption rate of agile processes, Team happiness, Maturity model level. For more details you can check LO 5.1.3 in the body of knowledge (BOK)"
+  },
+  {
+    "id": 37,
+    "lo": "ATLaS-5.1.4",
+    "k": "K4",
+    "pts": 3,
+    "text": "A technology company that is co-developing a national real-time based weather information system must collaborate and integrate with the government meteorological organization, who have not yet fully adopted agile software development. This has led to a difficulty in deployments and releases that are not synchronized and hence is affecting integration testing.\n\nWhich of the below statements best demonstrates how to structure testing to resolve this challenge?\n\nSelect ONE option.",
+    "options": [
+      "a) Shift-left to create clearer requirements which accommodate the organization’s less agile way of working.",
+      "b) Postpone integration testing and create more automated tests using mocked integrations.",
+      "c) Conduct a big room planning session to align development and testing of the two systems.",
+      "d) Initiate an adaptation of agile software development in the meteorological governmental organization."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a. Incorrect. Shifting left does not solve the issues of planning the testing between the two organizations.\n\nb. Incorrect. Postponing integration testing will delay early identification of misalignment as well as defects in the development.\n\nc. Correct. Conducting a big room planning will help identify constraints and dependencies for development and the test.\n\nd. Incorrect. Adaptation of Agile software development should be decided on an organizational level and the implementation of such an organizational change will take time."
+  },
+  {
+    "id": 38,
+    "lo": "ATLaS-5.1.4",
+    "k": "K4",
+    "pts": 3,
+    "text": "A fintech company that provides middleware to offer financial institutions the connectivity to multiple third-party applications is upgrading its application to enable usage of microservices. The parties have agreed upon interface definitions for the microservices and are therefore able to test their services in isolation using mocks. After some iterations the solution as a whole is completed and needs to be tested end-to-end. The parties are unsure about how this end-to-end testing should be handled. As an agile test leader, which of the below recommendations would be the BEST to suggest to the organization considering the scenario described?\n\nSelect ONE option.",
+    "options": [
+      "a) Centralize end-to-end testing in an enabling team to facilitate better planning.",
+      "b) Skip performing system testing manually as the end-to-end testing will cover the scope.",
+      "c) Focus on non-functional testing in the end-to-end testing as the functionality is already tested by the parties.",
+      "d) Introduce integration testing between some of the microservices across parties at regular intervals to avoid a big-bang end-to-end testing in the end."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a. Incorrect: Having a centralized team would most likely cause a struggle to obtain the needed knowledge to perform end-to-end testing.\n\nb. Incorrect: Skipping earlier tests does not make it easier to handle endto-end testing.\n\nc. Incorrect. The logic that only non-functional testing remains is flawed. Even if each service has been tested in isolation it does not ensure that the solution as a whole provides the intended value.\n\nd. Correct. This ensures that problems are detected earlier. Furthermore, knowledge is shared between the parties which will make end-to-end testing easier."
+  },
+  {
+    "id": 39,
+    "lo": "ATLaS-5.1.5",
+    "k": "K4",
+    "pts": 3,
+    "text": "A value-driven organization has an established release cycle. Releases in the last three months show a high rate of defects missed in production. The types of teams in an organization and their activities are as follows:\n\n• Platform team – one team responsible for infrastructure on an organizational level, servers, allocation resources and support of test environments. Does not work and connect with application layer and stream-aligned and enabling teams\n\n• Stream-aligned team – 45 agile teams developing business functionality. Release cycle once every week or two. Releases occur using an automated pipeline from enabling team or manually (passing the distribution to colleagues responsible for supporting the production environment)\n\n• Enabling team – a small team consisting of most of the organization's DevOps engineers and a few testers who are also leaders in testing competencies. The team has developed a pipeline for release automation and provides it to teams as a turnkey solution This year there is no way to take on more functional testers to strengthen the stream-aligned teams, but it is permitted to involve development in quality and testing issues. The goals of the management team are to reduce the number of defects in production and increase the number of automatic implementations for stream-aligned teams but lead time and number of releases should not decrease.\n\nWhat are the best solutions you can offer to achieve the organization's goals?\n\nSelect TWO options.",
+    "options": [
+      "a) Developers in stream-aligned teams should focus on the practices inherent in the shift-left approach (e.g., increasing coverage (component testing, api testing, contract testing).",
+      "b) DevOps specialists should add mandatory quality gates with the level of coverage in order to not miss releases due to the releases not being sufficiently covered by tests.",
+      "c) It is necessary to distribute DevOps engineers from enabling teams to stream-aligned teams so that the teams are more autonomous and have engineers with the proper expertise in the teams in order to improve implementation processes.",
+      "d) DevOps specialists in enabling teams should focus on ensuring that most teams know how to use their pipeline at the organization level.",
+      "e) Add a goal for developers in stream-aligned teams to achieve a coverage level of component tests at 90- 100% to increase confidence that the functionality in a release is sufficiently tested."
+    ],
+    "answer": [
+      0,
+      3
+    ],
+    "explanation": "a. Correct. It is not an option to hire additional manual testers. Therefore having developers increase coverage seems like a good option to reduce the number of defects.\n\nb. Incorrect. It could probably lead to fewer defects in production by having fewer releases, however it does not help the teams to improve quality while retaining time-to-market.\n\nc. Incorrect. In this case there is not enough DevOps engineers to do this.\n\nd. Correct. It helps stream-aligned teams to increase the number of automatic implementations.\n\ne. Incorrect. It is not enough to reduce the number of defects. Although100% coverage of component tests may result in high confidence; it does not mean that the number of defects will decrease. In addition to component tests, it is necessary to increase the coverage of API tests, contract test, and integration test for services."
+  },
+  {
+    "id": 40,
+    "lo": "ATLaS-5.1.5",
+    "k": "K4",
+    "pts": 3,
+    "text": "A value-driven organization completes a digital transformation associated with moving from a monolithic architecture to a microservice one. Teams in the company deal with the tasks of migrating to microservices and releasing business value. The organization has the following types of teams performing different activities:\n\n• Platform team o One global platform team servicing the entire organization. o Creates common platform services supporting business functionality. These include the audit service, monitoring and logging services. All services that include business functionality must be integrated with platform services.\n\n• Enabling teams o Multiple agile teams, usually small, that serve the teams who contact them to get assistance. o Have expertise in tools for automating microservice testing including load testing (e.g., stubs, test data generation tools). o Often reach out to the other types of teams to see if they can help.\n\n• Complicated-subsystem team o One team helping one part of the organization, responsible for conducting chaos engineering in the organization for stream-aligned teams.\n\n• Stream-aligned teams o Develop business functionality and run the solutions in operations. o Responsible for load testing the solutions for which they are responsible. The following challenges have been identified:\n\n• Stream-aligned teams do not use the expertise and tools provided by the enabling teams because they are often unaware of the existence of these tools.\n\n• The complicated-subsystem team often becomes a bottleneck where all teams must queue to get help.\n\n• Many teams in organizations believe that a complicated-subsystem team should also perform load testing and some teams believe that they should only focus on creating business functionality. The goal for the next six months set by the management team is to improve the stability and reliability of existing services.\n\nWhat is the BEST recommendation you can offer to improve the test processes that the teams perform considering the organization, the challenges and the goals described in the scenario?\n\nSelect ONE option.",
+    "options": [
+      "a) One of the enabling teams can develop a new test automation framework and help streamaligned teams implement the new framework.",
+      "b) Stream-aligned teams can share experience with each other in conducting chaos engineering in order to increase expertise and be less dependent on the complicatedsubsystem team.",
+      "c) It is necessary to have one shared backlog between the stream-aligned teams and the platform team.",
+      "d) Communicate the different types of testing which the teams perform so the teams have a clear understanding of who is responsible for what. Conduct a risk analysis and update the list of teams who need to use chaos engineering."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a. Incorrect. Does not align with the goal. Introducing a new test automation framework looks like a possible option but it is not enough to fix stability and reliability problems in 6 months.\n\nb. Incorrect. It seems like a possible option but in this example the organization only has 6 months to implement change. Raising expertise in teams where there may not be the right specialists is therefore not the best recommendation.\n\nc. Incorrect. The platform team does not create services for testing reliability and stability.\n\nd. Correct. Reduce over-processing and overproduction issues for the complicated sub-system team, because the complicated sub system team can focus on high risk areas. In addition, the stream aligned teams start performing load testing as expected. These two improvements are likely to result in more reliability and stability defects being identified."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 120 * 60;
+      const EXT_SECONDS = 150 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "150"
+          : "120";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 150:00 (120 minutes + 25% practice time). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 120:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {"p8-1": {"src": "assets/ISTQB_CT-ATLaS_Sample-Exam-Questions_v2.0/p8-1.png", "alt": "Diagram from the source question", "page": 8, "kind": "diagram"}, "p10-1": {"src": "assets/ISTQB_CT-ATLaS_Sample-Exam-Questions_v2.0/p10-1.png", "alt": "#9 (2 Points)", "page": 10, "kind": "diagram"}, "p12-1": {"src": "assets/ISTQB_CT-ATLaS_Sample-Exam-Questions_v2.0/p12-1.png", "alt": "Diagram from the source question", "page": 12, "kind": "diagram"}, "p20-1": {"src": "assets/ISTQB_CT-ATLaS_Sample-Exam-Questions_v2.0/p20-1.png", "alt": "Diagram from the source question", "page": 20, "kind": "diagram"}};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Open to enlarge</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagram for Question ${q.id}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

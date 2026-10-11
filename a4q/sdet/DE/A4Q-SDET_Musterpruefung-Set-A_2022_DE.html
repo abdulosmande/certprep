@@ -1,0 +1,1986 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A4Q SDET — Probeprüfung Set A (2022)</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+
+      .q-table-wrap pre.q-code {
+        margin: 0;
+        padding: 0.85rem 1.1rem;
+        font-family: "DM Mono", ui-monospace, monospace;
+        font-size: 0.82rem;
+        line-height: 1.6;
+        color: var(--text);
+        white-space: pre;
+        overflow-x: auto;
+      }
+      .q-table-wrap pre.q-code b { color: var(--heading); background: rgba(56, 189, 248, 0.14); }
+      .source-figure img { background: #fff; border-radius: 6px; padding: 6px; max-width: min(100%, 520px); }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .q-text, .option-text, .header-left { min-width: 0; overflow-wrap: anywhere; }
+      .meta-lbl { overflow-wrap: anywhere; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">A4Q Training</div>
+        <h1>A4Q SDET<br /><em>Probeprüfung</em></h1>
+        <p class="start-subtitle">A4Q Software Development Engineer in Test · Probeprüfung Set A · Lehrplan 2022. Der Timer startet mit der Prüfung.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Fragen</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">60</span>
+            <div class="meta-lbl">Minuten</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Punkte</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Bestehen</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Quelle: German Testing Board e. V. (GTB) / ISTQB® — A4Q_SDET_Musterpruefung_Fragen_DE.pdf; A4Q-SDET_Musterpruefung_Antworten_DE.pdf (20.07.2022). Copyright © GTB e. V. und ISTQB®. Fragen, Code, Abbildungen und Begründungen wurden aus diesen Quellen übernommen.</p>
+        <div class="time-option-label">Prüfungsdauer</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">60 Min.</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">75 Min.</span>
+            <span class="time-opt-lbl">+25 % Übungszeit</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optionale Verlängerung der Übungszeit um 25 %: 15 Minuten zusätzlich.</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Prüfung starten
+        </button>
+        <p class="start-note" id="start-note-txt">
+          Der Timer zählt von 60:00 herunter. Nach Ablauf der Zeit wird
+          die Prüfung automatisch abgegeben.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >A4Q SDET · Probeprüfung Set A · Lehrplan 2022</span
+            >
+            <span class="exam-title">Software Development Engineer in Test</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 beantwortet
+            </div>
+            <div class="timer" id="timer">60:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Zurücksetzen
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Abgeben
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 Fragen (40 Punkte) · <strong>Bestanden ab 26 von 40 Punkten (65 %)</strong>
+            · Jede Frage ist einen Punkt wert; alle Fragen sind Einfachauswahl.
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Prüfung abgeschlossen</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Benötigte Zeit: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Richtig</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Falsch</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Unbeantwortet</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Neustart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Prüfung abgeben?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Abbrechen
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Abgeben
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "Schlüsselbegriffe",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen ist die korrekte Definition des Begriffes „Testfall“?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Teilmenge des Wertebereichs innerhalb einer Komponente oder eines Systems, für die aufgrund der Spezifikation erwartet wird, dass alle Werte gleichartig behandelt werden.",
+      "b) Menge von Vorbedingungen, Eingaben, Aktionen, erwarteten Ergebnissen und Nachbedingungen, welche auf Basis von Testbedingungen entwickelt wurden.",
+      "c) Arbeitsergebnis, welches während des Testprozesses erstellt wird und dazu gebraucht wird, um die Tests zu planen, zu entwerfen, auszuführen, auszuwerten und darüber zu berichten.",
+      "d) Informationsquelle zur Ermittlung des erwarteten Ergebnisses, um es mit dem tatsächlichen Ergebnis eines Systems unter Test zu vergleichen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Lernziel: Schlüsselwort: Testfall\n\na) FALSCH – Dies ist die Definition der Äquivalenzklasse aus dem Glossar.\n\nb) KORREKT – Basierend auf der Definition des Testfalls aus dem Glossar.\n\nc) FALSCH – Dies ist die Definition des Testmittel aus dem Glossar.\n\nd) FALSCH – Dies ist die Definition des Testorakels aus dem Glossar."
+  },
+  {
+    "id": 2,
+    "lo": "FL-1.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt ein gültiges Ziel des Testens?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Der Test soll möglichst spät starten, damit die Entwicklung genug Zeit hatte, ein gutes Produkt zu erstellen.",
+      "b) Es soll validiert werden, ob das Testobjekt so funktioniert, wie es die Benutzer und andere Stakeholder erwarten.",
+      "c) Es soll nachgewiesen werden, dass alle möglichen Fehlerzustände identifiziert wurden.",
+      "d) Es soll nachgewiesen werden, dass alle verbleibenden Fehlerzustände keine Fehlerwirkungen verursachen werden."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Lernziel: FL-1.1.1 (K1) Typische Ziele des Testens identifizieren können.\n\na) FALSCH – Widerspruch zu Grundsatz 3: „Frühes Testen spart Zeit und Geld.“ (siehe A4Q SDET Lehrplan 2022; Abschnitt 1.3).\n\nb) KORREKT – Dies ist eines der Ziele des Testens (vgl. A4Q SDET Lehrplan 2022; Abschnitt 1.1.1).\n\nc) FALSCH – Grundsatz 2 besagt, dass vollständiges Testen unmöglich ist, und es kann nicht bewiesen werden, dass alle Fehlerzustände identifiziert wurden (siehe A4Q SDET Lehrplan 2022; Abschnitt 1.3).\n\nd) FALSCH – Um eine Einschätzung treffen zu können, ob ein Defekt einen Fehler verursacht oder nicht, muss man den Fehlerzustand zunächst erkennen. Zu sagen, dass verbleibende Fehlerzustände keine Fehlerwirkungen verursachen, bedeutet implizit, dass alle Fehlerzustände gefunden wurden. Dies widerspricht erneut Grundsatz 2 (siehe A4Q SDET Lehrplan 2022; Abschnitt 1.3)."
+  },
+  {
+    "id": 3,
+    "lo": "FL-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt den Unterschied zwischen Testen und Debugging zutreffend?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Testen identifiziert die Ursache von Fehlerzuständen. Debugging analysiert die Fehlerzustände und schlägt Präventionsmaßnahmen vor.",
+      "b) Dynamische Tests zeigen Fehlerwirkungen auf, die durch Fehlerzustände verursacht wurden. Debugging ist eine Entwicklungsaktivität, die Fehlerzustände beseitigt, die die Ursache von Fehlerwirkungen sind.",
+      "c) Testen entfernt Fehlerwirkungen; Debugging entfernt dagegen Fehlerzustände, die Fehlerwirkungen verursachen.",
+      "d) Dynamische Tests verhindern die Ursache von Fehlerwirkungen. Debugging entfernt die Fehlerwirkungen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Lernziel: FL-1.1.2 (K2) Testen von Debugging unterscheiden können.\n\na) FALSCH – Durch Testen können nicht die Ursachen von Fehlerwirkungen identifiziert werden, sondern nur durch Debugging (siehe A4Q SDET Lehrplan 2022, Abschnitt 1.1.2).\n\nb) KORREKT – Dynamisches Testen zeigt Fehlerwirkungen auf, die durch Fehlerzustände verursacht wurden. Durch Debugging können die Ursachen von Fehlerwirkungen analysiert und beseitigt werden (siehe A4Q SDET Lehrplan 2022; Abschnitt 1.1.2).\n\nc) FALSCH – Durch Testen werden keine Fehlerzustände und daraus folgende Fehlerwirkungen entfernt, sondern nur durch Debugging (siehe A4Q SDET Lehrplan 2022; Abschnitt 1.1.2).\n\nd) FALSCH – Durch dynamische Tests können die Ursachen von Fehlerwirkungen (d. h. Fehlerzustände) nicht verhindert werden, sondern nur das Vorhandensein von Fehlerzuständen, die Fehlerwirkungen hervorrufen, nachgewiesen werden. (siehe A4Q SDET Lehrplan 2022; Abschnitt 1.1.2 und Abschnitt 1.3; 1. Grundsatz)."
+  },
+  {
+    "id": 4,
+    "lo": "FL-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welcher    ist    ein    wichtiger                   Grund   für     Testen         im Softwareentwicklungsprozess?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Testen kann, durch seine Ergebnisse, als Werkzeug zur Leistungsbewertung der Entwickler benutzt werden.",
+      "b) Testen kann helfen, mögliche Ausfälle der SW im Betrieb zu verhindern.",
+      "c) Testen ist immer gesetzlich vorgeschrieben.",
+      "d) Testen stellt stets sicher, dass alle Anforderungen vollständig korrekt erfüllt sind."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Lernziel: FL-1.2.1 (K2) Beispiele dafür geben können, warum Testen notwendig ist\n\na) FALSCH – Dies ist keines der im A4Q SDET Lehrplan 2022 Kapitel 1.2 genannten Gründe, im Gegensatz laut Lehrplan soll dies gerade nicht stattfinden\n\nb) KORREKT – Lehrplan A4Q SDET 2022 S 16 1.2 “Gründliches Testen von Komponenten oder Systemen und ihrer zugehörigen Dokumentation kann dabei helfen, das Risiko von Fehlerwirkungen zu reduzieren, die während des Betriebs auftreten können.”\n\nc) FALSCH – Lehrplan A4Q SDET 2022, S. 16: 1.2 Warum ist Testen notwendig? “Darüber hinaus kann Softwaretesten auch notwendig sein, um vertragliche oder rechtliche Anforderungen oder branchenspezifische Standards zu erfüllen.” → Es kann, ist aber nicht immer notwendig.\n\nd) FALSCH – Lehrplan A4Q SDET 2022, S. 16: 1.2.1 Der Beitrag des Testens zum Erfolg “Historisch betrachtet ist es schon immer üblich gewesen, dass Software und Systeme in Betrieb genommen werden, obwohl Fehlerwirkungen infolge von Fehlerzuständen auftreten oder in anderer Weise die Bedürfnisse der Stakeholder nicht erfüllt werden. Allerdings kann der Einsatz geeigneter Testverfahren die Häufigkeit derartiger problematischer Inbetriebnahmen reduzieren, wenn diese Verfahren mit dem entsprechenden Grad an Testkompetenz, in den geeigneten Teststufen und zum richtigen Zeitpunkt im Softwareentwicklungslebenszyklus eingesetzt werden. “Durch das Testen wird die Häufigkeit reduziert, es ist aber nicht möglich, alle Probleme und Risiken vollständig abzudecken. (Siehe auch 1.3 Sieben Grundsätze des Testens: Vollständiges Testen ist nicht möglich)"
+  },
+  {
+    "id": 5,
+    "lo": "FL-1.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt die Beziehung zwischen Testen und Qualitätssicherung?\n\nWählen sie genau EINE Antwort aus.",
+    "options": [
+      "a) Testen ist Bestandteil der Qualitätssicherung",
+      "b) Testen führt stets zu besseren Produktanforderungen",
+      "c) Frühes Testen im Entwicklungsprozess trägt nur wenig zur Qualitätssicherung bei",
+      "d) Je mehr Testfälle ausgeführt werden desto höhere Qualität hat die Software"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "Lernziel: FL-1.2.2 (K2) Die Beziehung zwischen Testen und Qualitätssicherung beschreiben können und Beispiele dafür geben können, wie Testen zu höherer Qualität beiträgt\n\na) KORREKT – Da die Qualitätssicherung sich mit der korrekten Ausführung des gesamten Prozesses beschäftigt, unterstützt Qualitätssicherung korrektes Testen (vgl. Lehrplan A4Q SDET 2022, Abschnitt 1.2.2)\n\nb) FALSCH – Beispielsweise kann trotz gründlicher Tests aller spezifizierten Anforderungen und Beheben aller Fehlerzustände ein System erstellt werden, das schwer zu nutzen ist, das die Bedürfnisse und Erwartungen der Benutzer nicht erfüllt oder das geringwertigere Qualität hat als vergleichbare Systeme (vgl. Lehrplan A4Q SDET 2022, Abschnitt 1.3)\n\nc) FALSCH – (vgl. Lehrplan A4Q SDET 2022, Abschnitt 1.3) Um Fehlerzustände früh zu finden, sollten sowohl statische als auch dynamische Testaktivitäten so früh wie möglich im Softwareentwicklungslebenszyklus gestartet werden. Frühes Testen wird oft als Shift left bezeichnet. Frühes Testen im Softwareentwicklungslebenszyklus hilft dabei, kostenintensive Änderungen zu reduzieren oder vollständig zu vermeiden (siehe Abschnitt 3.1 Grundlagen des statischen Tests).\n\nd) FALSCH – (vgl. Lehrplan A4Q SDET 2022, Abschnitt 1.3) Einige Unternehmen erwarten, dass Tester alle denkbaren Tests durchführen und alle denkbaren Fehlerzustände finden können, aber die Grundsätze 2 und 1 lehren uns, dass dies unmöglich ist. Des Weiteren ist es ein Trugschluss (d. h. ein Irrglaube), zu erwarten, dass allein das Finden und Beheben einer großen Anzahl von Fehlerzuständen den Erfolg eines Systems sicherstellen werde. Beispielsweise kann trotz gründlicher Tests aller spezifizierten Anforderungen und Beheben aller Fehlerzustände ein System erstellt werden, welches schwer zu nutzen ist, welches die Bedürfnisse und Erwartungen der Benutzer nicht erfüllt oder welches geringwertigere Qualität hat als vergleichbare Systeme"
+  },
+  {
+    "id": 6,
+    "lo": "FL-1.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welches der folgenden Beispiele ist eine Fehlerwirkung in einem Tempomat eines Autos?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Der Entwickler des Systems hat vergessen, Variablen nach einem Ausschneiden und Einfügen umzubenennen.",
+      "b) Nicht benötigter Code, der beim Rückwärtsfahren einen Alarm auslöst, wurde in das System aufgenommen.",
+      "c) Das System hält die eingestellte Geschwindigkeit nicht mehr ein, wenn die Radiolautstärke erhöht oder verringert wird.",
+      "d) Die System-Entwurfsspezifikation gibt die Geschwindigkeit falsch an."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "Lernziel: FL-1.2.3 (K2) Zwischen Fehlhandlung, Fehlerzustand und Fehlerwirkung unterscheiden können\n\na) FALSCH – Dies ist ein Beispiel für einen vom Entwickler begangenen Fehler (Fehlhandlung).\n\nb) FALSCH – Dies ist ein Beispiel für einen Fehlerzustand (etwas, das im Code falsch ist und einen Fehler verursachen kann).\n\nc) KORREKT – Dies ist eine Abweichung von der erwarteten Funktionalität - ein Tempomat sollte nicht von der Laufstärkeeinstellung des Radios betroffen sein.\n\nd) FALSCH – Dies ist ein Beispiel für einen Defekt (Fehlerzustand in einer Spezifikation, die eine Fehlerwirkung verursachen kann, wenn gegen die Spezifikation anschließend implementiert wird)."
+  },
+  {
+    "id": 7,
+    "lo": "FL-1.2.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen ist eher ein Fehlerzustand als eine Grundursache für einen Fehlerzustand in einem Fitness-Tracker?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Der Anforderungsmanager war mit der Domäne des Fitnesstrainings nicht vertraut und ging zu Unrecht davon aus, dass die Benutzer die Herzschlag- Frequenz in Schlägen pro Stunde ablesen wollen.",
+      "b) Der Tester des Smartphone-Interfaces war nicht im zustandsbasierten Testen geschult und hat daher einen signifikanten Fehler übersehen.",
+      "c) Eine vom Entwickler für die GPS-Funktion fehlerhaft implementierte Konfigurationsvariable kann während der Sommerzeit zu Standortproblemen führen.",
+      "d) Die Designerin der Benutzeroberfläche hat noch nie an tragbaren Geräten gearbeitet und missverstand deshalb die Auswirkungen von reflektiertem Sonnenlicht."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "Lernziel: FL-1.2.4 (K2) Zwischen der Grundursache eines Fehlerzustands und seinen Auswirkungen unterscheiden können\n\na) FALSCH – Die mangelnde Vertrautheit des Autors der Anforderungen mit der Fitnessdomäne ist eine wesentliche Grundursache für einen Fehlerzustand.\n\nb) FALSCH – Die fehlende Schulung des Testers im zustandsbasierten Testen war eine der wesentlichen Grundursachen für den Fehler.\n\nc) KORREKT – Die fehlerhaften Konfigurationsdaten stellen einen Fehlerzustand in der Software des Fitness-Trackers dar, der zu Fehlerwirkungen führen kann. Die Grundursache ist eine vom Entwickler für die GPS-Funktion fehlerhaft implementierte Konfigurationsvariable.\n\nd) FALSCH – Die mangelnde Erfahrung bei der Gestaltung von Benutzeroberflächen für tragbare Geräte ist ein typisches Beispiel für eine Grundursache für einen Fehlerzustand."
+  },
+  {
+    "id": 8,
+    "lo": "FL-1.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Ein Tester hat über einen Zeitraum von 5 Jahren Software-Applikationen auf mobilen Geräten einem Test unterzogen. Er hat sich einen großen Erfahrungsschatz im Testen von mobilen Applikationen angeeignet und erzielt in kürzerer Zeit bessere Ergebnisse als andere. Über einen längeren Zeitraum hat der Tester die existierenden automatisierten Testfälle nicht modifiziert und auch keine neuen Testfälle mehr erstellt. Dies führt dazu, dass durch Ausführung der Tests immer weniger Fehler gefunden werden. Welchen Grundsatz des Softwaretestens hat der Tester nicht beachtet?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Testen ist abhängig vom Umfeld",
+      "b) Vollständiges Testen ist nicht möglich",
+      "c) Wiederholungen haben keine Wirksamkeit",
+      "d) Häufung von Fehlerzuständen"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "Lernziel: FL-1.3.1 (K2) Die sieben Grundsätze des Softwaretestens erklären können.\n\na) FALSCH – Test ist abhängig vom Umfeld, egal, ob manuell oder automatisiert (vgl. Lehrplan A4Q SDET 2022; Abschnitt 1.3; 6. Grundsatz), führt aber nicht dazu, dass – wie oben beschrieben – immer weniger Fehler aufgedeckt werden.\n\nb) FALSCH – Erschöpfendes vollständiges Testen ist unmöglich, egal wieviel Aufwand wir in den Test investieren (vgl. Lehrplan A4Q SDET 2022; Abschnitt 1.3; 2. Grundsatz), führt aber nicht dazu, dass – wie oben beschrieben – immer weniger Fehler aufgedeckt werden.\n\nc) KORREKT – Ein Grundsatz (gem. Lehrplan A4Q SDET 2022) besagt: “Vorsicht vor dem Pestizid-Paradoxon“ bzw. Wiederholungen haben keine Wirksamkeit (vgl. Lehrplan A4Q SDET 2022; Abschnitt 1.3; 5. Grundsatz), dass eine Ausführung immer der gleichen Testfälle keine neuen Erkenntnisse mehr bringt. Um neue Fehlerzustände zu finden, müssen bestehende Tests möglicherweise verändert werden und neue Tests erstellt werden.\n\nd) FALSCH – Oftmals ist eine “Häufung von Fehlerzuständen“ (Lehrplan A4Q SDET 2022; Abschnitt 1.3; 4. Grundsatz) in einer kleinen Anzahl von Modulen zu beobachten; das führt aber nicht dazu, dass – wie oben beschrieben – immer weniger Fehler aufgedeckt werden."
+  },
+  {
+    "id": 9,
+    "lo": "Schlüsselbegriffe",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen ist eine korrekte Definition für den Regressionstest?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Testen, um festzustellen, ob in unveränderten Bereichen der Software Fehlerzustände freigelegt wurden.",
+      "b) Testen der Auswirkungen einer geänderten Umgebung auf ein in Produktion laufendes System.",
+      "c) Testen, welches durch Änderungen eines laufenden Systems veranlasst wird.",
+      "d) Testen nach Behebung eines Fehlerzustands, um zu bestätigen, dass eine Fehlerwirkung nicht mehr auftritt."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Basierend auf der Definition des Regressionstests aus dem Glossar.\n\nb) FALSCH – Dies ist die Definition eines Wartungstests aus dem Glossar.\n\nc) FALSCH – Dies ist die Definition eines Wartungstests aus dem Glossar.\n\nd) FALSCH – Dies ist die Definition eines Fehlernachtests aus dem Glossar."
+  },
+  {
+    "id": 10,
+    "lo": "FL-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welcher der folgenden Tests ist ein White-Box-Testverfahren?\n\nWählen sie genau EINE Antwort aus.",
+    "options": [
+      "a) Entscheidungstest",
+      "b) Performanztest",
+      "c) Code-Review",
+      "d) Äquivalenzklassenanalyse"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "Lernziel: FL-2.3.1 (K2) Funktionale, nicht-funktionale und White-Box-Tests vergleichen können\n\na) KORREKT – Entscheidungstest ist ein White-Box-Testverfahren. (siehe Lehrplan A4Q SDET 2022, Abschnitt 4.3 White-Box-Testverfahren).\n\nb) FALSCH – Performanztest hat das Ziel, die Performanz des Testobjekts zu bewerten (siehe Glossar), und ist deshalb eine Testart und kein Testverfahren. (siehe Lehrplan A4Q SDET 2022. Abschnitt 2.2.2)\n\nc) FALSCH – Code-Review ist eine statische Testart, und gehört damit nicht zu den White- Box-Tests.\n\nd) FALSCH – Äquivalenzklassenanalyse ist ein Black-Box-Verfahren (siehe Abschnitt 4.2 Black-Box-Testverfahren)."
+  },
+  {
+    "id": 11,
+    "lo": "FL-2.3.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen vergleicht die Zwecke                            der Fehlernachtests und Regressionstests AM BESTEN miteinander?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Der Regressionstest stellt sicher, dass alle früher durchgeführten Tests immer noch korrekt laufen, während der Fehlernachtest sicherstellt, dass Korrekturen an einem Teil des Systems die anderen Teile nicht negativ beeinflussen.",
+      "b) Der Fehlernachtest prüft, dass ein vorher gefundener Fehlerzustand korrigiert wurde, während der Regressionstest sicherstellt, dass die Korrektur keine anderen Teile des Systems negativ beeinflusst hat.",
+      "c) Der Regressionstest stellt sicher, dass Korrekturen an einem Teil des Systems die anderen Teile nicht negativ beeinflussen, während der Fehlernachtest prüft, dass alle früher durchgeführten Tests immer noch die gleichen Ergebnisse produzieren.",
+      "d) Der Fehlernachtest bestätigt, dass die Änderungen am System erfolgreich durchgeführt wurden, während der Regressionstest Tests durchführt, die vorher fehlgeschlagen sind, um sicherzustellen, dass sie jetzt korrekt funktionieren."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Lernziel: FL-2.3.3 (K2) Den Zweck von Fehlernachtests und Regressionstests vergleichen können\n\na) FALSCH – Obwohl die Beschreibung des Regressionstests weitgehend richtig ist, ist die Beschreibung des Fehlernachtests (welcher bestätigen sollte, dass ein Fehlerzustand behoben wurde) falsch.\n\nb) KORREKT – Die Beschreibungen von Fehlernachtest und Regressionstest entsprechen sinngemäß Lehrplan A4Q SDET 2022, Abschnitt 2.2.4.\n\nc) FALSCH – Obwohl die Beschreibung des Regressionstests weitgehend richtig ist, ist die Beschreibung des Fehlernachtests (erneute Durchführung aller früher durchgeführten Tests) falsch. Der Zweck des Fehlernachtests ist zu prüfen, ob Tests, die früher fehlgeschlagen sind, jetzt korrekt funktionieren.\n\nd) FALSCH – Obwohl die Beschreibung des Fehlernachtests weitgehend richtig ist, ist die Beschreibung des Regressionstests (Tests durchzuführen, die vorher fehlgeschlagen sind) falsch. Das würde eher einer detaillierteren Beschreibung des Fehlernachtests entsprechen."
+  },
+  {
+    "id": 12,
+    "lo": "FL-2.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Entscheidungen sollte KEIN Auslöser für Wartungstests sein?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Die Entscheidung, die Wartbarkeit der Software zu testen",
+      "b) Die Entscheidung, das System nach der Migration auf einer neuen Betriebsplattform zu testen",
+      "c) Die Entscheidung zu testen, ob archivierte Daten abgerufen werden können",
+      "d) Die Entscheidung zum Testen nach \"Hot Fixes\""
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "Lernziel: FL-2.4.1 (K2) Auslöser für Wartungstests zusammenfassen können.\n\na) KORREKT – Dies ist ein Wartbarkeitstest und nicht ein Wartungstest. „... die meisten Wartbarkeitsfehler (können) nur durch statische Tests gefunden werden.“ (Lehrplan A4Q SDET 2022, Kap. 3.1.3, letzter Absatz)\n\nb) FALSCH – Dies ist ein Auslöser für Wartungstests, siehe Lehrplan A4Q SDET 2022, Kapitel 2.3.1: Betriebstests der neuen Umgebung, sowie der geänderten Software.\n\nc) FALSCH – Dies ist ein Auslöser für Wartungstests, siehe Lehrplan A4Q SDET 2022, Kapitel 2.3.1\n\nd) FALSCH – Dies ist ein Auslöser für Wartungstests, siehe Lehrplan A4Q SDET 2022, Kapitel 2.3.1."
+  },
+  {
+    "id": 13,
+    "lo": "FL-2.4.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt                  eine     Aufgabe       der Auswirkungsanalyse in der Wartung KORREKT?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Die Auswirkungsanalyse unterstützt bei der Entscheidung, ob sich eine Fehlerkorrektur beim zu wartenden System lohnt.",
+      "b) Die Auswirkungsanalyse identifiziert, wie Daten in das gewartete System zu migrieren sind.",
+      "c) Die Auswirkungsanalyse unterstützt bei der Entscheidung, welche Hot Fixes den meisten Nutzen für den Benutzer haben.",
+      "d) Die Auswirkungsanalyse unterstützt die Ermittlung der Effektivität neuer Wartungstestfälle."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "Lernziel: FL-2.4.2 (K2) Den Einsatz der Auswirkungsanalyse im Wartungstest beschreiben können\n\na) KORREKT – Die Auswirkungsanalyse kann verwendet werden, um die Bereiche des Systems zu identifizieren, die von einer Fehlerbehebung betroffen sind. Daher kann das Ausmaß der Auswirkungen (z. B. nötige Regressionstests) verwendet werden, um bei der Entscheidung zu helfen, ob die Veränderung vorgenommen werden sollte (Siehe Lehrplan A4Q SDET 2022, Abschnitt 2.3.2).\n\nb) FALSCH – Obwohl der Test der migrierten Daten Teil des Wartungstests ist (siehe Konvertierungstest), ermittelt die Auswirkungsanalyse nicht, wie dieser Test auszusehen hat.\n\nc) FALSCH – Die Auswirkungsanalyse ermittelt, welche Teile eines Systems von einer Änderung betroffen sind. Somit kann sie den Unterschied zwischen verschiedenen Hot Fixes in Hinsicht auf die Auswirkungen auf das System aufzeigen. Sie gibt aber keine Hinweise darauf, welchen Nutzen die Änderungen für den Benutzer haben.\n\nd) FALSCH – Die Auswirkungsanalyse ermittelt, welche Teile eines Systems von einer Änderung betroffen sind. Sie kann aber keine Anhaltspunkte zur Effektivität von Testfällen liefern."
+  },
+  {
+    "id": 14,
+    "lo": "Schlüsselbegriffe",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen ist eine korrekte Definition für das Checklistenbasierte Review?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Ein Reviewverfahren, das entlang einer Liste an Fragen oder geforderten Eigenschaften geführt wird.",
+      "b) Ein Review, das einem definierten Prozess folgt und ein formell dokumentiertes Ergebnis liefert.",
+      "c) Eine Art statischer Test, bei dem ein Arbeitsergebnis oder -prozess von einer oder mehreren Personen bewertet wird, um Fehlerzustände zu erkennen oder Verbesserungen zu erzielen.",
+      "d) Ein Reviewverfahren, bei dem ein Arbeitsergebnis aus der Perspektive unterschiedlicher Stakeholder beurteilt wird."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Basierend auf der Definition des checklistenbasierten Reviews aus dem Glossar.\n\nb) FALSCH – Dies ist die Definition eines formalen Reviews aus dem Glossar.\n\nc) FALSCH – Dies ist die Definition eines Reviews allgemein aus dem Glossar.\n\nd) FALSCH – Dies ist die Definition eines rollenbasierten Reviews aus dem Glossar."
+  },
+  {
+    "id": 15,
+    "lo": "Schlüsselbegriffe",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen ist eine korrekte Definition für die zyklomatische Komplexität?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Die maximale Anzahl von linear unabhängigen Pfaden durch ein Programm.",
+      "b) Der Schwierigkeitsgrad, mit dem der Entwurf und/oder die interne Struktur einer Komponente oder eines Systems zu verstehen, zu warten und zu prüfen ist.",
+      "c) Die Überdeckung einer Sequenz von (N+1) Zustandsübergängen.",
+      "d) Die Überdeckung sämtlicher Ergebnisse von atomaren Teilbedingungen, die sich unabhängig voneinander auf das Gesamtergebnis der Entscheidung auswirken."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Basierend auf der Definition der zyklomatischen Komplexität aus dem Glossar.\n\nb) FALSCH – Dies ist die Definition der Komplexität aus dem Glossar.\n\nc) FALSCH – Dies ist die Definition der N-Switch Überdeckung aus dem Glossar.\n\nd) FALSCH – Dies ist die Definition der modifizierten Bedingungs-/ Entscheidungsüberdeckung (MC/DC) aus dem Glossar."
+  },
+  {
+    "id": 16,
+    "lo": "Schlüsselbegriffe",
+    "k": "K1",
+    "pts": 1,
+    "text": "Ein agiles Team legt fest, dass jeder neu entwickelte Code vor seiner Ausführung von einer oder mehreren Personen bewertet wird, um Fehlerzustände zu erkennen oder Verbesserungen zu erzielen. Welche Bezeichnung trifft auf dieses Vorgehen AM BESTEN zu?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Review",
+      "b) Statische Analyse",
+      "c) White-Box-Test",
+      "d) Paarweises Testen"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Ein Review ist definiert als Eine Art statischer Test, bei dem ein Arbeitsergebnis oder -prozess von einer oder mehreren Personen bewertet wird, um Fehlerzustände zu erkennen oder Verbesserungen zu erzielen.\n\nb) FALSCH – Hier steht nicht die Bewertung des Codes basierend auf seiner Form, seiner Struktur, seines Inhalts oder seiner Dokumentation im Vordergrund, wie bei der statischen Analyse.\n\nc) FALSCH – White-Box-Test ist ein dynamischer Test und nicht eine Art von statischem Test. Hier geht es aber um einen statischen Test ohne Ausführung des Codes.\n\nd) FALSCH – Paarweises Testen ist ein dynamisches Testverfahren, hier geht es aber um statischen Test ohne Ausführung des Codes."
+  },
+  {
+    "id": 17,
+    "lo": "Schlüsselbegriffe",
+    "k": "K1",
+    "pts": 1,
+    "text": "Was ist ein Definition-Verwendungs-Paar?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Die Verknüpfung einer Definition einer Variablen mit der nachfolgenden Verwendung dieser Variablen.",
+      "b) Die Verknüpfung einer ausführbaren Anweisung im Quellcode mit der Verwendung dieser Anweisung bei der Ausführung des Codes.",
+      "c) Die Verknüpfung eines Kommentars im Code, der die Bedeutung einer Variablen beschreibt, mit der nachfolgenden Verwendung dieser Variablen im Code.",
+      "d) Die Verknüpfung zwischen der Definition des Verhaltens der Software in der Spezifikation und dem Code, der dieses Verhalten implementiert."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Dies ist die Definition des Definition-Verwendungs-Paars aus dem Glossar.\n\nb) FALSCH – Die „Verwendung“ im Namen des Begriffs bezieht sich nicht auf die Anweisung, sondern auf die Variable.\n\nc) FALSCH – Die „Definition“ im Namen des Begriffs bezieht sich nicht auf den Kommentar, sondern auf den Code selbst.\n\nd) FALSCH. – Der Gegenstand des Definitions-Verwendungs-Paars ist nicht die Software, sondern eine Variable."
+  },
+  {
+    "id": 18,
+    "lo": "FL-3.2.4",
+    "k": "K3",
+    "pts": 1,
+    "text": "Sie wurden gebeten, an einem checklistenbasierten Review des folgenden Auszuges aus einer Anforderungsspezifikation eines Bibliothekssystems teilzunehmen:\n\nBibliothekare können:\n\n1. Neue Nutzer registrieren.\n2. Bücher von Nutzern zurücknehmen.\n3. Mahngebühren für Nutzer erheben.\n4. Neue Bücher mit deren ISBN, Autor und Titel dem System hinzufügen.\n5. Bücher aus dem System löschen.\n6. Systemrückmeldungen innerhalb von 5 Sekunden erhalten.\n\nKunden können:\n\n7. Maximal drei Bücher gleichzeitig ausleihen.\n8. Die Historie ihrer ausgeliehen/reservierten Bücher anschauen.\n9. Mit einer Mahngebühr wegen Nichtrückgabe eines Buches innerhalb von 3 Wochen belegt werden.\n10. Systemrückmeldungen innerhalb von 3 Sekunden erhalten.\n11. Ein Buch kostenfrei für maximal 4 Wochen ausleihen.\n12. Bücher reservieren (falls sie ausgeliehen sind).\n\nAlle Benutzer (Bibliothekare und Kunden):\n\n13. Können Bücher nach ISBN, Autor oder Titel suchen.\n14. Können den Systemkatalog durchstöbern.\n15. Das System soll innerhalb von 3 Sekunden auf Benutzeranfragen reagieren.\n16. Die Benutzungsschnittstelle soll einfach zu bedienen sein.\n\nIhnen wurde der Checklisteneintrag zugewiesen, der ein Review der Spezifikation auf Inkonsistenzen zwischen einzelnen Anforderungen vorsieht (beispielsweise Konflikte zwischen Anforderungen).\n\nWelche folgenden Kombinationen weisen Inkonsistenzen zwischen Anforderungspaaren RICHTIG auf?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) 6-10, 6-15, 7-12",
+      "b) 6-15, 9-11",
+      "c) 6-10, 6-15, 9-11",
+      "d) 6-15, 7-12"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Lernziel: FL-3.2.4 (K3) Ein Reviewverfahren auf ein Arbeitsergebnis anwenden können, um Fehlerzustände zu finden\n\nZu betrachten werden die potenziellen Inkonsistenzen:\n\n•        6-10 – Wenn Bibliothekare eine Systemrückmeldung innerhalb von 5 Sekunden erhalten sollen, dann ist das KONSISTENT dazu, dass Kunden eine Systemrückmeldung innerhalb von 3 Sekunden erhalten sollen.\n\n•        6-15 – Wenn Bibliothekare eine Systemrückmeldung innerhalb von 5 Sekunden erhalten sollen, dann ist das INKONSISTENT dazu, dass alle Benutzer eine Systemrückmeldung innerhalb von 3 Sekunden erhalten sollen.\n\n•        7-12 – Wenn sich Kunden maximal 3 Bücher gleichzeitig ausleihen können, dann ist das KONSISTENT dazu, dass sie sich Bücher reservieren können (falls sie ausgeliehen sind).\n\n•        9-11 – Wenn Kunden wegen Nichtrückgabe eines Buches innerhalb von 3 Wochen mit einer Mahngebühr belegt werden, dann ist das INKONSISTENT dazu, dass Bücher kostenlos für maximal 4 Wochen ausgeliehen werden dürfen. Die zwei Fristen sind unterschiedlich. Folglich ist Antwort b) korrekt."
+  },
+  {
+    "id": 19,
+    "lo": "TTA-3.2.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Nachfolgend sehen Sie den Pseudo-Code und den Kontrollflussgraph für ein Programm, das Verkaufsprovisionen berechnet und ausdruckt:\n\n[[asset:q19-code1]]\n\n[[asset:q19-cfg]]\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Der Kontrollflussgraph entspricht dem Pseudo-Code. Die zyklomatische Zahl nach Mc Cabe ist 3.",
+      "b) Der Kontrollflussgraph entspricht dem Pseudo-Code. Die zyklomatische Zahl nach Mc Cabe ist 4.",
+      "c) Der Kontrollflussgraph entspricht nicht dem Pseudo-Code. Die zyklomatische Zahl nach Mc Cabe ist 3.",
+      "d) Der Kontrollflussgraph entspricht dem Pseudo-Code. Die zyklomatische Zahl nach Mc Cabe ist 1."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Mögliche Berechnungen:\nKanten – Knoten + 2 → 10 Kanten – 9 Knoten + 2 = 3\nSchleifen + Entscheidungen + 1 → 1 Schleife + 1 Entscheidung +1 = 3\n\nb) FALSCH\n\nc) FALSCH\n\nd) FALSCH"
+  },
+  {
+    "id": 20,
+    "lo": "TTA-3.2.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "Nachfolgend sehen Sie den Pseudo-Code für ein Programm, das Verkaufsprovisionen berechnet und ausdruckt:\n\n[[asset:q20-code1]]\n\nDer Code enthält Datenflussanomalien in den Zeilen 6 und 12 (im Code fettgedruckt).\n\nWelche Beispiele für Datenflussanomalien sind in diesen Zeilen zu finden?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Zeile 6: der Variablen \"summe\" wird vor ihrer Verwendung kein Wert zugewiesen Zeile 12: Die Variable \"provision_min\" ist definiert, wird aber anschließend nicht verwendet",
+      "b) Zeile 6: der Variablen \"summe\" wird ein ungültiger Wert zugewiesen Zeile 12: Die Variable \"provision_min\" wird vor ihrer Verwendung neu definiert",
+      "c) Zeile 6: Variable \"summe\" ist außerhalb des Bereichs Zeile 12: der hart codierte\" Wert \"0.15\" sollte nicht verwendet werden",
+      "d) Zeile 6: die Variable \"nummer\" ist nicht definiert Zeile 12: die Variable \"summe\" wird vor ihrer Verwendung neu definiert"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Anomalien:\n\nsumme: In Zeile 6 verwendet, bevor sie definiert wird (ku-Anomalie) provision_min: in Zeile 12 definiert und anschließend nicht verwendet (dk-Anomalie)\n\nb) FALSCH\n\nc) FALSCH\n\nd) FALSCH"
+  },
+  {
+    "id": 21,
+    "lo": "TTA-3.2.3",
+    "k": "K3",
+    "pts": 1,
+    "text": "Nachfolgend sehen Sie den Pseudo-Code für ein Programm namens TRICKY.\n\n[[asset:q21-code1]]\n\nIn welchem Bereich könnte der Einsatz der statischen Analyse die Wartbarkeit des Programms am besten verbessern?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Umstrukturierung des Codes",
+      "b) Reduzieren der Programmkopplung",
+      "c) Erhöhen der Anzahl der Kommentare",
+      "d) Verbessern der Einrückung des Codes"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "Lernziel: TTA-3.2.3 (K3) Möglichkeiten vorschlagen, wie die Wartbarkeit von Programmcode durch statische Analyse verbessert werden kann\n\na) FALSCH – Der Code ist klar mit Steuerelementen strukturiert (z. B. Schleife, if-then-else). Es ist unwahrscheinlich, dass die statische Analyse Verbesserungen an der Kontrollstruktur identifizieren kann.\n\nb) FALSCH – Es sind keine globalen Variablen definiert und es werden keine anderen Programme aufgerufen. Die Kopplung ist kein Verbesserungsgebiet.\n\nc) KORREKT – Die statische Analyse kann mit Werkzeugunterstützung auch die Einhaltung von Programmierkonventionen und -richtlinien im vorhandenen Programmcode verifizieren (siehe Lehrplan A4Q SDET 2022 3.3.3). Dazu gehört auch die Kommentierung. Da das Programm keine Kommentare hat, würde dies als Bereich zur Verbesserung der Wartbarkeit des Codes hervorgehoben werden.\n\nd) FALSCH – Die statische Analyse kann Einrückungsregeln anwenden, aber im Fall des TRICKY-Programms ist eine ausreichende Einrückung vorhanden."
+  },
+  {
+    "id": 22,
+    "lo": "Schlüsselbegriffe",
+    "k": "K1",
+    "pts": 1,
+    "text": "Was ist checklistenbasiertes Testen?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Ein Testverfahren, bei dem Testfälle auf Basis des Wissens der Tester über frühere Fehler oder aus allgemeinem Wissen über Fehlerwirkungen abgeleitet werden.",
+      "b) Ein Testverfahren, das auf einer Analyse der Spezifikation einer Komponente oder eines Systems basiert.",
+      "c) Ein erfahrungsbasiertes Testverfahren, bei dem der erfahrene Tester z. B. eine Liste von Kontrollpunkten nutzt, welche beachtet, überprüft oder in Erinnerung gerufen werden müssen.",
+      "d) Ein Testansatz, bei dem die Tester dynamisch Tests entwerfen und durchführen, basierend auf ihrem Wissen, der Erkundung des Testelements und dem Ergebnis früherer Tests."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "Lernziel: FL-4.x (K1) Schlüsselbegriffe\n\na) FALSCH – Das ist die Definition für intuitive Testfallermittlung aus dem Glossar.\n\nb) FALSCH – Das ist die Definition für Black-Box-Testverfahren aus dem Glossar.\n\nc) KORREKT – Basierend auf der Definition für checklistenbasiertes Testen aus dem Glossar.\n\nd) FALSCH – Das ist (bis auf die Erwähnung des Testers) die Definition für exploratives Testen aus dem Glossar."
+  },
+  {
+    "id": 23,
+    "lo": "Schlüsselbegriffe",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt AM BESTEN exploratives Testen?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Eine Testvorgehensweise/ein Testansatz, bei der eine intensive Untersuchung des Hintergrunds des Testobjekts dazu genutzt wird, mögliche Schwachstellen zu identifizieren, die durch Testfälle untersucht werden.",
+      "b) Eine Testvorgehensweise/ein Testansatz bei dem die Tester, basierend auf ihrem Wissen, der Erkundung des Testelements und dem Ergebnis früherer Tests, dynamisch Tests entwerfen und durchführen.",
+      "c) Eine Testvorgehensweise/ein Testansatz, bei dem die Testaktivitäten – insbesondere Testanalyse und Testentwurf – als unterbrechungsfreie Sitzungen geplant werden, oft in Verbindung mit checklisten-basiertem Testen.",
+      "d) Eine Testvorgehensweise/ein Testansatz, das auf der Erfahrung, dem Wissen und der Intuition des Testers basiert."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Lernziel: Schlüsselbegriff: exploratives Testen\n\na) FALSCH – Exploratives Testen wird meistens bei kurzfristigen Zeitvorgaben durchgeführt, daher sind intensive Untersuchungen des Hintergrunds des Testobjekts eher ungewöhnlich.\n\nb) KORREKT – Ein Testansatz, bei dem die Tests dynamisch entworfen und ausgeführt werden, basierend auf Wissen, der Erkundung des Testelements und den Ergebnissen früherer Tests. (Definition Glossar)\n\nc) FALSCH – Basiert auf der Definition des Glossars für sitzungsbasiertes Testen, jedoch wurde Testdurchführung durch Testanalyse ersetzt.\n\nd) FALSCH – Basiert auf der Definition des Glossars für erfahrungsbasiertes Testen."
+  },
+  {
+    "id": 24,
+    "lo": "Schlüsselbegriffe",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen ist eine korrekte Definition für den modifizierter Bedingungs-/Entscheidungstest?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Ein White-Box-Testverfahren, bei dem Testfälle so entworfen werden, dass sich Ergebnisse atomarer Teilbedingungen unabhängig voneinander auf das Gesamtergebnis der Entscheidung auswirken.",
+      "b) Ein White-Box-Testverfahren, bei dem Testfälle im Hinblick auf die Ausführung von Ergebniskombinationen von atomaren Bedingungen entworfen werden.",
+      "c) Ein White-Box-Testverfahren, bei dem die Testfälle im Hinblick auf die Ausführung von Bedingungs- und Entscheidungsergebnissen entworfen werden.",
+      "d) Ein White-Box-Testverfahren, bei dem Testfälle im Hinblick auf die Ausführung von Entscheidungsausgängen entworfen werden."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Basierend auf der Definition modifizierter Bedingungs- /Entscheidungstests aus dem Glossar.\n\nb) FALSCH – Dies ist die Definition des Mehrfachbedingungstests aus dem Glossar.\n\nc) FALSCH – Dies ist die Definition des Bedingungs- /Entscheidungstests aus dem Glossar.\n\nd) FALSCH – Dies ist die Definition des Entscheidungstest aus dem Glossar."
+  },
+  {
+    "id": 25,
+    "lo": "FL-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Zuordnungen von Beschreibungen                          zu verschiedenen Kategorien von Testverfahren trifft AM BESTEN zu?\n\n1. Überdeckung wird auf Basis einer ausgewählten Struktur des Testobjektes gemessen.\n2. Verarbeitung innerhalb des Testobjekts wird überprüft.\n3. Tests basieren auf der Erfahrung über die Wahrscheinlichkeit von Fehlerzuständen und deren Verteilung.\n4. Abweichungen von Anforderungen werden überprüft.\n5. User-Stories werden als Testbasis herangezogen.\n\nVerwendete Notation für die folgenden Optionen:\n\nBlack             – Black-Box-Testverfahren\nWhite             – White-Box-Testverfahren\nErfahrung         – erfahrungsbasiertes Testverfahren\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Black – 4, 5; White – 1, 2; Erfahrung – 3",
+      "b) Black – 3; White – 1, 2; Erfahrung – 4, 5",
+      "c) Black – 4; White – 1, 2; Erfahrung – 3, 5",
+      "d) Black – 1, 3, 5; White – 2; Erfahrung – 4"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "Lernziel: FL-4.1.1 (K2) Die Eigenschaften, Gemeinsamkeiten und Unterschiede zwischen Black-Box- Testverfahren, White-Box-Testverfahren und erfahrungsbasierten Testverfahren erklären können\n\nDie korrekte Verknüpfung der Beschreibungen zu den verschiedenen Kategorien von Testverfahren entsprechend des Lehrplans, Kapitel 4 ist:\n\n- Black-Box-Testverfahren:\n\nAbweichungen von Anforderungen werden überprüft (4) User-Stories werden als Testbasis herangezogen (5) - White-Box-Testverfahren:\n\nÜberdeckung wird auf Basis einer ausgewählten Struktur des Testobjektes gemessen (1) Verarbeitung innerhalb des Testobjekts wird überprüft (2) - erfahrungsbasiertes Testverfahren:\n\nTests basieren auf der Wahrscheinlichkeit von Fehlerzuständen und deren Verteilung (3) Folglich ist Antwort a) korrekt."
+  },
+  {
+    "id": 26,
+    "lo": "FL-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Sie ergänzen die Funktionalität einer Mobilfunkanwendung. Bei der Vorbereitung des Komponentenintegrationstests haben Sie festgestellt, dass eine bisher sehr fehleranfällige Komponente von einem externen Hersteller geändert wurde, es dazu aber keine aktualisierte Spezifikation gibt.\n\nWelches der folgenden Testverfahren ist am BESTEN geeignet, um trotzdem die von Ihnen implementierte Funktionalität sinnvoll testen zu können?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) White-Box-Testverfahren",
+      "b) Erfahrungsbasiertes Testverfahren",
+      "c) Spezifikationsorientierte Testverfahren",
+      "d) Black-Box-Testverfahren"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Lernziel: FL-4.1.1 (K2) Die Eigenschaften, Gemeinsamkeiten und Unterschiede zwischen Black-Box- Testverfahren, White-Box-Testverfahren und erfahrungsbasierten Testverfahren erklären können\n\na) FALSCH – Testbedingungen, Testfälle und Testdaten werden aus einer Testbasis abgeleitet, die Code, Softwarearchitektur, Feinentwurf oder andere Arten an Informationen zur Struktur der Software enthalten kann. (vgl. A4Q SDET Lehrplan 2022; Abschnitt 4.1.1, 6. Absatz)\n\nb) KORREKT – Testbedingungen, Testfälle und Testdaten werden aus einer Testbasis abgeleitet, die schlicht aus den Kenntnissen und Erfahrungen der Tester, Entwickler, Benutzer und anderer Stakeholder bestehen kann. (vgl. A4Q SDET Lehrplan 2022; Abschnitt 4.1.1, 7. Absatz), es liegt zudem Erfahrung zu bisherigen Fehlern vor.\n\nc) FALSCH – das bezieht sich auf Black-Box-Testverfahren. Black-Box-Testverfahren (auch spezifikationsbasierte Verfahren genannt) basieren auf einer Analyse der zugehörigen Testbasis (z. B. formale Anforderungsdokumente, Spezifikationen, Anwendungsfälle, User-Stories oder Geschäftsprozesse). (vgl. A4Q SDET Lehrplan 2022; Abschnitt 4.1.1,\n2. Absatz)\n\nd) FALSCH – Gängige Merkmale von Black-Box-Testverfahren sind u. a.: Testbedingungen, Testfälle und Testdaten werden aus einer Testbasis abgeleitet, die Softwareanforderungen, Spezifikationen, Anwendungsfälle und User-Stories beinhalten kann. (vgl. A4Q SDET Lehrplan 2022; Abschnitt 4.1.1, 5. Absatz)"
+  },
+  {
+    "id": 27,
+    "lo": "FL-4.2.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Ein Gerät zur Messung des täglichen Strahlungseinfalls für Pflanzen ermittelt einen Einstrahlungswert für Sonnenschein. Dieser ergibt sich aus der Kombination der Anzahl der Stunden, in denen eine Pflanze der Sonne ausgesetzt ist (unter 3 Stunden, 3 bis 6 Stunden, über 6 Stunden) und der durchschnittlichen Intensität des Sonnenscheins (sehr niedrig, niedrig, mittel, hoch). Die folgenden Testfälle existieren bereits:\n\n[[asset:q27-tbl1]]\n\nWie viele Testfälle müssen mindestens noch erzeugt werden, um eine vollständige Überdeckung ALLER GÜLTIGEN Eingabe-Äquivalenz- klassen zu gewährleisten?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) 1",
+      "b) 2",
+      "c) 3",
+      "d) 4"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Lernziel: FL-4.2.1 (K3) Die Äquivalenzklassenbildung anwenden können, um Testfälle aus vorgegebenen Anforderungen abzuleiten\n\nDie folgenden Äquivalenzklassen können identifiziert werden:\n\n•   Dauer\n1. Unter 3 Stunden\n2. 3 – 6 Stunden\n3. Über 6 Stunden\n\n•   Intensität\n4. sehr niedrig\n5. niedrig\n6. mittel\n7. hoch\n\nDie existierenden Testfälle decken die folgenden gültigen Eingabe- Äquivalenzklassen ab:\nT1       1,5 (1)           sehr niedrig (4)\nT2       7,0 (3)           mittel (6)\nT3       0,5 (1)           sehr niedrig (4) Folglich sind die fehlenden gültigen Eingabe- Äquivalenzklassen (2), (5) und (7). Sie können mit zwei zusätzlichen Testfällen abgedeckt werden, da (2) sowohl mit (5) als auch mit (7) kombiniert werden kann. Folglich ist Antwort b) richtig."
+  },
+  {
+    "id": 28,
+    "lo": "FL-4.2.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "Eine Smart-Home-App misst die durchschnittliche Temperatur im Haus während der vergangenen Woche und gibt den Bewohnern basierend auf diesem Wert Informationen zur Umweltfreundlichkeit ihres Verhaltens. Das Feedback für die verschiedenen Durchschnittstemperaturbereiche (gerundet auf die nächsten ganzen °C) soll lauten:\n\nBis zu 10°C                 Eiskalt!\n11°C bis 15°C               Ganz schön schattig!\n16°C bis 19°C               Cool!\n20°C bis 22°C               Zu warm!\nÜber 22°C                   Sauna!\n\nWelches der folgenden Testsets liefert die höchste Überdeckung von Grenzwerten, wenn die Grenzwertanalyse ausschließlich unter Verwendung der Minimal- und Maximalwerte verwendet wird?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) 0°C,             11°C,              20°C,             22°C,   23°C",
+      "b) 9°C,             15°C,              19°C,             23°C,   100°C",
+      "c) 10°C,            16°C,              19°C,             22°C,   23°C",
+      "d) 14°C,            15°C,              18°C,             19°C,   21°C          22°C"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "Lernziel: FL-4.2.2 (K3) Die Grenzwertanalyse anwenden können, um Testfälle aus vorgegebenen Anforderungen abzuleiten\n\nBei den angegebenen Eingabe-Äquivalenzklassen ergibt das Zwei-Punkt- Grenzwertverfahren folgende 8 Überdeckungselemente:\n\n10°C, 11°C, 15°C, 16°C, 19°C, 20°C, 22°C, 23°C. Die Überdeckung durch die Optionen ist folglich jeweils:\n\na) 4 von 8 (11, 20 ,22 und 23).\n\nb) 3 von 8 (15, 19 und 23).\n\nc) 5 von 8 (10, 16, 19, 22 und 23).\n\nd) 3 von 8 (15, 19 und 22). Folglich ist Option c) richtig."
+  },
+  {
+    "id": 29,
+    "lo": "FL-4.2.3",
+    "k": "K3",
+    "pts": 1,
+    "text": "Den Beschäftigten einer Firma wird nur dann eine Jahresprämie ausbezahlt, wenn sie länger als ein Jahr im Unternehmen beschäftigt sind und ein Ziel erreichen, das vorher individuell vereinbart wurde.\n\nDieser Sachverhalt lässt sich in einer Entscheidungstabelle darstellen:\n\n[[asset:q29-tbl1]]\n\nWelcher der folgenden Testfälle beschreibt eine in der Praxis vorkommende Situation und fehlt in der oben aufgeführten Entscheidungstabelle?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Bedingung1 = JA, Bedingung2 = NEIN, Bedingung3 = JA, Aktion = NEIN",
+      "b) Bedingung1 = JA, Bedingung2 = JA, Bedingung3 = NEIN, Aktion = JA",
+      "c) Bedingung1 = NEIN, Bedingung2 = NEIN, Bedingung3 = JA, Aktion = NEIN",
+      "d) Bedingung1 = NEIN, Bedingung2 = JA, Bedingung3 = NEIN, Aktion = NEIN"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "Lernziel: FL-4.2.3 (K3) Entscheidungstabellentests anwenden können, um Testfälle aus vorgegebenen Anforderungen abzuleiten.\n\na) FALSCH – Wenn kein Ziel vereinbart wurde, kann das nicht vereinbarte Ziel auch nicht erreicht werden. Daher handelt es sich nicht um ein in der Praxis vorkommendes Szenario.\n\nb) FALSCH – Der Testfall ist fachlich falsch, da unter diesen Bedingungen keine Prämie gezahlt wird, weil das vereinbarte Ziel nicht erreicht wurde.\n\nc) FALSCH – Wenn kein Ziel vereinbart wurde, kann das nicht vereinbarte Ziel auch nicht erreicht werden. Daher handelt es sich nicht um ein in der Praxis vorkommendes Szenario. (Vgl. Antwort a)\n\nd) KORREKT – Der Testfall beschreibt die Situation, dass sowohl die zu kurze Beschäftigungszeit als auch das Nichterreichen des vereinbarten Ziels zur Nichtauszahlung der Prämie führen. Diese Situation kann in der Praxis vorkommen, fehlt aber in der Entscheidungstabelle."
+  },
+  {
+    "id": 30,
+    "lo": "FL-4.2.4",
+    "k": "K3",
+    "pts": 1,
+    "text": "Gegeben sei folgendes Zustandsübergangsdiagramm für die Software eines Batterie-Ladegerätes:\n\n[[asset:q30-state]]\n\nWelche der folgenden Zustandsübergangs-Sequenzen ergibt die höchste Überdeckung der Zustandsübergänge?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Aus → Warten → Aus → Warten → Erhaltungsladen → Laden → Hoch → Laden → Niedrig",
+      "b) Warten → Erhaltungsladen → Warten → Aus → Warten → Erhaltungsladen → Laden → Niedrig → Laden",
+      "c) Hoch → Laden → Niedrig → Laden → Erhaltungsladen → Warten → Erhaltungsladen → Warten → Erhaltungsladen",
+      "d) Warten → Erhaltungsladen → Laden → Hoch → Laden → Erhaltungsladen → Warten → Aus → Warten"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "Lernziel: FL-4.2.4 (K3) Zustandsübergangstests anwenden können, um Testfälle aus vorgegebenen Anforderungen abzuleiten\n\nIm folgenden Zustandsdiagramm sind die Zustandsübergänge nummeriert:\n\n[[asset:q30-annot]]\n\nDie Sequenzen in den Antwortoptionen erreichen folgende Überdeckung der Zustandsübergänge:\n\na) FALSCH – Aus → (1) Warten → (2) Aus → (1) Warten → (3) Erhaltungsladen → (5) Laden → (9) Hoch → (10) Laden → (7) Niedrig. Das sind 7/10=70%.\n\nb) FALSCH – Warten → (3) Erhaltungsladen → (4) Warten → (2) Aus → (1) Warten → (3) Erhaltungsladen → (5) Laden → (7) Niedrig → (8) Laden. Das sind 7/10=70%.\n\nc) FALSCH – Hoch → (10) Laden → (7) Niedrig → (8) Laden → (6) Erhaltungsladen → (4) Warten → (3) Erhaltungsladen → (4) Warten → (3) Erhaltungsladen. Das sind 6/10=60%.\n\nd) KORREKT – Warten → (3) Erhaltungsladen → (5) Laden → (9) Hoch → (10) Laden → (6) Erhaltungsladen → (4) Warten → (2) Aus → (1) Warten. Das sind 8/10=80%. Antwortoption d) erreicht mit 80% die höchste Überdeckung der Zustandsübergänge."
+  },
+  {
+    "id": 31,
+    "lo": "FL-4.2.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt AM BESTEN, wie Testfälle aus Anwendungsfällen entworfen werden?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Testfälle werden entworfen, um das im Anwendungsfall definierte grundlegende, Sonder- und Fehlerbehandlungs-Verhalten des Systems in Interaktion mit den Akteuren auszuführen.",
+      "b) Testfälle werden entworfen, indem die vom Anwendungsfall betroffenen Komponenten identifiziert und Integrationstests erstellt werden, welche die Interaktionen dieser Komponenten ausführen.",
+      "c) Testfälle werden entworfen, indem die Interaktionen der Akteure mit dem System analysiert werden, um sicherzustellen, dass die Benutzungsschnittstelle des Systems leicht bedienbar ist.",
+      "d) Testfälle werden entworfen, mit denen alle Entscheidungspunkte im Geschäftsprozess des Anwendungsfalls ausgeführt werden, um eine 100%-ige Entscheidungsüberdeckung zu erreichen."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "Lernziel: FL-4.2.5 (K2) Erklären können, wie man Testfälle aus einem Anwendungsfall ableitet\n\na) KORREKT – Im Lehrplan unter 4.2.5 Anwendungsfallbasierter Test steht: Jeder Anwendungsfall definiert ein bestimmtes Verhalten, das ein Objekt in Zusammenarbeit mit einem oder mehreren Akteuren ausführen kann. Weiter unten ist zu lesen: Ein Anwendungsfall besteht aus mehreren möglichen Varianten seines grundlegenden Verhaltens, was u. a. Sonder- und Fehlerbehandlungen einschließt (Antwort- und Wiederherstellungsmechanismen des Systems nach Programmier-, Anwendungs- und Kommunikationsfehler, die z. B. zu Fehlermeldungen führen). Tests werden entworfen, um das definierte Verhalten nachzuweisen (grundlegendes, außergewöhnliches oder alternatives Verhalten und die Fehlerbehandlungsroutinen).\n\nb) FALSCH – Anwendungsfälle spezifizieren normalerweise Anforderungen und schließen daher nicht die Komponenten ein, die sie implementieren.\n\nc) FALSCH – Anwendungsfallbasierte Tests führen zwar Interaktionen des Systems mit einem oder mehreren Akteuren aus. Aber sie konzentrieren sich auf die Funktionalität und betrachten nicht die leichte Bedienbarkeit der Benutzungsschnittstelle.\n\nd) FALSCH – Tests decken zwar die Ablaufpfade des Anwendungsfalls ab, es geht jedoch nicht um eine Entscheidungsüberdeckung in diesen Pfaden, und bestimmt nicht in den Kontrollfluss im Geschäftsprozess."
+  },
+  {
+    "id": 32,
+    "lo": "FL-4.2.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "Sie erstellen eine Applikation (automatisches Einparken) für einen Automobilhersteller.\n\nFolgende Anwendungsfälle wurden von einem Kollegen erstellt:\n\n-   UC 1 Die Sensorik ermittelt den möglichen Parkplatz\n-   UC 2 Das Fahrzeug führt den Einparkvorgang selbständig durch\n-   UC 3 Das Resultat des Einparkvorgangs erscheint auf dem Display\n\nBasierend darauf wurden folgende abstrakten (logischen) Testfälle erstellt. Welcher dieser Testfälle passt zum Anwendungsfall UC 3?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Ein ausreichend großer Längsparkplatz wurde vom Parkassistenten identifiziert.",
+      "b) Der Fahrer bekommt auf seinem Display die Information, dass das Fahrzeug erfolgreich eingeparkt wurde.",
+      "c) Das Einparken ist wegen eines plötzlich auftretenden Hindernisses nicht möglich, der Einparkvorgang wird automatisch abgebrochen.",
+      "d) Der Längsparkplatz wird nicht erkannt, obwohl der Platz ausreichend ist (Sensoren verdreckt)."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Lernziel: FL-4.2.5 (K2) Erklären können, wie man Testfälle aus einem Anwendungsfall ableitet\n\na) FALSCH – passt zu UC 1\n\nb) KORREKT – dieser Testfall passt zu UC 3, da das Resultat auf dem Display angezeigt wird.\n\nc) FALSCH – passt zu UC 2\n\nd) FALSCH – passt zu UC 1"
+  },
+  {
+    "id": 33,
+    "lo": "FL-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Beschreibungen der Anweisungsüberdeckung ist korrekt?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Die Anweisungsüberdeckung ist ein Maß für die Anzahl der Quellcodezeilen (ohne Kommentare), die im Test ausgeführt wurden.",
+      "b) Die Anweisungsüberdeckung ist ein Maß für den prozentualen Anteil der ausführbaren Anweisungen im Quellcode, die im Test ausgeführt wurden.",
+      "c) Die Anweisungsüberdeckung ist ein Maß für den prozentualen Anteil der Quellcodezeilen (ohne Kommentare), die im Test ausgeführt wurden.",
+      "d) Die Anweisungsüberdeckung ist ein Maß für die Anzahl der ausführbaren Anweisungen im Quellcode, die im Test ausgeführt wurden."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Lernziel: FL-4.3.1 (K2) Anweisungsüberdeckung erklären können\n\nGlossareintrag Anweisungsüberdeckung: Der Anteil der Anweisungen, die durch eine Testsuite ausgeführt wurden, bezogen auf alle Anweisungen. Lehrplan A4Q SDET 2022 Kapitel 4.3.1: Anweisungstests untersuchen die (potenziell) ausführbaren Anweisungen im Code. Die Überdeckung wird an der Anzahl der im Test ausgeführten Anweisungen dividiert durch die Gesamtzahl aller ausführbaren Anweisungen insgesamt im Testobjekt gemessen – üblicherweise als Prozentsatz dargestellt.\n\na) FALSCH – Die Anweisungsüberdeckung bezieht sich auf durch Tests ausführbare Anweisungen. In einer Zeile können mehrere solcher Anweisungen stehen, und eine Anweisung kann sich über mehrere Zeilen erstrecken.\n\nb) KORREKT – Der prozentuale Anteil der ausführbaren Anweisungen ist der Anteil im Test ausgeführter Anweisungen bezogen auf alle Anweisungen, also (Anzahl durch die Testsuite ausgeführter Anweisungen / Anzahl alle Anweisungen) x 100%.\n\nc) FALSCH – Die Anweisungsüberdeckung bezieht sich nicht auf Quellcodezeilen, sondern auf durch Tests ausführbare Anweisungen, s. Begründung zu a).\n\nd) FALSCH – Die Anweisungsüberdeckung bezieht sich nicht auf die absolute Anzahl der von der Testsuite ausgeführten Anweisungen, sondern auf deren Anteil bezogen auf alle ausführbaren Anweisungen."
+  },
+  {
+    "id": 34,
+    "lo": "FL-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen                        ist   eine    Beschreibung        für Anweisungsüberdeckung?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Es handelt sich um eine Metrik zur Berechnung und Messung des prozentualen Anteils der ausgeführten Testfälle.",
+      "b) Es handelt sich um eine Metrik, die den Prozentsatz der ausgeführten Anweisungen im Code angibt.",
+      "c) Es handelt sich um eine Metrik zur Berechnung und Messung der Anzahl von Anweisungen im Code, die durch Testfälle ausgeführt wurden, die keine Fehlerwirkung aufgedeckt haben.",
+      "d) Es handelt sich um eine Metrik, die eine wahr/falsch-Bestätigung gibt, ob alle Anweisungen abgedeckt sind oder nicht."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Lernziel: FL-4.3.1 (K2) Anweisungsüberdeckung erklären können.\n\na) FALSCH – Anweisungsüberdeckung misst den prozentualen Anteil der durch Testfälle ausgeführten (überdeckten) Anweisungen und hat keinen Bezug zur Zahl ausgeführten Testfälle.\n\nb) KORREKT – Lehrplan A4Q SDET 2022; Abschnitt 4.3.1: Der Anweisungstest führt die ausführbaren Anweisungen des Codes aus. Die Anweisungsüberdeckung wird als die Anzahl der von den Tests ausgeführten Anweisungen gemessen, geteilt durch die Gesamtzahl der ausführbaren Anweisungen im Testobjekt, normalerweise ausgedrückt in Prozent.\n\nc) FALSCH – Die Abdeckung misst nicht bestanden/fehlgeschlagen bzw. Anweisungsüberdeckung berücksichtigt nicht, ob ein Test erfolgreich ausgeführt wurde.\n\nd) FALSCH – Anweisungsüberdeckung ist eine Metrik, die Prozentwerte liefert und keine wahr/falsch-Aussage macht. Letzteres gilt nur für die Forderung nach 100% Anweisungsüberdeckung."
+  },
+  {
+    "id": 35,
+    "lo": "FL-4.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Die folgende Aussage bezieht sich auf Entscheidungsüberdeckung:\n\n\"Wenn der Code nur aus einer einzigen IF-Anweisung (also keinen Schleifen oder CASE-Anweisungen) besteht und auch sonst durch den Test nicht geschachtelt aufgerufen wird, dann wird bei einem einzelnen Testfall, der ausgeführt wird, eine Entscheidungsüberdeckung von 50% erreicht.\"\n\nWelcher der folgenden Aussagen ist zutreffend?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Die Aussage ist wahr. Ein einzelner Testfall erzielt eine 100% Anweisungsüberdeckung und daher 50% Entscheidungsüberdeckung.",
+      "b) Die Aussage ist wahr. Bei einem einzelnen Testfall ist der Entscheidungsausgang der IF-Anweisung entweder wahr oder falsch.",
+      "c) Die Aussage ist falsch. Ein einzelner Testfall kann in diesem Fall nur eine Entscheidungsüberdeckung von 25% garantieren.",
+      "d) Die Aussage ist falsch. Die Aussage ist zu weit gefasst. Sie kann abhängig von der getesteten Software richtig sein oder nicht."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Lernziel: FL-4.3.2 (K2) Entscheidungsüberdeckung erklären können.\n\na) FALSCH – Während die gemachte Aussage wahr ist, ist die Erklärung falsch; weil die Beziehung zwischen Anweisungs- und Entscheidungsüberdeckung falsch dargestellt ist. (vgl. Lehrplan A4Q SDET 2022; Abschnitt 4.3.3)\n\nb) KORREKT – Da jeder Testfall dazu führt, dass das Ergebnis der IF-Anweisung entweder WAHR oder FALSCH ist, haben wir definitiv 50% Entscheidungsüberdeckung erreicht. (vgl. Lehrplan A4Q SDET 2022; Abschnitt 4.3.2, 2. Absatz)\n\nc) FALSCH – Ein einzelner Testfall kann mehr als 25% Entscheidungs-überdeckung erreichen; bei der obigen Aussage sind es 50% Entscheidungsüberdeckung (vgl. Begründung zu Antwort b)\n\nd) FALSCH – Die obige Aussage ist konkret und immer wahr; weil durch jeden einzelnen Testfall immer eine Entscheidungsüberdeckung von 50% erreicht wird. (vgl. Begründung zu Antwort b)"
+  },
+  {
+    "id": 36,
+    "lo": "FL-4.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Beschreibungen der Entscheidungsüberdeckung ist zutreffend?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) Die Entscheidungsüberdeckung ist ein Maß für den prozentualen Anteil möglicher Pfade durch den Quellcode, die im Test ausgeführt wurden.",
+      "b) Die Entscheidungsüberdeckung ist ein Maß für den prozentualen Anteil der Geschäftsabläufe durch die Komponente, die im Test ausgeführt wurden.",
+      "c) Die Entscheidungsüberdeckung ist ein Maß für die „IF-Anweisungen“ im Quellcode, die im Test sowohl mit dem Ergebnis „WAHR“ als auch mit „FALSCH“ ausgeführt wurden.",
+      "d) Die Entscheidungsüberdeckung ist ein Maß für den Anteil der Entscheidungsergebnisse, die im Test ausgeführt wurden."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "Lernziel: FL-4.3.2 (K2) Entscheidungsüberdeckung erklären können\n\nLehrplan 4.3.2: Der Überdeckungsgrad wird gemessen anhand der Anzahl der Entscheidungsergebnisse, die durch die Tests ausgeführt werden, dividiert durch die Gesamtzahl an möglichen Entscheidungsergebnissen im Testobjekt – üblicherweise als Prozentsatz dargestellt.\n\na) FALSCH – Ein Pfad durch den Quellcode ist ein möglicher Ablauf durch den Quellcode vom Eintrittspunkt zum Austrittspunkt, der eine Reihe von Entscheidungsergebnissen ausführen kann. Zwei verschiedene Pfade können bis auf einen die gleichen Entscheidungsergebnisse ausführen. Wird nur ein einziges Entscheidungsergebnis geändert, so wird ein anderer Pfad durchlaufen. Testfälle, die eine vollständige Entscheidungsabdeckung erzielen, sind in der Regel eine winzige Teilmenge der Testfälle, die eine vollständige Pfadüberdeckung erzielen würden. In der Praxis haben die meisten nicht-trivialen Programme (und alle Programme mit unbeschränkten\nSchleifen, z. B. 'while'-Schleifen) eine potenziell unendliche Anzahl möglicher Pfade, sodass die Messung des abgedeckten Prozentsatzes praktisch unmöglich ist.\n\nb) FALSCH – Geschäftsabläufe können im anwendungsfallbasierten Test betrachtet werden. Sie werden jedoch nicht durch die Entscheidungsüberdeckung gemessen, auch wenn sie ein oder mehrere Entscheidungsergebnisse ausführen würden.\n\nc) FALSCH – „IF-Anweisungen“ beinhalten zwar Entscheidungen, sind jedoch nicht die einzige Quelle für Entscheidungen, da z. B. auch Schleifen oder „CASE-Anweisungen“ Entscheidungen beinhalten, aufgrund deren Ergebnis sie ausgeführt oder nicht ausgeführt werden.\n\nd) KORREKT – S. Lehrplan-Auszug 4.3.2 oben."
+  },
+  {
+    "id": 37,
+    "lo": "FL-4.3.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche   Aussage    über     die    Beziehung   zwischen     der Anweisungsüberdeckung und der Entscheidungsüberdeckung ist wahr?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) 100% Entscheidungsüberdeckung schließt 100% Anweisungsüberdeckung ein.",
+      "b) 100% Anweisungsüberdeckung schließt 100% Entscheidungsüberdeckung ein.",
+      "c) 50% Entscheidungsüberdeckung schließt 50% Anweisungsüberdeckung ein.",
+      "d) Entscheidungsüberdeckung kann nie 100% erreichen."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "Lernziel: FL-4.3.3 (K2) Die Bedeutung von Anweisungs- und Entscheidungsüberdeckung erklären können.\n\na) KORREKT – Die Aussage ist wahr, weil die Ausführung aller Entscheidungen zwangsläufig auch die Ausführung aller Anweisungen bedingt. (siehe Lehrplan A4Q SDET 2022; Abschnitt 4.3.3; 3. Absatz).\n\nb) FALSCH – Die Aussage ist falsch, weil die Ausführung aller Anweisungen nicht zwangsläufig auch eine Ausführung aller Entscheidungen bedingt (siehe Lehrplan A4Q SDET 2022, Abschnitt 4.3.3; 3. Absatz).\n\nc) FALSCH – Die Aussage ist falsch, weil z. B. bei dem Code aus Aufgabe 21 in einem Zweig 3 Anweisungen und in dem anderen Zweig 1 Anweisung vorkommen kann - und sonst keine Anweisungen im Code vorkommen. Führt nun ein Testfall den Zweig mit den 3 Anweisungen aus, ergibt sich 50% Entscheidungsüberdeckung und 75% Anweisungsüberdeckung, da 3 der 4 Anweisungen ausgeführt werden. (siehe Lehrplan A4Q SDET 2022, Abschnitt 4.3.3).\n\nd) FALSCH – Die Aussage ist falsch, weil z. B. für den Code von Aufgabe 21 zwei (2) Testfälle ausreichen, die einmal das Ergebnis der (einzigen) IF-Anweisung WAHR und einmal FALSCH machen. Dann liegt eine Entscheidungsüberdeckung von 2/2, also 100%, vor. (siehe Lehrplan A4Q SDET 2022, Abschnitt 4.3.3)."
+  },
+  {
+    "id": 38,
+    "lo": "FL-4.3.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Unten finden Sie den Pseudo-Code für das Programm EASY:\n\n[[asset:q38-code1]]\n\nWelche der folgenden Aussagen zur Anzahl der Testfälle zu Anweisungs- und Entscheidungsüberdeckung ist KORREKT?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) 100% Anweisungsüberdeckung benötigt mindestens 4 Testfälle 100% Entscheidungsüberdeckung benötigt mindestens 2 Testfälle",
+      "b) 100% Anweisungsüberdeckung benötigt mindestens 2 Testfälle 100% Entscheidungsüberdeckung benötigt mindestens 4 Testfälle",
+      "c) 100% Anweisungsüberdeckung benötigt mindestens 2 Testfälle 100% Entscheidungsüberdeckung benötigt mindestens 2 Testfälle",
+      "d) 100% Anweisungsüberdeckung benötigt mindestens 2 Testfälle 100% Entscheidungsüberdeckung benötigt mindestens 3 Testfälle"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH\n\nb) FALSCH\n\nc) FALSCH\n\nd) KORREKT – Alle Anweisungen können mit zwei Testfällen und alle Entscheidungen mit 3 Testfällen abgetestet werden. Für 100% Anweisungsüberdeckung:\nPfad 1: (easy = false)\nPfad 2: (easy = true, var1 = 5)\n\nZusätzlich für 100% Entscheidungsüberdeckung:\nPfad 3: (easy = true, var1 != 5)"
+  },
+  {
+    "id": 39,
+    "lo": "TTA-2.2.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Betrachten Sie die vereinfachte Logik eines Teeautomaten:\n\n[[asset:q39-code1]]\n\nWie   viele Testfälle  würden    Sie  entwerfen,     um            100      % Anweisungsüberdeckung für den Teeautomaten zu erzielen?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) 3",
+      "b) 2",
+      "c) 5",
+      "d) 6"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Die drei Testfälle sind durch die folgenden Eingaben definiert:\n1. Ausreichend Wasser, Milch, fettarm, Zucker\n2. Ausreichend Wasser, Milch, nicht fettarm, Zucker oder kein Zucker\n3. Nicht genügend Wasser\n\nb) FALSCH\n\nc) FALSCH\n\nd) FALSCH"
+  },
+  {
+    "id": 40,
+    "lo": "TTA-2.3.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Die vereinfachte Logik eines Programms wurde wie folgt spezifiziert:\n\n[[asset:q40-code1]]\n\nWie   viele   Testfälle würden      Sie              entwerfen,       um       100% Entscheidungsüberdeckung zu erzielen?\n\nWählen Sie genau EINE Antwort aus.",
+    "options": [
+      "a) 2",
+      "b) 3",
+      "c) 4",
+      "d) 5"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH\n\nb) FALSCH\n\nc) KORREKT – Die folgenden Bedingungen stellen sicher, dass alle Entscheidungsergebnisse getestet sind: 1) A, B 2) A, nicht B 3) nicht A, C 4) nicht A, nicht C\n\nd) FALSCH Platz für Ihre Notizen:\n\n(werden bei der Korrektur weder gelesen noch bewertet) Platz für Ihre Notizen:\n\n(werden bei der Korrektur weder gelesen noch bewertet) Platz für Ihre Notizen:\n\n(werden bei der Korrektur weder gelesen noch bewertet) Platz für Ihre Notizen:\n\n(werden bei der Korrektur weder gelesen noch bewertet)"
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 60 * 60;
+      const EXT_SECONDS = 75 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "75"
+          : "60";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "Der Timer zählt von 75:00 herunter (60 Minuten + 25 % Übungszeit). Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben."
+          : "Der Timer zählt von 60:00 herunter. Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {"q19-cfg": {"src": "assets/q19-cfg.png", "alt": "Kontrollflussgraph zu Frage 19"}, "q30-state": {"src": "assets/q30-state.png", "alt": "Zustandsmodell eines Ladegeräts: WAIT, OFF, TRICKLE, CHARGE, LOW, HIGH"}, "q30-annot": {"src": "assets/q30-annot.png", "alt": "Zustandsmodell mit nummerierten Übergängen 1 bis 10"}, "q19-code1": {"html": "<pre class=\"q-code\">00 program Provisionsberechnung\n01 summe, nummer: integer\n02 provision_max, provision_min: real\n03 begin\n04     read (nummer)\n05     while nummer ≠ -1 loop\n06           summe = summe + nummer\n07           read (nummer)\n08     endloop\n09     if summe &gt; 1000 then\n10           provision_max = 100 + 0.2 * (summe – 1000)\n11     else\n12           provision_min = 0.15 * summe\n13     endif\n14     write (“Die Provision dieses beträgt:”)\n15     write (provision_max)\n16 end program Provisionsberechnung</pre>"}, "q20-code1": {"html": "<pre class=\"q-code\">00 program Provisionsberechnung\n01 summe, nummer : integer\n02 provision_max, provision_min : real\n03 begin\n04     read ( nummer )\n05     while nummer ≠ -1 loop\n<b>06           summe = summe + nummer</b>\n07           read ( nummer )\n08     endloop\n09     if summe &gt; 1000 then\n10           provision_max = 100 + 0.2 * ( summe – 1000 )\n11     else\n<b>12           provision_min = 0.15 * summe</b>\n13     endif\n14     write ( “Die Provision dieses beträgt:”)\n15     write ( provision_max )\n16 end program Provisionsberechnung</pre>"}, "q21-code1": {"html": "<pre class=\"q-code\">00      program TRICKY\n01      var1, var2, var3 : integer\n02      begin\n03         read ( var2 )\n04         read ( var1 )\n05         while var2 &lt; 10 loop\n06            var3 = var2 + var1\n07            var2 = 4\n08            var1 = var2 + 1\n09            print ( var3 )\n10            if var1 = 5 then\n11               print ( var1 )\n12            else\n13               print ( var1+1 )\n14            endif\n15            var2 = var2 + 1\n16         endloop\n17         write ( „Mensch, das war knifflig!“ )\n18         write ( „Die Antwort lautet aber...“ )\n19         write ( var2+var1 )\n20      end program TRICKY</pre>"}, "q27-tbl1": {"html": "<table><thead><tr><th></th><th>Dauer (Stunden)</th><th>Intensität</th><th>Einstrahlung</th></tr></thead><tbody><tr><td>T1</td><td>1,5</td><td>sehr niedrig</td><td>10</td></tr><tr><td>T2</td><td>7,0</td><td>mittel</td><td>60</td></tr><tr><td>T3</td><td>0,5</td><td>sehr niedrig</td><td>10</td></tr></tbody></table>"}, "q29-tbl1": {"html": "<table><thead><tr><th>Testfall-ID</th><th></th><th>T1</th><th>T2</th><th>T3</th><th>T4</th></tr></thead><tbody><tr><td>Bedingung1</td><td>Beschäftigung länger als ein Jahr?</td><td>JA</td><td>NEIN</td><td>NEIN</td><td>JA</td></tr><tr><td>Bedingung2</td><td>Ziel vereinbart?</td><td>NEIN</td><td>NEIN</td><td>JA</td><td>JA</td></tr><tr><td>Bedingung3</td><td>Ziel erreicht?</td><td>NEIN</td><td>NEIN</td><td>JA</td><td>JA</td></tr><tr><td>Aktion</td><td>Auszahlung der Jahresprämie?</td><td>NEIN</td><td>NEIN</td><td>NEIN</td><td>JA</td></tr></tbody></table>"}, "q38-code1": {"html": "<pre class=\"q-code\">00      program EASY\n01      var1, var2, var3: integer\n02      easy: boolean\n02      begin\n03            read (var2)\n04            read (var1)\n05            read (easy)\n06            If (easy = true) then\n07                    var3 = var2 + var1\n08                    print (var3)\n09                    if (var1 = 5) then\n10                            print (var1)\n11                    endif\n12                    var2 = var2 + 1\n13            else\n14                    var2 = 0\n15                    write (“Wow – that was tricky!”)\n16            endif\n17            write (var2)\n18      end program EASY</pre>"}, "q39-code1": {"html": "<pre class=\"q-code\">Teeautomat einschalten\nIF ausreichend Wasser THEN\n       Wasser kochen\n       Tee hinzufügen\n       Meldung “Milch?” anzeigen\n       IF Milch = ja THEN\n              Meldung “fettarm?” anzeigen\n              IF fettarm = ja THEN\n                       Fettarme Milch hinzufügen\n              ELSE Vollmilch hinzufügen\n              ENDIF\n       ENDIF\n       Meldung “Zucker?” anzeigen\n       IF Zucker = ja THEN\n              Zucker hinzufügen\n       ENDIF\n       Umrühren\n       3 Minuten warten\n       Meldung “Bitte nehmen Sie Ihren Tee” anzeigen\nELSE\n       Meldung “Bitte Wasser nachfüllen” anzeigen\nENDIF</pre>"}, "q40-code1": {"html": "<pre class=\"q-code\">Anweisung P\nIF A THEN\n       IF B THEN\n              Anweisung Q\n       ELSE\n              Anweisung R\n       ENDIF\nELSE\n       Anweisung S\n       IF C THEN\n              Anweisung T\n       ELSE\n              Anweisung U\n       ENDIF\nENDIF\nAnweisung V</pre>"}};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          if (asset.html) return `<div class="q-table-wrap">${asset.html}</div>`;
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Zum Vergrößern öffnen</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo}${q.k ? " (" + q.k + ")" : ""}</span>
+                      <span class="q-pts">${q.pts} Punkt${q.pts > 1 ? "e" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="${escHtml(q.imageAlt || ('Abbildung zu Frage ' + q.id))}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Prüfung abgeben?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `Es sind noch <strong style="color:var(--warn)">${unanswered} Frage${unanswered > 1 ? "n" : ""} unbeantwortet</strong>. Unbeantwortete Fragen ergeben 0 Punkte.<br><br>Trotzdem abgeben?`
+            : `Alle ${questions.length} Fragen sind beantwortet. Prüfung jetzt abgeben?`;
+        document.getElementById("confirm-yes-btn").textContent = "Abgeben";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Prüfung neu starten?";
+        document.getElementById("confirm-msg").innerHTML =
+          "Alle Antworten gehen verloren. Der Timer wird zurückgesetzt auf " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Möchten Sie fortfahren?";
+        document.getElementById("confirm-yes-btn").textContent = "Neu starten";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Unbeantwortet &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Richtig (+" + q.pts + (q.pts > 1 ? " Punkte)" : " Punkt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Falsch &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (Zeit abgelaufen)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " von " + totalPoints + " Punkten (" + correctCount + " von " + questions.length + " Fragen richtig)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? `✓ BESTANDEN (≥ ${Math.ceil(totalPoints * 0.65)} Punkte)`
+          : `✗ NICHT BESTANDEN (< ${Math.ceil(totalPoints * 0.65)} Punkte)`;
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

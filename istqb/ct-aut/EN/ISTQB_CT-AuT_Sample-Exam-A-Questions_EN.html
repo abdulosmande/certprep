@@ -1,0 +1,1970 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CT-AuT v2.1 — Sample Exam Set A v2.3</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Specialist Level</div>
+        <h1>CT-AuT v2.1<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">ISTQB® Certified Tester Automotive Software Tester · Sample Exam Set A v2.3 · Syllabus v2.1. The timer starts when you begin the exam.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">60</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Source: ISTQB® — ISTQB_CT-AuT_Sample-Exam-A-Questions_EN.pdf; ISTQB_CT-AuT_Sample-Exam-A-Answers_EN.pdf. Copyright © ISTQB®. Questions, tables, diagrams and rationales follow these sources. Authors are acknowledged in the source PDFs.</p>
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">60 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">75 min</span>
+            <span class="time-opt-lbl">+25% practice time</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optional practice allowance: 25% extra time (15 minutes).</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 60:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CT-AuT v2.1 · Sample Exam Set A v2.3</span
+            >
+            <span class="exam-title">Certified Tester – Automotive Software Tester</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 answered
+            </div>
+            <div class="timer" id="timer">60:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 questions (40 points) · <strong>65% (≥ 26 of 40 points)</strong>
+            to pass · each question is worth one point; all questions are
+            single-choice
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "AuT-1.3",
+    "k": "K1",
+    "pts": 1,
+    "text": "What are the six generic stages in the automotive system lifecycle according to ISO 24748- 1:2024?\n\nSelect ONE option.",
+    "options": [
+      "a) Concept, Development, Acceptance, Utilization, Support, Retirement",
+      "b) Concept, Development, Production, Release, Support, Retirement",
+      "c) Concept, Implementation, Production, Utilization, Support, Retirement",
+      "d) Concept, Development, Production, Utilization, Support, Retirement"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. The Acceptance stage is incorrect.\n\nb) Is not correct. The Release stage is incorrect.\n\nc) Is not correct. The Implementation stage is incorrect.\n\nd) Is correct. All stages are listed in the correct order."
+  },
+  {
+    "id": 2,
+    "lo": "AuT-1.4",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following statements is TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) The release recommendation of the Certified Automotive Software Tester does NOT have any influence on the release",
+      "b) The release level of the test object does NOT have any influence on the work of the Certified Automotive Software Tester",
+      "c) The release recommendation of the Certified Automotive Software Tester does NOT have any influence on the level of maturity of the corresponding software",
+      "d) The release recommendation does NOT have any influence on the scope of delivery"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. The release recommendation has a considerable influence on the release.\n\nb) Is not correct. The release level affects the test strategy.\n\nc) Is correct. The testing affects the level of software maturity by the detection of defects; the release recommendation, however, cannot affect the maturity level.\n\nd) Is not correct. The scope of delivery can be considerably influenced by the release recommendation."
+  },
+  {
+    "id": 3,
+    "lo": "AuT-1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "With which of the measures listed below can the objectives of an increasingly complex software development project be best achieved in the short run?\n\nSelect ONE option.",
+    "options": [
+      "a) By insourcing an outsourced project",
+      "b) By using effective methods and processes",
+      "c) By ensuring efficient qualification of employees",
+      "d) By outsourcing of complex projects"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. To insource an already running, outsourced project again endangers the project objectives as internal resources must be trained and included in the project.\n\nb) Is correct. By using effective methods and processes, interfacing issues, e.g., by misunderstandings, are reduced and minimized.\n\nc) Is not correct. Qualification is important, but for the project objectives it does not matter if it is efficient.\n\nd) Is not correct. Outsourcing means higher administrative efforts and it requires coordination with the contractor. In the short run, the efforts are higher, and the project objectives are at risk. (#)"
+  },
+  {
+    "id": 4,
+    "lo": "AuT-2.1.1.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which Automotive SPICE (ASPICE) process is particularly important from the point of view of an employee in the role of a Certified Automotive Software Tester?\n\nSelect ONE option.",
+    "options": [
+      "a) System requirements analysis",
+      "b) Configuration management",
+      "c) Software verification",
+      "d) Project management"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Because system requirements analysis is only of secondary importance to the Certified Automotive Software Tester.\n\nb) Is not correct. Because configuration management is only of secondary importance to the Certified Automotive Software Tester.\n\nc) Is correct. Because a software verification process assesses the integrated software against the software requirements and is therefore of primary importance to the Certified Automotive Software Tester.\n\nd) Is not correct. Because project management is only of secondary importance to the Certified Automotive Software Tester."
+  },
+  {
+    "id": 5,
+    "lo": "AuT-2.1.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is a dimension defined in ASPICE?\n\nSelect ONE option.",
+    "options": [
+      "a) Process dimension",
+      "b) Time dimension",
+      "c) Resource dimension",
+      "d) Objective dimension"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Defined as a dimension in Automotive SPICE®.\n\nb) Is not correct. Not defined as a dimension in Automotive SPICE®, because the correct dimensions are the process and capability dimensions.\n\nc) Is not correct. Not defined as a dimension in Automotive SPICE®, because the correct dimensions are the process and capability dimensions.\n\nd) Is not correct. Not defined as a dimension in Automotive SPICE®, because the correct dimensions are the process and capability dimensions."
+  },
+  {
+    "id": 6,
+    "lo": "AuT-2.1.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Documented information (e.g., work products) is reviewed, established and released. AND Process activities are planned, monitored and adjusted against objectives AND Requirements for the documented information are defined. According to ASPICE version 4, which software verification process capability level (CL) is characterized by a combination of the above statements?\n\nSelect ONE option.",
+    "options": [
+      "a) Capability level 0",
+      "b) Capability level 1",
+      "c) Capability level 2",
+      "d) Capability level 3"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. As none of the above statements characterize a capability level 0.\n\nb) Is not correct. As not all statements characterize a capability level 1.\n\nc) Is correct. As all above mentioned statements characterizes a capability level 2.\n\nd) Is not correct. In addition to all of the above statements, capability level 3 requires a defined process that is capable of achieving its process outcomes. (#)"
+  },
+  {
+    "id": 7,
+    "lo": "AuT-2.1.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Imagine you are participating in an ASPICE – Assessment in your role as Test Manager and you are receiving the information that your test process has been assessed as “L”, using the process attribute PA 1.1.\n\nWhich ONE of the following options is correct?\n\nSelect ONE option.",
+    "options": [
+      "a) “L” not fulfilled",
+      "b) “L” partly fulfilled",
+      "c) “L” largely fulfilled",
+      "d) “L” fully fulfilled"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. As NOT FULFILLED is for “None”.\n\nb) Is not correct. As PARTLY FULFILLED is for “Partly”.\n\nc) Is correct. As LARGELY FULFILLED is for “Largely”.\n\nd) Is not correct. As FULLY FULFILLED is for “Fully”."
+  },
+  {
+    "id": 8,
+    "lo": "AuT-2.1.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements about regression criteria is TRUE, according to ASPICE?\n\nSelect ONE option.",
+    "options": [
+      "a) The regression testing criteria define the test level specific test environments, and which tests are to be executed in which test environments",
+      "b) The regression testing criteria define the selection of appropriate test cases for regression testing, including a set of test cases selected as a base set to be executed",
+      "c) The regression testing criteria typically define the test approach independent from the test level for the selection of regression tests",
+      "d) The regression testing criteria are an abstract description of the planned test levels and how to proceed within those test levels. They are valid for an organization or program, for one or more projects"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Because regression testing criteria do NOT define the test level specific test environments. This distractor defines a test plan.\n\nb) Is correct. Because regression testing criteria define the test objective and the procedure for the selection of the test cases for the regression tests.\n\nc) Is not correct. Because the regression testing criteria do NOT define the test approach independent from the test level for the selection of regression tests. This distractor partly defines a test plan.\n\nd) Is not correct. Because the regression testing criteria are NOT an abstract description of the planned test level and how to proceed within those test levels. This distractor describes a test policy."
+  },
+  {
+    "id": 9,
+    "lo": "AuT-2.1.2.6",
+    "k": "K2",
+    "pts": 1,
+    "text": "What traceability requirements are referenced in ASPICE?\n\nSelect ONE option.",
+    "options": [
+      "a) Traceability of the tester working hours to the executed test cases",
+      "b) Traceability of the specified test cases to the verification test results",
+      "c) Traceability of interface description to the specified maintainability tests",
+      "d) Traceability of the customer requirements to the specified integration tests"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Because Automotive SPICE® does not require traceability of the working hours of the tester to the completed test cases.\n\nb) Is correct. Because Automotive SPICE® also requires traceability of the specified test cases to the test results.\n\nc) Is not correct. Because Automotive SPICE® does not require traceability of the interface descriptions to the specified maintainability tests.\n\nd) Is not correct. Because Automotive SPICE® does not require traceability from customer requirements to integration tests. Only the traceability between customer requirements and system requirements is required. (#)"
+  },
+  {
+    "id": 10,
+    "lo": "AuT-2.1.2.5",
+    "k": "K3",
+    "pts": 1,
+    "text": "You are the test manager for a Tier 1 supplier, and you are responsible for defining the verification measures according to ASPICE Software engineering process group (SWE.4). The components (units) to be verified are both safety-related (up to ASIL-B) and non-safety. According to the process requirements of the Original Equipment Manufacturers (OEM), the supplier should confirm tor Industry Software Reliability Association (MISRA) compliance and adhere to the functional safety guidelines.\n\nWhich of the following is INAPPLICABLE as a verification measure?\n\nSelect ONE option.",
+    "options": [
+      "a) Dynamic black-box testing of the components to achieve 100% requirements coverage for safety relevant components",
+      "b) Tool-supported measurement of branch coverage of the tested components, to ensure 100% plausibility of the test results",
+      "c) Tool-supported static analysis to achieve MISRA compliance with the component source code",
+      "d) Code reviews to verify the comprehensibility, and correctness of component source code"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Applicable, because according to the safety guidelines (i.e., ISO 26262-6) all safety-related components must be tested against the safety requirements.\n\nb) Is correct. Not applicable, because measuring the branch coverage would generally be an appropriate measure, but the above mentioned criteria for verification cannot be met in this way.\n\nc) Is not correct. Applicable, because tool-supported static analysis is a typical part of a verification strategy to confirm the MISRA compliance.\n\nd) Is not correct. Applicable, because code reviews as a complement to tool-supported static analysis are a typical part of confirming nondetectable verification criteria such as comprehensibility."
+  },
+  {
+    "id": 11,
+    "lo": "AuT-2.2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which statement BEST describes the contribution of a Certified Automotive Software Tester to the safety culture?\n\nSelect ONE option.",
+    "options": [
+      "a) The tester ensures that all project team members contribute to the safety culture",
+      "b) The tester verifies that all processes required for functional safety activities are implemented",
+      "c) The tester contributes to the development phases of the safety lifecycle",
+      "d) The tester carries out all activities that are related to functional safety"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. As this is not a tester´s task, but of the safety manager.\n\nb) Is not correct. As this is not a tester´s task, but of the safety manager.\n\nc) Is correct. As this is the core of the safety culture.\n\nd) Is not correct. As the tester only performs specific measures (typically test-related) in the area of functional safety, but not all of them."
+  },
+  {
+    "id": 12,
+    "lo": "AuT-2.2.4.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements regarding automotive safety integrity level (ASIL) is TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) The ASIL of a hazard is the result of the hazard analysis and risk assessment",
+      "b) ASIL A represents the highest criticality, ASIL D represents the lowest one",
+      "c) An ASIL is assigned to all classified hazards",
+      "d) ASIL stands for “automotive security integrity level”"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Because the hazard analysis and risk assessment can add an automotive safety integrity level (ASIL) to the hazards.\n\nb) Is not correct. Because ASIL D indicates the highest criticality and ASIL A the lowest.\n\nc) Is not correct. Because there may be hazards identified in the hazard analysis and risk assessment that are assigned to an ASIL but are classified as quality management (QM) hazards.\n\nd) Is not correct. Because ASIL stands for automotive safety integrity level. (#)"
+  },
+  {
+    "id": 13,
+    "lo": "AuT-2.2.3.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which two parts of ISO 26262 are the MOST IMPORTANT ones for the Certified Automotive Software Tester?\n\nSelect ONE option.",
+    "options": [
+      "a) Part 4 (Product development at the system level) and part 6 (Product development at the software level)",
+      "b) Part 3 (Concept phase) and part 6 (Product development at the software level)",
+      "c) Part 2 (Management of functional safety) and part 6 (Product development at the software level)",
+      "d) Part 5 (Product development at the hardware level) and part 6 (Product development at the software level)"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. As the parts 4 and 6 are explicitly mentioned in section 2.2.3.2.\n\nb) Is not correct. As part 3 is only of little relevance to the software tester and is not even mentioned in section 2.2.3.2.\n\nc) Is not correct. As part 2 is only of little relevance to the software tester and is not even mentioned in section 2.2.3.2.\n\nd) Is not correct. As part 5 deals with hardware-specific aspects which are of less important to the software tester."
+  },
+  {
+    "id": 14,
+    "lo": "AuT-2.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements regarding safety aspects is TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) For the development of automotive Electric/Electronic (E/E) systems, ISO 26262 describes requirements to ensure functional safety",
+      "b) Functional safety and cybersecurity of automotive E/E systems contradict each other",
+      "c) Functional safety of an automotive E/E system can be assumed if unreasonable risks for people during the normal operation of this system can be avoided",
+      "d) For the development of automotive E/E systems, ISO 26262 describes requirements to ensure cybersecurity"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Because ISO 26262 is a standard for functional safety which is applicable to automotive E/E systems and therefore provides requirements for achieving functional safety.\n\nb) Is not correct. Functional safety and cybersecurity are aspects of E/E systems that must be separated. A lack of cybersecurity could affect functional safety. However, an E/E system can be both functionally safe and secure at the same time, so the two characteristics don’t contradict each other.\n\nc) Is not correct. As ISO 26262 defines functional safety as absence of unreasonable risk due to hazards caused by malfunctioning behavior of E/E systems. ISO 26262 does not focus on the safety of the intended function during normal operation.\n\nd) Is not correct. As functional safety must be separated from cybersecurity and ISO 26262 only offers limited statements regarding cybersecurity. (#)"
+  },
+  {
+    "id": 15,
+    "lo": "AuT-2.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements BEST describes the contribution of a Certified Automotive Software Tester in the safety lifecycle?\n\nSelect ONE option.",
+    "options": [
+      "a) The tester performs functional safety tests primarily during the product development phase",
+      "b) The tester performs functional safety tests primarily during the concept phase",
+      "c) The tester performs functional safety tests equally during all phases of the safety lifecycle",
+      "d) The tester performs functional safety tests primarily during the post-release phase while in production"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Because the tester contributes to several phases but performs tests that mainly take place in the product development phase.\n\nb) Is not correct. Because the tester performs activities related to test planning and test design in the concept phase but does not execute tests in this phase.\n\nc) Is not correct. Because the focus of test execution is the product development phase.\n\nd) Is not correct. Because the focus of test execution is the product development phase."
+  },
+  {
+    "id": 16,
+    "lo": "AuT-2.2.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "ISO 26262 recommends the use of specific test techniques and test types depending on the Automotive Safety Integrity Level (ASIL).\n\nWhich statement is TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) For safety requirements with a higher ASIL require more extensive testing than safety requirements with a lower ASIL because the number of recommended test techniques and test types is higher",
+      "b) For safety requirements with a higher ASIL, more extensive testing is required than for safety requirements with a lower ASIL, as the recommended test techniques and test types lead to more test cases",
+      "c) For safety requirements with a higher ASIL, a more extensive testing in comparison to safety requirements with a lower ASIL often occurs, as the number of recommended test techniques and test types doubles with each ASIL",
+      "d) For safety requirements with a higher ASIL, more extensive testing in comparison to safety requirements with a lower ASIL often occurs, as more extensive and detailed test techniques and test types are recommended and may lead to more test cases."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Because there is no compelling causal relationship (“must”) between the number of test techniques and the test scope. Furthermore, a higher ASIL does not necessarily require more test techniques.\n\nb) Is not correct. Because there is no compelling causal relationship (“must”) between the number of test techniques and the number of derived test cases, and since a higher ASIL does not necessarily require more test techniques.\n\nc) Is not correct. Because a higher ASIL typically requires more or more intensive test techniques. However, there is no rule that requires doubling the number of recommended test techniques and test types which each ASIL typically requires more tests.\n\nd) Is correct. Because a higher ASIL typically requires more tests, or more intensive test techniques, which typically results in more test cases and therefore possibly more coverage. (#)"
+  },
+  {
+    "id": 17,
+    "lo": "AuT-2.2.5",
+    "k": "K3",
+    "pts": 1,
+    "text": "The following table shows an ISO 26262 methods table regarding code coverage metrics. [[asset:p11-1]]\n\nWhich of the following decisions documented in the test plan is consistent with the above methods table?\n\nSelect ONE option.",
+    "options": [
+      "a) For ASIL A, branch coverage is used, and statement coverage is not used, as 100% branch coverage implies 100% statement coverage",
+      "b) For ASIL B, statement coverage is used, and branch coverage is not used, as statement coverage is positioned higher in the table and is therefore more important",
+      "c) For ASIL D, MC/DC is used as it is the only possible option",
+      "d) For ASIL B, statement coverage is used, and branch coverage is not used, as 100% statement coverage implies 100% branch coverage"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "Due to the numbering scheme for the methods, i.e., 1a, 1b and 1c, indicates that these are alternative methods, i.e., usually at least one method must be selected.\n\na) Is correct. Because the justification is correct (see CTFL) and therefore in ASIL A, a method is used that is at least as good as the highly recommended statement coverage for ASIL A. Furthermore, branch coverage is recommended for ASIL A anyway.\n\nb) Is not correct. Because the order of the methods in the table does not matter and for ASIL B, branch coverage is highly recommended as well. Thus, a plausible content-related justification is necessary to explain why this method is not used.\n\nc) Is not correct. Because the justification is not sufficient to exclude the strongly recommended modified condition/decision coverage (MC/DC) for ASIL D. This would only be possible if there were no multiple conditions, as in exactly this special case, 100% MC/DC and 100% branch coverage provide the same test result.\n\nd) Is not correct. Because the justification is factually incorrect and therefore the highly recommended branch coverage for ASIL B is not used."
+  },
+  {
+    "id": 18,
+    "lo": "AuT-2.3.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following statements regarding Automotive Open System Architecture (AUTOSAR) is TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) AUTOSAR defines a closed architecture that only can be used by the companies that are members of the AUTOSAR consortium",
+      "b) AUTOSAR is not compliant with international standards",
+      "c) AUTOSAR supports communication only between AUTOSAR control units",
+      "d) AUTOSAR supports different domains"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Because Automotive Open System Architecture (AUTOSAR) defines an open architecture.\n\nb) Is not correct. Because AUTOSAR is compliant with international standards.\n\nc) Is not correct. Because AUTOSAR supports data exchange with non AUTOSAR systems.\n\nd) Is correct. Because it is one of the objectives of the AUTOSAR project. (#)"
+  },
+  {
+    "id": 19,
+    "lo": "AuT-2.3.3",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following statements regarding AUTOSAR is TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) The integration test of the AUTOSAR software components (SW-Cs) cannot be implemented in a virtual test environment because real hardware is required",
+      "b) The runtime environment (RTE) can be used as an infrastructure for testing AUTOSAR SW-Cs",
+      "c) The AUTOSAR acceptance testing must be performed to prove the AUTOSAR conformity of the software",
+      "d) AUTOSAR-specific tests are limited to the software of a single electronic control unit (ECU)"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. As AUTOSAR SW-Cs can be tested virtually in a runtime environment (RTE) simulation.\n\nb) Is correct. As the RTE can be used to stimulate the AUTOSAR software components (SW-Cs).\n\nc) Is not correct. As the AUTOSAR acceptance test is optional.\n\nd) Is not correct. As AUTOSAR also provides the infrastructure for functionality distributed over several electronic control units (ECUs), therefore supporting testing many ECUs at once."
+  },
+  {
+    "id": 20,
+    "lo": "AuT-2.4.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following statements regarding the objectives of ASPICE and the ISO 26262 is NOT TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) The objective of ASPICE is to evaluate the capability of the supplier´s development processes through the use of assessments",
+      "b) The objective of ISO 26262 is to evaluate the capability of the supplier´s development processes through the use of assessments",
+      "c) The objective of ISO 26262 is to avoid the risks of systematic failure during development by specifying suitable requirements and processes",
+      "d) The objective of ISO 26262 is to define requirements for the test processes and test techniques to be used by the tester in the development of E/E systems"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Because Automotive SPICE® defines the capability of the product development process, no matter on which supplier level.\n\nb) Is correct. Because this statement is true for Automotive SPICE®, but not for the ISO 26262.\n\nc) Is not correct. Because ISO 26262 is supposed to avoid these risks.\n\nd) Is not correct. Because ISO 26262 defines these requirements."
+  },
+  {
+    "id": 21,
+    "lo": "AuT-2.4.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements is TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) ASPICE defines the test techniques to be used for each test level",
+      "b) ISTQB® defines the test techniques to be used depending on the test level",
+      "c) ISO 26262 and ASPICE define method tables for all mentioned test levels",
+      "d) ISO 26262 method tables recommend test techniques depending on ASIL"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Because Automotive SPICE® does usually not make any statement about the test techniques to be used for each test level.\n\nb) Is not correct. Because ISTQB® usually defines the test techniques independently of the test levels.\n\nc) Is not correct. Because method tables are only defined by the ISO 26262 and not by Automotive SPICE®.\n\nd) Is correct. Because the ISO 26262 provides method tables that recommend test techniques depending on the ASIL. (#)"
+  },
+  {
+    "id": 22,
+    "lo": "AuT-3.1.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which items are part of an automotive specific test environment?\n\nSelect ONE option.",
+    "options": [
+      "a) Control computer, simulation software, data logger",
+      "b) Real-time capable computer, network accesses, report database",
+      "c) Measuring devices, specification documents, laboratory",
+      "d) Data management tool, operating system, environment model"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. All three items are included in the list in section 3.1.2.\n\nb) Is not correct. The report database is not part of the test environment because the test report is a downstream step in the test process.\n\nc) Is not correct. The specification documents are required for test design and the test case generation. However, these documents are not part of the test environment.\n\nd) Is not correct. Data management tools are upstream or downstream systems in the test process, which are not part of the test environment."
+  },
+  {
+    "id": 23,
+    "lo": "AuT-3.1.4",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which interfaces are used to collect and distribute information in an ECU?\n\nSelect ONE option.",
+    "options": [
+      "a) Environment model, bus system and diagnostic interface",
+      "b) Analogue and digital inputs, sensor interface and communication interface",
+      "c) Analogue and digital inputs, supply voltage and diagnostic interface",
+      "d) Analogue and digital inputs, bus system and diagnostic interface"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. The environment model does not belong to the ECU.\n\nb) Is not correct. The sensor interface is not an interface, but a monitoring mechanism of the software processes.\n\nc) Is not correct. The supply voltage is not an information carrier.\n\nd) Is correct. All three interfaces are mentioned in section 3.1.4 as information interfaces."
+  },
+  {
+    "id": 24,
+    "lo": "AuT-3.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the statements is TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) In a closed-loop system, the output signals of the test object are directly linked to the inputs of the test object",
+      "b) In a closed-loop system, the output signals of the test object are linked to the inputs of the test object via an environment model",
+      "c) In an open-loop system, the output signals of the test object are directly linked to the inputs of the test object",
+      "d) In an open-loop system, the output signals of the test object are linked to the inputs of the test object via an environment model"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. In a closed-loop system, the link between the output signals and to the inputs of the test object is not direct, but through the environment model.\n\nb) Is correct. The stimulation in the closed-loop system takes into account the output of the test object with a control loop in the test environment.\n\nc) Is not correct. This statement describes a closed-loop system.\n\nd) Is not correct. This statement is an extension of answer c.) and describes a closed-loop system. (#)"
+  },
+  {
+    "id": 25,
+    "lo": "AuT-3.2.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements is NOT TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) In the model-in-the-loop (MiL) test environment, the test object is human-readable",
+      "b) In the MiL test environment, the test object exists as a model",
+      "c) In the MiL test environment, additional hardware is required",
+      "d) A MiL test environment is used early in the development process"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. The test object is human-readable because it exists as a model and has not yet been compiled.\n\nb) Is not correct. The test object in a model-in-the-loop (MiL) test environment is usually a model and has not yet been compiled.\n\nc) Is correct. The MiL test environment does not require any additional hardware.\n\nd) Is not correct. The environment model of a MiL test environment is usually implemented in the same development environment as the test object and can therefore be used very early in the development process."
+  },
+  {
+    "id": 26,
+    "lo": "AuT-3.2.2.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following statements is NOT TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) In the software-in-the-loop (SiL) test environment, additional hardware is required",
+      "b) In the SiL test environment, the test object exists as compiled object code",
+      "c) In the SiL test environment, a wrapper is required to control and monitor inputs and outputs",
+      "d) In the SiL test environment, the number of access points is limited by the wrapper"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. The test is executed on a computer without specific hardware, i.e., no additional hardware is required.\n\nb) Is not correct. The source code of the test object is compiled.\n\nc) Is not correct. A wrapper generates access points in the test object.\n\nd) Is not correct. The number of access points is limited by the wrapper. (#)"
+  },
+  {
+    "id": 27,
+    "lo": "AuT-3.2.2.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which tests are typically performed in a SiL test environment?\n\nSelect ONE option.",
+    "options": [
+      "a) Tests of the response time for diagnostic requests",
+      "b) Tests for electromagnetic compatibility",
+      "c) Performance efficiency tests of the target hardware",
+      "d) Interface tests and integration tests"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Realistic runtimes of diagnostic requests can only be determined if the environment model has simulated the target hardware in detail, because the target hardware is not available in the software-inthe-loop (SiL) test environment. Such tests would typically be performed in a hardware-in-the-loop (HiL) test environment, since detailed hardware simulation takes a lot of effort.\n\nb) Is not correct. Tests for electromagnetic compatibility are only possible in a SiL test environment if the environment model simulates the target hardware in detail, because the target hardware is not available in a SiL test environment. Such tests would typically be performed in a HiL test environment, as a detailed hardware simulation takes a lot of effort.\n\nc) Is not correct. Performance efficiency tests cannot be performed in a SiL test environment because the hardware does not yet exist.\n\nd) Is correct. Interface tests and integration tests are typical parts of a SiL test environment."
+  },
+  {
+    "id": 28,
+    "lo": "AuT-3.2.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which three items are all parts of a hardware-in-the-loop (HiL) test environment?\n\nSelect ONE option.",
+    "options": [
+      "a) Test case specification, bus simulation, power supply",
+      "b) Breakout box, software compiler, real parts",
+      "c) Power supply, real-time capable computer",
+      "d) Signal processing, processor simulation"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. The test case generator is a software tool for generating test cases and is not part of the test environment.\n\nb) Is not correct. The software compiler is part of the build environment and is not part of the test environment.\n\nc) Is correct. The listed parts are all included in the list from section 3.2.3.1.\n\nd) Is not correct. The processor simulation is not a part of the HiL test environment, because real hardware is available for the test object. (#)"
+  },
+  {
+    "id": 29,
+    "lo": "AuT-3.2.4.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "Which of the following test environment statements is TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) For integration tests is only the HiL test environment suitable",
+      "b) For component tests, both a MiL test environment and SiL test environment are both suitable",
+      "c) For system tests, both a MiL and HiL test environment are both suitable",
+      "d) Any XiL test environment can be used at any test level"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. MiL and SiL test environments are suitable mainly for integration tests. The HiL test environment specializes in system tests.\n\nb) Is correct. MiL and SiL test environments are suitable for component tests.\n\nc) Is not correct. A MiL test environment is not suitable for system tests.\n\nd) Is not correct. Not every test environment can be used at every test level."
+  },
+  {
+    "id": 30,
+    "lo": "AuT-3.2.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements about MiL test environments is most likely TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) The test execution time of the simulation depends on the complexity of the model and the computing power of the test system",
+      "b) Access to bus and diagnostic interfaces are implemented in the test environment",
+      "c) The test environment model provides extensive implementations of physical processes such as electromagnetic compatibility or cable break",
+      "d) The MiL test environment simulation can only be started and stopped. It is not possible to pause the simulation."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. The more complex a system, the more computing time or more power a computer needs to provide all the information.\n\nb) Is not correct. These access points are not common in the MiL test environment.\n\nc) Is not correct. This implementation is not common in the MiL test environment.\n\nd) Is not correct. Pausing is one of the greatest advantages of a MiL test environment."
+  },
+  {
+    "id": 31,
+    "lo": "AuT-3.2.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which test is typically performed at a component HiL test environment?\n\nSelect ONE option.",
+    "options": [
+      "a) Test of the overall system requirements for the vehicle",
+      "b) Test of the driving behavior of the chassis",
+      "c) Test of the ECU functions for correct behavior",
+      "d) Test of the data exchange between the ECU"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. The overall system requirements can be tested in the system HiL test environment, but not in the component HiL test environment.\n\nb) Is not correct. Driving behavior is a complex function and is performed by several ECUs. Therefore, the component HiL test environment is not suitable.\n\nc) Is correct. The component HiL test environment tests single ECUs and their functions.\n\nd) Is not correct. To test the data exchange between ECUs, at least two ECUs are required. Therefore, these tests must be performed in the system HiL test environment. (#)"
+  },
+  {
+    "id": 32,
+    "lo": "AuT-3.2.4.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "Which statement is TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) The cost of a defect in the test object is highest if the defect is found in the MiL test environment",
+      "b) A HiL test environment is a more realistic test environment than a SiL test environment",
+      "c) The amount of effort for design, commissioning and maintenance of a HiL test environment is lower than a SiL test environment",
+      "d) Hardware components are tested in a SiL test environment"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. The cost of defect handling in the test environments increases in following order: MiL, SiL, and HiL test environments. Therefore, the cost is lowest in the MiL test environment.\n\nb) Is correct. Realism increases in the test environments in the following order: MiL, SiL, and HiL test environments. The HiL test environment is the most realistic compared to the other test environments.\n\nc) Is not correct. The commissioning and maintenance effort increases in the test environments in the following order: MiL, SiL, and HiL test environments. The effort is therefore highest in the HiL test environment.\n\nd) Is not correct. The required maturity of the test object increases in the test environments in the following order: MiL, SiL, and HiL test environments. In a SiL test environment the test object typically does not include the target hardware, but only the software."
+  },
+  {
+    "id": 33,
+    "lo": "AuT-3.2.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are a member of a test team, and you are asked to test the code of an ECU. The ECU has been provided by the development team as a model and development board since ECU hardware is available yet. The test is supposed to ensure the mechanisms for defect detection and defect handling in the ECU work properly.\n\nWhich test environment should be used in this situation given the test types?\n\nSelect ONE option.",
+    "options": [
+      "a) A HiL test environment, as defects for the test of the defect handling can only be simulated in this test environment",
+      "b) A SiL test environment, as development kits are available, and defect detection is to be tested",
+      "c) A MiL test environment, as no hardware is available yet and the test object is available as a model",
+      "d) If no ECU hardware is available, the software cannot be tested"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. As there is no hardware that can be used in the HiL test environment.\n\nb) Is not correct. As a SiL test environment does not require additional hardware such as a development kit.\n\nc) Is correct. As no hardware is available and the test object is available as a model, a MiL test environment is preferable.\n\nd) Is not correct. Even without the hardware, tests are already possible."
+  },
+  {
+    "id": 34,
+    "lo": "Keyword",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following statements about coding standards is TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) A coding standard defines required testing activities (e.g. test techniques and testware)",
+      "b) A coding standard defines required test specification languages (e.g. test automation and test case selection)",
+      "c) A coding standard defines required development practices (e.g. commenting and naming conventions)",
+      "d) A coding standard defines required modelling techniques (e.g. states and state transitions)"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Not compliant with the definition of the term.\n\nb) Is not correct. Not compliant with the definition of the term.\n\nc) Is correct. See the definition of the term coding standard.\n\nd) Is not correct. Not compliant with the definition of the term. (#)"
+  },
+  {
+    "id": 35,
+    "lo": "AuT-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements regarding MISRA C:2025 is TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) Rules of the category “required” must not be neglected by the developer, even if a reason is given",
+      "b) The binding character of guidelines is predefined for every organization",
+      "c) Rules of the category “mandatory” help to avoid typical coding anomalies",
+      "d) MISRA guidelines are fully testable by static analysis tools"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. “Required” guidelines may be disregarded by the developer, only if the developer can provide a compelling reason.\n\nb) Is not correct. Organizations can reinforce the binding character of a rule for themselves.\n\nc) Is correct. Coding guidelines help to avoid anomalies. Typical violations of coding standards are part of those anomalies.\n\nd) Is not correct. Directives are not fully testable by static analysis tools."
+  },
+  {
+    "id": 36,
+    "lo": "AuT-4.1.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "The requirements for a car radio on the system level are given below:\n\n1. After switching it on, the system shows the message “welcome” for 3 seconds.\n\n2. In a switched-on state, the radio is in one of the states “active”, “passive” or “in maintenance”, and in a switched-off state the last state is saved.\n\n3. In a switched-on state the radio function is engaged by pressing the button “Radio”.\n\n4. If the CD function is engaged and no CD is in the drive, the system displays the message “No Disc”.\n\nWhich of the following statements about the given quality criteria for requirements according to the ISO/IEC/IEEE 29148 standard is TRUE?\n\nSelect ONE option.",
+    "options": [
+      "a) Requirement 1 is not verifiable",
+      "b) Requirement 2 is not singular",
+      "c) Requirement 3 is not consistent",
+      "d) Requirement 4 is not unambiguous"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Requirement 1 is verifiable and can therefore be verified in a simple system test.\n\nb) Is correct. Requirement 2 can be split into two requirements: one requirement about the internal states in a switched-on state and one about the switched-off state.\n\nc) Is not correct. Requirement 3 is not inconsistent.\n\nd) Is not correct. Requirement 4 is unambiguous. It clearly states what should be considered."
+  },
+  {
+    "id": 37,
+    "lo": "AuT-4.2.4",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following statements regarding requirements-based testing is CORRECT?\n\nSelect ONE option.",
+    "options": [
+      "a) Requirements-based testing focuses only on the covering of requirements and do not allow the use of exploratory tests",
+      "b) Requirements-based testing is designed to test the requirements until they are consistent and complete",
+      "c) Requirements-based testing is designed to cover requirements with test cases",
+      "d) Requirements-based testing verifies the test object without considering the quality or clarity of the customer requirements."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Because requirements-based testing encourages the use of additional test approaches such as exploratory testing.\n\nb) Is not correct. Because the test objective is to test whether the product meets the requirements, not to test the requirements themselves for consistency and completeness.\n\nc) Is correct. Because the test objective is to cover the requirements with test cases.\n\nd) Is not correct. Because the effectiveness of requirements-based testing is directly related to the quality of the customer requirements."
+  },
+  {
+    "id": 38,
+    "lo": "AuT-4.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements is NOT a description of a fault injection test?\n\nSelect ONE option.",
+    "options": [
+      "a) Fault injection tests inject faults into the behavior of external components to show that the system can handle faulty situations",
+      "b) Fault injection tests inject faults into internal interfaces, such as lost messages",
+      "c) Fault injection tests inject faults into system specifications, such as parameters that are too low for the required performance",
+      "d) Fault injection tests inject faults into the test object, which show up as internal defects"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. This statement is correct.\n\nb) Is not correct. This statement is correct.\n\nc) Is correct. This statement is incorrect, because fault injection tests are not about defects in requirements, but about defects in the system.\n\nd) Is not correct. This statement is correct. (#)"
+  },
+  {
+    "id": 39,
+    "lo": "AuT-4.2.5",
+    "k": "K3",
+    "pts": 1,
+    "text": "A steer-by-wire system is being developed to ISO 26262 (ASIL D) and is currently undergoing system testing. The system specification describes each relevant input only as predefined categories (not numerical ranges), e.g.,\n\n• Steering mode: COMFORT, SPORT, ECO\n\n• Road surface: DRY, WET, SNOW\n\n• Wheel position: FRONT_LEFT, FRONT_RIGHT, REAR_LEFT, REAR_RIGHT Follow the recommendations in ISO 26262 and use only the information provided in this scenario.\n\nWhich test technique is MOST APPROPRIATE for the system test design?\n\nSelect ONE option.",
+    "options": [
+      "a) Decision table testing",
+      "b) Boundary value analysis",
+      "c) Equivalence partitioning",
+      "d) Modified Condition/Decision testing"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Decision table testing can be useful when multiple combinations of inputs result in different outputs. However, in this scenario, the specification does not define such output behavior for combinations of inputs, and ISO 26262 does not list decision table testing among its recommended test techniques. Therefore, while it may seem attractive, it is not the most appropriate choice in this context.\n\nb) Is not correct. Boundary value analysis is effective for inputs with ordered numerical ranges where boundary violations pose a risk. In this scenario, the inputs are purely categorical, and no boundaries are defined. Therefore, boundary value analysis is not applicable here, although it is generally recommended by ISO 26262.\n\nc) Is correct. The selection of a suitable test technique depends on several factors, including the test basis, test level, and alignment with ISO 26262 recommendations. In this case, the inputs are provided as predefined categories without numeric ranges, and the source code is not available. Equivalence partitioning matches this context perfectly and is also recommended by ISO 26262 for ASIL D on the system level.\n\nd) Is not correct. MC/DC is a white-box test technique recommended by ISO 26262 for testing a software unit, particularly at high ASIL levels. However, it requires access to the source code and is not applicable at the system test level when only the system specification is available. Therefore, it is not the most appropriate choice in this scenario."
+  },
+  {
+    "id": 40,
+    "lo": "AuT-4.2.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Below is a decision with three single conditions (B1 AND B2) OR B3. The task for the tester is to design test cases according to modified condition/decision testing (MC/DC). The tester has already designed three test cases:\n\n1. B1 = TRUE, B2 = TRUE, B3 = FALSE\n\n2. B1 = FALSE, B2 = TRUE, B3 = FALSE\n\n3. B1 = FALSE, B2 = TRUE, B3 = TRUE\n\nWhich additional test case is required to achieve 100% Modified Condition/ Decision Coverage?\n\nSelect ONE option.",
+    "options": [
+      "a) B1 = TRUE, B2 = FALSE, B3 = TRUE",
+      "b) B1 = TRUE, B2 = TRUE, B3 = TRUE",
+      "c) B1 = FALSE, B2 = FALSE, B3 = FALSE",
+      "d) B1 = TRUE, B2 = FALSE, B3 = FALSE"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "[[asset:answer-table]]\n\nTo achieve 100% MC/DC, the following criteria must be met:\n\n1. Each decision must be evaluated to be both TRUE and FALSE → Fulfilled: Decision is TRUE in TC 1 and TC 3, FALSE in TC 2.\n\n2. Each individual condition must be evaluated to be both TRUE and FALSE → While MC/DC does not explicitly require each condition to be evaluated to be both TRUE and FALSE, this typically results as a side-effect of satisfying the independent requirement for each condition. In this case, B2 is always TRUE and thus cannot be shown to affect the decision independently.\n\n3. For each condition, there must be at least one pair of test cases where only that condition changes, and the decision outcome changes. → Fulfilled for B1 (TC 1 vs TC 2) and for B3 (TC 2 vs TC 3) → Not fulfilled for B2, as B2 is always TRUE. An additional test case must show the isolated influence of B2 on the decision, i.e., - B2 = FALSE - Difference only in B2 - The decision outcome must differ to demonstrate that the condition independently affects the decision. (#)\n\na) Is not correct. The test case does not isolate B2 as the only changing condition compared to any existing test case with a different decision outcome.\n\nb) Is not correct. B2 is TRUE. No effect of B2 can be tested.\n\nc) Is not correct. This test case and TC 2 differ only in B2. However, the test result is FALSE in both cases. Therefore, the influence of B2 is not demonstrated, and the condition fails the MC/DC independence criterion.\n\nd) Is correct. Compared to TC 1, it isolates B2 as the only changed condition. The test result changes from TRUE to FALSE, demonstrating the independent effect of B2 and satisfying the last MC/DC requirement."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 60 * 60;
+      const EXT_SECONDS = 75 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "75"
+          : "60";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 75:00 (60 minutes + 25% practice time). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 60:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {"p11-1": {"src": "assets/ISTQB_CT-AuT_Sample-Exam-A-Questions_EN/p11-1.png", "alt": "ASIL\nMethods A B C D\n1a Statement coverage ++ ++ + +\n1b Branch coverage + ++ ++ ++\n1c Modified condition/decision coverage (MC/DC) + + + ++", "page": 11, "kind": "table"}, "answer-table": {"html": "<table><caption>MC/DC test cases</caption><thead><tr><th>B1</th><th>B2</th><th>B3</th><th>(B1 AND B2) OR B3</th><th>Test case</th></tr></thead><tbody><tr><td>TRUE</td><td>TRUE</td><td>FALSE</td><td>TRUE</td><td>TC 1</td></tr><tr><td>FALSE</td><td>TRUE</td><td>TRUE</td><td>TRUE</td><td>TC 3</td></tr><tr><td>FALSE</td><td>TRUE</td><td>FALSE</td><td>FALSE</td><td>TC 2</td></tr></tbody></table>"}};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          if (asset.html) return `<div class="q-table-wrap">${asset.html}</div>`;
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Open to enlarge</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagram for Question ${q.id}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

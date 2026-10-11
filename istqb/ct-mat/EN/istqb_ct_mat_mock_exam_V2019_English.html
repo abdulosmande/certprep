@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISTQB CT-MAT — Sample Exam 2019</title>
+
+<style>
+  :root {
+    --bg: #080c12; --surface: #0e1420; --card: #111827; --border: #1e2840;
+    --accent: #38bdf8; --accent2: #818cf8; --correct: #34d399;
+    --incorrect: #f87171; --warn: #fbbf24; --text: #cbd5e1;
+    --muted: #94a3b8; --heading: #f1f5f9;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  #start-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(56,189,248,0.06) 0%, transparent 70%); }
+  .start-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 3.5rem 3rem; max-width: 540px; width: 100%; text-align: center; position: relative; overflow: hidden; }
+  .start-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(56,189,248,0.03) 0%, transparent 50%, rgba(129,140,248,0.03) 100%); pointer-events: none; border-radius: 20px; }
+  .start-badge { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.2); padding: 0.3rem 1rem; border-radius: 99px; display: inline-block; margin-bottom: 1.6rem; }
+  .start-card h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.9rem, 4.5vw, 2.8rem); font-weight: 800; color: var(--heading); line-height: 1.1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+  .start-card h1 em { font-style: normal; color: var(--accent); }
+  .start-subtitle { font-size: 0.88rem; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.7; }
+  .start-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 2.5rem; }
+  .meta-item { background: var(--surface); padding: 1.1rem 0.5rem; text-align: center; }
+  .meta-val { font-family: 'DM Mono', monospace; font-size: 1.35rem; font-weight: 500; color: var(--heading); display: block; }
+  .meta-lbl { font-size: 0.63rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.25rem; }
+  .btn-start { font-family: 'DM Mono', monospace; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.08em; padding: 1rem 2.5rem; background: var(--accent); color: #080c12; border: none; border-radius: 10px; cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; width: 100%; text-transform: uppercase; }
+  .btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(56,189,248,0.35); }
+  .start-note { font-size: 0.73rem; color: var(--muted); margin-top: 1rem; line-height: 1.6; }
+
+  .time-option-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.65rem; font-family: 'DM Mono', monospace; }
+  .time-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .time-opt { background: var(--surface); padding: 0.85rem 0.5rem; text-align: center; cursor: pointer; transition: background 0.18s, color 0.18s; border: none; width: 100%; font-family: 'DM Mono', monospace; color: var(--muted); }
+  .time-opt:first-child { border-right: 1px solid var(--border); }
+  .time-opt.active { background: rgba(56,189,248,0.12); color: var(--heading); }
+  .time-opt-val { font-size: 1.25rem; font-weight: 500; color: inherit; display: block; line-height: 1.2; }
+  .time-opt-lbl { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; display: block; opacity: 0.7; }
+  .time-opt.active .time-opt-val { color: var(--accent); }
+  .time-ext-note { font-size: 0.68rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; padding: 0.6rem 0.9rem; background: rgba(129,140,248,0.06); border: 1px solid rgba(129,140,248,0.15); border-radius: 8px; }
+
+  #exam-screen { display: none; }
+  header { background: rgba(11,16,28,0.96); border-bottom: 1px solid var(--border); padding: 0.85rem 2rem; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px); }
+  .header-inner { max-width: 920px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .header-left { display: flex; flex-direction: column; }
+  .exam-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .exam-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; }
+  .timer-block { display: flex; align-items: center; gap: 1rem; }
+  .timer { font-family: 'DM Mono', monospace; font-size: 2rem; font-weight: 500; color: var(--accent); letter-spacing: 0.04em; transition: color 0.3s; min-width: 95px; text-align: right; }
+  .timer.warn { color: var(--warn); }
+  .timer.danger { color: var(--incorrect); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .answered-count { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); text-align: right; line-height: 1.5; }
+  .answered-count span { color: var(--text); font-weight: 500; }
+  .header-buttons { display: flex; gap: 0.5rem; align-items: center; }
+  .progress-bar-wrap { max-width: 920px; margin: 0.5rem auto 0; height: 2px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 99px; transition: width 0.4s ease; width: 0%; }
+
+  main { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+  .exam-toolbar { margin-bottom: 1.5rem; }
+  .toolbar-info { font-size: 0.8rem; color: var(--muted); }
+  .toolbar-info strong { color: var(--text); }
+  .btn-submit { font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; padding: 0.5rem 1.2rem; background: var(--accent); color: #080c12; border: none; border-radius: 7px; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; text-transform: uppercase; white-space: nowrap; }
+  .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(56,189,248,0.3); }
+  .btn-secondary { font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; padding: 0.5rem 1rem; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 7px; cursor: pointer; transition: color 0.15s, border-color 0.15s; text-transform: uppercase; white-space: nowrap; }
+  .btn-secondary:hover { color: var(--text); border-color: var(--muted); }
+
+  .question-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; margin-bottom: 1rem; transition: border-color 0.25s; animation: fadeUp 0.2s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+  .question-card.correct-card   { border-color: rgba(52,211,153,0.4); }
+  .question-card.incorrect-card { border-color: rgba(248,113,113,0.4); }
+  .q-header { display: flex; gap: 0.9rem; align-items: flex-start; margin-bottom: 1.1rem; }
+  .q-meta { display: flex; flex-direction: column; gap: 0.3rem; flex-shrink: 0; }
+  .q-num { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; color: var(--accent); background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.18); border-radius: 5px; padding: 0.18rem 0.5rem; white-space: nowrap; }
+  .q-lo  { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--muted); background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
+  .q-pts { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--accent2); background: rgba(129,140,248,0.08); border: 1px solid rgba(129,140,248,0.18); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
+  .q-text { font-size: 0.92rem; color: var(--heading); line-height: 1.7; flex: 1; white-space: pre-wrap; }
+  .options { display: flex; flex-direction: column; gap: 0.45rem; }
+
+  .option-row { position: relative; display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.7rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: border-color 0.15s, background 0.15s; user-select: none; }
+  .option-row:hover:not(.disabled) { border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.03); }
+  .option-row:focus-within { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .option-row.disabled { cursor: default; }
+  .option-marker { flex-shrink: 0; width: 17px; height: 17px; border-radius: 50%; border: 2px solid var(--border); background: transparent; margin-top: 2px; transition: border-color 0.15s, background 0.15s; display: flex; align-items: center; justify-content: center; }
+  .option-marker::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); opacity: 0; transition: opacity 0.15s; }
+  .option-row.selected { border-color: rgba(56,189,248,0.45); background: rgba(56,189,248,0.06); }
+  .option-row.selected .option-marker { border-color: var(--accent); }
+  .option-row.selected .option-marker::after { opacity: 1; }
+  .option-row.reveal-correct { border-color: var(--correct) !important; background: rgba(52,211,153,0.07) !important; }
+  .option-row.reveal-correct .option-marker { border-color: var(--correct); background: rgba(52,211,153,0.15); }
+  .option-row.reveal-correct .option-marker::after { background: var(--correct); opacity: 1; }
+  .option-row.reveal-wrong { border-color: var(--incorrect) !important; background: rgba(248,113,113,0.07) !important; }
+  .option-row.reveal-wrong .option-marker { border-color: var(--incorrect); background: rgba(248,113,113,0.15); }
+  .option-row.reveal-wrong .option-marker::after { background: var(--incorrect); opacity: 1; }
+  .option-text { font-size: 0.87rem; line-height: 1.55; color: var(--text); flex: 1; }
+
+  .result-tag { display: none; align-items: center; gap: 0.4rem; font-family: 'DM Mono', monospace; font-size: 0.67rem; font-weight: 500; letter-spacing: 0.04em; margin-top: 1rem; padding: 0.4rem 0.75rem; border-radius: 6px; }
+  .result-tag.show { display: flex; }
+  .result-tag.correct   { background: rgba(52,211,153,0.1);  color: var(--correct);   border: 1px solid rgba(52,211,153,0.25); }
+  .result-tag.incorrect { background: rgba(248,113,113,0.1); color: var(--incorrect); border: 1px solid rgba(248,113,113,0.25); }
+  .explanation { display: none; margin-top: 0.85rem; padding: 0.85rem 1rem; background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent2); border-radius: 0 6px 6px 0; font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+  .explanation.show { display: block; }
+
+  #summary { display: none; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 3rem 2.5rem; text-align: center; margin-top: 2rem; animation: fadeUp 0.4s ease; }
+  #summary h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--heading); margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+  .big-score { font-family: 'DM Mono', monospace; font-size: 4.8rem; font-weight: 500; color: var(--accent); line-height: 1; margin: 1rem 0 0.2rem; }
+  .sub { font-size: 0.86rem; color: var(--muted); margin-bottom: 0.6rem; }
+  .time-taken { font-family: 'DM Mono', monospace; font-size: 0.76rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .time-taken span { color: var(--text); }
+  .grade-badge { display: inline-block; padding: 0.4rem 1.2rem; border-radius: 8px; font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; margin-bottom: 2rem; }
+  .grade-badge.pass { background: rgba(52,211,153,0.12); color: var(--correct); border: 1px solid rgba(52,211,153,0.3); }
+  .grade-badge.fail { background: rgba(248,113,113,0.12); color: var(--incorrect); border: 1px solid rgba(248,113,113,0.3); }
+  .stat-row { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .stat .val { font-family: 'DM Mono', monospace; font-size: 1.7rem; font-weight: 500; color: var(--heading); }
+  .stat .lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.1rem; }
+
+  #confirm-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
+  #confirm-overlay.show { display: flex; }
+  .confirm-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; max-width: 420px; width: 90%; text-align: center; animation: fadeUp 0.22s ease; }
+  .confirm-box h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--heading); margin-bottom: 0.75rem; }
+  .confirm-box p { font-size: 0.86rem; color: var(--muted); margin-bottom: 1.75rem; line-height: 1.65; }
+  .confirm-btns { display: flex; gap: 0.75rem; justify-content: center; }
+  .btn-confirm-yes { font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; padding: 0.65rem 1.5rem; background: var(--accent); color: #080c12; border: none; border-radius: 8px; cursor: pointer; }
+  .btn-confirm-yes:hover { transform: translateY(-1px); }
+  .btn-confirm-no { font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; padding: 0.65rem 1.5rem; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; }
+  .btn-confirm-no:hover { color: var(--text); }
+
+  @media (max-width: 600px) {
+    header { padding: 0.75rem 1rem; }
+    main { padding: 1.25rem 0.9rem 3rem; }
+    .question-card { padding: 1.1rem 0.9rem; }
+    .start-card { padding: 2.5rem 1.5rem; }
+    .timer { font-size: 1.4rem; min-width: 75px; }
+    .stat-row { gap: 1.5rem; }
+    .start-meta { grid-template-columns: repeat(2, 1fr); }
+    .header-buttons { gap: 0.35rem; }
+    .btn-submit, .btn-secondary { font-size: 0.7rem; padding: 0.4rem 0.7rem; }
+  }
+</style>
+<link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="start-screen">
+  <div class="start-card">
+    <div class="start-badge">ISTQB Specialist Level</div>
+    <h1>Mobile Application<br><em>Testing</em></h1>
+    <p class="start-subtitle">ISTQB® Certified Tester Specialist – Mobile Application Testing (MAT) · Sample Exam 2019 · English edition. The timer starts when you click “Start exam”.</p>
+    <p class="start-note">Questions and answers: © 2019 ISTQB®, Sample Exam Version 2019.</p>
+    <p class="start-subtitle source-credit">Source: ISTQB-CTFL-MAT-Sample-Exam-Answers_v2019_EN.pdf. © ISTQB®. Authors and translators are acknowledged in the source PDFs.</p>
+    <div class="start-meta">
+      <div class="meta-item"><span class="meta-val">40</span><div class="meta-lbl">Questions</div></div>
+      <div class="meta-item"><span class="meta-val" id="meta-minutes">60</span><div class="meta-lbl">Minutes</div></div>
+      <div class="meta-item"><span class="meta-val">40</span><div class="meta-lbl">Points</div></div>
+      <div class="meta-item"><span class="meta-val">65%</span><div class="meta-lbl">Pass mark</div></div>
+    </div>
+
+    <div class="time-option-label">Time allowance</div>
+    <div class="time-toggle">
+      <button class="time-opt active" id="opt-standard" onclick="selectTime(false)">
+        <span class="time-opt-val">60 min</span>
+        <span class="time-opt-lbl">Standard</span>
+      </button>
+      <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+        <span class="time-opt-val">75 min</span>
+        <span class="time-opt-lbl">+15 min extension</span>
+      </button>
+    </div>
+    <div class="time-ext-note" id="ext-note" style="display:none;">
+      &#9432;&nbsp; The 15-minute extension is for candidates whose native language differs from the exam language.
+    </div>
+
+    <button class="btn-start" onclick="startExam()">&#9654; Start exam</button>
+    <p class="start-note" id="start-note-txt">The timer counts down from 60:00. The exam is submitted automatically when time runs out.</p>
+  </div>
+</div>
+
+<!-- EXAM SCREEN -->
+<div id="exam-screen">
+  <header>
+    <div class="header-inner">
+      <div class="header-left">
+        <span class="exam-label">ISTQB MAT · Sample Exam 2019</span>
+        <span class="exam-title">Mobile Application Testing</span>
+      </div>
+      <div class="timer-block">
+        <div class="answered-count"><span id="answered-num">0</span>/40 answered</div>
+        <div class="timer" id="timer">60:00</div>
+        <div class="header-buttons">
+          <button class="btn-secondary" onclick="confirmReset()">&#8635; Reset</button>
+          <button class="btn-submit" onclick="confirmSubmit()">Submit</button>
+        </div>
+      </div>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill"></div></div>
+  </header>
+
+  <main>
+    <div class="exam-toolbar">
+      <div class="toolbar-info">40 questions · <strong>65% (≥ 26 of 40 points)</strong> to pass · select one answer per question (1 point)</div>
+    </div>
+    <div id="questions-container"></div>
+    <div id="summary">
+      <h2>Exam complete</h2>
+      <div class="big-score" id="final-score-pct">—</div>
+      <div class="sub" id="final-score-raw"></div>
+      <div class="time-taken">Time used: <span id="time-used">—</span></div>
+      <div class="grade-badge" id="grade-badge"></div>
+      <div class="stat-row">
+        <div class="stat"><div class="val" id="stat-correct">—</div><div class="lbl">Correct</div></div>
+        <div class="stat"><div class="val" id="stat-wrong">—</div><div class="lbl">Incorrect</div></div>
+        <div class="stat"><div class="val" id="stat-skipped">—</div><div class="lbl">Skipped</div></div>
+      </div>
+      <button class="btn-secondary" onclick="confirmReset()">&#8635; Restart</button>
+    </div>
+    <p class="start-note">Source: ISTQB® CTFL-MAT Sample Exam Questions and Answers, Version 2019, released 10 May 2019. Copyright © 2019 International Software Testing Qualifications Board. The explanation for Question 16 corrects an obvious reference typo (iii and iv are non-functional). Question 37 option labels have been normalized from e–h to a–d to match the answer key.</p>
+  </main>
+</div>
+
+<!-- CONFIRM OVERLAY -->
+<div id="confirm-overlay">
+  <div class="confirm-box">
+    <h3 id="confirm-title">Submit exam?</h3>
+    <p id="confirm-msg"></p>
+    <div class="confirm-btns">
+      <button class="btn-confirm-no" onclick="closeConfirm()">Cancel</button>
+      <button class="btn-confirm-yes" id="confirm-yes-btn" onclick="doConfirm()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "MAT-1.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are the quality specialist in a mobile application development team. For which of the following would mobile analytics data be used in the test strategy or test plan?\n\nSelect ONE option.",
+    "options": [
+      "a) To define the expected user base of the application.",
+      "b) To derive test levels, test cases and test data.",
+      "c) To select the device portfolio and prioritization for test execution.",
+      "d) To select the application type and development model to follow."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) is not correct. Expected user base is not part of test strategy or test plan.\nb) is not correct. Test levels, test cases and test data are derived from the application, not from analytical data.\nc) is correct. As tests cannot be executed on all possible devices, the selected device portfolio and prioritization should be based on the devices and platforms most common found in the target market. The information about most common devices and platforms in the target market is provided by mobile analytics data.\nd) is not correct. Application type and development model is not selected within test strategy or test plan."
+  },
+  {
+    "id": 2,
+    "lo": "MAT-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Your team is developing a free-use application that collects publicly available news from user selected sources so that the user has a single place to read all the news from his/her favorite sources. Based on this information, which of the following business models is MOST appropriate?\n\nSelect ONE option.",
+    "options": [
+      "a) Freemium application.",
+      "b) Advertisement-based application.",
+      "c) Paid application.",
+      "d) Transaction-based application."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) is not correct. As the scenario does not include any hint towards additional paid features.\nb) is correct. The data shown is publicly available, and thus it is unlikely the user will pay to read the data in the app. However, the user is used to seeing advertisements in news sites.\nc) is not correct, as it is a free-to-use app.\nd) is not correct, as no transactions are managed in this app"
+  },
+  {
+    "id": 3,
+    "lo": "MAT-1.3.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following statements is true for feature phones?\n\nSelect ONE option.",
+    "options": [
+      "a) Feature phones provide limited support for app installation.",
+      "b) Feature phones are similar to smart phones but bigger.",
+      "c) Feature phones are the next generation smartphones, with extended functionality.",
+      "d) Feature phones have cameras, GPS and other sensors built in."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) is correct. Feature phones come with some apps installed, like browsers, but user options to install additional apps are usually limited to a small set of applications provided by the device manufacturer\nb) is not correct. See justification in a).\nc) is not correct. See justification in a).\nd) is not correct. See justification in a)."
+  },
+  {
+    "id": 4,
+    "lo": "MAT-1.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Your team develops an Android game utilizing many device features such as camera, GPS and device orientation. Which of the following types of application is MOST suitable, if the precise use of device specific features is essential?\n\nSelect ONE option.",
+    "options": [
+      "a) Hybrid app.",
+      "b) Mobile web app.",
+      "c) Native app.",
+      "d) Desktop app."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) is not correct. Hybrid apps are less suitable than native apps, since they require an additional layer to translate between web technology content and the device runtime environment\nb) is not correct. Web apps do not utilize device features as well as native apps\nc) is correct. The game is for one platform only and utilized many device features which can be best utilized by native apps.\nd) is not correct, as Android is a mobile OS not a Desktop OS."
+  },
+  {
+    "id": 5,
+    "lo": "MAT-1.5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Your team develops an iOS app that is used to register users, their e-mail and street addresses. The data is transferred to a server and provides registered users with samples of physical products, shipped via normal mail. Which of the following are appropriate architectural decisions for this app?\ni. Always connected.\nii. Native app.\niii. Store and forward.\niv. Cellular data.\nv. Web app.\n\nSelect ONE option.",
+    "options": [
+      "a) True: iii, v False: i, ii, iv",
+      "b) True: ii, iv False: i, iii, v",
+      "c) True: i, iv False: ii, iii, v",
+      "d) True: ii, iii False: i, iv, v"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) is not correct. See justification in d).\nb) is not correct. See justification in d).\nc) is not correct. See justification in d).\nd) is correct. As it is iOS, only a native app is most appropriate. As the samples are sent out via physical shipping, a delay between registration and arrival of samples is present anyway. Thus, there is no negative impact if the registration is not received when done by the user. The store and forward model allows the user to register even when he/she is offline while doing so."
+  },
+  {
+    "id": 6,
+    "lo": "MAT-1.6.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Your analytics data shows that all your users use iPhone. Which of the following decisions is MOST appropriate for your test strategy if you have a low risk app?\n\nSelect ONE option.",
+    "options": [
+      "a) Use remote device access service.",
+      "b) Use single platform strategy.",
+      "c) Use maximum coverage strategy.",
+      "d) Use iOS simulators only."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) is not correct, as remote device access service brings no advantage for single platform user base.\nb) is correct, as the user bases is single platform and app is low risk.\nc) is not correct, as maximum coverage does not go together with low risk.\nd) is not correct, as testing should not be based on simulated devices alone."
+  },
+  {
+    "id": 7,
+    "lo": "MAT-1.7.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT a challenge when testing mobile apps?\n\nSelect ONE option.",
+    "options": [
+      "a) Unknown command parameters for application startup altering the app’s behavior.",
+      "b) Diverse users and user groups.",
+      "c) Multiple network types and network providers.",
+      "d) Non-availability of newly launched devices necessitating the use of emulators/simulators."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) is correct. Mobile apps are usually started via tapping in the GUI. Thus, the user has no option to provide additional parameters during startup of the app.\nb) is not correct. See justification in a).\nc) is not correct. See justification in a).\nd) is not correct. See justification in a)."
+  },
+  {
+    "id": 8,
+    "lo": "MAT-1.8.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A company has decided to use crowd testing. Which of the following risks is mitigated by this decision?\n\nSelect ONE option.",
+    "options": [
+      "a) Non-availability of important stakeholders during development.",
+      "b) Cost of supporting multiple platforms.",
+      "c) Non-availability of important devices during testing.",
+      "d) Good reviews in the platform provider’s app store."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) is not correct, as it is a project risk.\nb) is not correct, as crowd testing has no impact on maintenance cost per platform.\nc) is correct, as the crowd has a lot of different devices.\nd) is not correct, as good reviews are not a risk."
+  },
+  {
+    "id": 9,
+    "lo": "MAT-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "When testing a native app using different device features, which of the following device hardware is LEAST needed to be in focus when performing the tests?\n\nSelect ONE option.",
+    "options": [
+      "a) WLAN module.",
+      "b) Integrated speakers.",
+      "c) Built-in camera.",
+      "d) Headphone access."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) is correct. As mentioned in the text, the SUT is a native app and common native apps can work without an internet connection. Thus, testing the WLAN module should have the lowest priority in comparison to the tests of the other hardware features.\nb) is not correct. See justification in a).\nc) is not correct. See justification in a).\nd) is not correct. See justification in a)."
+  },
+  {
+    "id": 10,
+    "lo": "MAT-2.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT a potential effect of overheating of a mobile device when testing it?\n\nSelect ONE option.",
+    "options": [
+      "a) Application becomes slow.",
+      "b) Features of the application stop working.",
+      "c) De-installation of the app.",
+      "d) Incorrect functionality of apps."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) is not correct, as drop in CPU frequency is used to reduce power consumption.\nb) is not correct, as shutting down parts of the system is used to reduce power consumption.\nc) is correct, as apps are not de-installed due to overheating.\nd) is not correct, as malfunctioning can occur."
+  },
+  {
+    "id": 11,
+    "lo": "MAT-2.1.4",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following statements is NOT a valid scenario for testing a mobile device regarding input sensors?\n\nSelect ONE option.",
+    "options": [
+      "a) Verifying the quality of the received GPS signal.",
+      "b) Testing for correct functionality of the gyroscope.",
+      "c) Validating data provided by the motion sensor.",
+      "d) Correct screen size in landscape and portrait modes."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) is not correct. GPS signal belongs to input sensors.\nb) is not correct. Gyroscope belongs to input sensors.\nc) is not correct. Motion sensor belongs to input sensors.\nd) is correct. This scenario is not testing an input sensor."
+  },
+  {
+    "id": 12,
+    "lo": "MAT-2.1.5",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following options contains tests which ONLY relate to different input methods?\n\nSelect ONE option.",
+    "options": [
+      "a) Swiping to the next screen, double tapping on a button, scanning a QR code, recording audio.",
+      "b) Taking a photo with the camera, using a soft keyboard, printing the content of a screen, using GPS coordinates.",
+      "c) Dragging an object on the screen, opening another application, capturing of images, sending an SMS to a friend.",
+      "d) Displaying geo location data, performing distance measurements, using a TV remote app, capturing videos from the internet."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) is correct. This is the best answer, because it lists only scenarios covering different input methods.\nb) is not correct. Printing the content of a screen is testing of an output and not an input method.\nc) is not correct. Sending an SMS to a friend is also testing of an output method.\nd) is not correct. Using a TV remote app is testing an output and not an input method."
+  },
+  {
+    "id": 13,
+    "lo": "MAT-2.1.6",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are working as a mobile tester for a company which is developing a navigation app. One of the requirements is that the app should run in both portrait and landscape modes whilst providing the same features to the user in an accurate way. Which of the following lists the BEST aspects to take into account for verifying correct functionality when switching screen orientation?\n\nSelect ONE option.",
+    "options": [
+      "a) Motion sensor, security issues, correctness of output data.",
+      "b) Usability issues, retaining input data, maintenance of current state.",
+      "c) Various switches in screen orientation, performance issues, user interface features.",
+      "d) WLAN interrupts, rendering issues in the graphical user interface, loss of entered data."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) is not correct. Testing security aspects is not done while testing for correct screen orientation.\nb) is correct. The list contains only aspects that are mentioned in the syllabus for screen orientation change.\nc) is not correct. Performance testing is not done while testing for correct screen orientation.\nd) is not correct. Testing for WLAN interrupts is not done while testing for correct screen orientation."
+  },
+  {
+    "id": 14,
+    "lo": "MAT-2.1.7",
+    "k": "K3",
+    "pts": 1,
+    "text": "As test manager you are working for bank company which is developing a new release of its online banking software. This software is realized as a web application. During the preparation of suitable tests, you are focusing on the app’s fault tolerance according user-initiated interrupts. Which of the following tests scenarios would you choose at BEST for this purpose?\ni. Displaying low battery warnings.\nii. Setting mobile devices in standby mode.\niii. Accepting incoming voice calls.\niv. Low memory notification.\nv. Setting device in do-not-disturb mode.\n\nSelect ONE option.",
+    "options": [
+      "a) i – ii – iii",
+      "b) i – ii – iv",
+      "c) ii – iii – iv",
+      "d) ii – iii – v"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) is not correct. Statement i is not correct, because the software has been implemented as a mobile-web application.\nb) is not correct, as statements i and iv are fault tolerance for user-initiated interrupts.\nc) is not correct. Statement iv is not a user-initiated interrupt.\nd) is correct. Statements ii, iii and v are all user-initiated interrupts."
+  },
+  {
+    "id": 15,
+    "lo": "MAT-2.1.8",
+    "k": "K3",
+    "pts": 1,
+    "text": "A health insurance company released an updated version of its customer app. The update includes a feature which scans a pharmacy bill and sends it directly to the health insurance company for payment. However, when the customers installed the update, they found that the camera couldn't be invoked to scan the bills. This bug was reported and fixed. Now new tests need to be prepared and executed, and retesting needs to be performed. Which of the following tests will you execute as the MOST IMPORTANT test in the given scenario?\n\nSelect ONE option.",
+    "options": [
+      "a) Test for performance.",
+      "b) Test for accessibility.",
+      "c) Test for access permission.",
+      "d) Test for installation."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) is not correct. There is no hint in the text that the users have experienced performance problems.\nb) is not correct. There is nothing mentioned in the text that users are complaining about the malfunctioning of the scanning feature.\nc) is correct. This is the most important test to be performed, because missing or incorrect access permissions may be a possible root cause for the fixed problem.\nd) is not correct. The users are able to install the update of the app successfully, as stated in the text."
+  },
+  {
+    "id": 16,
+    "lo": "MAT-2.2.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Your company is providing a news massaging app including a notification feature for displaying breaking news with deep linking to the relevant news page in the app itself. Recently some users of the app complained about a delayed display or even the complete absence of the expected notifications of breaking news. The root cause of this defect was identified by the developers and fixed. In your role as a mobile tester, which functional tests would you take into account to validate the correct working of the fixed version of the app?\ni. Correct displaying of the notification when the app is in the background.\nii. Running the application under low battery conditions.\niii. Testing the performance of the app whilst displaying the notification.\niv. Performing of usability tests related to the fixed version of the app.\nv. Testing the deep linking to the correct news page of the app.\n\nSelect ONE option.",
+    "options": [
+      "a) i – iv – v",
+      "b) i – ii – iv",
+      "c) i – ii – v",
+      "d) ii – iii – iv"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) is not correct. See justification in c).\nb) is not correct. See justification in c).\nc) is correct. Statements i, ii and v are functional tests, as mentioned in the text. Statements iii and iv are non-functional tests. Additionally, their execution makes no sense in this context.\nd) is not correct. See justification in c)."
+  },
+  {
+    "id": 17,
+    "lo": "MAT-2.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Your company is developing a new version of a hybrid app for price comparison. This app consists of feature-rich functionalities in quick-access links. As a mobile tester, it is your task to verify the failure- free working of these quick-access links. Which of the following is the BEST approach to take?\n\nSelect ONE option.",
+    "options": [
+      "a) Verifying the correct behavior of force-touch functionality of an iOS app.",
+      "b) Assuring the presence of favorite bookmarks in Mobile Chrome on Android OS.",
+      "c) Verifying that all hardware keys of a mobile device work as expected.",
+      "d) Using a suitable tool for identifying broken links in the mobile web app."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) is correct. According to the syllabus, testing the force-touch functionality is an example that is in the context of testing quick-access links.\nb) is not correct. This approach does not focus on testing failure-free working of quick-access links. Instead it focuses on browser bookmarks\nc) is not correct. This approach does not focus on testing failure-free working of quick-access links. Instead it focuses on interactions with device hardware"
+  },
+  {
+    "id": 18,
+    "lo": "MAT-2.2.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are testing a native iOS app that uses various sensors. Which of the following test types do NOT apply?\n\nSelect ONE option.",
+    "options": [
+      "a) Performance testing.",
+      "b) Testing for utilization of device features.",
+      "c) Cross-browser testing.",
+      "d) Device compatibility testing."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) is not correct, as performance is important for any app.\nb) is not correct, as testing the utilization of device features is important.\nc) is correct, as a native app does not use various browsers.\nd) is not correct, as the app should be compatible with the various devices of the users."
+  },
+  {
+    "id": 19,
+    "lo": "MAT-2.2.5",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is a typical test type for testing interoperability with OS versions?\n\nSelect ONE option.",
+    "options": [
+      "a) Testing for security issues.",
+      "b) Testing for performance problems.",
+      "c) Testing for accessibility standards.",
+      "d) Testing for backward compatibility."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) is not correct. Testing for security issues is not primarily the focus of verifying interoperability with different OS versions.\nb) is not correct. See justification in a).\nc) is not correct. See justification in a).\nd) is correct. Testing for backward compatibility focuses on verifying correct interoperability with different OS versions, as stated as example in the syllabus."
+  },
+  {
+    "id": 20,
+    "lo": "MAT-2.2.6",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is a PRIMARY test goal when performing tests for co-existence of an system under test (SUT) with other apps on the device?\n\nSelect ONE option.",
+    "options": [
+      "a) Verifying that the SUT does not harm any user data.",
+      "b) Identifying existing security issues on the device.",
+      "c) Assessing usability problems in the SUT.",
+      "d) Testing if the SUT meets accessibility standards."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) is correct. This is an accurate test goal for testing the SUT for co-existence with other installed applications on the device.\nb) is not correct. This is not a valid test goal in the context of testing for co-existence of the SUT to other applications.\nc) is not correct. See justification in b).\nd) is not correct. See justification in b)."
+  },
+  {
+    "id": 21,
+    "lo": "MAT-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are developing a test approach for performing connectivity tests on different types of mobile devices. Which of the following should NOT be in scope for this approach?\n\nSelect ONE option.",
+    "options": [
+      "a) Switching from GSM to flight mode and back to GSM.",
+      "b) Initiating a payment transaction via NFC.",
+      "c) Using Bluetooth for pairing with a wearable device.",
+      "d) Connecting a USB cable with a power supply."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) is not correct. According to the syllabus, this answer contains an appropriate aspect for performing connectivity tests.\nb) is not correct. See justification in a).\nc) is not correct. See justification in a).\nd) is correct. To plug in a power supply via USB does not focus on connectivity, but it can be used as a suitable scenario for interrupt testing."
+  },
+  {
+    "id": 22,
+    "lo": "MAT-3.1.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "You are assigned the task of installation testing for an Android application. Which of the following installation tests should NOT be used?\n\nSelect ONE option.",
+    "options": [
+      "a) Executing App-Installer.exe.",
+      "b) Install by connecting the device to a PC and running commands for installation.",
+      "c) Installation from Google Play Beta Program.",
+      "d) Sideloading by providing the installation package on an SD-Card and executing from within the device file system."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) is correct. Exe is an executable file format for Windows only. It won’t work on Android.\nb) is not correct. Connecting the device to a PC and running installation commands can be used for installation testing on Android devices.\nc) is not correct. Installation from the Google Play Beta Program will work on Android devices.\nd) is not correct. This scenario can also be used for installation testing on Android devices."
+  },
+  {
+    "id": 23,
+    "lo": "MAT-3.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following are potential security issues for mobile apps?\ni. Code injection via input fields.\nii. Data being transferred unencrypted.\niii. App not responding after interruption.\niv. Rendering issues after changing device orientation.\nv. Overlap of screen elements on small screens.\n\nSelect ONE option.",
+    "options": [
+      "a) i and iii.",
+      "b) ii and v.",
+      "c) i and ii.",
+      "d) ii and iv."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) is not correct. Although statement i is related to security, statement iii is not.\nb) is not correct. Although statement ii is related to security, statement v is not.\nc) is correct. Both statements i and ii are related to security.\nd) is not correct. Although statement ii is related to security, statement iv is not."
+  },
+  {
+    "id": 24,
+    "lo": "MAT-3.1.4",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following are you likely to use to carry out a performance test of the time behavior of an app?\n\nSelect ONE option.",
+    "options": [
+      "a) An instrumented build to get exact chronometric numbers.",
+      "b) A load generator to observe the server behavior under heavy load.",
+      "c) Running the app on an emulator/simulator.",
+      "d) A device and a stopwatch to check the performance of the device."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) is correct. Only an instrumented build can provide exact chronometric numbers on how long a processing step within the app actually lasted. A stop watch is not sufficient in the range of milliseconds. Also, it does not allow differentiation between the time taken by the app, by the backend and time for network communication.\nb) is not correct. Server-side performance is not app performance\nc) is not correct. Emulator/Simulator can never provide correct app performance\nd) is not correct. See justification in a)."
+  },
+  {
+    "id": 25,
+    "lo": "MAT-3.1.5",
+    "k": "K3",
+    "pts": 1,
+    "text": "You are tasked with carrying out a usability test for a mobile app. Which of the following is a step that you will NOT perform?\n\nSelect ONE option.",
+    "options": [
+      "a) Ask the manager to order a usability lab session.",
+      "b) Test the app to check compliance with platforms user interface guidelines",
+      "c) Activate the voice-over feature of the device.",
+      "d) Learn about the look and feel expectations of the platform."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) is not correct, because this step is to be performed.\nb) is not correct, because this step is to be performed.\nc) is correct, because this step is NOT to be performed.\nd) is not correct, because this step is to be performed."
+  },
+  {
+    "id": 26,
+    "lo": "MAT-3.1.6",
+    "k": "K1",
+    "pts": 1,
+    "text": "What does the mnemonic \"CRUD\" stand for in the context of data validation testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Copy, Rename, Update, Delete.",
+      "b) Create, Read, Undo, Delete.",
+      "c) Create, Read, Update, Delete.",
+      "d) Create, Read, Undo, Deploy."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) is not correct, as per syllabus and glossary.\nb) is not correct, as per syllabus and glossary.\nc) is correct, as per syllabus and glossary.\nd) is not correct, as per syllabus and glossary."
+  },
+  {
+    "id": 27,
+    "lo": "MAT-3.1.7",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are conducting internationalization testing. While you execute the tests you partly see pseudo- strings and partly English strings. Which of the following is the most likely cause?\n\nSelect ONE option.",
+    "options": [
+      "a) Missing translations.",
+      "b) Hard-coded English strings.",
+      "c) Wrong language settings of the device.",
+      "d) Something went wrong during build."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) is not correct. See justification in b).\nb) is correct. When doing internationalization testing, we want to see that all strings are sourced from a resource. Thus, if the app does not show the pseudo-strings and instead shows real language, it is not sourced from the pseudo-string resource.\nc) is not correct. See justification in b).\nd) is not correct. See justification in b)."
+  },
+  {
+    "id": 28,
+    "lo": "MAT-3.1.8",
+    "k": "K2",
+    "pts": 1,
+    "text": "Why should accessibility testing be conducted?\n\nSelect ONE option.",
+    "options": [
+      "a) To determine if the app is usable by users with differing needs.",
+      "b) Because it is required by the W3C and the platform providers.",
+      "c) To completely test the application.",
+      "d) As generic test cases exist that must be executed for every application."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) is correct. The syllabus states that accessibility testing “is performed to determine the ease by which users with differing needs can use a component or system”\nb) is not correct. See justification in a).\nc) is not correct. See justification in a).\nd) is not correct. See justification in a)."
+  },
+  {
+    "id": 29,
+    "lo": "MAT-3.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are a tester in a team developing a mobile app. Your team has finished the current version of the app and has released it to the application store. Which of the following is your next activity?\n\nSelect ONE option.",
+    "options": [
+      "a) Archiving testware.",
+      "b) Post-release testing.",
+      "c) Application store approval testing.",
+      "d) Test closure."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) is not correct. Archiving testware is a test closure activity, which is done after post-release testing.\nb) is correct. When the app is available in the application store it must be tested that it can be installed from there, and works as in the build that was tested.\nc) is not correct. Application store approval testing should be done prior to submission.\nd) is not correct. See justification in a)."
+  },
+  {
+    "id": 30,
+    "lo": "MAT-3.3.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "You are a new member in a team which is testing mobile applications. Your team lead asks you to test the app’s inputs for a duration of 1 hour, functions for 1 hour, interrupts for 1 hour, and so on. Which of the following is the team lead applying?\n\nSelect ONE option.",
+    "options": [
+      "a) Risk-Based Test Management",
+      "b) Delegating the responsibility of his job to you.",
+      "c) Managing Performance Testing.",
+      "d) Session-Based Test Management."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) is not correct, as the question does not provide any information about risks and all sessions have the same time frame, not a time frame adjusted according to risk.\nb) is not correct, as no delegation of responsibilities is happening.\nc) is not correct, as no performance testing is done in the scenario.\nd) is correct. The team lead uses Session-Based Test Management, as testing is divided into 1h sessions, each with a defined focus."
+  },
+  {
+    "id": 31,
+    "lo": "MAT-3.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Your company has just finished developing a brand-new navigation app for smartphones. As the test manager you are now planning exploratory test sessions on mobile devices with your test team. Which of the following approaches would be the BEST to consider, knowing that there is only a short time available for testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Executing test sessions with various mobile devices in a device lab of your company.",
+      "b) Designing and executing a high number of test cases using a test management tool.",
+      "c) Planning field tests using a combination of prior defined tours and suitable heuristics.",
+      "d) Defining user scenarios to be performed as tasks by representative participants in a usability lab."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) is correct. Tours can be helpful to learn about an app.\nb) is not correct. Since there is hardly any time, waiting until requirement documents are provided costs too much time.\nc) is not correct. The scenario does not provide any information on whether test cases are available already or not.\nd) is not correct. Apk-files are installation packages for Android. It it is not possible to deploy them on iOS."
+  },
+  {
+    "id": 32,
+    "lo": "MAT-3.4.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Why is it common for mobile app projects to flip the Test Pyramid?\n\nSelect ONE option.",
+    "options": [
+      "a) Unit tests are much more complicated on mobile apps. As a result, it is convenient to only have a few unit tests.",
+      "b) Missing tool support for unit and integration testing for mobile apps.",
+      "c) Mobile apps are always monolithic. As a result, everything can be tested at system level and there is no need to test at lower levels.",
+      "d) Mobile apps require a lot of manual testing, like usability or field testing."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) is not correct. This statement is simply wrong.\nb) is not correct. This statement is simply wrong.\nc) is not correct. This statement is simply wrong.\nd) is correct. Market and device fragmentation, as well as user expectations with regard to usability, and the variability of usage scenarios give test conditions which can only be tested manually."
+  },
+  {
+    "id": 33,
+    "lo": "MAT-4.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following statements is correct for the development environments used for mobile application development?\n\nSelect ONE option.",
+    "options": [
+      "a) iOS developers use Visual Studio IDE as their development environment.",
+      "b) Android developers use the Universal Studio IDE while iOS developers use Xcode as their development environment.",
+      "c) Android developers use the Xcode IDE as their development environment.",
+      "d) iOS developers use the Xcode IDE as their development environment."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) is not correct. Visual Studio IDE is not used for developing apps for iOS.\nb) is not correct. Xcode IDE is used for developing apps for iOS, but Universal Studio IDE is not used for developing apps for Android.\nc) is not correct. Xcode IDE is not used for developing apps for Android.\nd) is correct. Referring to the examples given at the syllabus, for Android app development Android Studio may be used and for iOS app development Xcode may be used."
+  },
+  {
+    "id": 34,
+    "lo": "MAT-4.2.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is NOT a task that can be typically performed by using a software development kit (SDK) for mobile applications?\n\nSelect ONE option.",
+    "options": [
+      "a) Taking screenshots.",
+      "b) Designing test cases.",
+      "c) Pushing random events to the application.",
+      "d) Creating virtual devices."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) is not correct. Taking screenshots can be utilized by an SDK and is listed in the examples of chapter 4.2.\nb) is correct. According to chapter 4.2 the task of designing test cases is not mentioned in the examples that can be supported by tools as part of SDKs.\nc) is not correct. Pushing random events to the application can be utilized by an SDK and is listed in the examples of chapter 4.2.\nd) is not correct. Creating virtual devices can be utilized by an SDK and is listed in the examples of chapter 4.2."
+  },
+  {
+    "id": 35,
+    "lo": "MAT-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are assigned as a tester for a mobile app with a client-server architecture. In order to better utilize available equipment, the company decides to use the employee’s PC without the application being connected to a real server, in order to test the basic features in early test stages. Which of the following architectures would you recommend that the developer of the Android app should use in the early test stages of the development to verify the functional suitability of the basic features?\n\nSelect ONE option.",
+    "options": [
+      "a) Have the server emulator installed on the developer’s PC and the simulator of the mobile application installed on a real device.",
+      "b) Have the simulator of the mobile application installed on one of the Android Virtual Device’s (AVD’s) device emulators and the server emulator installed on the developer’s PC.",
+      "c) Have the server simulator installed on the developer’s PC and the mobile application installed on one of the AVD’s device emulators.",
+      "d) Have the server simulator and the emulated mobile application installed directly on the developer’s PC."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) is not correct. See justification in c).\nb) is not correct. See justification in c).\nc) is correct. It is possible to have a simulator representing the server side, and the application installed on the AVD emulator to better utilize the earlier test environment (all on one PC). In addition, having the tester advising the developer on an environment is good, as is simulating the server side for basic functionality testing as an alternative if the server side has problems or if requested to be utilized by the testing team on early test stages\nd) is not correct. See justification in c)."
+  },
+  {
+    "id": 36,
+    "lo": "MAT-4.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are the test manager in a digital banking division at a Fintech company that is upgrading the Android-based mobile banking application of a mid-level financial institution. The upgrade incorporates an innovative security mechanism that uses fingerprint and face recognition features for enhanced app security. Which of the following represents the BEST approach to use in order to setup your test lab for this enhancement?\n\nSelect ONE option.",
+    "options": [
+      "a) Setup a remote test lab in order to test the new innovative mobile banking application on as many types of devices as possible.",
+      "b) Setup an on-premise lab in order to effectively test the new unique device-related features of the innovative mobile banking application.",
+      "c) Setup a remote test lab in order to test the mobile banking application on many types of different devices and an on-premise lab to cover the maximum of possible devices.",
+      "d) Setup a remote test lab in order to test the new innovative mobile banking application on many types of Android devices from different device manufacturers and save money for the company."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) is not correct. See justification in b).\nb) is correct. The on-premise lab main advantage is to enable specific tests for sensors, battery, and unique-device related feature or tech part, especially if it’s done by the device manufacturer – in that case Samsung. The question is targeted to check if the examinee knows how to distinguish between the labs by leveraging the lab’s advantages.\nc) is not correct. See justification in a).\nd) is not correct. See justification in a)."
+  },
+  {
+    "id": 37,
+    "lo": "MAT-5.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statement does NOT correctly distinguish between the common mobile testing automation approaches?\n\nSelect ONE option.",
+    "options": [
+      "a) Agent-based testing approach are best used for executing mobile web applications, whereas device-based testing are best used for all types of mobile applications.",
+      "b) Agent-based testing approach utilizes a string sent by the browser to spoof a particular browser, whereas device-based testing approach has to be executed on a particular mobile gadget.",
+      "c) Native apps are best tested using the general web application automation tools, whereas mobile apps need specific tools.",
+      "d) The mode of operation for the agent-based testing approach is to mimic the browser characteristics, whereas that of the device-based testing approach is to operate on the actual browser."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) is not correct. An agent-based testing approach is best used for executing mobile web applications, whereas device-based testing is best used for all types of mobile applications.\nb) is not correct. Agent-based approaches utilize the User-Agent string sent by the browser to spoof a particular browser on a particular device and device-based approaches execute on the actual gadget.\nc) is correct. It is the mobile apps that are tested using general web application tools, whereas native apps are best tested using specific tools.\nd) is not correct. The agent-based approach mimics the browser, whereas the device-based approach runs on the actual browser."
+  },
+  {
+    "id": 38,
+    "lo": "MAT-5.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements is TRUE regarding the scripting methods used in automation of mobile testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Scripting using object identification is faster than using visual based (OCR/Text recognition), and therefore reduces the overall time needed for test execution.",
+      "b) Object based scripting is the more reliable method of authoring test automation code because it allows the test framework to match the right mobile application object agnostically to the device under test.",
+      "c) The scripting method using object identification increases the ongoing maintenance effort when there are frequent software code changes to the app that affect the baseline images.",
+      "d) Relying on OCR/Text recognition and object learning does not pose a risk to the test automation reliability or robustness."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) is not correct. Object based scripting requires manual scripting not needed in Image/OCR scripting.\nb) is correct. Object based scripting is the most reliable method of authoring test automation code.\nc) is not correct. Maintenance effort and authoring challenges relating to of Image/OCR are higher with app changes that affect the baseline images.\nd) is not correct. Image/OCR is the less reliable method."
+  },
+  {
+    "id": 39,
+    "lo": "MAT-5.3.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is NOT a major consideration during the evaluation of mobile automation test tools?\n\nSelect ONE option.",
+    "options": [
+      "a) The test automation skill set of the testers who will be using the tool.",
+      "b) Test automation requirements and complexities such as the use of new features such as FaceID, Fingerprint, Chatbots by the app.",
+      "c) It is important to consider automation requirements and complexities.",
+      "d) Ability of the test framework to operate independently of other existing tools used in the organization."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) is not correct. It is important to consider testers skill set when evaluating the tools.\nb) is not correct. It is important to consider automation requirements and complexities.\nc) is not correct. This is an important consideration.\nd) is correct. It is not a major consideration to make consideration for independent operation."
+  },
+  {
+    "id": 40,
+    "lo": "MAT-5.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements LEAST supports the use of a remote test lab?\n\nSelect ONE option.",
+    "options": [
+      "a) Testing during later stages of the app development and which need to run on the full device lab, is best done on a remote device lab.",
+      "b) A remote device lab will most likely cover a small set of the latest device/OS configurations to allow developers and testers to quickly validate early design stages of the app.",
+      "c) Remote device labs will ensure sufficient variety of device and OS to enable teams to get a larger variety of test gadgets for their testing.",
+      "d) Remote labs are better when executing at large-scale because they are typically designed to ensure that stability concerns are in most cases removed from the overall process."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) is not correct. Remote test labs are best for advanced stages with full lab setup.\nb) is correct. Testing against a local device lab is the approach that would typically serve small range of devices for earlier stages of the app testing.\nc) is not correct. Remote test labs usually have a wide variety of devices.\nd) is not correct. Remote test labs are usually stable for large scale tests."
+  }
+];
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+const BASE_SECONDS = 60 * 60;
+const EXT_SECONDS  = 75 * 60;
+let timeExtended  = false;
+let TOTAL_SECONDS = BASE_SECONDS;
+let userAnswers   = questions.map(() => []);
+let timerInterval = null;
+let examDeadline = null;
+let secondsLeft   = TOTAL_SECONDS;
+let examSubmitted = false;
+let pendingAction = null;
+
+function selectTime(extended) {
+  timeExtended  = extended;
+  TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+  document.getElementById('opt-standard').classList.toggle('active', !extended);
+  document.getElementById('opt-extended').classList.toggle('active',  extended);
+  document.getElementById('meta-minutes').textContent = extended ? '75' : '60';
+  document.getElementById('ext-note').style.display   = extended ? 'block' : 'none';
+  document.getElementById('start-note-txt').textContent = extended
+    ? 'The timer counts down from 75:00 (60 min + 15 min extension). The exam is submitted automatically when time runs out.'
+    : 'The timer counts down from 60:00. The exam is submitted automatically when time runs out.';
+}
+
+function startExam() {
+  secondsLeft = TOTAL_SECONDS;
+  examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+  document.getElementById('timer').textContent = timeExtended ? '75:00' : '60:00';
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('exam-screen').style.display  = 'block';
+  renderQuestions();
+  timerInterval = setInterval(tickTimer, 1000);
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+            .replace(/"/g,'&quot;').replace(/\n/g,'<br>');
+}
+
+function renderQuestions() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'card-' + qi;
+    card.style.animationDelay = (qi * 0.012) + 's';
+    const opts = q.options.map((opt, oi) => `
+      <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+        <input type="radio" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+               style="position:absolute;opacity:0;width:1px;height:1px;">
+        <span class="option-marker"></span>
+        <span class="option-text">${escHtml(opt)}</span>
+      </label>`).join('');
+    card.innerHTML = `
+      <div class="q-header">
+        <div class="q-meta">
+          <span class="q-num">Q${q.id}</span>
+          <span class="q-lo">${q.lo} (${q.k})</span>
+          <span class="q-pts">1 pt</span>
+        </div>
+        <div class="q-text" id="q-text-${qi}">${escHtml(q.text)}</div>
+      </div>
+      <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+      <div class="result-tag" id="result-${qi}"></div>
+      <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>`;
+    container.appendChild(card);
+  });
+  document.querySelectorAll('.option-row input').forEach(input => {
+    input.addEventListener('change', function () {
+      tickTimer();
+      if (examSubmitted) return;
+      syncAnswer(parseInt(this.dataset.qi));
+    });
+  });
+}
+
+function syncAnswer(qi) {
+  userAnswers[qi] = [];
+  questions[qi].options.forEach((_, oi) => {
+    if (document.getElementById('inp-' + qi + '-' + oi).checked) userAnswers[qi].push(oi);
+  });
+  questions[qi].options.forEach((_, oi) => {
+    document.getElementById('opt-' + qi + '-' + oi)
+      .classList.toggle('selected', userAnswers[qi].includes(oi));
+  });
+  updateProgress();
+}
+
+function updateProgress() {
+  const answered = userAnswers.filter(a => a.length > 0).length;
+  document.getElementById('answered-num').textContent = answered;
+  document.getElementById('progress-fill').style.width = (answered / questions.length * 100) + '%';
+}
+
+function tickTimer() {
+  if (examSubmitted || examDeadline === null) return;
+  secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+  const m = Math.floor(secondsLeft / 60), s = secondsLeft % 60;
+  const el = document.getElementById('timer');
+  el.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  if      (secondsLeft <= 300) el.className = 'timer danger';
+  else if (secondsLeft <= 900) el.className = 'timer warn';
+  else                         el.className = 'timer';
+  if (secondsLeft === 0) doSubmit(true);
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) tickTimer();
+});
+
+function confirmSubmit() {
+  const answered   = userAnswers.filter(a => a.length > 0).length;
+  const unanswered = questions.length - answered;
+  document.getElementById('confirm-title').textContent = 'Submit exam?';
+  document.getElementById('confirm-msg').innerHTML = unanswered > 0
+    ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered>1?'s':''}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+    : `All ${questions.length} questions answered. Submit the exam now?`;
+  document.getElementById('confirm-yes-btn').textContent = 'Submit';
+  pendingAction = 'submit';
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function confirmReset() {
+  document.getElementById('confirm-title').textContent = 'Restart the exam?';
+  document.getElementById('confirm-msg').innerHTML = 'All answers will be lost. The timer will reset to ' + (timeExtended ? '75:00' : '60:00') + '.<br><br>Are you sure?';
+  document.getElementById('confirm-yes-btn').textContent = 'Restart';
+  pendingAction = 'reset';
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function closeConfirm() {
+  document.getElementById('confirm-overlay').classList.remove('show');
+  pendingAction = null;
+}
+
+function doConfirm() {
+  if (pendingAction === 'submit') doSubmit(false);
+  else if (pendingAction === 'reset') doReset();
+  closeConfirm();
+}
+
+function doSubmit(timedOut) {
+  if (examSubmitted) return;
+  secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+  timedOut = timedOut || secondsLeft === 0;
+  examSubmitted = true;
+  clearInterval(timerInterval);
+  closeConfirm();
+
+  let correct = 0, wrong = 0, skipped = 0;
+  const total = questions.length;
+
+  questions.forEach((q, qi) => {
+    const given     = userAnswers[qi];
+    const isCorrect = given.length === 1 && given[0] === q.answer[0];
+    if (given.length === 0) skipped++;
+    else if (isCorrect) correct++;
+    else wrong++;
+
+    q.options.forEach((_, oi) => {
+      const row = document.getElementById('opt-' + qi + '-' + oi);
+      if (!row) return;
+      row.classList.add('disabled');
+      document.getElementById('inp-' + qi + '-' + oi).disabled = true;
+      row.classList.remove('selected');
+      if (q.answer.includes(oi))           row.classList.add('reveal-correct');
+      else if (given.includes(oi))         row.classList.add('reveal-wrong');
+    });
+
+    const rt   = document.getElementById('result-' + qi);
+    const expl = document.getElementById('expl-' + qi);
+    const card = document.getElementById('card-' + qi);
+    rt.classList.add('show');
+    expl.classList.add('show');
+    if (given.length === 0) {
+      rt.classList.add('incorrect');
+      rt.innerHTML = '&mdash; Not answered &middot; Correct: ' + String.fromCharCode(65 + q.answer[0]);
+      card.classList.add('incorrect-card');
+    } else if (isCorrect) {
+      rt.classList.add('correct');
+      rt.innerHTML = '&#10003; Correct (+1 pt)';
+      card.classList.add('correct-card');
+    } else {
+      rt.classList.add('incorrect');
+      rt.innerHTML = '&#10007; Incorrect &middot; Correct: ' + String.fromCharCode(65 + q.answer[0]);
+      card.classList.add('incorrect-card');
+    }
+  });
+
+  const pct  = Math.round(correct / total * 100);
+  const pass = pct >= 65;
+  const usedSec = TOTAL_SECONDS - secondsLeft;
+  const um = Math.floor(usedSec / 60), us = usedSec % 60;
+  const totalLabel = timeExtended ? '75:00' : '60:00';
+  const timeStr = timedOut
+    ? totalLabel + ' (time expired)'
+    : String(um).padStart(2,'0') + ':' + String(us).padStart(2,'0');
+
+  if (timedOut) { const el = document.getElementById('timer'); el.textContent = '00:00'; el.className = 'timer danger'; }
+
+  document.getElementById('final-score-pct').textContent = pct + '%';
+  document.getElementById('final-score-raw').textContent = correct + ' of ' + total + ' points';
+  document.getElementById('time-used').textContent = timeStr;
+  const badge = document.getElementById('grade-badge');
+  badge.textContent = pass ? '✓ PASS (≥ 65%)' : '✗ FAIL (< 65%)';
+  badge.className   = 'grade-badge ' + (pass ? 'pass' : 'fail');
+  document.getElementById('stat-correct').textContent = correct;
+  document.getElementById('stat-wrong').textContent   = wrong;
+  document.getElementById('stat-skipped').textContent = skipped;
+
+  document.getElementById('summary').style.display = 'block';
+  document.getElementById('summary').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function doReset() {
+  examSubmitted = false;
+  userAnswers   = questions.map(() => []);
+  secondsLeft   = TOTAL_SECONDS;
+  examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+  clearInterval(timerInterval);
+  document.getElementById('timer').textContent = timeExtended ? '75:00' : '60:00';
+  document.getElementById('timer').className   = 'timer';
+  document.getElementById('answered-num').textContent = '0';
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('summary').style.display = 'none';
+  renderQuestions();
+  timerInterval = setInterval(tickTimer, 1000);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

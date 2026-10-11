@@ -1,0 +1,2144 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CTAL-TM v3.0 — Probeprüfung Set A (Deutsch)</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .q-text, .option-text, .header-left { min-width: 0; overflow-wrap: anywhere; }
+      .meta-lbl { overflow-wrap: anywhere; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    </style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Advanced Level</div>
+        <h1>CTAL-TM v3.0<br /><em>Probeprüfung</em></h1>
+        <p class="start-subtitle">
+          ISTQB® Certified Tester Advanced Level Test Management (CTAL-TM) ·
+          Probeprüfung Set A v1.3.3 · ATB-/GTB-Edition · CTAL-TM-Lehrplan v3.0 (2024). Der
+          Timer startet, sobald Sie auf „Prüfung starten“ klicken.
+        </p>
+        <p class="start-subtitle source-credit">Quelle: ISTQB_CTAL-TM-v30_SET_A_germ_Sample-Exam_Questions.pdf; ISTQB_CTAL-TM-v30_SET_A_germ_Sample-Exam_Answers.pdf. © ISTQB® / German Testing Board e.V.. Autoren und Übersetzer sind in den Quell-PDFs genannt.</p>
+    <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">50</span>
+            <div class="meta-lbl">Fragen</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">120</span>
+            <div class="meta-lbl">Minuten</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">88</span>
+            <div class="meta-lbl">Punkte</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Bestehensgrenze</div>
+          </div>
+        </div>
+
+        <div class="time-option-label">Prüfungsdauer</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">120 Min.</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">150 Min.</span>
+            <span class="time-opt-lbl">+30 Min. Verlängerung</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">
+          &#9432;&nbsp; Die Verlängerung um 30 Minuten ist für Teilnehmende vorgesehen,
+          die die Prüfung nicht in ihrer Muttersprache ablegen.
+        </div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Prüfung starten
+        </button>
+        <p class="start-note" id="start-note-txt">
+          Der Timer zählt von 120:00 herunter. Nach Ablauf der Zeit wird
+          die Prüfung automatisch abgegeben.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CTAL-TM v3.0 · Probeprüfung Set A v1.3.3 · ATB-/GTB-Edition</span
+            >
+            <span class="exam-title">Certified Tester Advanced Level – Testmanagement</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/50 beantwortet
+            </div>
+            <div class="timer" id="timer">120:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Zurücksetzen
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Abgeben
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            50 Fragen (88 Punkte) · <strong>Bestanden ab 58 von 88 Punkten (65 %)</strong>
+            · Je Frage sind 1–3 Punkte möglich. Die Anzahl der auszuwählenden Antworten
+            steht bei jeder Frage.
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Prüfung abgeschlossen</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Benötigte Zeit: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Richtig</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Falsch</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Unbeantwortet</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Neustart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Prüfung abgeben?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Abbrechen
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Abgeben
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "TM-1.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Sie sind Testmanager in einem großen CRM-Implementierungsprojekt. Vor Beginn der Entwicklung müssen Sie ein Testkonzept erstellen.\n\nWelche der folgenden Aktivitäten ist für die Entwicklung und Erstellung eines Testkonzepts AM WICHTIGSTEN?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Einen Konsens zwischen allen Stakeholdern erzielen.",
+      "b) Testziele auf der Grundlage von regulatorischen Standards festlegen.",
+      "c) Die Bereitschaft zum Testen herstellen.",
+      "d) Alle Stakeholder zur Festlegung ihrer Risikominderungsstrategie bewegen."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Gemäß CTAL-TM-Lehrplan V3.0, Abschnitt 1.1.1, („Erstellung des Testkonzepts“), müssen alle Aspekte des Testkonzepts von allen Stakeholdern akzeptiert werden. Daher ist das Erreichen eines Konsenses zwischen allen Stakeholdern die wichtigste Aktivität bei der Entwicklung und Erstellung eines Testkonzepts.\n\nb) FALSCH – Das Testkonzept bezieht sich zwar auf die Testziele, ihre Festlegung ist im Vergleich zu Option a) aber NICHT die wichtigste Aktivität bei der Entwicklung und Erstellung eines Testkonzepts. Die regulatorischen Standards sind nicht in allen Testsituationen anwendbar.\n\nc) FALSCH – Herstellung der Bereitschaft zum Testen ist eine Aktivität der Testüberwachungs- und Teststeuerungsaktivitäten (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 1.1.2), aber es ist NICHT die wichtigste Aktivität bei der Entwicklung und Erstellung eines Testkonzepts.\n\nd) FALSCH – Die Risikominderung bezieht sich auf das Gesamtprojekt und lässt sich nicht individuell für die einzelnen Stakeholder ausdrücken."
+  },
+  {
+    "id": 2,
+    "lo": "TM-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Optionen beschreibt das Ziel der Testüberwachung AM EHESTEN?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Bei der Testüberwachung werden der tatsächliche Teststatus und –fortschritt erfasst und auf Unterschiede zum Plan geprüft.",
+      "b) Bei der Testüberwachung werden die tatsächlichen mit den erwarteten Ergebnissen auf Testfallebene und den zugehörigen Endekriterien verglichen.",
+      "c) Bei der Testüberwachung werden neu identifizierte oder bekannte Risiken nach deren Änderungen behandelt.",
+      "d) Bei der Testüberwachung werden das Testkonzept umgesetzt und im Bedarfsfall Korrekturmaßnahmen durchgeführt."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Die Testüberwachung besteht darin, den tatsächlichen Testfortschritt und -status mit den im Testzeitplan festgelegten Sollwerten zu vergleichen, um Abweichungen frühzeitig zu erkennen und eine faktengestützte Grundlage für Teststeuerungsmaßnahmen zu schaffen (vgl. CTAL-TM v3.0, Abschnitt 1.1.2 „Testüberwachungs- und Teststeuerungsaktivitäten“: „Die Testüberwachung umfasst das Sammeln und Aufzeichnen von Testergebnissen, das Erkennen von Abweichungen vom geplanten Testen (Testzeitplan)…“).\n\nb) FALSCH – Der Vergleich tatsächlicher mit erwarteten Ergebnissen ist ein Bestandteil der Testdurchführung (siehe CTFL v4.0 Abschnitt 1.4.1 Absatz Testdurchführung. In der Testüberwachung werden zwar Testergebnisse gesammelt und aufgezeichnet, jedoch um den Status/Fortschritt gegenüber Plan und Zielen zu bewerten.). Weiterhin ist der Vergleich mit Endekriterien eher Teil der Teststeuerung, vgl. CTAL-TM v3.0, Abschnitt 1.1.2 „Testüberwachungs- und Teststeuerungsaktivitäten“: „Die Teststeuerung vergleicht den tatsächlichen Testfortschritt mit den im Testkonzept festgelegten Endekriterien…“\n\nc) FALSCH – Die Behandlung von neu identifizierten/veränderten Risiken ist Teil der Teststeuerung (reagieren/anpassen), nicht Ziel der Überwachung. Die Testüberwachung umfasst das Erkennen und Analysieren neuer Risiken und das Überwachen von Änderungen bei identifizierten Risiken - nicht jedoch deren Behandlung. vgl. CTAL-TM v3.0, Abschnitt 1.1.2: „Die Testüberwachung umfasst … das Erkennen und Analysieren neuer Risiken, die ein Testen erfordern, und das Überwachen von Änderungen bei identifizierten Risiken.“; vgl. CTAL-TM v3.0, Abschnitt 1.1.2 „Testüberwachungs- und Teststeuerungsaktivitäten“: „Die Teststeuerung … umfasst: Behandlung von neu identifizierten und veränderten Risiken…“.\n\nd) FALSCH – Die Umsetzung des Testkonzepts und das Einleiten von Korrekturmaßnahmen sind Aktivitäten der Teststeuerung, nicht der Testüberwachung."
+  },
+  {
+    "id": 3,
+    "lo": "TM-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "In einem bestimmten Projekt möchte der Projektleiter sicherstellen, dass mit Stakeholdern auf ähnlicher Entscheidungsebene erste detaillierte Gespräche geführt werden, während er hingegen mit Stakeholdern der operativen Ebene einen Planungsworkshop speziell für den Projektzeitplan durchführen will. Welche Gruppe von Stakeholdern ist für den Projektmanager DIE BESTE Wahl, um sie an den ersten detaillierten Gesprächen zu beteiligen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Entwicklungsleiter, Testautomatisierer, Mitarbeiter der Finanzabteilung.",
+      "b) Sicherheitsarchitekten, Betriebsteam.",
+      "c) Fachbereichsmitarbeiter, Produktverantwortliche.",
+      "d) Projektmanager anderer Projekte, Trainer, Anbieter von Testmanagementwerkzeugen."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Testautomatisierer werden nicht in erste Detailgespräche mit einbezogen. Leiter der Entwicklung sind dennoch Stakeholder ebenso wie Mitarbeiter der Finanzabteilung (Kunden-Stakeholder).\n\nb) FALSCH – IT-Sicherheitsarchitekten würden zwar an den ersten Gesprächen zu beteiligen sein, aber das Betriebsteam wird nicht notwendigerweise frühzeitig in die ersten Gespräche einbezogen.\n\nc) KORREKT – Dies sind alles Stakeholder gemäß CTAL-TM-Lehrplan V3.0. Beides sind Stakeholder auf ähnlicher Entscheidungsebene, die direkten Einfluss auf das Projekt und seine Ergebnisse haben. Sie müssen in Detailgespräche mit einbezogen werden, um sicherzustellen, dass ihre Erwartungen, Anforderungen und Rahmenbedingungen vom Testmanager verstanden und berücksichtigt werden.\n\nd) FALSCH – Die Projektmanager anderer Projekte und Anbieter von Testmanagementwerkzeugen sind normalerweise nicht an diesen Gesprächen für das Projekt zu beteiligen."
+  },
+  {
+    "id": 4,
+    "lo": "TM-1.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche Aussage beschreibt AM BESTEN, warum das Wissen über Stakeholder in einer Stakeholder-Matrix für das Testmanagement relevant ist?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Es hilft, Stakeholder mit hohem Einfluss und Interesse frühzeitig einzubinden und deren Erwartungen gezielt zu managen.",
+      "b) Es dient dazu, den wichtigsten Stakeholder zu identifizieren und dessen Perspektive zur wesentlichen Entscheidungsgrundlage zu machen.",
+      "c) Es legt verbindlich und allgemein fest, welche Stakeholder in allen Projekten höchste Priorität haben.",
+      "d) Es ersetzt das Risikomanagement und die Risikominderung, da alle Stakeholder ihre Sicht auf die Risiken einbringen können."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Die Stakeholder-Matrix (auch Einfluss-Interessen-Matrix) ist laut Lehrplan TM Kapitel 1.2.2 Einleitung + Quadrant “Förderer” ein strategisches Werkzeug und „… hilft Testmanagern dabei, Prioritäten bei der Einbindung von Stakeholdern zu setzen und Erwartungen effizient zu verwalten.“ Das Wissen über die Stakeholder ermöglicht es, Personen mit hohem Einfluss und Interesse frühzeitig einzubinden, ihre Erwartungen zu berücksichtigen und geeignete Kommunikations- und Entscheidungsstrategien zu entwickeln. Damit trägt es direkt zur Zielerreichung des Testmanagements bei (Transparenz, Akzeptanz, Unterstützung). Weiterhin siehe Kapitel 1.2.2, Spiegelstrich 2: „Sie unterstützt das Risikomanagement, indem sie die Interessen und den Einfluss der Stakeholder hervorhebt und so proaktive Bemühungen zur Risikominderung fördert.“\n\nb) FALSCH – Es geht nicht darum, nur die Perspektive des wichtigsten Stakeholders (im Wesentlichen) zu übernehmen. Stattdessen ist ein wesentliches Ziel der Stakeholder-Matrix die Förderung der Berücksichtigung unterschiedlicher Perspektiven. Siehe Lehrplan (TM v3.0, Kapitel 1.2.2, dritter Stichpunkt): „Sie fördert die Berücksichtigung unterschiedlicher Perspektiven und liefert wertvolles Feedback.“\n\nc) FALSCH – Die Stakeholder-Matrix legt keine verbindliche Priorisierung für alle Projekte fest, sondern ist projektabhängig, siehe Lehrplan (TM v3.0, Kapitel 1.2.1, letzter Satz): „Testmanager müssen im Rahmen der Erstellung der Teststrategie und des Testkonzepts eine Stakeholder-Analyse durchführen, die unter Berücksichtigung des Testumfangs die spezifischen Stakeholder für ihr Projekt identifiziert.“ Einfluss und Interesse müssen für jedes Projekt individuell bewertet werden. Der Lehrplan (TM v3.0, Kapitel 1.2.2 Erster Absatz, letzter Satz) hebt hervor, dass die Matrix ““ein strategisches Werkzeug für das Testmanagement” ist.\n\nd) FALSCH – Die Stakeholder-Analyse ersetzt weder Risikomanagement noch Risikominderung, sondern unterstützt sie, indem sie Interessen und Einfluss der Stakeholder hervorhebt. Siehe Lehrplan (TM v3.0, Kapitel 1.2.2, zweiter Stichpunkt): „Sie unterstützt das Risikomanagement, indem sie die Interessen und den Einfluss der Stakeholder hervorhebt und so proaktive Bemühungen zur Risikominderung fördert.“"
+  },
+  {
+    "id": 5,
+    "lo": "TM-1.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Ein Unternehmen stellt von einem sequenziellen Entwicklungsprozess auf ein hybrides Softwareentwicklungsmodell um, das agile Sprints mit phasenbasierten Release-Zyklen kombiniert. Das Testteam hat Schwierigkeiten, sich an die kürzeren Iterationen und kontinuierlichen Testzyklen zu gewöhnen.\n\nWelche der folgenden Testmanagement-Aktivitäten ist in dieser Situation AM WICHTIGSTEN?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Coaching und Mentoring des Testteams zur kontinuierlichen Integration (CI) und agilen Testpraktiken, um den Übergang zu agilen Ansätzen zu unterstützen.",
+      "b) Verlängerung der Release-Zyklen, um den gewohnten Testprozess aufrechtzuerhalten und den Überdeckungsgrad sicherzustellen.",
+      "c) Schutz der Mitglieder des Testteams vor Stakeholdern, um das Team während der kritischen Übergangsphase vor Ablenkung durch äußere Einflüsse zu schützen.",
+      "d) Den Fokus vom reinen Testen nehmen und auf die Entwicklungsziele des Projekts legen, da im agilen Vorgehen alle Mitglieder für Qualität verantwortlich sind."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Gemäß Lehrplanabschnitt 1.2.3, Abschnitt („Hybrid als Übergang zu Agile“) ist eine der Hauptaufgaben des Testmanagements in hybriden Modellen die Unterstützung des Testteams beim Übergang zwischen traditionellen und agilen Vorgehensweisen. Dies beinhaltet die Bewertung des Verständnisses und der Fähigkeiten des Teams, die Kombination von strukturierten Prozessen mit agiler Flexibilität und die Förderung von Zusammenarbeit und kontinuierlicher Verbesserung. Siehe Lehrplan (TM v3.0 Abschnitt 1.2.3, nach „In einer hybriden Umgebung kann das Testmanagement folgende Aktivitäten umfassen“ Spiegelstriche 1, 2 und 3. Coaching und Mentoring sind geeignete Maßnahmen, um diese Förderung voranzutreiben.\n\nb) FALSCH – Das Beibehalten längerer Release-Zyklen widerspricht der Grundidee hybrider Modelle, die kürzere agile Iterationen und schnelles Feedback mit strukturierten Phasen kombinieren. Eine Anpassung des Teams ist erforderlich, nicht eine Rückkehr zu alten Abläufen. Siehe Lehrplan, Kapitel 1.2.3, Abschnitt „Hybrid als Übergang zu Agile“: eine der Hauptaufgaben des Testmanagements in hybriden Modellen die Unterstützung des Testteams beim Übergang zwischen traditionellen und agilen Vorgehensweisen.\n\nc) FALSCH – Eine wesentliche Aktivität durch das Testmanagement ist, die Zusammenarbeit mit den Stakeholdern zu verbessern. Siehe Lehrplan (TM v3.0, Kapitel 1.2.3, nach „In einer hybriden Umgebung kann das Testmanagement folgende Aktivitäten umfassen“, Spiegelstrich 4): „Verbesserung der Zusammenarbeit zwischen dem Testteam und den Stakeholdern, um das Testen innerhalb von Sprints und traditionellen Tests besser zu verwalten“\n\nd) FALSCH – Es sind zwar alle Mitglieder für Qualität verantwortlich, jedoch sollte der Fokus auf das Testen natürlich beibehalten werden. Siehe Lehrplan (TM v3.0, Kapitel 1.2.3, nach „In einer hybriden Umgebung kann das Testmanagement folgende Aktivitäten umfassen“, Spiegelstrich 5): „Teilnahme an koordinierten Maßnahmen, wie Scrum-of-Scrums für Tester, um den Fokus auf das Testen beizubehalten und gleichzeitig zu den allgemeinen Entwicklungszielen beizutragen.“"
+  },
+  {
+    "id": 6,
+    "lo": "TM-1.2.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Eine neue Testmanagerin tritt in ein Unternehmen ein und wird zunächst damit beauftragt, zu ermitteln, welche Softwareentwicklungslebenszyklus -Modelle derzeit verwendet werden. Vier Dinge, die sie beobachtete, waren:\n\n• Testwiederholungen erfolgen alle 3 Wochen.\n\n• Die Automatisierung wurde eingeführt, um die Einhaltung der Zeitvorgaben zu erleichtern.\n\n• Produkte und Aufgaben werden abgeschlossen, bevor die nächste Iteration eingeleitet wird.\n\n• Die Tests beginnen erst, wenn die Anforderungen abgeschlossen sind.\n\nWelches Softwareentwicklungslebenszyklus-Modell ist oben beschrieben?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Sequenziell",
+      "b) Iterativ",
+      "c) Hybrid",
+      "d) DevOps"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Zwei der vier Beobachtungen sind zwar spezifisch für das sequenzielle Modell. Die obige Beschreibung passt aber nicht zu diesem Modell, da es Testiterationen und Testautomatisierung beinhaltet, die eher Merkmale iterativer Modelle sind.\n\nb) FALSCH – Zwei der vier Beobachtungen sind zwar spezifisch für das iterative Modell. Die obige Beschreibung passt aber nicht zu diesem Modell, da die Vorgehensweise verlangt, dass das Testen erst nach Abschluss der Anforderungen beginnt und Testwiederholungen fest eingeplant sind, was beides Merkmale sequenzieller Modelle sind.\n\nc) KORREKT – Die Fertigstellung von Produkten und Aufgaben (vor dem Übergang zur nächsten Iteration) und der Beginn des Testens erst nach Fertigstellung der Anforderungen sind Teil des sequenziellen Modells. Die Verwendung von Iterationen und Automatisierung ist Teil des iterativen Modells. Im Lehrplan heißt es: „Hybride Softwareentwicklungsmodelle integrieren Elemente sowohl traditioneller sequenzieller Ansätze als auch agiler Praktiken …“ (vgl. CTAL-TM-Lehrplan V3.0, Abschnitt 1.2.3, 1. Satz).\n\nd) FALSCH – DevOps ist ein iteratives Modell – es werden allerdings nur einige Aspekte von iterativen Modellen beachtet. Die obige Beschreibung passt nicht zu diesem Modell, da sie keine Aspekte von DevOps, wie kontinuierliche Integration, kontinuierliche Lieferung, Bereitstellung oder Überwachung, erwähnt (siehe CTFL-Lehrplan V4.0, Abschnitt 2.1.4)."
+  },
+  {
+    "id": 7,
+    "lo": "TM-1.2.7",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie kommen neu als Testmanager in ein seit längerem laufendes Projekt, das täglich neue Funktionen und Fehlerkorrekturen für einen Webshop veröffentlicht. Da Ihr Vorgänger die Firma bereits verlassen hat, erarbeiten Sie im Zuge Ihrer Einarbeitung, welche Kombination von Testmanagementaktivitäten kurzfristig AM BESTEN auf das Projekt zugeschnitten ist, um weiterhin stabil und kontinuierlich die Zufriedenheit der Stakeholder und den Erfolg des Projekts sicherzustellen. Welche zwei Testmanagementaktivitäten wählen Sie?\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) In der Testplanung sollten durch eine Retrospektive nach dem Rollout mögliche Schwachstellen und Probleme aufgedeckt werden, um langfristige Strategien zur Verringerung von Risiken entwickeln zu können.",
+      "b) Für die Testplanung ist die Effizienz des Testprozesses ein wichtiger Faktor. Daher muss, gerade im Kontext von kurzen Iterationszyklen, die Testautomatisierung für den Regressionstest ausgebaut werden, sodass der Zeitrahmen eingehalten wird.",
+      "c) Die Testüberwachung muss den Fortschritt der Testdurchführung und den Stand der Fehlerzustände kontinuierlich erfassen, damit die Teststeuerung die Testreihenfolge entlang der Risiken und priorisierten Anforderungen passend ausrichten kann.",
+      "d) Für die Teststeuerung ist das Quality Gate Management sehr wichtig, daher ist kurzfristig zu klären, was ein Quality Gate im Softwarelebenszyklus ist, wer darüber die Entscheidungen trifft und welche Konsequenz es für das Testen hat.",
+      "e) In der Testplanung ist die Vorbereitung der Teamkommunikation ein wichtiger Punkt. Gerade wenn Teams an verschiedenen Orten arbeiten, muss die Abstimmungs-infrastruktur entsprechend angepasst werden."
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "explanation": "a) FALSCH – Die Retrospektive dient der Überprüfung der Arbeitsweisen und Verbesserungsmöglichkeiten (siehe Glossar). Der Umgang mit einer Risikoanalyse in diesem hochdynamischen Projekt ist ein integraler Bestandteil des Testkonzepts. Zudem ist „Die Entwicklung von Strategien zur Risikominderung ist von entscheidender Bedeutung. Dazu gehört eine vorausschauende Planung, um diese Risiken effektiv zu umgehen oder zu minimieren.“ Siehe Lehrplan, Kapitel 1.2.7 Abschnitt Testplanung – Risikobewertung und Planung zur Risikominderung. ABER: In diesem Kontext kommt beides zu spät für die Risikominderung.\n\nb) KORREKT - Testmanager spielen eine entscheidende Rolle, wenn es darum geht, sicherzustellen, dass der Testprozess nicht nur effektiv und effizient, sondern auch auf die besonderen Anforderungen des jeweiligen Projekts zugeschnitten ist (siehe Lehrplan, Kapitel 1.2.7, 1. Absatz). Gerade in einem iterativen, kurzfristigen Entwicklungszyklus ist Testautomatisierung das passende Mittel für den Regressionstest, um Aufwand zu reduzieren und Zeit einzusparen, daher ist dieser Aspekt sehr wichtig für das Testmanagement.\n\nc) KORREKT – In diesem hochdynamischen Projekt ist die kontinuierliche Testüberwachung der Ausführung durch den Testmanager essenziell: „Sie umfasst eine kontinuierliche Überprüfung der Testdurchführung hinsichtlich der festgelegten Testplanung, die Verfolgung des Fortschritts der Testausführung und das Management aller auftretenden Fehlerzustände. Die Anpassung der Prioritäten für die Tests auf der Grundlage von Risikobewertungen und Echtzeitentwicklungen stellt sicher, dass die Tests auf die kritischsten Bereiche ausgerichtet bleiben.“ Siehe Lehrplan, Kapitel 1.2.7 Abschnitt Testüberwachung – Überwachung der Ausführung.\n\nd) FALSCH – Gemäß Lehrplan (Kapitel 1.2.7 Abschnitt Teststeuerung – Quality Gate Management) ist „Ein strukturierter Ansatz für das Quality Gate Management ist von grundlegender Bedeutung. Dazu gehören die Definition, was ein Quality Gate innerhalb des Testlebenszyklus darstellt und wie man fundierte Entscheidungen über den Fortschritt des Testzyklus trifft, was entscheidend für die Sicherstellung der Produktintegrität ist.“ ABER: Das Quality Gate Management ist ein übergeordnetes Thema des ganzen Softwarelebenszyklus und sollte im Vorfeld festgelegt sein. Falls es bisher nicht betrieben wird, könnte es eventuell kurzfristig definiert werden, es benötigt aber einige Zeit, bis es Wirkung zeigt. Im gegebenen Szenario stellt es NICHT die KURZFRISTIG BESTE Lösung dar.\n\ne) FALSCH – Der Lehrplan, Kapitel 1.2.7 Abschnitt Testplanung – Strategie der Ressourcenzuweisung hebt hervor, dass für den Testmanager “Die Ressourcenplanung ist ein weiteres wichtiges Element. Dabei geht es nicht nur um die bloße Zuweisung von Ressourcen, sondern auch darum, die Struktur des Teams zu definieren, die Rollen abzugrenzen und Kommunikationsprozesse festzulegen. In Umgebungen, in denen die Teams verteilt sind, wie z. B. bei Onsite/Offsite-Modellen, ist dies besonders wichtig, um eine Synchronisierung und möglichst nahtlose Zusammenarbeit zu gewährleisten.“ Für das genannte Szenario wäre eine Überarbeitung der Kommunikationsprozesse evtl. sogar kontraproduktiv, da somit die nahtlose und effiziente Zusammenarbeit nicht mehr garantiert werden würde und in der Übergangszeit nicht eindeutig wäre. Zuletzt spricht das Szenario nicht von verteilten Teams und beschreibt gar keine Notwendigkeit für diesen Schritt."
+  },
+  {
+    "id": 8,
+    "lo": "TM-1.2.7",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie sind an einem Projekt beteiligt, in dem eine sicherheitskritische Software für ein medizinisches Gerät entwickelt wird. Das Projekt arbeitet agil in zweiwöchigen Sprints. Das Testteam umfasst vier Onsite- und sechs Offsite-Tester. Die Organisation verwendet eine cloud-basierte DevOps-Toolchain als Hauptinstrument für CI/CD und Testautomatisierung. Das Projekt befindet sich in der Wartungsphase und erfordert aufgrund von Fehlerbehebungen und Funktionserweiterungen nun erstmalig häufige Regressionstests. Das Projekt verfügt über einen kontinuierlichen Risikomanagementprozess, der die Identifizierung, Bewertung und Minderung neuer oder bestehender Risiken im Zusammenhang mit den Softwareänderungen umfasst.\n\nWelche Testmanagementaktivität betont AM EHESTEN den projektspezifischen Fokus in dieser Situation?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Erstellung eines separaten Risikomanagementplans, um Risiken zu identifizieren, zu bewerten, zu priorisieren und zu reduzieren.",
+      "b) Ausarbeitung eines Kommunikations- und Koordinationskonzepts zur Zusammenarbeit zwischen Onsite- und Offsite-Testern.",
+      "c) Entwicklung eines Testautomatisierungskonzepts zur Festlegung des Automatisierungsumfangs, Werkzeug-/Framework-Auswahl und Metriken.",
+      "d) Erarbeitung eines Regressionstestkonzepts mit Umfangsdefinition, risikobasierter Priorisierung, Verfolgbarkeit (Änderungen und Testfälle), sowie Endekriterien."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Die Entwicklung eines separaten Risikomanagementplans ist wichtig, aber nicht die am ehesten geeignete Maßnahme in diesem Projekt. Das Projekt befindet sich bereits in der Wartungsphase, so dass die meisten Risiken bereits in früheren Phasen hätten ermittelt und entschärft werden müssen bzw. zumindest die Erstellung eines Risikomanagementplans früher im Projekt hätte erfolgen müssen.\n\nb) FALSCH – Die Entwicklung eines Kommunikations- und Koordinationsplans für das verteilte Testteam ist ebenfalls wichtig, aber nicht die wichtigste Maßnahme/Aktivität in diesem Projekt. Das Testteam arbeitet bereits seit einiger Zeit zusammen und sollte daher effektive Kommunikations- und Koordinationsmechanismen etabliert haben, und ist deshalb nicht die wichtigste Aktivität in der Wartungsphase.\n\nc) FALSCH – Die Entwicklung eines Testautomatisierungskonzepts ist wichtig, aber nicht die wichtigste Aktivität in diesem Projekt, da sie dabei unterstützen kann, kontinuierliches Testen als wichtiges Instrument in DevOps umzusetzen. Die Testautomatisierung kann auch den manuellen Aufwand verringern, die Überdeckung der Tests verbessern und schnelleres Feedback zur Produktqualität liefern, und ist deshalb nicht die wichtigste Aktivität in der Wartungsphase.\n\nd) KORREKT – Der Grund dafür ist, dass Regressionstests unerlässlich sind, um sicherzustellen, dass die Fehlerzustände und Funktionserweiterungen keine neuen Fehler einführen oder die bestehende Funktionalität der Software beeinträchtigen. Regressionstests sind besonders wichtig für sicherheitskritische Software, da jede Fehlerwirkung schwerwiegende Folgen für die Benutzer und die Patienten haben kann. Daher ist die Entwicklung eines Regressionstestkonzepts, der die relevanten Testfälle abdeckt und geeignete Werkzeuge fordert, die wichtigste Aktivität des Testmanagements für dieses Projekt."
+  },
+  {
+    "id": 9,
+    "lo": "TM-1.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Bei einem Projekt ging es um die Migration einer Webanwendung in die Cloud. Der Cloud-Systemanbieter schätzte einen Systemausfall als sehr unwahrscheinlich ein. Auf der Grundlage dieser Aussage beschloss der Testmanager, keine Zuverlässigkeitsprüfung für diesen Punkt durchzuführen, denn obwohl das Schadensausmaß hoch wäre, rechtfertigt die mittlere Risikostufe nicht den zusätzlichen Aufwand und die Zeit, die für diese Testart erforderlich ist. Kurz nach der Inbetriebnahme war die Webseite zwei Tage lang nicht verfügbar, was dem Unternehmen einen erheblichen Umsatz- und Reputationsverlust einbrachte.\n\nWie könnte das Testteam den Einsatz von risikobasiertem Testen verbessern, um solche Probleme in Zukunft zu vermeiden?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Einbeziehung weiterer Stakeholder in die Risikoanalyse, um die Bewertung der Eintrittswahrscheinlichkeit zu verbessern.",
+      "b) Intensive Zuverlässigkeitstests durchführen, auch wenn die Risikostufe „Mittel“ ist.",
+      "c) Einbeziehung erfahrener Tester in die Risikobewertung, um das Risikoniveau richtig einzuschätzen.",
+      "d) Verwendung einer risikobasierten Teststrategie, um solche schwerwiegenden Fehler zu vermeiden."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Um möglichst effektiv zu sein, sollte die Risikoanalyse die Stakeholder einbeziehen, in diesem Fall vor allem unabhängige Experten für Cloud-Architektur. Sich auf die Aussagen des Anbieters zu verlassen, ist nicht ausreichend. In dem Szenario unterschätzte das Testteam die Eintrittswahrscheinlichkeit des Risikos eines Systemausfalls aufgrund der Migration einer Webanwendung in die Cloud. Es verließ sich auf die Schätzung des Cloud-Systemanbieters, die weder genau noch zuverlässig war. Dies führte zu unzureichenden Zuverlässigkeitstests, bei denen die Fehlerzustände nicht entdeckt wurden, die dazu führten, dass die Webseite zwei Tage lang nicht verfügbar war. Um solche Probleme in Zukunft zu vermeiden, sollte das Testteam zusätzliche Stakeholder in die Risikoanalyse einbeziehen, insbesondere unabhängige Experten für Cloud-Architektur. Diese Stakeholder können aufgrund ihrer Kenntnisse und Erfahrungen objektivere und realistischere Einschätzungen der Eintrittswahrscheinlichkeit des Risikos abgeben.\n\nb) FALSCH – Bei risikobasierten Tests rechtfertigt eine mittlere Risikostufe nur eine mittlere Testintensität.\n\nc) FALSCH – Um eine zuverlässige Bewertung der Risikostufe zu erhalten, reicht es nicht aus, erfahrene Tester einzubeziehen. Es wird eine breite Gruppe von Stakeholder benötigt, darunter auch unabhängige Experten für Cloud-Architektur.\n\nd) FALSCH – Es scheint, dass das Testteam eine risikobasierte Teststrategie verfolgt hat. Wäre das Risiko richtig bewertet worden, hätte das Testteam Zuverlässigkeitstests durchgeführt und die Fehlerzustände aufgedeckt."
+  },
+  {
+    "id": 10,
+    "lo": "TM-1.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Als Testmanager erstellen Sie ein Arbeitsblatt mit Zeilen für die Systemkomponenten und Spalten für deren Ausfallarten, deren Eintrittswahrscheinlichkeit und Schadensausmaß. Sie fordern die Systemarchitekten und die Fachbereichsvertreter auf, gemeinsam die Systemkomponenten und Ausfallarten auf der Grundlage ihrer Fachkenntnisse auszufüllen.\n\nWelche Verfahren zur Risikoidentifizierung wenden Sie an?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Experteninterviews",
+      "b) Checklisten",
+      "c) Risiko-Workshop",
+      "d) Brainstorming"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Im vorgegebenen Szenario ist nicht von einer Befragung der Stakeholder die Rede, sondern nur davon, ihnen eine vorbereitete Tabelle zur Verfügung zu stellen.\n\nb) FALSCH – Eine Checkliste ist eine Liste von Punkten, die zu überprüfen sind, und kein Arbeitsblatt mit mehreren Spalten, die auszufüllen sind.\n\nc) KORREKT – Sie organisieren einen Workshop mit den Stakeholdern, um gemeinsam die Fehlerauswirkungen der Integration von Komponenten zu ermitteln, indem sie die Vorlage ausfüllen.\n\nd) FALSCH – Brainstorming ist eine spontane Technik, um Ideen auszutauschen, aber in diesem Fall wurde ein Arbeitsblatt vorbereitet, das die Risikoidentifizierung anleitet."
+  },
+  {
+    "id": 11,
+    "lo": "TM-1.3.4",
+    "k": "K4",
+    "pts": 3,
+    "text": "Für ein Projekt wurden Risiken identifiziert und mit einer quantitativen Methode analysiert. Folgende Ergebnisse für die Eintrittswahrscheinlichkeiten und die Schadensausmaße wurden zusammengetragen: Mit welchen Testaktivitäten lassen sich diese Risiken AM BESTEN mindern?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Behandlung des Risikos A mit hoher Priorität durch Testen eines frühen Prototyps mit den Stakeholdern des Unternehmens, dann Behandlung des Risikos C durch Einführung von Reviews. Zur Minderung der Risiken B und D werden keine Tests geplant.",
+      "b) Ausführung von Tests, die das Risiko A durch Reviews der Dokumentation und das Risiko C durch Black-Box-Tests behandeln. Anschließend Behandlung der Risiken B und D mit White- Box-Tests.",
+      "c) Zuerst Minderung der Risiken B und C mit explorativen Tests, dann des Risikos A mit Bestätigungstests. Testen des Risikos D, wenn es die Zeit erlaubt.",
+      "d) Minderung der Risiken A und B durch Tests mit den Stakeholdern des Unternehmens anhand eines frühen Prototyps und des Risikos D durch nicht-funktionale Tests. Akzeptieren des Risikos C ohne explizite Tests."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Unter den Produktrisiken hat Risiko A hat mit 40 % * 1.500.000 = 600.000 EUR den höchsten Wert, weshalb dieses Risiko beim Testen vorrangig behandelt werden sollte. Da ein Prototyp die Hauptmerkmale der Anwendung für die Benutzer frühzeitig testbar macht, ist diese Methode geeignet, das Risiko zu mindern. Bei B und D handelt es sich um Projektrisiken, daher können sie mit Testaktivitäten nicht gemindert werden.\n\nb) FALSCH – Risiko B ist kein Produktrisiko und kann daher nicht durch Testen gemindert werden.\n\nc) FALSCH – Risiko C bedeutet ein Risiko von 90 % * 100.000 = 90.000 EUR, was weniger ist als Risiko A und daher beim Testen eine geringere Priorität hat. Ein Review kann das Risiko einer unverständlichen Dokumentation mindern.\n\nd) FALSCH – Risiko D ist kein Produktrisiko und kann daher nicht durch Testen gemindert werden.",
+    "image": "SETA_v1.3.3_GTB/image_11.png",
+    "imageAlt": "Risikotabelle: Risiko-ID Beschreibung Risikowahr- Risiko- scheinlichkeit auswirkungen A Die Anwendung bietet nicht die vom 40 % 1.500.000 EUR Unternehmen erwartete Funktionalität. B Die Testumgebung ist möglicherweise 20 % 500.000 EUR nicht rechtzeitig für den Test verfügbar. C Benutzer verstehen die 90 % 100.000 EUR Systemdokumentation möglicherweise nicht. D Der Testmanager hat möglicherweise 10 % 6.000.000 EUR nicht genug Zeit für dieses Projekt."
+  },
+  {
+    "id": 12,
+    "lo": "TM-1.3.4",
+    "k": "K4",
+    "pts": 3,
+    "text": "Angenommen, Sie arbeiten an einem Projekt zur Entwicklung einer Webanwendung für Online-Banking. Das Projekt folgt einem agilen Softwareentwicklungslebenszyklus (SDLC) und hat Sprints von je zwei Wochen. Die Anwendung hat mehrere Funktionen, z. B. Kontoverwaltung, Überweisung, Rechnungszahlung und Kreditantrag. Jede Funktion birgt unterschiedliche Risikostufen der IT-Sicherheit, Gebrauchstauglichkeit und Performanz. Sie haben ein Testteam von sechs Mitgliedern mit unterschiedlichen Fähigkeiten und Erfahrungen.\n\nWie würden Sie in dieser Situation geeignete Testaktivitäten auswählen, um die Risiken entsprechend ihrer Risikostufe zu mindern?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Einsatz von statischen und dynamischen Tests für alle Funktionen, aber mit höherem Testaufwand und gründlicheren Testverfahren für die Funktionen mit höheren Risikostufen. Einsatz der qualifiziertesten Tester für die Funktionen mit den höchsten Risikostufen. Nutzung von Reviews und Regressionstests, um die Qualität zu sichern.",
+      "b) Einsatz von statischen Tests für die Funktionen mit geringeren Risikostufen und von dynamischen Tests für die Funktionen mit höheren Risikostufen. Zufällige Zuweisung der Tester zu den Funktionen, unabhängig von ihren Fähigkeiten und Erfahrungen. Nutzung von Reviews und Regressionstests, um die Qualität zu sichern.",
+      "c) Einsatz von dynamischen Tests nur für Funktionen mit höheren Risikostufen und Auslassen von Tests für Funktionen mit niedrigeren Risikostufen. Zuweisung der Tester entsprechend ihrer Verfügbarkeit und Präferenz. Nutzung von Reviews und Regressionstests, um die Qualität zu sichern.",
+      "d) Einsatz von lediglich statischen Tests für die Funktionen mit höheren Risikostufen und keine Tests von Funktionen mit niedrigeren Risikostufen. Zuweisung der Tester auf der Grundlage ihrer Seniorität und ihres Ranges. Nutzung von Reviews und Regressionstests, um die Qualität zu sichern."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Die Option folgt den Grundsätzen des risikobasierten Testens, die besagen, dass der Testaufwand abhängig von der Risikostufe sein sollte und dass die qualifiziertesten Personen die Testelemente mit den höchsten Risikostufen testen sollten. Dadurch wird sichergestellt, dass die kritischsten Funktionen der Anwendung gründlich und effektiv getestet werden. Außerdem kommen sowohl statische Tests als auch dynamische Tests zum Einsatz, die sich gegenseitig ergänzen und verschiedene Risikoarten abdecken können.\n\nb) FALSCH – Wenn nicht für alle Funktionen sowohl statische Tests als auch dynamische Tests eingesetzt werden, werden einige Risiken nicht behandelt, die nur durch das eine oder das andere erkannt werden können. Außerdem werden die Tester nicht nach ihren Fähigkeiten und Erfahrungen eingeteilt, was die Qualität der Tests beeinträchtigen kann.\n\nc) FALSCH – Hier wird das Testen von Funktionen mit niedrigeren Risikostufen ausgelassen, die noch Fehlerzustände aufweisen können, die die Qualität des Produkts beeinträchtigen können. Außerdem werden die Tester nicht nach ihren Fähigkeiten und ihrer Erfahrung eingeteilt, was die Qualität der Tests beeinträchtigen kann.\n\nd) FALSCH – Diese Option lässt das Testen von Funktionen mit niedrigeren Risikostufen aus, die noch Fehlerzustände aufweisen können, die die Qualität des Produkts beeinträchtigen können. Außerdem werden keine dynamischen Tests durchgeführt, die für das Verifizieren der Funktionalität und der Performanz des Produkts unerlässlich sind."
+  },
+  {
+    "id": 13,
+    "lo": "TM-1.3.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "Ihr Team entwickelt ein neues Release einer mobilen Anwendung, die den Fahrplan verschiedener öffentlicher Verkehrsbetriebe auf einer gemeinsamen Benutzeroberfläche grafisch darstellt. Ihr Team arbeitet nach einem agilen Lebenszyklusmodell mit schnellen Iterationen und Releases. Die Anforderungen sind eher informell und werden oft durch Benutzerfeedback und Entwicklung gesammelt. Die Teststrategie der Organisation erfordert risikobasiertes Testen. Um die Risikoanalyse schnell voranzutreiben, möchten Sie die Mitglieder des agilen Teams einbeziehen, die mit den Hauptrisikobereichen Gebrauchstauglichkeit, Kompatibilität, Portabilität und Performanz vertraut sind.\n\nWelches Verfahren würden Sie in dieser Situation empfehlen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Gefährdungsanalyse",
+      "b) Pragmatische Risikoanalyse und -management",
+      "c) Systematic Software Testing",
+      "d) Fehlerbaumanalyse"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Die Situation erfordert eine leichtgewichtige Technik, da die Anwendung nicht sicherheitskritisch ist und die Vorlaufzeit und der Aufwand sowohl für das Team als auch für die Stakeholder begrenzt sind.\n\na) FALSCH – Die Gefährdungsanalyse ist eine schwergewichtige Technik.\n\nb) KORREKT – Pragmatische Risikoanalyse und -management (PRAM) ist eine leichtgewichtige Technik, die auf der Grundlage des Inputs der Stakeholder funktionieren kann. PRAM beinhaltet die Definition, Bewertung und Entscheidung über die Risiken, die für das Projekt von Bedeutung sind, und den Einsatz direkter oder indirekter Maßnahmen zu deren Minderung. PRAM eignet sich für agile Projekte, da es eine schnelle und flexible Risikoanalyse und ein Risikomanagement ermöglicht, ohne dass eine formale Dokumentation oder Spezifikationen erforderlich sind.\n\nc) FALSCH – Systematic Software Testing ist ein Testverfahren, das formalere Anforderungen voraussetzt.\n\nd) FALSCH – Die Fehlerbaumanalyse ist eine zeitaufwendige und schwergewichtige Technik."
+  },
+  {
+    "id": 14,
+    "lo": "TM-1.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Als Testmanager wurden Sie vom Projektleiter gebeten, die Teststrategie für ein Software-Implementierungsprojekt festzulegen.\n\nWelche der folgenden Faktoren sind DIE WICHTIGSTEN, um einen möglichst effektiven Testansatz sicherzustellen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Testarten, Testverfahren und Testmetriken.",
+      "b) Teststufen, Eingangs-/Ausgangskriterien und Testverfahren.",
+      "c) Teststufen, Testarten und Testverfahren.",
+      "d) Teststufen, Testverfahren und Testarbeitsergebnisse."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Testarten und Testverfahren sind Teil eines Testansatzes. Testmetriken sind jedoch – zusammen mit dem Testansatz – Teil der Teststrategie.\n\nb) FALSCH – Teststufen und Testverfahren sind Teil eines Testansatzes. Testeingangs- und -ausgangskriterien sind jedoch – zusammen mit dem Testansatz – Teil der Teststrategie.\n\nc) KORREKT – Bei der Wahl eines Testansatzes geht es darum, wichtige Entscheidungen über Teststufen, Testarten und Testverfahren zu treffen.\n\nd) FALSCH – Teststufen und Testverfahren sind Teil eines Testansatzes. Die Testarbeitsergebnisse sind jedoch – zusammen mit dem Testansatz – Teil der Teststrategie."
+  },
+  {
+    "id": 15,
+    "lo": "TM-1.4.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "Angenommen, Sie sind Mitglied eines Projekts, in dem ein Softwareprodukt für den Bankensektor entwickelt wird. Sie sind dafür verantwortlich, die organisationsweite Teststrategie und den Projektkontext zu analysieren, um einen geeigneten Testansatz zu wählen. Sie berücksichtigen die folgenden Faktoren:\n\n• Das Projekt hat ein begrenztes Budget und einen festen Zeitplan, was bedeutet, dass Sie den Testaufwand optimieren und unnötige Kosten und Verzögerungen vermeiden müssen.\n\n• Der Kunde hat detaillierte Anforderungen gestellt und erwartet von dem Produkt eine hohe Qualität und Zuverlässigkeit. Das bedeutet, dass Sie sicherstellen müssen, dass das Produkt die Erwartungen des Kunden erfüllt und den Spezifikationen entspricht.\n\n• Das Projekt verwendet ein agiles Softwareentwicklungsmodell mit häufigen Releases und Feedbackzyklen, was bedeutet, dass Sie sich an veränderte Anforderungen anpassen und Testergebnisse in kurzen Iterationen liefern müssen.\n\n• Das Testteam besteht aus vier Testern mit unterschiedlichen Erfahrungen und Fähigkeiten. Das bedeutet, dass Sie die Testaufgaben entsprechend den Fähigkeiten der Tester zuweisen und bei Bedarf Betreuung und Unterstützung bieten müssen.\n\n• Die Testinfrastruktur ist begrenzt und erfordert manuelle Konfiguration und Wartung, was eine sorgfältige und effiziente Planung und Verwaltung der Testumgebung und der Ressourcen erfordert.\n\n• Das Produkt hat mehrere Schnittstellen zu anderen Systemen, die getestet werden müssen. Das bedeutet, dass Sie die Testaktivitäten mit den anderen Beteiligten koordinieren und integrieren und die Kompatibilität und Interoperabilität der Produkte sicherstellen müssen. (Fortsetzung auf der nächsten Seite)\n\nWelcher der folgenden Testansätze wäre für dieses Projekt AM BESTEN geeignet?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Risikobasiertes Testen, um die kritischsten und komplexesten Funktionen und Szenarien zu priorisieren und die Testressourcen entsprechend zuzuweisen.",
+      "b) Modellbasiertes Testen zur automatischen Generierung von Testfällen und Testdaten aus den Anforderungen und zur Messung der Testabdeckung und - qualität",
+      "c) Erfahrungsbasiertes Testen, um das Fachwissen und die Intuition der Tester zu nutzen und um explorative Tests in einem agilen Kontext durchzuführen.",
+      "d) Prüfung auf der Grundlage der Abnahmekriterien, um die Übereinstimmung des Produkts mit den Kundenspezifikationen zu überprüfen und dadurch die Abnahme zu ermöglichen."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Risikobasiertes Testen hilft dabei, sich auf die wichtigsten Aspekte des Testens in Bezug auf Qualität wie Zuverlässigkeit und Kundenzufriedenheit zu konzentrieren und gleichzeitig die Beschränkungen von Budget, Zeit und Ressourcen zu berücksichtigen. Das risikobasierte Testen unterstützt auch das agile Testen, indem es häufige Anpassungen der Testprioritäten auf Grundlage von Feedback und Änderungen ermöglicht.\n\nb) FALSCH – Modellbasiertes Testen erfordert eine hohe Anfangsinvestition in die Erstellung und Pflege von Modellen, was angesichts von Budget- und Zeitrestriktionen möglicherweise nicht durchführbar ist. Modellbasiertes Testen setzt außerdem voraus, dass die Anforderungen stabil und vollständig sind, was in einem agilen Projekt möglicherweise nicht der Fall ist.\n\nc) FALSCH – Erfahrungsbasiertes Testen hängt stark von den Fähigkeiten und Kenntnissen der Tester ab, die bei den Mitgliedern des Testteams unterschiedlich sein können. Beim erfahrungsbasierten Testen fehlen auch objektive Kriterien für die Testabdeckung und Qualität der Tests, die möglicherweise nicht den Erwartungen des Kunden entsprechen.\n\nd) FALSCH – Abnahmetests decken höchstwahrscheinlich nicht alle Aspekte der Qualität und Zuverlässigkeit ab, die für den Bankensektor relevant sind, wie z. B. Sicherheit, Performanz und Gebrauchstauglichkeit."
+  },
+  {
+    "id": 16,
+    "lo": "TM-1.4.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "Angenommen, Sie arbeiten in einem Projekt zur Entwicklung einer Webanwendung für Online-Banking. Das Projekt ist kundenspezifisch und hat strenge Anforderungen an Sicherheit, Performanz und Zuverlässigkeit. Das Projekt verwendet ein agiles Softwareentwicklungslebenszyklus-(SDLC-)Modell mit zweiwöchigen Sprints und häufigen Releases. Das Testteam besteht aus vier Testern mit unterschiedlichen Erfahrungen und Fähigkeiten. Die Testinfrastruktur ist cloudbasiert und unterstützt verschiedene Browser und Geräte. Die Testdaten werden vom Kunden bereitgestellt und müssen vor der Verwendung anonymisiert werden. (Fortsetzung auf der nächsten Seite)\n\nWelcher der folgenden Testansätze wäre für Ihr Projekt AM BESTEN geeignet?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Die Tests werden vom gesamten Team auf drei Teststufen durchgeführt: Unit- und Integrationstests, bei denen die Testfälle jeweils paarweise von einem Entwickler und einem Tester gemeinsam erstellt und durchgeführt werden, sowie Systemtests, bei denen die Testfälle von den vier Testern erstellt und durchgeführt werden. Auf der Stufe der Unit- und Integrationstests werden White-Box-Tests eingesetzt, die eine 100 %ige Automatisierung anstreben. Auf allen Teststufen werden risikobasierte Tests eingesetzt, um Testfälle zu erstellen und zu priorisieren. Bei den Systemtests verwenden die Tester alle geeigneten Testverfahren, um die Abnahmekriterien abzudecken.",
+      "b) Die Tests werden vom gesamten Team in vier Teststufen durchgeführt: Unit- Tests, Integrationstests, Systemtests und Abnahmetests. Sowohl bei den Unit- und Integrationstests als auch bei den Systemtests werden durchgängig modellbasierte Tests eingesetzt, wobei der Schwerpunkt auf zustandsbasierten Tests liegt. Die Codeabdeckung wird während der Testdurchführung gemessen, wobei eine 90 %ige Zweigabdeckung angestrebt wird. Für Abnahmetests ist daher die Sprint-Demo ausreichend.",
+      "c) Da das Projekt ein agiles SDLC-Modell verwendet, sind keine expliziten Teststufen definiert, und die Tests werden von den Entwicklern, die ihre Unit- Tests automatisieren, und von den vier Testern, die explorative Tests durchführen, durchgeführt. Zu diesem Zweck werden mehrere Test-Chartas erstellt, die Anleitungen zur Nutzung der Testinfrastruktur enthalten, damit alle verfügbaren Browser und Geräte abgedeckt werden. Darüber hinaus werden Usability-Tests anhand von Checklisten durchgeführt.",
+      "d) Es werden zwei Teststufen definiert. Die erste Teststufe ist eine kombinierte Unit-/Integrationsteststufe, auf der die vier Tester Testfälle auf der Grundlage der funktionalen Anforderungen unter Verwendung von Äquivalenzklassen, Grenzwertanalyse, Entscheidungstabellen und Zustandsübergangstests erstellen. Diese Testfälle werden dann von den Entwicklern automatisiert und in den Unit-/Integrationstests verwendet. Bei den Systemtests werden die Tester explorative Tests für jedes Element durchführen, das von den Entwicklern auf \"erledigt\" gesetzt wurde."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Risikobasierte Tests helfen bei der Priorisierung der Testziele und Testfälle auf der Grundlage von Sicherheits-, Performanz- und Zuverlässigkeitsrisiken, während White-Box-Tests zur Überprüfung der internen Strukturen und der Logik der Webanwendung beitragen. Das Pairing von Testern und Entwicklern ist hilfreich, um die Anforderungen des Kunden abzudecken und einen hohen Automatisierungsgrad zu ermöglichen. Dieser Testansatz ist für agile SDLC-Modelle geeignet und erfordert erfahrene Tester.\n\nb) FALSCH – Das Szenario erwähnt keine ausreichende Grundlage für einen modellbasierten Test. So ist modellbasiertes Testen für die Entwicklung eingebetteter Software oft besser geeignet als für die Entwicklung von Webanwendungen. Der Testansatz prüft nicht die internen Strukturen und die Logik der Webanwendung, die für die IT-Sicherheit, Performanz und Zuverlässigkeit wichtig sind. Außerdem ist die Demo als Abnahmetest im Kontext des Online-Bankings wahrscheinlich unzureichend.\n\nc) FALSCH – Exploratives Testen verlässt sich auf die Intuition und Kreativität der Tester. Auch wenn Usability üblicherweise bei Webanwendungen eine Rolle spielt, wird es bei den Anforderungen dieses Szenarios nicht gefordert. Explorative Tests sind möglicherweise nicht konsistent oder ausreichend, um die Aspekte Sicherheit, IT-Sicherheit und Zuverlässigkeit der Webanwendung zu testen. Agile SDLCs, die unterschiedliche Rollen für Entwicklung und Test vorsehen, haben in der Regel auch mindestens zwei unterschiedliche Teststufen.\n\nd) FALSCH – Der beschriebene Ansatz konzentriert sich auf die Überprüfung der Funktionalität und Qualität der Webanwendung anhand der festgelegten Qualitätsanforderungen und Kriterien, berücksichtigt jedoch nicht die Risiken in Bezug auf Sicherheit, Performanz und Zuverlässigkeit ein, die sich aus der Umgebung, den Schnittstellen oder den Daten der Webanwendung ergeben können."
+  },
+  {
+    "id": 17,
+    "lo": "TM-1.4.3",
+    "k": "K3",
+    "pts": 2,
+    "text": "Punkte Sie sind Mitglied eines Teams, das für das Testen einer komplexen E-Commerce-Website verantwortlich ist. Das Team hat vom Management die Vorgabe erhalten: \"Das System soll fehlerfrei sein.\"\n\nWelche der folgenden Modifikationen dieses Testziels wäre nach den S.M.A.R.T.-Kriterien und unter Berücksichtigung der Komplexität und der begrenzten Ressourcen Ihres Projekts AM BESTEN geeignet?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Unsere Website sollte in der Lage sein, alle geplanten Funktionen ohne schwerwiegende Mängel auszuführen, die das Nutzererlebnis beeinträchtigen könnten.",
+      "b) Am Ende der laufenden Entwicklungsphase sollten weniger als 1 % der Funktionalität der Website noch Mängel aufweisen, gemessen an der Gesamtzahl der in der Testsuite enthaltenen funktionalen Testfälle.",
+      "c) Wir wollen sicherstellen, dass unser E-Commerce-System innerhalb des nächsten Jahres keine kritischen Ausfälle erleidet, die zu Geschäftsunterbrechungen führen könnten.",
+      "d) Unser Ziel ist es, die Anzahl der während des Beta-Tests gefundenen Fehlerzustände im Vergleich zum letzten Release um 50 % zu reduzieren."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Dieses Ziel ist nicht spezifisch oder messbar genug. Was sind \"schwerwiegende\" Fehlerzustände und wie wird das \"Nutzererlebnis\" gemessen? Dies ist kein S.M.A.R.T.-Testziel, da es vage und subjektiv ist. Es wird nicht definiert, was \"geplante Funktionen\", \"schwerwiegende Fehlerzustände\" oder \"Nutzererlebnisse\" sind.\n\nb) FALSCH – Dies ist kein S.M.A.R.T.-Testziel, da die Messmethode nicht dazu geeignet ist, aufgrund der Anzahl der fehlgeschlagenen Testfälle auf die Anzahl der fehlerhaften Funktionen zu schließen.\n\nc) FALSCH – Dies ist kein S.M.A.R.T.-Testziel, da es unrealistisch oder unerreichbar sein kann. Es berücksichtigt nicht die Komplexität und die begrenzten Ressourcen des Projekts, die die Zuverlässigkeit des E-Commerce-Systems beeinträchtigen können.\n\nd) KORREKT – Es handelt sich um ein S.M.A.R.T.-Testziel, da es spezifisch ist. Es ist messbar, was \"bei den Beta-Tests gefundene Fehlerzustände\" sind oder wie sie mit dem letzten Release verglichen werden. Es gibt keine Indikatoren, die auf eine Nichterreichung dieses Ziels schließen lassen, es passt zur Vorgabe der Geschäftsleitung und der Zeitrahmen ist durch den Beta-Test gegeben."
+  },
+  {
+    "id": 18,
+    "lo": "TM-1.4.3",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie sind der Testmanager eines Projekts, in dem eine mobile Anwendung für das Online-Shopping entwickelt wird. Das Projekt befindet sich in der Entwicklung und es werden hohe Erwartungen an die Gebrauchstauglichkeit, Funktionalität und Kompatibilität gestellt. Das Projekt verwendet ein hybrides SDLC-Modell mit viermonatigen Releases und monatlichen Iterationen. Das Testteam besteht aus sechs Testern mit unterschiedlichen Fähigkeiten und Erfahrungen. Die Testinfrastruktur ist cloudbasiert und unterstützt verschiedene Geräte und Betriebssysteme. Die Testdaten werden von einem Testdatenmanagement-Werkzeug generiert und müssen aber vor der Verwendung noch geprüft werden.\n\nWelches der folgenden Ziele des Projekts ist laut Lehrplantext ein S.M.A.R.T.-Testziel?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Überprüfung der Gebrauchstauglichkeit der App durch Messung der Zeit, die für den Abschluss eines Einkaufs benötigt wird, mit dem Ziel, dass 90 % der Benutzer innerhalb der nächsten zwei Monate ihren Einkauf innerhalb von drei Minuten abschließen können.",
+      "b) Erhöhung des Grades der automatisierten Tests um 50 % innerhalb der nächsten 2 Wochen mit dem Ziel, die Regressionstests deutlich zu beschleunigen und noch mehr Fehler zu finden, um eine bessere Benutzerakzeptanz zu erzielen.",
+      "c) Einhaltung der einschlägigen Regeln und Vorschriften der E-Commerce- Branche, die vor Kurzem veröffentlicht wurden und demnächst in einer EU- Verordnung regulatorischer Standard werden und damit für alle Stakeholder verbindlich werden.",
+      "d) Überprüfung der Funktionalität und Kompatibilität der App durch Testen aller Funktionen sowohl auf den meisten realen Geräten als auch mit einem von einem externen Dienstanbieter bereitgestellten Emulator innerhalb der folgenden beiden Sprints, da es immer wieder negative Kommentare in den Stores gab."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Das Ziel ist spezifisch, messbar, erreichbar, relevant und terminiert. Das Ziel ist spezifisch, weil das Ziel klar definiert ist – die Zeit, die für den Abschluss eines Einkaufs benötigt wird. Es ist messbar, weil es ein quantifizierbares Kriterium für die Messung des Fortschritts enthält: 90 % der Benutzer sollen den Einkauf innerhalb von 3 Minuten abschließen können. Das Ziel ist realistisch und erreichbar, weil es innerhalb der gegebenen Ressourcen, des Zeitrahmens und der Fähigkeiten durchführbar ist und auf einer spezifischen Benutzergruppe basiert. Es ist relevant, weil es mit den allgemeinen Projektzielen und -erwartungen in Einklang steht und die Gebrauchstauglichkeit ein wichtiger Aspekt für den Erfolg einer Online-Shopping-App ist. Das Ziel ist terminiert, weil es eine definierte Frist hat und innerhalb der nächsten 2 Monate erreicht werden soll (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 1.4.3).\n\nb) FALSCH – Dieses Ziel ist weder spezifisch noch relevant. Es ist nicht spezifisch, weil es nicht definiert, was der Grad der automatisierten Tests bedeutet oder wie es gemessen werden soll. Es ist nicht relevant, weil es nicht auf die allgemeinen Projektziele und -erwartungen abgestimmt ist.\n\nc) FALSCH – Dieses Ziel ist weder messbar noch terminiert. Es ist nicht messbar, weil es keine spezifischen Kriterien zur Messung des Fortschritts oder zur Feststellung, ob die Konformität zu den Standards erreicht wurde, gibt. Es ist nicht terminiert, weil es keine definierte Frist hat, wie beispielsweise das Ende jeder Version oder Iteration.\n\nd) FALSCH – Es ist zum Zeitpunkt des Testens nicht messbar, wie sich die Kundenbeschwerden entwickeln werden, und unklar, welche Akzeptanzkriterien hierfür angelegt werden sollen. Das Ziel, z. B. keine negativen Kommentare mehr, ist nicht erreichbar, weil es nicht messbar ist, wann man das Ziel innerhalb der Entwicklungsphase erreicht hat."
+  },
+  {
+    "id": 19,
+    "lo": "TM-1.5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Angenommen, Sie sind Testmanager und arbeiten daran, Ihre Testprozesse effektiver und effizienter zu gestalten. Sie haben bereits ein von der Geschäftsleitung genehmigtes Startbudget für diese Prozessverbesserungen zur Verfügung. Letzte Woche hat eine externe Beraterin ihre Bewertung des Testprozesses abgeschlossen und ihre Ergebnisse vorgelegt.\n\nWelcher der folgenden Schritte ist der nächste Schritt für diese Prozessverbesserung, vorausgesetzt, Sie folgen dem IDEAL-Modell für Prozessverbesserung?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Sie erstellen einen Plan für die Auswahl und Umsetzung der Bewertungsempfehlungen.",
+      "b) Sie setzen die Bewertungsempfehlungen um, einschließlich notwendiger Schulungen und Pilotprojekte.",
+      "c) Sie initiieren den Verbesserungsprozess in der gesamten Testorganisation.",
+      "d) Sie diagnostizieren die aktuelle Situation durch Bewertung der Ursachen für Ineffizienz."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Es ist der dritte Schritt des IDEAL-Prozesses und sollte den Schritten folgen, die bisher durchgeführt wurden (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 1.5.1, Absatz „Erstellung und Etablierung eines Plans zur Testprozessverbesserung“).\n\nb) FALSCH – Dies ist der vierte Schritt des IDEAL-Prozesses, und daher sollte die Erstellung eines Plans vorher erfolgen (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 1.5.1, Absatz „Maßnahmen zur Implementierung einer Testprozessverbesserung“).\n\nc) FALSCH – Dies ist der erste Schritt des IDEAL-Prozesses und wurde bereits durchgeführt (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 1.5.1, Absatz „Initiierung des Verbesserungsprozesses“).\n\nd) FALSCH – Dies ist der zweite Schritt des IDEAL-Prozesses und wurde bereits durchgeführt (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 1.5.1, Absatz „Diagnose der aktuellen Situation“)."
+  },
+  {
+    "id": 20,
+    "lo": "TM-1.5.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Als Testberater sind Sie für Verbesserungen des Testprozesses in einem kritischen Projekt bei einer kleinen regionalen Bank verantwortlich. Das Projekt befasst sich mit der digitalen Transformation und wird noch zwei Jahre lang mit einem agilen Ansatz fortgesetzt. Da das Test Maturity Model Integration (TMMi) im Finanzbereich sehr beliebt ist, hat die Bank Sie gebeten, TMMi für Ihre Testverbesserungsaktivitäten im Projekt zu verwenden.\n\nWie würden Sie vorgehen, um TMMi in dem beschriebenen Zusammenhang einzusetzen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Sie stellen klar, dass eine modellbasierte Verbesserung mit TMMi auf Projektebene nicht möglich ist.",
+      "b) Sie empfehlen, alle TMMi-Prozessbereiche der Ebenen 2 und 3 für diese Verbesserungsaktivitäten zu nutzen.",
+      "c) Sie konzentrieren sich auf die TMMi-Prozessbereiche, die sich besonders auf die Aktivitäten auf Projektebene beziehen, und verwenden zusätzlich den spezifischen Leitfaden: „TMMi in the Agile world“.",
+      "d) Da das Projekt einen agilen Ansatz verfolgt, schlagen Sie vor, den Scrum Guide für die Aktivitäten zur Testverbesserung zu verwenden."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Im Lehrplan steht, dass die modellbasierte Verbesserung sowohl auf Organisations- als auch auf Projektebene durchgeführt werden kann (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 1.5.2).\n\nb) FALSCH – Anstatt alle Prozessbereiche der TMMi-Ebenen 2 und 3 zu berücksichtigen, wäre es viel vorteilhafter, die Prozessbereiche zu betrachten, die besonders projektbezogen und bereits in einem relevanten Reifegrad umgesetzt sind (siehe Begründung für Antwort c).\n\nc) KORREKT – Laut Lehrplan enthält jede Reifegradstufe, mit Ausnahme der TMMi-Stufe 1, Testprozessbereiche und Verbesserungsziele. Darüber hinaus enthält TMMi Praktiken, Teilpraktiken und Beispiele, um die Umsetzung zu erleichtern und zu unterstützen (siehe CTAL- TM-Lehrplan V3.0, Abschnitt 1.5.2, Absatz \"Test Maturity Model Integration\"). Außerdem wird im Lehrplan der spezifische Leitfaden \"TMMi in the Agile world\" erwähnt, der hier von Vorteil wäre.\n\nd) FALSCH – Der Scrum-Leitfaden enthält keine Angaben dazu, wie man Tests verbessern kann."
+  },
+  {
+    "id": 21,
+    "lo": "TM-1.5.4",
+    "k": "K3",
+    "pts": 2,
+    "text": "Angenommen, Sie arbeiten für ein ehrgeiziges Start-up-Unternehmen, das ein System für maßgeschneiderte Treue- und Prämienprogramme für kleine und mittlere Unternehmen entwickelt, die an Kunden im Internet verkaufen. Die das System nutzenden Unternehmen können sich im Webshop des Systems selbst registrieren und dann individuelle Schaltflächen für ihre eigenen Websites erstellen. Diese Schaltflächen geben deren Kunden dann die Möglichkeit, sich für Treue- und Prämienprogramme des Unternehmens anzumelden. Für jeden nachfolgenden Kauf gibt es Punkte. Unternehmen sowie deren Kunden können das Programm verwalten, z. B. können Unternehmen die Anzahl der Punkte für ein kostenloses Produkt oder eine kostenlose Dienstleistung festlegen. Die Marketingabteilung Ihres Arbeitgebers wirbt intensiv für das System, indem sie Unternehmen, die sich früh für die Einführung des Systems entscheiden, hohe “Early Adopter”-Rabatte auf die Gebühren für das erste Jahr anbietet. In den Marketingunterlagen steht, dass der Dienst für die Unternehmen und deren Kunden sehr zuverlässig und schnell sein wird. Vor vier Monaten waren die Anforderungen vollständig und die Entwicklung der Software wurde begonnen. Bei der Analyse der Qualitätsrisiken wurde die Anpassung der Schaltflächen als geringstes Risiko eingestuft, während die Registrierung als höchstes Risiko eingestuft wurde. Wie im Zeitplan vorgesehen erfolgte die erste Freigabe vor einem Monat und Unternehmen und ihre Kunden konnten mit der Registrierung beginnen. Das System wird nun seit einem Monat von Unternehmen und deren Kunden genutzt. Ihr Team hat eine Mischung aus risikobasiertem Testen, anforderungsbasiertem Testen und reaktiver Teststrategie verwendet. Sie führen nun eine Retrospektive für die Testarbeit durch. (Fortsetzung auf der nächsten Seite)\n\nWelche ZWEI der folgenden Bereiche sollten bei dieser Retrospektive AM EHESTEN berücksichtigt werden?\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) Bewertung, ob von den Benutzern erhebliche Probleme bei der Anpassung der Schaltflächen gemeldet wurden.",
+      "b) Entscheidung darüber, ob der Projektplan alle relevanten Projektrisiken enthielt, die sich auf die Lieferung an “Early Adopter”-Unternehmen auswirkten.",
+      "c) Festlegung des erforderlichen Detaillierungsgrads der Testfälle zur Registrierung, Anpassung und Punkteverwaltung",
+      "d) Durchführung der Messung der Überdeckung der Registrierungsanforderungen und Berichterstattung der Ergebnisse an die Projekt- und Geschäfts-Stakeholder",
+      "e) Untersuchung, welche Tests auf welcher Teststufe die von den Kunden gemeldeten Probleme hätten aufdecken können."
+    ],
+    "answer": [
+      0,
+      4
+    ],
+    "explanation": "a) KORREKT – Fehlerzustände sollten analysiert werden, um in einer Retrospektive zu bewerten, ob die Analyse der Qualitätsrisiken korrekt war (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 1.5.4, Absatz „Sammlung von Daten“ und „Ableitung von Verbesserungen“).\n\nb) FALSCH – Das ist zwar ein guter Punkt für eine Retrospektive, aber es ist ein projektübergreifendes Problem, kein testbezogenes. Diese Retrospektive konzentriert sich auf den Test (siehe Beschreibung der Prüfungsfrage).\n\nc) FALSCH – Dies sollte während der Testrealisierung geschehen und ist nicht als Teil des Testverbesserungsprozesses (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 1.5.4).\n\nd) FALSCH – Dies ist Teil der Teststeuerung und gehört nicht zur Retrospektive (siehe CTAL- TM-Lehrplan V3.0, Abschnitt 1.5.4).\n\ne) KORREKT – Diese Prüfung ist wichtig, denn je früher Fehlerzustände gefunden werden, desto kostengünstiger ist fast immer deren Beseitigung (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 1.5.4, Absatz „Sammlung von Daten“ und „Ableitung von Verbesserungen“)."
+  },
+  {
+    "id": 22,
+    "lo": "TM-1.5.4",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie sind ein Tester in einem agilen Softwareentwicklungsteam, das gerade eine Iteration abgeschlossen hat. Sie bereiten sich auf die Retrospektive mit dem Rest des Teams vor.\n\nWelche der folgenden Aktivitäten ist nicht Teil einer typischen Retrospektive?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Überprüfung des Testfortschritts, der Fehlerfindung und der Metriken zur Testeffizienz.",
+      "b) Identifizierung der Grundursachen von Testproblemen und Entwicklung von Verbesserungsideen.",
+      "c) Zuweisung von Zuständigkeiten und Festlegung von Zielen und Metriken für die Verbesserungsmaßnahmen.",
+      "d) Bewertung der Testprozesse und -werkzeuge anhand der Best Practices der Branche."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Das Review des Testfortschritts, der Fehlerzustände und der Metriken zur Effektivität der Tests ist Teil des Test-Evaluierungsprozesses und gehört zu den Bereichen, die in einer Retrospektive zu berücksichtigen sind (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 1.5.4).\n\nb) FALSCH – Die Ermittlung der Grundursachen für die Probleme beim Testen und die Erarbeitung von Verbesserungsvorschlägen ist Teil der Problemanalyse und der Lösungsfindung. Diese gehören zu den Bereichen, die in einer Retrospektive betrachtet werden sollten (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 1.5.4).\n\nc) FALSCH – Die Zuweisung von Zuständigkeiten und die Festlegung von Zielen und Metriken für die Verbesserungsmaßnahmen sind Teil des Prozesses der Maßnahmenplanung und - umsetzung, der in einer Retrospektive zu berücksichtigen ist (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 1.5.4).\n\nd) KORREKT – Die Bewertung der Testprozesse und -werkzeuge anhand branchenüblicher Best Practices ist NICHT Teil einer typischen Retrospektive, sondern in der Regel Teil von Aktivitäten zur Testprozessverbesserung."
+  },
+  {
+    "id": 23,
+    "lo": "TM-1.6.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Sie sind Testmanager und Leiter des Testteams für eine neue Produktlinie mit mehreren Varianten für mehrere Kunden. Als eine Ihrer ersten Aufgaben müssen Sie ein geeignetes Testwerkzeug für das Testmanagement auswählen und einführen, da das derzeitige Werkzeug Ihres Unternehmens den Anforderungen der neuen Produktlinie nicht gerecht wird.\n\nWas ist kein bewährtes Verfahren für die Auswahl des neuen Testmanagement-Tools?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Auswahl des Nachfolgemodells des aktuell verwendeten Testmanagementsystems ohne weitere Evaluierung.",
+      "b) Auflistung der für die Produktlinie erforderlichen Kriterien, die vom Testmanagementwerkzeug nicht erfüllt werden.",
+      "c) Evaluierung, welches Lizenzierungsmodell am besten für das Testmanagement einer Produktlinie mit mehreren Varianten geeignet ist.",
+      "d) Evaluierung des Werkzeugs anhand klarer Anforderungen und objektiver Kriterien."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Das Nachfolgemodell des derzeit verwendeten Tools hat vielleicht Vorteile, aber wenn Sie keine Anforderungsanalyse durchgeführt haben, wissen Sie vielleicht nicht, ob das Nachfolgemodell alle Ihre Anforderungen erfüllt. Möglicherweise gibt es auch keinen Nachfolger.\n\nb) FALSCH – Die Antwort wird im CTAL-TM-Lehrplan V3.0, Abschnitt 1.6.1 als bewährtes Verfahren für die Werkzeugauswahl aufgeführt.\n\nc) FALSCH – Die Antwort wird im CTAL-TM-Lehrplan V3.0, Abschnitt 1.6.1 als bewährtes Verfahren für die Werkzeugauswahl aufgeführt.\n\nd) FALSCH – Die Antwort wird im CTAL-TM-Lehrplan V3.0, Abschnitt 1.6.1 als bewährtes Verfahren für die Werkzeugauswahl aufgeführt."
+  },
+  {
+    "id": 24,
+    "lo": "TM-1.6.3",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie arbeiten für ein internationales Unternehmen, das Hardware und Software für Telekommunikationsnetze herstellt. Hardware- und Softwareentwicklung werden in getrennten Geschäftsbereichen durchgeführt. Sie sind Testmanager für eine Produktlinie von Netzwerk- Router-Software. In Ihrer Produktlinie gibt es eine lange Tradition, eng integrierte Produkte mit einem inkrementellen Produktlebenszyklus zu entwickeln. Der Hardware-Geschäftsbereich produziert alle sechs Monate eine neue Version. Ihre Softwareproduktlinie ist bestrebt, für jede neue Hardwareversion eine neue Version der Software bereitzustellen. Die Software wird in Zweimonatsschritten entwickelt, die Zeitpläne der Geschäftsbereiche werden während des Entwurfs synchronisiert. Ihr Team besteht aus 15 Testern, die seit mindestens zwei Jahren im Unternehmen tätig sind, meist aber viel länger. Neue Tests werden von den erfahrensten Testanalysten entwickelt. Die Variationen der Tests und die Regressionstests werden vom restlichen Team ausgeführt. Die Unternehmensleitung verlangt monatliche Fortschrittsberichte, in denen die Anzahl der gefundenen schwerwiegenden Fehlerzustände sowie der Status der Testdurchführung aufgeführt sind. Es wurden auch Anstrengungen unternommen, um die Effizienz des Personals in allen Geschäftsbereichen zu messen. Nun gibt es Probleme, den Zeitplan für die Hardwareentwicklung einzuhalten. Sie haben gehört, dass eine andere, ähnliche Softwareproduktlinie in Ihrem Unternehmen ein Open-Source-Werkzeug für die Testautomatisierung einsetzt. Diese automatisiert damit etwa 50 % der Tests und führt die restlichen Tests manuell über die Benutzeroberfläche der Software aus. Nun sollen Sie die Möglichkeit prüfen, dieses Werkzeug auch für Ihre Produktlinie zu verwenden. (Fortsetzung auf der nächsten Seite)\n\nWas sollte Ihr Hauptanliegen sein?\n\nWählen Sie DIE BESTE Option! (1 aus 4)",
+    "options": [
+      "a) Wie gut ist der Support des Open-Source-Werkzeugs?",
+      "b) Ist das neue Werkzeug gebrauchstauglich?",
+      "c) Ist Ihr Testprozess reif genug für die Testautomatisierung mit diesem Werkzeug?",
+      "d) Können alle mit dem Werkzeug erstellten Artefakte einfach gewartet werden?"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Dies ist zwar ein berechtigtes Anliegen, da Open-Source-Werkzeuge möglicherweise nicht den gleichen Umfang an Dokumentation, Schulung und technischer Unterstützung bieten wie kommerzielle Werkzeuge. Es ist jedoch nicht das Hauptanliegen, da Sie nach Online-Communitys, Foren und Tutorials suchen können, die Ihnen bei der Verwendung des Werkzeugs helfen. Außerdem lässt die Tatsache, dass eine andere Softwareproduktlinie in Ihrem Unternehmen das Werkzeug verwendet, darauf schließen, dass es internes Wissen und Erfahrung gibt, die Sie nutzen können.\n\nb) FALSCH – Auch dies ist ein berechtigtes Anliegen, denn die Gebrauchstauglichkeit kann sich auf die Leichtigkeit des Erlernens, der Nutzung und der Wartung des Werkzeugs auswirken. Dies ist jedoch nicht das Hauptanliegen, da Gebrauchstauglichkeit subjektiv ist und von den Vorlieben und Fähigkeiten der Benutzer abhängt. Sie können die Gebrauchstauglichkeit des Werkzeugs beurteilen, indem Sie es selbst ausprobieren oder die andere Softwareproduktlinie, die es verwendet, um Feedback bitten.\n\nc) KORREKT – Wie im CTAL-TM-Lehrplan V3.0 beschrieben, erfordert die Testautomatisierung eine gewisse Reife des Testprozesses, um effektiv und effizient zu sein. Daher müssen Sie beurteilen, ob Ihre Testprozesse bereit sind, die Testautomatisierung mit dem Werkzeug einzuführen, um das verbliebene Risiko zu beherrschen.\n\nd) FALSCH – Dies ist eine weitere berechtigte Sorge, da die Testautomatisierung die Erstellung und Verwaltung verschiedener Artefakte wie Testskripte, Testdaten, Testergebnisse und Testberichte beinhaltet. Die Wartbarkeit der Artefakte hängt jedoch von der Qualität und dem Design des Werkzeugs sowie von den Best Practices und Standards ab, die von den Benutzern befolgt werden. Sie können die Wartbarkeit der Artefakte beurteilen, indem Sie die bestehenden Artefakte der anderen Softwareproduktlinie, die das Werkzeug verwendet, reviewen."
+  },
+  {
+    "id": 25,
+    "lo": "TM-1.6.3",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie arbeiten in einem Softwareentwicklungsprojekt, bei dem ein agiler Softwareentwicklungszyklus zum Einsatz kommt. Sie erwägen die Einführung eines Testautomatisierungswerkzeugs, um die Qualität und Effizienz der Tests zu verbessern. Sie haben aktuell einen manuellen Testaufwand von 60.000 EUR. Sie haben drei potenzielle Werkzeuge identifiziert: Werkzeug A, Werkzeug B und Werkzeug C. Jedes Werkzeug hat unterschiedliche Funktionen, Kosten und Vorteile. Die jährlich wiederkehrenden Kosten sind bei allen drei Werkzeugen jeweils 20 % der Anschaffungskosten. Sie haben eine Kosten-Nutzen-Analyse für jedes Werkzeug auf der Grundlage der folgenden Informationen durchgeführt:\n\n• Werkzeug A kostet 10.000 EUR in der Anschaffung. Es unterstützt nur funktionale Tests. Es kann den manuellen Testaufwand um 20 % und die Testzykluszeit um 10 % reduzieren. Außerdem kann es die Überdeckung um 15 % erhöhen.\n\n• Werkzeug B kostet 15.000 EUR in der Anschaffung. Es unterstützt sowohl Funktions- als auch Performanztests. Es kann den manuellen Testaufwand um 30 % und die Testzykluszeit um 20 % reduzieren. Außerdem kann die Überdeckung um 25 % erhöht werden.\n\n• Werkzeug C kostet 20.000 EUR in der Anschaffung. Es unterstützt Funktions-, Performanz- und Sicherheitstests. Es kann den manuellen Testaufwand um 40 % und die Testzykluszeit um 30 % reduzieren. Außerdem kann es die Überdeckung um 35 % erhöhen.\n\nWelches Werkzeug würden Sie wählen und warum?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Werkzeug A, weil es die niedrigsten initialen Kosten hat.",
+      "b) Werkzeug B, weil es das beste Verhältnis zwischen Kosten und Nutzen aufweist.",
+      "c) Werkzeug C, weil es die größte Reduzierung des Aufwands und der Zeit und die größte Erhöhung der Überdeckung aufweist.",
+      "d) Keines der Tools, da sie keinen Benefit bieten."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "Hinweis: Hier wird der ROI vereinfachend als Verhältnis von jährlichem Nettobenefit (Einsparung minus wiederkehrende Kosten) zur einmaligen Investition definiert.\n\na) FALSCH – Werkzeug A ist nicht die beste Option, da es unter den drei Werkzeugen den geringsten Nutzen aufweist. Es hat zwar die geringsten anfänglichen Kosten, aber auch die geringste Reduzierung des Aufwands (jährlich 12.000 EUR - 2.000 EUR = 10.000 EUR, nach 1 Jahr einen ROI von 100 %) und der Zeit sowie die geringste Erhöhung der Überdeckung. Werkzeug A unterstützt nur funktionale Tests, was unzureichend für das Testen eines agilen Softwareentwicklungsprojekts ist.\n\nb) FALSCH – Werkzeug B ist nicht die beste Option. Es hat höhere initiale Kosten als Werkzeug A. Zwar bietet es eine mittlere Reduzierung des Aufwands (jährlich 18.000 EUR - 3.000 EUR = 15.000 EUR, also auch nach 1 Jahr einen ROI von 100 %) und der Zeit sowie die mittlere Erhöhung der Überdeckung und unterstützt sowohl funktionale als auch Performanztests. Allerdings unterstützt das Werkzeug B keine IT-Sicherheitstests, die für das Testen eines agilen Softwareentwicklungsprojekts wichtig sind. Abgesehen davon gibt es andere, noch bessere Angebote.\n\nc) KORREKT – Werkzeug C ist die beste Option, da es unter den drei Werkzeugen die größte Einsparung an Aufwand (jährlich 24.000 EUR - 4.000 EUR = 20.000 EUR, also auch nach 1 Jahr einen ROI von 100 %) und Zeit sowie die größte Verbesserung an Überdeckung aufweist, die wichtige Faktoren für die Qualitäts- und Effizienzsteigerung des Testens sind. Werkzeug C unterstützt auch Funktions-, Performanz- und IT-Sicherheitstests, die für das Testen eines agilen Softwareentwicklungsprojekts unerlässlich sind. Das bedeutet, dass Werkzeug C im Verhältnis zu seinen Kosten den größten Nutzen und damit den größten Wert für das Projekt bietet.\n\nd) FALSCH – Keines der Tools zu wählen ist nicht die beste Option, denn alle Werkzeuge haben einen ROI von 100 % nach 1 Jahr und bieten schon für kleine Projekte aufgrund der Reduzierung des manuellen Testaufwands einen Nutzen für das Projekt, so dass sich die Investition lohnt."
+  },
+  {
+    "id": 26,
+    "lo": "TM-1.6.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Das für Ihr aktuelles Projekt verfügbare selbst entwickelte Werkzeug entspricht nicht den Anforderungen Ihrer Testautomatisierung. In Ihrem Unternehmen gibt es ein Open-Source-Testautomatisierungswerkzeug, das für identische Anforderungen erfolgreich eingesetzt wird. Wenn Sie sich für dasselbe Open-Source-Werkzeug entscheiden, welche der folgenden Aktivitäten sollte dann als erster Schritt bei der Ablösung des aktuellen, selbst entwickelten Werkzeugs erfolgen, um den Wert des neuen Werkzeugs so schnell wie möglich zu zeigen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Das selbst entwickelte Werkzeug muss gewartet und auf die neue Umgebung umgestellt werden.",
+      "b) Die Regressionstestskripte des selbst entwickelten Werkzeugs müssen in das neue Tool konvertiert werden.",
+      "c) Die Sicherungs- und Wiederherstellungsfunktionen des selbst entwickelten Werkzeugs müssen beibehalten werden.",
+      "d) Alle Testskripte des selbst entwickelten Werkzeugs müssen in das neue Werkzeug konvertiert werden."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Diese Aktivität ist nicht notwendig, da das selbst entwickelte Werkzeug ausgemustert wird.\n\nb) KORREKT – Diese Antwort betrifft die Ablösung, da es wahrscheinlich viele bestehende Skripte gibt und Testskripte für Regressionstests am häufigsten verwendet werden. Der Grund dafür ist:\n\n• Testskripte für Regressionstests werden am häufigsten verwendet, um die Funktionalität und Performanz der Software nach Änderungen oder Aktualisierungen zu überprüfen.\n\n• Die Konvertierung der Testskripte für Regressionstests in das neue Werkzeug ermöglicht es Ihnen, den Wert des neuen Werkzeugs als Pilotprojekt und “Proof of Concept” so schnell wie möglich zu zeigen, da Sie die Ergebnisse und die Effizienz des neuen Tools mit dem alten vergleichen können (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 1.6.1, 3. Absatz, letzter Aufzählungspunkt und Abschnitt 1.6.3, 5. Absatz, 2. Aufzählungspunkt).\n\nc) FALSCH – Diese Aktivität ist nicht notwendig, da das alte Werkzeug ausgemustert wird.\n\nd) FALSCH – Sie wollen den Wert so schnell wie möglich zeigen, daher ist es nicht sinnvoll, hierfür alle Testskripte direkt im ersten Schritt zu konvertieren. Zudem brauchen Sie vielleicht nicht alle Testskripte, die jemals in dem alten Werkzeug entwickelt wurden."
+  },
+  {
+    "id": 27,
+    "lo": "TM-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Als Testmanager müssen Sie über unterschiedliche Testaktivitäten mit Hilfe verschiedener Metriken berichten.\n\nWelche der folgenden Zuordnungen von Metriken zu Testaktivitäten ist AM EHESTEN zutreffend? Metriken:\n\n1. Produktrisikoüberdeckung\n\n2. Anzahl der insgesamt behobenen Fehler vs. insgesamt gefundene Fehlerzustände.\n\n3. Prozentualer Anteil automatisierter Testfälle von den geplanten Testfällen.\n\n4. Verhältnis des tatsächlichen vs. geplanten Aufwands (in Stunden) für Testaktivitäten Testaktivitäten:\n\nA) Testplanung\n\nB) Testüberwachung und Teststeuerung\n\nC) Testabschluss\n\nD) Testdurchführung\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) 1B, 2B, 3C, 4A",
+      "b) 1A, 2B, 3C, 4D",
+      "c) 1B, 2B, 3C, 4B",
+      "d) 1C, 2D, 3A, 4B"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "1. Der Prozentsatz der Überdeckung des Produktrisikos ist eine Metrik für die Testüberwachung und Teststeuerung sowie für den Testabschluss nach Lehrplan, Abschnitt 2.1.1 Tabelle 2.\n\n2. Die Anzahl der behobenen im Vergleich zu gefundenen Fehlerzuständen ist eine Metrik zur Testüberwachung und Teststeuerung. Lehrplan Abschnitt 2.1.1 Tabelle 2, Zeile 6.\n\n3. Der Prozentsatz der tatsächlich automatisierten Testfälle von den zur Automatisierung geplanten Testfällen ist eine Metrik für den Testabschluss nach Lehrplan, Abschnitt 2.1.1 Tabelle 2, Zeile 7.\n\n4. Das Verhältnis des tatsächlichen vs. geplanten Aufwands (in Stunden) für Testaktivitäten ist eine Metrik für die Testüberwachung und Teststeuerung nach Lehrplan, Abschnitt 2.1.1 Tabelle 2. KORREKT – Die richtige Antwort lautet daher c) 1B, 2B, 3C, 4B."
+  },
+  {
+    "id": 28,
+    "lo": "TM-2.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Ihr Management Board ist mit dem Thema Testmetriken noch nicht vertraut und bittet Sie, das Hauptziel der Verwendung von Testmetriken zu erläutern.\n\nWelche der folgenden Aussagen würden Sie verwenden, um den Nutzen von Testmetriken zu erklären?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Testmetriken sind Indikatoren, die den Testfortschritt zeigen und helfen zu beurteilen, ob die Testendekriterien oder die Testziele erreicht wurden.",
+      "b) Testmetriken dienen als Empfehlung für Korrekturmaßnahmen, um effektives und effizientes Testen zu erreichen.",
+      "c) Testmetriken sammeln Daten aus abgeschlossenen Testaktivitäten, um gewonnene Erkenntnisse, Testware und andere relevante Informationen zu konsolidieren.",
+      "d) Testmetriken werden verwendet, um Tests neu zu priorisieren, wenn ein identifiziertes Risiko zu einem Problem wird."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Testmetriken werden in der Teststeuerung verwendet, um den Testfortschritt zu messen und um zu beurteilen, ob die Endekriterien des Tests oder die mit den Endekriterien oder Testzielen verbundenen Testaufgaben erfüllt worden sind (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 2.1.2, 1. und 2. Absatz). Diese Aussage ist zutreffend, da Testmetriken helfen können, den Status und das Ergebnis der Testaktivitäten zu verfolgen, wie z. B. die Anzahl der ausgeführten Testfälle, die Anzahl der gefundenen Fehler, die Fehlerdichte, die Testüberdeckung, die Effektivität des Tests und so weiter. Anhand dieser Metriken lässt sich beurteilen, ob der Testprozess das gewünschte Maß an Qualität und Vollständigkeit erreicht hat und ob das Softwareprodukt zur Freigabe bereit ist oder nicht.\n\nb) FALSCH – Diese Aussage beschreibt die Rolle der Teststeuerung, nicht die der Testmetriken. Die Teststeuerung nutzt die Informationen aus der Testüberwachung, die auf Testmetriken basieren, um Anleitungen und Korrekturmaßnahmen zu geben. Metriken allein geben noch keine Handlungsempfehlungen (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 2.1.2, 3. Absatz).\n\nc) FALSCH – Diese Aussage beschreibt die Rolle des Abschlusses der Testaktivitäten, keine Testmetrik. Der Abschluss der Testaktivitäten sammelt Daten aus abgeschlossenen Testaktivitäten, die Testmetriken zur Konsolidierung der gewonnenen Erkenntnisse, Testmittel und andere relevante Informationen enthalten können (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 2.1.2,\n\n4. Absatz).\n\nd) FALSCH – Diese Aussage ist falsch, da sie ein Beispiel für eine Anweisung zur Teststeuerung und nicht für eine Testmetrik beschreibt (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 2.1.2, 3. Absatz). Testmetriken können zur Unterstützung der Entscheidung über die Repriorisierung von Tests verwendet werden, sie sind aber nicht die direkte Ursache dafür."
+  },
+  {
+    "id": 29,
+    "lo": "TM-2.1.3",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie arbeiten für ein internationales Unternehmen, das Hardware und Software für Telekommunikationsnetze herstellt. Sie sind der Testmanager für eine Produktlinie von Netzwerk-Router-Software. Die Hardware-Entwicklung liefert alle 6 Monate ein neues Release. Die Software wird in zweimonatigen, mit der Hardware-Entwicklung synchronisierten Inkrementen entwickelt. Das letzte Gesamtrelease verzögerte sich, weil kritische Schnittstellenfehler in der Software zu spät gefunden und behoben wurden. Die Entwicklungsleitung fordert Sie dazu auf, weitere Verzögerungen für die kommenden Releases zu vermeiden oder wenigstens frühzeitig zu kommunizieren. Sie planen daraufhin ein verbessertes, metrikbasiertes Berichtswesen, das auf den priorisierten User-Storys (P1, P2, P3) und einer gestuften Produktrisikoliste (hoch, mittel, gering) für den Testbereich aufbauen soll.\n\nWelche der aufgeführten Metriken sind für Ihre Berichterstattung im Sinne der Anforderungen der Entwicklungsleitung AM WICHTIGSTEN?\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) Fehlermetriken: Auswertung von Fehlerpriorität und Quelle des Fehlerzustands, um zu berichten, welche User-Storys fehlerbehaftet sind und verstärkt getestet werden müssen.",
+      "b) Teststatus-/Abdeckungsmetriken je User-Story, geordnet nach Story-Priorität (P1 bis P3), um zu zeigen, welche wichtigen User-Storys in den kommenden Zyklen im Fokus stehen bzw. noch nicht ausreichend abgedeckt sind.",
+      "c) Aufwands-/Kapazitätsmetriken zur Prognose, ob der geplante Restaufwand und die verfügbare Velocity ausreichen, P1/P2-Storys und hohe Produktrisiken rechtzeitig zu testen.",
+      "d) Produktrisikometriken (rückblickend): Auswertung hoch/kritisch eingestufter Defekte an Schnittstellen mit hohem Produktrisiko, um fehlerhaft definierte Schnittstellen zu identifizieren.",
+      "e) Produktrisiko-Überdeckungsmetriken: bestanden vs. offen geführte Testfälle in Relation zur Risikostufe (hoch, mittel, gering), um zu berichten, welche Hochrisikobereiche in der Teststeuerung priorisiert werden müssen."
+    ],
+    "answer": [
+      1,
+      4
+    ],
+    "explanation": "Das wichtigste Ziel für den Testmanager in dieser Situation ist, den Status der wichtigsten User-Storys und höchsten Produktrisiken zu berichten, um abnahmeverhindernde Probleme frühzeitig zu berichten und ggfs. Durch gezielte Teststeuerung zu beheben.\n\na) FALSCH – Fehlermetriken dieser Art sind hilfreich, um Bereiche mit hoher Fehlerdichte zu erkennen und darauf zu reagieren (Teststopp, vertieftes Testen). Diese Metrik geht aber nicht auf die Priorität der User-Story ein und ist somit nicht so wichtig im Sinne der Ziele (siehe CTAL-TM- Lehrplan V3.0, Abschnitt 2.1.3, Absatz zu ‘Metriken über Fehlerzustände’).\n\nb) KORREKT – Diese Metrik legt den Fokus auf die Darstellung der Testabdeckung der User-Storys, geordnet nach Priorität, und ermöglicht somit eine Darstellung, welche wichtigen User-Storys aufgrund von offenen Fehlern oder fehlenden Testdurchführungen ggf. ein Risiko bedeuten und somit eine steuernde Entscheidung im Sinne der Ziele ermöglichen (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 2.1.3, Absatz zu „Metriken über die Überdeckung“).\n\nc) FALSCH – Aufwands-/Kapazitätsmetriken dieser Art sind hilfreich, um Hinweise zu geben, ob man seine Mindestziele budget- und zeittechnisch erreichen kann. Im Sinne der Ziele zur Erreichung der kritischen Testabdeckung sind sie jedoch nicht ausreichend bzw. nicht die wichtigsten (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 2.1.3, Absatz zu „Metriken über verbleibende Risiken und den Testkosten“).\n\nd) FALSCH – Rückblickende Produktrisikometriken dieser Art helfen spezifische Fragestellungen zu bewerten, aber in der aktuellen Situation ist nicht gesagt, dass in einem Folgerelease wieder die Schnittstellen das wichtigste Problem sind. Daher ist diese Metrik im Sinne der Ziele nicht die Wichtigste (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 2.1.3, Absatz zu ‘Metriken über Produktrisiken’).\n\ne) KORREKT – Diese Metrik legt den Fokus auf die Darstellung der Testabdeckung der Produktrisiken, geordnet nach Risikostufe, und ermöglicht somit eine Darstellung, welche wichtigen Produktrisiken auf Grund von offenen Fehlern oder fehlenden Testdurchführungen ggfs. ein Risiko bedeuten und somit eine steuernde Entscheidung im Sinne der Ziele ermöglichen (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 2.1.3, Absatz zu ‘Metriken über Produktrisiken’)."
+  },
+  {
+    "id": 30,
+    "lo": "TM-2.1.3",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie sind der Testmanager eines Softwareprojekts, das ein dokumentenzentriertes sequenzielles Entwicklungsmodell verwendet und die Entwicklung einer Desktop-Anwendung für ein Bankensystem beinhaltet. Das Projekt besteht aus einem großen, hierarchisch aufgebauten Team, das mit mehreren Stakeholdern zusammenarbeitet. Das Projekt weist aufgrund der stabilen und genau definierten Anforderungen und Technologien ein geringes Maß an Unsicherheit und Komplexität auf. Außerdem gelten für das Projekt strenge Qualitäts- und Sicherheitsstandards, um die gesetzlichen Vorschriften des Bankensektors einzuhalten.\n\nWelche Metriken eignen sich am besten für die Analyse der Testergebnisse und die Erstellung von Testberichten, die es den Stakeholdern ermöglichen, Entscheidungen zu treffen?\n\nWählen Sie DIE BESTE Antwort! (1 aus 4)",
+    "options": [
+      "a) Metriken für Produktrisiken, Fehlerzustände, Testfortschritt, Überdeckung, Kosten und Testaufwand.",
+      "b) Metriken für Fehlerzustände, Testfortschritt, Überdeckung und Codeüberdeckung.",
+      "c) Metriken für Produktrisiken, Fehlerzustände, Testfortschritt, Überdeckung und Umgebungs-/Konfigurationsüberdeckung.",
+      "d) Metriken für Fehlerzustände, Testfortschritt, Überdeckung und Restkosten für nicht getestete Komponenten."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Denn diese Option deckt alle Kategorien von Metriken ab, die für den Projektkontext relevant sind:\n\n• Metriken für Produktrisiken sind erforderlich, um die Qualität und Zuverlässigkeit des Systems zu bewerten und die gesetzlichen Vorschriften einzuhalten.\n\n• Zur Messung der Fehlerdichte, des Fehlerschweregrads, der Effizienz der Fehlerbeseitigung usw. werden Metriken für Fehlerzustände benötigt.\n\n• Metriken für den Testfortschritt werden zur Überwachung und Steuerung der Testaktivitäten und -ressourcen benötigt.\n\n• Metriken für die Überdeckung werden benötigt, um zu messen, inwieweit die Testbasis und das System unter Test durch die Tests ausgeführt werden.\n\n• Metriken für Kosten und Testaufwand sind erforderlich, um das Kosten-Nutzen-Verhältnis des Testens zu bewerten und das Testbudget zu optimieren.\n\nb) FALSCH – Sie enthält keine Metriken für Produktrisiken, Kosten und Testaufwand, die für den Projektkontext wichtig sind. Außerdem sind Metriken zur Codeüberdeckung enthalten, die für die Berichterstattung auf höherer Abstraktionsebene über Testergebnisse in einem dokumentenzentrierten sequenziellen Entwicklungsmodell nicht geeignet sind.\n\nc) FALSCH – Sie enthält keine Metriken für Kosten und Testaufwand, die für den Projektkontext wichtig sind. Metriken für Umgebungs-/Konfigurationsüberdeckung sind sinnvoll bei komplexen Infrastruktur- oder Multi-Plattform-Tests, aber in diesem Fall nicht so relevant, da es sich um eine Desktop-Anwendung mit stabilen Anforderungen und Technologien handelt.\n\nd) FALSCH – Sie enthält keine Metriken für Produktrisiken, Kosten und Testaufwand, die für den Projektkontext wichtig sind. Darüber hinaus sind Metriken zu Restkosten für nicht getestete Komponenten enthalten, die für ein dokumentenzentriertes sequenzielles Entwicklungsmodell, das einen hohen Grad an Überdeckung anstrebt, nicht anwendbar sind."
+  },
+  {
+    "id": 31,
+    "lo": "TM-2.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Als Testmanager müssen Sie viele Faktoren berücksichtigen, um den Testaufwand abzuschätzen. Diese Schätzung kann im Laufe der Tests angepasst werden. Welcher der folgenden Faktoren ist für die Testschätzung während der initialen Testplanung dieses Projekts noch nicht als Eingangsgröße nutzbar?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Die Komplexität und der Umfang der zu testenden Software.",
+      "b) Die Verfügbarkeit und die Fähigkeiten der Mitglieder des Testteams.",
+      "c) Die Qualität und Zuverlässigkeit der Testwerkzeuge und der Testumgebung.",
+      "d) Die Anzahl und der Schweregrad der bei der Testdurchführung festgestellten Fehler."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Die Komplexität und der Umfang der zu testenden Software wirken sich auf den Umfang und die Tiefe der Testaktivitäten und -aufgaben aus, die wiederum den Testaufwand, die Zeit und die Kosten beeinflussen.\n\nb) FALSCH – Die Verfügbarkeit und die Fähigkeiten der Mitglieder des Testteams bestimmen die Produktivität und Effizienz des Testprozesses, die wiederum Einfluss auf den Testaufwand, die Zeit und die Kosten haben.\n\nc) FALSCH – Die Qualität und Zuverlässigkeit der Testwerkzeuge sowie der Testumgebung wirken sich auf die Durchführbarkeit und Genauigkeit der Testaktivitäten und -aufgaben aus, die wiederum den Testaufwand, die Zeit und die Kosten beeinflussen.\n\nd) KORREKT – Die Anzahl und der Fehlerschweregrad der in diesem Projekt beim Testen gefundenen Fehler sind Ergebnisse der Testdurchführung und stehen zum Zeitpunkt der initialen Testplanung noch gar nicht zur Verfügung. Sie können daher nicht als Eingangsgröße für die erste Testschätzung dieses Projekts dienen, sondern allenfalls später für Nachschätzungen oder für zukünftige Projekte verwendet werden. Für die initiale Schätzung stützt sich der Testmanager stattdessen auf Faktoren wie Umfang/Komplexität, Teamverfügbarkeit und Werkzeug-/Umgebungsqualität."
+  },
+  {
+    "id": 32,
+    "lo": "TM-2.2.3",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie arbeiten an einem agilen Projekt, das an mehreren Standorten durchgeführt wird, und sind für den Testaufwand an Ihrem Standort verantwortlich. Die Teststrategie ist eine Mischung aus risikobasiertem Testen, prozesskonformer Teststrategie und reaktivem Testen. Die Entwickler halten sich an bekannte agile Best Practices, einschließlich automatisierter Komponententests und kontinuierlicher Integration. Ihre Aufgabe ist es, den Systemtestaufwand abzuschätzen, der für eine bestimmte Iteration durch Ihr Testteam erforderlich ist.\n\nWelche zwei der folgenden Aussagen beschreiben AM BESTEN, welche Schätzverfahren bzw. Ansätze zur Testaufwandschätzung Sie in dieser Situation anwenden und wie Sie dabei vorgehen sollten?\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) Berücksichtigung des durchschnittlichen Aufwands pro identifiziertem Risiko in früheren Iterationen.",
+      "b) Zuteilung von Time-Boxed-Test-Sitzungen für jede identifizierte Test-Charta.",
+      "c) Einschätzung, dass die meisten Fehler bei der Durchführung von Systemtests gefunden werden.",
+      "d) Aufwand für die Erstellung einer detaillierten Dokumentation der Testartefakte einbeziehen.",
+      "e) Die Annahme, Systemtests können Daten und Umgebungen von Unit-Tests wiederverwenden."
+    ],
+    "answer": [
+      0,
+      1
+    ],
+    "explanation": "a) KORREKT – Es handelt sich um eine Möglichkeit, risikobasiertes Testen als Teil der Teststrategie anzuwenden. Anhand historischer Daten aus vergangenen Iterationen kann der Testmanager den Aufwand für das Testen der kritischsten und wahrscheinlichsten Risiken in der aktuellen Iteration abschätzen.\n\nb) KORREKT – Es ist eine Möglichkeit, reaktives Testen als Teil der Teststrategie anzuwenden. Durch die Verwendung von Test-Chartas, d. h. von Beschreibungen der Testziele auf hoher Ebene, kann der Testmanager für jede Testsitzung für explorative Tests eine feste Zeitspanne zuweisen, was Flexibilität und Anpassbarkeit beim Testen ermöglicht.\n\nc) FALSCH – Es widerspricht der Annahme, dass die Entwickler bekannte agile Best Practices befolgen, einschließlich automatisierter Unit-Tests und kontinuierlicher Integration. Diese Praktiken sollten sicherstellen, dass die meisten Fehlerzustände in einem frühen Stadium gefunden und behoben werden, wodurch die Fehlerdichte auf der Teststufe des Systemtests verringert wird.\n\nd) FALSCH – Es widerspricht dem agilen Grundsatz, dass funktionierende Software wichtiger ist als eine umfassende Dokumentation. In einem agilen Kontext ist eine detaillierte Dokumentation der Test-Artefakte weder notwendig noch wünschenswert, da sie zusätzlichen Aufwand verursacht und die Agilität verringert. Stattdessen sollte sich der Testmanager darauf konzentrieren, eine leichtgewichtige und prägnante Testdokumentation zu erstellen, die der Kommunikation und Zusammenarbeit dienlich ist.\n\ne) FALSCH – Es widerspricht dem Grundsatz der Unabhängigkeit des Testens. Systemtests sollten sich nicht auf Testdaten und -umgebungen von Unit-Tests stützen, da diese für Tests auf Systemebene möglicherweise nicht repräsentativ oder realistisch genug sind. Stattdessen sollte das Testmanagement sicherstellen, dass Systemtests über eigene Testdaten und -umgebungen verfügen, die den beabsichtigten Betriebsbedingungen entsprechen."
+  },
+  {
+    "id": 33,
+    "lo": "TM-2.2.3",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie sind der Testmanager eines Softwareprojekts, in dem ein sequenzielles Entwicklungsmodell zur Anwendung kommt. Die Projektanforderungen und der Umfang sind festgelegt und klar definiert. Es liegen historische Daten zu Anforderungen aus ähnlichen Projekten vor. Jedoch ist die Teamzusammensetzung für dieses Projekt noch nicht final geklärt. Somit müssen Sie den Testaufwand für das gesamte Projekt im Alleingang auf der Grundlage des Anforderungsspezifikationsdokuments schätzen.\n\nWelche der folgenden Verfahren oder Ansätze wären für Ihren Kontext AM BESTEN geeignet?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Schätzung auf der Basis von Verhältniszahlen",
+      "b) Planungspoker",
+      "c) Drei-Punkt-Schätzung",
+      "d) Breitband-Delphi-Verfahren"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Die auf Kennzahlen basierende Schätzung ist ein metrikbasiertes Verfahren, das historische Daten aus ähnlichen Projekten verwendet, um Basiswerte für den Testaufwand abzuleiten. Dieses Verfahren eignet sich für sequenzielle Modelle, bei denen die Anforderungen und der Umfang des Projekts fest und klar definiert sind (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 2.2.3).\n\nb) FALSCH – Beim Planungspoker werden die Schätzungen durch die Teammitglieder diskutiert, um einen Konsens zu erreichen. Hier aber sollen Sie die Schätzung machen. Außerdem kann dieses Verfahren zu zeitaufwendig und unpraktisch sein, um den Testaufwand für das gesamte Projekt auf einmal zu schätzen.\n\nc) FALSCH – Die Drei-Punkt-Schätzung ist ein expertenbasiertes Verfahren, bei dem optimistische, pessimistische und wahrscheinlichste Aufwandswerte kombiniert werden. Grundsätzlich könnten Sie diese Methode auch allein anwenden. Im gegebenen Kontext liegen jedoch gute historische Kennzahlen aus ähnlichen Projekten vor und die Anforderungen sind klar definiert. Damit ist eine auf Verhältniszahlen basierende, metrikgestützte Schätzung (Option a) zielgerichteter und effizienter als eine Drei-Punkt-Schätzung.\n\nd) FALSCH – Das Breitband-Delphi-Verfahren eignet sich eher für Projekte, bei denen aufgrund der Informationslage der Testaufwand schwer zu quantifizieren ist und man auf die Erfahrungen und unterschiedlichen Perspektiven der Experten angewiesen ist. In dem zeitlichen Rahmen ist dadurch das Breitband-Delphi-Verfahren nicht effizient umsetzbar, wenn Sie bereits die Synergien aus den vorliegenden Anforderungen und historischen Daten nutzen können. Sie müssen die Schätzung selbst machen."
+  },
+  {
+    "id": 34,
+    "lo": "TM-2.3.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Als Tester müssen Sie im Normalfall einen Fehlerbericht erstellen, wenn Sie während des Tests eine Fehlerwirkung entdecken. Es kann jedoch Situationen geben, in denen Sie keinen Fehlerbericht erstellen. Welcher der folgenden Gründe spricht dagegen, einen Fehlerbericht zu erstellen, nachdem bei einem Test eine Fehlerwirkung festgestellt wurde?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Der Fehler wird durch einen Defekt verursacht, der in der gleichen Phase wie der Test eingeführt wurde.",
+      "b) Der Fehler wird durch einen Defekt verursacht, der nicht im Rahmen des Fehlerworkflows verfolgt werden soll.",
+      "c) Der Fehler wird durch einen ungültigen Test verursacht, der nicht mit der Anforderungsspezifikation übereinstimmt.",
+      "d) Der Fehler wird durch eine Anomalie verursacht, die vom Prüfer nicht beobachtet wird."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Die Phase, in der ein Fehlerzustand eingeführt wurde, hat keinen Einfluss darauf, ob ein Fehlerbericht erstellt wird oder nicht. Ein Fehlerbericht sollte für jeden Fehlerzustand erstellt werden, der eine Fehlerwirkung verursacht, unabhängig davon, wann er eingeführt wurde.\n\nb) KORREKT – Dies ist bei der testgetriebenen Entwicklung der Fall, bei der Komponententests als eine Form der ausführbaren Entwurfsspezifikation verwendet werden. Bis die Entwicklung der Komponente abgeschlossen ist, werden einige oder alle Tests fehlgeschlagen sein. Daher ist die durch einen solchen Test entdeckte Fehlerwirkung nicht notwendigerweise auf einen Fehlerzustand zurückzuführen und wird normalerweise nicht durch einen Fehlerbericht gemäß dem Fehlerworkflow verfolgt.\n\nc) FALSCH – Ein ungültiger Test, der nicht mit der Anforderung übereinstimmt, sollte zwar korrigiert oder entfernt werden, aber er verhindert nicht die Erstellung eines Fehlerberichts für die von ihm verursachte Fehlerwirkung. Ein Fehlerbericht sollte für jeden Fehlerzustand erstellt werden, der eine Diskrepanz zwischen den tatsächlichen Ergebnissen und den erwarteten Ergebnissen eines Tests aufzeigt.\n\nd) FALSCH – Ein falsch negatives Ergebnis tritt auf, wenn der Tester die Anomalie, die eine Fehlerwirkung verursacht, nicht beobachtet. Dies bedeutet jedoch nicht, dass kein Fehlerbericht erstellt wird, z. B. bei einer statischen Codeanalyse. Ein Fehlerbericht sollte für jede Anomalie erstellt werden, die entweder vom Tester oder durch andere Mittel (z. B. Protokolle, Berichte, Warnmeldungen) beobachtet wird."
+  },
+  {
+    "id": 35,
+    "lo": "TM-2.3.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Das Diagramm zeigt einen unvollständigen Fehlerworkflow, bei dem zwei Zustände (Zustände X und Y) noch entsprechend benannt werden müssen.\n\nWelche der folgenden Möglichkeiten würde den Arbeitsablauf korrekt abschließen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) ZUSTAND X: NACHGETESTET → ZUSTAND Y: WIEDER GEÖFFNET",
+      "b) ZUSTAND X: ABGELEHNT → ZUSTAND Y: ZUR KLÄRUNG",
+      "c) ZUSTAND X: DUPLIKAT → ZUSTAND Y: BEENDET",
+      "d) ZUSTAND X: BEHOBEN → ZUSTAND Y: ABGELEHNT"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – NACHGETESTET ist nicht sinnvoll als Folgezustand von GELÖST. WIEDER GEÖFFNET folgt üblicherweise auf GELÖST, wenn der Fehlernachtest fehlgeschlagen ist.\n\nb) KORREKT – Vom anfänglichen OFFEN und dem IN BEARBEITUNG kann der Fehlerbericht abgelehnt werden (daher Übergang zu ABGELEHNT). Wenn weitere Informationen vom Meldenden benötigt werden, kann der Zustand ZUR KLÄRUNG verwendet werden.\n\nc) FALSCH – Während der Zustand DUPLIKAT auf die Situation passen könnte, dürfte BEENDET als Endzustand keinen Folgezustand haben.\n\nd) FALSCH – ABGELEHNT als Zustand Y funktioniert nicht, der Workflow geht nach diesem Zustand zurück zum vorherigen Zustand.",
+    "image": "SETA_v1.3.3_GTB/image_35.png",
+    "imageAlt": "Unvollständiger Fehlerworkflow mit den Zuständen Offen, In Bearbeitung, Behoben, Geschlossen sowie Zustand X und Zustand Y."
+  },
+  {
+    "id": 36,
+    "lo": "TM-2.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Angaben stellt eine vollständige Abfolge von Zuständen für einen Fehlerbericht dar, die zu einem Endzustand führt? Gehen Sie davon aus, dass IN BEARBEITUNG einen oder mehrere Zustände bedeutet, in denen Entwickler oder andere Projektbeteiligte sich mit dem Fehler befassen.\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) OFFEN, IN BEARBEITUNG, ERLEDIGT, ABGESCHLOSSEN, ZURÜCKGESTELLT.",
+      "b) OFFEN, IN BEARBEITUNG, ZURÜCKGEGEBEN, IN BEARBEITUNG, GELÖST.",
+      "c) OFFEN, IN BEARBEITUNG, GELÖST, ABGESCHLOSSEN.",
+      "d) IN BEARBEITUNG, OFFEN, GELÖST, ABGESCHLOSSEN."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Es macht keinen Sinn, einen Fehlerzustand zurückzustellen, der bereits behoben und abgeschlossen ist.\n\nb) FALSCH – „GELÖST“ ist kein Endzustand.\n\nc) KORREKT – Diese Abfolge entspricht dem häufigsten Pfad durch den Fehlerworkflow, bei dem ein Fehlerbericht geöffnet wird, wenn der Fehler entdeckt wird, in den Status \"IN BEARBEITUNG\" versetzt wird, wenn er zugewiesen und behoben wird, dann in den Status \"GELÖST\" übergeht, wenn er überprüft und bestätigt wird, und anschließend geschlossen wird, wenn er akzeptiert und archiviert wird.\n\nd) FALSCH – Ein Fehlerbericht kann sich nicht im Status \"IN BEARBEITUNG\" befinden, bevor er überhaupt gemeldet wurde."
+  },
+  {
+    "id": 37,
+    "lo": "TM-2.3.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Sie sind ein Tester in einem agilen Team, das an einem neuen Produkt arbeitet. Während des dritten Sprints stellten Sie bei der Durchführung von explorativen Tests eine Fehlerwirkung in der Anmeldefunktion fest, die im ersten Sprint in Zusammenarbeit mit dem für den Identitätsanbieter (IDP – Identity Provider) zuständigen Team entwickelt wurde.\n\nWas ist ein Grund, warum Sie in diesem Fall vorerst keinen Fehlerbericht erstellen würden?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Der Entwickler wird erst in der darauffolgenden Woche Zeit haben, an der Fehlerbehebung zu arbeiten.",
+      "b) Sie müssen die Fehlerwirkung mit einem Entwickler Ihres Teams klären.",
+      "c) Diese Fehlerwirkung erfordert die Zusammenarbeit mit dem IDP-Team.",
+      "d) Laut dem Product Owner hat diese Fehlerwirkung einen geringen Schweregrad und sollte in der nächsten Iteration behoben werden."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Es sollte ein Fehlerbericht erstellt werden, wenn die Arbeit an der Fehlerbehebung nicht frühzeitig nach der Entdeckung begonnen werden kann (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 2.3.3, 1. Absatz, 2. Aufzählungspunkt).\n\nb) KORREKT – In agilen Teams ist es üblich, Fehlerzustände informell mit den Entwicklern zu besprechen (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 2.3.3, 1. Absatz). Je nach den Befunden während dieser Diskussion kann anschließend ein Fehlerbericht erstellt werden.\n\nc) FALSCH – Wenn die Zusammenarbeit mehrerer Teams erforderlich ist, empfiehlt der Lehrplan die Erstellung eines Fehlerberichts (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 2.3.3,\n\n1. Absatz, 3. Aufzählungspunkt).\n\nd) FALSCH – Wenn der Fehlerzustand nicht innerhalb der aktuellen Iteration behoben wird, sollte er in Form eines Fehlerberichts im Product Backlog gespeichert werden (siehe CTAL- TM-Lehrplan V3.0, Abschnitt 2.3.3, 1. Absatz, 2. Aufzählungspunkt)."
+  },
+  {
+    "id": 38,
+    "lo": "TM-2.3.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Heutzutage werden verschiedene Softwareentwicklungsmethoden verwendet. Unterschiedliche Methoden im SDLC erfordern somit einen angepassten Testansatz. Sie sind Testmanager in einem Softwareentwicklungsprojekt, das mit einem hybriden Ansatz durchgeführt wird.\n\nWelche der folgenden Aussagen ist in diesem Zusammenhang für das Fehlermanagement AM RELEVANTESTEN?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Alle Teams verwenden unabhängig von ihrer Methodik dasselbe Werkzeug für das Fehlermanagement.",
+      "b) Die Häufigkeit der Sitzungen des Fehlermanagement-Ausschusses wird von dem größten Team festgelegt.",
+      "c) Agile Teams planen ihre Prioritäten für die Fehlerbehebung so, dass sie mit dem Gesamtprojektplan übereinstimmen.",
+      "d) Alle Teammitglieder einigen sich über die Priorisierung der Mängel."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Es ist zwar vorteilhaft, dass alle Teams dasselbe Werkzeug für das Fehlermanagement verwenden, aber es ist nicht so relevant wie die korrekte Option c) (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 2.3.4, 1. Aufzählungspunkt).\n\nb) FALSCH – Die Häufigkeit der Sitzungen des Fehlermanagement-Ausschusses sollte nicht von der Größe des Teams abhängig gemacht werden (CTAL-TM-Lehrplan V3.0, Abschnitt 2.3.2 sagt nichts dazu; Abschnitt 2.3.4, 2. Aufzählungspunkt: “Meetings zum Fehlermanagement sollten bei der agilen Softwareentwicklung häufiger stattfinden als bei sequenziellen Entwicklungsmodellen” bedeutet, dass jedes Team seinen Rhythmus haben kann.).\n\nc) KORREKT – Laut CTAL-TM-Lehrplan V3.0, Abschnitt 2.3.4, 3. Aufzählungspunkt (“Alle Ergebnisse, einschließlich Fehlerzustände, sollten an diesem Projektplan ausgerichtet sein”) muss der Plan für Neuentwicklungen und die Behebung von Fehlerzuständen zwischen den Teams abgestimmt und transparent gemacht werden. Indem sie ihre Prioritäten für die Fehlerbehebung mit dem Gesamtprojektplan abstimmen, können agile Teams ihre Testaktivitäten mit anderen Teams und Beteiligten koordinieren und Konflikte oder Verzögerungen bei der Auslieferung des Softwareprodukts vermeiden.\n\nd) FALSCH – Laut CTAL-TM-Lehrplan V3.0, Abschnitt 2.3.4, 2. Aufzählungspunkt ist es manchmal von Vorteil, wenn eine kleinere Gruppe von Akteuren des Fehlermanagements das letzte Wort bei der Priorisierung hat."
+  },
+  {
+    "id": 39,
+    "lo": "TM-2.3.5",
+    "k": "K3",
+    "pts": 2,
+    "text": "MANTIS ID: [Insert Mantis ID here] Status: 24.06.2024 Edited by [Max Mustermann] Component: [Insert the specific component here] Subsystem: [Insert the specific subsystem here]\n\nWelches der folgenden Datenelemente ist für die Verwaltung von Fehlerberichten in den meisten Umgebungen nicht erforderlich?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Eine Fehlerbezeichnung mit einer kurzen Zusammenfassung der Anomalie.",
+      "b) Das Teilsystem oder die Komponente, in der der Fehler auftritt.",
+      "c) Fehlerschweregrad der Auswirkungen auf das System unter Test und/oder die Stakeholder des Produkts.",
+      "d) Priorität der Behebung der Anomalie."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Laut CTAL-TM-Lehrplan V3.0, Abschnitt 2.3.5, 4. Absatz sind folgende Punkte für die Verwaltung von Fehlerberichten in den meisten Umgebungen obligatorisch:\n\n• Ein Fehlertitel mit einer kurzen Zusammenfassung der Anomalie\n\n• Eine detaillierte Beschreibung der Anomalie, vorzugsweise mit Schritten zur Reproduktion der Fehlerwirkung\n\n• Fehlerschweregrad der Auswirkungen auf das System unter Test (SuT) und/oder die Stakeholder des Produkts\n\n• Priorität der Behebung der Anomalie\n\na) FALSCH – Dies ist ein obligatorisches Datenelement für die Verwaltung von Fehlerberichten.\n\nb) KORREKT – Diese Option ist nicht obligatorisch. Sie ist ein Beispiel für ein Datenelement, das je nach Kontext zur Unterstützung der Fehlerbehebung erfasst werden kann, aber für die Verwaltung des Fehlerberichts nicht erforderlich ist.\n\nc) FALSCH – Dies ist ein obligatorisches Datenelement für die Verwaltung von Fehlerberichten.\n\nd) FALSCH – Dies ist ein obligatorisches Datenelement für die Verwaltung von Fehlerberichten."
+  },
+  {
+    "id": 40,
+    "lo": "TM-2.3.5",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie sind der Testmanager in einem Projekt, in dem Systemtests für eine Software durchgeführt werden, die von einer dritten Partei bereitgestellt wird. Von dieser dritten Partei haben Sie eine Beschwerde erhalten, dass die Vollständigkeit der Fehlerdaten aus Ihren Systemtests inakzeptabel ist.\n\nWelche der folgenden Optionen könnten in den an diese dritte Partei gesendeten Fehlerberichten als fehlend identifiziert worden sein?\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) Die Projektaktivität, die stattfand, als das Problem entdeckt wurde.",
+      "b) Schritte zur Reproduktion der Fehlerwirkung, zusammen mit den tatsächlichen und erwarteten Ergebnissen",
+      "c) Die Priorität, das Problem zu beheben.",
+      "d) Die technische Art des Fehlerzustands.",
+      "e) Die Phase des Softwarelebenszyklus, in der der Fehler entdeckt wurde."
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "explanation": "a) FALSCH – Die dritte Partei weiß bereits, dass diese Fehlerberichte von Systemtests stammen.\n\nb) KORREKT – Diese Schritte (und die Ist-Ergebnisse) werden ihnen helfen, die Fehlerwirkung zu verstehen, und die erwarteten Ergebnisse werden bestätigen, dass die Tester verstanden haben, was erwartet wurde.\n\nc) KORREKT – Die dritte Partei benötigt diese Informationen zur Unterstützung Ihrer Priorisierung.\n\nd) FALSCH – Die technische Art des Fehlerzustands wird von der Person bestimmt, die von der dritten Partei mit der Behebung des Fehlers beauftragt wurde.\n\ne) FALSCH – Die Phase der Erkennung ist bereits verfügbar (Systemtest)."
+  },
+  {
+    "id": 41,
+    "lo": "TM-2.3.6",
+    "k": "K2",
+    "pts": 1,
+    "text": "Ihr Unternehmen hat beschlossen, seinen Test- und Entwicklungsprozess zu verbessern. Dazu soll die Anzahl der während der Entwicklung eingeführten Fehlerzustände reduziert werden.\n\nWelche der folgenden Informationen aus den Fehlerberichten sind AM NÜTZLICHSTEN, um dieses Ziel zu erreichen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Die Phasen des Softwarelebenszyklus, in denen die Fehlerzustände erkannt wurden.",
+      "b) Die Grundursachen der Fehlerzustände.",
+      "c) Die Komponenten mit der geringsten Anzahl an Fehlerzuständen.",
+      "d) Die Effizienz der Beseitigung von Fehlerzuständen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Die Informationen zur Erkennung und Beseitigung von Fehlern sind für die Verringerung der Anzahl der Fehlerzustände weniger hilfreich als b).\n\nb) KORREKT – Auf diese Weise lässt sich analysieren, wann und warum Fehlerzustände auftreten, und man kann gezielt Maßnahmen ergreifen, um künftige Fehlerzustände zu vermeiden (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 2.3.6, 2. Absatz, 3. Aufzählungspunkt).\n\nc) FALSCH – Diese Informationen werden für das Clustering von Fehlern verwendet, um Komponenten auszuwählen, die zusätzlich getestet werden müssen, sie tragen jedoch nicht direkt zur Fehlerprävention bei.\n\nd) FALSCH – Dies sagt uns, wie effizient wir bei der Beseitigung von Fehlerzuständen sind. Es hilft nicht dabei, die Einführung von Fehlerzuständen zu reduzieren."
+  },
+  {
+    "id": 42,
+    "lo": "TM-3.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Als Testmanager suchen Sie neue Teammitglieder und müssen eine Stellenanzeige aufgeben. In der Stellenanzeige geben Sie an, welche Kompetenzen die neuen Teammitglieder mitbringen sollten. Welche der folgenden Fähigkeiten ist ein Beispiel für die Methodenkompetenz eines Testteammitglieds?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Fähigkeit zur Anwendung von Testverfahren für den Entwurf von Testfällen.",
+      "b) Fähigkeit, Testergebnisse den Beteiligten mitzuteilen.",
+      "c) Fähigkeit, Testaufgaben und -ressourcen zu verwalten.",
+      "d) Fähigkeit, neue Technologien und Werkzeuge zu erlernen."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Die Fähigkeit, Testverfahren für den Entwurf von Testfällen anzuwenden, ist ein Beispiel für Fachkompetenz, da sie spezifische Kenntnisse und Fähigkeiten zur Bewältigung spezieller Aufgaben beinhaltet.\n\nb) FALSCH – Die Fähigkeit, Testergebnisse an Stakeholder zu kommunizieren, ist ein Beispiel für soziale Kompetenz, da sie Kenntnisse, Fähigkeiten und Fertigkeiten in Bezug auf Kommunikation und Kooperation umfasst.\n\nc) FALSCH – Die Fähigkeit, Testaufgaben und -ressourcen zu verwalten, ist ein Beispiel für Fachkompetenz, da sie spezifische Kenntnisse und Fähigkeiten zur Bewältigung spezieller Aufgaben, wie z. B. des Projektmanagements, beinhaltet.\n\nd) KORREKT – Die Fähigkeit, neue Technologien und Werkzeuge zu erlernen, ist ein Beispiel für Methodenkompetenz, da sie allgemeine Kenntnisse, Fertigkeiten und Fähigkeiten umfasst, die die selbstständige Erledigung komplexer und neuer Aufgaben ermöglichen. Dies zeigt, dass sich das Mitglied des Testteams an sich ändernde und neu entstehende Situationen und Herausforderungen anpassen und sich selbstständig neue Kenntnisse und Fähigkeiten aneignen kann (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 3.1.1, 2. Aufzählungspunkt)."
+  },
+  {
+    "id": 43,
+    "lo": "TM-3.1.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie sind verantwortlich für die Besetzung eines Testteams in einem Unternehmen, das sich auf die Entwicklung von Bremssystemen für inländische Kraftfahrzeughersteller spezialisiert hat. Während die Entwicklung der einzelnen Softwarekomponenten von mehreren agilen Teams durchgeführt wird, erfolgt die Systementwicklung (bestehend aus Software und Hardware) nach dem V-Modell in enger Zusammenarbeit mit den agilen Teams. Das Bremssystem wurde als sicherheitskritisch eingestuft. Die Tests müssen dem Stand der Technik in Entwurf und Dokumentation entsprechen. Der Testanalyst für die Systemtests verlässt Ihr Unternehmen, während sich das Projekt in einer kritischen Phase befindet, und die Stelle muss schnell neu besetzt werden. Die Hauptaufgabe des Testanalysten war der Testentwurf des Integrationstests in Zusammenarbeit mit den agilen Teams und der anforderungsbasierte Testentwurf für die Systemtests.\n\nWelche Kombination von Fähigkeiten und Qualifikationen ist auf der Grundlage der oben genannten Informationen für diese Stelle mindestens erforderlich?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Black-Box-Testverfahren, Kommunikationsfähigkeit, Belastbarkeit, Testdokumentation gemäß ISO 29119.",
+      "b) Black-Box-Testverfahren, Programmierkenntnisse, Ausfallsicherheit, Kenntnisse aus einer Agile-Zertifizierung.",
+      "c) Kommunikationsfähigkeit, Fähigkeit, Arbeit zu delegieren, interkulturelle Kompetenz, Testdokumentation gemäß ISO 29119.",
+      "d) Interkulturelle Kompetenz, Kommunikationsfähigkeiten, Black-Box- Testverfahren, Fähigkeit zu delegieren."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Alle Anforderungen (Black-Box-Testverfahren, Kommunikationsfähigkeit, Belastbarkeit, Testdokumentation gemäß ISO 29119) lassen sich aus der gegebenen Projektsituation ableiten (siehe untenstehende Erläuterung).\n\nb) FALSCH – Programmierkenntnisse und Kenntnisse aus der Agile-Zertifizierung sind für die Aufgaben eines Testanalysten nicht erforderlich (siehe untenstehende Erläuterung).\n\nc) FALSCH – Die Fähigkeit, Arbeit zu delegieren, und interkulturelle Kompetenz sind für die Aufgaben eines Testanalysten nicht erforderlich (siehe untenstehende Erläuterung).\n\nd) FALSCH – Interkulturelle Kompetenz und die Fähigkeit zu delegieren sind für die Aufgaben eines Testanalysten nicht erforderlich (siehe folgende Erläuterung). Erläuterungen:\n\n• RICHTIG: Black-Box-Testverfahren sind erforderlich, weil Systemtests systematisch und auf der Grundlage von Anforderungen entworfen werden müssen (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 3.1.2, 2. Absatz, 4. Aufzählungspunkt).\n\n• FALSCH: Da das Unternehmen speziell auf inländische Kunden ausgerichtet ist, kann davon ausgegangen werden, dass interkulturelle Kompetenzen nicht unbedingt erforderlich sind (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 3.1.2, 6. Absatz).\n\n• RICHTIG: Insbesondere bei zeitkritischen Projekten wird häufig ein hohes Maß an Zuverlässigkeit und Belastbarkeit gefordert (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 3.1.2, 7. Absatz).\n\n• RICHTIG: Die Zusammenarbeit mit verschiedenen Teams erfordert Kommunikationsfähigkeiten für den Projekterfolg (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 3.1.2, 5. Absatz).\n\n• FALSCH: Für die Programmierung von Testskripten sind zwar Kenntnisse der Programmiersprache (technisches Fachwissen) erforderlich (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 3.1.2, 2. Absatz, 5. Aufzählungspunkt), aber dies ist keine Hauptaufgabe eines Testanalysten.\n\n• FALSCH: Die Fähigkeit, Arbeit zu delegieren, ist vor allem als Testmanager eines hierarchischen Testteams erforderlich (siehe CTAL-TM-Lehrplan, Abschnitt 3.1.2, 7. Absatz). Es gibt keinen Hinweis darauf, dass der Testanalytiker für die Leitung eines Teams verantwortlich sein sollte.\n\n• RICHTIG: Der SDLC verlangt, dass die Tests gemäß dem Stand der Technik dokumentiert werden müssen (siehe CTAL-TM-Lehrplan, Abschnitt 3.1.2, 4. Absatz, 3. Aufzählungspunkt). Arbeiten nach Standards ist eine hilfreiche professionelle Kompetenz.\n\n• RICHTIG: Kenntnisse in Agile (eine berufliche Qualifikation) sind von Vorteil, aber eine Agile- Zertifizierung ist für den Testanalysten nicht erforderlich, da es nicht als Eingangsvoraussetzung definiert ist."
+  },
+  {
+    "id": 44,
+    "lo": "TM-3.1.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie sind für das Testmanagement eines Softwareprojekts zuständig, das einen agilen Softwareentwicklungslebenszyklus (SDLC) verwendet und die Entwicklung einer Webanwendung für eine Online- Glücksspielplattform umfasst. Das Projekt besteht aus einem kleinen funktionsübergreifenden Team, das eng mit dem Kunden zusammenarbeitet. Das Projekt ist aufgrund der häufigen Änderungen der Anforderungen und der Technologie mit einem hohen Maß an Unsicherheit und Komplexität verbunden. Außerdem gelten für das Projekt strenge Qualitäts- und Sicherheitsstandards, um die gesetzlichen Vorschriften der Glücksspielbranche einzuhalten.\n\nWas sind die Fähigkeiten, auf die Sie bei der Auswahl von Teammitgliedern in Hinblick auf die Testaufgaben in diesem Projekt achten sollten?\n\nWählen Sie DIE BESTE Option! (1 aus 4)",
+    "options": [
+      "a) Fachkenntnisse in der Glücksspielbranche, technische Kenntnisse über Webtechnologien und Sicherheitslücken, technisches Fachwissen für die Automatisierung der Testdurchführung, Kommunikations- und Kooperationskompetenz, Selbstmanagement und Disziplin.",
+      "b) Konzeptionelle Fähigkeiten für die Entwicklung einer Teststrategie, Kompetenz für das Management der Testaufgaben, analytische Fähigkeiten für die Analyse der Testbasis und der Produktrisiken, Urteilsvermögen für die Auswahl von Tests.",
+      "c) Kenntnisse in Testverfahren und des Entwurfs von Testumgebungen, Kenntnisse in der Programmierung von Testskripten und der Einrichtung von Testumgebungen, technisches Fachwissen für die Automatisierung der Testdurchführung, Kommunikations- und Kooperationskompetenz.",
+      "d) Fachkenntnisse in der Glücksspielbranche, Kenntnisse in Programmiersprachen und Schnittstellentechnologie, Kenntnisse über Teststufen, Testrollen und spezifische Testverfahren, Kompetenz zur Konfliktlösung."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Die Antwort umfasst die fachlichen, sozialen und Selbstkompetenzen, die für den Projektkontext relevant sind. Fachwissen in der Glücksspielbranche ist erforderlich, um die funktionale Eignung des Systems zu beurteilen und die gesetzlichen Vorschriften einzuhalten. Technische Expertise über Webtechnologien und Sicherheitsschwachstellen ist erforderlich, um die Wartbarkeit und Sicherheit des Codes zu beurteilen. Kommunikations- und Kooperationsfähigkeiten sind erforderlich, um effektiv in einem agilen Team und mit dem Kunden zu arbeiten. Fähigkeiten zum Selbstmanagement und zur Disziplin sind erforderlich, um in einem selbstorganisierten Team zu arbeiten und mit Unsicherheit und Komplexität umgehen zu können.\n\nb) FALSCH – Der Schwerpunkt liegt auf den für die Testplanung, -überwachung, -kontrolle, -analyse und -implementierung erforderlichen Testfähigkeiten, die nicht projektspezifisch sind. Dies sind allgemeine Testmanagementfähigkeiten, die in jedem Projekt relevant sind. Für dieses Szenario sind weiter gehende, konkrete Fähigkeiten gefragt, die in der Antwort fehlen.\n\nc) FALSCH – Der Schwerpunkt liegt auf den Testfähigkeiten, die für den Testentwurf, die Testrealisierung, die Testdurchführung und den Testabschluss erforderlich sind und die nicht spezifisch für den Projektkontext sind. Die aufgeführten Fähigkeiten sind für das technische Testen relevanter als für das fachliche Testen. Außerdem decken diese Fähigkeiten nicht die sozialen und Selbstkompetenzen ab, die für die Arbeit in einem agilen Team erforderlich sind. In der Antwort fehlt im Gegensatz zur Antwort a) die fachliche Kompetenz.\n\nd) FALSCH – Die aufgeführten Fähigkeiten sind für dieses Szenario nicht spezifisch genug. Fachliche Expertise in der Informationstechnologie sind zu allgemein und spiegeln nicht den spezifischen Bereich der Glücksspielindustrie wider. Technische Expertise über Programmiersprachen und Schnittstellentechnologie ist zu breit gefasst und geht nicht auf die im Projekt verwendeten Webtechnologien und Sicherheitsschwachstellen ein. Kenntnisse über Teststufen, Testrollen und spezifische Testverfahren sind zu allgemein und berücksichtigen nicht den Softwareentwicklungslebenszyklus der agilen Softwareentwicklung. Die Fähigkeiten zur Konfliktlösung reichen nicht aus, um eine effektive Kommunikation und Zusammenarbeit in einem agilen Team zu gewährleisten. Diese Option vernachlässigt die agilen Anforderungen und Sicherheitsaspekte, die für die Entwicklung einer Webanwendung in der stark regulierten Glücksspielbranche notwendig sind."
+  },
+  {
+    "id": 45,
+    "lo": "TM-3.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Als Testmanager haben Sie die Aufgabe, die vorhandenen Kompetenzen der Teammitglieder zu bewerten, um sie mit den erforderlichen Fach- und Methodenkompetenzen zu vergleichen.\n\nWelcher der genannten Ansätze eignet sich nicht, um vorhandene Fach- und Methodenkompetenzen zu beurteilen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Man kann sehen, wie fachkundig die Mitglieder des Testteams sind, indem man ihnen typische Testaufgaben gibt und bewertet, wie sie diese lösen.",
+      "b) Man kann die Teammitglieder anhand des Belbin-Teamrollenmodells einschätzen und daraus ihre Abdeckung der Fach- und Methodenkompetenzen ermitteln.",
+      "c) Man kann bewerten, was die einzelnen Mitglieder des Testteams können, wenn man sich ihre Nachweise, Zertifikate und Zeugnisse durchsieht und einordnet.",
+      "d) In agilen Projekten kann man in den Retrospektiven zusammen mit dem Team die bestehenden und fehlenden Fach- und Methodenkompetenzen ermitteln."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Die Fach- und Methodenkompetenz der Mitglieder des Testteams KANN SEHR WOHL durch Demonstration typischer Testaufgaben beurteilt werden. (siehe Lehrplan, Kapitel 3.1.3, Dritter Absatz).\n\nb) KORREKT - Das Belbin-Teamrollenmodell charakterisiert Teamrollen mit unterschiedlichen Persönlichkeits- und Rollentypen und fokussiert damit auf Sozial- und Selbstkompetenzen; es eignet sich NICHT zur Beurteilung der Fach- und Methodenkompetenz. (siehe Lehrplan, Kapitel 3.1.3, Zweiter Absatz)\n\nc) FALSCH – Kompetenzen KÖNNEN SEHR WOHL durch externe Nachweise, Zertifizierungen, Berufserfahrungen und Abschlüsse bewertet werden (siehe Lehrplan, Kapitel 3.1.3, Vierter Absatz.)\n\nd) FALSCH – SEHR WOHL werden „insbesondere in der agilen Softwareentwicklung identifizieren Teams die erforderlichen Kompetenzen, indem sie regelmäßig an Retrospektiven teilnehmen und Feedback erhalten. Erfahrene Coaches oder Mentoren unterstützen sie dabei, ihre Kompetenzen weiterzuentwickeln und Wissenslücken zu erkennen und zu schließen.“ (siehe Lehrplan, Kapitel 3.1.3. Letzter Absatz)."
+  },
+  {
+    "id": 46,
+    "lo": "TM-3.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Die Entwicklung der Fähigkeiten und Kompetenzen Ihrer Teammitglieder ist wichtig, um ein leistungsfähiges Testteam aufzubauen und zu erhalten. Als Testmanager müssen Sie individuelle Entwicklungspläne für Ihr Projektteam erstellen. Welche der folgenden Aussagen über Ansätze zur Entwicklung der Fähigkeiten von Testteammitgliedern ist richtig?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Training und Coaching sind dasselbe.",
+      "b) Das Selbststudium ist ein empfehlenswerter Ansatz zur Entwicklung sozialer Kompetenzen.",
+      "c) Beim Peer-Learning unterstützt eine erfahrene Person eine unerfahrene Person.",
+      "d) Coaching hilft dabei, individuelle Lösungen zur Verbesserung der eigenen Kompetenzen zu finden."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Das Training erfolgt meist mit mehreren Teilnehmern und vordefinierten Inhalten; das Coaching erfolgt individuell (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 3.1.4, 1. und 4. Aufzählungspunkt).\n\nb) FALSCH – Für die Entwicklung von Sozial- und Selbstkompetenzen wird empfohlen, Ansätze wie Training und Coaching zu nutzen (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 3.1.4, letzter Absatz).\n\nc) FALSCH – Beim Peer-Learning tauschen Kollegen Wissen, Ideen und Erfahrungen aus und lernen mit- bzw. voneinander (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 3.1.4,\n\n3. Aufzählungspunkt).\n\nd) KORREKT – Coaching ist für eine Person gedacht, die neu in einer Funktion ist und von einer erfahrenen Person individuell angeleitet wird. Die erfahrene Person fungiert als ständige Ressource, die Rat und Unterstützung bietet (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 3.1.4, 4. Aufzählungspunkt)."
+  },
+  {
+    "id": 47,
+    "lo": "TM-3.1.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "Die Leitung eines Teams erfordert besondere Fähigkeiten. Welche der folgenden Aussagen über die Leitung eines Testteams ist richtig?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) In einem Testteam ist die Bereitschaft zu helfen wichtiger als die Fähigkeit zu delegieren.",
+      "b) Insbesondere wenn sich ein neues Testteam bildet, ist die wichtigste Kompetenz die Fähigkeit, mit Wertschätzung zu handeln.",
+      "c) Während aller Entwicklungsphasen des Testteams sind alle Fähigkeiten gleich wichtig.",
+      "d) Die Fähigkeit, Konflikte zu lösen, trägt dazu bei, in den frühen Phasen der Gruppenentwicklung einen Konsens über Regeln und Rollen zu erzielen."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Der Lehrplan macht keine pauschale Aussage über den Wert von Fähigkeiten.\n\nb) FALSCH – In den ersten Phasen des Aufbaus eines Testteams sind z. B. Hilfsbereitschaft und Konfliktfähigkeit wichtiger (Forming und Storming). Bei der Auflösung eines Testteams oder beim Ausscheiden eines Testteammitglieds ist eher die Fähigkeit zum wertschätzenden Handeln gefragt (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 3.1.5, 3. Absatz).\n\nc) FALSCH – Testteams sind dynamischen Entwicklungsprozessen unterworfen. Diese erfordern Fähigkeiten, deren Anforderungen je nach Team und aktueller Situation variieren (siehe CTAL-TM- Lehrplan V3.0, Abschnitt 3.1.5, 3. Absatz).\n\nd) KORREKT – Die Fähigkeit, Konflikte innerhalb des Testteams zu lösen, ist insbesondere in der Storming-Phase erforderlich (siehe CTAL-TM-Lehrplan V3.0, Abschnitt 3.1.5,\n\n3. Absatz, 2. Aufzählungspunkt)."
+  },
+  {
+    "id": 48,
+    "lo": "TM-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Betrachten Sie die folgenden Kategorien von Qualitätskosten bezogen auf Fehlerzustände und Fehlerwirkungen:\n\n1. Fehlerpräventionskosten\n\n2. Überprüfungskosten\n\n3. Interne Fehlerkosten\n\n4. Externe Fehlerkosten Betrachten Sie die folgenden Beispiele für Qualitätskosten:\n\nA) Frühzeitige Abnahmetests für schnelles Feedback\n\nB) Durchführen einer Produktrisikoanalyse\n\nC) Kundenbeschwerden über schlechte Performanz\n\nD) Lange Zeitdauer von der Fehlermeldung bis zur Lösung während des Testens, was zu einer erhöhten Ineffizienz des Fehlermanagements führt. Ordnen Sie die Kategorie dem entsprechenden Beispiel zu.\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) 1A, 2B, 3C, 4D",
+      "b) 1B, 2A, 3D, 4C",
+      "c) 1A, 2B, 3D, 4C",
+      "d) 1B, 2A, 3C, 4D"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Die Beispiele stimmen nicht mit den richtigen Kategorien von Qualitätskosten überein. Gegenbeispiel: Kundenbeschwerden über schlechte Performanz gehören zu den externen Fehlerkosten (4C), nicht zu den internen Fehlerkosten (3C).\n\nb) KORREKT – Die Durchführung einer Produktrisikoanalyse ist eine Prävention, da diese geplant und proaktiv durchgeführt wird, um schlechte Qualität zu verhindern (1B). Die Durchführung von Abnahmetests erzeugt Überprüfungskosten und zielt auf die Erkennung von Fehlern ab (2A). Die lange Zeitdauer zwischen Fehlerbericht und Fehlerbehebung verursacht interne Fehlerkosten, da sie die Projektlaufzeit verlängert (3D). Kundenbeschwerden sind externe Fehlerkosten, da diese Kundenbeschwerden zu einem Rückgang der zukünftigen Verkäufe führen (4C).\n\nc) FALSCH – Die Beispiele stimmen nicht mit den richtigen Kategorien von Qualitätskosten überein. Gegenbeispiel: Die Durchführung einer Risikoanalyse des Produktrisikos gehört zu den Fehlerpräventionskosten (1B), nicht zu den Überprüfungskosten (2B).\n\nd) FALSCH – Die Beispiele stimmen nicht mit den richtigen Kategorien von Qualitätskosten überein. Gegenbeispiel: Kundenbeschwerden über schlechte Performanz gehören zu den externen Fehlerkosten (4C), nicht zu den internen Fehlerkosten (3C)."
+  },
+  {
+    "id": 49,
+    "lo": "TM-3.2.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "Angenommen, Sie leiten die Testaktivitäten an einer ausgereiften Anwendung. Bei dieser Anwendung handelt es sich um einen Online- Dating-Service, der den Nutzern Folgendes ermöglicht: Ein Profil von sich selbst zu erstellen; Menschen zu treffen, die gut zu ihnen passen würden; gesellschaftliche Veranstaltungen mit diesen Menschen zu arrangieren; Menschen zu blockieren, die sie nicht kontaktieren möchten. Sie haben die folgenden Qualitätskosten pro Fehlerwirkung berechnet:\n\n• Überprüfungskosten: 150 EUR\n\n• Interne Kosten pro Fehlerwirkung: 250 EUR\n\n• Externe Kosten pro Fehlerwirkung: 5.000 EUR Die durchschnittlichen Überprüfungskosten und die internen Kosten einer Fehlerwirkung werden anhand der Anzahl der vor der Freigabe gefundenen Fehler ermittelt. Die durchschnittlichen externen Kosten einer Fehlerwirkungen werden anhand der Anzahl der nach der Freigabe gefundenen Fehler berechnet.\n\nWelche der folgenden Aussagen ist richtig?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Die Gesamtkosten für die Qualität, einschließlich der Kosten für die Fehlerprävention, belaufen sich bei dieser Dating-App auf 5.500 EUR.",
+      "b) Jeder durch das Testen gefundene Fehler bietet dem Unternehmen im Durchschnitt 4.600 EUR an Einsparungen bei den Qualitätskosten.",
+      "c) Die angegebenen Qualitätskosten können nicht verwendet werden, um den Gegenwert von Tests für diese oder eine andere Organisation zu berechnen.",
+      "d) Jeder durch das Testen gefundene Fehler bietet dem Unternehmen im Durchschnitt 5.400 EUR an Einsparungen bei den Qualitätskosten."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Man kann keine Annahmen addieren, um eine Gesamtsumme zu berechnen, und außerdem wurden die Kosten für die Fehlerprävention nicht genannt, dafür kann man nicht einfach eine beliebige Summe wie hier 100 EUR hinzufügen.\n\nb) KORREKT – Jeder durch Testen gefundene Fehlerzustand bietet dem Unternehmen ein Einsparungspotenzial von 5.000 EUR - (150 EUR + 250 EUR) = 4.600 EUR an Qualitätskosten.\n\nc) FALSCH – Die Qualitätskosten lassen sich zur Werteermittlung einer jeden qualitätsbezogenen Tätigkeit verwenden und werden daher in der ganzen Welt angewendet.\n\nd) FALSCH – Um die potenziellen Nettoeinsparungen zu berechnen, müssen die durchschnittlichen Überprüfungskosten und die Kosten der internen Fehlerwirkungen im Zusammenhang mit Tests abgezogen werden, anstatt diese Kosten zu addieren."
+  },
+  {
+    "id": 50,
+    "lo": "TM-3.2.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie sind der Testmanager eines Softwareprojekts mit einem Budget von 100.000 EUR und einer Frist von sechs Monaten. Sie haben geschätzt, dass die durchschnittlichen Fehlerpräventionskosten pro Fehlerzustand 150 EUR betragen, die durchschnittlichen Überprüfungskosten 400 EUR, die durchschnittlichen internen Fehlerkosten pro Fehlerwirkung 250 EUR und die durchschnittlichen externen Fehlerkosten pro Fehlerwirkung 3.000 EUR. Sie haben auch die folgenden Merkmale für Ihr Projekt ermittelt:\n\n• Die Anforderungen sind unklar und können sich häufig ändern.\n\n• Die verwendete Technologie ist neu und dem Entwicklungsteam nicht vertraut.\n\n• Der Kunde hat hohe Erwartungen an Qualität und Zuverlässigkeit.\n\n• Das Projekt hat einen engen Zeitplan und Umfang.\n\nWelche der folgenden Aussagen ist nicht richtig?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Durch die unklaren Anforderungen steigt im Projektverlauf der Durchschnitt der internen Fehlerkosten pro Fehlerwirkung auf das Doppelte, dadurch ergibt sich nur noch eine durchschnittliche Einsparung von 2.100 EUR pro Fehler.",
+      "b) Um sich mit der verwendeten Technologie besser vertraut zu machen, steigert man die Ausgaben für die Fehlerpräventionskosten um das Dreifache, jedoch wirken sich die Maßnahmen nicht auf die durchschnittliche Einsparung pro Fehler aus.",
+      "c) Um den engen Zeitrahmen des Kunden einhalten zu können, werden die reaktiven Maßnahmen zur Testwiederholung vor Auslieferung eingespart. Somit sinken die externen Fehlerkosten auf 2.000 EUR. Allerdings sinken die Einsparungen pro Fehler ebenso auf 1.350 EUR.",
+      "d) Um den engen Zeitplan einhalten zu können, wird das Testteam kurzfristig aufgestockt und somit steigen die Überprüfungskosten auf 500 EUR. Daher steigen die durchschnittlichen Einsparungen pro Fehler um jeweils 100 EUR."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Der Durchschnitt der Überprüfungskosten und der Durchschnitt der internen Fehlerkosten werden von dem Durchschnitt der externen Fehlerkosten abgezogen. Hier wären das initial: 3.000 EUR - (400 EUR + 250 EUR) = 2.350 EUR. Steigen die durchschnittlichen internen Kosten von 250 EUR auf 500 EUR, ergibt sich eine geringere durchschnittliche Einsparung von 2.100 EUR pro Fehler. Diese Aussage ist richtig.\n\nb) FALSCH – In der Berechnung der durchschnittlichen Einsparung pro Fehler werden die Fehlerpräventionskosten nicht berücksichtigt, sie sind somit unabhängig und wirken sich daher nicht aus. Diese Aussage ist richtig.\n\nc) FALSCH – Die durchschnittliche Einsparung ergibt sich aus dem Potenzial, Fehlerzustände möglichst frühzeitig zu finden. Sinken die externen Fehlerkosten, kann so eben auch weniger eingespart werden, hier: 2.000 EUR - (400 EUR + 250 EUR) = 1.350 EUR. Diese Aussage ist richtig.\n\nd) KORREKT – Steigen die Überprüfungskosten, so sinken die durchschnittlichen Einsparungen pro Fehler – sie steigen nicht. Es ergeben sich durchschnittliche Einsparungen von 3.000 EUR - (500 EUR + 250 EUR) = 2.250 EUR anstelle von 2.350 EUR, also 100 EUR weniger. Somit ist diese Aussage nicht richtig."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 120 * 60;
+      const EXT_SECONDS = 150 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "150"
+          : "120";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "Der Timer zählt von 150:00 herunter (120 Min. + 30 Min. Verlängerung). Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben."
+          : "Der Timer zählt von 120:00 herunter. Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${escHtml(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} Punkt${q.pts > 1 ? "e" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${escHtml(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="${escHtml(q.imageAlt || ('Abbildung zu Frage ' + q.id))}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Prüfung abgeben?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `Es sind noch <strong style="color:var(--warn)">${unanswered} Frage${unanswered > 1 ? "n" : ""} unbeantwortet</strong>. Unbeantwortete Fragen ergeben 0 Punkte.<br><br>Trotzdem abgeben?`
+            : `Alle ${questions.length} Fragen sind beantwortet. Prüfung jetzt abgeben?`;
+        document.getElementById("confirm-yes-btn").textContent = "Abgeben";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Prüfung neu starten?";
+        document.getElementById("confirm-msg").innerHTML =
+          "Alle Antworten gehen verloren. Der Timer wird zurückgesetzt auf " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Möchten Sie fortfahren?";
+        document.getElementById("confirm-yes-btn").textContent = "Neu starten";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Unbeantwortet &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Richtig (+" + q.pts + (q.pts > 1 ? " Punkte)" : " Punkt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Falsch &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (Zeit abgelaufen)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " von " + totalPoints + " Punkten (" + correctCount + " von " + questions.length + " Fragen richtig)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ BESTANDEN (≥ 58 Punkte)"
+          : "✗ NICHT BESTANDEN (< 58 Punkte)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

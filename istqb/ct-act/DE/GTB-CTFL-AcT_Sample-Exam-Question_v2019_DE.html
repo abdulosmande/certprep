@@ -1,0 +1,1973 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CT-AcT v2019 — Probeprüfung 2019 GTB</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .q-text, .option-text, .header-left { min-width: 0; overflow-wrap: anywhere; }
+      .meta-lbl { overflow-wrap: anywhere; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Specialist Level</div>
+        <h1>CT-AcT v2019<br /><em>Probeprüfung</em></h1>
+        <p class="start-subtitle">ISTQB® Certified Tester Acceptance Testing · Probeprüfung 2019 GTB · Lehrplan v2019. Der Timer startet mit der Prüfung.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Fragen</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">60</span>
+            <div class="meta-lbl">Minuten</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Punkte</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Bestehen</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Quelle: ISTQB® / German Testing Board — GTB-CTFL-AcT_Sample-Exam-Question_v2019_DE.pdf; GTB-CTFL-AcT_Sample-Exam-Answers_v2019_DE.pdf. Copyright © ISTQB® / German Testing Board e.V.. Fragen, Tabellen, Diagramme und Begründungen wurden aus diesen Quellen übernommen. Autoren und Übersetzer sind in den Quell-PDFs genannt.</p>
+        <div class="time-option-label">Prüfungsdauer</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">60 Min.</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">75 Min.</span>
+            <span class="time-opt-lbl">+25 % Übungszeit</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optionale Verlängerung der Übungszeit um 25 %: 15 Minuten zusätzlich.</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Prüfung starten
+        </button>
+        <p class="start-note" id="start-note-txt">
+          Der Timer zählt von 60:00 herunter. Nach Ablauf der Zeit wird
+          die Prüfung automatisch abgegeben.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CT-AcT v2019 · Probeprüfung 2019 GTB</span
+            >
+            <span class="exam-title">Certified Tester – Acceptance Testing</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 beantwortet
+            </div>
+            <div class="timer" id="timer">60:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Zurücksetzen
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Abgeben
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 Fragen (40 Punkte) · <strong>Bestanden ab 26 von 40 Punkten (65 %)</strong>
+            · Jede Frage ist einen Punkt wert. Die Anzahl der auszuwählenden Antworten
+            steht bei jeder Frage.
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Prüfung abgeschlossen</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Benötigte Zeit: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Richtig</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Falsch</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Unbeantwortet</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Neustart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Prüfung abgeben?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Abbrechen
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Abgeben
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "AcT-1.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt die Beziehung zwischen Geschäftszielen, Geschäftsbedarfe und Anforderungen am BESTEN?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Geschäftsziele und Geschäftsbedarfe sind Synonyme.",
+      "b) Geschäftsziele, Geschäftsbedarfe und Anforderungen beschreiben auf verschiedenen Abstraktionsebenen, was erreicht werden soll.",
+      "c) Beim Geschäftsbedarf geht es um die zu entwickelnde Geschäftslösung, während die Geschäftsanforderungen das Geschäftsproblem oder die Geschäftsmöglichkeit definieren.",
+      "d) Um den Geschäftsbedarfe abzuleiten, muss der Businessanalyst zunächst die Geschäftsziele und -anforderungen verstehen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Geschäftsziele und Geschäftsbedarfe haben unterschiedliche Abstraktionsebenen.\n\nb) KORREKT – Wie im Lehrplan angegeben, beschreiben Geschäftsziele, Geschäftsbedarfe sowie betriebliche Anforderungen und Produktanforderungen auf verschiedenen Abstraktionsebenen, was erreicht werden soll.\n\nc) FALSCH – Der Geschäftsbedarf definiert das Geschäftsproblem oder die Geschäftsmöglichkeit, die Businessanalysten verstehen müssen, um anhand der Geschäftsanforderungen geeignete Lösungen zu empfehlen.\n\nd) FALSCH – Geschäftsanforderungen werden aus den Geschäftsbedarfen abgeleitet."
+  },
+  {
+    "id": 2,
+    "lo": "AcT-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen über Abnahmekriterien ist richtig?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Abnahmekriterien sind spezifisch für agile Vorgehensweisen, wo sie funktionalen Anforderungen entsprechen.",
+      "b) Tester sollten am Schreiben von Abnahmekriterien nicht mitwirken, um sicherzustellen, dass das Testen unabhängig ist.",
+      "c) Bei der abnahmetestgetriebenen Entwicklung ersetzen Abnahmekriterien die Abnahmetests.",
+      "d) Abnahmekriterien stellen fest, was getestet werden soll, um zu verifizieren, ob eine Anforderung oder eine User-Story korrekt implementiert wurde."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Abnahmekriterien sind nicht auf die agile Entwicklung beschränkt.\n\nb) FALSCH – Tester sollten einbezogen werden, um sicherzustellen, dass die Kriterien frühzeitig verifiziert werden.\n\nc) FALSCH – Bei der abnahmetestgetriebenen Entwicklung werden Abnahmetests gleichzeitig mit der Definition der Abnahmekriterien geschrieben, ersetzen diese jedoch nicht.\n\nd) KORREKT – Abnahmekriterien stellen die Testbedingungen dar, die bestimmen, was zu testen ist."
+  },
+  {
+    "id": 3,
+    "lo": "AcT-1.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen zur Qualität der Anforderungen trifft AM EHESTEN zu?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Ungenaue oder nicht eindeutige Anforderungen können sowohl bei der Implementierung als auch beim Testen zu Missverständnissen führen.",
+      "b) Bei agilen Entwicklungslebenszyklusmodellen wird das Requirements Engineering aufgrund der Rolle des Product Owners weniger wichtig.",
+      "c) INVEST ist ein Verfahren, das die Qualität von User-Storys oder Anforderungen sicherstellt und so regelmäßige Reviews ersetzt.",
+      "d) Tester können unklare Anforderungen durch Annahmen ergänzen, sofern sie diese Annahmen mit mindestens einem Stakeholder abstimmen."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Unklare Anforderungen können zu falschen Abnahmekriterien führen; in diesem Fall können die resultierenden Tests fehlerhaft sein. Die Folge sind Nacharbeiten oder, noch schlimmer, eine Durchführung ungültiger Tests, was unnötige Kosten verursacht.\n\nb) FALSCH – Auch in der agilen Entwicklung muss Requirements Engineering noch durchgeführt werden, und es sind sowohl vom Product Owner als auch von den Teammitgliedern entsprechende Fähigkeiten erforderlich.\n\nc) FALSCH – INVEST ist kein Ersatz für Reviews; es definiert vielmehr Qualitätsmerkmale für User-Storys, die von Businessanalysten/Product Owner und Testern verwendet werden können, um die Qualität der User-Storys sicherzustellen.\n\nd) FALSCH – Die Anforderungen sollten zwischen allen relevanten Stakeholdern, einschließlich des Teams und der Stakeholder des Fachbereichs vereinbart werden. Tester entscheiden nicht über Anforderungen, sondern sollten eng mit Businessanalysten zusammenarbeiten, um sicherzustellen, dass die Anforderungen klar formuliert und für alle betroffenen Stakeholder gut verständlich sind."
+  },
+  {
+    "id": 4,
+    "lo": "AcT-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "In welchem Verhältnis stehen die Testaktivitäten gemäß ISTQB® CTFL Lehrplan zu den Aktivitäten der Businessanalyse und des Requirements Engineering gemäß IQBBA® FL Lehrplan?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Businessanalysten, die den Requirements Engineering-Prozess des IQBBA® befolgen, wirken nicht am Testfallentwurf mit.",
+      "b) Businessanalysten und Tester müssen sich entscheiden, ob sie dem IQBBA®- oder dem ISTQB®-Lebenszyklusprozess folgen, weil diese sie sich gegenseitig ausschließen.",
+      "c) Die Lösungsbewertung gemäß IQBBA® erfolgt vor den Testrealisierungs- und Testausführungsaktivitäten gemäß ISTQB®.",
+      "d) Die Testanalyse- und Testentwurfsaktivitäten können zu Änderungen der Abnahmekriterien führen."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Der IQBBA®-Prozess setzt voraus, dass der Businessanalyst am Testen beteiligt ist (Review der Testfälle, Bereitstellung von Informationen usw.).\n\nb) FALSCH – Die IQBBA®- und ISTQB®- Prozesse stehen nicht in Konflikt miteinander. Tatsächlich hängen viele der in diesen Prozessen definierten Aktivitäten zusammen und unterstützen gemeinsam ähnliche Ziele.\n\nc) FALSCH – Die Lösungsbewertung gemäß IQBBA® und die Testrealisierungs- und Testausführungsaktivitäten gemäß ISTQB® können parallel erfolgen.\n\nd) KORREKT – Wie im Lehrplan angegeben, können Tester im Rahmen ihrer Testanalyse und ihres Testentwurfs zur Verifizierung von Abnahmekriterien beitragen. Dies kann auch bedeuten, dass Abnahmekriterien nach ihrer erstmaligen Definition angepasst werden müssen."
+  },
+  {
+    "id": 5,
+    "lo": "AcT-1.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt die Zusammenarbeit zwischen Businessanalysten und Testern am BESTEN?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Businessanalysten arbeiten bei der Testplanung und Risikoanalyse zusammen, um sicherzustellen, dass im weiteren Verlauf geeignete Testfälle entwickelt und priorisiert werden.",
+      "b) Businessanalysten können Abnahmetests in der Regel nicht reviewen, da sie die technischen Details nicht verstehen.",
+      "c) Tester beteiligen sich an der Ermittlung der Geschäftsbedarfe von Stakeholdern, um die Geschäftsbedarfe und die damit verbundenen Anforderungen besser zu verstehen.",
+      "d) Nachdem die Anforderungen und Abnahmekriterien festgelegt wurden, sind die Businessanalysten nicht mehr an den Testaktivitäten beteiligt."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Die Zusammenarbeit bei der Testplanung auf Grundlage einer Risikoanalyse ist eine gute Gelegenheit, um sicherzustellen, dass geeignete Testfälle entwickelt und priorisiert werden.\n\nb) FALSCH – Abnahmetests enthalten keine technischen Details, sondern konzentrieren sich auf die Überprüfung der betrieblichen Abnahmekriterien; sie können und sollten daher von Businessanalysten reviewt werden.\n\nc) FALSCH – Dies ist die Rolle von Businessanalysten. Tester können das Review der Anforderungen unterstützen, um sicherzustellen, dass die Abnahmekriterien klar, präzise und messbar sind.\n\nd) FALSCH – Businessanalysten sollten in andere Testaktivitäten einbezogen werden, einschließlich der Testvorbereitung, -durchführung und -berichterstattung."
+  },
+  {
+    "id": 6,
+    "lo": "AcT-1.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen über abnahmetestgetriebene/ verhaltensgetriebene Entwicklung trifft zu?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Die verhaltensgetriebene Entwicklung betrachtet den Entwurf der Abnahmetests als eine Aktivität, die vom Testteam durchgeführt wird, nachdem die Anforderungen festgelegt wurden.",
+      "b) Sowohl bei abnahmetestgetriebener als auch bei verhaltensgetriebener Entwicklung liefern Testfälle Beispiele für die Nutzung von Produkten.",
+      "c) Bei abnahmetestgetriebener Entwicklung werden Testfälle vor den Abnahmekriterien erstellt.",
+      "d) Sowohl bei abnahmetestgetrieben Entwicklung als auch bei verhaltensgetriebene Entwicklung, werden Abnahmetestfälle von einem Testautomatisierungsingenieur in Form von Testautomatisierungscode geschrieben."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Verhaltensgetriebene Entwicklung beinhaltet eine frühzeitige Erstellung von Abnahmetests. Bei diesem Ansatz sollten Abnahmekriterien und Abnahmetestfälle erstellt werden, bevor die Anforderungen abschließend festgelegt sind, um einen größeren Einfluss auf die Entwicklung der Lösung zu haben.\n\nb) KORREKT – Wie im Lehrplan angegeben, stellen Abnahmetestfälle Szenarien für die Nutzung des Produkts dar.\n\nc) FALSCH – Abnahmekriterien definieren, was zu testen ist, und Abnahmetestfälle definieren, wie zu testen ist. Sie können in derselben Arbeitssitzung definiert werden; es macht jedoch Sinn, zuerst festzulegen, was getestet werden soll.\n\nd) FALSCH – Bei beiden Ansätzen können die Abnahmetestfälle von Businessanalysten und anderen Stakeholdern gelesen und verstanden werden."
+  },
+  {
+    "id": 7,
+    "lo": "AcT-2.1.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Sie arbeiten als Tester an einem Projekt zur Entwicklung eines Entscheidungshilfe-systems für die Gewährung von Darlehen mit. Sie werden gebeten, die Abnahme-kriterien für die folgende Anforderung zu reviewen: REQ 3.28. Das automatisierte System zeichnet kritische Kreditantragsdaten auf, die das System benötigt, um die Kreditantragsprüfung zu unterstützen. Gehen Sie davon aus, dass bekannt ist, um welche Art von Daten es sich bei den “kritischen Kreditantragsdaten” handelt.\n\nWelche der folgenden Antworten nennt das BESTE Beispiel für ein Abnahmekriterium für diese Anforderung?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Die kritischen Kreditantragsdaten werden nach jeder erfolgreichen Dateneingabe in der relationalen MySQL-Datenbank gespeichert.",
+      "b) Die kritischen Kreditantragsdaten werden nicht aufgezeichnet, wenn sie unvollständig sind und eine Meldung angezeigt wird.",
+      "c) Der Aufzeichnungsprozess für die kritischen Kreditantragsdaten ist schnell und umkehrbar.",
+      "d) Der Prozess zum Sammeln von kritischen Kreditantragsdaten entspricht den Gebrauchstauglichkeitsrichtlinien des Unternehmens."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Gut spezifizierte Abnahmekriterien enthalten keine Details der technischen Lösung.\n\nb) KORREKT – Dies ist das erwartete Verhalten, das ein Benutzer im Abnahmetest verifizieren möchte. Es ist zu beachten, dass bekannt ist, wenn die kritischen Kreditantragsdaten unvollständig sind, da diese genau definiert wurden.\n\nc) FALSCH – Dieses Abnahmekriterium ist weder präzise noch messbar.\n\nd) FALSCH – Dieses Abnahmekriterium bezieht sich nicht auf die oben genannte Anforderung."
+  },
+  {
+    "id": 8,
+    "lo": "AcT-2.1.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Als Abnahmetester analysieren Sie die folgende User-Story für ein webbasiertes Massen-Multispieler Computer-Rollenspiel: \"Als ein nicht registrierter Spieler – möchte ich mich anmelden können, indem ich meine E-Mail-Adresse, meinen Benutzernamen und mein Passwort in einem Anmeldeformular festlege – damit ich ein registrierter Spieler werde\". Ziehen Sie die folgenden vorgeschlagenen Abnahmekriterien in Betracht:\n\ni) Auf dem Bildschirm wird ein Anmeldeformular angezeigt\n\nii) Das Formular ist in Groovy erstellt; der Cursor befindet sich zunächst im Feld \"Anmelden\". Nach Drücken der TAB-Taste wechselt der Cursor zu den Feldern \"Passwort\", \"Passwort wiederholen\", \"E-Mail\" und \"E-Mail wiederholen\"\n\niii) Ich kann mich nicht registrieren, wenn das von mir gewählte Login von einem anderen Spieler verwendet wird\n\niv) Nach erfolgreicher Anmeldung werde ich per E-Mail darüber informiert\n\nWelche dieser Vorschläge würden Sie als gut spezifizierte Abnahmekriterien betrachten?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) nur i) und iii)",
+      "b) nur ii)",
+      "c) nur ii) und iv)",
+      "d) nur i), iii) und iv)"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "Vorschlag ii) beinhaltet technische Lösungen, die bei den Abnahmekriterien vermieden werden sollten. Alle anderen Abnahmekriterien sind gutgeschrieben, da sie für die Stakeholder präzise, messbar und verständlich sind. Daraus folgt:\n\na) FALSCH\n\nb) FALSCH\n\nc) FALSCH\n\nd) KORREKT"
+  },
+  {
+    "id": 9,
+    "lo": "AcT-2.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt korrekt, wie Abnahmetests mit anderen Testverfahren oder -ansätzen ergänzt werden können?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Bei einer modellbasierten Testvorgehensweisewerden Abnahmetests aus grafischen (oder textuellen) Modellen generiert.",
+      "b) Bei einem prioritätsbasierten Testansatz hängt die Priorisierung von Abnahmetests von den zuvor identifizierten Produktrisiken ab.",
+      "c) Bei einem risikoorientierten Testansatz wird die Erfahrung und die Intuition des Testers für die Herleitung der Abnahmekriterien genutzt.",
+      "d) Bei einem Black-Box-Testansatz folgen die Abnahmetestszenarien der im Code implementierten Abfolge von Funktionsaufrufen."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Modellbasiertes Testen nutzt grafische (oder textuelle) Modelle um Abnahmetestfälle abzuleiten.\n\nb) FALSCH – Die Priorisierung von Abnahmetests basierend auf identifizierten Produktrisiken bezieht sich auf einen risikoorientierten Testansatz.\n\nc) FALSCH – Bei einem risikoorientierten Testansatz, hängen die Priorisierung und Gründlichkeit der Tests von zuvor identifizierten Produktrisiken ab, und nicht von der Erfahrung.\n\nd) FALSCH – Black-Box-Testen bezieht sich im Allgemeinen auf das Testen der Systemreaktion auf bereitgestellte Eingaben, ohne das Verhalten des internen Codes zu untersuchen."
+  },
+  {
+    "id": 10,
+    "lo": "AcT-2.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welches der folgenden Testverfahren passt AM BESTEN zum Zweck von Abnahmetests?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Statische Codeanalyse",
+      "b) Eingabevalidierung",
+      "c) Äquivalenzklassenbildung",
+      "d) Fehlerbasierter Testentwurf"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Dieses Verfahren wird auf der Ebene des Quellcodes angewendet, während sich der Abnahmetest auf höhere Geschäftsebenen konzentrieren sollte.\n\nb) FALSCH – Dies kann ein Element eines anderen Black-Box-Verfahrens sein, ist jedoch kein eigenständiges Testverfahren.\n\nc) KORREKT – Wie im Lehrplan angegeben, kann dieses Verfahren als Teil des Abnahmetests genutzt werden.\n\nd) FALSCH – Fehlerbasierte Testentwurfsverfahren können für Integrations-/, Systemtests verwendet werden, aber nicht für den Abnahmetest, da es hierbei nicht darum geht, nach Fehlern zu suchen, sondern darum, die geschäftliche Einsatzbereitschaft eines Systems zu überprüfen."
+  },
+  {
+    "id": 11,
+    "lo": "AcT-2.2.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "Angenommen, Sie testen die Funktionalität der Schnittstelle eines Aufzugs. Eine der Anforderungen ist, dass der Aufzug nur funktioniert, wenn das Gesamtgewicht der beförderten Personen 200 kg nicht überschreitet. Der Aufzug kann die folgenden Stockwerke erreichen: Erdgeschoss, 1. Stock und 2. Stock. Sie möchten einen Abnahmetest in Gherkin-Sprache erstellen und Sie können dafür die folgenden Ausdrücke verwenden:\n\ni) Das Gesamtgewicht der beförderten Personen beträgt mehr als 200 kg\n\nii) Der Aufzug befindet sich im Erdgeschoss\n\niii) Die Taste \"1. Stock\" wurde gedrückt\n\niv) Der Aufzug fährt in den 1. Stock\n\nv) Eine Person im 2. Stock fordert den Aufzug an\n\nvi) Auf dem Bildschirm wird die Meldung \"Zu viele Personen im Aufzug\" angezeigt In welcher der folgenden Antworten sind dem Konstrukt von „Gegeben – Wenn – Dann“ die relevanten Ausdrücke korrekt zugeordnet, um einen korrekten Testfall für die gegebene Anforderung des beschriebenen Szenarios zu erstellen?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) GEGEBEN ii) WENN i) DANN vi)",
+      "b) GEGEBEN ii) WENN iv) DANN v)",
+      "c) GEGEBEN iii) WENN ii) DANN iv)",
+      "d) GEGEBEN ii) WENN v) UND vi) DANN i)"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Bei diesem Test geht es um eine Situation, in der der Aufzug nicht betrieben werden kann, da das Gesamtgewicht der beförderten Personen den zulässigen Grenzwert überschreitet. ii) beschreibt eine Situation, i) beschreibt eine Aktion (Ereignis) und vi) das erwartete Ergebnis.\n\nb) FALSCH – Dieser Test deckt keinen vernünftigen Ablauf bzw. Szenario ab - er beschreibt lediglich, dass eine Kombination der Ereignisse iv) und v) auftreten kann, enthält jedoch im Element “DANN” keine vernünftigen, erwarteten Ergebnisse.\n\nc) FALSCH – Dieser Test ist unvollständig, da die in den Anforderungen festgelegte Beschränkung des Gesamtgewichts der beförderten Personen nicht berücksichtigt wird.\n\nd) FALSCH – Dieser Test würde eine korrekte Argumentationslinie darstellen (wenn die Gewichtsmeldung angezeigt wird, überschreitet das Gesamtgewicht der beförderten Personen 200 kg), aber dies ist kein nützliches Testszenario. Bei i) handelt es sich nicht um das erwartete Ergebnis, sondern um eine Aktion des Systems. Es soll aber das Gegenteil getestet werden: Wenn das Gewicht überschritten wird, wird dann die Meldung angezeigt?"
+  },
+  {
+    "id": 12,
+    "lo": "AcT-2.2.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "Welche der folgenden Antworten enthält das BESTE Beispiel für einen in Gherkin-Sprache erstellten Test einer webbasierten Onlinebanking- Anwendung?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) GEGEBEN: Ich habe 5000 € auf meinem Girokonto X UND ich habe 200 € auf meinem Girokonto Y WENN ich 1000 € von Konto X auf das Konto Y überweise DANN sollte ich auf meinem Girokonto X ein Guthaben von 4000 € haben UND ich sollte ich auf meinem Girokonto Y ein Guthaben von 1200 € haben",
+      "b) GEGEBEN: Ich habe 5000 € auf meinem Girokonto X UND ich habe 200 € auf meinem Girokonto Y WENN ich die Schaltfläche ‘Geld überweisen’ anklicke UND ich ‘3000’ im Feld ‘Betrag’ eingebe UND ich ‘X’ in das Feld ‘Von welchem Konto’ eingebe UND ich ‘Y’ in das Feld ‘Auf welches Konto’ eingebe UND ich auf die Schaltfläche ‘Transaktion bestätigen’ klicke DANN sollte ich auf meinem Girokonto X ein Guthaben von 2000 € haben UND ich sollte ich auf meinem Girokonto Y ein Guthaben von 3200 € haben",
+      "c) GEGEBEN: Ich habe 5000 € auf meinem Girokonto X UND 600 € auf meinem Girokonto Y WENN ich 500 € von Konto Y auf das Konto X überweise DANN sollte ich auf meinem Girokonto X ein Guthaben von 4500 € UND auf meinem Girokonto Y ein Guthaben von 1100 € haben",
+      "d) GEGEBEN: Ich habe 5000 € auf meinem Girokonto X WENN ich 600 € auf meinem Girokonto Y habe DANN habe ich insgesamt 5600 € auf den beiden Girokonten X UND Y"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Dies ist ein gutes Beispiel für einen in Gherkin-Sprache erstellten Test: GEGEBEN beschreibt die Vorbedingung (eine Situation; eine Voraussetzung), WENN beschreibt ein bestimmtes Verhalten (eine Aktion auf dem System) und DANN beschreibt das erwartete Ergebnis (Nachbedingung, erwartete Änderung).\n\nb) FALSCH – Gemäß Lehrplan, WENN sollte sich nicht auf Elemente der Benutzungsoberfläche beziehen, sondern nur die Aktion beschreiben, die wir aufrufen möchten.\n\nc) FALSCH – Dieses Szenario enthält einen Fehler im Element DANN - hier sollte angegeben sein, dass dann 5500 € auf Girokonto X und 100 € auf Girokonto Y sind.\n\nd) FALSCH – Dieses Szenario beschreibt einen offensichtlichen Zustand des Systems, der aus einer einfachen Berechnung resultiert, die nicht Teil des Abnahmetestszenarios sein muss."
+  },
+  {
+    "id": 13,
+    "lo": "AcT-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "In einem agilen Softwareentwicklungsprojekt wird eine explorative Testsitzung durchgeführt. Welches der folgenden Konzepte bzw. Praktiken ist AM BESTEN geeignet?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Programmieren in Paaren",
+      "b) Refactoring",
+      "c) Planungspoker",
+      "d) Timeboxing"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Dies ist keine Praktik im Zusammenhang mit explorativem Testen. Dieser Begriff bezieht sich auf einen der agilen Entwicklungsansätze.\n\nb) FALSCH – Dies ist kein Konzept im Zusammenhang mit explorativem Testen. Dieser Begriff bezieht sich auf eine der agilen Entwicklungspraktiken, die vom Entwicklungsteam befolgt werden müssen.\n\nc) FALSCH – Dies ist ein Schätzverfahren, das nicht mit dem explorativen Testen selbst zusammenhängt.\n\nd) KORREKT – Timeboxing ist ein Konzept, das dabei hilft, die Zeitdauer und den Aufwand für die explorative Testsitzung zu steuern."
+  },
+  {
+    "id": 14,
+    "lo": "AcT-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt eine Test-Charta beim explorativen Testen AM BESTEN?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Der Hinweis, dass der Tester die Rolle eines unerfahrenen Benutzers übernehmen soll, kann Teil einer explorativen Test-Charta sein.",
+      "b) Die Test-Charta wird während der Testsitzung gemäß den Ergebnissen der Testausführung ausgearbeitet.",
+      "c) Jede explorative Test-Charta basiert auf einer zuvor definierten Liste von Aktivitäten, die zu testen interessant wären.",
+      "d) Im Abnahmetest verwenden Tester die explorative Test-Charta während der Testsitzung, um das Testorakel zu definieren."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Wie im Lehrplan angegeben, kann die Test-Charta möglicherweise auch Angaben über einige während der Sitzung zu verwendende Taktiken enthalten (z. B. die Art des Benutzers, der während der explorativen Testsitzung simuliert werden soll).\n\nb) FALSCH – Die Test-Charta wird vor der Testsitzung erstellt und während der Testsitzung vom Tester verwendet.\n\nc) FALSCH – Die Test-Charta enthält Informationen über die Rolle des Testers während der Sitzung, das in der Sitzung zu erreichende Ziel, den Testaufbau, die zu testenden Aktivitäten, das Testorakel sowie weitere Informationen. Beim explorativen Testen gibt es keine vordefinierte Liste mit Aktivitäten, die befolgt werden muss.\n\nd) FALSCH – Das Testorakel sollte vor der Testsitzung in einer Test-Charta definiert werden."
+  },
+  {
+    "id": 15,
+    "lo": "AcT-2.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Wie hängen Beta-Tests und Abnahmetests zusammen?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Beta-Test ist ein Synonym für Abnahmetests, die in bestimmten Anwendungsdomänen verwendet werden.",
+      "b) Beta-Tests sollten vordefinierte Abnahmetestszenarien basierend auf den Abnahmekriterien beinhalten.",
+      "c) In Beta-Tests kann das Produkt in realistischen Geschäftskonfigurationen und -kontexten getestet werden.",
+      "d) Beta-Tests sind ein systematischer Ansatz für Abnahmetests und liefern eine messbare Überdeckung der User-Storys."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Beta-Tests sind eine Form von Abnahmetests, die häufig für kommerzielle Standardsoftware verwendet werden. Sie sind ist nicht dasselbe wie Abnahmetests.\n\nb) FALSCH – Beta-Tests werden von potenziellen oder bereits vorhandenen Benutzern an ihrem eigenen Standort durchgeführt. Es werden keine vordefinierten Testabläufe befolgt, und es wird keine Test-Charta verwendet. Die durchgeführten Testaktivitäten werden in der Regel nicht dokumentiert.\n\nc) KORREKT – In Beta-Tests wird das Produkt in verschiedenen realistischen Konfigurationen von tatsächlichen Anwendern im Kontext ihrer Geschäftsprozesse getestet.\n\nd) FALSCH – Beta-Tests sind weder systematisch noch messbar."
+  },
+  {
+    "id": 16,
+    "lo": "AcT-2.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Antworten definiert Beta-Tests AM BESTEN?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Beta-Tests werden von Entwicklern vor Ort beim Kunden durchgeführt.",
+      "b) Beta-Tests werden frühzeitig im Entwicklungsprozess durchgeführt, um Feedback vom Markt zu erhalten.",
+      "c) Während des Beta-Tests legen echte Benutzer die Abnahmekriterien für verschiedene realistische Konfigurationen fest.",
+      "d) In Beta-Tests werden Fehler im Produkt gefunden, die während des Entwicklungsprozesses nicht gefunden wurden."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Beta-Tests werden von potenziellen oder bereits vorhandenen Benutzern an ihrem eigenen Standort durchgeführt.\n\nb) FALSCH – Beta-Tests werden nach Fertigstellung des Produkts durchgeführt, damit Benutzer das Produkt in der realen Umgebung bewerten und der Entwicklungsorganisation Feedback geben können.\n\nc) FALSCH – In Beta-Tests wird das Produkt in verschiedenen realistischen Konfigurationen von Benutzern getestet. Dabei werden weder vordefinierte Szenarien und noch eine Testcharta verwendet.\n\nd) KORREKT – In Beta-Tests können Fehler im Produkt gefunden werden, die während des Entwicklungsprozesses nicht gefunden wurden."
+  },
+  {
+    "id": 17,
+    "lo": "AcT-3.1.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Angenommen, Sie testen ein neues System zur Verwaltung von Prüfungen. Als Eingabe erhält das System zwei Noten aus zwei Prüfungen. Für jede Prüfung ist die Bewertung mit 0 oder 1 Punkt möglich. Als Ausgabe gibt das System eine einzelne Zeichenfolge zurück - die Entscheidung über die erzielte Berechtigung: Bei einer Gesamtpunktzahl von 2 die volle Berechtigung, bei einer Gesamtpunktzahl von 1 eine Teilberechtigung. Wenn die Gesamtpunktzahl 0 ist, bedeutet das, dass die Prüfung nicht bestanden ist und der Kandidat keine Berechtigung erhält.\n\nWelche der folgenden Antworten liefert das richtige DMN-Modell (Decision Model and Notation) für die beschriebene Situation? (Fortsetzung auf der nächsten Seite)\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) [[asset:q17-a]]",
+      "b) [[asset:q17-b]]",
+      "c) [[asset:q17-c]]",
+      "d) [[asset:q17-d]]"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – das ist die richtige DMN-Entscheidungstabelle mit zwei Eingaben und einer Ausgabe.\n\nb) FALSCH – Diese Tabelle enthält keine Eingaben; dies ist keine DMN-Tabelle.\n\nc) FALSCH – Das Format für die Darstellung der Ausgaben ist nicht korrekt.\n\nd) FALSCH – Dies ist keine DMN-Entscheidungstabelle (wegen der Spalte “Ergebnis” und wegen dem inkorrekten Format der Spalte “Ausgabe“)."
+  },
+  {
+    "id": 18,
+    "lo": "AcT-3.1.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Angenommen, Sie möchten ein Modell erstellen, das den Kreditbeantragungsprozess einer Bank beschreibt. Der Kreditbeantragungsprozess beginnt, wenn der Kunde einen Kreditantrag einreicht. Die Bank prüft dann den Antrag. Unabhängig davon, ob der Kreditantrag genehmigt wird oder nicht, wird der Kunde per Brief über die Entscheidung informiert. Wenn der Kreditantrag genehmigt wird, wird der Kreditvertrag erstellt. Sie haben das folgende Geschäftsprozessmodell mit BPMN 2.0 erstellt:\n\nWelche der folgenden Aussagen in Bezug auf dieses Geschäftsprozessmodell trifft zu?\n\n[[asset:q18]]\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Es erfolgt keine Verifizierung der Erwerbstätigkeit, wenn der Kredit abgelehnt wird.",
+      "b) Das Erstellen des Kreditvertrags ist als Subprozess definiert.",
+      "c) Das Durchführen der Titelsuche (nach Eigentumsrechten) und das Anfordern der Kreditauskunft sind aufeinanderfolgende Aufgaben.",
+      "d) Das Prüfen der Kreditwürdigkeit ist bei der Prüfung des Kreditantrags optional."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – “Erwerbstätigkeit verifizieren” erfolgt systematisch nach der Aufgabe „Kreditantrag erfassen“ und vor der Aufgabe „Kreditantrag prüfen“, in der über den Kreditantrag entschieden wird.\n\nb) KORREKT – “Kreditvertrag erstellen” ist als Subprozess definiert.\n\nc) FALSCH – Ein paralleles Gateway teilt den Fluss zwischen den Aufgaben \"Titelsuche durchführen\" und \"Kreditauskunft anfordern\".\n\nd) FALSCH – Im Prozessfluss muss die Aufgabe „Kreditwürdigkeit prüfen“ vor „Kreditantrag prüfen“ ausgeführt werden."
+  },
+  {
+    "id": 19,
+    "lo": "AcT-3.2.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Als Abnahmetester möchten Sie den Bargeldabhebungsprozess für einen Geldbetrag von 100 € testen, welcher im folgenden BPMN-Modell (Business Process Model and Notation) beschrieben ist. Sie möchten ein Überdeckungskriterium erreichen, bei dem alle möglichen Prozessaufgaben ausgeführt wurden. Betrachten Sie die folgenden Testfälle:\n\nTest 1: Kontostand = 100 €, Quittung = JA\n\nTest 2: Kontostand = 120 €, Quittung = NEIN\n\nTest 3: Kontostand = 85 €\n\nTest 4: Kontostand = 20 €, Quittung = JA\n\nWelche der folgenden Antworten nennt die Menge an Testfällen, die mindestens erforderlich sind, um die erforderliche Überdeckung zu erreichen?\n\n[[asset:q19]]\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Test 1, Test 3",
+      "b) Test 1, Test 2, Test 3",
+      "c) Test 2, Test 4",
+      "d) Test 1, Test 2, Test 4"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Test 1 deckt alle Aufgaben ab, mit Ausnahme von \"Karte entnehmen (Auszahlung abgelehnt)\", das wiederum von Test 3 abgedeckt wird. Somit erzielen diese beiden Tests die gewünschte Überdeckung. Beachten Sie, dass in Test 1 sowohl die Aufgaben \"Quittung entnehmen\" als auch \"100 € abheben, Karte entnehmen\" abgedeckt werden, da sie parallel ausgeführt werden.\n\nb) FALSCH – Diese Menge von Testfällen erzielt die erforderliche Überdeckung, es handelt sich jedoch nicht um die Mindestmenge von Testfällen (Mindestmenge siehe Antwort A mit nur 2 Testfällen).\n\nc) FALSCH – In Test 3 sind nur zwei von fünf Aufgaben abgedeckt.\n\nd) FALSCH – Test 4 ist nicht korrekt aufgesetzt, da bei einem Kontostand von 20 € die Option “Quittung anfordern” nicht ausgewählt werden kann."
+  },
+  {
+    "id": 20,
+    "lo": "AcT-3.2-1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Als Abnahmetester möchten Sie den Bargeldabhebungsprozess für einen Geldbetrag von 100 € testen, der im folgenden BPMN-Modell (Business Process Model and Notation) beschrieben ist. Sie möchten Entscheidungsüberdeckung erzielen. Betrachten Sie die folgenden Testfälle:\n\nTest 1: Kontostand = 100 €, Quittung = JA\n\nTest 2: Kontostand = 99 €\n\nTest 3: Kontostand = 120 €, Quittung = NEIN\n\nTest 4: Kontostand = 2500 €, Quittung = JA\n\nWelche der folgenden Antworten nennt die Menge an Testfällen, die es ermöglicht, eine vollständige Entscheidungsüberdeckung zu erzielen?\n\n[[asset:q20]]\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Test 1, Test 2, Test 4",
+      "b) Test 1, Test 2",
+      "c) Test 2, Test 3",
+      "d) Test 1, Test 2, Test 3"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "Es sind zwei Entscheidungspunkte vorhanden (gekennzeichnet durch ein auf der Spitze stehendes Quadrat (bzw. Raute) mit einem X). Der erste dieser Gateways hat zwei Ergebnisse: Guthaben ≥ 100 € und Guthaben <100 €. Der zweite hat auch zwei Ergebnisse: JA und NEIN. Um eine vollständige Entscheidungsüberdeckung zu erreichen, müssen wir alle diese Ergebnisse abdecken. Beachten Sie, dass die Raute mit dem Pluszeichen eine parallele Sequenz darstellt, dies ist also kein Entscheidungspunkt.\n\nTest 1 und Test 4 decken Guthaben ≥ 100 € und JA ab\n\nTest 2 deckt Guthaben < 100 € ab\n\nTest 3 deckt Guthaben ≥ 100 € und NEIN ab Es sind also drei Testfälle (1, 2, 3 oder 2, 3, 4) erforderlich, um die volle Entscheidungsüberdeckung zu erzielen. Daraus folgt:\n\na) FALSCH – siehe Begründung oben\n\nb) FALSCH – siehe Begründung oben\n\nc) FALSCH – siehe Begründung oben\n\nd) KORREKT – siehe Begründung oben"
+  },
+  {
+    "id": 21,
+    "lo": "AcT-3.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen über die grafische Darstellung von Geschäftsprozessen trifft zu?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Durch die Verwendung von Entscheidungstabellen in BPMN können Testbedingungen definiert werden, die den zu testenden Geschäftsregeln entsprechen.",
+      "b) Grafische Darstellungen von Geschäftsprozessen müssen den gesamten Arbeitsablauf detailliert beschreiben, einschließlich Alternativ- und Fehlerszenarien.",
+      "c) Im Abnahmetest sollten sich grafische Geschäftsprozessmodelle auf die zu testenden Workflows der Benutzer konzentrieren.",
+      "d) Geschäftsprozesse sollten unter Verwendung des DMN-Standards grafisch beschrieben und mit Entscheidungstabellen ergänzt werden."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Dies wird durch Entscheidungstabellen unterstützt, BPMN unterstützt die Geschäftsprozessmodellierung in Form von Diagrammen.\n\nb) FALSCH – Grafische Darstellungen von Geschäftsprozessen sollten sich auf das konzentrieren, was getestet werden soll. Abhängig vom Verwendungszweck decken grafische Darstellungen von Geschäftsprozessen das Verhalten der zugehörigen Softwaresysteme möglicherweise nur teilweise ab.\n\nc) KORREKT – Insbesondere beim Benutzerabnahmetest ist es “das Hauptziel (…), Vertrauen darin zu schaffen, dass die Benutzer das System so nutzen können, dass es ihre Bedürfnisse und Anforderungen erfüllt und ihre Geschäftsprozesse (…) ausführt” [ISTQB CTFL Lehrplan]. Daher sollten sich grafische Geschäftsprozessmodelle auf die Workflows der Benutzer konzentrieren.\n\nd) FALSCH – DMN ist keine Notation zur grafischen Geschäftsprozessmodellierung, sondern eine Notation für die Entscheidungsmodellierung."
+  },
+  {
+    "id": 22,
+    "lo": "AcT-3.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Was wird bei der Geschäftsprozessmodellierung als gute Praxis angesehen?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Wenn alle Modellierungselemente in einem Diagramm enthalten sind, wird die Lesbarkeit von BMPN-Modellen erheblich verbessert.",
+      "b) BPMN-Diagramme und DMN-Tabellen sollten Informationen wie die Rückverfolgbarkeit auf User-Storys enthalten.",
+      "c) Referenzen auf Anforderungen oder Risiken sollten von der Arbeitsablaufbeschreibung getrennt werden.",
+      "d) Businessanalysten sollten ihre Geschäftsprozessmodelle fertigstellen, bevor sie diese den Abnahmetestern zeigen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Die Diagramme sollten so einfach wie möglich sein und bei Bedarf in Subprozesse unterteilt werden\n\nb) KORREKT – Zusätzliche Informationen, wie z. B. Referenzen auf User-Storys, Anforderungen, Risiken, Prioritäten und sonstigen Informationen, die für die Abnahmetests nützlich sind, sollten den Diagrammen mithilfe von Annotationen hinzugefügt werden.\n\nc) FALSCH – Zusätzliche Informationen, wie z. B. Referenzen auf User-Storys, Anforderungen, Risiken, Prioritäten und sonstigen Informationen, die für die Abnahmetests nützlich sind, sollten nicht von der Arbeitsablaufbeschreibung getrennt werden, sondern mithilfe von Annotationen den Diagrammen hinzugefügt werden.\n\nd) FALSCH – Die Geschäftsprozessmodellierung für Abnahmetests sollte in enger Zusammenarbeit zwischen Businessanalysten und Testern erfolgen. Die erstellten Artefakte sollten von beiden Gruppen gemeinsam genutzt werden."
+  },
+  {
+    "id": 23,
+    "lo": "AcT-3.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Ihr Unternehmen möchte eine neue Anwendung für das Personalmanagement einrichten. Als Tester schlagen Sie vor, abnahmetestgetriebene Entwicklung einzusetzen und Geschäftsprozessmodelle für den Testfallentwurf zu verwenden.\n\nWelche der folgenden Aussagen ist das AM WENIGSTEN stichhaltige Argument für diesen Ansatz?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Die Geschäftsprozessmodelle helfen den Testern, die zu testenden Anwendungsfälle zu verstehen.",
+      "b) Tester können die Testüberdeckung direkt in der grafischen Darstellung von Geschäftsprozessen anzeigen.",
+      "c) Geschäftsprozessmodelle erleichtern das Erkennen von Fehlern im Anwendungscode.",
+      "d) Da Geschäftsprozessmodelle aktualisiert werden, um die Tests zu warten, sind sie eine lebende Dokumentation des Produkts."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Businessanalysten und Tester arbeiten zusammen, um die Abläufe für die abnahmetestgetriebene Entwicklung zu modellieren. Dies hilft den Testern, die zu testenden Anwendungsfälle zu verstehen.\n\nb) FALSCH – Wenn Tester Tests aus diesen Geschäftsprozessmodellen ableiten, können sie die Testüberdeckung direkt in der grafischen Darstellung anzeigen.\n\nc) KORREKT – Die grafische Darstellung von Geschäftsprozessmodellen ist nicht speziell dazu geeignet, Fehler im Code zu identifizieren.\n\nd) FALSCH – Geschäftsprozessmodelle, die für eine abnahmetestgetriebene Entwicklung erstellt und gewartet werden, können als lebende Dokumentation angesehen werden, die von Businessanalysten verwendet wird, um das tatsächliche Verhalten des Testobjekts darzustellen."
+  },
+  {
+    "id": 24,
+    "lo": "AcT-3.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Antworten erklärt AM BESTEN, wie die Geschäftsprozess- und Geschäftsregelmodellierung für abnahmetestgetriebene Entwicklung verwendet werden kann?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Bei einem abnahmetestgetriebenen Entwicklungsansatz müssen Geschäftsprozess-/Geschäftsregelmodelle vor Projektbeginn erstellt werden.",
+      "b) Bei einem abnahmetestgetriebenen Entwicklungsansatz ersetzen Geschäftsprozessmodelle die Abnahmekriterien.",
+      "c) Bei einem abnahmetestgetriebenen Entwicklungsansatz verwenden Tester Geschäftsprozess- und Geschäftsregelmodelle, um Abnahmetests zu erstellen.",
+      "d) Bei einem abnahmetestgetriebenen Entwicklungsansatz werden Prozessmodelle für den anfänglichen Testentwurf erstellt, danach jedoch nicht mehr gewartet."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Bei einem visuellen abnahmetestgetriebenen Entwicklungsansatz, arbeiten Businessanalysten und Tester zusammen, um die Abläufe und Geschäftsregeln mithilfe grafischer Notationen zu modellieren.\n\nb) FALSCH – Geschäftsprozess-/Geschäftsregelmodelle werden mit relevanten Stakeholdern reviewt und tragen zur Validierung der Anforderungen und Abnahmekriterien bei (sind also kein Ersatz für die Abnahmekriterien).\n\nc) KORREKT – Tester leiten Tests aus den Geschäftsprozess-/Geschäftsregel-modellen ab, um die erforderliche Überdeckung durch die verschiedenen Pfade und Geschäftsregeln sicherzustellen und nachzuweisen.\n\nd) FALSCH – Abnahmetests werden aus Prozessmodellen abgeleitet, die aktualisiert werden, um Testfälle zu warten, wenn sich Anforderungen oder User-Storys ändern."
+  },
+  {
+    "id": 25,
+    "lo": "AcT-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Gegeben sind die folgenden Attribute:\n\ni. Kommerzialisierbarkeit\n\nii. Funktionale Eignung\n\niii. Machbarkeit\n\niv. Zuverlässigkeit\n\nv. IT-Sicherheit\n\nvi. Kognitive Fähigkeit\n\nvii. Wartbarkeit\n\nWelche der folgenden Antworten nennt die standardisierten, nichtfunktionalen Qualitätsmerkmale gemäß ISO 25010, die für den Abnahmetest AM WICHTIGSTEN sind?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) ii, v und vi",
+      "b) iv, v und vii",
+      "c) i, ii und vi",
+      "d) iii, iv und v"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Die in der Norm ISO/IEC 25010 definierten Qualitätsmerkmale sind:\n\n• Funktionale Eignung (funktional)\n\n• Zuverlässigkeit (nicht-funktional)\n\n• Effizienz (nicht-funktional)\n\n• Benutzbarkeit/Gebrauchstauglichkeit (nicht-funktional)\n\n• IT-Sicherheit (nicht-funktional)\n\n• Kompatibilität (nicht-funktional)\n\n• Wartbarkeit (nicht-funktional)\n\n• Übertragbarkeit (nicht-funktional) Abgesehen des Merkmals \"Funktionalität\" sind aller anderen Merkmale nicht-funktionaler Natur. Folglich sind iv, v und vii richtig. Daraus folgt:\n\na) FALSCH – siehe Begründung oben\n\nb) KORREKT – siehe Begründung oben\n\nc) FALSCH – siehe Begründung oben\n\nd) FALSCH – siehe Begründung oben"
+  },
+  {
+    "id": 26,
+    "lo": "AcT-4.1.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Die Norm ISO 25010 definiert ein Modell für die Nutzungsqualität mit Merkmalen und Teilmerkmalen.\n\nWelches Element der folgenden Liste ist ein Merkmal in diesem Modell?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Effizienz",
+      "b) Gebrauchstauglichkeit",
+      "c) Kompatibilität",
+      "d) Übertragbarkeit"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Effizienz ist eines von fünf Merkmalen des ISO 25010-Modell für die Nutzungsqualität.\n\nb) FALSCH –Gebrauchstauglichkeit ist Teil der nicht-funktionalen Qualitätsmerkmale gemäß ISO 25010, jedoch nicht Teil des Modells der Nutzungsqualität.\n\nc) FALSCH – Kompatibilität ist Teil der nicht-funktionalen Qualitätsmerkmale gemäß ISO 25010, jedoch nicht Teil des Modells der Nutzungsqualität.\n\nd) FALSCH – Übertragbarkeit ist Teil der nicht-funktionalen Qualitätsmerk-male gemäß ISO 25010, jedoch nicht Teil des Modells der Nutzungsqualität."
+  },
+  {
+    "id": 27,
+    "lo": "AcT-4.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen entspricht einer Aktivität der UX-Anforderungsanalyse AM BESTEN?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Personas werden verwendet, um Produkte oder Lösungen von Wettbewerbern zu analysieren.",
+      "b) Nutzungsprofile werden verwendet, um unterschiedliche Wissensstände in Bezug auf die betrieblichen Kenntnisse von Nutzern zu bestimmen.",
+      "c) IT-Sicherheitsanforderungen werden aus Nutzungsszenarien abgeleitet.",
+      "d) Umgebungsbedingungen wie z. B. Lichtbedingungen werden aus einer Aufgabenanalyse gewonnen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Das Erstellen von Personas kann Teil der Nutzeranalyse in Zusammenhang mit der Analyse von UX-Anforderungen sein, wird jedoch nicht zum Analysieren von Produkten oder Lösungen von Wettbewerbern verwendet.\n\nb) KORREKT – Das Messen der Wissensstände in Bezug auf die betrieblichen Kenntnisse von Nutzern kann Teil der Nutzeranalyse sein, wenn UX-Anforderungen analysiert werden.\n\nc) FALSCH – Die Analyse von IT-Sicherheitsanforderungen ist normalerweise nicht Teil der UX-Anforderungsanalyse.\n\nd) FALSCH – Die Kontextanalyse kann die Analyse der äußeren Bedingungen (z. B. Lichtbedingungen) umfassen, aber diese ergeben sich aus einer Kontextanalyse und nicht aus einer Aufgabenanalyse."
+  },
+  {
+    "id": 28,
+    "lo": "AcT-4.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welches der folgenden Szenarien beschreibt die Aufgabenanalyse im Rahmen einer UX-Anforderungsanalyse AM BESTEN?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Benutzer werden entsprechend ihrer physischen und intellektuellen Merkmale qualifiziert.",
+      "b) Anwendungsfälle werden analysiert und in Form von Geschäftsprozessmodellen dargestellt.",
+      "c) Äußere Bedingungen werden als Input für nachfolgende Entwurfsschritte berücksichtigt.",
+      "d) Inspirationen aus ähnlichen Branchen werden recherchiert, um erfolgreiche Lösungen zu identifizieren."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Dies bezieht sich auf die Nutzeranalyse.\n\nb) KORREKT – Bei der Aufgabenanalyse wird Funktionalität identifiziert und formalisiert, z.\n\nB. anhand von Anwendungsfällen, die dann als Geschäftsprozessmodelle dargestellt werden können.\n\nc) FALSCH – Dies bezieht sich auf die Kontextanalyse.\n\nd) FALSCH – Dies bezieht sich auf die Wettbewerbsanalyse."
+  },
+  {
+    "id": 29,
+    "lo": "AcT-4.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welches der folgenden Gebrauchstauglichkeitstestverfahren passt AM BESTEN zum Testziel?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Experten-Reviews helfen zu verstehen, wie Benutzer mit einem System interagieren und was für Benutzer mehr oder weniger sichtbar ist.",
+      "b) Biometrische Evaluierungen helfen nachträglich zu verstehen, wie Benutzer mit dem System interagiert haben; dies hilft, das System zu verbessern.",
+      "c) Die von Gebrauchstauglichkeitsexperten durchgeführte Protokolldateianalyse identifiziert die Stärken einer Benutzungsschnittstelle, also die Elemente, die die Aufmerksamkeit des Benutzers auf sich ziehen.",
+      "d) Walkthrough und Think-Aloud-Techniken können auf Schwierigkeiten hinweisen, die Benutzer bei der Ausführung bestimmter Aufgaben haben."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Bei Experten-Reviews bewerten Gebrauchstauglichkeits-Experten die Gebrauchstauglichkeit des Systems oder Produkts anhand vordefinierter Kriterien oder Checklisten auf der Grundlage von Gebrauchstauglichkeits-Heuristiken, um die Stärken und Schwächen einer Schnittstelle zu identifizieren.\n\nb) FALSCH – Bei biometrischen Evaluierungen wird das Benutzerverhalten wird mit speziellen biometrischen Geräten überwacht, um zu verstehen, wie Benutzer mit einer Seite oder einem System interagieren.\n\nc) FALSCH – Die Protokolldateianalyse ermöglicht eine nachträgliche Analyse der Interaktion der Benutzer mit dem System, um das System zu verbessern.\n\nd) KORREKT –Walkthrough und Think-Aloud-Techniken sind Methoden, bei denen Benutzer das Produkt erkunden und bestimmte Aufgaben ausführen, die sie erhalten haben. Dies hilft herauszufinden, wie die Benutzer mit dem Produkt interagieren, und es hilft, mehr über Erwartungen oder Schwierigkeiten zu erfahren."
+  },
+  {
+    "id": 30,
+    "lo": "AcT-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen über den Performanztest trifft AM MEISTEN zu?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Je nach Modell, das zur Simulation der Arbeitslast verwendet wird, werden Performanztests als Lasttests, Stresstests oder Ausdauer-/Stabilitätstests bezeichnet.",
+      "b) Mit Performanztests soll die Robustheit eines Systems gegen böswillige Angriffe ermittelt werden.",
+      "c) Die Leistung des Systems wird in einer Umgebung gemessen, die so weit wie möglich repräsentative Betriebsbedingungen widerspiegelt.",
+      "d) Die Performanztestergebnisse dienen zur Bestimmung der Anforderungen bezüglich der Hardware- und Softwareleistung."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Diese Klassifizierung bezieht sich auf die durchzuführenden Testarten, je nachdem, was gemessen werden muss.\n\nb) FALSCH – Performanztests haben das Ziel, die Reaktionsfähigkeit und Stabilität eines Systems unter bestimmten Bedingungen zu ermitteln.\n\nc) KORREKT – In einem typischen Performanztest werden gleichzeitige Benutzer oder Transaktionen mit bestimmten Werkzeugen simuliert, um eine bestimmte Last zu generieren, die die tatsächlichen Bedingungen mit tatsächlichen Benutzern und realistischen Interaktionen so genau wie möglich nachahmt.\n\nd) FALSCH – Die Ergebnisse von Performanztests werden gemessen und mit vordefinierten Performanzanforderungen verglichen."
+  },
+  {
+    "id": 31,
+    "lo": "AcT-4.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Bei welcher Antwort passt die Kombination aus vorgegebener Perspektive und Aussage AM BESTEN?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Aus Geschäftssicht sind Rechenleistung und Architektur wichtige Parameter für die Feinabstimmung des Systems.",
+      "b) Aus Sicht des Benutzers sind fehlende Rückmeldungen des Systems bei der Verarbeitung einer Anfrage ein Problem.",
+      "c) Aus technischer Sicht sind die Anzahl der gleichzeitig angemeldeten Benutzer und die Art der durchgeführten Transaktionen wichtige Elemente.",
+      "d) Aus Geschäftssicht hängt die Auswahl der Performanztestwerkzeuge stark von den verwendeten Testverfahren ab."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Rechenleistung und Architektur gehören zur technischen Perspektive.\n\nb) KORREKT – Aus Sicht des Benutzers ist die wahrgenommene Antwortzeit entscheidend, da sie die tatsächliche Erfahrung des Benutzers mit dem System widerspiegelt.\n\nc) FALSCH – Die Anzahl der gleichzeitigen Benutzer und die Art der durchgeführten Szenarien oder Transaktionen beziehen sich auf die Geschäftssicht.\n\nd) FALSCH – Dieses Thema ist aus Geschäftssicht nicht von Interesse."
+  },
+  {
+    "id": 32,
+    "lo": "AcT-4.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welches der folgenden Abnahmekriterien bezieht sich auf IT-Sicherheitsanforderungen?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Die Antwortzeit des Systems darf 3 Sekunden nicht überschreiten.",
+      "b) Das System muss webbasiert sein.",
+      "c) Die grafische Benutzungsoberfläche muss dem Styleguide des Unternehmens entsprechen.",
+      "d) Normale Benutzer haben nur eingeschränkten Zugriff auf private Daten."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Die Anforderungen bezüglich der Antwortzeit beziehen sich auf die das Teilmerkmal Zeitverhalten des Qualitätsmerkmals Performanz.\n\nb) FALSCH – Dies ist eine technische Einschränkung des Lösungsraums.\n\nc) FALSCH – Styleguides sind für das Branding von entscheidender Bedeutung und können Aspekte enthalten, die sich auf die Gebrauchstauglichkeit beziehen. Sie umfassen jedoch in der Regel keine Sicherheitsanforderungen, die eher Teil der Programmierrichtlinien sind.\n\nd) KORREKT – Die Vertraulichkeit privater Daten ist eine Sicherheitsanforderung."
+  },
+  {
+    "id": 33,
+    "lo": "AcT-5.1.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Das Projektteam befindet sich derzeit in einer schwierigen Situation, die sich aus der Schwierigkeit ergibt, sich die Zukunft und die notwendigen Schritte zur Erreichung der Zukunft vorzustellen, verbunden mit einem gewissen Motivationsverlust durch ein starkes Gefühl der Stagnation. Sie versuchen, die Situation zu lösen und schlagen einen Workshop vor.\n\nWelche Vorgehensweise würde am besten passen?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Sie bitten zwei Freiwillige nach vorne zu einem Rollenspiel vor dem Team. Einer der Freiwilligen soll versuchen, das Projekt zu verteidigen und positive Argumente und Vorschläge zu machen. Der andere soll das Gegenteil tun. Anschließend rekapitulieren Sie die wichtigsten Argumente beider Seiten und diskutieren offen mit dem Team.",
+      "b) Sie zeichnen eine Treppe mit 11 Stufen, von denen jede einen wichtigen Meilenstein des Projekts darstellt. Die unterste Stufe entspricht dem ersten Tag des Projekts, und die obere Stufe bedeutet, dass das Projekt freigegeben wird. Sie verorten die aktuelle Situation in der Mitte der Treppe. Das Team wird gebeten, die wichtigsten Schritte nach unten und oben zu identifizieren und zu diskutieren.",
+      "c) Sie organisieren einen Tagesausflug für das Team mit herausfordernden körperlichen Übungen in Teams, gefolgt von einem Abendessen und Drink nach der Arbeit. Denn für die Motivation in einem Team gibt es nichts Besseres als Herausforderungen, die gemeinsam bewältigt werden, gemeinsame Ziele und die Aussicht auf eine gute Zeit.",
+      "d) Sie visualisieren alle verbleibenden wichtigen Meilensteine des Projekts, beginnend mit dem heutigen Tag und endend mit der Projektfreigabe. Anschließend bitten Sie das Team, die erforderlichen Maßnahmen zu ermitteln und zu besprechen, wie das Team aus der gegenwärtigen Situation vorankommt, um die Meilensteine zu erreichen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Dieser Ansatz könnte helfen, einige der Probleme zu identifizieren, aber er wird nicht dazu beitragen, eine Vision für die Zukunft zu entwickeln und das Team erneut zu motivieren.\n\nb) KORREKT – Durch die Identifizierung dessen, was bereits erreicht wurde und was noch zu tun ist und wie das erreicht werden kann, wird das Team in die Lage versetzt, ein besseres Verständnis darüber zu erlangen, wo sie sich befinden und wie sie vorankommen werden.\n\nc) FALSCH – Es kann sich positiv auf Motivation und Teamgeist auswirken, aber es hilft nicht, eine Vision für die Zukunft zu entwickeln, und es trägt auch nicht dazu bei, dem Team zu vermitteln, was bereits erreicht wurde.\n\nd) FALSCH – Wenn die Analyse mit der aktuellen Situation beginnt, arbeitet das Team nur an den zukünftigen Schritten. Sie werden sich dabei nicht vorstellen, was schon erreicht wurde, und könnten möglicherweise sogar noch demotivierter werden, wenn sie sehen, was noch zu tun ist und wie unerreichbar es zu sein scheint."
+  },
+  {
+    "id": 34,
+    "lo": "AcT-5.1.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Sie leiten ein komplett neues Projektteam, dessen Mitglieder aus der gesamten Organisation kommen und noch nie zusammengearbeitet haben. Sie müssen eine gemeinsame Vision und Teamgeist aufbauen.\n\nWelcher Workshop wäre dafür AM BESTEN geeignet?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Sie laden die Teammitglieder ein und fordern sie auf, ein eigenes (teambezogenes) Logo zu entwerfen, das ihre Werte, Überzeugungen, Ziele und Aufgaben als gemeinsames Motto darstellt.",
+      "b) Sie fordern jedes Teammitglied auf, seine/ihre bisherigen Erfahrungen und seine/ihre wichtigsten Erfolge in der Organisation bzw. in einer früheren Tätigkeit zu beschreiben.",
+      "c) Sie fordern die Teammitglieder nacheinander auf, je drei Dinge zu notieren, die sie in der Organisation mögen und die sie nicht mögen, und diese an eine Wand zu hängen. Dann wird ein Freiwilliger ausgewählt, der nach dem Zufallsprinzip einige Beiträge vorliest, die dann mit der Gruppe besprochen werden.",
+      "d) Sie zeichnen eine Treppe mit 11 Stufen, von denen jede einen wichtigen Meilenstein des Projekts darstellt. Die unterste Stufe entspricht dem ersten Tag des Projekts, und die obere Stufe bedeutet, dass das Projekt freigegeben wird. Sie verorten die aktuelle Situation ganz oben auf der Treppe. Das Team wird gebeten, die wichtigsten Schritte nach unten zu identifizieren und zu diskutieren."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Durch die Darstellung ihrer Werte, Überzeugungen, Ziele und Aufgaben erhalten die Teammitglieder eine vollständige Definition der Teamidentität, und Sie richten alle Mitglieder auf dieselbe Vision aus.\n\nb) FALSCH – Sie können entweder das Eis brechen oder ein sehr langweiliges Meeting haben, aber Sie werden Ihr Ziel mit Sicherheit verfehlen.\n\nc) FALSCH – Dieser Workshop dient eher dazu, das auszudrücken, was keiner sagt. Er fördert weder den Teamgeist, noch richtet er das Team auf ein gemeinsames Ziel aus.\n\nd) FALSCH – Dieser Workshop ist ziemlich nutzlos, es sei denn, es geht darum, sich an die guten alten Zeiten zu erinnern (da es nur erlaubt ist, sich die vergangenen Schritte vorzustellen, wenn das Projekt erreicht ist)."
+  },
+  {
+    "id": 35,
+    "lo": "AcT-5.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen in Bezug auf Fehler trifft AM MEISTEN zu?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Regelmäßige Besprechungen zwischen Businessanalysten und Testern sind erforderlich, um Abweichungen zwischen den tatsächlichen und den erwarteten Ergebnissen zu berichten.",
+      "b) Tester sollten genaue Informationen in Bezug auf die Differenz zwischen dem erwarteten Testergebnis und dem tatsächlichen Ergebnis liefern.",
+      "c) Wenn sich herausstellt, dass es sich tatsächlich um einen Fehler handelt, schreibt der Tester einen Fehlerbericht und sendet ihn zur weiteren Untersuchung an den Businessanalysten.",
+      "d) Tester sollten die möglichen Auswirkungen eines Fehlers auf die Systemnutzung analysieren, bevor sie den Businessanalysten darüber informieren."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Tester melden Abweichungen zunächst durch Fehlerberichte, die anschließend besprochen werden.\n\nb) KORREKT – Ein Fehlerbericht enthält alle relevanten Informationen, die der Tester bereitstellen kann, um dem Businessanalysten zu helfen, den Vorfall zu verstehen und die Abweichung zu bewerten.\n\nc) FALSCH – Alle Fehler sollten vom Businessanalysten dokumentiert und bewertet werden, der dann entscheiden kann, ob es sich um einen Fehler handelt oder nicht.\n\nd) FALSCH – Tester sind Testexperten, keine Geschäftsexperten. Es sind die Businessanalysten, die die Auswirkungen eines Fehlers auf die System-nutzung am besten beurteilen können."
+  },
+  {
+    "id": 36,
+    "lo": "AcT-5.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aktivitäten wird von Businessanalysten im Rahmen der Fehleranalyse höchstwahrscheinlich ausgeführt?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Businessanalysten identifizieren die Anforderungen/User-Storys, die nicht erfüllt sind.",
+      "b) Businessanalysten beurteilen die Auswirkungen von Korrekturmaßnahmen auf andere Teile der Systemimplementierung.",
+      "c) Businessanalysten analysieren die fehlgeschlagene Funktion Schritt für Schritt, um die Fehlerursache zu ermitteln.",
+      "d) Businessanalysten prüfen, ob andere Pfade im Geschäftsprozessmodell wie vorgesehen funktionieren."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Im Rahmen der Fehleranalyse identifiziert der Businessanalyst die nicht erfüllten Abnahmekriterien, um den Fehler zu analysieren. Diese Kriterien sind Teil einer Anforderung/User-Story.\n\nb) FALSCH – Der Businessanalyst hat nicht genügend Einblick in die Implementierung, um die Auswirkungen von Änderungen auf andere Teile der Systemimplementierung beurteilen zu können. Entwickler haben die erforderlichen Kenntnisse.\n\nc) FALSCH – Debugging ist eine Aufgabe von Entwicklern.\n\nd) FALSCH – In Einzelfällen kann es vorkommen, dass Businessanalysten dies prüfen, um Vertrauen in das System zu gewinnen. Im Allgemeinen werden die anderen Pfade jedoch von anderen Tests abgedeckt, die von Testern durchgeführt werden."
+  },
+  {
+    "id": 37,
+    "lo": "AcT-5.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Informationen ist höchstwahrscheinlich Bestandteil eines Testabschlussberichts?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Informationen zur Bewertung des Risikos für die Produktfreigabe",
+      "b) Technische Details zu Fehlerbehebungen",
+      "c) Teststrategie und Testentwurfsverfahren",
+      "d) Informationen zum Testablauf"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Auf Grundlage des Testabschlussberichts sollten Entscheidungsträger feststellen können, ob das zu testende System das erforderliche spezifizierte Qualitätsniveau erreicht hat und für den Betrieb freigegeben werden kann oder nicht.\n\nb) FALSCH – Fehlerbehebungen sind im zugehörigen Fehlerbericht dokumentiert.\n\nc) FALSCH – Teststrategie und Testentwurfsverfahren sind Teil des Testkonzepts.\n\nd) FALSCH – Informationen über den Testablauf sind in der Testablauf-spezifikation enthalten. Sie können Teil eines Testberichts sein, jedoch nicht des Testabschlussberichts."
+  },
+  {
+    "id": 38,
+    "lo": "AcT-5.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Methoden wird am wahrscheinlichsten angewendet, um die Qualität der Abnahmetestaktivitäten sicherzustellen?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Überprüfung des Quellcodes, um die Verfolgbarkeit von User-Storys zu Systemkomponenten sicherzustellen",
+      "b) Verifizierung der Verfolgbarkeit zwischen User-Storys und Testfällen, um sicherzustellen, dass diese auf dem aktuellen Stand ist",
+      "c) Checklistenbasiertes Review der Anforderungen auf Vollständigkeit und Qualität",
+      "d) Eye-Tracking, um die Durchführbarkeit zuvor definierter Benutzerabnahmetests zu verifizieren"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Code-Reviews werden verwendet, um die Qualität von Software- Implementierungen sicherzustellen.\n\nb) KORREKT – Die Verfolgbarkeit zwischen Anforderungen/User-Storys, Abnahmekriterien, Testfällen und Fehlern verdeutlicht Abhängigkeiten und ermöglicht einen einfachen Zugriff auf zugehörige Informationen.\n\nc) FALSCH – Selbst wenn Abnahmetester eventuell am Review der Anforderungen teilnehmen, ist die Verifizierung der Testbasis keine Methode, um die Qualität der Abnahmetestaktivitäten sicherzustellen.\n\nd) FALSCH – Eye-Tracking kommt beim Gebrauchstauglichkeitstest zum Einsatz. Es wird verwendet, um die Qualität des Systems und nicht die der Abnahmetestaktivitäten sicherzustellen."
+  },
+  {
+    "id": 39,
+    "lo": "AcT-5.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Antworten beschreibt einen Hauptvorteil AM BESTEN, der sich ergibt, wenn Businessanalysten und Tester die Abnahmekriterien gemeinsam reviewen?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Eine gemeinsame Vision zwischen Businessanalysten und Testern hinsichtlich der Abnahmekriterien erleichtert das Entwerfen der Abnahmetestfälle.",
+      "b) Ein gemeinsames Review stellt sicher, dass nicht-funktionale Qualitätskriterien berücksichtigt werden.",
+      "c) Das Review der Abnahmekriterien hilft zu verifizieren, dass die Abnahmetestfälle die Geschäftsprozesse, Geschäftsregeln und Geschäftsrisiken abdecken.",
+      "d) Das Review der Abnahmekriterien ist eine gute Praktik, um die Qualität der Testberichte zu verbessern."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Gute Abnahmekriterien liefern messbare bestanden/nicht bestanden- Kriterien; dies erleichtert den Entwurf der entsprechenden Testfälle.\n\nb) FALSCH – Ein gemeinsames Review verringert zwar das Risiko, dass nicht-funktionale Qualitätskriterien übersehen werden; es ist jedoch keine Garantie.\n\nc) FALSCH – Dies ist eher ein Vorteil des Reviews von Abnahmetestfällen.\n\nd) FALSCH – Dies ist eher ein Vorteil des Reviews von Testberichten."
+  },
+  {
+    "id": 40,
+    "lo": "AcT-5.3.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welches Werkzeug passt AM BESTEN zur jeweils genannten Abnahmetestaktivität?\n\nWählen Sie eine Antwort.",
+    "options": [
+      "a) Anforderungsmanagementwerkzeuge zum Verwalten von Testausführungsaktivitäten beim Abnahmetest",
+      "b) Werkzeuge für das Testmanagement und die Testautomatisierung zum Generieren von modellbasierten Abnahmetests aus Geschäftsprozessmodellen",
+      "c) Geschäftsprozessmanagementwerkzeuge zur Modellierung von Geschäftsprozessen und Geschäftsregeln",
+      "d) Modellbasierte Testwerkzeuge für das Verwalten von Fehlern bzw. Abweichungen"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Zum Verwalten von Testausführungsaktivitäten werden Testmanagementwerkzeuge und Testautomatisierungswerkzeuge verwendet, nicht Anforderungsmanagementwerkzeuge.\n\nb) FALSCH – Zum Generieren von Tests aus Geschäftsprozessmodellen werden modellbasierter Testwerkzeuge verwendet.\n\nc) KORREKT – Geschäftsprozessmanagementwerkzeuge werden für die Modellierung von Geschäftsprozessen und Geschäftsregeln verwendet.\n\nd) FALSCH – Fehlermanagementwerkzeuge werden für das Verwalten von Fehlern bzw. Abweichungen verwendet."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 60 * 60;
+      const EXT_SECONDS = 75 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "75"
+          : "60";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "Der Timer zählt von 75:00 herunter (60 Minuten + 25 % Übungszeit). Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben."
+          : "Der Timer zählt von 60:00 herunter. Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {"q17-a": {"src": "assets/GTB-CTFL-AcT_Sample-Exam-Question_v2019_DE/q17-a.png", "alt": "Berechtigungstabelle\nEingaben Ausgaben\nu Prüfung #1 Prüfung #2 Berechtigung\n1 0 0 keine\n2 0 1 Teilberechtigung\n3 1 0 Teilberechtigung\n4 1 1 voll", "kind": "table"}, "q17-b": {"src": "assets/GTB-CTFL-AcT_Sample-Exam-Question_v2019_DE/q17-b.png", "alt": "Berechtigungstabelle\nPrüfungsergebnis Berechtigung\n0 keine\n1 Teilberechtigung\n2 voll", "kind": "table"}, "q17-c": {"src": "assets/GTB-CTFL-AcT_Sample-Exam-Question_v2019_DE/q17-c.png", "alt": "Berechtigungstabelle\nEingaben Ausgaben\nPrüfung Prüfung Keine Teil- Volle\nu\n#1 #2 Berechtigung berechtigung Berechtigung\n1 0 0 JA NEIN NEIN\n2 0 1 NEIN JA NEIN\n3 1 0 NEIN JA NEIN\n4 1 1 NEIN NEIN JA", "kind": "table"}, "q17-d": {"src": "assets/GTB-CTFL-AcT_Sample-Exam-Question_v2019_DE/q17-d.png", "alt": "Berechtigungstabelle\nRegel Prüfung #1 Prüfung #2 Ergebnis Ausgabe\n0: keine\n1 e1 e2 e1+e2 1: Teilberechtigung\n2: voll", "kind": "table"}, "q18": {"src": "assets/GTB-CTFL-AcT_Sample-Exam-Question_v2019_DE/q18.png", "alt": "Prozessdiagramm aus der Quellfrage", "kind": "diagram"}, "q19": {"src": "assets/GTB-CTFL-AcT_Sample-Exam-Question_v2019_DE/q19.png", "alt": "Prozessdiagramm aus der Quellfrage", "kind": "diagram"}, "q20": {"src": "assets/GTB-CTFL-AcT_Sample-Exam-Question_v2019_DE/q20.png", "alt": "Prozessdiagramm aus der Quellfrage", "kind": "diagram"}};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          if (asset.html) return `<div class="q-table-wrap">${asset.html}</div>`;
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Zum Vergrößern öffnen</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} Punkt${q.pts > 1 ? "e" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="${escHtml(q.imageAlt || ('Abbildung zu Frage ' + q.id))}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Prüfung abgeben?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `Es sind noch <strong style="color:var(--warn)">${unanswered} Frage${unanswered > 1 ? "n" : ""} unbeantwortet</strong>. Unbeantwortete Fragen ergeben 0 Punkte.<br><br>Trotzdem abgeben?`
+            : `Alle ${questions.length} Fragen sind beantwortet. Prüfung jetzt abgeben?`;
+        document.getElementById("confirm-yes-btn").textContent = "Abgeben";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Prüfung neu starten?";
+        document.getElementById("confirm-msg").innerHTML =
+          "Alle Antworten gehen verloren. Der Timer wird zurückgesetzt auf " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Möchten Sie fortfahren?";
+        document.getElementById("confirm-yes-btn").textContent = "Neu starten";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Unbeantwortet &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Richtig (+" + q.pts + (q.pts > 1 ? " Punkte)" : " Punkt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Falsch &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (Zeit abgelaufen)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " von " + totalPoints + " Punkten (" + correctCount + " von " + questions.length + " Fragen richtig)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? `✓ BESTANDEN (≥ ${Math.ceil(totalPoints * 0.65)} Punkte)`
+          : `✗ NICHT BESTANDEN (< ${Math.ceil(totalPoints * 0.65)} Punkte)`;
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

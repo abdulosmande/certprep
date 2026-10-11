@@ -1,0 +1,1976 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CT-MBT v1.1 — Sample Exam 1.2</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Specialist Level</div>
+        <h1>CT-MBT v1.1<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">ISTQB® Certified Tester Model-Based Tester · Sample Exam 1.2 · Syllabus v1.1. The timer starts when you begin the exam.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">60</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Source: ISTQB® — ISTQB_CT-MBT_v1.1_Sample-Exam-A-Questions_v1.2.pdf; ISTQB_CT-MBT_v1.1_Sample-Exam-A-Answers_v1.2.pdf. Copyright © ISTQB®. Questions, tables, diagrams and rationales follow these sources. Authors are acknowledged in the source PDFs.</p>
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">60 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">75 min</span>
+            <span class="time-opt-lbl">+25% practice time</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optional practice allowance: 25% extra time (15 minutes).</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 60:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CT-MBT v1.1 · Sample Exam 1.2</span
+            >
+            <span class="exam-title">Certified Tester – Model-Based Tester</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 answered
+            </div>
+            <div class="timer" id="timer">60:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 questions (40 points) · <strong>65% (≥ 26 of 40 points)</strong>
+            to pass · each question is worth one point and some questions are
+            multi-select (see marking on each question)
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "Term “MBT”",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which one of the following statements is the best definition of model-based testing?\n\nSelect ONE option.",
+    "options": [
+      "a) A test technique using models to generate automated scripts.",
+      "b) A test design approach that uses state transition diagrams to design test cases.",
+      "c) Acceptance testing using business process models.",
+      "d) Testing based on or involving models."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Model-based testing is used to generate manual or automated tests.\n\nb) Is not correct. Model-based testing supports and automates a large variety of test techniques, not only state transition testing.\n\nc) Is not correct. Model-based testing may use a large variety of modeling languages, not only business process modeling.\n\nd) Is correct. This is the definition according to glossary."
+  },
+  {
+    "id": 2,
+    "lo": "MBT-1.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A test team has decided to apply an MBT approach for a large banking system project at the system testing level.\n\nWhich one of the following statements describes a benefit of MBT you may expect for any kind of project?\n\nSelect ONE option.",
+    "options": [
+      "a) MBT implies the generation of test scripts for automated test execution, which will reduce execution time and decrease the number of tester errors during test execution.",
+      "b) The test team creates graphical MBT models and reviews them with business analysts to contribute to a common understanding of the requirements.",
+      "c) The maintenance of the automated test scripts is now fully automated when changes to the MBT models have been done by the test team.",
+      "d) MBT reduces the costs of test design, because the test team applies test selection criteria on existing system design models to generate various test suites covering the project test objectives."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. MBT is not equivalent to test automation. It is also possible (and beneficial) to generate test cases for manual test execution.\n\nb) Is correct. A benefit of MBT is to facilitate a shared understanding of requirements between testers and other stakeholders using MBT models.\n\nc) Is not correct. Maintenance of the generated automated test scripts would also require the maintenance of the test adaptation layer.\n\nd) Is not correct. Reuse of system design models is possible, but of limited use. In particular, it is not possible to cover all project test objectives without writing a targeted MBT model."
+  },
+  {
+    "id": 3,
+    "lo": "MBT-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following statements best reflects realistic expectations from introducing MBT into the software development lifecycle?\n\nSelect ONE option.",
+    "options": [
+      "a) MBT users do not need to understand test techniques because test generation with MBT is fully automated.",
+      "b) Carefully introducing changes to the whole test process when introducing MBT, including test team training, helps to obtain measurable progress.",
+      "c) Adding an MBT tool without change in the existing organization and/or test process is an effective approach.",
+      "d) Since reuse of a system design model is possible in MBT, after small investment, the usage of MBT in a development process is almost for free."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. To fulfill project test objectives, testers need to drive MBT test generation and to master test techniques.\n\nb) Is correct. MBT needs to adapt to the existing test process and organization.\n\nc) Is not correct. MBT is not just a matter of tooling but impacts the test organization and process.\n\nd) Is not correct. The reuse of system design models has its limits."
+  },
+  {
+    "id": 4,
+    "lo": "MBT-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "An MBT approach is used in a project. Which statement below regarding MBT activities is most correct?\n\nSelect ONE option.",
+    "options": [
+      "a) MBT modeling activities should start as soon as possible, but not before having finished the detailed system design.",
+      "b) MBT models reflect the system requirements, but do not consider the project test objectives.",
+      "c) MBT activities in a test process should follow a strictly sequential order.",
+      "d) Test selection criteria are used to drive test generation from the MBT model."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Early testing is an important aspect of MBT. In a top- down approach, it is not necessary to know the detailed design of the system under test to start the modeling activities.\n\nb) Is not correct. MBT models should be developed on the basis of requirements AND project test objectives.\n\nc) Is not correct. Iterative and incremental development of MBT models is part of good practices in MBT.\n\nd) Is correct. The use of test selection criteria to drive test generation is part of MBT activities."
+  },
+  {
+    "id": 5,
+    "lo": "MBT-1.2.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which one of the following items are artifacts that can be generated from an MBT model?\n\nSelect ONE option.",
+    "options": [
+      "a) Test basis, test cases and defect reports.",
+      "b) Test cases, test suites and traceability matrix between generated tests and requirements.",
+      "c) Test cases, test suites and test strategy.",
+      "d) Test cases, defect reports and process guidelines."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Test basis are input to the MBT activities and defect reports cannot be generated from the MBT model.\n\nb) Is correct.\n\nc) Is not correct. The test strategy is part of the input for MBT.\n\nd) Is not correct. Defect reports cannot be generated from the MBT model and process guidelines are part of the input for MBT activities."
+  },
+  {
+    "id": 6,
+    "lo": "MBT-1.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following statements best reflects the impact of MBT on software development lifecycles?\n\nSelect ONE option.",
+    "options": [
+      "a) MBT keeps existing testing roles but it amends their tasks with specific MBT activities.",
+      "b) MBT has no impact on the software development lifecycle.",
+      "c) MBT requires a new role to manage the MBT-specific activities.",
+      "d) MBT requires a separate process independent of the software development lifecycle."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. MBT requires new activities for testers but not new roles.\n\nb) Is not correct. MBT impacts the software development life cycle. It amends the lifecycle with modeling activities.\n\nc) Is not correct. No new roles are required. Modeling activities require testers to learn new skills and enrich current roles.\n\nd) Is not correct. MBT integrates well with common variants of sequential and agile software development."
+  },
+  {
+    "id": 7,
+    "lo": "MBT-1.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Suppose a project team is using use case diagrams for business analysis. Now the project manager proposes model-based testing to improve testing.\n\nWhich one of the following statements is the best analysis made by the project manager related to the impact of MBT on requirements engineering (RE) activities?\n\nSelect ONE option.",
+    "options": [
+      "a) RE activities will not change. The major impact on RE is the fact that MBT models will support validation of requirements by modeling the system from a testing perspective.",
+      "b) RE activities will not change. The major impact is that requirements analysis is now performed by the skilled MBT analyst replacing the business analyst.",
+      "c) RE activities will not change. The major impact is that MBT models are replacing system development models.",
+      "d) RE activities will change. The requirements analysis activity is not required anymore, because MBT analysis and design is sufficient to analyze the requirements."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. RE does not change. In fact, RE gets earlier feedback. MBT supports requirements validation early by MBT models made.\n\nb) Is not correct. RE does not change. MBT analysts do not replace business analysts and do not perform requirements analysis for development, but for testing.\n\nc) Is not correct. RE does not change. MBT models do not replace system development models, because MBT models cover the project test objectives (which is generally not the case for system development models).\n\nd) Is not correct. RE does not change. Requirements Analysis is still required."
+  },
+  {
+    "id": 8,
+    "lo": "MBT-2.1.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "The given workflow diagram describes an ISTQB certification. It shows the behavior of the exam taker, who attends the training course and/or prepares for the exam at home, then takes the exam and gets the certificate.\n\n[[asset:p8-1]]\n\nWhich one of the following statements corresponds to the workflow described in the model?\n\nSelect ONE option.",
+    "options": [
+      "a) The exam taker has to attend the training and to prepare individually at home to be able to pass the exam.",
+      "b) After failing the exam, the exam taker willing to repeat the exam has to attend the training course again.",
+      "c) Irrespective of the result, the exam taker may repeat the exam an unlimited number of times.",
+      "d) It is possible to get the certificate without attending the training course."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. It is possible to pass the exam without attending a training course or without individual preparation at home.\n\nb) Is not correct. When repeating the exam, it is also possible to pass the exam without attending a training course or without individual preparation at home.\n\nc) Is not correct. If the exam taker succeeds the exam, he or she may no longer repeat it.\n\nd) Is correct. It is not necessary to attend the training course prior to the exam."
+  },
+  {
+    "id": 9,
+    "lo": "MBT-2.1.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "The given state machine shows the behavior of a beverage dispenser, e.g., for soft drinks or coffee. It shows the functional interaction between a user of the dispenser, who can switch the dispenser on and select a beverage, and the dispenser that can request more money if an insufficient amount of money has been inserted. The model should be used for model-based testing of the beverage dispenser.\n\n[[asset:p9-1]] A reviewer of the model created four comments against the model. Which one of the following comments is correct?\n\nSelect ONE option.",
+    "options": [
+      "a) After selecting a beverage and inserting an insufficient amount of money, the model does not require that money is returned.",
+      "b) After selecting the beverage, the user always has to insert an infinite amount of money without getting the selected beverage.",
+      "c) After selecting the beverage and paying for it, the user cannot take the beverage from the dispenser.",
+      "d) After selecting the beverage and canceling the choice, the user has to switch the beverage dispenser on and off again."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. An action “/ return money” (or equivalent) missing after “cancel”.\n\nb) Is not correct. As soon as “[enough money]” is true, the automaton dispenses the beverage.\n\nc) Is not correct. There is an outgoing transition with the trigger “take beverage” from state “finished”.\n\nd) Is not correct. The user may select a beverage."
+  },
+  {
+    "id": 10,
+    "lo": "MBT-2.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "The following models show two different viewpoints of a coffee dispenser.\n\n[[asset:p10-1]]\n\n[[asset:p10-2]] Please select the one correct option below.\n\nSelect ONE option.",
+    "options": [
+      "a) Model A is a structural description of test cases and Model B is behavioral description of the system.",
+      "b) Model A is a behavioral description of the system and Model B is structural description of the environment.",
+      "c) Model A is a structural description of the system and Model B is a behavioral description of test cases.",
+      "d) Model A is a structural description of the environment and Model B is a behavioral description of the system."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "Model A is a structural description of the system (class diagram above) and Model B is a behavioral description of test cases. The latter one can be recognized by the “check” action. Therefore:\n\na) Is not correct. See explanation above.\n\nb) Is not correct. See explanation above.\n\nc) Is correct. See explanation above.\n\nd) Is not correct. See explanation above."
+  },
+  {
+    "id": 11,
+    "lo": "MBT-2.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Suppose the following test objectives are specified in a project: TO-1) validate the business workflows. TO-2) verify whether all system interfaces exist as specified. TO-3) validate that the system corresponds to the needs of different user profiles. TO-4) verify the correct implementation of input data ranges.\n\nWhich one of the following combinations between test objectives and MBT model characteristics is correct?\n\nSelect ONE option.",
+    "options": [
+      "a) TO-1 requires a structural system model.",
+      "b) TO-2 requires a behavioral test model.",
+      "c) TO-3 requires a behavioral environment model.",
+      "d) TO-4 requires a structural environment model."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. TO-1 requires a behavioral model\n\nb) Is not correct. TO-2 requires a structural model\n\nc) Is correct. Subject and focus are correct\n\nd) Is not correct. TO-4 requires a structural system or test model"
+  },
+  {
+    "id": 12,
+    "lo": "MBT-2.2.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "In MBT, behavioral models are often used for test generation. Which one of the following diagrams is a behavioral model?\n\nSelect ONE option.",
+    "options": [
+      "a) A state transition diagram.",
+      "b) A class diagram.",
+      "c) A deployment diagram.",
+      "d) A package diagram."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. This is a UML behavior diagram.\n\nb) Is not correct. This is a UML structure diagram.\n\nc) Is not correct. This is a UML structure diagram.\n\nd) Is not correct. This is a UML structure diagram."
+  },
+  {
+    "id": 13,
+    "lo": "MBT-2.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "You have to test the performance of an IT system and you are asked to recommend a model to derive tests from. Which one would you first recommend?\n\nSelect ONE option.",
+    "options": [
+      "a) A usage model, as that model allows representing the prospective usages of the system.",
+      "b) A decision table, as that table allows representing the rule sets of the IT system.",
+      "c) A state transition diagram, as that model allows representing normal, maximum and overload states of the system.",
+      "d) A structural model of source code, as that model allows representing non-functional requirements."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Usage models are well suited as a basis to derive performance tests as they represent typical usages for that system.\n\nb) Is not correct. Decision tables model logical rules of an IT system, which relate to the functionality of that system, but not to its performance.\n\nc) Is not correct. State transition diagrams may be helpful, but they are not the first choice.\n\nd) Is not correct. A structural model of the source code, such as a class diagram, is not the best information for establishing performance test scenarios, as it does not give any information about how the application behaves at the behavioral level."
+  },
+  {
+    "id": 14,
+    "lo": "MBT-2.3.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "As a reviewer, you have to check whether an MBT model is adequate for the given test objective.\n\nHow is the corresponding quality criterion defined?\n\nSelect ONE option.",
+    "options": [
+      "a) Syntactic quality,",
+      "b) Semantic quality,",
+      "c) Pragmatic quality,",
+      "d) Portability quality."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. An MBT model may be syntactically correct but inadequate for the given test objective.\n\nb) Is not correct. An MBT model may be semantically correct but inadequate for the given test objective.\n\nc) Is correct. Pragmatic quality means that the MBT model fits the target.\n\nd) Is not correct. Portability has nothing to do with adequacy of the MBT model to the test objective."
+  },
+  {
+    "id": 15,
+    "lo": "MBT-2.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following scenarios corresponds to a common mistake MBT newcomers tend to commit?\n\nSelect ONE option.",
+    "options": [
+      "a) MBT is used in combination with manual test execution.",
+      "b) The MBT model for system testing tries to describe the system under test in complete detail.",
+      "c) The MBT model is developed on the basis of the test objectives.",
+      "d) Different test suites are generated from the same MBT model with various test selection criteria."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. MBT can be used in combination with either manual or automated test execution.\n\nb) Is correct. The pragmatic aspect of models has been disregarded. The MBT model should focus on the test objective and not aim to be as complete as possible.\n\nc) Is not correct. Developing the MBT model on the basis of project test objectives is a best practice in model-based testing.\n\nd) Is not correct. An MBT model can be used to generate several test suites with different test selection criteria."
+  },
+  {
+    "id": 16,
+    "lo": "MBT-2.3.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following statements about linking requirements to MBT models is most correct?\n\nSelect ONE option.",
+    "options": [
+      "a) Linking requirements to models makes it easier to layout the MBT model.",
+      "b) Linking requirements to models makes it possible to generate test cases for selected requirements.",
+      "c) The link between requirements and model elements facilitates root cause analysis in case of errors in the model.",
+      "d) Linking requirements to MBT models facilitates debugging activities at the code level."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. With increasing number of model elements, it becomes more difficult to keep the model layout readable.\n\nb) Is correct. This linking information is mandatory to be able to generate test cases on the basis of the coverage of selected requirements.\n\nc) Is not correct. When requirements are linked with model elements, it becomes easier to analyze the impact of requirements changes, but does not support root cause analysis in case of errors in the model.\n\nd) Is not correct. In principle, code debugging is not specifically facilitated by MBT."
+  },
+  {
+    "id": 17,
+    "lo": "MBT-2.3.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "In a project regarding the development of a new banking system, a model-based testing approach based on business process modeling with BPMN is used. MBT modeling guidelines are defined for the project.\n\nWhich one of the following topics is most probably found in modeling guidelines for such MBT project?\n\nSelect ONE option.",
+    "options": [
+      "a) A full description of UML diagrams and model elements.",
+      "b) Proposed modeling patterns for typical business flows.",
+      "c) Naming rules based on the naming conventions defined in coding guidelines.",
+      "d) Sample drafts of test cases relevant for testing the application."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. MBT tools usually take only a subset of an existing modeling language as input. Defining this subset is part of possible MBT modeling guidelines.\n\nb) Is correct. Modeling patterns help to share common structure of MBT models within a team.\n\nc) Is not correct. MBT modeling guidelines are different from coding guidelines. Syntactical naming rules help foster a similar syntax and semantics of MBT models from various authors, but they should be easy to understand by non-technical stakeholders.\n\nd) Is not correct. Providing test cases as part of MBT modeling guidelines is not relevant."
+  },
+  {
+    "id": 18,
+    "lo": "MBT-2.3.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "The reuse of existing design models is usually appreciated by industry as it lowers costs. Consider the following examples where an existing design model shall be used as input to MBT instead of developing completely new MBT models.\n\nWhich one of the following examples shows a best-practice reuse of an existing model?\n\nSelect ONE option.",
+    "options": [
+      "a) Model-driven engineering was used in the project to automatically derive the implementation of the system from a model. A separate MBT model is not necessary and this model will be reused to generate all test cases to test the system.",
+      "b) A requirements model of the business processes has been developed during the business analysis phase. The test team decided to reuse and adapt it for model-based testing.",
+      "c) A model of the architecture of the system, describing component interaction at a low level, is available from the development team. The test team decided to reuse it in the context of model-based testing for user acceptance testing.",
+      "d) A detailed implementation model was used to derive the implementation of a system. The model is accessible to the MBT tool and can be used to check that the implementation correctly implements the requirements."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. If a model is used to automatically generate the code, using it to generate the tests will only test the code generator (which is not the test objective of the project in general).\n\nb) Is correct. If adequate with the test objectives and the MBT tooling, requirements models may be reused and adapted.\n\nc) Is not correct. A low-level architecture model is a structural model than cannot be reused for user acceptance testing.\n\nd) Is not correct. A detailed implementation model is, in general, not reusable for MBT because it focuses on implementation information and not on the requirements for test purposes."
+  },
+  {
+    "id": 19,
+    "lo": "MBT-2.3.6",
+    "k": "K1",
+    "pts": 1,
+    "text": "Consider the following tools supporting the MBT modeling process. Which tool provides support for writing syntactically correct MBT models?\n\nSelect ONE option.",
+    "options": [
+      "a) UML modeling tool.",
+      "b) State/transition diagram editor.",
+      "c) Domain-specific language editor.",
+      "d) All of the above."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. This is a model editor that provides support for writing syntactically correct (MBT) models, but it is not the only one in the list.\n\nb) Is not correct. This is a model editor that provides support for writing syntactically correct (MBT) models, but it is not the only one in the list.\n\nc) Is not correct. This is a model editor that provides support for writing syntactically correct (MBT) models, but it is not the only one in the list.\n\nd) Is correct. All of the above are specialized model editors that know about the syntax of the modeling language used.."
+  },
+  {
+    "id": 20,
+    "lo": "MBT-2.3.7",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following statements regarding iterative model development, review and validation is true?\n\nSelect ONE option.",
+    "options": [
+      "a) At least some parts of the MBT model must be specified to its final degree of detail, before the stakeholders can perform their first review.",
+      "b) Regular reviews of the MBT model are sufficient to assure that tests generated from the MBT model will fulfill the expectations.",
+      "c) Iterative model development allows the MBT tester to start specifying tests early in the development process.",
+      "d) Validation of the MBT model replaces requirements validation."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Especially in a top-down modeling approach, the level of detail is rather low during the first reviews.\n\nb) Is not correct. MBT models may also become quite complex and pure inspections, especially across different diagrams, are no longer sufficient. Validation of the generated test cases is necessary to ensure that the tests fulfill the expectations.\n\nc) Is correct. Iterative model development allows the MBT tester to start specifying tests early in the development process because that can be done first on a higher level of abstraction.\n\nd) Is not correct. MBT supports early requirement validation, but does not replace it. The focus of model validation is completely different."
+  },
+  {
+    "id": 21,
+    "lo": "Term “TestSelectionCriteria”",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which one of the following definitions best describes test selection criteria in the MBT context?\n\nSelect ONE option.",
+    "options": [
+      "a) Model-based testers apply test selection criteria to determine the test cases ready for review.",
+      "b) Test selection criteria are specific to MBT, because they are the only possibility to avoid test case explosion.",
+      "c) Model-based testers apply test selection criteria to guide the generation of test cases or to select test cases in order to limit the size of a test suite.",
+      "d) Test selection criteria are part of the test adaption layer for automated test execution in MBT."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Test selection criteria have nothing to do with reviews.\n\nb) Is not correct. There are other ways to avoid test case explosion.\n\nc) Is correct. This is the definition according to glossary.\n\nd) Is not correct. Test selection criteria are neither part of the test adaption layer, not limited to automated test execution."
+  },
+  {
+    "id": 22,
+    "lo": "Term“ModelCoverage”",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which one of the following definitions best describes model coverage in the MBT context?\n\nSelect ONE option.",
+    "options": [
+      "a) Model coverage characterizes the degree to which model elements are planned to be or have been exercised by a test suite.",
+      "b) Model coverage characterizes the degree to which the previously defined requirements are covered by the MBT model.",
+      "c) Model coverage defines a random coverage of the model expressed as percentage.",
+      "d) Model coverage is a white box test selection criteria measured during test execution."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. This is the definition according to glossary.\n\nb) Is not correct. Model coverage refers to the generated test cases (not requirements).\n\nc) Is not correct. Model coverage is not directly related to random coverage.\n\nd) Is not correct. In the MBT context, model coverage relates to the MBT model, not to the code."
+  },
+  {
+    "id": 23,
+    "lo": "MBT-3.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "The following list enumerates different statements about MBT test case selection. Two of them do NOT describe coverage-based test selection. Which ones?\n\nSelect TWO options.",
+    "options": [
+      "a) The selected tests cover the requirements linked to model elements.",
+      "b) The selected tests check all transitions in the state transition diagram except one.",
+      "c) The selected tests cover specific, previously defined scenarios.",
+      "d) The selected tests cover all tests that require some specific equipment.",
+      "e) The selected tests check all equivalence partitions defined for a given data domain."
+    ],
+    "answer": [
+      2,
+      3
+    ],
+    "explanation": "a) Is not correct. This scenario describes requirement-based test selection.\n\nb) Is not correct. This scenario describes a situation, where transition coverage was the aim, but has not been reached.\n\nc) Is correct. This scenario describes scenario-based test selection.\n\nd) Is correct. This scenario describes project-driven test selection.\n\ne) Is not correct. This scenario describes a specific case of data coverage."
+  },
+  {
+    "id": 24,
+    "lo": "MBT-3.1.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "The system under test is an online booking portal. From the MBT model shown in the figure, several sets of test cases can be selected.\n\n[[asset:p15-1]]\n\nWhat is the minimum number of test cases required to obtain 100% branch coverage?\n\nSelect ONE option.",
+    "options": [
+      "a) 1",
+      "b) 2",
+      "c) 3",
+      "d) 4"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. There is no way to cover “Room available = yes” and “Given up = yes” in one path.\n\nb) Is correct. It is possible to cover all decision points with two paths (e.g. “Start -> Search hotel (yes) -> Request reservation (yes) -> Confirm reservation (yes) -> End” and “Start -> Search hotel (no) -> Search hotel (yes) -> Request reservation (no) -> End”).\n\nc) Is not correct. It is possible to obtain 100% branch coverage with three test cases, but the minimum number is two.\n\nd) Is not correct. It is possible to obtain 100% branch coverage with four test cases, but the minimum number is two."
+  },
+  {
+    "id": 25,
+    "lo": "MBT-3.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following statements is a typical combination of test selection criteria for an MBT model?\n\nSelect ONE option.",
+    "options": [
+      "a) Path coverage on structural models.",
+      "b) Transition coverage on business process models.",
+      "c) Gateway coverage on textual models.",
+      "d) Transition coverage on state transition diagrams."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. In some sense, it is possible to tests \"paths\" in structural MBT models by, for example, creating objects of given types (for a class diagram) and check the relations between them defined by the edges. However, this is NOT common practice in industry.\n\nb) Is not correct. A business process represents business flows, NOT states and transitions.\n\nc) Is not correct. Gateways are a modeling element used for business process modeling, not for textual models.\n\nd) Is correct. Transition coverage is a common criterion for state transition diagrams."
+  },
+  {
+    "id": 26,
+    "lo": "MBT-3.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "MBT does not replace other test techniques, but supports them.\n\nWhich two of the following statements can be considered as correct regarding this support?\n\nSelect TWO options.",
+    "options": [
+      "a) It is possible to model boundary values in the MBT model.",
+      "b) MBT allows the combination of behavioral MBT models with decision tables.",
+      "c) Use case testing without models is impossible.",
+      "d) MBT only supports verification activities, but no validation activities.",
+      "e) State machine modeling is the only way to use MBT."
+    ],
+    "answer": [
+      0,
+      1
+    ],
+    "explanation": "a) Is correct. For example in activity diagrams, each boundary value may be represented by an action.\n\nb) Is correct. Decision table is part of test techniques.\n\nc) Is not correct. Even if it is always recommended to work with models, use case testing without models is possible.\n\nd) Is not correct. MBT supports validation activities very well.\n\ne) Is not correct. State machine is a possible modeling language for MBT, but not the only one."
+  },
+  {
+    "id": 27,
+    "lo": "MBT-3.2.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Tooling plays an important role in model-based testing and influences the degree of test artifact generation.\n\nWhich one of the following statements regarding automated test artifact generation is most correct?\n\nSelect ONE option.",
+    "options": [
+      "a) MBT automatically implies tool-based test artifact generation.",
+      "b) Even in a completely automated MBT approach, some post-processing of the generated test artifacts is required prior to test execution.",
+      "c) Even if a test artifact generator is used, manual test case selection may add value to the test process.",
+      "d) Only test cases can be automatically generated from an MBT model."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. This is a common misunderstanding. An MBT approach without test generation tools has low maturity, but it is definitely an MBT approach.\n\nb) Is not correct. In the highest maturity approach, the model is the master and the derived artifacts are used as is without further post-processing.\n\nc) Is correct. A common usage of MBT is to let the tool generate test cases following some coverage criteria and to manually add some specific scenario-based tests.\n\nd) Is not correct. More artifacts like test scripts or traceability matrix can be automatically generated from an MBT model."
+  },
+  {
+    "id": 28,
+    "lo": "MBT-3.2.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "The following MBT model describes the main user activities of a change request management system:\n\n[[asset:p17-1]]\n\nWhich of the following statements regarding test selection criteria is correct?\n\nSelect ONE option.",
+    "options": [
+      "a) To test the usage profiles given in the note, stochastic test case selection is not useful.",
+      "b) 100% transition coverage is the best test selection criterion to check the change request management workflow.",
+      "c) Scenario-based test case selection allows you to select specific sequences from the model.",
+      "d) It is possible to achieve 100% requirements coverage with the given information."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. In the note, the probabilities are given to be used by stochastic test case selection.\n\nb) Is not correct. The entire model is not really apt to test the workflow.\n\nc) Is correct. Selecting specific paths is exactly the idea of scenario-based test selection. An example for such a scenario is: Create request 1, Solve request 1, Create request 2, Create request 3, Solve request 3, View statistics\n\nd) Is not correct. We know nothing about the requirements. To apply requirements coverage as selection criterion, we need at least a link to a requirement in the MBT model."
+  },
+  {
+    "id": 29,
+    "lo": "MBT-3.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following statements regarding test selection criteria applied to MBT models in practice is most correct?\n\nSelect ONE option.",
+    "options": [
+      "a) In MBT, testers avoid combining test selection criteria.",
+      "b) Combining test selection criteria always decreases the number of test cases.",
+      "c) Combining test selection criteria may increase the number of test cases.",
+      "d) The correct way to combine test selection criteria is to apply full requirements coverage first and then another criterion."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Combining test selection criteria is a good MBT practice.\n\nb) Is not correct. This is only true for composition of criteria (intersection).\n\nc) Is correct. We may add the test cases obtained with different test selection criteria to obtain a larger set of test cases, which fits the test objective better.\n\nd) Is not correct. This is a possible, but not the only way to combine test selection criteria."
+  },
+  {
+    "id": 30,
+    "lo": "Term“OnlineMBT”",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which one of the following statements best defines online model-based testing?\n\nSelect ONE option.",
+    "options": [
+      "a) A model-based testing approach whereby test cases are generated and executed simultaneously.",
+      "b) The term \"Online MBT\" covers all model-based testing approaches where the generated test cases are automatically executed.",
+      "c) Online MBT refers to model-based testing approaches using semi-automated tool support.",
+      "d) A model-based testing approach whereby test cases are generated using project-based coverage criteria."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. This is the definition according to glossary.\n\nb) Is not correct. Automated test execution is not a specific characteristic of online MBT (with respect to offline MBT).\n\nc) Is not correct. Online and offline MBT are two different MBT approaches, which differ in the way the test cases are generated. Online MBT requires even more automated tool support than offline MBT.\n\nd) Is not correct. Online MBT is not specifically related to project-based coverage criteria."
+  },
+  {
+    "id": 31,
+    "lo": "MBT-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A test team decided to use an MBT approach in the context of an HRMS – Human Resources Management System - testing project. They first produce an MBT model reflecting the main business processes with high level business actions, but without detailed test actions and concrete data values.\n\nWhich one of the following statements regarding high-level and low-level test cases is most true in this project context?\n\nSelect ONE option.",
+    "options": [
+      "a) The test team can generate low-level test cases from this MBT model and execute them automatically without further adaptation.",
+      "b) In order to obtain low-level test cases from this MBT model, additional MBT tools are required.",
+      "c) The generated test cases are sufficiently detailed if executed manually by a certified tester.",
+      "d) The test team can provide input for the test adaptation layer required to generate the low- level test cases."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. The MBT model developed so far in the project does not contain sufficient information to generate low-level test cases for automated execution.\n\nb) Is not correct. It is possible to add the required information on detailed test actions and data values in the MBT model and to generate low-level test cases using the same MBT tool as before.\n\nc) Is not correct. It strongly depends on the degree of abstraction of the MBT model, whether an experienced tester will be able to execute the generated test cases. However, the tester qualification has to be domain- (and even project-) specific to enable him or her.\n\nd) Is correct. The information provided by the test team about the test cases, the keywords used in the test cases and the test data is needed to develop and validate the implementation of the adaptation layer."
+  },
+  {
+    "id": 32,
+    "lo": "MBT-4.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following statements regarding MBT methods for test execution is true?\n\nSelect ONE option.",
+    "options": [
+      "a) MBT is not used with manual test execution.",
+      "b) When using offline MBT test execution, generated test cases can be exported to the test management tool.",
+      "c) Online test execution is generally applied with manual test execution.",
+      "d) Offline execution implies test generation and test execution simultaneously."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. MBT is used with manual and automated test execution.\n\nb) Is correct. Offline MBT test execution is often linked with exporting of generated tests to the test management tool.\n\nc) Is not correct. In principle, online test execution cannot be used with manual test execution (because of the large number of tests obtained from the MBT model).\n\nd) Is not correct. Offline test execution means that the test cases are generated first and executed afterwards."
+  },
+  {
+    "id": 33,
+    "lo": "MBT-4.1.3",
+    "k": "K3",
+    "pts": 1,
+    "text": "The test team created a first version of an MBT model for testing a car navigation system:\n\n[[asset:p19-1]] Now, a new requirement turned up. It shall be possible to interrupt the navigation in order to change the destination or to abort the navigation. The test team decided to add a new transition triggered by the event “userInterrupt”, plus a new state “Navigation interrupted” to the existing MBT model. Therefore, the test team created a second version of the MBT model:\n\n[[asset:p19-2]]\n\nWhich two of the following combination of adaptations of this second MBT model are correct in order to cover the new requirement in the MBT model?\n\nSelect TWO options.",
+    "options": [
+      "a) Add a transition “abortNavigation” between the state “Navigation active” and the end state.",
+      "b) Add a transition with trigger “changeDestination” between the existing state “Navigation inactive” and the existing state “Navigation active”.",
+      "c) Add a transition with trigger “abortNavigation” between the new state “Navigation interrupted” and the existing state “Navigation inactive”.",
+      "d) Add a transition with trigger “changeDestination” between the new state “Navigation interrupted” and the existing state “Navigation active”.",
+      "e) Add a guard “False” to the transition between the state “Navigation active” and the state “Navigation interrupted”."
+    ],
+    "answer": [
+      2,
+      3
+    ],
+    "explanation": "a) Is not correct. Distractor; This may be a part of a possible alternative solution, but in the given situation, it is wrong, because it short-circuits the state “Navigation interrupted”.\n\nb) Is not correct. Distractor; This may be a part of a possible alternative solution, but in the given situation, it is wrong, because it short-circuits the state “Navigation interrupted”.\n\nc) Is correct. see figure below\n\nd) Is correct. see figure below\n\ne) Is not correct. There is no decision this guard refers to.\n\n[[asset:answer-q33]]"
+  },
+  {
+    "id": 34,
+    "lo": "MBT-4.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A test team is using MBT to generate manual test scripts at system testing level.\n\nWhich one of the following statements regarding MBT test adaptation for test execution is most true?\n\nSelect ONE option.",
+    "options": [
+      "a) In the case of manual test execution, testers need to read the MBT model to proceed to manual test execution.",
+      "b) If high-level test cases are generated from the MBT model, a test automation engineer has to develop the test adaptation layer prior to any test execution.",
+      "c) In the case of automated test execution, the test automation engineer adds test adaptation layer information to the MBT model to enable automated generation of low-level test cases.",
+      "d) In general, specifying a test adaptation layer helps separating platform- and implementation-specific aspects from business workflows and rules to be tested."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. The test team generates manual test scripts, so testers do NOT need to read the MBT model during manual test execution\n\nb) Is not correct. The answer is true for automated test execution, but not in general.\n\nc) Is not correct. The test automation engineer implements the test adaptation layer according to information, which may be contained in the MBT model or provided externally.\n\nd) Is correct. It is a good practice to keep the MBT model at a higher abstraction level and to separate logical aspects from implementation details."
+  },
+  {
+    "id": 35,
+    "lo": "MBT-5.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following expected benefits of MBT may best lead to a financial benefit for the test effort?\n\nSelect ONE option.",
+    "options": [
+      "a) Process automation and reuse effects.",
+      "b) Higher number of test cases automatically generated from the MBT model compared to a set of manually created test cases.",
+      "c) Systematic coverage of the MBT model.",
+      "d) Reducing the time-to-market."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Process automation reduces effort due to reduced manuals errors. Reuse reduces effort in general.\n\nb) Is not correct. Rather it increases the testing costs, since a higher number of test cases leads to increasing test execution effort.\n\nc) Is not correct. Rather it may increase the testing costs, since an improvement in systematic coverage for itself leads to a higher coverage and thus may lead to a higher number of test cases compared to a set of manually created test cases increasing the test execution effort.\n\nd) Is not correct. This can lead to a financial benefit for the product vendor (e.g. due to higher market acceptance) but it will not lead to direct financial benefits for the test project."
+  },
+  {
+    "id": 36,
+    "lo": "MBT-5.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "A company decided to deploy an MBT approach to test an embedded satellite flight guidance system, at the system testing level for functional testing. The motivation for using MBT is to improve the testing process.\n\nWhich one of the following characteristics of the MBT approach is the most relevant in this context?\n\nSelect ONE option.",
+    "options": [
+      "a) The company combines various types of test selection criteria to achieve test objectives, and monitors requirement coverage through MBT tests.",
+      "b) In the case where models for code generation are used, these models are fully reused for MBT without modification.",
+      "c) All tests are executed manually.",
+      "d) The MBT models are limited to structural aspects."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Combining test selection criteria and coverage monitoring improves the quality of testing.\n\nb) Is not correct. Separate models for development and MBT activities (enabling the tester’s mindset and encouraging independence) help to improve the quality of testing.\n\nc) Is not correct. High degree of process automation including the generation of test artifacts and the execution of tests to reduce human errors\n\nd) Is not correct. Functional testing requires that behavioral aspects are modeled."
+  },
+  {
+    "id": 37,
+    "lo": "MBT-5.1.3",
+    "k": "K1",
+    "pts": 1,
+    "text": "A company decided to use MBT for acceptance testing of a transport ticketing system.\n\nWhich one of the following metrics would a test manager use to best measure the progress of MBT activities?\n\nSelect ONE option.",
+    "options": [
+      "a) The number of requirements managed and traced in the MBT model, and requirements coverage (percentage) by generated test cases",
+      "b) The effort (in person-days) done for code development.",
+      "c) The number of bugs discovered in the component testing phase.",
+      "d) The effort (in person-days) spent on developing test models and applying test selection criteria."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct.\n\nb) Is not correct. In this context, MBT is used for acceptance testing and has no impact on code development.\n\nc) Is not correct. In this context, MBT is used for acceptance testing and has no impact on component testing.\n\nd) Is not correct. The spent effort is not the best measure for progress in this context."
+  },
+  {
+    "id": 38,
+    "lo": "MBT-5.2.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "An MBT approach is deployed in a project. Which one of the following statements describes good practice?\n\nSelect ONE option.",
+    "options": [
+      "a) Deploying MBT with manual test execution requires additional risk management.",
+      "b) Configuration management does not have to cover the MBT models, if the generated test cases are controlled.",
+      "c) For projects applying continuous integration, MBT should be used for higher test levels only (system testing, user acceptance testing).",
+      "d) Establishing traceability between requirements and MBT model elements is part of an MBT approach."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. MBT can be used for manual and automated testing. The risk is higher for projects using test automation.\n\nb) Is not correct. Configuration management should be used for MBT models.\n\nc) Is not correct. Using MBT automated test scripts in continuous integration is a good practice.\n\nd) Is correct. Traceability between requirements and MBT model elements is mandatory to produce the traceability matrix between test cases and requirements and to apply requirement coverage-based test selection."
+  },
+  {
+    "id": 39,
+    "lo": "MBT-5.2.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Cost factors of MBT relate to initial costs and running costs. Which one of the following is an initial MBT cost?\n\nSelect ONE option.",
+    "options": [
+      "a) MBT modeling and model validation efforts.",
+      "b) MBT tool evaluation.",
+      "c) Test adaptation efforts.",
+      "d) Tooling support costs."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. MBT modeling is a running cost.\n\nb) Is correct. Evaluating tools is an initial cost.\n\nc) Is not correct. Test adaptation efforts are running cost.\n\nd) Is not correct. Tooling is a running cost (because of tool maintenance)."
+  },
+  {
+    "id": 40,
+    "lo": "MBT-5.2.3",
+    "k": "K1",
+    "pts": 1,
+    "text": "An MBT approach is used for a hospital management software project at the system testing level. A test management tool and a test automation framework are used in the project. The requirements are stored in a spreadsheet.\n\nWhich one of the following statements regarding MBT tool integration describes a typical situation?\n\nSelect ONE option.",
+    "options": [
+      "a) The MBT tool exports the generated test cases to the test management tool.",
+      "b) To generate automated test scripts for the test automation framework, both tools must be from the same vendor.",
+      "c) Requirements are specified in the MBT tool and synchronized with the test management tool.",
+      "d) The test automation framework automatically mirrors the test results back into the model."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. The export of generated test cases into the test management tool is a good practice.\n\nb) Is not correct. Most MBT tools provide features to configure different output formats and, thus, generate automated test scripts in a format compatible with the test automation framework.\n\nc) Is not correct. Usually, requirements are imported into the MBT tool to support traceability.\n\nd) Is not correct. In some cases, it is possible to mirror execution results back into the MBT model, but this required specific tool support and is not common practice."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 60 * 60;
+      const EXT_SECONDS = 75 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "75"
+          : "60";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 75:00 (60 minutes + 25% practice time). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 60:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {"p8-1": {"src": "assets/ISTQB_CT-MBT_v1.1_Sample-Exam-A-Questions_v1.2/p8-1.png", "alt": "Diagram from the source question", "kind": "diagram", "page": 8}, "p9-1": {"src": "assets/ISTQB_CT-MBT_v1.1_Sample-Exam-A-Questions_v1.2/p9-1.png", "alt": "Diagram from the source question", "kind": "diagram", "page": 9}, "p10-1": {"src": "assets/ISTQB_CT-MBT_v1.1_Sample-Exam-A-Questions_v1.2/p10-1.png", "alt": "Diagram from the source question", "kind": "diagram", "page": 10}, "p10-2": {"src": "assets/ISTQB_CT-MBT_v1.1_Sample-Exam-A-Questions_v1.2/p10-2.png", "alt": "Diagram from the source question", "kind": "diagram", "page": 10}, "p15-1": {"src": "assets/ISTQB_CT-MBT_v1.1_Sample-Exam-A-Questions_v1.2/p15-1.png", "alt": "Diagram from the source question", "kind": "diagram", "page": 15}, "p17-1": {"src": "assets/ISTQB_CT-MBT_v1.1_Sample-Exam-A-Questions_v1.2/p17-1.png", "alt": "Diagram from the source question", "kind": "diagram", "page": 17}, "p19-1": {"src": "assets/ISTQB_CT-MBT_v1.1_Sample-Exam-A-Questions_v1.2/p19-1.png", "alt": "Diagram from the source question", "kind": "diagram", "page": 19}, "p19-2": {"src": "assets/ISTQB_CT-MBT_v1.1_Sample-Exam-A-Questions_v1.2/p19-2.png", "alt": "Diagram from the source question", "kind": "diagram", "page": 19}, "answer-q33": {"src": "assets/ISTQB_CT-MBT_v1.1_Sample-Exam-A-Answers_v1.2/q33-solution.png", "alt": "Corrected navigation state model showing the transitions required by answers c) and d) in question 33", "kind": "diagram", "page": 18}};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          if (asset.html) return `<div class="q-table-wrap">${asset.html}</div>`;
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Open to enlarge</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagram for Question ${q.id}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

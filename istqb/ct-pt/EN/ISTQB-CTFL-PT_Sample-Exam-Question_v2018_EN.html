@@ -1,0 +1,1970 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CT-PT v2018 — Sample Exam 2018</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Specialist Level</div>
+        <h1>CT-PT v2018<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">ISTQB® Certified Tester Performance Testing · Sample Exam 2018 · Syllabus v2018. The timer starts when you begin the exam.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">90</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Source: ISTQB® — ISTQB-CTFL-PT_Sample-Exam-Question_v2018_EN.pdf; ISTQB-CTFL-PT_Sample-Exam-Answers_v2018_EN.pdf. Copyright © ISTQB®. Questions, tables, diagrams and rationales follow these sources. Authors are acknowledged in the source PDFs.</p>
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">90 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">112.5 min</span>
+            <span class="time-opt-lbl">+25% practice time</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optional practice allowance: 25% extra time (22 minutes 30 seconds).</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 90:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CT-PT v2018 · Sample Exam 2018</span
+            >
+            <span class="exam-title">Certified Tester – Performance Testing</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 answered
+            </div>
+            <div class="timer" id="timer">90:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 questions (40 points) · <strong>65% (≥ 26 of 40 points)</strong>
+            to pass · each question is worth one point; select one answer per question
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "PTFL-1.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is an important principle in performance testing?\n\nSelect ONE option.",
+    "options": [
+      "a) The tests should be easy to create and understand",
+      "b) The test results must be reproducible when the system under test is unchanged",
+      "c) The tests should be executed in the production environment to provide the most accurate results",
+      "d) The test results should match the stakeholders’ expectations for system performance"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. Reproducible results is a key factor in performance test execution. The results should be statistically identical when run on the same unchanged system. A is not correct because tests are sometimes quite complex to create. C is not correct because tests generally should not be run in the actual production environment, but rather a representative equivalent. D is not correct because the test results may show that the system does not meet expectations."
+  },
+  {
+    "id": 2,
+    "lo": "PTFL-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is the best description of spike testing?\n\nSelect ONE option.",
+    "options": [
+      "a) It focuses on the ability of the system to handle loads that are gradually increased to reach the expected maximum",
+      "b) It focuses on the ability of the system to handle loads that are at or beyond the expected peak load",
+      "c) It focuses on the ability of the system to meet future efficiency requirements",
+      "d) It focuses on the ability of the system to respond to quick and extreme changes in load"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct. This is a description of spike testing. A is a description of load testing. B is a description of stress testing. C is a description of scalability testing."
+  },
+  {
+    "id": 3,
+    "lo": "PTFL-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is the best description of load testing?\n\nSelect ONE option.",
+    "options": [
+      "a) It focuses on the ability of the system to handle loads that are gradually increased to reach the expected maximum",
+      "b) It focuses on the ability of the system to handle loads that are at or beyond the expected peak load",
+      "c) It focuses on the ability of the system to meet future efficiency requirements",
+      "d) It focuses on the ability of the system to respond to quick and extreme changes in load"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. This is a description of load testing. B is a description of stress testing. C is a description of scalability testing. D is a description of spike testing."
+  },
+  {
+    "id": 4,
+    "lo": "PTFL-1.3.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following performance testing activities should occur during unit testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Testing end-to-end behavior under various load conditions",
+      "b) Testing data flows and workflows across interfaces",
+      "c) Testing key use cases and workflows using a top-down approach",
+      "d) Testing to evaluate resource utilization and potential bottlenecks"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct. While this can occur at any time, it should start with unit testing. A is not correct because this occurs at system or SIT. B is not correct because this occurs during SIT. C is not correct because this is done during integration testing"
+  },
+  {
+    "id": 5,
+    "lo": "PTFL-1.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "When is it appropriate to generate load via the application’s APIs?\n\nSelect ONE option.",
+    "options": [
+      "a) When a large number of testers are available who can represent the real users",
+      "b) When testing must be conducted at the communications protocol level",
+      "c) When the UI is likely to change but the transactions must be processed as if they were created through the UI",
+      "d) When only small numbers of test instances are available"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct. Testing through the API makes the most sense when the UI is likely to change, but the full communication to and from the UI must be tested. A is not correct because this is crowd testing and these testers would be using the real UI. B is not correct because the communications protocol level is one level below the API level. D is not correct because many test instances can be created with API testing."
+  },
+  {
+    "id": 6,
+    "lo": "PTFL-1.5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "If you have an application that has a memory leak, what is the likely result you will see during performance testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Response time will be consistently slow",
+      "b) Response time will remain acceptable but the error handling will degrade",
+      "c) Response time will be slow, but only under heavy loads",
+      "d) Response time will degrade over time"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct. With a memory leak, response time will degrade over time (the time length is unknown though until you test it). A is an indication of underlying performance issues such as bad design, under-powered hardware, network latency, etc. B is an indication of resource pool or queue or stack issues as well as invalid timeout settings. C is an indication that some of the resources may become saturated, but only at high loads"
+  },
+  {
+    "id": 7,
+    "lo": "PTFL-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is a true statement regarding tracking metrics for network latency during a performance test?\n\nSelect ONE option.",
+    "options": [
+      "a) High latency could indicate a network bandwidth problem that could negatively impact performance",
+      "b) Low latency could indicate a network bandwidth problem that could negatively impact performance",
+      "c) Network latency is difficult to track and should not be included in the performance metrics",
+      "d) Network latency is too variable to be useful during performance tuning"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. A high latency means that there are delays occurring in the network which may be due to inadequate bandwidth. B is not true because low latency is a good thing. C is not true because this is trackable with the right tools. D is not true because if there is variability, that needs to be understood as part of the performance tests."
+  },
+  {
+    "id": 8,
+    "lo": "PTFL-2.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Should performance test results be aggregated?\n\nSelect ONE option.",
+    "options": [
+      "a) Yes, this gives a better overall picture of the performance of the system and helps to identify trends",
+      "b) Yes, this is the best way to focus on the outliers in the performance metrics",
+      "c) No, the results should be analyzed individually so that all variations are understood",
+      "d) No, the results from each test should be reported and tracked separately"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. Aggregated results help to provide the big picture and to observe consistent trends. Aggregating the results helps to identify and understand the importance of outliers and to know which ones are interesting vs just test aberrations. B is not correct because aggregated results will eliminate the information on the outliers. C is not correct because aggregation allows you to see the big picture rather than focusing on the individual results which may be due to transient system noise. It is unlikely to ever reach the point where “all” variations are understood. D is not correct because this type of reporting will be too difficult for stakeholders to understand and may focus on the highly unlikely situations."
+  },
+  {
+    "id": 9,
+    "lo": "PTFL-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "In what way are log analysis tools helpful for collecting metrics?\n\nSelect ONE option.",
+    "options": [
+      "a) They monitor the systems while the performance tests are conducted and report on the behavior during the tests",
+      "b) They create the system load and monitor the system performance",
+      "c) They scan the various server logs and compile metrics for occurrences that were recorded during the test execution",
+      "d) They write the performance results to the server logs for later manual analysis"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct. The log analysis tools scan the server logs for particular error types (high usage, memory errors, etc.) and report on those. A is not correct as these are general system monitoring tools. B is not correct as these are performance testing tools. D is not correct because the performance test results aren’t written to the logs, rather the system activities during the performance tests are written to the logs."
+  },
+  {
+    "id": 10,
+    "lo": "PTFL-2.4.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is a failure that would typically be found by conducting a spike test?\n\nSelect ONE option.",
+    "options": [
+      "a) The system performance gradually degrades",
+      "b) The system provides inconsistent responses to errors",
+      "c) The system handles a sudden burst of activity, but can’t resume a steady state",
+      "d) The system performs well for the expected load, but can’t scale to a larger load"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct. This is a description of a failure that has resulted from a spike test. A is not correct as this is a result of an endurance test. B is not correct because this is an example of resource degradation over time. D is not correct because this is the result of a scalability test."
+  },
+  {
+    "id": 11,
+    "lo": "PTFL-3.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "When applying the principal performance testing activities, when should risk identification and analysis occur?\n\nSelect ONE option.",
+    "options": [
+      "a) Test planning",
+      "b) Test analysis and design",
+      "c) Test implementation and execution",
+      "d) Test closure"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. Risk identification and analysis is done at the test planning stage. This information is then used for the analysis and design of the tests. B, C and D are incorrect because this is too late in the process."
+  },
+  {
+    "id": 12,
+    "lo": "PTFL-3.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "When applying the principal performance testing activities, when should the test cases be ordered into performance test procedures?\n\nSelect ONE option.",
+    "options": [
+      "a) Test planning",
+      "b) Test analysis and design",
+      "c) Test implementation and execution",
+      "d) Test closure"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct. This should occur during the test implementation and execution activities. A and B are incorrect because this is when the test cases are planned and designed. D is incorrect because this is too late."
+  },
+  {
+    "id": 13,
+    "lo": "PTFL-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Consider the following technical environments:\n\n1. Single computer\n\n2. Multi-tier system\n\n3. Distributed\n\n4. Virtualized\n\n5. Dynamic/Cloud-based\n\n6. Client/Server and Browser-based\n\n7. Mobile\n\n8. Embedded\n\n9. Mainframe\n\nWhich of these is most likely to have a performance risk due to connectivity issues?\n\nSelect ONE option.",
+    "options": [
+      "a) 2, 3",
+      "b) 7, 8",
+      "c) 5, 6, 7, 9",
+      "d) 2, 4, 5, 8"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct according to the syllabus. Mobile and embedded environments are particularly prone to connectivity issues particularly when embedded software is used in the IoT devices. A and D are incorrect because these environments are not prone to connection dropping. C is incorrect because other than #7, the other environments are not prone to connection dropping."
+  },
+  {
+    "id": 14,
+    "lo": "PTFL-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Consider the following technical environments:\n\n1. Virtualized\n\n2. Dynamic/Cloud-based\n\n3. Client/Server and Browser-based\n\n4. Mobile\n\n5. Embedded\n\n6. Mainframe\n\nWhich of these is most likely to have a performance risk due to memory leaks?\n\nSelect ONE option.",
+    "options": [
+      "a) 1, 2, 3, 6",
+      "b) 2, 3, 4, 5",
+      "c) 1, 2, 4, 6",
+      "d) 1, 3, 4, 5"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct. The virtualized environment uses shared resources across different applications, including memory. The dynamic/cloud-based environment are designed to dynamically scale, so while memory leaks may occur, they are less of a risk because the environment will scale to compensate. Client/Server and browser-based environments are prone to memory leaks, particularly since a lot of this code is written in C and C++. Mobile environments are prone to leakage and are particularly at risk due to the limited available memory. The same is true of the embedded environments (and these also tend to be written in languages that have less protection against leaks). Mainframes tend to run older code, often written in the higher level languages that provide their own memory management."
+  },
+  {
+    "id": 15,
+    "lo": "PTFL-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "If performance testing is being conducted for software that is written in C++, what do you need to monitor that wouldn’t be a concern if the software was written in Python?\n\nSelect ONE option.",
+    "options": [
+      "a) Memory use",
+      "b) Network latency",
+      "c) Connectivity",
+      "d) Batch processing"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. C and C++ require the programmer to do their own memory management which sometimes results in memory leaks (where memory is allocated, but not de-allocated). B, C and D would have the same issues regardless of the language used."
+  },
+  {
+    "id": 16,
+    "lo": "PTFL-3.3.1",
+    "k": "K4",
+    "pts": 1,
+    "text": "You are working on a project that tracks health history information for patients across a region. The number of records handled by the system is in the millions due to the large number of patients in the region. Patient information must be accessible to doctors in offices, hospitals and urgent care facilities. The information should be presented to the requestor within three seconds of request, particularly for patients with critical allergies and preconditions.\n\nGiven this information, when is the best time in the project to analyze and assess the performance risks?\n\nSelect ONE option.",
+    "options": [
+      "a) During the requirements phase and again just prior to executing the performance tests",
+      "b) After design but prior to coding",
+      "c) During system testing and again prior to the performance tests",
+      "d) Repeatedly throughout the requirements, development and performance testing"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct. Since performance is critical, the risks must be analyzed as early as possible and then repeatedly as the system is assembled since risks may change both in impact and likelihood. A is not correct because it ignores looking at the risks during development. B is not correct because it leaves out the requirements and development and at the completion of development. C is not correct because it leaves out the requirements and development options for analysis."
+  },
+  {
+    "id": 17,
+    "lo": "PTFL-3.4.1",
+    "k": "K4",
+    "pts": 1,
+    "text": "You are working on a project that tracks health history information for patients across a region. The number of records handled by the system is in the millions due to the large number of patients in the region. Patient information must be accessible to doctors in offices, hospitals and urgent care facilities. The information should be presented to the requestor within three seconds of request, particularly for patients with critical allergies and preconditions.\n\nWhat is the best way to address the performance testing for the response time?\n\nSelect ONE option.",
+    "options": [
+      "a) Test from the UI with the full data set loaded to ensure the response time will be adequate when the database is loaded",
+      "b) Test via the web services at the API level to ensure access to the data is fast enough without having the testing complicated by the UI",
+      "c) Conduct a technical review of the database implementation and conduct a performance test from the UI with the full database loaded",
+      "d) Conduct a network assessment to ensure there are no latency issues between the database server and the web servers, then test with a network scanner to ensure no collisions are occurring that might cause performance delays"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct. The best way to do the testing is to first do a technical analysis because this can be done at the design time. Once implemented, full testing will be needed to verify that the solution does indeed deliver the performance required. A is not correct because this leaves out the static testing. B is not correct because this would bypass any issues that might occur at the UI end and doesn’t consider the database loading. D is not correct because the network is less likely an issue regarding the data handling for such a large amount of data."
+  },
+  {
+    "id": 18,
+    "lo": "PTFL-4.1.1",
+    "k": "K4",
+    "pts": 1,
+    "text": "You are working on a project that tracks health history information for patients across a region. The number of records handled by the system is in the millions due to the large number of patients in the region. Patient information must be accessible to doctors in offices, hospitals and urgent care facilities. The information should be presented to the requestor within three seconds of request, particularly for patients with critical allergies and preconditions.\n\nWhich of the following is a technical objective for performance that could be applicable to this project?\n\nSelect ONE option.",
+    "options": [
+      "a) The response time must be within three seconds from the time the request is sent when there are 100 concurrent users making similar requests",
+      "b) The system must be able to scale to 10 million patient records with no degradation in the performance",
+      "c) The system must perform at or above the level of the legacy system when handling a similar load and responding to a similar request",
+      "d) The response time must remain the same when the disaster recovery system is in use rather than the primary system and the switchover must cause no discernable downtime"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. Scalability is a technical objective for performance. A is not correct because this is a user- based objective. C is not correct because this is also a user-based objective and not a very clear one at that. D is not correct because this is primarily a robustness test rather than a performance test."
+  },
+  {
+    "id": 19,
+    "lo": "PTFL-4.1.2",
+    "k": "K4",
+    "pts": 1,
+    "text": "You are working on a project that tracks health history information for patients across a region. The number of records handled by the system is in the millions due to the large number of patients in the region. Patient information must be accessible to doctors in offices, hospitals and urgent care facilities. The information should be presented to the requestor within three seconds of request, particularly for patients with critical allergies and preconditions. You have been asked to write a performance test plan for this project. Which of the following is the information you will need to deal with the most critical performance objective?\n\nSelect ONE option.",
+    "options": [
+      "a) Who can access what data and how often will they do it",
+      "b) How is user access authenticated and authorized",
+      "c) Where will the data be stored and how much storage is available",
+      "d) What is the expected use of the data after it has been presented to the user"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. Because data retrieval time is critical to the project, you need to know who can access that data (so you can get the user profiles created), what data they will access (so you can be sure you have the right data available) and how often will they access it (so you can set up an operational profile). B is not correct because this is more related to security than performance testing and is not the most critical performance objective. C is not correct because the data storage may be something to investigate if the data retrieval proves slow, but we don’t need to know it to conduct the tests. D is not correct because that is after retrieval and the scenario just discusses presenting the information to the requestor."
+  },
+  {
+    "id": 20,
+    "lo": "PTFL-4.1.3",
+    "k": "K4",
+    "pts": 1,
+    "text": "You are working on a project that tracks health history information for patients across a region. The number of records handled by the system is in the millions due to the large number of patients in the region. Patient information must be accessible to doctors in offices, hospitals and urgent care facilities. The information should be presented to the requestor within three seconds of request, particularly for patients with critical allergies and preconditions. You have been asked to prepare a presentation for the business stakeholders regarding your plan for performance testing. Which of the following is an example set of information that should be shared with these stakeholders?\n\nSelect ONE option.",
+    "options": [
+      "a) Once configured, the performance test system will require data loading. Once loaded, we will next proceed to running a small set of sample scripts to verify the output. When those succeed we will proceed with the performance test script which ramps up users at a rate of 10 per minute until we reach the target number of concurrent users. This load will then be maintained for 2 hours.",
+      "b) The performance test system will cost $240,000 which will include the hardware and setup. This system will allow us to create a test system that is representative of the production system and will allow us to simulate production-like conditions.",
+      "c) Because the cost of a performance test system is prohibitive, we will conduct the performance testing in the production environment using live data.",
+      "d) The product risks include data contention issues, data access issues, locking issues that will reject concurrent requests, network bandwidth constraints, data seek errors, data seek slowdowns or bottlenecks, and difficulty for the user in processing the returned data."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. This is information that should be conveyed to the business stakeholders. A is not correct because this is information that should be shared with the technical stakeholders. C is not correct because it is incomplete. If testing will be conducted in production, mitigation plans must also be made so that any impact to production is understood. D is not correct because this is a list of risks but doesn’t include a list of how the tests will help mitigate these risks."
+  },
+  {
+    "id": 21,
+    "lo": "PTFL-4.1.3",
+    "k": "K4",
+    "pts": 1,
+    "text": "You are working on a project that tracks health history information for patients across a region. The number of records handled by the system is in the millions due to the large number of patients in the region. Patient information must be accessible to doctors in offices, hospitals and urgent care facilities. The information should be presented to the requestor within three seconds of request, particularly for patients with critical allergies and preconditions. You have been asked to prepare a presentation for the technical stakeholders regarding your plan for performance testing. Which of the following is an example set of information that should be shared with these stakeholders?\n\nSelect ONE option.",
+    "options": [
+      "a) Once configured, the performance test system will require data loading. Once loaded, we will next proceed to running a small set of sample scripts to verify the output. When those succeed we will proceed with the performance test script which ramps up users at a rate of 10 per minute until we reach the target number of concurrent users. This load will then be maintained for 2 hours.",
+      "b) The performance test system will cost $240,000 which will include the hardware and setup. This system will allow us to create a test system that is representative of the production system and will allow us to simulate production-like conditions.",
+      "c) Because the cost of a performance test system is prohibitive, we will conduct the performance testing in the production environment using live data.",
+      "d) The product risks include data contention issues, data access issues, locking issues that will reject concurrent requests, network bandwidth constraints, data seek errors, data seek slowdowns or bottlenecks, and difficulty for the user in processing the returned data."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. This is information that should be conveyed to the technical stakeholders because it shows how the tests will be conducted. B is not correct because this is information that should be shared with the business stakeholders. C is not correct because it is incomplete. If testing will be conducted in production, mitigation plans must also be made so that any impact to production is understood. D is not correct because this is a list of risks but doesn’t include a list of how the tests will help mitigate these risks."
+  },
+  {
+    "id": 22,
+    "lo": "PTFL-4.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "If your performance test is testing the speed of the response of a web service, which protocol is being used?\n\nSelect ONE option.",
+    "options": [
+      "a) ODBC",
+      "b) HTTP",
+      "c) REST",
+      "d) SMTP"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. This is an example of a web protocol. A is an example of a database protocol. C is an example of a web service protocol. D is an example of a network protocol."
+  },
+  {
+    "id": 23,
+    "lo": "PTFL-4.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "If your performance test is testing the speed with which database requests are sent and received, which protocol is being used?\n\nSelect ONE option.",
+    "options": [
+      "a) ODBC",
+      "b) HTTP",
+      "c) REST",
+      "d) SMTP"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. This is an example of a database protocol. B is an example of a web protocol. C is an example of a web service protocol. D is an example of a network protocol."
+  },
+  {
+    "id": 24,
+    "lo": "PTFL-4.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "If you are testing from the UI and you need to simulate the amount of time it will take a real user to read a prompt and enter data in a field, what should you implement in your test script?\n\nSelect ONE option.",
+    "options": [
+      "a) Wait time",
+      "b) Think time",
+      "c) Latency time",
+      "d) Reading time"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. This is referred to as think time. A, C and D are incorrect."
+  },
+  {
+    "id": 25,
+    "lo": "PTFL-4.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is the value of nesting transactions for performance testing?\n\nSelect ONE option.",
+    "options": [
+      "a) It supports the concept of parent and child transactions",
+      "b) It allows the tester to measure a series of discrete transactions",
+      "c) It speeds the reporting time for the performance results",
+      "d) It bypasses the network communication time by sending the transaction directly to the server that will process it"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. The discrete transactions can be nested together to provide response information for a series of transactions that would normally be performed together while still allowing measurement of the discrete transactions as well. A is not correct because parent and child transactions may not accomplish anything meaningful in terms of system usage. C is not correct because it will not affect the reporting time, particularly if the discrete transactions are tracked as well. It may increase reporting time. D is not correct because this has nothing to do with bypassing network communications."
+  },
+  {
+    "id": 26,
+    "lo": "PTFL-4.2.3",
+    "k": "K4",
+    "pts": 1,
+    "text": "You are working on a project that tracks health history information for patients across a region. The number of records handled by the system is in the millions due to the large number of patients in the region. Patient information must be accessible to doctors in offices, hospitals and urgent care facilities. The information should be presented to the requestor within three seconds of request, particularly for patients with critical allergies and preconditions. One of the operational profiles you have identified is an emergency room doctor. You have determined that this person will access the system 10 times per shift (a shift is 10 hours) and that they will normally view 6 patient records for each access. They will print those patient records to be retained in the patient’s file at the hospital. They will also enter notes into the database regarding the patient’s treatment. For new patients, another user will enter the information into the system.\n\nGiven this information, what is missing to construct the operational profile for this user class?\n\nSelect ONE option.",
+    "options": [
+      "a) No interviews were conducted to better understand the user class",
+      "b) The number of users across the system for this role is not known",
+      "c) Batch processing of the patient upload information has not been considered",
+      "d) Other system components that may be required (x-ray upload, lab results reporting) have not been considered"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. At this point, we need to know how many users of this type will be accessing the system. We know the concurrency because we can take the number of users and the accesses per shift to figure this out. A is not needed for this instance because we already have the information. C and D are considerations for setting up the load profile but not needed for the operational profile."
+  },
+  {
+    "id": 27,
+    "lo": "PTFL-4.2.4",
+    "k": "K4",
+    "pts": 1,
+    "text": "You are working on a project that tracks health history information for patients across a region. The number of records handled by the system is in the millions due to the large number of patients in the region. Patient information must be accessible to doctors in offices, hospitals and urgent care facilities. The information should be presented to the requestor within three seconds of request, particularly for patients with critical allergies and preconditions. One of the operational profiles you have identified is an emergency room doctor. You have determined that this person will access the system 10 times per shift (a shift is 10 hours) and that they will normally update 6 patient records for each access by entering notes into the database regarding the patient’s treatment. They will print those patient records to be retained in the patient’s file at the hospital. For new patients, another user will enter the information into the system. The shifts these doctors work are: 7am – 5pm (day shift), 2pm – midnight (evening shift), 9pm to 7am (night shift). There are 1000 doctors that work the day shift, 1000 that work the evening shift, and 500 that work the night shift. Assuming an even distribution of the system access across a shift, which of the following is the proper load profile for these doctors?\n\nSelect ONE option.",
+    "options": [
+      "a) 6250 transaction per hour",
+      "b) Steady ramp-up increasing the transactions by 15,000 per hour starting at 15,000 transactions and ending at 150,000 transactions",
+      "c) Stepped ramp-up with 7 hours at 21,000 transactions, 3 hours at 27,000 transactions, 3 hours at 36,000 transactions, 11 hours at 66,000 transactions",
+      "d) Separate tests for 120,000 transactions per hour and 30,000 transactions per hour"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct. See the calculations below. Total transactions should be 2500 doctors x 10 accesses x 6 record updates: 150,000 transactions per day. Hourly load: 7 hours of 500 doctors = 21,000 transactions 11 hours of 1000 doctors = 66,000 transactions 3 hours of 1500 doctors = 27,000 transactions 3 hours of 2000 doctors = 36,000 transactions Doctors per hour in 24 hour clock: 1:00 - 500 2:00 - 500 3:00 - 500 4:00 - 500 5:00 - 500 6:00 - 500 7:00 - 1000 8:00 - 1000 9:00 – 1000 10:00 - 1000 11:00 - 1000 12:00 - 1000 13:00 - 1000 14:00 - 2000 15:00 - 2000 16:00 - 2000 17:00 - 1000 18:00 - 1000 19:00 - 1000 20:00 - 1000 21:00 - 1500 22:00 - 1500 23:00 - 1500 24:00 – 500"
+  },
+  {
+    "id": 28,
+    "lo": "PTFL-4.2.5",
+    "k": "K4",
+    "pts": 1,
+    "text": "You are working on a project that tracks health history information for patients across a region. The number of records handled by the system is in the millions due to the large number of patients in the region. Patient information must be accessible to doctors in offices, hospitals and urgent care facilities. The information should be presented to the requestor within three seconds of request, particularly for patients with critical allergies and preconditions. One of the operational profiles you have identified is an emergency room doctor. You have determined that this person will access the system 10 times per shift (a shift is 10 hours) and that they will normally update 6 patient records for each access by entering notes into the database regarding the patient’s treatment. They will print those patient records to be retained in the patient file at the hospital. For new patients, another user will enter the information into the system. The shifts these doctors work are: 7am – 5pm (day shift), 2pm – midnight (evening shift), 9pm to 7am (night shift). There are 1000 doctors that work the day shift, 1000 that work the evening shift, and 500 that work the night shift. Assuming an even distribution of the system access across a shift, what is the highest number of concurrent accesses on the system from these doctors?\n\nSelect ONE option.",
+    "options": [
+      "a) 1,000",
+      "b) 2,000",
+      "c) 6,000",
+      "d) 12,000"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. The highest concurrent usage is when 2000 doctors are working from 2:00-5:00 in the afternoon. Each doctor has only one access per hour according to the question and that access has up to 6 updates. A, C and D are incorrect."
+  },
+  {
+    "id": 29,
+    "lo": "PTFL-4.2.6",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is one of the advantages to conducting performance tests at the protocol level?\n\nSelect ONE option.",
+    "options": [
+      "a) It’s the easiest method for manual scripting",
+      "b) It’s the best way to evaluate the total user experience",
+      "c) It’s scalable because the client is bypassed",
+      "d) It’s the best way to handle data correlation"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct. This is a scalable method because it bypasses the UI so you can run many of these tests at the same time without requiring the client. A is not correct because this scripting can be quite difficult without using a tool to capture the protocol level communication. B is not correct because the UI is bypassed. D is not correct because data correlation is more difficult because the correlation done at the UI is bypassed."
+  },
+  {
+    "id": 30,
+    "lo": "PTFL-4.2.6",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is the best method to use for verifying that a performance test script added users to a system?\n\nSelect ONE option.",
+    "options": [
+      "a) Check the error output from the script to verify no errors occurred",
+      "b) Manually check via an application to see if the users were created",
+      "c) Use the script to verify through the application that the users were created",
+      "d) Use the script to verify that the users exist in the database"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct. Scripts should contain their own checks that the process has worked and verifying via the database directly is a more efficient way to do it (and more maintainable) than having the script do the verification through the application (which may also be wrong) as this adds to the maintenance requirements of the script. A is not correct because no errors doesn’t mean that it worked – it could just mean that the error handling is also broken. B is not correct because this could be a very time-consuming approach. C is not correct because the application may have a defect that causes it to not find the new users."
+  },
+  {
+    "id": 31,
+    "lo": "PTFL-4.2.7",
+    "k": "K3",
+    "pts": 1,
+    "text": "You are working on a project that tracks health history information for patients across a region. The number of records handled by the system is in the millions due to the large number of patients in the region. Patient information must be accessible to doctors in offices, hospitals and urgent care facilities. The information should be presented to the requestor within three seconds of request, particularly for patients with critical allergies and preconditions. One of the operational profiles you have identified is an emergency room doctor. You have determined that this person will access the system 10 times per shift (a shift is 10 hours) and that they will normally view 6 patient records for each access. They will print those patient records to be retained in the patient file at the hospital. They will also enter notes into the database regarding the patient’s treatment. For new patients, another user will enter the information into the system. You have created a performance script that logs in as a doctor (from a list of doctors) and then performs the patient look ups. When you run the script, the login works, but then you are not able to perform the patient look ups. You are getting an error that indicates the user is not known to the system. What is likely your problem?\n\nSelect ONE option.",
+    "options": [
+      "a) The script is not capturing and re-using the system identifier for the user",
+      "b) You cannot use the same user to log in and do the patient look ups because the user has expired",
+      "c) The script needs to pass the login username/password for each transaction",
+      "d) The login information from the previous user is cached by the system and you need to clear the cache before you can log in as a new user"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. The problem is most likely with the system identifier that is given to that particular user when they login. When they try to do another transaction, that unique identifier needs to be passed to the system so it can provide access to the transaction. B is not correct because there is no indication that this is the problem. C is not correct because the question indicates that the doctor performs multiple lookups per access. D is not correct because if this were happening, it would log in as the previous user, not error out on the login."
+  },
+  {
+    "id": 32,
+    "lo": "PTFL-4.2.7",
+    "k": "K3",
+    "pts": 1,
+    "text": "You are testing a sales application for an e-commerce system. You are particularly interested in the response time for when a user enters text to be used to search for an item in the database. You have noticed that the first time you ran the tests it took 5.00 seconds to respond, but subsequent queries with the same data are responding in 0.01 seconds. What should you have done during your scripting to prevent this issue?\n\nSelect ONE option.",
+    "options": [
+      "a) There’s no issue, the system is just getting faster",
+      "b) You need to log in each time to ensure that the transaction is performed again",
+      "c) You need to be sure the cache is cleared because the query results are probably being cached",
+      "d) You need to use a different user for each test to avoid the user’s information being re-used without being restored"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct. This is a symptom of caching and can be avoided by either varying the data or by clearing the cache. A is not correct and is highly unlikely as systems tend to get slower, not faster, unless there is a caching issue. B is not correct because it’s not the user’s information that is being re-used but rather the search results. D is not correct for the same reason."
+  },
+  {
+    "id": 33,
+    "lo": "PTFL-4.2.8",
+    "k": "K2",
+    "pts": 1,
+    "text": "What happens when the performance test system is not equivalent to the production environment?\n\nSelect ONE option.",
+    "options": [
+      "a) Projections become less reliable and risk increases because the results may not be representative",
+      "b) The tests will tend to run more quickly because they are not burdened by production data",
+      "c) The results will be easier to understand because the system can be configured for a particular test",
+      "d) Projects become more reliable because of the targeted focus and this results in risk being reduced"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. The less like production the performance testing system is, the less reliable are the results and this increases the risk of making incorrect assumptions. B is not correct. It could happen, but not necessarily. C is not correct because there is no reason to think the results would be easier to understand with a different configuration. D is not correct because the project risk would actually be increased in this case."
+  },
+  {
+    "id": 34,
+    "lo": "PTFL-4.2.8",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is a concern when using a properly configured load generation tool to build the background load for the performance tests?\n\nSelect ONE option.",
+    "options": [
+      "a) The load generated will contain invalid data",
+      "b) The load generator may experience performance problems and will not be able to maintain a steady load",
+      "c) The load generated may affect the production system and the production data",
+      "d) The load generator log reports may be difficult to read, resulting in problems with interpreting the performance results"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. A load generator, particularly if you are running multiples on one machine, may slow down enough that it is no longer maintaining the desired load on the system. A and C will not occur if the tool is configured properly. D is not an issue as the load generator is not usually used to generate the performance results – it just creates the load on the system so the performance tests can be conducted."
+  },
+  {
+    "id": 35,
+    "lo": "PTFL-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is the purpose of having a ramp up period at the beginning of performance tests?\n\nSelect ONE option.",
+    "options": [
+      "a) To increase the number of users beyond the desired load",
+      "b) To allow the system to achieve a steady state before taking measurements",
+      "c) To allow the system to achieve an orderly shut down after the tests",
+      "d) To ensure the performance monitoring tools are working"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. The system must have started up and achieved a steady state for valid steady state performance metrics to be gathered. A is not correct because the goal of the ramp up to is to get the number of users to the point desired for the test, not to exceed that number. C is not correct because ramp up is increasing load, not decreasing it getting ready for shut down. D is not correct because this has nothing to do with ramp up and should be tested before any official tests are started."
+  },
+  {
+    "id": 36,
+    "lo": "PTFL-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is a method for testing transient states?\n\nSelect ONE option.",
+    "options": [
+      "a) Steady load testing",
+      "b) Peak and valley testing",
+      "c) Spike testing",
+      "d) Scalability testing"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct. This is achieved with spike tests which force the system to transition between a low load to a high load in a short period of time."
+  },
+  {
+    "id": 37,
+    "lo": "PTFL-4.4.1",
+    "k": "K4",
+    "pts": 1,
+    "text": "You are working on a project that tracks health history information for patients across a region. The number of records handled by the system is in the millions due to the large number of patients in the region. Patient information must be accessible to doctors in offices, hospitals and urgent care facilities. The information should be presented to the requestor within three seconds of request, particularly for patients with critical allergies and preconditions. You have conducted your tests and have determined the following metrics: < 3 second response time: 85% of the time < 5 second response time: 90% of the time <10 second response time: 95% of the time < 60 second response time: 100% of the time\n\nGiven this information, how should you present the results to the stakeholders?\n\nSelect ONE option.",
+    "options": [
+      "a) The test failed, the system is too slow. The requirements should be reviewed to ensure that <3 seconds is required 100% of the time.",
+      "b) 85% of the time the performance goal is met, so the system should be accepted based on industry standards.",
+      "c) The response time for 90% of the tests is probably acceptable, but more tuning is needed to bring down the 95% response time.",
+      "d) The response time for 100% of the tests is unacceptable and tuning will be required to bring it down to <3 seconds."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "A is correct but this is also a problem with the requirements being unclear. Does it have to be less than 3 seconds 100% of the time? Or is it acceptable if it’s 95%? As stated though, the system has failed the test and the requirements should be revisited. C might be a good result if the requirements had been better defined. Right now, they say that 100% must be less than 3 seconds. Realistically though, the 90% time should be investigated to see if there are a few outliers that are bringing it down or if it is always at the 5 second mark. More tuning should be attempted though because this is a critical system and performance could be life or death impacting. B is not correct because the goal didn’t stay 85% of the time was acceptable. D is not correct because tuning to get to below 3 seconds 100% of the time will probably not be possible.",
+    "sourceNote": "Source discrepancy: the official answer column lists C, while the rationale begins “A is correct” and explains that the stated requirement is not met. This exercise retains the published key C; both statements are shown so the source ambiguity is visible."
+  },
+  {
+    "id": 38,
+    "lo": "PTFL-5.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is the purpose of a load generator tool?\n\nSelect ONE option.",
+    "options": [
+      "a) It creates a load on the network to allow testing for collisions",
+      "b) It maintains a load on the user interface to accurately mimic user response time",
+      "c) It feeds data to the dashboard showing how the system is responding to the load",
+      "d) It simulates user behavior according to the operational profiles"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct. This is what a load generator tool does. A is a network analysis tool. B might be a browser testing tool or might not exist. C is a monitoring tool."
+  },
+  {
+    "id": 39,
+    "lo": "PTFL-5.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is a pay-as-you-go tool?\n\nSelect ONE option.",
+    "options": [
+      "a) A tool with a licensing agreement that requires you to pay only for the number of virtual users and instances that you actually use",
+      "b) A server-based tool that provides you with full ownership of the tool for your usage",
+      "c) A monitoring tool that populates the dashboard with pertinent metrics based on what you have paid to monitor",
+      "d) A tool that provides the ability to test from multiple points of presence for load generation"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. This is the description of a pay-as-you-go tool. These are often cloud-based tools but not all cloud- based tools are pay-as-you-go. B, C and D are not correct as these are not descriptions of pay-as-you-go tools."
+  },
+  {
+    "id": 40,
+    "lo": "PTFL-5.2.1",
+    "k": "K4",
+    "pts": 1,
+    "text": "You are working on a project that tracks health history information for patients across a region. The number of records handled by the system is in the millions due to the large number of patients in the region. Patient information must be accessible to doctors in offices, hospitals and urgent care facilities. The information should be presented to the requestor within three seconds of request, particularly for patients with critical allergies and preconditions. You have a technical team conducting the performance tests and they are comfortable with programming the performance test scripts for re-usability and maintainability. You are now looking for a tool to use for this testing. You have found one that is compatible with your environment and will be able to generate a load via the protocols in use. The team has looked at it and they are comfortable that they can code in the tool and will be able to create their scripts with little training. Because there are many stakeholders for this testing, you have verified that the tool provides excellent monitoring and reporting capabilities. You have verified with the various system administrators that they are comfortable with the tool and happy to use its monitoring capabilities in addition to their own tools during the testing.\n\nWhat do you still need to verify before selecting this tool?\n\nSelect ONE option.",
+    "options": [
+      "a) The project schedule",
+      "b) The availability of a record/playback capability for your testers to use",
+      "c) The ability of the tool to meet your requirements for concurrent virtual users",
+      "d) The ease with which your team can code the required performance scripts"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct. At this point you know that your testers are able to code what is needed (which eliminates B and D). The project schedule is not really a factor because any tool will take time to acquire and integrate, but the developers can code in it, so that’s the main schedule factor. What you need to know is can this tool simulate the necessary number of virtual users and, of course, how much will it cost."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 90 * 60;
+      const EXT_SECONDS = 90 * 60 * 1.25;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "112.5"
+          : "90";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 112:30 (90 minutes + 25% practice time). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 90:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          if (asset.html) return `<div class="q-table-wrap">${asset.html}</div>`;
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Open to enlarge</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagram for Question ${q.id}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

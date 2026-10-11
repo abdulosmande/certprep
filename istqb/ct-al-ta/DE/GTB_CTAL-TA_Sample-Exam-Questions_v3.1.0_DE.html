@@ -1,0 +1,1992 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CTAL-TA v3.1 — Probeprüfung 3.1.0 GTB</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .q-text, .option-text, .header-left { min-width: 0; overflow-wrap: anywhere; }
+      .meta-lbl { overflow-wrap: anywhere; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Advanced Level</div>
+        <h1>CTAL-TA v3.1<br /><em>Probeprüfung</em></h1>
+        <p class="start-subtitle">ISTQB® Certified Tester Advanced Level Test Analyst · Probeprüfung 3.1.0 GTB · Lehrplan v3.1. Der Timer startet mit der Prüfung.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Fragen</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">120</span>
+            <div class="meta-lbl">Minuten</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">80</span>
+            <div class="meta-lbl">Punkte</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Bestehen</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Quelle: ISTQB® / German Testing Board — GTB_CTAL-TA_Sample-Exam-Questions_v3.1.0_DE.pdf; GTB_CTAL-TA_Sample-Exam-Answers_3.1.0_DE.pdf. Copyright © ISTQB® / German Testing Board e.V.. Fragen, Tabellen, Diagramme und Begründungen wurden aus diesen Quellen übernommen. Autoren und Übersetzer sind in den Quell-PDFs genannt.</p>
+        <div class="time-option-label">Prüfungsdauer</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">120 Min.</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">150 Min.</span>
+            <span class="time-opt-lbl">+25 % Übungszeit</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optionale Verlängerung der Übungszeit um 25 %: 30 Minuten zusätzlich.</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Prüfung starten
+        </button>
+        <p class="start-note" id="start-note-txt">
+          Der Timer zählt von 120:00 herunter. Nach Ablauf der Zeit wird
+          die Prüfung automatisch abgegeben.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CTAL-TA v3.1 · Probeprüfung 3.1.0 GTB</span
+            >
+            <span class="exam-title">Certified Tester Advanced Level – Test Analyst</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 beantwortet
+            </div>
+            <div class="timer" id="timer">120:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Zurücksetzen
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Abgeben
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 Fragen (80 Punkte) · <strong>Bestanden ab 52 von 80 Punkten (65 %)</strong>
+            · Je Frage sind 1–3 Punkte möglich. Die Anzahl der auszuwählenden Antworten
+            steht bei jeder Frage.
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Prüfung abgeschlossen</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Benötigte Zeit: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Richtig</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Falsch</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Unbeantwortet</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Neustart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Prüfung abgeben?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Abbrechen
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Abgeben
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "TA-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen ist WAHR in Bezug auf die Frage, wann der Test Analyst bei unterschiedlichen Softwareentwicklungslebenszyklusmodellen beteiligt werden sollte?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Beim sequenziellen V-Modell sollte der Test Analyst die Testanalyse gleichzeitig mit der Codierung starten.",
+      "b) Beim sequenziellen V-Modell sollte der Test Analyst die Testanalyse gleichzeitig mit der Spezifikation der Anforderungen starten.",
+      "c) Es gibt bei den unterschiedlichen Softwareentwicklungslebenszyklusmodellen keine Unterschiede hinsichtlich des Zeitpunkts, ab wann Test Analysten beteiligt werden.",
+      "d) Bei agiler Softwareentwicklung sollte der Test Analyst die Testanalyse und den Testentwurf gleichzeitig mit der Codierung starten."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch: Die Testanalyse muss früher beginnen, bei sequenziellen  Lebenszyklusmodellen bereits während der Anforderungsspezifikation.\n\nb) Richtig: Gemäß Lehrplan. Dies ist die richtige Aussage, die beschreibt, wie die Testaktivitäten an den Phasen des sequenziellen Lebenszyklusmodells ausgerichtet werden sollten.\n\nc) Falsch: Laut Lehrplan kann es viele Unterschiede in der zeitlichen Ausrichtung der Testaktivitäten geben.\n\nd) Falsch: Laut Lehrplan wird bei agiler Softwareentwicklung von Anfang an getestet."
+  },
+  {
+    "id": 2,
+    "lo": "TA-1.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Antworten beschreibt die geeignetste und vollständigste Abfolge von Aktivitäten, auf die sich der Test Analyst bei Testanalyse und Testentwurf konzentrieren sollte?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Analyse der Testbasis, Auswahl von Testverfahren, Erstellung abstrakter Testbedingungen zur Risikominderung, Erstellung von Testfällen zur Erzielung der angestrebten Überdeckung der Testbasis, Erstellung von Testfällen zur Risikominderung.",
+      "b) Analyse der Risiken, Erstellung von Testbedingungen, die auf die Risiken ausgerichtet sind, Erstellung abstrakter Testfälle, die die Testbedingungen zur Risikominderung erfüllen, Erstellung aller konkreter Testfälle.",
+      "c) Auswahl von Testverfahren, Erstellung abstrakter Testfälle, die die Testbedingungen erfüllen, Erstellung abstrakter Testfälle zur Risikominderung, Erstellung konkreter Testfälle zur Erzielung der angestrebten Überdeckung.",
+      "d) Analyse der Testbasis, Identifizieren von Testbedingungen mit entsprechendem Detaillierungsgrad für die Testbasis, Hinzufügen von weiteren Testbedingungen zur Risikominderung, Auswahl von Testverfahren zur Erzielung der angestrebten Überdeckung, Entwurf von Testfällen."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Falsch: Bei dieser Antwort werden die Testbedingungen zur Überdeckung der  Testbasis nicht berücksichtigt; zur Überdeckung der Testbasis werden gleich Testfälle ohne Testbedingungen entworfen.\n\nb) Falsch: Diese Option ignoriert die Analyse der User Stories und lässt die Erwähnung der gewünschten Überdeckung weg\n\nc) Falsch: Bei dieser Antwort werden die Testbedingungen überhaupt nicht berücksichtigt; es geht gleich um die Testfälle.\n\nd) Richtig: Testbedingungen zur Risikominderung sind zu den Testbedingungen aus der Testbasis hinzugefügt."
+  },
+  {
+    "id": 3,
+    "lo": "TA-1.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen ist KEIN guter Grund dafür, dass Testfälle von den Stakeholdern überprüft und verstanden werden sollten?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Kunden und Anwender überprüfen die Testfälle, um sie anhand der Anforderungen, Geschäftsprozesse und Geschäftsregeln zu verifizieren.",
+      "b) Der Testmanager überprüft die Testfälle, um die Arbeit des Test Analysten zu kontrollieren und eine Teststrategie für die Organisation zu erstellen.",
+      "c) Tester überprüfen die von anderen Testern geschriebenen Testfälle, um sicherzustellen, dass die Testfälle konsistent, verständlich und von anderen Testern als dem Autor ausführbar sind.",
+      "d) Entwickler überprüfen von Testern erstellte Testfälle, um ihr Verständnis der Anforderungen mit dem der Tester abzugleichen und um Komponententests mit Systemtests abzustimmen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch Verifizieren, ob die Testfälle die Geschäftsprozesse und -regeln  erfüllen, ist ein guter Grund.\n\nb) Richtig Testfälle sollten so erstellt werden, dass sie mit der Teststrategie der Organisation übereinstimmen, nicht umgekehrt\n\nc) Falsch Dies ist ein weiterer guter Grund, denn andere Tester sollten in der Lage sein, die Testfälle zu verstehen und auszuführen.\n\nd) Falsch Die Entwickler müssen sicher sein, dass sie die Anforderungen genauso verstehen wie die Tester, um in der Lage zu sein, Missverständnisse aufzudecken und auch an der Optimierung der Tests mitzuwirken."
+  },
+  {
+    "id": 4,
+    "lo": "TA-1.4.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "Die IT-Abteilung der Versicherungsgesellschaft SecureLife hat das Projekt IQ (Improved Quality bzw. Qualitätsverbesserung) zur Implementierung einer neuen Krankenversicherungsanwendung gestartet. Diese soll die Erfassung von Leistungsansprüchen von Mitarbeitern und Gesellschaftern von Unternehmen oder Verbänden in Online-Transaktionen ermöglichen, die SecureLife- Krankenversicherungsverträge haben. In der neuen Anwendung sollen alle relevanten Informationen über die Mitarbeiter wie deren Alter, Gesundheitszustand usw. registriert werden können. Das Projekt muss darüber hinaus auch die Anforderungen der Personen, die ihre Versicherungsprämie berechnen, der Versicherungsmathematiker und die geltenden Rechtsvorschriften erfüllen. Das Projektteam für IQ verfügt über Tester, bei denen es sich um Benutzer mit umfangreichen Kenntnissen des Geschäftsbereichs handelt, die jedoch keine formale Ausbildung bzw. Schulung im Testen haben. Zeitgleich wurde von der Marketingabteilung der SecureLife ein weiteres Projekt namens HIPPOS (Health Insurance Product Public Order Sales bzw. Öffentlicher Vertrieb von Krankenversicherungsprodukten) gestartet. Ziel ist eine neue Internetanwendung, die es potenziellen Versicherungsnehmern ermöglicht, mit einem Rechner die Versicherungsprämien und mögliche Prämienabzüge aufgrund des Alters und verschiedener Gesundheitsparameter online zu berechnen. Diese Anwendung soll es Kunden außerdem ermöglichen, Krankenversicherungsprodukte online abzuschließen. Das neue Projekt HIPPOS Anwendung wird vom agilen Entwicklungsteam von SecureLife entwickelt und getestet. Das agile Entwicklungsteam hat in den letzten drei Jahren in Zusammenarbeit mit der Marketingabteilung Webanwendungen entwickelt. Das agile Team besteht aus gut ausgebildeten Testern und Entwicklern. Sie haben eine Testautomatisierung für Regressionstests implementiert und verfügen über Checklisten für häufige Fehler und IT-Sicherheitsprobleme, die sie im Rahmen ihrer Projektretropektiven benutzen. Als leitender Test Analyst bei SecureLife wurden Sie gebeten, für die beiden Projekte IQ und HIPPOS Optionen vorzuschlagen, die den erforderlichen Detaillierungsgrad und Dokumentationsumfang der Testfälle in den beiden Projekten betreffen.\n\nWelches sind die BESTEN Optionen?\n\nWählen Sie genau ZWEI Antworten.",
+    "options": [
+      "a) Beim Projekt HIPPOS sollten abstrakte Testfälle erstellt werden, was den Testern Flexibilität bei der Variierung von Details einräumt, um eine höhere Überdeckung zu erzielen.",
+      "b) Im Projekt IQ sollten abstrakte Testfälle erstellt werden. Die Tester sind Fachanwender und daher mit den Geschäftsregeln und Berechnungen vertraut; eine ausführliche Dokumentation ist daher nicht erforderlich.",
+      "c) In beiden Projekten (IQ und HIPPOS) müssen konkrete Testfälle mit umfassender Dokumentation und detaillierten Abläufen erstellt werden.",
+      "d) Im Projekt IQ sollten konkrete Testfälle einschließlich der Dokumentation der Abläufe und mit Verfolgbarkeit zu den Anforderungen erstellt werden.",
+      "e) Im Projekt HIPPOS sollten konkrete Testfälle erstellt und die Abläufe und Testprotokolle dokumentiert werden."
+    ],
+    "answer": [
+      0,
+      3
+    ],
+    "explanation": "a) Richtig: Dies ist die beste Empfehlung für das Projekt HIPPOS; das Team hat  Erfahrung im Testen und in der agilen Softwareentwicklung; zudem handelt es sich bei der Anwendung um eine Online-Marketing-Anwendung, bei der erfahrungsbasiertes Testen auf abstrakter Ebene sehr sinnvoll ist\n\nb) Falsch: Eine der Anforderungen des IQ-Projekts ist die Einhaltung der öffentlichen Gesetzgebung, was im Allgemeinen Rückverfolgbarkeit bedeutet, daher ist dies keine gute Empfehlung. Außerdem haben die Tester nicht viel Testerfahrung, so dass das Testen auf abstraktem Niveau nicht gut ist.\n\nc) Falsch. Keine gute Empfehlung. Es gibt keine Argumente, die den gleichen detaillierten Grad an Dokumentation für das Projekt HIPPOS unterstützen; es ist eine Marketing-Anwendung, die sie bauen.\n\nd) Richtig. Dies ist eine gute Empfehlung, weil die Rückverfolgbarkeit Transparenz über die Überdeckung schafft und die Tester nicht viel Testerfahrung haben\n\ne) Falsch. Es gibt keine Argumente, die den gleichen detaillierten Dokumentationsgrad für das Projekt HIPPOS unterstützen; es handelt sich um eine Marketing-Anwendung, die sie bauen.."
+  },
+  {
+    "id": 5,
+    "lo": "TA-1.4.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "Ein E-Commerce-Unternehmen hat ein Projekt zur Implementierung einer elektronischen Handelsplattform gestartet, die Händlern einen direkten Zugang zu den OTC-Märkten (Over-the- Counter) für festverzinsliche Wertpapiere ermöglicht, die sogenannte B-OTC. Mit Hilfe von B-OTC werden Händler in der Lage sein, Aufträge online an diese Märkte zu übermitteln, um eine schnellere Auftragsausführung zu erreichen. B-OTC wird einen Auftrag in verschiedenen Phasen bearbeiten: - Eine Validierungsphase des Auftrags - Eine Preisbestimmungsphase, in der mehrere Märkte auf der Suche nach dem besten Preis untersucht werden - Eine Ausführungsphase, in der der Auftrag abgeschlossen wird Die Anforderungsspezifikation für B-OTC ist sehr klar, detailliert und ausführlich. B-OTC muss mehreren Vorschriften entsprechen, und eine Auditierung der Tests ist vorgeschrieben. Die Tester sind Fachexperten ohne spezifische Kenntnisse über formales Testen.\n\nWelche der folgenden Aussagen beschreibt auf der Grundlage der gegebenen Informationen am BESTEN den Detaillierungsgrad und die erforderliche Dokumentation der Testfälle in diesem Szenario?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Detaillierte Testabläufe mit konkreten Testfällen und Dokumentation sollten geschrieben werden. Die Verfolgbarkeit von den konkreten Testfällen zu den Anforderungen sollte ebenfalls gewährleistet sein.",
+      "b) Es sollten konkrete Testfälle geschrieben werden, da die Tester Fachexperten sind, die keine ausreichenden Kenntnisse über formales Testen haben.",
+      "c) Abstrakte Testfälle sollten geschrieben werden, da die Anforderungsspezifikation für B-OTC sehr klar, detailliert und umfassend ist.",
+      "d) Abstrakte Testfälle sollten ohne Dokumentationsaufwand geschrieben werden. Die Verfolgbarkeit sollte durch die Verwendung von Namenskonventionen für Testfälle gewährleistet werden."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Richtig: Im Lehrplan heißt es, dass konkrete Testfälle nützlich sind, wenn wir  keine Fehler in der Testbasis erwarten und der Detaillierungsgrad eine unabhängige Überprüfung der Tests, wie z. B. Audits, ermöglicht, während abstrakte Testfälle nützlich sind, wenn keine detaillierte und formale Dokumentation erforderlich ist.\n\nb) Falsch: Tester , die Fachexperten ohne angemessene Kenntnisse des formalen Testens sind, benötigen ohnehin konkrete Testfälle.\n\nc) Falsch: Das gründliche Testen der sehr detaillierten Anforderungsspezifikationen erfordert konkrete Testfälle.\n\nd) Falsch: Beachten Sie, dass die Verfolgbarkeit aus verschiedenen Gründen ein grundlegender Aspekt ist, z.B. wird bei einem Audit fast immer die Umsetzung überprüft. Darüber hinaus sind detaillierte Testabläufe und die Dokumentation der konkreten Testfälle von grundlegender Bedeutung, um die Tester zu unterstützen, die in diesem Szenario keine spezifischen Kenntnisse über formale Tests haben."
+  },
+  {
+    "id": 6,
+    "lo": "TA-1.5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen über Testrealisierungsaktivitäten ist FALSCH?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Test Analysten können Daten erstellen, die bei schlüsselwortgetriebener Testautomatisierung verwendet werden.",
+      "b) Falls eine risikoorientierte Teststrategie verwendet wird, kann die Risikostufe die Reihenfolge, in der die Testfälle ausgeführt werden, vorgeben.",
+      "c) Bei der Erstellung des Testausführungsplans werden manuelle und automatisierte Testdurchführung als unabhängige Aktivitäten betrachtet.",
+      "d) Test Analysten müssen die Verfahren verifizieren, mit denen Daten zur Bewertung des aktuellen Status bezüglich der Endekriterien gesammelt werden."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Falsch (da die Aussage richtig ist): Test Analysten können Daten erstellen,  die bei schlüsselwortgetriebener Testautomatisierung verwendet werden.\n\nb) Falsch (da die Aussage richtig ist): Bei einer risikoorientierten Teststrategie kann die Risikostufe die Reihenfolge, in der die Testfälle ausgeführt werden, zwingend vorgeben.\n\nc) Richtig (da die Aussage falsch ist): Bei der Erstellung des Testausführungsplans müssen Abhängigkeiten zwischen manueller und automatisierter Testdurchführung berücksichtigt werden. Dies sind keine unabhängigen Aktivitäten.\n\nd) Falsch (da die Aussage richtig ist):: Test Analysten müssen die Verfahren verifizieren, mit denen Daten zur Bewertung des aktuellen Status bezüglich der Endekriterien gesammelt werden."
+  },
+  {
+    "id": 7,
+    "lo": "TA-2.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Ein Projekt zur Entwicklung eines Geldwechselautomaten für einen Flughafen ist geplant, und eine Risikobewertung hat gezeigt, dass es 3 Hauptrisiken gibt:\n\n• Es besteht das Risiko, dass die Gebrauchstauglichkeit für sehbehinderte Benutzer ein Problem darstellt, da für die Bedienung mehrere aufeinanderfolgende Fenster mit relativ kleinem Text angesehen werden müssen. Für dieses Risiko wurde die Eintrittswahrscheinlichkeit als mittelhoch und das Schadensausmaß als hoch eingestuft.\n\n• Es besteht das Risiko, dass die Antwortzeit relativ langsam ist, da die Wechselkurse vor jeder Transaktion geprüft werden. Für dieses Risiko wurden die Eintrittswahrscheinlichkeit und das Schadensausmaß als mittelhoch eingestuft.\n\n• Es besteht das Risiko, dass die Genauigkeit der Berechnungen zu kumulativen Fehlern führt. Für dieses Risiko wurden die Eintrittswahrscheinlichkeit als gering und das Schadensausmaß als hoch eingestuft. Die Testvorgehensweise sieht derzeit Performanztests im Rahmen des Systemtests, Gebrauchstauglichkeitstests im Rahmen des Benutzerabnahmetests und funktionale Korrektheitstests auf jeder Teststufe vor. Das Projekt steht unter Zeitdruck.\n\nWelche der folgenden möglichen Maßnahmen zur Risikominderung sollte die höchste Priorität erhalten?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Review der Berechnungsalgorithmen und Definition eines Datenbestands für Berechnungstests in Zusammenarbeit mit Fachleuten",
+      "b) Aufschiebung der Gebrauchstauglichkeitstests bis zum Benutzerabnahmetest, und Rekrutierung von sehbehinderten Benutzern für das Benutzerabnahmetestteam",
+      "c) Beteiligung sehbehinderter Benutzer in das Review des Entwurfs der Benutzungsschnittstelle",
+      "d) Identifizierung von Nutzungsszenarien und Testen der Performanz gemeinsam mit Entwicklern"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Falsch: Dies ist zwar ein guter Vorschlag, hat jedoch nicht die höchste  Priorität, weil das Risiko niedriger eingestuft ist.\n\nb) Falsch: Dies ist zwar ein guter Vorschlag, mindert das Risiko jedoch nicht so gut wie die richtige Antwort. Dies könnte zusätzlich zum Vorschlag der richtigen Antwort gemacht werden, aber die höchste Priorität sollte die in der richtigen Antwort vorgeschlagene Maßnahme erhalten.\n\nc) Richtig. Für das Gebrauchstauglichkeitsrisiko wurde die Eintrittswahrscheinlichkeit als mittelhoch und das Schadensausmaß als hoch eingestuft. Dies ist somit die höchste identifizierte Risikostufe, unabhängig von der Berechnungsmethode der Risikostufe.\n\nd) Falsch: Dies ist ein guter Vorschlag, hat aber eine geringere Priorität, weil das Risiko niedriger eingestuft ist."
+  },
+  {
+    "id": 8,
+    "lo": "TA-3.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Ein Unternehmen hat ein Gesundheitsförderungsprogramm für die Mitarbeiter eingerichtet und an den Beitrag für die Krankenversicherung gekoppelt: Für das Programm gelten die folgenden Regeln:\n\n1) Mitarbeiter, die nicht mehr als 20 Alkoholeinheiten pro Woche konsumieren, erhalten einen Beitragsnachlass von 30 €.\n\n2) Mitarbeiter, die den Fragebogen \"Bewertung gesundheitlicher Risiken\" ausfüllen, erhalten als Belohnung einen Beitragsnachlass von 25 €.\n\n3) Mitarbeiter, die an einer jährlichen Gesundheitskontrolluntersuchung im Unternehmen teilnehmen, erhalten :\n\n1. Bei einem Body-Mass-Index (BMI) von max. 27,5 einen Beitragsnachlass von 50 € und bei einem BMI von max. 30 einen Beitragsnachlass von 25 €.\n\n2. Wenn sie nicht rauchen, erhalten sie zusätzlich einen Beitragsnachlass von 50 €.\n\n3. Wenn sie an einem Raucherentwöhnungskurs teilnehmen, erhalten sie einen Beitragsnachlass von 25 €.\n\n4. Raucher, die nicht an einem Raucherentwöhnungskurs teilgenommen haben, zahlen einen Beitragszuschlag von 75 €.\n\nWie viele Testfälle sind erforderlich, um 100% Überdeckung der Äquivalenzklassen der gültigen Eingabeparameter zu erzielen, wenn diese Spezifikation unter Verwendung der Äquivalenzklassenbildung getestet wird?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) 3 Testfälle",
+      "b) 4 Testfälle",
+      "c) 5 Testfälle",
+      "d) 12 Testfälle"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Im Folgenden sind die Äquivalenzklassen für diese Frage aufgeführt:  Alkohol (2 Klassen): (a1) ≤20 Einheiten pro Woche (a2) >20 Einheiten pro Woche Ausfüllen eines Fragebogens \"Gesundheitsrisikobewertung\" (2 Klassen): (g1) Ja (g2) Nein Teilnahme an der Gesundheitskontrolluntersuchung: (t1) Ja (t2) Nein BMI: (3 Klassen): (b1) BMI ≤ 27,5 (b2) 27,5 < BMI <30 (b3) BMI ≥ 30 Raucher: (3 Klassen): (r1) Nicht rauchend (r2) Rauchen und Teilnahme an einem Raucherentwöhnungskurs (r3) Rauchen und Nichtteilnahme am Kurs Beachten Sie, dass die Fälle BMI und Raucher nur bei Verwendung von t1 getestet werden können, ansonsten werden diese Parameter vom Code nicht einmal betrachtet. Die folgenden 4 Testfälle werden benötigt, um eine 100%ige Überdeckung der Äquivalenzpartitionen der gültigen Eingabeparameter zu erreichen:\n\n1. 15 Alkoholeinheiten (a1), kein Ausfüllen der Gesundheitsrisikobewertung (g2), keine Teilnahme an der jährlichen Gesundheitskontrolle (t2), BMI und Raucher werden nicht abgedeckt.\n\n2. 15 Einheiten Alkohol (a1), Ausfüllen einer \"Gesundheitsrisikobewertung\" (g1), Teilnahme an der jährlichen Gesundheitskontrolle (t1), BMI 25,0 (b1) und Nichtraucher (r1).\n\n3. 25 Einheiten Alkohol (a2). Ausfüllen einer \"Einschätzung des Gesundheitsrisikos\" (g2), Teilnahme an der jährlichen Gesundheitskontrolle (t1), BMI 28,0 (b2), Rauchen und Teilnahme an einem Raucherentwöhnungskurs (r2).\n\n4. 15 Einheiten Alkohol (a1), Ausfüllen einer \"Einschätzung des Gesundheitsrisikos\" (g1), Teilnahme an der jährlichen Gesundheitskontrolle (t1), BMI 32,0 (b3), Rauchen und keine Teilnahme an einem Raucherentwöhnungskurs (r3). Die folgende Tabelle zeigt, wie die verschiedenen Äquivalenzklassen abgedeckt werden: T1 T2 T3 T4 Alkohol ≤20 (a1) >20 (a2) ~ ~ Fragebogen Nein (g2) Ja (g1) ~ ~ Gesundheitskontroll- Nein (t2) Ja (t1) Ja (t1) Ja (t1) untersuchung BMI Nicht ≤27.5 (b1) 27.5 < … <30 ≥ 30 (b3) relevant (b2) Rauchen Nicht Nein (r1) Ja + in Klasse Ja + nicht in relevant (r2) Klasse (r3) Eine einfachere/schnellere Möglichkeit, zu dieser Schlussfolgerung zu gelangen, ist folgende: Es gibt zwei Variablen, die 3 Äquivalenzklassen haben. Daher müssen Sie mindestens 3 Tests haben. Da der zweite Parameter (Rauchen) nur aktiv ist, wenn \"Gesundheitskontrolluntersuchung\" = \"Ja\" ist, bedeutet dies, dass keiner der 3 Werte von Rauchen getestet wird, wenn \"Gesundheitskontrolluntersuchung\" = \"Nein\" ist. Sie benötigen also 3 Tests mit \"Gesundheitskontrolluntersuchung\" = \"Ja\" und einen weiteren Test, um \"Gesundheitskontrolluntersuchung\" auf \"Nein\" zu setzen. Die anderen Parameter, die nur 2 Äquivalenzklassen haben, werden durch die gleichen Tests abgedeckt. Deshalb:\n\na) Falsch\n\nb) Richtig\n\nc) Falsch\n\nd) Falsch"
+  },
+  {
+    "id": 9,
+    "lo": "TA-3.2.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie arbeiten an einer Kundenbindungsanwendung für ein Restaurant. Kunden sammeln Punkte, indem sie Geld für Speisen ausgeben. Es gibt vier Treuekategorien für Kunden, die sich nach der Anzahl der gesammelten Punkte richten:\n\n• Bronze: 1 - 40 Punkte\n\n• Silber: 41 - 150 Punkte\n\n• Gold: 151 - 300 Punkte\n\n• Platin: über 300 Punkte Mit vorhandenen Testfällen wurden bereits die Punktwerte 12, 150, 151, 152 und 301 überdeckt. Mit Hilfe der Grenzwertanalyse mit zwei Werten müssen Sie 100% Überdeckung für die Klassen Silber und Gold erzielen. Wie hoch ist die prozentuale Grenzwertüberdeckung, die Sie mit den vorhandenen Testfällen bezüglich der Klassen Silber und Gold bereits erzielt haben?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) 33 Prozent",
+      "b) 50 Prozent",
+      "c) 66 Prozent",
+      "d) 75 Prozent"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Man benötigt die folgenden 6 Werte, um eine 100%ige Überdeckung für Silber und  Gold zu erreichen: 40 und 41 für die untere Grenze der Partition \"Silber\", 150 und 151, die sowohl die obere Grenze für \"Silber\" als auch die untere Grenze für \"Gold\" überdecken, und 300 und 301 für die obere Grenze von \"Gold\". Vorhandene Testfälle haben bereits die Punktwerte 12, 150, 151, 152 und 301 überdeckt. Somit ist für Silber 150 und 151 überdeckt und für Gold 301; 3 Punkte von 6 sind überdeckt. (d. h., 50 %)\n\na) Falsch\n\nb) Richtig\n\nc) Falsch\n\nd) Falsch."
+  },
+  {
+    "id": 10,
+    "lo": "TA-3.2.3",
+    "k": "K4",
+    "pts": 3,
+    "text": "Die Business Analysten haben die folgende Spezifikation für die Zahlungsoptionen eines Internetshops erstellt: “Ein registrierter Kunde kann eine der drei Zahlungsoptionen nutzen: Kreditkarte, Sofortüberweisung und Bankeinzug. Bei Verwendung der Kreditkartenoption muss zum Zeitpunkt der Zahlung eine gültige Kreditkarte angegeben werden. Das Lastschriftverfahren ist nur für Kaufbeträge bis zu 500 € möglich. Für nicht registrierte Kunden ist die einzige erlaubte Zahlungsoption die Sofortüberweisung.” Ein Test Analyst hat die folgende Entscheidungstabelle entworfen, die Regeln für die möglichen Kombinationen enthalten soll: [[asset:p14-1]] Sie überprüfen die Entscheidungstabelle auf Vollständigkeit, Korrektheit und Konsistenz. Welche der folgenden Befunde sind RICHTIG?\n\nWählen Sie genau ZWEI Antworten.",
+    "options": [
+      "a) Die Tabelle ist unvollständig, weil drei boolesche Bedingungen 23 = 8 Regeln erfordern.",
+      "b) Die Regel R3 ist nicht korrekt, da sie registrierten Kunden, die keine gültige Kreditkarte besitzen, die Zahlung per Kreditkarte anbietet.",
+      "c) Der Wert \"-\" (ist egal) für Bedingung C2 in Regel R4 sollte eher ein \"N/A\" (nicht anwendbar) sein, da das System keine Informationen über Kreditkarten für nicht registrierte Kunden hat.",
+      "d) Der Wert '-' (ist egal) für Bedingung C3 in Regel R4 ist falsch, denn wenn Betrag <= 500€ 'Wahr' ist, sollte Lastschrift angeboten werden.",
+      "e) Die Tabelle ist inkonsistent, da für einen registrierten Kunden mit ungültiger Kreditkarte und einem Kaufbetrag > 500€ sowohl die Regeln R2 als auch R3 gelten."
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "explanation": "a) Falsch: Aufgrund der \"ist egal\"-Werte benötigt die Entscheidungstabelle  weniger als 2n Regeln. Wenn wir die \"ist egal\"-Werte zu einer vollständigen Entscheidungstabelle erweitern, würde sich R3 auf zwei Regeln und R4 auf vier Regeln erweitern, was die richtige Anzahl von 8 Regeln ergibt.\n\nb) Richtig: Der \"ist egal\"-Wert für C2 in Regel R3 ist falsch. Die Regel muss in zwei Regeln aufgeteilt werden, wobei der \"ist egal\"-Wert durch \"Wahr\" bzw. \"Falsch\" ersetzt wird, da die Aktion A1 von der Bedingung C2 abhängt.\n\nc) Richtig: Ein nicht registrierter Kunde kann keine registrierte Kreditkarte haben, daher kann das System die Information nicht bereitstellen, wenn sie gültig ist, und der Wert sollte ein \"N/A\" sein (siehe Lehrplan, Abschnitt 3.2.3, Unterabschnitt über \"Kollabierte Entscheidungstabellen\")\n\nd) Falsch: Gemäß dem letzten Satz in der Spezifikation ist der Lastschrifteinzug für nicht registrierte Kunden nicht erlaubt, unabhängig vom Kaufbetrag. Daher ist der \"ist egal\"-Wert für die Bedingung C3 'Betrag <= 500€' korrekt\n\ne) Falsch: Die genannte Kombination ist C1 = 'Wahr', C2 = 'Falsch' und C3 = 'Falsch', die nur in Regel R2 enthalten ist, nicht in Regel R1. Die Tabelle ist konsistent."
+  },
+  {
+    "id": 11,
+    "lo": "TA-3.2.3",
+    "k": "K4",
+    "pts": 3,
+    "text": "Als Test Analyst testen Sie die Download-Funktionalität einer mobilen Anwendung über das Mobilfunknetz mit dem Verfahren des Entscheidungstabellentests. In der Spezifikation steht: \"Das Herunterladen sollte nur gestartet werden, wenn die Mobilfunkverbindung mindestens zwei Balken stark ist und der Mobilfunkteilnehmer genügend Datenvolumen zum Herunterladen der Datei zur Verfügung hat. Im Grenzfall von zwei Balken Konnektivität wird ein Puffer von mindestens 20 KB zusätzlichem Datenvolumen benötigt.\" Während der Testanalyse haben Sie die folgende Entscheidungstabelle entworfen und erfolgreich überprüft: [[asset:p16-1]] Sie entwerfen eine Testsuite, die alle fünf Entscheidungsregeln abdecken soll.\n\nWelche der folgenden Aussagen über eine Testsuite für diese Spezifikation, die alle fünf Regeln abdeckt, ist RICHTIG?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Die Testfälle sollten zwei Eingaben haben: die Stärke der Mobilfunkverbindung und die Differenz zwischen dem verfügbaren Datenvolumen und der Dateigröße.",
+      "b) Die Testdaten sollten mindestens zwei Dateien unterschiedlicher Größe enthalten: eine größer als oder gleich 20 KB und eine kleiner als 20 KB.",
+      "c) Die Testsuite sollte mindestens drei verschiedene Testfälle mit Verbindungsstärke = 2 Balken enthalten, die jeweils die drei möglichen erwarteten Ergebnisse abdecken: A1, A2 und A3.",
+      "d) Jeder konkrete Testfall mit einer Eingabe bestehend aus Verbindungsstärke, verfügbarem Datenvolumen und einer herunterzuladenden Datei wird genau eine Regel der Entscheidungstabelle abdecken."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Falsch: Laut Spezifikation sind die Eingangsgrößen des Testobjekts die  Mobilfunknetz-Konnektivität, das verfügbare Datenvolumen des Mobilfunkvertrags und die herunterzuladende Datei. Die Differenz zwischen dem verfügbaren Datenvolumen und der Dateigröße ist eine Bedingung, aber keine direkte Eingabe. (Siehe Lehrplan Abschnitt 3.2.3, letzter Absatz des einleitenden Unterabschnitts).\n\nb) Falsch:. Die Testdaten müssen nicht zwei Dateien mit Größen über / unter 20 KB enthalten. Man kann alle Regeln mit einer einzigen Datei mit fester Größe abdecken, wenn das verfügbare Datenvolumen entsprechend gewählt wird, z.\n\nB. Dateigröße - 1 KB für R2, Dateigröße + 10 KB für R3, Dateigröße + 30 KB für R4 und Dateigröße + 10 KB für R5\n\nc) Falsch: Verbindungsstärke = 2 Balken ist nur für zwei Testfälle vorgeschrieben, die die beiden Regeln R3 und R4 mit den Aktionen A3 bzw. A1 abdecken. Die Regel R2, die die Aktion A2 abdeckt, kann auch mit mehr als 2 Balken Verbindungsstärke getestet werden.\n\nd) Richtig: Dass die kollabierten Regeln konsistent und vollständig sind, lässt sich leicht erkennen, wenn man die Regel R2 in zwei Regeln aufteilt\n\n• R2a, wobei die Bedingung C2 den Wert = 2 Balken hat, und\n\n• R2b mit der Bedingung C2 mit dem Wert >= 3 Balken"
+  },
+  {
+    "id": 12,
+    "lo": "TA-3.2.4",
+    "k": "K4",
+    "pts": 3,
+    "text": "Das folgende Zustandsdiagramm beschreibt das Verhalten eines generischen Schedulers eines Betriebssystems (OS): [[asset:p17-1]] Nehmen Sie an, ein Testfall beginnt immer im Zustand \"Bereit\" und endet, wenn das System zum Zustand „Bereit“ zurückkehrt. Das heißt eine Abfolge von Zuständen und Ereignissen aus einer Sequenz (\"Bereit\", Ereignis, nächster Zustand, ..., Ereignis, \"Bereit\") besteht.\n\nWie hoch ist die MINDESTANZAHL an Tests, die erforderlich ist, um eine 1-Switch Überdeckung zu erreichen?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) 2",
+      "b) 3",
+      "c) 4",
+      "d) 5"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "Es sind neun 1-Switches möglich: S1: Bereit (starten) Läuft (blockieren) Blockiert1 S2: Bereit (aussetzen) Blockiert3 (wiederaufnehmen) Bereit S3: Läuft (Blockieren) Blockiert1 (Blockierung auflösen) Bereit S4: Läuft (Blockieren) Blockiert1 (aussetzen) Blockiert2 S5: Blockiert1 (aussetzen) Blockiert2 (wiederaufnehmen) Blockiert1 S6: Blockiert1 (aussetzen) Blockiert2 (Freigeben) Blockiert3 S7: Blockiert2 (wiederaufnehmen) Blockiert1 (Blockierung auflösen) Bereit S8: Blockiert2 (wiederaufnehmen) Blockiert1 (aussetzen) Blockiert2 S9: Blockiert2 (Freigeben) Blockiert3 (wiederaufnehmen) Bereit Außerdem gibt es 4 weitere 1-Switches: Blockiert1 (Blockierung auflösen) Bereit (starten) Läuft Blockiert1 (Blockierung auflösen) Bereit (aussetzen) Blockiert3 Blockiert3 (wiederaufnehmen) Bereit (aussetzen) Blockiert3 Blockiert3 (wiederaufnehmen) Bereit (starten) Läuft aber sie sind nicht durchführbar, da der Zustand in der Mitte \"Bereit\" ist, was den Test zwingt, nach Erreichen dieses Zustands zu stoppen. Daher müssen wir neun eindeutige 1-Switches S1-S9 überdecken. Beachten Sie, dass vier von ihnen im Zustand \"Bereit\" enden, so dass keine zwei dieser vier in einem einzigen Testfall enthalten sein können. Daher benötigen wir mindestens vier Testfälle, und das ist ausreichend, zum Beispiel: TC1: Bereit (aussetzen) Blockiert3 (wiederaufnehmen) Bereit TC2: Bereit (starten) Läuft (blockieren) Blockiert1 (Blockierung auflösen) Bereit TC3: Bereit (starten) Läuft (blockieren) Blockiert1 (aussetzen) Blockiert2 (wiederaufnehmen) Blockiert1 (aussetzen) Blockiert2 (freigeben) Blockiert3 (wiederaufnehmen) Bereit TC4: Bereit (starten) Läuft (blockieren) Blockiert1 (aussetzen) Blockiert2 (wiederaufnehmen) Blockiert1 (Blockierung auflösen) Bereit TC1 deckt S2 ab. TC2 deckt zusätzlich S1 und S3 ab. TC3 deckt zusätzlich S4, S5, S8, S6, S9 ab. TC4 deckt zusätzlich S7 ab. Daher ist:\n\na) Falsch\n\nb) Falsch\n\nc) Richtig\n\nd) Falsch"
+  },
+  {
+    "id": 13,
+    "lo": "TA-3.2.4",
+    "k": "K4",
+    "pts": 3,
+    "text": "Ein GPRS-Mobilfunkgerät arbeitet in einem von drei Zuständen: LEERLAUF, STAND-BY und BETRIEB. Dessen Verhalten wird im folgenden Zustandsdiagramm dargestellt. [[asset:p18-1]] ￼ Wenn man nur den Zustand BETRIEB betrachtet, wie viele Testfälle sind erforderlich, um eine Rundumüberdeckung für diesen Zustand zu erreichen?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) 3",
+      "b) 4",
+      "c) 6",
+      "d) 7"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "100 % Rundumüberdeckung ist erreicht, wenn alle Schleifen von einem beliebigen  Zustand zurück zum gleichen Zustand für alle Zustände, an denen Schleifen beginnen und enden, getestet wurden. Diese Schleife kann nicht mehr als ein Mal einen bestimmten Zustand enthalten (außer dem Anfangs-/Endzustand). Betrachtet man nur den Zustand BETRIEB, so sind die folgenden Testfälle gültig:\n\n1. BETRIEB > STAND-BY > BETRIEB\n\n2. BETRIEB > LEERLAUF > BETRIEB\n\n3. BETRIEB > STAND-BY > LEERLAUF > BETRIEB Daher ist:\n\na) Richtig\n\nb) Falsch\n\nc) Falsch\n\nd) Falsch"
+  },
+  {
+    "id": 14,
+    "lo": "TA-3.2.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt NICHT die Verwendung von Klassifikationsbäumen zur Unterstützung von Black-Box-Testverfahren?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Klassifikationsbäume unterstützen die Identifizierung von Äquivalenzklassen.",
+      "b) Klassifikationsbäume unterstützen die Identifizierung von Grenzwerten.",
+      "c) Klassifikationsbäume unterstützen die Identifizierung von Regeln für eine Entscheidungstabelle.",
+      "d) Klassifikationsbäume unterstützen paarweises Testen."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Falsch: Klassifikationsbäume unterstützen die Identifizierung von  Äquivalenzklassen.\n\nb) Falsch: Klassifikationsbäume unterstützen die Identifizierung von Grenzwerten.\n\nc) Richtig: Klassifizierungsbäume unterstützen nicht die Identifizierung von Regeln, die in einer Entscheidungstabelle verwendet werden sollen.\n\nd) Falsch: Klassifikationsbäume unterstützen paarweises Testen."
+  },
+  {
+    "id": 15,
+    "lo": "TA-3.2.6",
+    "k": "K4",
+    "pts": 3,
+    "text": "Ein Unternehmen das Wohngebäudeversicherungen anbietet hat mehrere Versicherungsoptionen. Sie hängen von den folgenden Faktoren ab: Gebäudetyp: Einfamilienhaus, Doppelhaushälfte, Wohnung, Ferienhaus Baumaterial: Holz, Beton, Ziegelsteine, gemischt Lage: Stadt, Vorort, Land, Wildnis Sie testen das System und verwenden das paarweise Testen für die Erstellung der Testfälle.\n\nWie viele Testfälle sind bei Verwendung des paarweisen Testens zur Erzielung einer Überdeckung aller Paare erforderlich?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) 16 Testfälle",
+      "b) 12 Testfälle",
+      "c) 64 Testfälle",
+      "d) 4 Testfälle"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Richtig. Wir benötigen mindestens 4*4 = 16 Testfälle, um alle Kombinationen  für \"Material\" und \"Lage\" zu überdecken. Dass 16 Kombinationen ausreichen ist aus der folgenden Tabelle ersichtlich: Fall Nr. Wert 1 Wert 2 Wert 3 1 EFH Holz Stadt 2 EFH Beton Vorort 3 EFH Ziegelstein Land 4 EFH gemischt Wildnis 5 DHH Holz Vorort 6 DHH Beton Land 7 DHH Ziegelstein Wildnis 8 DHH gemischt Stadt 9 Wohnung Holz Land 10 Wohnung Beton Wildnis 11 Wohnung Ziegelstein Stadt 12 Wohnung gemischt Vorort 13 Ferienhaus Holz Wildnis 14 Ferienhaus Beton Stadt 15 Ferienhaus Ziegelstein Vorort 16 Ferienhaus gemischt Land\n\nb) Falsch: Dieser Wert ergibt sich aus der Anzahl der Parameter multipliziert mit der Anzahl der Optionen (3 * 4).\n\nc) Falsch: Für die volle Kombinationsüberdeckung (die paarweise subsumiert) wäre die erforderliche Anzahl von Tests 4 * 4 * 4 =64.\n\nd) Falsch: Das reicht nur für eine 1-fache Überdeckung von 100%. Wir benötigen aber mindestens 16 Testfälle, da dies die Anzahl der Kombinationen für \"Material\" und \"Lage\" ist"
+  },
+  {
+    "id": 16,
+    "lo": "TA-3.2.6",
+    "k": "K4",
+    "pts": 3,
+    "text": "Betrachten Sie eine mehrsprachige Webanwendung mit folgenden Anforderungen: - Unterstützung von drei verschiedene Sprachen: Deutsch, Englisch und Japanisch - Lauffähig auf drei verschiedenen Browsern: Br1, Br2, Br3 - Lauffähig auf drei verschiedenen Betriebssystemen: Bs1, Bs2, Bs3 Sie wurden gebeten das korrekte Verhalten dieser Anwendung für verschiedene Kombinationen von Sprachen, Browsern und Betriebssystemen zu testen. Aufgrund der begrenzten Zeit entscheiden Sie sich für das paarweise Testen als Testverfahren zur Erstellung von Testfällen.\n\nWie hoch ist die Mindestzahl an Testfällen, die bei der Verwendung des paarweisen Testverfahrens erforderlich ist, um eine Überdeckung aller Paare zu erreichen?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) 3",
+      "b) 6",
+      "c) 9",
+      "d) 27"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "Um die erforderliche Überdeckung zu erreichen, benötigen wir einen Satz von  Testfällen, der alle möglichen abgegrenzten Kombinationen jedes Paares von Eingabeparametern abdeckt. In diesem Fall kann die erforderliche Überdeckung wie in der folgenden Tabelle dargestellt, mit 9 Testfällen erreicht werden:\n\nc) Werd eTestfall Sprache Browser Betriebssystem 1 Deutsch Br1 Bs1 2 Deutsch Br2 Bs2 3 Deutsch Br3 Bs3 4 Englisch Br1 Bs3 5 Englisch Br2 Bs1 6 Englisch Br3 Bs2 7 Japanisch Br1 Bs2 8 Japanisch Br2 Bs3 9 Japanisch Br3 Bs1\n\na) Falsch\n\nb) Falsch\n\nc) Richtig\n\nd) Falsch: Die Frage erfordert die Mindestanzahl von Testfällen"
+  },
+  {
+    "id": 17,
+    "lo": "TA-3.2.7",
+    "k": "K4",
+    "pts": 3,
+    "text": "EasyTravel ist eine Karte zur Bezahlung von Bus- oder U-Bahnfahrten. Der Benutzer kann an den EasyTravel-Ladeautomaten die Karte mit Guthaben aufladen; das System bucht den Betrag für die Fahrt automatisch ab, wenn der Benutzer die Karte in das Kartenlese/-schreibgerät im Bus oder an der U- Bahn-Station schiebt. Sie arbeiten an einem Projekt zur Wartung des EasyTravel-Systems und haben den folgenden Anwendungsfall zum Review erhalten. ANWENDUNGSFALL: EASYTRAVEL-GUTHABEN VON KREDITKARTE AUFLADEN Anwendungsfall ID: UC-201201 Zweck: Benutzer lädt EasyTravel-Karte mit Guthaben auf. Akteure: Benutzer, System Vorbedingungen: Benutzer hat eine gültige EasyTravel-Karte und eine Kreditkarte. Standardverhalten: [[asset:p21-1]] [[asset:p22-1]] Ausnahmen: [[asset:p22-2]] Endergebnis: Das Guthaben der EasyTravel-Karte des Benutzers wird um den ausgewählten Betrag aufgeladen und die Kreditkarte mit dem gleichen Betrag belastet.\n\nWie viele Testfälle sind erforderlich, um eine Mindestüberdeckung für diesen Anwendungsfall zu erzielen?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) 2 Testfälle",
+      "b) 1 Testfall",
+      "c) 9 Testfälle",
+      "d) 6 Testfälle"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Falsch: Dies ist eine Situation mit einem Testfall für das Standardverhalten  und einem Testfall für die Ausnahmen.\n\nb) Falsch: 1 ist das Minimum für das Standardverhalten, berücksichtigt aber weder die alternativen Verhalten noch die Ausnahmen.\n\nc) Falsch: Die Zahl für diese Antwort wird berechnet, indem die Testfälle für die Optionen mit separaten Anwendungsfällen zu der in der richtigen Antwort angegebenen Zahl addiert werden.\n\nd) Richtig: Die richtige Anzahl ergibt sich aus einem Testfall für das Standardverhalten und genügend zusätzliche Testfälle, um alle alternative Verhalten abzudecken.; In diesem Fall gibt es 4 Ausnahmen E1 und 1 Ausnahme E2, insgesamt 6 Verhalten."
+  },
+  {
+    "id": 18,
+    "lo": "TA-3.2.7",
+    "k": "K4",
+    "pts": 3,
+    "text": "TS ist ein Kompetenzportal, das allen IT-Fachleuten zur Verfügung gestellt wird. Einzelne IT-Fachleute besprechen zunächst ihren Schulungsbedarf mit ihrem Manager und können infolgedessen vom Manager einen Gutschein für einen beliebigen im Unternehmen angebotenen Kurs erhalten. Die IT- Fachleute verwenden TS und ihren Gutschein, um eine bestimmte Kursdurchführung auszuwählen und sich als Teilnehmer anzumelden. ANWENDUNGSFALL: KURSANMELDUNG Anwendungsfall-ID: UC-15504 Zweck: IT-Fachleute in die Lage versetzen, einen Kurs auszuwählen und zu reservieren, für den sie einen Gutschein erhalten haben. Akteure: IT-Fachmann (ITF); TS-Kompetenzportal (TS) Voraussetzungen: keine Standardverhalten: [[asset:p23-1]] Alternative Verhalten [[asset:p24-1]] Ausnahmen: [[asset:p24-2]]\n\nWie viele Testfälle sind erforderlich, um die Mindestüberdeckung für diesen Anwendungsfall zu erreichen?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) 1",
+      "b) 2",
+      "c) 4",
+      "d) 3"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "Wir benötigen einen Testfall für das Haupt-/Standardverhalten. Die  verbleibenden zwei alternativen Verhaltensweisen und zwei Ausnahmen können durch drei andere Testfälle abgedeckt werden, sodass insgesamt vier Testfälle benötigt werden, z. B.: TC1: Hauptpfad: 1, 2, 3, 4, 5, 6, 7, 8, 9 TC2: Erzwingen von Alternative 3a und Ausnahme E1: 1, 2, 3a, 2, 3, E1 TC3: erzwingt Alternative 8a: 1, 2, 3, 4, 5, 6, 7, 8a, 9. TC4: Erzwingen E2: 1, 2, 3, E2 Beachten Sie, dass wir die beiden alternativen Verhaltensweisen 3a und 8a und die beiden Ausnahmen E1 und E2 nicht mit weniger als drei Testfällen abdecken können, da das Testen von 8a erfordert, E1 und E2 nicht aufzurufen (diese Ereignisse liegen vor dem Schritt 8), und jede Ausnahme mit einem separaten Testfall getestet werden muss, da das Auftreten einer Ausnahme den Anwendungsfall sofort beendet. Alternative 3a kann mit dem Auftreten von E1 (oder E2) kombiniert werden. Daher ist:\n\na) Falsch\n\nb) Falsch\n\nc) Richtig\n\nd) Falsch"
+  },
+  {
+    "id": 19,
+    "lo": "TA-3.2.8",
+    "k": "K4",
+    "pts": 3,
+    "text": "Für die Mitgliederverwaltung eines Fußballvereins, der mehrere Mannschaften betreibt, soll eine neue mobile App entwickelt werden. Eines der Hauptziele des Vorstands ist es, die veraltete manuelle Methode zu ersetzen, die für die Registrierung neuer Mitglieder erforderlich ist. Die Funktionalität der App soll relativ einfach bleiben, da nicht alle Benutzer mit modernen Benutzungsschnittstellen vertraut sein werden. Der Vorstand hat daher Wert auf die einfache Navigation zwischen den verschiedenen Bildschirmseiten und die Gebrauchstauglichkeit der Anwendung gelegt. Ein Ziel ist es auch, die Anzahl der Spieler zu verwalten, die sich für eine Mannschaft anmelden können. Es sollen daher Obergrenzen gelten, die dazu führen können, dass Bewerber auf eine Warteliste gesetzt werden.\n\nWelche ZWEI der folgenden Testverfahren würden zum Testen der mobilen App am GEEIGNETSTEN sein ?\n\nWählen Sie genau ZWEI Antworten.",
+    "options": [
+      "a) Zustandsübergangstest",
+      "b) Entscheidungstabellentest",
+      "c) Grenzwertanalyse",
+      "d) Anwendungsfallbasierter Test",
+      "e) Paarweises Testen"
+    ],
+    "answer": [
+      0,
+      2
+    ],
+    "explanation": "a) Richtig: Zustandsübergangstests sind angemessen, da sie die korrekte  Navigation zwischen den verschiedenen Bildschirmen testen. Sie ermöglichen auch die Bewertung der Administration der Warteliste (z.B. Übergänge zwischen genehmigtem Programm und Warteliste).\n\nb) Falsch: Mit der aktuellen Spezifikation wird die Verwendung von Entscheidungstabellentests nur von begrenztem Wert sein.\n\nc) Richtig: In der Spezifikation wird erwähnt, dass ein Ziel darin besteht, die Anzahl der Spieler zu verwalten, die sich für eine bestimmte Mannschaft anmelden können. Es sollen Obergrenzen (d.h. die Anzahl der registrierten Spieler, die eine Mannschaft haben kann) durchgesetzt werden, die dazu führen können, dass Bewerber auf eine Warteliste gesetzt werden. Für die Prüfung dieser Obergrenzen ist die Anwendung der Grenzwertanalyse sinnvoll.\n\nd) Falsch: Die geforderte Funktionalität der App soll relativ einfach bleiben. Anwendungsfallbasierte Tests könnten angewandt werden, aber sie sind weniger geeignet als Zustandsübergangstests (Antwort a) und Grenzwertanalyse (Antwort c). Es ist zu beachten, dass die Erwähnung von Gebrauchstauglichkeitstests im Szenario nicht zwingend bedeutet, dass anwendungsfallbasierte Tests als Testverfahren angewendet werden sollten.\n\ne) Falsch: Nichts in dem Szenario deutet darauf hin, dass ein paarweises Testen angemessen wäre. Es gibt keine ausdrückliche Erwähnung der anzuwendenden kombinatorischen Logik."
+  },
+  {
+    "id": 20,
+    "lo": "TA-3.2.8",
+    "k": "K4",
+    "pts": 3,
+    "text": "Ein neues Anwendungssystem für Autohändler wird konzipiert. Das System soll die Möglichkeit bieten, die optionalen Merkmale eines Fahrzeugs (z.B. Motorgröße, Außenverkleidung, Farbe) zu konfigurieren, das konfigurierte Fahrzeug visuell darzustellen und den Verkaufspreis des Fahrzeugs zu generieren. Das bereits vorhandene System kann zwar ein visuelles Modell der beliebigen Konfiguration eines Fahrzeugs liefern, aber es ermöglicht dem Benutzer nicht, die Konfiguration in derselben Sitzung zu ändern. Das vorhandene System wird als Entwicklungsprototyp verwendet, wobei man davon ausgeht, dass die erforderliche Funktionalität schneller erstellt werden kann, als wenn sie komplett neu entwickelt würde. Die Zeitplanung wurde bereits für eine schnelle Lieferung angepasst.\n\nWelche der folgenden Testverfahren würden zusammen die beste Chance bieten, eine akzeptable Überdeckung im verfügbaren Zeitrahmen zu erzielen?\n\nWählen Sie genau ZWEI Antworten.",
+    "options": [
+      "a) Zustandsübergangstest",
+      "b) Klassifikationsbaumverfahren",
+      "c) Grenzwertanalyse",
+      "d) Anwendungsfallbasierter Test",
+      "e) Äquivalenzklassenbildung"
+    ],
+    "answer": [
+      1,
+      4
+    ],
+    "explanation": "a) Falsch: Es könnte sich zwar um ein zustandsbasiertes System handeln,  das Szenario enthält jedoch keinerlei Informationen darüber. Der Ansatz, ein bestehendes System weiterzuentwickeln, lässt vermuten, dass Zustandsänderungen wohl kaum definiert sind.\n\nb) Richtig: Klassifikationsbäume bieten die Möglichkeit, mit Kombinationen von Eingaben effektiv umzugehen.\n\nc) Falsch: Einige der Eingabenwerte sind wahrscheinlich in Äquivalenzklassen enthalten (z.B. Farben), bei denen es sich wahrscheinlich nicht um geordnete Äquivalenzklassen handelt, da sie Alternativen anbieten, so dass die Grenzwertanalyse nicht geeignet ist.\n\nd) Falsch: Anwendungsfallbasierte Tests sind für den voraussichtlichen Entwicklungsansatz geeignet, würden aber eher auf dem funktionalen Gesamtablauf als auf detaillierten Kombinationen von Eingabewerten basieren.\n\ne) Richtig: Die Eingaben liegen in Äquivalenzklassen (Optionen) vor, die kombiniert werden; daher wäre eine Kombination des Klassifikationsbaumverfahrens mit der Äquivalenzklassenbildung die ideale Wahl."
+  },
+  {
+    "id": 21,
+    "lo": "TA-3.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt das erfahrungsbasierte Testen am BESTEN?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Wenn die Tester erfahren sind und das System unter Test gut kennen, sind erfahrungsbasierte Verfahren eine gute Alternative zu formaleren Verfahren, falls es Probleme mit der Qualität der Systemdokumentation gibt oder wenn die verfügbare Zeit zum Testen knapp bemessen ist.",
+      "b) Erfahrungsbasierte Verfahren sollten grundsätzlich in solchen Fällen eingesetzt werden, wenn es keine geeigneten formalen Verfahren gibt oder wenn ihre Verwendung zu zeit- und arbeitsintensiv wäre.",
+      "c) Erfahrungsbasierte Verfahren nutzen das Wissen und die Erfahrung des Testers und können daher zur Erzielung einer höheren Überdeckung eingesetzt werden, da der Tester weiß, welche Bereiche gründlicher getestet werden müssen.",
+      "d) Wenn Checklisten verwendet werden, kann erfahrungsbasiertes Testen systematischer und effizienter sein und Black-Box-Testverfahren ersetzen."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Richtig: Erfahrungsbasierte Testverfahren können als Alternative zu  formaleren Testverfahren verwendet werden, wenn die Tester genügend Erfahrung und Informationen über das System unter Test haben. Typischerweise kann dies in Situationen geschehen, in denen Zeitdruck besteht, die Qualität der Dokumentation schlecht ist oder keine Dokumentation vorhanden ist.\n\nb) Falsch: Erfahrungsbasierte Verfahren können zwar eingesetzt werden, wenn keine formalen Testverfahren verwendet werden können, aber nicht nur in dieser Situation, sondern auch - wenn immer möglich - als Ergänzung der formalen Testverfahren.\n\nc) Falsch: Erfahrung hilft zwar dem Tester bei der Entscheidung, wo gründlicher getestet werden muss; erfahrungsbasierte Verfahren verbessern jedoch nicht notwendigerweise die Testüberdeckungsg, da sie nicht formal sind und die Überdeckung bei diesen Verfahren nicht immer gemessen werden kann.\n\nd) Falsch: Wenn Black-Box-Testverfahren gefordert sind, dann können diese nicht durch erfahrungsbasierte Verfahren ersetzt werden. Checklisten sind zwar systematisch und effizient, aber Black-Box Verfahren sind systematischer."
+  },
+  {
+    "id": 22,
+    "lo": "TA-3.3.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie sind Test Analyst bei einem neuen Projekt. Die Anforderungsdokumente sind sehr abstrakt und enthalten wenig Details über den Zweck der Software. Daher hat Ihr Manager entschieden, dass bei diesem Projekt primär exploratives Testen eingesetzt wird. Sie wurden mit der Spezifizierung, Ausführung und Aufzeichnung der Testsitzungen beauftragt.\n\nWelche der folgenden Optionen beschreiben, was Sie für die Durchführung dieser Aufgaben benötigen oder verwenden werden?\n\nWählen Sie genau ZWEI Antworten.",
+    "options": [
+      "a) Die Abschlussbesprechungen mit dem Testmanager oder einem Testleiter nutzen, um die Ergebnisse der Testsitzungen festzuhalten.",
+      "b) Fehlerzustände im Fehlermanagementsystem protokollieren, jedoch ohne aufzuzeichnen, ob die explorative Testsitzung bestanden oder nicht bestanden hat, da eine doppelte Dokumentation der Ergebnisse problematisch sein könnte.",
+      "c) Endanwender auffordern, einige Ad-hoc-Tests durchzuführen und deren Aktionen für die zukünftige Verwendung als explorative Testsitzungen notieren.",
+      "d) Wissen über den Geschäftsbereich, das in der explorativen Testsitzung angewendet werden soll, beschaffen.",
+      "e) Die Ergebnisse in einer E-Mail dokumentieren und diese an den Testmanager und Testleiter senden."
+    ],
+    "answer": [
+      0,
+      3
+    ],
+    "explanation": "a) Richtig: Gemäß Lehrplan können Ergebnisse auf diese Art und Weise  aufgezeichnet werden.\n\nb) Falsch: Der „bestanden/nicht bestanden“-Status der Sitzung gemäß der Test-Charta sollte ebenfalls aufgezeichnet werden.\n\nc) Falsch: Testfälle werden normalerweise nicht für explorative Sitzungen definiert.\n\nd) Richtig: Gemäß Lehrplan wird dieses Wissen benötigt, um zu entscheiden, was zu testen ist, zumal das Problem nicht spezifiziert ist.\n\ne) Falsch: Dies führt vermutlich dazu, dass Ergebnisse verloren gehen, und keine Verfolgung möglich ist."
+  },
+  {
+    "id": 23,
+    "lo": "TA-3.3.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Antworten beschreibt typische Merkmale fehlerbasierter Testverfahren?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Fehlerbasierte Testverfahren basieren auf der Analyse und Klassifizierung bereits gefundener Fehlerzustände.",
+      "b) Fehlerbasierte Testverfahren werden hauptsächlich im Komponententest eingesetzt.",
+      "c) Fehlerbasierte Testverfahren sind auf Fehlerzustände fokussiert, die bei der Analyse der Dokumentation eines Systems aufgedeckt werden.",
+      "d) Fehlerbasierte Testverfahren sind eine Unterkategorie der Black-Box-Testverfahren."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Richtig: Fehlerbasierte Testverfahren verwenden die typischen  Fehlerzustände, die bei verschiedenen Arten von Software und Programmen identifiziert wurden, als Basis für den Entwurf von Testfällen, um diese spezifischen Fehlerarten in der Software unter Test aufzudecken.\n\nb) Falsch: Fehlerbasierte Testverfahren werden hauptsächlich im Systemtest eingesetzt, nicht im Komponententest.\n\nc) Falsch: Testfälle werden basierend auf der Analyse der für das zu testende System typischen Fehlerzustände erstellt, und nicht durch die Analyse der Systemdokumentation.\n\nd) Falsch: Fehlerbasiertes Testverfahren sind keine Untergruppe der Black- Box-Testverfahren, da die Spezifikationen nicht die Grundlage für die Testfälle bilden."
+  },
+  {
+    "id": 24,
+    "lo": "TA-3.4.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Die Marketingabteilung der Versicherungsgesellschaft SecureLife hat ein Projekt mit dem Namen HIPPOS (Health Insurance Product Public Order Sales, deutsch: Öffentlicher Vertrieb für Krankenversicherungsprodukte) gestartet. Ziel des Projekts ist es, eine neue Internetanwendung zu erstellen, in der potenzielle Kunden Versicherungsbeiträge und Boni unter Berücksichtigung des Alters und verschiedener Gesundheitsfaktoren berechnen können. Die neue Anwendung wird es Einzelkunden auch ermöglichen, Krankenversicherungsprodukte online abzuschließen. Die im Projekt HIPPOS erstellte neue Anwendung wird vom agilen Entwicklungsteam von SecureLife entwickelt und getestet. Das agile Entwicklungsteam hat in den letzten drei Jahren in Zusammenarbeit mit der Marketingabteilung Webanwendungen entwickelt. Das agile Team besteht aus gut ausgebildeten Testern und Entwicklern. Sie haben eine Testautomatisierung für Konfigurations- und Regressionstests implementiert und Taxonomien der häufigsten Fehlerzustände und IT-Sicherheitsprobleme erstellt. Beim Projekt HIPPOS hat der Produktverantwortliche (Product Owner) aus der Marketingabteilung dem agilen Team vor der ersten Releaseplanungsbesprechung folgende User-Stories vorgelegt: US1: Der Krankenversicherungs-Rechner im Web soll die Versicherungsprämien und Boni auf Grundlage der versicherungsmathematischen Regeln der Kalkulationsabteilung berechnen. US2: Für die Benutzungsschnittstelle der HIPPOS Anwendung sollen dieselben Standards eingehalten werden, wie für die anderen Marketing-Webanwendungen, und es soll ein vordefiniertes Setup von Seiten und Dialogen verwendet werden, das bereits seit zwei Jahren verwendet wurde. US3: Die Webanwendungen sollen die drei neuesten Versionen von Internet Explorer, Google Chrome, Firefox und Safari unterstützen. US4: Es muss das gleiche Maß an IT-Sicherheit vorhanden sein wie für die anderen Marketing- Webanwendungen. Das agile Team wurde aufgefordert, eine Testvorgehensweise auszuarbeiten. Der Produktverantwortliche bittet das Team, seinen Vorschlag über den Einsatz von Testverfahren bei der Releaseplanungsbesprechung zu präsentieren.\n\nWelcher der folgenden Vorschläge unterstützt das vorgegebene Szenario AM BESTEN?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Das agile Team wird exploratives Testen als primäres Testverfahren verwenden. Zusätzlich werden für die User-Story US1 die Äquivalenzklassenbildung und Grenzwertanalyse verwendet, und für die User-Story US4 ein Black-Box-Testverfahren.",
+      "b) Das agile Team wird exploratives Testen und fehlerbasiertes Testen als primäre Testverfahren verwenden. Zusätzlich werden für die User-Story US1 Entscheidungstabellentests verwendet, für die User-Story US3 Anpassbarkeitstests und für die User-Story US4 Fehlerangriffe anhand einer Checkliste.",
+      "c) Das agile Team wird exploratives Testen als primäres Testverfahren verwenden. Zusätzlich werden für die User-Story US1 Interoperabilitätstests verwendet. Für die User-Story US3 werden zusätzlich Anpassbarkeitstests verwendet, und für die User-Story US4 Fehlerangriffe.",
+      "d) Das agile Team wird Black-Box-Testverfahren als primäre Testverfahren verwenden. Für die User-Story US1 werden sowohl Zustandsübergangstests als auch Grenzwertanalyse verwendet, und für die User-Story US4 wird zusätzlich exploratives Testen verwendet."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch: Exploratives Testen wird überhaupt nicht erwähnt, sollte jedoch zu  den Verfahren gehören, die dieses Team verwendet. Für die User Story US1 werden die Äquivalenzklassenbildung und Grenzwertanalyse erwähnt, während eine Entscheidungstabelle wahrscheinlich passender wäre. Zusätzliche Black-Box-Testverfahrenen werden für IT- Sicherheitstests von User Story US4 vorgeschlagen; basierend auf dem Szenario wären jedoch Fehlerangriffe oder das fehlerbasierte Testverfahren besser geeignet wären.\n\nb) Richtig: Dies ist der beste Vorschlag, der eine Reihe von Verfahren miteinander kombiniert. Der Vorschlag erwähnt sowohl exploratives als auch fehlerbasiertes Testen, wobei letzteres direkt durch das Szenario unterstützt wird, das besagt, dass \"Taxonomien der häufigsten Fehlerzustände (…) erstellt (wurden). Außerdem sollte die Organisation Erfahrung mit den Fehlerarten haben, die diese Art von Anwendung typischerweise aufweist. Es werden zusätzliche Entscheidungstabellentests vorgeschlagen; dies passt zum beschriebenen Szenario für User Story US1. Anpassbarkeitstests sind für die iUser Story US3 geeignet, und Fehlerangriffe anhand einer Checkliste für IT-Sicherheitstests von User Story US4.\n\nc) Falsch: Es ist vor allem deswegen falsch, weil keine Interoperabilitätsmerkmale in US1 beschriebenen sind., aber auch fehlerbasiertes Testen hätte erwähnt werden können, da im Szenario ausdrücklich erwähnt ist, dass das Team eine Taxonomie von häufigsten Fehlerzuständen erstellt hat.\n\nd) Falsch: Es ist unwahrscheinlich, dass Black-Box-Testverfahren für die User Stories US1 bis US4 des Szenarios geeignet sind. Außerdem enthält User Story US1 keinen Hinweis, der eine Verwendung von Zustandsübergangstests unterstützt. Stattdessen hätten Entscheidungstabellentests erwähnt werden müssen."
+  },
+  {
+    "id": 25,
+    "lo": "TA-4.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Sie arbeiten in einem Projekt, das eine neue Anwendung testet, welche Devisentransaktionen abwickelt. Ein Großteil der Software, die Berechnungen und Geldüberweisungen abwickelt, wurde aus einer ähnlichen Anwendung wiederverwendet, die seit über 3 Jahren verwendet wird. Die neue Anwendung soll um einige neue Funktionen erweitert werden, um das Benutzererlebnis zu verbessern und die Anzeige grafisch besser aufzubereiten. Die Benutzer wurden nicht vollständig in die Spezifikation dieser neuen Aspekte einbezogen; daher wurden die neuen Funktionen entsprechend der Erwartungen des Entwicklers implementiert. Auf welches der folgenden Qualitätsmerkmale würden Sie sich beim Testen der neuen Anwendung als Test Analyst AM MEISTEN konzentrieren?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Funktionale Korrektheit",
+      "b) Funktionale Vollständigkeit",
+      "c) Austauschbarkeit",
+      "d) Wiederherstellbarkeit"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch: Die funktionale Korrektheit steht nicht im Vordergrund, da die  Funktionalität, die korrekt und genau sein muss, aus einer ähnlichen Anwendung, die seit über 3 Jahren im Einsatz ist, wiederverwendet wurde. Es besteht also ein geringes Risiko, dass die funktionale Korrektheit in der neuen Anwendung nicht gegeben ist.\n\nb) Korrekt: Eine mangelnde funktionale Vollständigkeit kann als Risiko betrachtet werden, da neue Funktionen implementiert werden sollen und die Anwender nicht in die Spezifikation dieser neuen Aspekte einbezogen wurden. Es besteht das Risiko, dass einige erforderlichen Funktionen nicht implementiert wurden.\n\nc) Falsch: Austauschbarkeit ist ein Untermerkmal der Übertragbarkeit, welche eindeutig nicht im Fokus steht.\n\nd) Falsch: Die Wiederherstellbarkeit sollte von einem Technical Test Analysten abgedeckt werden und scheint in diesem Szenario kein Hauptanliegen zu sein"
+  },
+  {
+    "id": 26,
+    "lo": "TA-4.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Sie arbeiten in agiler Softwareentwicklung in der Telekommunikationsindustrie. Die Anwendung stellt eine neue Schnittstelle bereit, die es den Kunden ermöglicht, ihren Handytarif direkt über die Webanwendung zu ändern. Sie führen Systemtests durch und arbeiten vor allem mit der Bildschirmmaske, die für die Änderung des Handytarifs verwendet wird. Die User-Story, die Sie testen, lautet wie folgt: US-34: Als Kunde möchte ich die Möglichkeit haben, meinen Handytarif online zu ändern, damit ich ihn an meinen Bedarf anpassen kann. Im Rahmen dieser Tests laden Sie und der Produktverantwortliche einen Geschäftsexperten ein, einen explorativen Test auf dieser Bildschirmmaske durchzuführen und mitzuteilen, ob er Anmerkungen dazu hat, ob die vorgeschlagene Lösung es ihm erlaubt alle möglichen Änderungen vorzunehmen.\n\nWelche Art von Test führen Sie durch?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Tests der funktionalen Korrektheit",
+      "b) Zugänglichkeitstests",
+      "c) Apassbarkeitstests",
+      "d) Tests der funktionalen Angemessenheit"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Falsch. Auch wenn der Geschäftsexperte auf Probleme mit der  Korrektheit hinweisen konnte, ist dies nicht das Ziel dieser explorativen Testsitzung.\n\nb) Falsch. Die Zugänglichkeit wird nicht als ein Ziel dieser Testsitzung erwähnt, und der Geschäftsexperte ist wahrscheinlich nicht die beste Person, um Probleme mit der Zugänglichkeit zu finden.\n\nc) Falsch Exploratives Testen mit einem Fachexperten ist nicht der beste Weg, um die Anpassungsfähigkeit zu prüfen.\n\nd) Richtig. Der Geschäftsexperte kann die Angemessenheit des entwickelten Bildschirms überprüfen, um einem Kunden die Wahl eines neuen Handytarifs zu ermöglichen."
+  },
+  {
+    "id": 27,
+    "lo": "TA-4.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen hinsichtlich des Testens von Qualitätsuntermerkmalen und der Fehlerzustände, für die dies zielgerichtet eingesetzt wird, ist richtig?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Beim Testen der funktionalen Vollständigkeit werden Hinweise darauf gefunden, dass das System nicht in der Lage sein wird, die Erfordernisse des Benutzers in einer Weise zu erfüllen, die als akzeptabel angesehen wird.",
+      "b) Das Testen der funktionalen Zuverlässigkeit stellt sicher, dass die Funktionen verfügbar sind, wenn sie aufgerufen werden.",
+      "c) Die funktionale Angemessenheit kann sich auf die Überdeckung von übergeordneten Geschäftsszenarien durch die implementierte Funktionalität konzentrieren.",
+      "d) Beim Testen der funktionalen Korrektheit soll die inkorrekte Verarbeitung von Daten oder Situationen aufgedeckt werden."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Falsch: Die Beschreibung bezieht sich auf die funktionale Angemessen-  heit.\n\nb) Falsch: Funktionalen Zuverlässigkeit ist kein Qualitäts(unter)-merkmal.\n\nc) Falsch: Die Beschreibung bezieht sich auf die funktionale Vollständigkeit.\n\nd) Richtig: Beim Testen der funktionalen Korrektheit soll die inkorrekte Verarbeitung von Daten oder Situationen aufgedeckt werden."
+  },
+  {
+    "id": 28,
+    "lo": "TA-4.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Angenommen, Sie arbeiten für ein Unternehmen, das Software entwickelt hat, die Anwender beim Devisenhandel unterstützt. Eine neue Version der Software wird gerade entwickelt. Das Hauptmerkmal dieser neuen Version ist die Möglichkeit unterschiedliche Provisionsbeträge in Abhängigkeit vom Transaktionsvolumen zu berechnen. Zusätzlich werden verschiedene Kategorien von Benutzern (Anfänger, Fortgeschrittene, Experten) definiert und diesen je nach Kategorie unterschiedliche Funktionen zur Verfügung gestellt. Sie sind als Test Analyst für die Erstellung der Tests der funktionalen Eignung zuständig.\n\nWelche der folgenden Aussagen definiert korrekt die Stufe im Softwareentwicklungslebenszyklus, auf der die Tests zur funktionalen Eignung zuerst durchgeführt werden sollten?\n\nWählen Sie genau ZWEI Antworten.",
+    "options": [
+      "a) Das Testen der korrekten Berechnung der Provisionen bei Geschäften mit geringem Transaktionsvolumen sollte im Rahmen des Komponententests durchgeführt werden.",
+      "b) Das Testen der Angemessenheit von Funktionen, die den einzelnen Benutzerkategorien zugeordnet sind, sollte im Rahmen des Abnahmetests durchgeführt werden.",
+      "c) Die Interoperabilität der neuen Funktionen mit anderen Handelssystemen sollte im Rahmen des Systemtests getestet werden.",
+      "d) Das Testen der korrekten Berechnung der Provisionen für Devisenhandelsgeschäfte mit hohem Transaktionsvolumen sollte im Rahmen des Systemtests erfolgen.",
+      "e) Die erforderliche Überdeckung von übergeordneten Geschäftsprozessen sollte für den Systemintegrationstest ermittelt werden."
+    ],
+    "answer": [
+      0,
+      4
+    ],
+    "explanation": "a) Richtig: Testen der funktionalen Korrektheit kann in jeder Stufe erfolgen,  Komponententest ist die früheste.\n\nb) Falsch: Testen der funktionalen Angemessenheit wird normalerweise in der Systemteststufe durchgeführt, kann aber auch in den späteren Phasen der Integrationstests durchgeführt werden. Das Testen der Angemessenheit während der Abnahmetests ist zu spät.\n\nc) Falsch: Es geht um die funktionale Eignung, nicht um die Interoperabilität.\n\nd) Falsch: Tests zur funktionalen Korrektheit können in jeder Teststufe durchgeführt werden, der Systemtest wäre also nicht der erste Test, der durchgeführt würde.\n\ne) Richtig: Die funktionale Vollständigkeit für Systemintegrationstests kann sich auf die Überdeckung von übergeordneten Geschäftsprozessen konzentrieren."
+  },
+  {
+    "id": 29,
+    "lo": "TA-4.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Wann werden Tests zur funktionalen Angemessenheit normalerweise durchgeführt?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Bei Komponenten- und Integrationstests",
+      "b) Bei Integrations- und Systemtests",
+      "c) Bei System- und Benutzerabnahmetests",
+      "d) Bei Abnahmetests, insbesondere Alpha – und Betatests"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch: Die funktionale Angemessenheit ist in der Regel auf  Komponentenebene schwer zu bewerten, wenn Sie nur einen kleinen Teil des Systems bewerten können.\n\nb) Richtig: Funktionale Angemessenheitstests werden normalerweise während der Systemtests durchgeführt, können aber auch während der späteren Phasen der Integrationstests durchgeführt werden.\n\nc) Falsch: Funktionale Angemessenheitstests sollten vor den Abnahmetests durchgeführt werden, wenn dies zu umfangreichen Nacharbeiten in der Programmierung führen könnte.\n\nd) Falsch: Die funktionale Angemessenheit sollte nicht Teil der Ziele von Alpha- oder Beta-Tests sein. Während der Alpha- und Beta-Tests werden sich die Benutzer beispielsweise mehr auf Fragen der Benutzerfreundlichkeit und Vollständigkeit konzentrieren."
+  },
+  {
+    "id": 30,
+    "lo": "TA-4.2.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen über den Gebrauchstauglichkeitstest ist richtig?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Die Gebrauchstauglichkeit sollte gegen die Anforderungen verifiziert und von den tatsächlichen Anwendern validiert werden.",
+      "b) Die Validierung der Gebrauchstauglichkeitsanforderungen sollte nach der Freigabe der Software erfolgen, damit die tatsächlichen Anwender daran beteiligt werden können.",
+      "c) Die heuristische Evaluation kann zur Befragung der Benutzer und zum Aufdecken von Gebrauchstauglichkeitsproblemen eingesetzt werden.",
+      "d) Die Gebrauchstauglichkeit kann durch einen Vergleich mit dem vorhandenen inakzeptablen Produkt verifiziert werden."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Richtig: Die Gebrauchstauglichkeit sollte anhand der Anforderungen  verifiziert und von den tatsächlichen Benutzern validiert werden.\n\nb) Falsch: Die Validierung sollte vor der Freigabe und durch tatsächliche Anwender erfolgen.\n\nc) Falsch: Heuristische Evaluation ist keine Form der Gebrauchstauglichkeitsbefragung.\n\nd) Falsch: Die Gebrauchstauglichkeit kann nicht durch einen Vergleich mit dem vorhandenen inakzeptablen Produkt verifiziert werden."
+  },
+  {
+    "id": 31,
+    "lo": "TA-4.2.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "Angenommen, Sie arbeiten für ein Unternehmen, das eine Softwarekomponente entwickelt hat, mit der Benutzer sämtliche Passwörter, die sie für verschiedene Websites festgelegt haben, sicher und einfach verwalten können. Diese Komponente ist in Hunderte von Webseiten integriert, die von Millionen von Menschen weltweit genutzt werden. Eine neue Softwareversion der Komponente wird gerade entwickelt. Das Hauptmerkmal dieser Version ist die Integration mit einem bestimmten Betriebssystem, das diese Komponente derzeit nicht unterstützt.\n\nWelcher der folgenden Fehlerwirkungen gilt NICHT als Interoperabilitätsfehler?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Passwörter werden nicht für alle Webseiten gespeichert, in welche die Komponente integriert ist.",
+      "b) 5% der Webseiten laufen auf einem bestimmten Betriebssystem nicht.",
+      "c) Bei einigen Browsern werden die Passwörter abgeschnitten.",
+      "d) Das Speichern der Passwörter wird für einige Benutzer zu kompliziert."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Falsch (da die Aussage richtig ist): Dies ist ein Interoperabilitätsproblem  bei einigen Webseiten.\n\nb) Falsch (da die Aussage richtig ist): Dies ist ein Interoperabilitätsproblem bei einem bestimmten Betriebssystem.\n\nc) Falsch (da die Aussage richtig ist): Dies ist ein Interoperabilitätsproblem bei einigen Browsern.\n\nd) Richtig (da die Aussage falsch ist): Dies ist ein Gebrauchstauglichkeitsfehler und kein Interoperabilitätsfehler."
+  },
+  {
+    "id": 32,
+    "lo": "TA-4.2.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "Sie arbeiten als Test Analyst in dem Team, das ein System zur Verwaltung von gemieteten Elektrorollern entwickelt. Das System besteht aus den folgenden drei Teilen:\n\n1) Eine Client-Anwendung für Mobiltelefone\n\n2) Eine Rollerüberwachung\n\n3) Eine Server-Anwendung, die die Arbeit des Ganzen überwacht: Das wichtigste Ziel für Ihr Team ist es, die Zusammenarbeit zwischen den Modulen sicherzustellen\n\nWelches Qualitätsmerkmal ist, nur auf Basis dieser Beschreibung, AM WICHTIGSTEN und sollte zuerst getestet werden?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Gebrauchstauglichkeit",
+      "b) Interoperabilität",
+      "c) IT-Sicherheit",
+      "d) Performanz"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch: Während die Gebrauchstauglichkeit ein wichtiges nicht-  funktionales Merkmal ist, insbesondere in der Client-Anwendung, sind die meisten Benutzer von Elektrorollern junge Leute und haben normalerweise keine Probleme mit typischen Anwendungen dieser Art.\n\nb) Richtig: Es ist leicht zu erkennen, dass das System in verschiedenen Umgebungen funktionieren muss: Jeder Teil muss mit dem anderen zusammenarbeiten.Daher ist die Interoperabilität für dieses System sehr wichtig.\n\nc) Falsch: Als Test Analyst sollten IT-Sicherheitstests nicht in Ihrer Verantwortung liegen.\n\nd) Falsch: Die Performanz kann ein gewünschtes Qualitätsmerkmal sein, aber es gibt keine festgelegte Anforderung und sie wäre ohnehin weniger wichtig als die Interoperabilität."
+  },
+  {
+    "id": 33,
+    "lo": "TA-4.2.6",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreiben Fehlerarten, die Sie im Rahmen von Übertragbarkeitstests normalerweise NICHT berücksichtigen würden?\n\nWählen Sie genau ZWEI Antworten.",
+    "options": [
+      "a) Eine Anwendung funktioniert nicht in allen vorgesehenen Zielumgebungen korrekt.",
+      "b) Die Software kann für bestimmte Konfigurationen nicht installiert werden.",
+      "c) Benutzer mit Behinderungen können nicht mit der Anwendung interagieren.",
+      "d) Bestimmte Softwarekomponenten eines Systems können nicht gegen andere ausgetauscht werden.",
+      "e) Fehlerhafter Datenaustausch zwischen interagierenden Komponenten."
+    ],
+    "answer": [
+      2,
+      4
+    ],
+    "explanation": "a) Falsch: Dies ist ein typischer Übertragbarkeits- bzw.  Anpassbarkeitsfehler.\n\nb) Falsch: Dies ist ein typischer Übertragbarkeits- bzw. Installierbarkeitsfehler.\n\nc) Richtig: Dieser Fehlerzustand ist ein typischer Mangel der Zugänglichkeit.\n\nd) Falsch: Dies ist ein typischer Übertragbarkeits- bzw. Austauschbarkeitsfehler.\n\ne) Richtig: Dies ist ein typischer Interoperabilitätsfehler."
+  },
+  {
+    "id": 34,
+    "lo": "TA-4.2.7",
+    "k": "K4",
+    "pts": 3,
+    "text": "Die mobile Anwendung HeatWell soll es Hausbesitzern ermöglichen, die Heizung ihres Hauses zu steuern und zu überwachen. Die folgenden Anforderungen wurden als die wichtigsten für die HeatWell- App identifiziert: Anforderung 1: Dem Benutzer muss eine Schnittstelle zur Verfügung gestellt werden, mit der auf einfache Weise die gewünschten Heizzeiten und -temperaturen eingestellt und die Temperatur in verschiedenen Teilen des Hauses überwacht werden können. Anforderung 2: Eine Effizienzfunktion soll den Energieverbrauch berechnen und den Benutzern helfen, ihre Bedarfe zu optimieren. Sie sind Test Analyst im HeatWell-Team.\n\nWelche der folgenden Testbedingungen halten Sie für die Verifizierung der funktionalen und/oder nichtfunktionalen Qualitätsmerkmale der aufgeführten Anforderungen für AM GEEIGNETSTEN?\n\nWählen Sie genau ZWEI Antworten.",
+    "options": [
+      "a) Der Benutzer kann die App auf einem Android-Gerät installieren.",
+      "b) Der Benutzer kann mit einer minimalen Anzahl von Schritten die Soll-Temperaturen effektiv einstellen.",
+      "c) Die Effizienzfunktion berechnet den Energieverbrauch genau.",
+      "d) Energieverbrauchsdaten können auf dem HeatWell-Datenbankserver für iOS- und Android- Geräte gespeichert werden.",
+      "e) Überwachungsdaten können für die letzten 30 Tage angezeigt werden."
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "explanation": "a) Falsch: Hier geht es um die Installierbarkeit; es bezieht sich nicht auf die  Anforderungen.\n\nb) Richtig: Diese Testbedingung bezieht sich auf die Gebrauchstauglichkeitsaspekte der Anforderung 1. \"Dem Nutzer muss eine Schnittstelle zur Verfügung gestellt werden, mit der er auf einfache Weise (…) einstellen und (…) überwachen kann\" - dies zielt insbesondere auf den Effizienzaspekt der Gebrauchstauglichkeit ab.\n\nc) Richtig: Diese Testbedingung bezieht sich auf die funktionale Korrektheit der Effizienzfunktion der App, wie in Anforderung 2 angegeben.\n\nd) Falsch: Hier geht es um Interoperabilität; es bezieht sich nicht auf die Anforderungen.\n\ne) Falsch: Diese Testbedingung betrifft Funktionalität, die nicht gefordert wird."
+  },
+  {
+    "id": 35,
+    "lo": "TA-4.2.7",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie sind ein Test Analyst, der an einem brandneuen Projekt arbeitet. Der Kunde ist eine staatliche Sozialhilfebehörde, die ihre Website verbessern will. Die Website soll Informationen, Nachrichten und Dokumentationen zur Sozialhilfe enthalten. Sie wird es jedem Bürger ermöglichen, online zu interagieren, um seinen aktuellen Status sowie laufende und frühere Leistungen einzusehen. Ein Team von Businessanalysten, Anforderungsingenieuren und Spezialisten für das Benutzererlebnis hat mit dem Kunden zusammengearbeitet, um eine umfassende Liste der Anforderungen für die neue Website zu erstellen, die auf der bestehenden Website, neuen Bedürfnissen, neuen bewährten Praktiken und dem Feedback der Benutzer basiert. Das Projekt folgt dem V-Modell als Softwareentwicklungslebenszyklus. Die Anforderungen wurden von allen Interessengruppen geprüft und genehmigt. Sie beginnen nun mit dem Testentwurf, der auf den Anforderungen und einem vorläufigen Entwurf der detaillierten Spezifikationen basiert. Hier ist eine Auswahl einiger Anforderungen: R003 - Die gesamte Website muss gemäß WCAG 2.0 für Benutzer mit Sehbehinderungen zugänglich sein. R004 - Die Website muss auf den Geräten, die derzeit von den Benutzern der bestehenden Website verwendet werden, einwandfrei funktionieren und mindestens 80% dieser Benutzer abdecken. R005 - Die Antwortzeit der Website darf bei der Belastung durch 5.000 gleichzeitige Benutzer nicht mehr als 5 Sekunden betragen. R006 - Das neue System muss alle nicht-technischen Daten des vorherigen Systems behalten. R007 - Nur der Antragsteller selbst und einige autorisierte Dienststellen dürfen Zugang zu personenbezogenen Daten im System haben.\n\nWelche der oben genannten Anforderungen sollten Sie entsprechend Ihrer Verantwortung für Ihren Testentwurf berücksichtigen?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) R003, R005, R006",
+      "b) R003, R004",
+      "c) R003, R004, R007",
+      "d) R004, R006, R007"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch. Anforderung R005 ist eine Performanzanforderung und R006 ist  eine technische Übertragbarkeitsanforderung. Beide liegen in der Verantwortung eines Technical Test Analysten.\n\nb) Richtig. Anforderung R003 ist eine Zugänglichkeitsanforderung und R004 eine Anpassbarkeitsanforderung. Beide liegen im Zuständigkeitsbereich des Test Analysten.\n\nc) Falsch. Anforderung R007 ist eine IT-Sicherheitsanforderung. Sie liegt in der Verantwortung eines auf IT-Sicherheit spezialisierten Technical Test Analysten.\n\nd) Falsch. Anforderung R004 liegt im Bereich des Test Analysten, aber nicht R006 oder R007 (siehe obige Begründungen für Details)."
+  },
+  {
+    "id": 36,
+    "lo": "TA-5.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie prüfen das folgende Anforderungsspezifikationsdokument: [[asset:p36-1]] Für das Review verwenden Sie die folgende Checkliste:\n\n1. Ist jede Anforderung testbar?\n\n2. Sind für jede Anforderung Abnahmekriterien aufgeführt?\n\n3. Hat jede Anforderung eine definierte Prioritätsstufe?\n\n4. Sind die Anforderungen eindeutig identifizierbar?\n\n5. Ist das Anforderungsspezifikationsdokument versioniert?\n\n6. Ist die Verfolgbarkeit jeder einzelnen Anforderung zu den Anforderungen des Geschäfts- /Marketingbereichs gegeben?\n\n7. Ist die Verfolgbarkeit zwischen den Anforderungen und den Anwendungsfällen (falls zutreffend) gegeben? Sie überprüfen die obige Anforderungsspezifikation anhand der bereitgestellten Checkliste. Gehen Sie davon aus, dass Sie Zugriff auf das Dokument haben, das weitere Informationen zum Fensterlayout enthält. Welche der folgenden Antworten nennt die Punkte der Checkliste, die von der Anforderungsspezifikation NICHT erfüllt werden?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) 1, 2, 3",
+      "b) 4, 6, 7",
+      "c) 3, 5, 7",
+      "d) 4, 5,6"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Bewertung der Punkte der Checkliste: \n\n1. Ist jede Anforderung testbar? JA\n\n2. Sind für jede Anforderung Abnahmekriterien aufgeführt? N E I N\n\n3. Hat jede Anforderung eine definierte Prioritätsstufe? NEIN\n\n4. Sind die Anforderungen eindeutig identifizierbar? N E I N\n\n5. Ist das Anforderungsspezifikationsdokument versioniert? J A\n\n6. Ist die Verfolgbarkeit jeder einzelnen Anforderung zu den NEIN Anforderungen des Geschäfts-/Marketingbereichs gegeben?\n\n7. Ist die Verfolgbarkeit zwischen den Anforderungen und NEIN den Anwendungsfällen (falls zutreffend) gegeben? Gefragt ist nach den Punkten der Checkliste, die von der Spezifikation NICHT erfüllt werden.\n\na) Falsch: Der Punkt 1 der Checkliste ist erfüllt.\n\nb) Richtig: Die Punkte der Checkliste = [4,6,7] sind alle drei nicht erfüllt.\n\nc) Falsch: Der Punkt 5 der Checkliste ist erfüllt.\n\nd) Falsch: Der Punkt 5 der Checkliste ist erfüllt."
+  },
+  {
+    "id": 37,
+    "lo": "TA-5.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie sind ein Test Analyst, der in einem Projekt für die Entwicklung einer neuen Online-Banking- Anwendung eingesetzt wird. Sie wurden gebeten, an der Überprüfung der Anforderungen teilzunehmen. Für Ihre individuelle Vorbereitung erhalten Sie eine Checkliste, die Ihnen hilft, die grundlegenden Regeln für die Anforderungserstellung zu überprüfen. Folgendes ist eine der Voraussetzungen: R034 - Auch eine Person, die mit Softwareanwendungen nicht vertraut ist, muss in der Lage sein, eine Banküberweisung durchzuführen. Im Folgenden finden Sie einen Auszug aus der Checkliste:\n\ni. Die Anforderung muss testbar sein.\n\nii. Die Anforderung muss eine Kennung haben\n\niii. Die Anforderung muss immer ihre Versionsnummer zeigen.\n\niv. Die Anforderung muss die Verfolgbarkeit zu einer oder mehreren Geschäfts- /Marketinganforderungen zeigen. Ohne weitere Informationen zu dieser Anforderung: Welche der vier Punkte der Checkliste sind , in Bezug auf die Anforderung richtig?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Alle Punkte werden berücksichtigt.",
+      "b) I und II werden berücksichtigt.",
+      "c) Nur II wird berücksichtigt.",
+      "d) Nur I wird berücksichtigt."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Falsch. Die Anforderung ist nicht testbar, da es keine messbaren Kriterien  gibt, um festzustellen, ob die Anforderung erfüllt ist oder nicht. Die Anforderung hat eine Kennung, aber wir können keine Versionsnummer sehen, und es gibt keine Rückverfolgbarkeit zu Geschäfts- oder Marketinganforderungen.\n\nb) Falsch. Die Anforderung ist nicht testbar, da es keine messbaren Kriterien gibt, um festzustellen, ob die Anforderung erfüllt ist oder nicht.\n\nc) Richtig, Es gibt eine Kennung, aber keiner der anderen Punkte wird eingehalten.\n\nd) Falsch. Die Anforderung ist nicht testbar."
+  },
+  {
+    "id": 38,
+    "lo": "TA-5.2.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "EasyTravel ist eine Karte zur Bezahlung von Bus- und U-Bahnfahrten. Der Benutzer kann an den EasyTravel-Ladeautomaten die Karte mit Guthaben aufladen; das System bucht den Betrag für die Fahrt automatisch ab, wenn der Benutzer die Karte an das Kartenlesegerät an einer Bus- oder U- Bahnhaltestelle hält. Sie sind Mitglied des EasyTravel-Projektteams und Ihnen wurde die folgende User-Story zur Prüfung gegeben. USER-STORY: EasyTravel-Karte mit Guthaben aufladen Priorität: 1 Als Fahrgast möchte ich meine EasyTravel-Karte mit Guthaben aufladen, damit ich Busfahrten mit der Karte bezahlen kann. FEATURE [[asset:p38-1]] Betrachten Sie die folgende Checkliste für eine gute User-Story. Welche dieser Kriterien sind bei dieser User Story NICHT erfüllt?\n\nWählen Sie genau ZWEI Antworten.",
+    "options": [
+      "a) Ist die User-Story gänzlich aus Sicht der Person geschrieben, die sie anfordert?",
+      "b) Ist das Feature klar und eindeutig formuliert?",
+      "c) Sind die Abnahmekriterien definiert und testbar?",
+      "d) Ist die User-Story priorisiert?",
+      "e) Folgt die User-Story dem üblichen Format?"
+    ],
+    "answer": [
+      0,
+      2
+    ],
+    "explanation": "a) Richtig: Die User-Story ist nicht vollständig aus Sicht des Benutzers  geschrieben; Teile der User-Story beziehen sich auf das, was der Ladeautomat macht.\n\nb) Falsch: Das Feature/Merkmal ist klar und eindeutig formuliert.\n\nc) Richtig:“EasyTravel-Ladeautomat ist bereit“ kann nicht getestet werden, da nicht angegeben wird, was zu prüfen ist. Möglicherweise blinkt der Schlitz für das Einführen von Banknoten. Möglicherweise wird das aktuelle Guthaben angezeigt.\n\nd) Falsch: Priorität 1 ist ausdrücklich angegeben.\n\ne) Falsch: Die User Story entspricht dem Standardformat."
+  },
+  {
+    "id": 39,
+    "lo": "TA-6.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Eine Geschäftsanwendung befindet sich in der Wartungsphase und mehrere Änderungen an der Geschäftslogik wurden entweder bereits implementiert oder werden voraussichtlich in der nächsten Version umgesetzt. Durch die Testautomatisierung wird sichergestellt, dass die Geschäftsvorgänge bei jeder Änderung einem Regressionstest unterzogen werden. Für die Testautomatisierung wird eine schlüsselwortgetriebene Vorgehensweise verwendet. Seit der letzten Version wurden einige Notfallkorrekturen erforderlich und die Testautomatisierungsberichte enthalten nun Hinweise auf Anomalien.\n\nWelche der folgenden Schritte sollten nun vom Test Analyst durchgeführt werden?\n\nWählen Sie genau ZWEI Antworten.",
+    "options": [
+      "a) Aktualisierung der Schlüsselwörter und Daten, um die vorgenommenen Änderungen zu berücksichtigen",
+      "b) Modularisierung der Automatisierungsskripte",
+      "c) Analyse der Anomalien, um festzustellen, ob das Problem durch die Schlüsselwörter, die Eingabedaten, das Automatisierungsskript selbst oder durch die zu testende Anwendung verursacht wird",
+      "d) Den Entwickler auffordern, den fehlgeschlagenen automatisierten Test mit denselben Daten manuell durchzuführen, um herauszufinden, ob die Fehlerwirkung die Anwendung selbst betrifft",
+      "e) Falls die Ursache der Anomalie nicht gefunden werden kann, Test aus der automatisierten Regressionstestsuite entfernen"
+    ],
+    "answer": [
+      0,
+      2
+    ],
+    "explanation": "a) Richtig: Der Test Analyst pflegt die Schlüsselwörter und Daten, um die  vorgenommenen Änderungen zu berücksichtigen.\n\nb) Falsch: Der Test Analyst modularisiert die Automatisierungskripte nicht.\n\nc) Richtig: Der Test Analyst analysiert Anomalien, um festzustellen, ob das Problem bei den Schlüsselwörtern, den Eingabedaten, den automatisierten Testskripten selbst oder der zu testenden Anwendung liegt.\n\nd) Falsch: Es ist der Test Analyst, der den fehlgeschlagenen automatisierten Test mit denselben Daten manuell durchführt, um zu sehen, ob der Fehler in der Anwendung selbst liegt.\n\ne) Falsch: Wenn der Test Analyst die Ursache der Anomalie nicht bestimmen kann, sollten die Informationen zur Fehleranalyse an den Technical Test Analysten oder Entwickler zur weiteren Analyse übergeben werden. Siehe Lehrplan Kap. 6.2 letzter Satz und nicht aus der automatisierten Regressiontestsuite gelöscht werden."
+  },
+  {
+    "id": 40,
+    "lo": "TA-6.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt KEINEN Vorteil beim verwenden von Testwerkzeugen?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Werkzeuge für die Testdatenvorbereitung können Daten anonymisieren und gleichzeitig die interne Integrität dieser Daten erhalten.",
+      "b) Testausführungswerkzeuge ermöglichen es, weniger Tests durchzuführen, was die Kosten und die Effizienz von Regressionstests reduziert.",
+      "c) Testentwurfswerkzeuge können den Test Analyst bei der Auswahl der Testverfahren unterstützen, die für die angestrebte Überdeckung erforderlich sind.",
+      "d) Testausführungswerkzeuge ermöglichen die Wiederholung derselben Tests in vielen verschiedenen Umgebungen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch: Das ist ein korrekter Vorteil. –Werkzeuge für die  Testdatenvorbereitung können Daten \"anonymisieren\" und gleichzeitig die interne Integrität dieser Daten erhalten.\n\nb) Richtig: Das ist KEIN korrekter Vorteil. Testausführungswerkzeuge ermöglichen, dass mehr Tests durchgeführt werden, und nicht weniger.\n\nc) Falsch: Das ist ein korrekter Vorteil. Testentwurfswerkzeuge können den Test Analysten bei der Auswahl der Tests unterstützen, die für die angestrebte Überdeckung erforderlich sind.\n\nd) Falsch: Das ist ein korrekter Vorteil. Testausführungswerkzeuge ermöglichen die Wiederholung derselben Tests in vielen verschiedenen Umgebungen."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 120 * 60;
+      const EXT_SECONDS = 150 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "150"
+          : "120";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "Der Timer zählt von 150:00 herunter (120 Minuten + 25 % Übungszeit). Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben."
+          : "Der Timer zählt von 120:00 herunter. Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {"p14-1": {"src": "assets/GTB_CTAL-TA_Sample-Exam-Questions_v3.1.0_DE/p14-1.png", "alt": "ID Bedingungen R1 R2 R3 R4\nC1 Registrierter Kunde W W W F\nC2 Kreditkarte ist gültig W F - -\nC3 Kaufbetrag <= 500 € W W F -\nAktionen\nA1 Kreditkartenoption wird X - X -\nangeboten\nA2 Sofortüberweisungsoption wird X X X X\nangeboten\nA3 Lastschriftoption wird X X - -\nangeboten", "page": 14, "kind": "table"}, "p16-1": {"src": "assets/GTB_CTAL-TA_Sample-Exam-Questions_v3.1.0_DE/p16-1.png", "alt": "ID Bedingungen R1 R2 R3 R4 R5\nC1 Stärke der < 2 Balken >= 2 Balken 2 Balken 2 Balken >= 3 Balken\nMobilfunkverbindung\nC2 Verfügbares - < 0 KB >= 0 KB >= 20 KB >= 0 KB\nDatenvolumen - UND\nDateigröße < 20 KB\nAktionen\nA1 Herunterladen der - - - X X\nDatei\nA2 Meldung - X - - -\n\"Unzureichendes\nDatenvolumen\nverfügbar\"\nA3 Meldung X - X - -\n\"Unzureichende\nKonnektivität\"", "page": 16, "kind": "table"}, "p17-1": {"src": "assets/GTB_CTAL-TA_Sample-Exam-Questions_v3.1.0_DE/p17-1.png", "alt": "Diagramm aus der Quellfrage", "page": 17, "kind": "diagram"}, "p18-1": {"src": "assets/GTB_CTAL-TA_Sample-Exam-Questions_v3.1.0_DE/p18-1.png", "alt": "Diagramm aus der Quellfrage", "page": 18, "kind": "diagram"}, "p21-1": {"src": "assets/GTB_CTAL-TA_Sample-Exam-Questions_v3.1.0_DE/p21-1.png", "alt": "Benutzer System\n1. Der Benutzer schiebt die 2. Das System fragt, welchen Vorgang der Benutzer ausführen\nEasyTravel-Karte in das möchte: (Ausnahme E1)\nKartenlese/-schreibgerät des\nEasyTravel-Automaten. • Kartenguthaben abfragen (→separater Anwendungsfall)\n• Karte mit Guthaben aufladen\n• die letzten Transaktionen überprüfen (→separater\nAnwendungsfall)\n3. Benutzer wählt “Guthaben 4. System fragt nach dem Betrag. (Ausnahme E1)\naufladen”\n5. Benutzer wählt Betrag aus. 6. System fragt nach der Zahlungsmethode: (Ausnahme E1)\n• Bargeld (→separater Anwendungsfall)\n• Kreditkarte\n7. Benutzer wählt Kreditkarte. 8. System fordert Benutzer auf, die Kreditkarte in den\nKreditkartenleser einzuführen. (Ausnahme E1)\n9. Benutzer führt Kreditkarte ein. 10. System zeigt den Betrag an, mit dem die Kreditkarte belastet\nwerden soll, und bittet um Bestätigung. (Ausnahme E2)\n11. Benutzer bestätigt Betrag. 12. System führt die Kreditkartentransaktion durch und fügt den\nBetrag dem EasyTravel-Kartensaldo hinzu.", "page": 21, "kind": "table"}, "p22-1": {"src": "assets/GTB_CTAL-TA_Sample-Exam-Questions_v3.1.0_DE/p22-1.png", "alt": "13. Benutzer entnimmt die 14. System druckt Transaktionsbeleg aus.\nKreditkarte und die EasyTravel-\nKarte.\n15. Das System kehrt zum Hauptbildschirm zurück.", "page": 22, "kind": "table"}, "p22-2": {"src": "assets/GTB_CTAL-TA_Sample-Exam-Questions_v3.1.0_DE/p22-2.png", "alt": "Ausnahme Aktion\nE1 Benutzer kann den Vorgang abbrechen, indem er die EasyTravel-Karte aus dem\nKartenlese/-schreibgerät entfernt.\nE2 Wenn der Benutzer den abzubuchenden Betrag nicht akzeptiert, kann er den\nVorgang durch Drücken der Taste „Abbrechen“ am Kreditkartenleser abbrechen.", "page": 22, "kind": "table"}, "p23-1": {"src": "assets/GTB_CTAL-TA_Sample-Exam-Questions_v3.1.0_DE/p23-1.png", "alt": "Schritt Aktion\n1 Der ITF startet TS\n2 TS zeigt seine Startseite und fordert einen Gutscheincode vom ITF an\n3 Der ITF gibt den Gutscheincode ein (Ausnahme E1)\n4 TS listet Termine, Orte und die aktuelle Anzahl der angemeldeten Teilnehmer für\nden im Gutschein angegebenen Kurs auf. (Ausnahme E2)\n5 Die ITF wählt einen Termin und Ort aus\n6 TS zeigt einen Überblick über die Inhalte des ausgewählten Kurses\n7 Der ITF bestätigt die Auswahl dieses Kurses durch Drücken der Schaltfläche\n\"Anmelden\"\n8 TS setzt den ITF auf die Teilnehmerliste und zeigt die Meldung \"Sie sind für den\nKurs angemeldet\"\n9 Der ITF meldet sich ab", "page": 23, "kind": "table"}, "p24-1": {"src": "assets/GTB_CTAL-TA_Sample-Exam-Questions_v3.1.0_DE/p24-1.png", "alt": "Alternative Aktion\nSzenarioschritte\n3a Der ITF kann sich von der Startseite der Anwendung abmelden.\n8a Wenn der Kurs bereits 12 Teilnehmer hat, setzt TS den ITF auf eine\nWarteliste und zeigt eine Meldung \"Sie sind auf der Warteliste\" an.\nTS aktualisiert die Warteliste.", "page": 24, "kind": "table"}, "p24-2": {"src": "assets/GTB_CTAL-TA_Sample-Exam-Questions_v3.1.0_DE/p24-2.png", "alt": "Ausnahme Aktion\nE1 Wenn ein ungültiger Gutscheincode eingegeben wird, zeigt TS die Meldung \"Gutschein\nnicht bekannt - bitte versuchen Sie es erneut\" an. TS kehrt zur Startseite zurück\n(Schritt 2).\nE2 Wenn keine Kurse verfügbar sind, zeigt TS die Meldung \"Entschuldigung - keine Kurse\nverfügbar - bitte loggen Sie sich aus und sprechen Sie mit Ihrem Manager \". TS kehrt\nzur Startseite zurück (Schritt 2)", "page": 24, "kind": "table"}, "p36-1": {"src": "assets/GTB_CTAL-TA_Sample-Exam-Questions_v3.1.0_DE/p36-1.png", "alt": "Dokument: Anf.-Spez. 101-A\nObjekt: Transaktionsbildschirm\nAutor: Susi Spezifiziererin Erstellt am: 2019-03-15\nVersion: 0.23 System: Buchhaltung TA-AB1\nSubsystem: 2a15 Anwendungsfälle auf das Projekt anwendbar? Ja\nBeschreibung:\nBenutzer muss die Kundentransaktionen im Kundenkonto durchblättern können. Es muss möglich sein, die\nTransaktionen entweder chronologisch aufsteigend (d.h., von der ältesten zur neuesten) oder abgsteigend\n(d.h., von der neuesten zur ältesten), sowie nach ihrer Transaktions-ID sortiert anzeigen zu lassen.\nDas Feld mit den Transaktionsdetails muss lang genug sein, damit der Name des Geschäftspartners (max.\n20 Zeichen), seine ID-Nummer (6 Ziffern) und die Transaktionskennung (8 Ziffern) angezeigt werden\nkönnen.\nEs muß möglich sein, mit der Schaltfläche “Fenster wechseln” zwischen dem Fenster “Transaktion” und\n“Benutzerinformation” zu wechseln.\nDas Layout des Fensters “Transaktion” ist in einem separaten Dokument detailliert beschrieben.\nDie Zeit zum Abruf neuer Daten muss weniger als 3 Sekunden pro Fenster betragen. Die Anzahl der\ngleichzeitigen Benutzer wird zwischen 20 und 40 liegen, wird aber voraussichtlich innerhalb eines Jahres\nauf 60 steigen.\nWeitere Details zu den Performanzanforderungen sind in einer separaten Performanzspezifikation\nenthalten.", "page": 36, "kind": "table"}, "p38-1": {"src": "assets/GTB_CTAL-TA_Sample-Exam-Questions_v3.1.0_DE/p38-1.png", "alt": "Aktion Abnahmekriterien\nBenutzer führt EasyTravel-Karte EasyTravel-Ladeautomat zeigt eine Option zum Aufladen des\nin das Kartenlesegerät des Kartenguthabens an.\nEasyTravel-Ladeautomaten ein.\nEasyTravel-Ladeautomat prüft die Karte wird bei Ungültigkeit abgelehnt.\nKartendaten.\nBenutzer wählt “Karte aufladen”. EasyTravel-Ladeautomat ist bereit.\nBenutzer führt eine oder mehrere EasyTravel-Ladeautomat zeigt eine Erhöhung des\nBanknoten ein. Kartenguthabens entsprechend der eingegebenen\nBanknote(n) an.\nEasyTravel-Ladeautomat Back-End-System wird aktualisiert.\nübermittelt Aktualisierung an\nBack-End-System.\nBenutzer wählt “Beenden”. Benutzer wird aufgefordert, die EasyTravel-Karte zu\nentnehmen.", "page": 38, "kind": "table"}};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Zum Vergrößern öffnen</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} Punkt${q.pts > 1 ? "e" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="${escHtml(q.imageAlt || ('Abbildung zu Frage ' + q.id))}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Prüfung abgeben?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `Es sind noch <strong style="color:var(--warn)">${unanswered} Frage${unanswered > 1 ? "n" : ""} unbeantwortet</strong>. Unbeantwortete Fragen ergeben 0 Punkte.<br><br>Trotzdem abgeben?`
+            : `Alle ${questions.length} Fragen sind beantwortet. Prüfung jetzt abgeben?`;
+        document.getElementById("confirm-yes-btn").textContent = "Abgeben";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Prüfung neu starten?";
+        document.getElementById("confirm-msg").innerHTML =
+          "Alle Antworten gehen verloren. Der Timer wird zurückgesetzt auf " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Möchten Sie fortfahren?";
+        document.getElementById("confirm-yes-btn").textContent = "Neu starten";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Unbeantwortet &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Richtig (+" + q.pts + (q.pts > 1 ? " Punkte)" : " Punkt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Falsch &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (Zeit abgelaufen)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " von " + totalPoints + " Punkten (" + correctCount + " von " + questions.length + " Fragen richtig)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? `✓ BESTANDEN (≥ ${Math.ceil(totalPoints * 0.65)} Punkte)`
+          : `✗ NICHT BESTANDEN (< ${Math.ceil(totalPoints * 0.65)} Punkte)`;
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

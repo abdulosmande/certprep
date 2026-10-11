@@ -1,0 +1,852 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>CTAL-TA v4.0 — Additional exercises 4.1</title><style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.practice-card { border:1px solid var(--border);border-radius:14px;background:var(--card);padding:1.5rem;margin:1rem 0; } .practice-card h2{font-size:1rem;color:var(--accent);margin-bottom:1rem} .practice-answer{margin-top:1.25rem;border-top:1px solid var(--border);padding-top:1rem} .practice-answer summary{cursor:pointer;color:var(--accent);margin-bottom:1rem} textarea{width:100%;padding:.8rem;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);font:inherit;resize:vertical} .practice-head{max-width:900px;margin:2rem auto;padding:0 1.5rem} .practice-head h1{font-size:2rem;color:var(--heading)} .practice-head a{color:var(--accent)} input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px} .practice-card .option-row:has(input:checked){border-color:var(--accent);background:rgba(56,189,248,.08)} .practice-card .q-text{margin-bottom:1rem}</style><link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head><body><div class="practice-head"><a href="../../../index.html">← Back to catalogue</a><h1>CTAL-TA v4.0 — Additional exercises 4.1</h1><p>Appendix exercises · Self-check practice without a time limit or exam score. Write or select your answer, then open the source rationale.</p><p class="source-credit">Source: ISTQB® — ISTQB-CTAL-TA-Sample-Exam-Questions-v4.1.pdf; ISTQB-CTAL-TA-Sample-Exam-Answers-v4.1.pdf. Copyright © ISTQB®. Questions, tables, diagrams and rationales follow these sources. Authors are acknowledged in the source PDFs.</p><button class="btn-secondary" onclick="resetPractice()">Reset practice</button></div><main><section class="practice-card"><h2 id="q-0">A1 · TA-1.2.1 (K2)</h2><div class="q-text">The tasks of the TA in test analysis include:<br><br>A) Define test conditions for each test item<br><br>B) Involve stakeholders in reviewing the test conditions<br><br>C) Review the test basis for testability<br><br>D) Check that test objectives and test approach are clear Order the tasks A to D in correct chronological sequence: <figure class="source-figure"><a href="assets/ISTQB-CTAL-TA-Sample-Exam-Questions-v4.1/p40-1.png" target="_blank" rel="noopener"><img src="assets/ISTQB-CTAL-TA-Sample-Exam-Questions-v4.1/p40-1.png" alt="Activity 1 Activity 2 Activity 3 Activity 4" loading="lazy"></a><figcaption>Open to enlarge</figcaption></figure></div><div class="options" role="group" aria-labelledby="q-0"><label for="response-0">Your answer</label><textarea id="response-0" rows="5"></textarea></div><details class="practice-answer"><summary>Show answer and rationale</summary><p></p><div>The correct ordering is: D - C - A - B. <br><br>• Checking that test objectives and test approach are clear is a precondition to test analysis, so activity D must come first.<br><br>• Reviewing the test basis for testability is one of the first tasks in test analysis, providing early feedback. So, activity C must come next and must precede activity A (defining test conditions).<br><br>• The TA can define test conditions (activity A) as soon as all preconditions are met (activity D), and the quality of the test basis is appropriate (activity C).<br><br>• Stakeholders can only review the test conditions (activity B) once the test conditions have been defined (activity A).</div></details></section><section class="practice-card"><h2 id="q-1">A2 · TA-1.2.4 (K2)</h2><div class="q-text">Which of the following is typically the responsibility of the test analyst during the execution of an automated regression test suite?</div><div class="options" role="group" aria-labelledby="q-1"><label class="option-row"><input type="radio" name="q1" value="0"> <span class="option-text">a) Manually rerun the test cases that have failed during automated test execution</span></label><label class="option-row"><input type="radio" name="q1" value="1"> <span class="option-text">b) Fix the automated test scripts that caused anomalies in the test execution</span></label><label class="option-row"><input type="radio" name="q1" value="2"> <span class="option-text">c) Report a defect for each anomaly that occurs during test execution</span></label><label class="option-row"><input type="radio" name="q1" value="3"> <span class="option-text">d) Compare actual results with expected results to determine the test result</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: a)</p><div>a) Is correct. A test analyst should manually rerun failed automated  tests to verify whether the failure is due to a genuine defect or a problem with the test automation.<br><br>b) Is not correct. Fixing automated test scripts is typically the responsibility of a test automation engineer or a technical test analysts, not a test analyst.<br><br>c) Is not correct. A test analyst should first analyze anomalies to determine if they are caused by actual defects before reporting them. Not all failures in automated tests are due to defects in the system under test.<br><br>d) Is not correct. While comparing test results is a task of a test analyst, in automated regression testing, this is primarily done by the automated test scripts. The test analyst’s role is to investigate failures, not to perform the initial comparison.</div></details></section><section class="practice-card"><h2 id="q-2">A3 · TA-1.3.1 (K2)</h2><div class="q-text">Consider the following test case: Test case: TC 02.001 - correct calculation of order price with discount Preconditions: the user is logged in Inputs: the shopping cart contains products for the amount entitled to the discount Actions: the user proceeds to payment Expected results: the total price displayed is reduced by the discount amount entitled<br><br>How can this test case be classified in terms of level of abstraction?</div><div class="options" role="group" aria-labelledby="q-2"><label class="option-row"><input type="radio" name="q2" value="0"> <span class="option-text">a) This is a high-level test case because it covers a business requirement rather than a technical specification.</span></label><label class="option-row"><input type="radio" name="q2" value="1"> <span class="option-text">b) This is a high-level test case because it does not contain specific test data.</span></label><label class="option-row"><input type="radio" name="q2" value="2"> <span class="option-text">c) This is a low-level test case because the action is an individual step of a business process.</span></label><label class="option-row"><input type="radio" name="q2" value="3"> <span class="option-text">d) This is a low-level test case because it can be the basis for creating test scripts that implement this test case with various inputs.</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: b)</p><div>a) Is not correct. Although it is a high-level test case, the explanation Is  not correct. The type of test condition covered does not play a role in this classification.<br><br>b) Is correct. A high-level test case does not contain specific test data. Specific data is specified when designing low-level test cases based on a high-level test case.<br><br>c) Is not correct. This is not a low-level test case – see the correct answer.<br><br>d) Is not correct. This is not a low-level test case – see the correct answer.</div></details></section><section class="practice-card"><h2 id="q-3">A4 · TA-1.3.2 (K2)</h2><div class="q-text">Which of the following describes a valid test case quality criterion and has valid justification?</div><div class="options" role="group" aria-labelledby="q-3"><label class="option-row"><input type="radio" name="q3" value="0"> <span class="option-text">a) Test cases covering important features in the product backlog but not yet included in the current version of the test object should be defined to support future maintenance.</span></label><label class="option-row"><input type="radio" name="q3" value="1"> <span class="option-text">b) The test cases should contain the concrete values of the test data required for preconditions, inputs, and outputs to enable test execution.</span></label><label class="option-row"><input type="radio" name="q3" value="2"> <span class="option-text">c) If the test basis uses a glossary of functional terms, the test cases should also use that terminology to make them consistent and understandable.</span></label><label class="option-row"><input type="radio" name="q3" value="3"> <span class="option-text">d) Test cases based on end-to-end scenarios should be limited to a few steps of the scenarios to ease their combination into test procedures and an analysis of the cause of failures.</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: c)</p><div>a) Is not correct. This violates the necessity criterion because features  not yet implemented should not be tested.<br><br>b) Is not correct. Although the completeness criterion requires a description or reference to test data, explicit test data in the test case would impact the maintainability of the test case. Not all test cases must be low-level.<br><br>c) Is correct. This is an aspect of consistency in terms of the language used.<br><br>d) Is not correct. Although short test cases have advantages over long ones, their granularity should always correspond to the test basis and test conditions. End-to-end scenarios should not be split up.</div></details></section><section class="practice-card"><h2 id="q-4">A5 · TA-1.3.6 (K3)</h2><div class="q-text">In the item management system IMS1, each item can have multiple versions. The latest version is active, all older versions are historical and frozen. You are specifying domain-layer keywords for the following high-level test case:<br><br>• Preconditions: An item has multiple versions; the latest version is active; the others are old and frozen. <figure class="source-figure"><a href="assets/ISTQB-CTAL-TA-Sample-Exam-Questions-v4.1/p42-1.png" target="_blank" rel="noopener"><img src="assets/ISTQB-CTAL-TA-Sample-Exam-Questions-v4.1/p42-1.png" alt="Step Action/Input Expected result
+1 The user selects the item with multiple versions IMS1 shows the details of the latest version in
+edit mode
+2 The user selects an older version of the item IMS1 shows the details of that version in view-
+only mode" loading="lazy"></a><figcaption>Open to enlarge</figcaption></figure> You have specified the following keywords:<br><br>1. Search the database for an item with multiple versions (Item-ID)<br><br>2. Select item (Item-ID)<br><br>3. Select item version (Number)<br><br>4. Assert details displayed are correct (Screen, Item-ID, Number)<br><br>5. Assert details are editable (Screen)<br><br>6. Assert details are non-editable (Screen) You want to use keywords in one of the following groups of elements of the high-level test cases:<br><br>A) Precondition only<br><br>B) Step 1 only<br><br>C) Step 2 only<br><br>D) Both step 1 and step 2 Assign each specified keyword (1-6) to ONE group of test case elements (A-D) while not leaving any group empty.</div><div class="options" role="group" aria-labelledby="q-4"><label for="response-4">Your answer</label><textarea id="response-4" rows="5"></textarea></div><details class="practice-answer"><summary>Show answer and rationale</summary><p></p><div>Keyword 1 provides an item with 2 versions, so it is useful for an  additional step in the test script to ensure the precondition. Keyword 2, selecting the item, is an action keyword for step 1. Keyword 3, selecting a (different) version of the item, is an action keyword for step<br><br>2. Keyword 4, verifying the correctness of the details display against the expected values, is a verification keyword that can be used in both step 1 and 2. Keyword 5, verifying that the details are editable, is a verification keyword that can be used only in step 1. Keyword 6, verifying that the details are not editable, is a verification keyword that can be used only in step 2. Hence, the correct assignment is: 1 - A, 2 - B, 3 - C, 4 - D, 5 - B, 6 - C.</div></details></section><section class="practice-card"><h2 id="q-5">A6 · TA-3.1.1 (K3)</h2><div class="q-text">Standard letters carried by a postage service have a maximum length of 235mm and a maximum weight of 20g. You are testing an automatic letter scanning system that can measure with a precision of 1 mm and 1g respectively. You perform domain testing for valid standard letter sizes with the following inputs: <figure class="source-figure"><a href="assets/ISTQB-CTAL-TA-Sample-Exam-Questions-v4.1/p43-1.png" target="_blank" rel="noopener"><img src="assets/ISTQB-CTAL-TA-Sample-Exam-Questions-v4.1/p43-1.png" alt="No. Length in mm Weight in g
+X1 160 15
+X2 200 25
+X3 230 21
+X4 235 20
+X5 250 16
+X6 236 18" loading="lazy"></a><figcaption>Open to enlarge</figcaption></figure> Inputs can have of one of the coverage item types:<br><br>1. ON point for both length and weight<br><br>2. IN point for both length and weight<br><br>3. OFF point for length only<br><br>4. OFF point for weight only<br><br>5. OUT point for length only<br><br>6. OUT point for weight only Assign each input (X1-X6) to EXACTLY ONE coverage item type (1-6).</div><div class="options" role="group" aria-labelledby="q-5"><label for="response-5">Your answer</label><textarea id="response-5" rows="5"></textarea></div><details class="practice-answer"><summary>Show answer and rationale</summary><p></p><div>Let L denote the length of the letter in mm and W its weight in g. The  equivalence partition for standard letters is bounded by the closed borders L ≤ 235 for length and W ≤ 20 for weight. In consequence,<br><br>• X1 is an IN point both for length and weight.<br><br>• X2 is an OUT point for weight only.<br><br>• X3 is an OFF point for weight only.<br><br>• X4 is an ON point for both length and weight<br><br>• X5 is an OUT point for length only.<br><br>• X6 is an OFF point for length only. Hence, the correct assignments are: X1-2; X2-6; X3-4; X4-1; X5-5; X6-3.</div></details></section><section class="practice-card"><h2 id="q-6">A7 · TA-3.1.1 (K3)</h2><div class="q-text">The specification of a safety-critical component states about the integer values of an input parameter the following:<br><br>• Values less than 10 shall be rejected;<br><br>• Values between 10 and 21 shall be accepted;<br><br>• Values greater than or equal to 22 shall be rejected.<br><br>Which of the following input data sets provides 100% reliable domain coverage while using a MINIMAL number of values?</div><div class="options" role="group" aria-labelledby="q-6"><label class="option-row"><input type="radio" name="q6" value="0"> <span class="option-text">a) 9, 10, 21, 22</span></label><label class="option-row"><input type="radio" name="q6" value="1"> <span class="option-text">b) 0, 9, 10, 21, 22, 50</span></label><label class="option-row"><input type="radio" name="q6" value="2"> <span class="option-text">c) 9, 10, 11, 20, 21, 22</span></label><label class="option-row"><input type="radio" name="q6" value="3"> <span class="option-text">d) 8, 9, 10, 11, 20, 21, 22, 23</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: b)</p><div>The specification defines one variable with three adjacent equivalence  partitions. These are:<br><br>• EP1 with one open border x &lt; 10;<br><br>• EP2 with two closed borders x ≥ 10 and x ≤ 21;<br><br>• EP3 with one open border x &gt; 21.<br><br>a) Is not correct. It misses an IN point for EP1, OUT points for EP2 at both borders, and an IN point for EP3. Note that this set provides 100% 2-value BVA coverage.<br><br>b) Is correct. For EP1’s open border at 10: 0 is an IN point, 9 an ON point, 10 an OFF point, and 21 an OUT point. For EP2’s closed border at 10: 0 is an OUT point, 9 is an OFF point, 10 is an ON point, and 21 is an IN point. For EP2’s closed border at 21: 10 is an IN point, 21 is an ON point, 22 is an OFF point, and 50 is an OUT point. For EP3’s open border at 21: 10 is an OUT point, 21 is an OFF point, 22 is an ON point, and 50 is an IN point.<br><br>c) Is not correct. It misses an IN point for EP1, OUT points for EP2 at both borders, and an IN point for EP3.<br><br>d) Is not correct. The set is not minimal because the values 11 and 20 can be removed and the remaining set still provides reliable coverage, similar to option B. Note that this is a minimal set for 100% 3-value BVA coverage.</div></details></section><section class="practice-card"><h2 id="q-7">A8 · TA-3.1.1 (K3)</h2><div class="q-text">An airline has specific restrictions regarding checked baggage:<br><br>• The total dimensions (length + width + height) D of a piece of baggage must be at least 80 cm and cannot exceed 158 cm.<br><br>• The weight W must not exceed 23 kg.<br><br>• Measurements in centimeters and kilograms are always rounded up to the nearest whole number.<br><br>What is the MINIMUM set of pairs (D,W) of dimension and weight to achieve 100% simplified domain coverage?</div><div class="options" role="group" aria-labelledby="q-7"><label class="option-row"><input type="radio" name="q7" value="0"> <span class="option-text">a) (80,10), (79,10), (125,23), (125,24), (158,20), (159,20)</span></label><label class="option-row"><input type="radio" name="q7" value="1"> <span class="option-text">b) (80,23), (79,24), (158,23), (159,24)</span></label><label class="option-row"><input type="radio" name="q7" value="2"> <span class="option-text">c) (80,23), (79,23), (80,24), (158,23), (158,24), (159,23)</span></label><label class="option-row"><input type="radio" name="q7" value="3"> <span class="option-text">d) (80,23), (79,23), (80,24), (158,20), (159,20)</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: d)</p><div>The equivalence partition EP1 of correct baggage dimensions and  weights has three borders: D ≥ 80, D ≤ 158, and W ≤ 23. The simplified domain coverage requires for each border a pair of an ON and an OFF point that are as close as possible to each other.<br><br>a) Is not correct. This data set achieves a simplified domain coverage of 100% but is not minimal. It contains three pairs of ON / OFF points for the three borders. However, 100% coverage can be reached with five points too by using a common ON point for two borders (see option d below).<br><br>b) Is not correct. This data set does not achieve 100% simplified domain coverage. It contains two ON points at the two corners (80,23) and (158,23) of EP1, but it does not contain the required OFF points at a minimum distance from them for simplified domain coverage. The two points outside EP1 are close but not as close as possible to the ON points at the corners. For example, the OFF point (79,23) which is not in the data set would be closer to (80,23) than (79,24).<br><br>c) Is not correct. This data set achieves a simplified domain coverage of 100% but is not minimal. The first two are a pair of closest ON / OFF points for the border D ≥ 80. The first and the third constitute a pair of closest ON/OFF points for the border D ≤ 158. Finally, the fourth and the sixth constitute a pair of closest ON/OFF points for the border W ≤ 23. So, the fifth point, (158.24), is superfluous and the set is not minimal.<br><br>d) Is correct. This data set achieves a simplified domain coverage of 100% and has the minimal number of five elements. The ON / OFF points for the three borders are: (80,23), (79,23); (80,23), (80,24); and (158,20), (159,20).</div></details></section></main><script>function resetPractice(){document.querySelectorAll("input").forEach(e=>e.checked=false);document.querySelectorAll("textarea").forEach(e=>e.value="");document.querySelectorAll("details").forEach(e=>e.open=false);}</script><script src="../../../assets/exam-ui.js"></script>
+</body></html>
