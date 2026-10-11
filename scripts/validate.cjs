@@ -17,7 +17,7 @@ for (const file of pages) {
   const h = fs.readFileSync(file, 'utf8');
   const relative = path.relative(root, file).split(path.sep).join('/');
   assert(!/https:\/\/fonts\.(googleapis|gstatic)\.com/.test(h), `${relative}: remote fonts`);
-  for (const script of h.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)) new vm.Script(script[1], { filename: relative });
+  for (const script of h.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)) new vm.Script(script[1], { filename: relative });
   for (const m of h.matchAll(/(?:src|href)=["']([^"']+)["']/g)) {
     const ref = m[1];
     if (!/^(https?:|data:|#|mailto:)/.test(ref) && !ref.includes('${')) {
