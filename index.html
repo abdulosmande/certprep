@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>cert-exam-prep — Certification Mock Exams</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YZFKVZC1TB"></script>
@@ -107,7 +107,59 @@
     .exam-grid, .section-divider, .features { padding-left: 1.25rem; padding-right: 1.25rem; }
     .features { grid-template-columns: 1fr 1fr; }
   }
+
+
+  /* Syllabuses expand with native mouse, touch, and keyboard controls. */
+  .syllabus-list { max-width: 960px; margin: 0 auto; padding: 0 2rem 2rem; position: relative; z-index: 1; }
+  .syllabus-group { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; margin-bottom: .75rem; overflow: hidden; }
+  .syllabus-group summary { display: flex; align-items: center; gap: .9rem; padding: 1.1rem 1.25rem; cursor: pointer; list-style: none; color: var(--heading); }
+  .syllabus-group summary::-webkit-details-marker { display: none; }
+  .syllabus-group summary:hover { background: rgba(56,189,248,.05); }
+  .syllabus-group summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; border-radius: 12px; }
+  .syllabus-icon { width: 42px; height: 42px; flex-shrink: 0; display: grid; place-items: center; border-radius: 10px; background: rgba(56,189,248,.1); color: var(--accent); }
+  .syllabus-icon svg { width: 25px; height: 25px; }
+  .syllabus-name { font-family: 'Syne', sans-serif; font-weight: 700; line-height: 1.4; flex: 1; min-width: 0; }
+  .syllabus-count { font-family: 'DM Mono', monospace; font-size: .7rem; color: #94a3b8; white-space: nowrap; }
+  .syllabus-chevron { color: var(--accent); font-size: 1.4rem; transition: transform .2s; }
+  .syllabus-group[open] .syllabus-chevron { transform: rotate(180deg); }
+  .syllabus-group[open] summary { border-bottom: 1px solid var(--border); }
+  .syllabus-group .exam-grid { padding: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); }
+  @media (max-width: 600px) {
+    .syllabus-list { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .syllabus-group summary { padding: .9rem; gap: .65rem; flex-wrap: wrap; }
+    .syllabus-name { font-size: .95rem; flex-basis: calc(100% - 60px); }
+    .syllabus-count { margin-left: 49px; }
+    .syllabus-chevron { margin-left: auto; }
+  }
+  @media (prefers-reduced-motion: reduce) { .exam-card { animation: none; transition: none; } .syllabus-chevron { transition: none; } }
+
+  /* Certification blocks: English and Deutsch side by side, ordered like istqb.org/certifications */
+  .syllabus-list { max-width: 1080px; }
+  html { scroll-behavior: smooth; }
+  .brand-label { scroll-margin-top: 4.5rem; }
+  .body-nav { position: sticky; top: 0; z-index: 20; display: flex; gap: .6rem; padding: .7rem 0; margin-bottom: 1rem; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); }
+  .body-nav a { display: flex; align-items: baseline; gap: .6rem; padding: .5rem 1rem; border: 1px solid var(--border); border-radius: 99px; background: var(--surface); color: var(--text); text-decoration: none; transition: border-color .15s, color .15s; }
+  .body-nav a b { font-family: 'Syne', sans-serif; font-weight: 800; }
+  .body-nav a span { font-family: 'DM Mono', monospace; font-size: .65rem; color: var(--muted); }
+  .body-nav a:hover, .body-nav a:focus-visible { border-color: var(--accent); color: var(--accent); outline: none; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  @media (max-width: 760px) { .body-nav a { padding: .45rem .8rem; } .body-nav a span { display: none; } }
+  .brand-label { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; letter-spacing: .02em; color: var(--text); margin: 3rem 0 1rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+  .brand-label:first-child { margin-top: 0; border-top: none; padding-top: 0; }
+  .brand-label small { font-family: 'DM Mono', monospace; font-size: .65rem; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .cat-label { font-family: 'DM Mono', monospace; font-size: .65rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin: 1.75rem 0 .75rem; }
+  .cat-label:first-child { margin-top: 0; }
+  .lang-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1rem; align-items: start; }
+  .lang-col { min-width: 0; }
+  .lang-col .section-lang-tag { display: inline-block; margin-bottom: .75rem; }
+  .lang-col .exam-grid { padding: 0; grid-template-columns: 1fr; }
+  .empty-slot { border: 1px dashed var(--border); border-radius: 12px; padding: 1.1rem; font-family: 'DM Mono', monospace; font-size: .7rem; color: var(--muted); text-align: center; }
+  .prev-label { font-family: 'DM Mono', monospace; font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: .9rem 1.25rem 0; border-top: 1px solid var(--border); }
+  .lang-cols + .prev-label { margin-top: .25rem; }
+  @media (max-width: 760px) { .lang-cols { grid-template-columns: 1fr; padding: .75rem; } }
 </style>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="assets/exam-ui.css">
 </head>
 <body>
 
@@ -116,95 +168,51 @@
   <h1>Practice.<br><em>Pass.</em></h1>
   <p class="hero-sub">Free, browser-based mock exams for software testing and requirements engineering certifications. No login. No install. Open a link and start the clock.</p>
   <div class="hero-pills">
-    <span class="pill">ISTQB</span>
-    <span class="pill">ASTQB</span>
-    <span class="pill">IREB</span>
+    <a class="pill" href="#istqb" style="text-decoration:none">ISTQB</a>
+    <a class="pill" href="#a4q" style="text-decoration:none">A4Q</a>
+    <a class="pill" href="#cpre" style="text-decoration:none">CPRE</a>
     <span class="pill">Timed</span>
     <span class="pill">Instant feedback</span>
     <span class="pill">Mobile friendly</span>
   </div>
 </section>
 
-<!-- ══ ENGLISH EXAMS ══════════════════════════════════════════════════════ -->
-<div class="section-divider">
-  <hr>
-  <div class="section-header">
-    <div class="section-label">Available exams</div>
-    <span class="section-lang-tag lang-en">English</span>
-  </div>
-</div>
-
-<div class="exam-grid">
-
-  <!-- ISTQB CT-GenAI Sample A -->
-  <a class="exam-card" href="istqb/ct-genai/istqb_ct_genai_mock_exam_v1.0.html" style="animation-delay:0.05s">
-    <div class="card-top">
-      <span class="card-badge badge-istqb">ISTQB</span>
-      <span class="card-level">Certified Tester — Specialist Level</span>
-    </div>
-    <div class="card-title">Testing with Generative AI — Sample A (ISTQB V1.0)</div>
-    <div class="card-meta">
-      <span class="meta-chip">40 questions</span>
-      <span class="meta-chip">46 pts</span>
-      <span class="meta-chip">60 min</span>
-      <span class="meta-chip">CT-GenAI v1.0</span>
-    </div>
-    <div class="card-footer">
-      <span class="card-pass">Pass ≥ 30 pts</span>
-      <span class="card-arrow">→</span>
-    </div>
-  </a>
-
-  <!-- ASTQB CT-GenAI -->
-  <a class="exam-card" href="istqb/ct-genai/astqb_ct_genai_mock_exam.html" style="animation-delay:0.1s">
-    <div class="card-top">
-      <span class="card-badge badge-astqb">ASTQB</span>
-      <span class="card-level">Certified Tester — Specialist Level</span>
-    </div>
-    <div class="card-title">Testing with Generative AI — Sample B (ASTQB)</div>
-    <div class="card-meta">
-      <span class="meta-chip">40 questions</span>
-      <span class="meta-chip">46 pts</span>
-      <span class="meta-chip">60 min</span>
-      <span class="meta-chip">CT-GenAI v1.0</span>
-    </div>
-    <div class="card-footer">
-      <span class="card-pass">Pass ≥ 30 pts</span>
-      <span class="card-arrow">→</span>
-    </div>
-  </a>
-
-  <!-- Coming soon: CT-SEC (English) -->
-  <div class="exam-card coming" style="animation-delay:0.15s">
-    <div class="card-top">
-      <span class="card-badge badge-coming">ISTQB</span>
-      <span class="card-level">Certified Tester — Specialist Level</span>
-    </div>
-    <div class="card-title">Certified Tester Security Tester (CT-SEC)</div>
-    <div class="card-meta">
-      <span class="meta-chip">CT-SEC 2018</span>
-    </div>
-    <div class="card-footer">
-      <span class="coming-tag">Coming soon</span>
-      <span class="card-arrow">→</span>
-    </div>
-  </div>
-
-</div><!-- /.exam-grid English -->
-
-<!-- ══ GERMAN EXAMS ═══════════════════════════════════════════════════════ -->
-<div class="section-divider" style="margin-top:2.5rem">
-  <hr>
-  <div class="section-header">
-    <div class="section-label">Available exams</div>
-    <span class="section-lang-tag lang-de">Deutsch</span>
-  </div>
-</div>
-
-<div class="exam-grid">
-
-  <!-- ISTQB CT-FL v4.0 SET A -->
-  <a class="exam-card" href="istqb/ct-fl40/ISTQB_CTFL40_Sample-Exam-Questions_SET_A_v2.2_germ.html" style="animation-delay:0.05s">
+<div class="section-divider"><hr><div class="section-header"><div class="section-label">Available exams · Verfügbare Prüfungen</div></div></div>
+<div class="syllabus-list">
+<nav class="body-nav" aria-label="Certification bodies"><a href="#istqb"><b>ISTQB</b><span>67 exams &amp; practice pages</span></a><a href="#a4q"><b>A4Q</b><span>2 exams</span></a><a href="#cpre"><b>CPRE</b><span>1 exam</span></a></nav><p class="catalogue-note">English and German columns contain independently sourced editions; their questions and versions can differ. Appendix practice is untimed self-check material.</p>
+<h2 class="brand-label" id="istqb"><span>ISTQB</span><small>International Software Testing Qualifications Board · incl. ASTQB and GTB sample exams</small></h2>
+<h3 class="cat-label">Core Foundation</h3>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CTFL v4.0 · Foundation Level</span><span class="syllabus-count">6 EN · 6 DE</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-fl40/EN/ISTQB_CTFL40_Sample-Exam-Questions_SET_A_v2.3_engl.html">
+    <div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Foundation Level</span></div>
+    <div class="card-title">Certified Tester Foundation Level v4.0 — SET A (V2.3)</div>
+    <div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">40 pts</span><span class="meta-chip">60 min</span><span class="meta-chip">CT-FL v4.0</span></div>
+    <div class="card-footer"><span class="card-pass">Pass ≥ 26 pts</span><span class="card-arrow">→</span></div>
+  </a><a class="exam-card" href="istqb/ct-fl40/EN/ISTQB_CTFL40_Sample-Exam-Questions_SET_B_v1.3.3_engl.html">
+    <div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Foundation Level</span></div>
+    <div class="card-title">Certified Tester Foundation Level v4.0 — SET B (V1.3.3)</div>
+    <div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">40 pts</span><span class="meta-chip">60 min</span><span class="meta-chip">CT-FL v4.0</span></div>
+    <div class="card-footer"><span class="card-pass">Pass ≥ 26 pts</span><span class="card-arrow">→</span></div>
+  </a><a class="exam-card" href="istqb/ct-fl40/EN/ISTQB_CTFL40_Sample-Exam-Questions_SET_C_v2.4.0_engl.html">
+    <div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Foundation Level</span></div>
+    <div class="card-title">Certified Tester Foundation Level v4.0 — SET C (V2.4.0)</div>
+    <div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">40 pts</span><span class="meta-chip">60 min</span><span class="meta-chip">CT-FL v4.0</span></div>
+    <div class="card-footer"><span class="card-pass">Pass ≥ 26 pts</span><span class="card-arrow">→</span></div>
+  </a><a class="exam-card" href="istqb/ct-fl40/EN/ISTQB_CTFL40_Sample-Exam-Questions_SET_D_v1.5.0_engl.html">
+    <div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Foundation Level</span></div>
+    <div class="card-title">Certified Tester Foundation Level v4.0 — SET D (V1.5.0)</div>
+    <div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">40 pts</span><span class="meta-chip">60 min</span><span class="meta-chip">CT-FL v4.0</span></div>
+    <div class="card-footer"><span class="card-pass">Pass ≥ 26 pts</span><span class="card-arrow">→</span></div>
+  </a><a class="exam-card" href="istqb/ct-fl40/EN/ISTQB_CTFL40_Sample-Exam-Questions_SET-E_v1.3_GTB-edition_engl.html">
+    <div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Foundation Level</span></div>
+    <div class="card-title">Certified Tester Foundation Level v4.0 — SET E (V1.3, GTB)</div>
+    <div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">40 pts</span><span class="meta-chip">60 min</span><span class="meta-chip">CT-FL v4.0</span></div>
+    <div class="card-footer"><span class="card-pass">Pass ≥ 26 pts</span><span class="card-arrow">→</span></div>
+  </a><a class="exam-card" href="istqb/ct-fl40/EN/ISTQB_CTFL40_Sample-Exam-Questions_SET-F_v1.1_GTB-edition_engl.html">
+    <div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Foundation Level</span></div>
+    <div class="card-title">Certified Tester Foundation Level v4.0 — SET F (V1.1, GTB)</div>
+    <div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">40 pts</span><span class="meta-chip">60 min</span><span class="meta-chip">CT-FL v4.0</span></div>
+    <div class="card-footer"><span class="card-pass">Pass ≥ 26 pts</span><span class="card-arrow">→</span></div>
+  </a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-fl40/DE/ISTQB_CTFL40_Sample-Exam-Questions_SET_A_v2.2_germ.html" style="animation-delay:0.05s">
     <div class="card-top">
       <span class="card-badge badge-istqb">ISTQB</span>
       <span class="card-level">Certified Tester — Foundation Level</span>
@@ -220,15 +228,210 @@
       <span class="card-pass">Bestehen ≥ 26 Pkt</span>
       <span class="card-arrow">→</span>
     </div>
-  </a>
-
-  <!-- ISTQB CT-MAT -->
-  <a class="exam-card" href="istqb/ct-mat/istqb_ct_mat_mock_exam_V2019_German.html" style="animation-delay:0.1s">
+  </a><a class="exam-card" href="istqb/ct-fl40/DE/ISTQB_CTFL40_Sample-Exam-Questions_SET_B_v1.3.3_GTB-edition_germ.html" style="animation-delay:0.05s">
+    <div class="card-top">
+      <span class="card-badge badge-istqb">ISTQB</span>
+      <span class="card-level">Certified Tester — Foundation Level</span>
+    </div>
+    <div class="card-title">Certified Tester Foundation Level v4.0 — SET B (V1.3.3)</div>
+    <div class="card-meta">
+      <span class="meta-chip">40 Fragen</span>
+      <span class="meta-chip">40 Pkt</span>
+      <span class="meta-chip">60 min</span>
+      <span class="meta-chip">CT-FL v4.0</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-pass">Bestehen ≥ 26 Pkt</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a><a class="exam-card" href="istqb/ct-fl40/DE/ISTQB_CTFL40_Sample-Exam-Questions_SET_C_v2.3.0_germ.html" style="animation-delay:0.05s">
+    <div class="card-top">
+      <span class="card-badge badge-istqb">ISTQB</span>
+      <span class="card-level">Certified Tester — Foundation Level</span>
+    </div>
+    <div class="card-title">Certified Tester Foundation Level v4.0 — SET C (V2.3.0)</div>
+    <div class="card-meta">
+      <span class="meta-chip">40 Fragen</span>
+      <span class="meta-chip">40 Pkt</span>
+      <span class="meta-chip">60 min</span>
+      <span class="meta-chip">CT-FL v4.0</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-pass">Bestehen ≥ 26 Pkt</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a><a class="exam-card" href="istqb/ct-fl40/DE/ISTQB_CTFL40_Sample-Exam-Questions_SET_D_v1.5.0_germ.html" style="animation-delay:0.05s">
+    <div class="card-top">
+      <span class="card-badge badge-istqb">ISTQB</span>
+      <span class="card-level">Certified Tester — Foundation Level</span>
+    </div>
+    <div class="card-title">Certified Tester Foundation Level v4.0 — SET D (V1.5.0)</div>
+    <div class="card-meta">
+      <span class="meta-chip">40 Fragen</span>
+      <span class="meta-chip">40 Pkt</span>
+      <span class="meta-chip">60 min</span>
+      <span class="meta-chip">CT-FL v4.0</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-pass">Bestehen ≥ 26 Pkt</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a><a class="exam-card" href="istqb/ct-fl40/DE/ISTQB_CTFL40_Sample-Exam-Questions_SET-E_v1.3_GTB-edition_germ.html" style="animation-delay:0.05s">
+    <div class="card-top">
+      <span class="card-badge badge-istqb">ISTQB</span>
+      <span class="card-level">Certified Tester — Foundation Level</span>
+    </div>
+    <div class="card-title">Certified Tester Foundation Level v4.0 — SET E (V1.3, GTB)</div>
+    <div class="card-meta">
+      <span class="meta-chip">40 Fragen</span>
+      <span class="meta-chip">40 Pkt</span>
+      <span class="meta-chip">60 min</span>
+      <span class="meta-chip">CT-FL v4.0</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-pass">Bestehen ≥ 26 Pkt</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a><a class="exam-card" href="istqb/ct-fl40/DE/ISTQB_CTFL_Sample-Exam-Questions_SET-F_v1.2_-GTB-edition_germ.html" style="animation-delay:0.05s">
+    <div class="card-top">
+      <span class="card-badge badge-istqb">ISTQB</span>
+      <span class="card-level">Certified Tester — Foundation Level</span>
+    </div>
+    <div class="card-title">Certified Tester Foundation Level v4.0 — SET F (V1.2)</div>
+    <div class="card-meta">
+      <span class="meta-chip">40 Fragen</span>
+      <span class="meta-chip">40 Pkt</span>
+      <span class="meta-chip">60 min</span>
+      <span class="meta-chip">CT-FL v4.0</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-pass">Bestehen ≥ 26 Pkt</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a></div></div></div></details>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CTFL-AT v2014 · Agile Tester</span><span class="syllabus-count">1 EN · 1 DE</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-agile/EN/ISTQB-CTFL-FA_Sample_Exam_v1.0_EN.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Foundation — Agile</span></div><div class="card-title">Agile Tester — Sample Exam 1.0</div><div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">40 pts</span><span class="meta-chip">90 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 26 pts</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-agile/DE/GTB-CTFL-FA_2015A_Sample_Exam_Paper_v20_DE.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Foundation — Agile</span></div><div class="card-title">Agile Tester — Probeprüfung 2015 A v2.0 GTB</div><div class="card-meta"><span class="meta-chip">40 Fragen</span><span class="meta-chip">40 Pkt</span><span class="meta-chip">90 min</span></div><div class="card-footer"><span class="card-pass">Bestehen ≥ 26 Pkt</span><span class="card-arrow">→</span></div></a></div></div></div></details>
+<h3 class="cat-label">Core Advanced</h3>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true">📚</span><span class="syllabus-name">CTAL-AT v2.0 · Advanced Level Agile Tester</span><span class="syllabus-count">1 EN</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-al-at/EN/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Advanced Level</span></div><div class="card-title">CTAL-AT v2.0 · Advanced Level Agile Tester</div><div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">52 pts</span><span class="meta-chip">90 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 34 pts</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="empty-slot">Noch nicht verfügbar</div></div></div></details><details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true">📚</span><span class="syllabus-name">CTAL-TTA v4.0 · Technical Test Analyst</span><span class="syllabus-count">4 EN · 2 DE</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-al-tta/EN/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Advanced Level</span></div><div class="card-title">CTAL-TTA v4.0 · Technical Test Analyst · Sample v4.0</div><div class="card-meta"><span class="meta-chip">45 questions</span><span class="meta-chip">78 pts</span><span class="meta-chip">120 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 51 pts</span><span class="card-arrow">→</span></div></a><a class="exam-card" href="istqb/ct-al-tta/EN/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN-additional.html"><div class="card-title">CTAL-TTA v4.0 · Technical Test Analyst · Sample v4.0 · Additional practice</div><div class="card-meta"><span class="meta-chip">4 exercises</span><span class="meta-chip">Self-check · untimed</span></div></a><a class="exam-card" href="istqb/ct-al-tta/EN/ISTQB_CTAL-TTA_Sample-Exam-Questions_v4.2.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Advanced Level</span></div><div class="card-title">CTAL-TTA v4.0 · Technical Test Analyst · Sample v4.2</div><div class="card-meta"><span class="meta-chip">45 questions</span><span class="meta-chip">78 pts</span><span class="meta-chip">120 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 51 pts</span><span class="card-arrow">→</span></div></a><a class="exam-card" href="istqb/ct-al-tta/EN/ISTQB_CTAL-TTA_Sample-Exam-Questions_v4.2-additional.html"><div class="card-title">CTAL-TTA v4.0 · Technical Test Analyst · Sample v4.2 · Additional practice</div><div class="card-meta"><span class="meta-chip">4 exercises</span><span class="meta-chip">Self-check · untimed</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-al-tta/DE/ISTQB-CTAL-TTA_Sample-Exam-Questions_v4.0_DE-1.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Advanced Level</span></div><div class="card-title">CTAL-TTA v4.0 · Technical Test Analyst · Probeprüfung v4.0</div><div class="card-meta"><span class="meta-chip">45 Fragen</span><span class="meta-chip">78 pts</span><span class="meta-chip">120 min</span></div><div class="card-footer"><span class="card-pass">Bestehen ≥ 51 pts</span><span class="card-arrow">→</span></div></a><a class="exam-card" href="istqb/ct-al-tta/DE/ISTQB-CTAL-TTA_Sample-Exam-Questions_v4.0_DE-1-additional.html"><div class="card-title">CTAL-TTA v4.0 · Technical Test Analyst · Probeprüfung v4.0 · Zusätzliche Übungen</div><div class="card-meta"><span class="meta-chip">4 Übungen</span><span class="meta-chip">Self-check · untimed</span></div></a></div></div></div></details>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CTAL-TA v4.0 · Test Analyst</span><span class="syllabus-count">4 EN · 4 DE</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-al-ta/EN/ISTQB-CTAL-TA-Sample-Exam-Questions-v4.1.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Advanced Level</span></div><div class="card-title">Test Analyst — Sample Exam 4.1</div><div class="card-meta"><span class="meta-chip">45 questions</span><span class="meta-chip">78 pts</span><span class="meta-chip">120 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 51 pts</span><span class="card-arrow">→</span></div></a><a class="exam-card" href="istqb/ct-al-ta/EN/ISTQB-CTAL-TA-Sample-Exam-Questions-v4.1-additional.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Advanced Level</span></div><div class="card-title">Test Analyst — Additional exercises 4.1</div><div class="card-meta"><span class="meta-chip">8 exercises</span></div><div class="card-footer"><span class="card-pass">Self-check · untimed</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-al-ta/DE/ISTQB-CTAL-TA-Probeprufung-Questions-v4.0-DE-public.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Advanced Level</span></div><div class="card-title">Test Analyst — Probeprüfung 4.0 DE</div><div class="card-meta"><span class="meta-chip">45 Fragen</span><span class="meta-chip">78 Punkte</span><span class="meta-chip">120 Min.</span></div><div class="card-footer"><span class="card-pass">Bestanden ab 51 Punkten</span><span class="card-arrow">→</span></div></a><a class="exam-card" href="istqb/ct-al-ta/DE/ISTQB-CTAL-TA-Probeprufung-Questions-v4.0-DE-public-additional.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Advanced Level</span></div><div class="card-title">Test Analyst — Zusatzfragen 4.0 DE</div><div class="card-meta"><span class="meta-chip">8 Aufgaben</span></div><div class="card-footer"><span class="card-pass">Selbstkontrolle · ohne Zeitlimit</span><span class="card-arrow">→</span></div></a></div></div></div><div class="prev-label">Previous syllabus · CTAL-TA v3.1 (retiring)</div><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-al-ta/EN/ISTQB-CTAL-TA-v3.1_Sample-Exam-A-Questions_v2.6.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Advanced Level</span></div><div class="card-title">Test Analyst — Sample Exam 2.6</div><div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">80 pts</span><span class="meta-chip">120 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 52 pts</span><span class="card-arrow">→</span></div></a><a class="exam-card" href="istqb/ct-al-ta/EN/ISTQB-CTAL-TA-v3.1_Sample-Exam-A-Questions_v2.6-additional.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Advanced Level</span></div><div class="card-title">Test Analyst — Additional exercises 2.6</div><div class="card-meta"><span class="meta-chip">2 exercises</span></div><div class="card-footer"><span class="card-pass">Self-check · untimed</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-al-ta/DE/GTB_CTAL-TA_Sample-Exam-Questions_v3.1.0_DE.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Advanced Level</span></div><div class="card-title">Test Analyst — Probeprüfung 3.1.0 GTB</div><div class="card-meta"><span class="meta-chip">40 Fragen</span><span class="meta-chip">80 Punkte</span><span class="meta-chip">120 Min.</span></div><div class="card-footer"><span class="card-pass">Bestanden ab 52 Punkten</span><span class="card-arrow">→</span></div></a><a class="exam-card" href="istqb/ct-al-ta/DE/GTB_CTAL-TA_Sample-Exam-Questions_v3.1.0_DE-additional.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Advanced Level</span></div><div class="card-title">Test Analyst — Zusatzfragen 3.1.0 GTB</div><div class="card-meta"><span class="meta-chip">2 Aufgaben</span></div><div class="card-footer"><span class="card-pass">Selbstkontrolle · ohne Zeitlimit</span><span class="card-arrow">→</span></div></a></div></div></div></details>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CTAL-TAE v2.0 · Test Automation Engineering</span><span class="syllabus-count">2 EN · 2 DE</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-al-tae/EN/ISTQB_CTAL-TAE_Sample_Exam_Questions_v2.2.html">
+    <div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Test Automation Engineering</span></div>
+    <div class="card-title">Test Automation Engineering — Sample Exam v2.2</div>
+    <div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">66 pts</span><span class="meta-chip">90 min</span></div>
+    <div class="card-footer"><span class="card-pass">Pass ≥ 43 pts</span><span class="card-arrow">→</span></div>
+  </a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-al-tae/DE/CTAL-TAE_Sample-Exam_Questions_v2.2_germ_.html">
+    <div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Test Automation Engineering</span></div>
+    <div class="card-title">Test Automation Engineering — Probeprüfung v2.2 DE</div>
+    <div class="card-meta"><span class="meta-chip">40 Fragen</span><span class="meta-chip">66 Punkte</span><span class="meta-chip">90 Min.</span></div>
+    <div class="card-footer"><span class="card-pass">Bestanden ab 43 Punkten</span><span class="card-arrow">→</span></div>
+  </a></div></div></div><div class="prev-label">Previous syllabus · CTAL-TAE 2016</div><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-al-tae/EN/ISTQB-CTAL-TAE_Sample-Exam-Questions_v2016_EN.html">
+      <div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Test Automation Engineer</span></div>
+      <div class="card-title">Test Automation Engineer — Sample Exam (2016)</div>
+      <div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">75 pts</span><span class="meta-chip">90 min</span></div>
+      <div class="card-footer"><span class="card-pass">Pass ≥ 49 pts</span><span class="card-arrow">→</span></div>
+    </a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-al-tae/DE/ISTQB-CT-TAE_Sample-Exam-Questions_v1.2_DE-1.html">
+      <div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Test Automation Engineer</span></div>
+      <div class="card-title">Testautomatisierungsentwickler — Probeprüfung v1.2 DE (Lehrplan 2019)</div>
+      <div class="card-meta"><span class="meta-chip">40 Fragen</span><span class="meta-chip">75 Punkte</span><span class="meta-chip">90 Min.</span></div>
+      <div class="card-footer"><span class="card-pass">Bestanden ab 49 Punkten</span><span class="card-arrow">→</span></div>
+    </a></div></div></div></details>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CTAL-TM v3.0 · Test Management</span><span class="syllabus-count">4 EN · 1 DE</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-al-tm/EN/ISTQB_CTAL-TM_Sample-Exam-Questions_SETA_v1.3.3_engl.html">
+    <div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Advanced Level</span></div>
+    <div class="card-title">ISTQB CTAL-TM v3.0 — Set A v1.3.3</div>
+    <div class="card-meta"><span class="meta-chip">50 questions</span><span class="meta-chip">88 pts</span><span class="meta-chip">120 min</span></div>
+    <div class="card-footer"><span class="card-pass">Pass ≥ 58 pts</span><span class="card-arrow">→</span></div>
+  </a><a class="exam-card" href="istqb/ct-al-tm/EN/astqb_ctal_tm_2024.html">
+    <div class="card-top"><span class="card-badge badge-astqb">ASTQB</span><span class="card-level">Certified Tester — Advanced Level</span></div>
+    <div class="card-title">ASTQB CTAL-TM v3.0 · Sample Exam 2024</div>
+    <div class="card-meta"><span class="meta-chip">50 questions</span><span class="meta-chip">88 pts</span><span class="meta-chip">120 min</span></div>
+    <div class="card-footer"><span class="card-pass">Pass ≥ 58 pts</span><span class="card-arrow">→</span></div>
+  </a><a class="exam-card" href="istqb/ct-al-tm/EN/ISTQB_CTAL-TM_Sample-Exam-Questions_v30_1.1.1_engl.html">
+    <div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Advanced Level</span></div>
+    <div class="card-title">ISTQB CTAL-TM v3.0 · Sample Exam Set A v1.1.1</div>
+    <div class="card-meta"><span class="meta-chip">50 questions</span><span class="meta-chip">88 pts</span><span class="meta-chip">120 min</span></div>
+    <div class="card-footer"><span class="card-pass">Pass ≥ 58 pts</span><span class="card-arrow">→</span></div>
+  </a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-al-tm/DE/ISTQB_CTAL-TM-v30_SET_A_germ_Sample-Exam_Questions.html">
+    <div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Advanced Level</span></div>
+    <div class="card-title">Testmanagement (CTAL-TM v3.0) — Set A v1.3.3 · ATB/GTB</div>
+    <div class="card-meta"><span class="meta-chip">50 Fragen</span><span class="meta-chip">88 Punkte</span><span class="meta-chip">120 Min.</span></div>
+    <div class="card-footer"><span class="card-pass">Bestanden ab 58 Punkten</span><span class="card-arrow">→</span></div>
+  </a></div></div></div><div class="prev-label">Previous syllabus · CTAL-TM (legacy sample exam v1.3.1)</div><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-al-tm/EN/ISTQB-CTAL-TM_Sample-Exam-A-Questions_v1.3.1_engl.html">
+    <div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Advanced Level</span></div>
+    <div class="card-title">ISTQB CTAL-TM · Legacy Sample Exam Set A v1.3.1 (2021 syllabus)</div>
+    <div class="card-meta"><span class="meta-chip">56 questions</span><span class="meta-chip">85 pts</span><span class="meta-chip">180 min</span></div>
+    <div class="card-footer"><span class="card-pass">Pass ≥ 56 pts</span><span class="card-arrow">→</span></div>
+  </a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="empty-slot">Noch nicht verfügbar</div></div></div></details>
+<h3 class="cat-label">Specialist · Technologies and Approaches</h3>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CT-GenAI · Testing with Generative AI</span><span class="syllabus-count">2 EN · 1 DE</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-genai/EN/istqb_ct_genai_mock_exam_v1.0.html" style="animation-delay:0.05s">
+    <div class="card-top">
+      <span class="card-badge badge-istqb">ISTQB</span>
+      <span class="card-level">Certified Tester — Specialist Level</span>
+    </div>
+    <div class="card-title">Testing with Generative AI — Sample A (ISTQB V1.0)</div>
+    <div class="card-meta">
+      <span class="meta-chip">40 questions</span>
+      <span class="meta-chip">46 pts</span>
+      <span class="meta-chip">60 min</span>
+      <span class="meta-chip">CT-GenAI v1.0</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-pass">Pass ≥ 30 pts</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a><a class="exam-card" href="istqb/ct-genai/EN/astqb_ct_genai_mock_exam.html" style="animation-delay:0.1s">
+    <div class="card-top">
+      <span class="card-badge badge-astqb">ASTQB</span>
+      <span class="card-level">Certified Tester — Specialist Level</span>
+    </div>
+    <div class="card-title">Testing with Generative AI — Sample B (ASTQB)</div>
+    <div class="card-meta">
+      <span class="meta-chip">40 questions</span>
+      <span class="meta-chip">46 pts</span>
+      <span class="meta-chip">60 min</span>
+      <span class="meta-chip">CT-GenAI v1.0</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-pass">Pass ≥ 30 pts</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-genai/DE/ISTQB_CT_GenAI-Sample-Exam_Fragen_SET-A_v1.1_GTB-edition_germ.html" style="animation-delay:0.1s">
+    <div class="card-top">
+      <span class="card-badge badge-istqb">ISTQB</span>
+      <span class="card-level">Certified Tester — Specialist Level</span>
+    </div>
+    <div class="card-title">Testing with Generative AI — SET A (V1.1, GTB)</div>
+    <div class="card-meta">
+      <span class="meta-chip">40 Fragen</span>
+      <span class="meta-chip">46 Pkt</span>
+      <span class="meta-chip">60 min</span>
+      <span class="meta-chip">CT-GenAI v1.1</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-pass">Bestehen ≥ 30 Pkt</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a></div></div></div></details>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CT-MAT · Mobile Application Testing</span><span class="syllabus-count">1 EN · 1 DE</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-mat/EN/istqb_ct_mat_mock_exam_V2019_English.html" style="animation-delay:0.2s">
     <div class="card-top">
       <span class="card-badge badge-istqb">ISTQB</span>
       <span class="card-level">Certified Tester — Specialist Level</span>
     </div>
     <div class="card-title">Mobile Application Testing — Version 2019</div>
+    <div class="card-meta">
+      <span class="meta-chip">40 questions</span>
+      <span class="meta-chip">40 pts</span>
+      <span class="meta-chip">60 min</span>
+      <span class="meta-chip">CT-MAT 2019</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-pass">Pass ≥ 26 pts</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-mat/DE/istqb_ct_mat_mock_exam_V2019_German.html" style="animation-delay:0.1s">
+    <div class="card-top">
+      <span class="card-badge badge-istqb">ISTQB</span>
+      <span class="card-level">Certified Tester — Specialist Level</span>
+    </div>
+    <div class="card-title">Mobile Application Testing — Version 2019 (Deutsch)</div>
     <div class="card-meta">
       <span class="meta-chip">40 Fragen</span>
       <span class="meta-chip">40 Pkt</span>
@@ -239,44 +442,62 @@
       <span class="card-pass">Bestehen ≥ 26 Pkt</span>
       <span class="card-arrow">→</span>
     </div>
-  </a>
-
-  <!-- IREB CPRE FL -->
-  <a class="exam-card" href="cpre/foundation/IREB_CPRE_FL_Questionnaire_Set_Public_DE_2025-09-11.html" style="animation-delay:0.15s">
+  </a></div></div></div></details>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CT-ATLaS v2.0 · Agile Test Leadership at Scale</span><span class="syllabus-count">1 EN</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-atlas/EN/ISTQB_CT-ATLaS_Sample-Exam-Questions_v2.0.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Agile</span></div><div class="card-title">Agile Test Leadership at Scale — Sample Exam Set A v2.0</div><div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">71 pts</span><span class="meta-chip">120 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 47 pts</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="empty-slot">Noch nicht verfügbar</div></div></div></details>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CT-AI v1.0 · AI Testing</span><span class="syllabus-count">2 EN · 1 DE</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-ai/EN/ISTQB_CT-AI_Sample-Exam-Questions_v1.1.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">AI Testing — Sample Exam 1.1 (answers 1.2)</div><div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">47 pts</span><span class="meta-chip">60 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 31 pts</span><span class="card-arrow">→</span></div></a><a class="exam-card" href="istqb/ct-ai/EN/ISTQB_CT-AI_Sample-Exam-Questions_v1.1-additional.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">AI Testing — Additional practice 1.1 (answers 1.2)</div><div class="card-meta"><span class="meta-chip">27 exercises</span><span class="meta-chip">Self-check</span></div><div class="card-footer"><span class="card-pass">No exam score</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-ai/DE/ISTQB-CT-AI_Sample-Exam-Questions_v2.0_DE-1.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">AI Testing — Probeprüfung 2.0 DE</div><div class="card-meta"><span class="meta-chip">40 Fragen</span><span class="meta-chip">47 Pkt</span><span class="meta-chip">60 min</span></div><div class="card-footer"><span class="card-pass">Bestehen ≥ 31 Pkt</span><span class="card-arrow">→</span></div></a></div></div></div></details>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CT-MBT v1.1 · Model-Based Tester</span><span class="syllabus-count">1 EN</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-mbt/EN/ISTQB_CT-MBT_v1.1_Sample-Exam-A-Questions_v1.2.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">Model-Based Tester — Sample Exam 1.2</div><div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">40 pts</span><span class="meta-chip">60 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 26 pts</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="empty-slot">Noch nicht verfügbar</div></div></div></details>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CT-QDO v1.0 · Quality in DevOps</span><span class="syllabus-count">2 EN</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-qdo/EN/ISTQB-CT-QDO-Sample-Exam-Questions-v1.0-EN-1.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">Quality in DevOps — Sample Exam 1.0</div><div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">45 pts</span><span class="meta-chip">60 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 30 pts</span><span class="card-arrow">→</span></div></a><a class="exam-card" href="istqb/ct-qdo/EN/ISTQB-CT-QDO-Sample-Exam-Questions-v1.0-EN-1-additional.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">Quality in DevOps — Additional practice 1.0</div><div class="card-meta"><span class="meta-chip">8 exercises</span><span class="meta-chip">Self-check</span></div><div class="card-footer"><span class="card-pass">No exam score</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="empty-slot">Noch nicht verfügbar</div></div></div></details>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CT-TAS v1.0 · Test Automation Strategy</span><span class="syllabus-count">1 EN</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-tas/EN/ISTQB_CT-TAS_Sample-Exam-Questions_v1.2_EN.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">Test Automation Strategy — Sample Exam Set A v1.2</div><div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">49 pts</span><span class="meta-chip">60 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 32 pts</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="empty-slot">Noch nicht verfügbar</div></div></div></details>
+<h3 class="cat-label">Specialist · Quality Characteristics and Test Levels</h3>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CT-SEC · Security Tester (syllabus 2016)</span><span class="syllabus-count">1 EN</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-sec/EN/ISTQB-CTAL-SEC_Sample_Exam_Questions_v2016_EN.html" style="animation-delay:0.15s">
+    <div class="card-top">
+      <span class="card-badge badge-istqb">ISTQB</span>
+      <span class="card-level">Certified Tester — Advanced Level</span>
+    </div>
+    <div class="card-title">Security Tester (CT-SEC) — Sample Exam 2016</div>
+    <div class="card-meta">
+      <span class="meta-chip">45 questions</span>
+      <span class="meta-chip">80 pts</span>
+      <span class="meta-chip">120 min</span>
+      <span class="meta-chip">CT-SEC 2016</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-pass">Pass ≥ 52 pts</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="empty-slot">Noch nicht verfügbar</div></div></div></details>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CT-AcT 2019 · Acceptance Testing</span><span class="syllabus-count">1 EN · 1 DE</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-act/EN/ISTQB_CT-AcT_Sample-Exam-A-Questions_v1.2.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">Acceptance Testing — Sample Exam Set A v1.2</div><div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">40 pts</span><span class="meta-chip">60 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 26 pts</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-act/DE/GTB-CTFL-AcT_Sample-Exam-Question_v2019_DE.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">Abnahmetest — Probeprüfung v2019 · GTB</div><div class="card-meta"><span class="meta-chip">40 Fragen</span><span class="meta-chip">40 Pkt</span><span class="meta-chip">60 min</span></div><div class="card-footer"><span class="card-pass">Bestehen ≥ 26 Pkt</span><span class="card-arrow">→</span></div></a></div></div></div></details>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CT-PT v2018 · Performance Testing</span><span class="syllabus-count">1 EN · 1 DE</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-pt/EN/ISTQB-CTFL-PT_Sample-Exam-Question_v2018_EN.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">Performance Testing — Sample Exam 2018</div><div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">40 pts</span><span class="meta-chip">90 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 26 pts</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-pt/DE/GTB-CTFL-PT_SampleExam_v2019_DE.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">Performance Testing — Probeprüfung 2019 GTB</div><div class="card-meta"><span class="meta-chip">40 Fragen</span><span class="meta-chip">40 Pkt</span><span class="meta-chip">90 min</span></div><div class="card-footer"><span class="card-pass">Bestehen ≥ 26 Pkt</span><span class="card-arrow">→</span></div></a></div></div></div></details>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CT-STE v1.0.1 · Security Test Engineer</span><span class="syllabus-count">1 EN</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-ste/EN/ISTQB_CT-STE_Sample-Exam-Questions_v1.0.1_EN.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">Security Test Engineer — Sample Exam v1.0.1</div><div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">43 pts</span><span class="meta-chip">75 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 28 pts</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="empty-slot">Noch nicht verfügbar</div></div></div></details>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CT-UT 2017 · Usability Testing</span><span class="syllabus-count">1 EN · 1 DE</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-ut/EN/ISTQB_CT-UT_Sample-Exam-Questions_v2.3_EN.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">Usability Testing — Sample Exam v2.3</div><div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">40 pts</span><span class="meta-chip">60 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 26 pts</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-ut/DE/GTB_CT-UT_Probepruefung_v2.3_DE.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">Usability Testing — Probeprüfung v2.3 · GTB</div><div class="card-meta"><span class="meta-chip">40 Fragen</span><span class="meta-chip">40 Pkt</span><span class="meta-chip">60 min</span></div><div class="card-footer"><span class="card-pass">Bestehen ≥ 26 Pkt</span><span class="card-arrow">→</span></div></a></div></div></div></details>
+<h3 class="cat-label">Specialist · Testing in Particular Domains</h3>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CT-AuT v2.1 · Automotive Software Tester</span><span class="syllabus-count">1 EN · 1 DE</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-aut/EN/ISTQB_CT-AuT_Sample-Exam-A-Questions_EN.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist Level</span></div><div class="card-title">Automotive Software Tester — Sample Exam Set A v2.3</div><div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">40 pts</span><span class="meta-chip">60 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 26 pts</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-aut/DE/ISTQB_CT-AuT_Probeprufung_Set-A_Fragen_v2.3_DE.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist Level</span></div><div class="card-title">Automotive Software Tester — Probeprüfung Set A v2.3</div><div class="card-meta"><span class="meta-chip">40 Fragen</span><span class="meta-chip">40 Punkte</span><span class="meta-chip">60 Min.</span></div><div class="card-footer"><span class="card-pass">Bestanden ab 26 Punkten</span><span class="card-arrow">→</span></div></a></div></div></div></details>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CT-FT v1.0 · Finance Testing</span><span class="syllabus-count">1 EN</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-ft/EN/ISTQB-CT-FT_Sample_Exam_Set_A_Questions_v1.0-2.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">Finance Testing — Sample Exam Set A v1.0</div><div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">45 pts</span><span class="meta-chip">60 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 30 pts</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="empty-slot">Noch nicht verfügbar</div></div></div></details>
+  <details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CT-GaMe v1.0.1 · Game Testing</span><span class="syllabus-count">2 EN</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-game/EN/ISTQB_CT-GaMe_SampleExam_v1.0.1.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">Game Testing — Sample Exam Set A v1.0.1</div><div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">40 pts</span><span class="meta-chip">60 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 26 pts</span><span class="card-arrow">→</span></div></a><a class="exam-card" href="istqb/ct-game/EN/ISTQB_CT-GaMe_SampleExam_v1.0.1-additional.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">Game Testing — 14 Additional Practice Questions</div><div class="card-meta"><span class="meta-chip">14 exercises</span><span class="meta-chip">Self-check</span></div><div class="card-footer"><span class="card-pass">No exam score</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="empty-slot">Noch nicht verfügbar</div></div></div></details>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CT-GT 2019 · Gambling Industry Tester</span><span class="syllabus-count">1 EN</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-gt/EN/ISTQB_CT-GT_Sample-Exam-A-Questions_v1.0.1.html"><div class="card-top"><span class="card-badge badge-istqb">ISTQB</span><span class="card-level">Certified Tester — Specialist</span></div><div class="card-title">Gambling Industry Tester — Sample Exam Set A v1.0.1</div><div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">40 pts</span><span class="meta-chip">60 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 26 pts</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="empty-slot">Noch nicht verfügbar</div></div></div></details>
+<h3 class="cat-label">Other</h3>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CTFL-TDS · Test Data Specialist</span><span class="syllabus-count">2 DE</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="empty-slot">Not yet available</div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-tds/DE/GTB-CTFL-TDM_Sample-Exam-Question_SET2019A_DE-1.html"><div class="card-top"><span class="card-badge badge-istqb">GTB</span><span class="card-level">Certified Tester — Test Data Specialist</span></div><div class="card-title">Test Data Specialist — Probeprüfung Set 2019 A</div><div class="card-meta"><span class="meta-chip">40 Fragen</span><span class="meta-chip">40 Punkte</span><span class="meta-chip">60 Min.</span></div><div class="card-footer"><span class="card-pass">Bestanden ab 26 Punkten</span><span class="card-arrow">→</span></div></a></div></div></div><div class="prev-label">2021 syllabus</div><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="empty-slot">Not yet available</div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="istqb/ct-tds/DE/GTB-CTFL-TDS_Sample-Exam_Questions_v2021_DE-1.html"><div class="card-top"><span class="card-badge badge-istqb">GTB</span><span class="card-level">Certified Tester — Test Data Specialist</span></div><div class="card-title">Test Data Specialist — Probeprüfung Set 2021</div><div class="card-meta"><span class="meta-chip">40 Fragen</span><span class="meta-chip">40 Punkte</span><span class="meta-chip">60 Min.</span></div><div class="card-footer"><span class="card-pass">Bestanden ab 26 Punkten</span><span class="card-arrow">→</span></div></a></div></div></div></details>
+<h2 class="brand-label" id="a4q"><span>A4Q</span><small>Alliance for Qualification · German Testing Board</small></h2>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">A4Q SDET 2022 · Software Development Engineer in Test</span><span class="syllabus-count">1 EN · 1 DE</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="exam-grid"><a class="exam-card" href="a4q/sdet/EN/A4Q-SDET_Sample-Exam-Set-A_2022_EN.html"><div class="card-top"><span class="card-badge badge-astqb">A4Q</span><span class="card-level">A4Q — Software Development Engineer in Test</span></div><div class="card-title">Software Development Engineer in Test — Sample Exam Set A (2022)</div><div class="card-meta"><span class="meta-chip">40 questions</span><span class="meta-chip">40 pts</span><span class="meta-chip">60 min</span></div><div class="card-footer"><span class="card-pass">Pass ≥ 26 pts</span><span class="card-arrow">→</span></div></a></div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="a4q/sdet/DE/A4Q-SDET_Musterpruefung-Set-A_2022_DE.html"><div class="card-top"><span class="card-badge badge-astqb">A4Q</span><span class="card-level">A4Q — Software Development Engineer in Test</span></div><div class="card-title">Software Development Engineer in Test — Probeprüfung Set A (2022) · GTB</div><div class="card-meta"><span class="meta-chip">40 Fragen</span><span class="meta-chip">40 Pkt</span><span class="meta-chip">60 min</span></div><div class="card-footer"><span class="card-pass">Bestehen ≥ 26 Pkt</span><span class="card-arrow">→</span></div></a></div></div></div></details>
+<h2 class="brand-label" id="cpre"><span>CPRE</span><small>IREB · Certified Professional for Requirements Engineering</small></h2>
+<details class="syllabus-group"><summary><span class="syllabus-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h6l2 2h10v12H3z"/><path d="M7 11h10M7 15h6"/></svg></span><span class="syllabus-name">CPRE · Foundation Level 3 (IREB)</span><span class="syllabus-count">1 DE</span><span class="syllabus-chevron" aria-hidden="true">⌄</span></summary><div class="lang-cols"><div class="lang-col" lang="en"><span class="section-lang-tag lang-en">English</span><div class="empty-slot">Not yet available</div></div><div class="lang-col" lang="de"><span class="section-lang-tag lang-de">Deutsch</span><div class="exam-grid"><a class="exam-card" href="cpre/foundation/DE/IREB_CPRE_FL_Questionnaire_Set_Public_DE_2025-09-11.html" style="animation-delay:0.15s">
     <div class="card-top">
       <span class="card-badge badge-ireb">IREB</span>
       <span class="card-level">CPRE — Foundation Level</span>
     </div>
     <div class="card-title">Certified Professional for Requirements Engineering — Foundation Level</div>
     <div class="card-meta">
-      <span class="meta-chip">43 Fragen</span>
-      <span class="meta-chip">67 Pkt</span>
+      <span class="meta-chip">45 Fragen</span>
+      <span class="meta-chip">70 Pkt</span>
       <span class="meta-chip">75 min</span>
-      <span class="meta-chip">CPRE FL v3.3.3</span>
+      <span class="meta-chip">Set 3.3.3 · Lehrplan 3</span>
     </div>
     <div class="card-footer">
       <span class="card-pass">Bestehen ≥ 70%</span>
       <span class="card-arrow">→</span>
     </div>
-  </a>
-
-  <!-- Coming soon: ISTQB CTAL-TM (German) -->
-  <div class="exam-card coming" style="animation-delay:0.2s">
-    <div class="card-top">
-      <span class="card-badge badge-coming">ISTQB</span>
-      <span class="card-level">Certified Tester — Advanced Level</span>
-    </div>
-    <div class="card-title">Certified Tester Advanced Level — Test Manager (CTAL-TM v3.0)</div>
-    <div class="card-meta">
-      <span class="meta-chip">CTAL-TM v3.0</span>
-    </div>
-    <div class="card-footer">
-      <span class="coming-tag">Coming soon</span>
-      <span class="card-arrow">→</span>
-    </div>
-  </div>
-
-</div><!-- /.exam-grid Deutsch -->
+  </a></div></div></div></details>
+</div><!-- /.syllabus-list -->
 
 <!-- ══ HOW IT WORKS ═══════════════════════════════════════════════════════ -->
 <div class="section-divider" style="margin-top:2.5rem">
@@ -292,8 +513,8 @@
   </div>
   <div class="feature">
     <div class="feature-icon">🌐</div>
-    <div class="feature-title">+15 min option</div>
-    <div class="feature-desc">Optional time extension for non-native speakers, per ISTQB / IREB regulations.</div>
+    <div class="feature-title">Time extension</div>
+    <div class="feature-desc">Optional extra time for non-native speakers: +25% on ISTQB exams; CPRE offers 90 instead of 75 minutes.</div>
   </div>
   <div class="feature">
     <div class="feature-icon">✅</div>

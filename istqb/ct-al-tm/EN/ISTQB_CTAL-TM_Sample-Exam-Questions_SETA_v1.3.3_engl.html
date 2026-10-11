@@ -1,0 +1,2139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CTAL-TM v3.0 — Sample Exam Set A</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #475569;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+    </style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Advanced Level</div>
+        <h1>CTAL-TM v3.0<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">
+          ISTQB® Certified Tester Advanced Level Test Management (CTAL-TM) ·
+          Sample Exam Set A v1.3.3 · Test Management Syllabus v3.0. The
+          timer starts as soon as you click "Start Exam".
+        </p>
+        <p class="start-subtitle source-credit">Source: ISTQB_CTAL-TM_Sample-Exam-Questions_SETA_v1.3.3.pdf; ISTQB_CTAL-TM_Sample-Exam-Answers_SETA-v1.3.3.pdf. © ISTQB®. Authors and translators are acknowledged in the source PDFs.</p>
+    <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">50</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">120</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">88</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">120 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">150 min</span>
+            <span class="time-opt-lbl">+30 min extension</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">
+          &#9432;&nbsp; The 30-minute extension applies to candidates who are
+          not sitting the exam in their native language (per ISTQB rules).
+        </div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 120:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CTAL-TM v3.0 · Sample Exam Set A v1.3.3</span
+            >
+            <span class="exam-title">Certified Tester Advanced Level – Test Management</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/50 answered
+            </div>
+            <div class="timer" id="timer">120:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            50 questions (88 points) · <strong>65% (≥ 58 of 88 points)</strong>
+            to pass · points vary per question (1–3) and some questions are
+            multi-select (see marking on each question)
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "TM-1.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are test manager in a large CRM implementation project. You are required to establish a test plan before the development starts.\n\nWhich of the following activities is MOST ESSENTIAL in developing and establishing the test plan?",
+    "options": [
+      "a) Reaching consensus among all stakeholders",
+      "b) Defining test objectives based on regulatory standards",
+      "c) Establishing readiness to begin testing",
+      "d) Having all stakeholders identify their risk mitigation strategy"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Per syllabus section 1.1.1, all aspects of the test plan need to be accepted by all stakeholders. Therefore, reaching consensus among all stakeholders is the most essential activity in developing and establishing a test plan.\nb) Is not correct. The test plan relates to the test objectives, but compared to option a) it is NOT the most essential activity in developing and establishing a test plan. Regulatory standards are not applicable in all test situations.\nc) Is not correct - Establishing readiness to begin testing is a typical test monitoring and controlling activity (1.1.2).\nd) Is not correct. Risk mitigation relates to the overall project and is not unique for the individual stakeholders."
+  },
+  {
+    "id": 2,
+    "lo": "TM-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following MOST accurately defines the goal of test monitoring?",
+    "options": [
+      "a) Test monitoring compares the actual test progress against the planned progress.",
+      "b) Test monitoring compares the actual results against the expected results.",
+      "c) Test monitoring assesses with newly identified or known risks after they have changed.",
+      "d) Test monitoring implements the test plan and swiftly initiates corrective actions."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Per syllabus section 1.1.2, the primary goal of test monitoring is to continuously track and compare actual test progress and status against the planned baseline to provide visibility to stakeholders.\nb) Is not correct. Comparing actual vs. expected results is part of test execution/result evaluation; test results are only one input to monitoring and do not define its goal.\nc) Is not correct. Assessing newly identified or changed risks belongs to risk management/test control; but the assessment and decisions are control activities.\nd) Is not correct. Implementing the test plan and initiating corrective actions are activities of test control; not test monitoring."
+  },
+  {
+    "id": 3,
+    "lo": "TM-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "When comparing stakeholders in a given project, the Project Manager wants to ensure that detailed discussions are held with similar-level stakeholders (e.g. peers to Project Manager) while, at the same time, engaging operative stakeholders in a planning workshop specifically for the project schedule.\n\nWhich group of stakeholders is the BEST choice for the Project Manager to include in the detailed discussions?",
+    "options": [
+      "a) Development leads, automation testers, finance staff",
+      "b) Security architects, operations team",
+      "c) Department staff, Product Managers",
+      "d) Project Managers for other projects, trainers, test management tool vendor"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Automation testers would not be involved in initial discussions, development leads are stakeholders and finance staff are customer stakeholders.\nb) Is not correct. Security architects would be involved in initial discussions, but the ops team is not necessarily involved early in initial discussions.\nc) Is correct. These are all stakeholders according to the syllabus. These are all similar-level stakeholders who have direct influence on the project and its outcomes. They need to be involved in detailed discussions to ensure that their expectations, requirements, and constraints are understood and addressed by the test manager.\nd) Is not correct. Project managers for other projects and the test management tool vendor are not involved in any discussions for this project, however the trainer is a stakeholder and can provide input into early planning discussions."
+  },
+  {
+    "id": 4,
+    "lo": "TM-1.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which statement BEST describes why knowledge about stakeholders in a stakeholder matrix is relevant for test management?",
+    "options": [
+      "a) It helps to involve stakeholders with high influence and interest at an early stage and to manage their expectations in a targeted manner.",
+      "b) It serves to identify the most important stakeholders and make their perspectives the basis for key decisions.",
+      "c) It sets out binding and general guidelines on which stakeholders have the highest priority in all projects.",
+      "d) It replaces risk management and risk mitigation, as all stakeholders can contribute their views on the risks."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. A stakeholder (power–interest) matrix helps test management identify high-influence, high-interest stakeholders early, tailor communication, and proactively manage their expectations and engagement.\nb) Is not correct. The matrix helps identify key stakeholders, but their perspectives should inform—not automatically determine—major decisions, which must also consider objectives, risks, evidence, and constraints.\nc) Is not correct. Stakeholder prioritization is project-specific and dynamic; a matrix does not establish universal, binding priorities that apply across all projects.\nd) Is not correct. Stakeholder analysis supports risk management but does not replace it; risks still require systematic identification, assessment, mitigation, and monitoring."
+  },
+  {
+    "id": 5,
+    "lo": "TM-1.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "A company is transitioning from a sequential development process to a hybrid software development model that combines agile sprints with phase-based release cycles. The test team is having difficulty adjusting to the shorter iterations and continuous testing cycles.\n\nWhich of the following test management activities is MOST IMPORTANT in this situation?",
+    "options": [
+      "a) Coaching and mentoring the test team on continuous integration (CI) and agile testing practices to support the transition to agile approaches.",
+      "b) Extend release cycles to maintain the usual testing process and ensure coverage.",
+      "c) Protecting test team members from stakeholders in order to shield the team from external distractions during the critical transition phase.",
+      "d) Shift the focus away from pure testing and onto the development goals of the project, as in an agile approach, all members are responsible for quality."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Coaching and mentoring on CI and agile testing directly addresses the team's difficulty with short iterations and continuous testing, building the skills, practices, and automation needed for fast, reliable feedback.\nb) Is not correct. Extending release cycles avoids the problem and undermines the hybrid approach by delaying feedback and reverting toward a sequential cadence.\nc) Is not correct. Limiting stakeholder interaction may reduce noise, but it weakens essential collaboration and feedback loops that agile/hybrid models rely on.\nd) Is not correct. \"Whole-team quality\" does not mean reducing focus on testing; deprioritizing testing during the transition increases risk instead of enabling the team to adapt."
+  },
+  {
+    "id": 6,
+    "lo": "TM-1.2.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "A new test manager joins an organization and is initially tasked with identifying which software development life cycle is currently being used. Four things that she observed were:\n\n• Test iterations occurred every 3 weeks.\n• Automation was implemented to aid in meeting time frames.\n• Products and tasks were completed before moving to the next iteration.\n• Testing wasn't starting until the requirements had been completed.\n\nWhich software development life cycle is currently being used?",
+    "options": [
+      "a) Sequential",
+      "b) Iterative",
+      "c) Hybrid",
+      "d) DevOps"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. The presence of regular 3-week iterations contradicts a purely sequential life cycle.\nb) Is not correct. Although iterations fit iterative, the phase gate \"testing only after requirements completed\" contradicts a purely iterative model.\nc) Is correct. The use of iterations (3-week cycles) indicates iterative practice, while gating ('testing only after requirements completed') reflects sequential practice. In combination, this is hybrid. The syllabus states that \"Hybrid life cycle models are a combination of sequential and iterative models\" (section 1.2.3).\nd) Is not correct. No DevOps hallmarks mentioned (CI/CD, deployment, monitoring); automation alone isn't DevOps-specific."
+  },
+  {
+    "id": 7,
+    "lo": "TM-1.2.7",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are joining a long-running project as a test manager, which releases new features and bug fixes for a web shop on a daily basis.\n\nSince your predecessor has already left the company, you are working out which combination of test management activities is BEST suited to the project in the short term in order to continue to ensure stakeholder satisfaction and the success of the project in a stable and continuous manner.\n\nWhich two test management activities do you choose?",
+    "options": [
+      "a) Test planning should include a retrospective after the rollout to identify potential weaknesses and problems so that long-term strategies can be developed to reduce risks.",
+      "b) The efficiency of the testing process is an important factor in test planning. Therefore, especially in the context of short iteration cycles, test automation for regression testing should be expanded so that the time frame can be adhered to.",
+      "c) Test monitoring must continuously record the progress of test execution and the status of error conditions so that test control can align the test sequence appropriately with the risks and prioritized requirements.",
+      "d) Quality gate management is very important for test control, so it is necessary to clarify at short notice what a quality gate is in the software life cycle, who makes the decisions about it, and what consequences it has for testing.",
+      "e) Preparing team communication is an important part of test planning. Especially when teams are working in different locations, the coordination infrastructure must be adapted accordingly."
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "explanation": "a) Is not correct. Post-rollout retrospectives and long-term strategy work are valuable, but they don't most directly stabilize a daily release cadence in the short term.\nb) Is correct (choose this). Expanding automated regression testing is a key test-planning decision that boosts efficiency and preserves the tight timelines of daily releases.\nc) Is correct (choose this). Continuous test monitoring of execution progress and defect status enables timely test control, risk-aligned sequencing, and stable day-to-day delivery.\nd) Is not correct. Defining/clarifying quality gates on short notice adds overhead; in a long-running project they should already be established and are not the most urgent lever.\ne) Is not correct. Preparing team communication is helpful, especially for distributed teams, but it is less impactful than automation and continuous monitoring for immediate stability."
+  },
+  {
+    "id": 8,
+    "lo": "TM-1.2.7",
+    "k": "K4",
+    "pts": 3,
+    "text": "Assume you are in a project that develops safety-critical software for a medical device. The software must comply with standards like the IEC 62304 standard and FDA regulations. The project is following an Agile methodology with two-week sprints. The test team consists of four onsite testers and six offsite testers.\n\nThe organization uses a cloud-based DevOps toolchain as the main tool for CI/CD and test automation. The project is in the maintenance phase and starting now will require frequent regression testing due to defect fixes and feature enhancements. The project has a continuous risk management process in place, which involves identifying, assessing, and mitigating any new or existing risks associated with the software changes.\n\nWhich of the following test management activities BEST emphasizes the specific focus of this project?",
+    "options": [
+      "a) Developing a separate risk management plan to identify, assess, prioritize, and reduce risks.",
+      "b) Developing a communication and coordination concept for cooperation between onsite and offsite testers.",
+      "c) Developing a test automation plan to define the scope of automation, tool/framework selection, and metrics.",
+      "d) Developing a regression test plan with scope definition, risk-based prioritization, traceability (changes and test cases), and exit criteria."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. A separate risk management plan duplicates the existing continuous risk process. Test management should integrate with that process, not recreate it, and this does not address the immediate need for frequent, compliant regressions in maintenance.\nb) Is not correct. A communication/coordination concept for on-site and off-site testers is useful, but it does not target the project's specific focus: systematic, compliant regression testing driven by frequent changes in a safety-critical context.\nc) Is not correct. A test automation plan can help CI/CD, but a cloud-based DevOps toolchain is already in place. The key emphasis now is deciding what to regress and in what order with compliance evidence, not primarily selecting/defining automation.\nd) Is correct. A regression test plan with scope, risk-based prioritization, bidirectional traceability (changes ↔ tests/requirements), and exit criteria directly supports safety-critical compliance (e.g., IEC 62304/FDA), two-week sprints, and the maintenance phase's frequent regression needs."
+  },
+  {
+    "id": 9,
+    "lo": "TM-1.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A project involved the migration of a web application to the cloud. The cloud system provider estimated that a system outage was very unlikely. Based on this statement, the test manager decided not to conduct reliability testing for this item because even though the risk impact would be high, the moderate overall risk level did not justify the additional effort and time needed for this test type. Soon after going live, the website became unavailable for two days causing a substantial loss of revenue and reputation to the company.\n\nHow could the test team improve its use of risk-based testing to avoid such problems in the future?",
+    "options": [
+      "a) Involve additional stakeholders in risk analysis to improve the assessment of risk likelihood",
+      "b) Conduct intensive reliability tests even if the risk level is moderate",
+      "c) Involve experienced testers in risk assessment to evaluate the risk level correctly",
+      "d) Use a risk-based testing strategy to avoid such major failures"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. To be most effective, risk analysis should include stakeholders, in this case especially of independent experts in cloud architecture. Relying on statements of the vendor is not enough. In the scenario, the test team underestimated the risk likelihood of a system outage due to the migration of a web application to the cloud. They relied on the cloud system provider's estimation, which was not accurate or reliable. This led to insufficient reliability testing, which failed to detect the defects that caused the website to become unavailable for two days. To avoid such problems in the future, the test team should involve additional stakeholders in risk analysis, especially independent experts in cloud architecture. These stakeholders can provide more objective and realistic assessments of the risk likelihood, based on their knowledge and experience.\nb) Is not correct. In risk-based testing, a moderate risk level only justifies moderate test intensity.\nc) Is not correct. Involving experienced testers is not enough for obtaining a reliable assessment of the risk level. A broad group of stakeholders is needed, including independent experts in cloud architecture.\nd) Is not correct. It appears that the test team did follow a risk-based testing strategy. Had the risk been assessed correctly, the test team would have conducted reliability testing and detected the defects."
+  },
+  {
+    "id": 10,
+    "lo": "TM-1.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "As a test manager, you create a spreadsheet with rows for the system components and columns for their failure modes, their risk likelihood and risk impact. You invite the system architects and business representatives to jointly fill in the system components and failure modes based on their expertise.\n\nWhich risk identification technique are you applying with this procedure?",
+    "options": [
+      "a) Expert interviews",
+      "b) Checklists",
+      "c) Risk workshop",
+      "d) Brainstorming"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. The question does not mention interviewing the stakeholders, only providing them with a prepared spreadsheet.\nb) Is not correct. A checklist would be a list of items to check, not a spreadsheet with multiple columns to fill in.\nc) Is correct. You organize a workshop with the stakeholders to jointly identify the failure modes of component integration by filling in the template.\nd) Is not correct. Brainstorming is a spontaneous technique to share ideas, but in this case a spreadsheet has been prepared which guides the risk identification."
+  },
+  {
+    "id": 11,
+    "lo": "TM-1.3.4",
+    "k": "K4",
+    "pts": 3,
+    "text": "Risks have been identified for a project and analyzed using a quantitative method, with the following results for risk likelihood and risk impact.\n\nWhich set of testing activities would be the best to mitigate these risks?",
+    "options": [
+      "a) Address risk A as a high priority by testing an early prototype with business stakeholders, then address risk C by introducing reviews. No testing is planned to mitigate risks B and D.",
+      "b) Execute tests addressing risk A by documentation review, and risk C with black-box testing. Then, address risks B and D with white-box testing.",
+      "c) Mitigate risks by testing risk B and C first with exploratory testing, then test risk A with confirmation testing. Test Risk D as time allows.",
+      "d) Mitigate risks by testing risk A and risk B by testing with business stakeholders using an early prototype and risk D with non-functional testing. Accept risk C without explicit testing."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct - Risk A gives us an exposure of 40% * 1,500,000 = 600,000 € which is the highest, hence this should be prioritized during testing. As a prototype makes main features of the application testable to the users early, this method is appropriate to mitigate the risk. B and D are project risks, therefore other (non-) testing activities are needed.\nb) Is not correct - Risk B is not a product risk – hence cannot be mitigated by testing.\nc) Is not correct - Risk C gives us an exposure of 90% * 100,000 = 90,000 € which is less than Risk A, hence this is not the priority during testing. Reviewing can mitigate the risk of non-understandable documentation.\nd) Is not correct - Risk D is not a product risk – hence cannot be mitigated by testing.",
+    "image": "SETA_v1.3.3_GTB/image_11.png"
+  },
+  {
+    "id": 12,
+    "lo": "TM-1.3.4",
+    "k": "K4",
+    "pts": 3,
+    "text": "Assume you are in a project that develops a web application for online banking. The project is following an Agile SDLC and has sprints of two weeks each. The application has several features, such as account management, fund transfer, bill payment, and loan application. Each feature has different levels of security, usability, and performance risks.\n\nYou have a test team of six members with different skills and experience.\n\nBased on this scenario, how would you select appropriate test activities to mitigate risks according to their risk level?",
+    "options": [
+      "a) Use static testing and dynamic testing for all features but allocate more test effort and use more thorough test techniques for the features with higher risk levels. Assign the most qualified testers to the features with the highest risk levels. Use reviews and regression testing to ensure quality assurance.",
+      "b) Use static testing for the features with lower risk levels and dynamic testing for the features with higher risk levels. Assign the testers randomly to the features regardless of their skills and experience. Use reviews and regression testing to ensure quality assurance.",
+      "c) Use dynamic testing only for the features with higher risk levels and skip testing for the features with lower risk levels. Assign the testers based on their availability and preference. Use reviews and regression testing to ensure quality assurance.",
+      "d) Use static testing only for the features with higher risk levels and skip testing for the features with lower risk levels. Assign the testers based on their seniority and rank. Use reviews and regression testing to ensure quality assurance."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. It follows the principles of risk-based testing, which states that the test effort should be proportional to the risk level, and that the most qualified people should test the test items with the highest risk levels. This ensures that the most critical features of the application are tested thoroughly and effectively. It also uses both static testing and dynamic testing, which are complementary and can cover different types of risks.\nb) Is not correct. It does not use both static testing and dynamic testing for all features, which may result in missing some risks that can only be detected by one or the other. It also does not assign the testers based on their skills and experience, which may affect the quality of testing.\nc) Is not correct. It skips testing for the features with lower risk levels, which may still have some defects that can affect the quality of the product. It also does not assign the testers based on their skills and experience, which may affect the quality of testing.\nd) Is not correct. It skips testing for the features with lower risk levels, which may still have some defects that can affect the quality of the product. It also does not use dynamic testing, which is essential for verifying the functionality and performance of the product."
+  },
+  {
+    "id": 13,
+    "lo": "TM-1.3.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "Your team is developing a new major version of a mobile application which graphically displays the timetable of various public transport organizations on a common user interface. Your team is following an Agile SDLC with fast iterations and releases. Requirements are rather informal, often collected from user feedback and development. The organizational test strategy requires risk-based testing. To make the risk analysis proceed quickly, you want to involve the members of the Agile team who are familiar with the main risk areas of usability, compatibility, portability, and performance.\n\nWhich technique would you recommend using in this situation?",
+    "options": [
+      "a) Hazard analysis",
+      "b) Pragmatic Risk Analysis and Management",
+      "c) Systematic Software Testing",
+      "d) Fault tree analysis"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "The situation demands a lightweight technique, since the application is non-safety-critical and lead time and effort are limited both for the team and for the stakeholders.\na) Is not correct. Hazard analysis is a heavy-weight technique.\nb) Is correct. Pragmatic Risk Analysis and Management (PRAM) is a lightweight technique that can work based on stakeholder input. PRAM involves defining, assessing, and deciding on the risks that matter for the project, and using direct or indirect measures to mitigate them. PRAM is suitable for Agile projects, as it allows quick and flexible risk analysis and management without requiring formal documentation or specifications.\nc) Is not correct. Systematic Software Testing is a test approach that requires requirements specifications which are missing in your situation.\nd) Is not correct. Fault tree analysis is a time-consuming heavy-weight technique."
+  },
+  {
+    "id": 14,
+    "lo": "TM-1.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "As a test manager you have been asked by the project manager to establish the test strategy for a software implementation project.\n\nWhich of the following are the most important factors for you to consider ensuring an efficient and effective test strategy?",
+    "options": [
+      "a) Test types, test techniques and test metrics.",
+      "b) Test levels, entry/exit criteria and test techniques.",
+      "c) Test levels, test types and test techniques.",
+      "d) Test levels, test techniques, and test deliverables."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Test types and test techniques are part of a test approach. However, test metrics are – together with the test approach – part of the test strategy.\nb) Is not correct. Test levels and test techniques are part of a test approach. However, test entry/exit criteria are – together with the test approach – part of the test strategy.\nc) Is correct. Choosing a test approach is about making key decisions concerning test levels, test types and test techniques.\nd) Is not correct. Test levels and test techniques are part of a test approach. However, test deliverables are – together with the test approach – part of the test strategy."
+  },
+  {
+    "id": 15,
+    "lo": "TM-1.4.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "Assume you are a member of a project that develops a software product for the banking sector. You are responsible for analyzing the organizational test strategy and the project context to choose the appropriate test approach. You consider the following factors:\n\n• The project has a tight budget and a fixed deadline, which means that you must optimize the test effort and avoid unnecessary costs and delays.\n• The customer has provided detailed requirements and expects high quality and reliability from the product, which means that you must ensure that the product meets the customer´s expectations and complies with the specifications.\n• The project uses an Agile SDLC model with frequent releases and feedback cycles, which means that you must adapt to changing requirements and deliver test results in short iterations.\n• The test team consists of four testers with different levels of experience and skills, which means that you must assign the test tasks according to the testers' capabilities and provide guidance and support when needed.\n• The test infrastructure is limited and requires manual configuration and maintenance, which means that you must plan and manage the test environment and resources carefully and efficiently.\n• The product has several interfaces with other systems that need to be tested, which means that you must coordinate and integrate the test activities with the other stakeholders and ensure the compatibility and interoperability of the products.\n\nWhich of the following test approaches would be most appropriate for this project?",
+    "options": [
+      "a) Risk-based testing to prioritize the most critical and complex features and scenarios, and to allocate the test resources accordingly.",
+      "b) Model-based testing to generate test cases and test data automatically from the requirements, and to measure the test coverage and quality.",
+      "c) Experience-based testing to leverage the testers' expertise and intuition, and to perform exploratory testing in an Agile context.",
+      "d) Testing based on the acceptance criteria to verify the compliance of the product with the customer's specifications, and to enable acceptance testing."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Risk-based testing helps to focus on the most important aspects of testing in terms of quality, reliability, and customer satisfaction, while also considering the constraints of budget, time, and resources. Risk-based testing also supports Agile testing by allowing frequent adjustments of test priorities based on feedback and changes.\nb) Is not correct. Model-based testing requires a high initial investment in creating and maintaining models, which may not be feasible given the budget and time constraints. Model-based testing also assumes that the requirements are stable and complete, which may not be the case in an Agile project.\nc) Is not correct. Experience-based testing relies heavily on the testers' skills and knowledge, which may vary among the test team members. Experience-based testing also lacks objective criteria for test coverage and quality, which may not meet the customer's expectations.\nd) Is not correct. Acceptance testing most likely does not cover all of the aspects of quality and reliability that are relevant for the banking sector such as security, performance, usability, etc."
+  },
+  {
+    "id": 16,
+    "lo": "TM-1.4.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "Assume you are in a project that develops a web application for online banking. The project is customer specific and has strict requirements on security, performance, and reliability. The project uses an Agile SDLC model with two-week sprints and frequent releases.\n\nThe test team consists of four testers with different levels of experience and skills. The test infrastructure is cloud-based and supports various browsers and devices. The test data is provided by the customer and needs to be anonymized before use.\n\nBased only on the scenario, which of the following test approaches would be most appropriate for your project?",
+    "options": [
+      "a) Testing will be done by the whole team using three test levels: unit testing and integration testing, where test cases are jointly created and performed by the developers and the testers grouped in pairs, and system testing where the test cases will be created and performed by the four testers. In unit and integration testing level, white-box testing is used aiming at 100% automation. In all test levels risk-based testing will be used to create and prioritize test cases. For system testing the testers will use all appropriate test techniques to cover acceptance criteria.",
+      "b) Testing will be done by the whole team using four test levels: unit testing, integration testing, system testing and acceptance testing. In unit and integration testing as well as in system testing level, model-based testing will be used thoroughly with a focus on state transition testing. Code coverage is measured while executing the tests and aimed at 90% branch coverage. For acceptance testing the sprint demo is therefore sufficient.",
+      "c) As the project uses an Agile SDLC model, no explicit test levels are defined, and testing will be performed by the developers automating their unit tests and by the four testers using exploratory testing. For this, several test charters will be created that give guidance on using the test infrastructure so that all available browsers and devices are covered. Additionally, usability testing will be performed using checklist-based testing.",
+      "d) Two test levels will be defined. The first test level is a combined unit/integration test level where the four testers will create test cases based on the functional requirements using equivalence partitioning, boundary value analysis, decision tables and state transition testing. These test cases will then be automated by the developers and used in unit/integration testing. In system testing the testers will use exploratory testing for every item which is set to “done” by the developers."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Risk-based testing helps to prioritize the test objectives and test cases based on the security, performance, and reliability risks, while white-box testing helps to verify the internal structures and logic of the web application. Pairing testers and developers is helpful to cover the customer's requirements and enable a high degree of automation. This test approach is suitable for Agile SDLC models and requires skilled testers.\nb) Is not correct. Model-based testing is more suitable for embedded software development than web application development, but the given scenario provides no sufficient basis for it. The test approach does not check the internal structures and logic of the web application, which are important for security, performance, and reliability. Moreover, the demo is probably insufficient as acceptance testing in the context of online banking.\nc) Is not correct. Exploratory testing relies on the testers' intuition and creativity. Although usability is typically an issue concerning web applications, this does not satisfy the demands of the given scenario. Exploratory testing may not be consistent or sufficient for testing the security, performance, and reliability aspects of the web application. Agile SDLCs that have different roles for development and test typically also do have at least two different test levels and most do.\nd) Is not correct. The given approach focuses on verifying the functionality and quality of the web application against the specified requirements and criteria, but does not address the security, performance, and reliability risks that may arise from the web application's environment, interfaces, or data."
+  },
+  {
+    "id": 17,
+    "lo": "TM-1.4.3",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are part of a team responsible for testing a complex e-commerce website. The team has been given the following objective from Management: \"The system should be defect-free\". According to the S.M.A.R.T criteria, and taking into account the complexity and limited resources of your project, which of the following modifications to this test objective/exit criterion would be most appropriate?",
+    "options": [
+      "a) Our website should be able to perform all planned functions without serious defects that affect the user experience.",
+      "b) By the end of the current development phase, less than 1% of the site's functions should have defects, as measured by the total number of functional test cases included in the test suite.",
+      "c) We aim to ensure that our e-commerce system does not experience any critical outages that could lead to business interruptions within the next year.",
+      "d) At UAT exit for Release R, there are 0 (zero) open Critical defects and no more than 3 (three) open Major defects, and all tests for the defined top-priority customer journeys have passed."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. This goal is not specific or measurable enough. What are \"serious\" defects and how is the \"user experience\" measured? This is not a S.M.A.R.T. test objective, as it is vague and subjective. It does not define what are \"planned functions\", \"serious defects\", or \"user experience\".\nb) Is not correct. This is not a S.M.A.R.T. test objective, as the measurement method is not suitable, as the number of failed test cases does not indicate the number of faulty functions.\nc) Is not correct. This is not a S.M.A.R.T. test objective, as it may be unrealistic or unattainable. It does not consider the complexity and limited resources of the project, which may affect the reliability of the e-commerce system.\nd) Is correct. It is a S.M.A.R.T test objective because it is specific. It is measurable in terms of defects found during UAT testing or how it compares the last release. There are no indicators that suggest that this goal has not been achieved, it fits the management´s target and the time frame is given by the UAT test."
+  },
+  {
+    "id": 18,
+    "lo": "TM-1.4.3",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are the test manager of a project that develops a mobile app for online shopping.\n\nThe project is under development and there are high expectations on usability, functionality, and compatibility. The project uses a hybrid SDLC model with four-month releases and monthly iterations. The test team consists of six testers with various skills and experience.\n\nThe test infrastructure is cloud-based and supports various devices and operating systems.\n\nThe test data is generated by a test data management tool and needs to be validated before use.\n\nWhich of the following project test objectives is S.M.A.R.T. according to the syllabus text?",
+    "options": [
+      "a) Checking the usability of the app by measuring the time it takes to complete a purchase with the objective that 90% of users can complete their purchase within 3 minutes within the next two months.",
+      "b) Enhancing the level of automated tests by 50% within the next two weeks with the objective of significantly accelerating regression testing and finding more defects to improve user acceptance.",
+      "c) Complying with the rules and regulations of the e-commerce industry which have recently been published and will soon become the regulatory standard in an EU regulation, and thus binding for all stakeholders.",
+      "d) Proving the functionality and compatibility of the app by testing all features on most real devices as well as with emulators provided by an external service provider, within the next two sprints, as there have been negative comments in the stores."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. The objective is specific, measurable, achievable, relevant, and timely. The objective is specific because the objective is clearly defined – the time it takes to complete a purchase. It is measurable because it has a quantifiable criterion for measuring progress: 90% of users should be able to complete the purchase within 3 minutes. The objective is realistic and achievable because it is feasible within the given resources, time frame and is based on a specific user group. It is relevant because it is aligned with the overall project objectives and expectations and usability is an important aspect of the success of an online shopping app. It is timely because it has a defined deadline and should be achieved within the next 2 months.\nb) Is not correct. This is not specific, or relevant. It is not specific because it does not define what level of automated tests means or how to measure it. It is not relevant because it is not aligned with the overall project objectives and expectations.\nc) Is not correct. This is not measurable or timely. It is not measurable because it does not have specific criteria for measuring progress or determining whether conformity to the standard has been reached. It is not timely because it does not have a defined deadline, which could be the end of each release or iteration.\nd) Is not correct. This not measurable how customer feedback evolves and not defined which acceptance criteria apply and therefore not achievable. It is not achievable e.g. no negative feedback anymore, because it is not measurable how to achieve this goal within the development phase."
+  },
+  {
+    "id": 19,
+    "lo": "TM-1.5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Assume that you are a test manager and are working to make your test processes more effective and efficient. You already have a management-approved initial budget in place for these process improvements. Last week, an external consultant completed her assessment on the test process and delivered her findings.\n\nWhich of the following is the next step for this process improvement effort, assuming you are following the IDEAL model for process improvement?",
+    "options": [
+      "a) Create a plan for selecting and implementing the assessment recommendations.",
+      "b) Implement the assessment recommendations, including any necessary training and piloting.",
+      "c) Initiate the improvement process across the test organization.",
+      "d) Diagnose the current situation by evaluating the sources of inefficiency."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. It's the third step of the IDEAL process and should follow the steps that have already been carried out so far.\nb) Is not correct. It's the fourth step of the IDEAL process, and thus creating a plan should be carried out before.\nc) Is not correct. This is the first step of the IDEAL process and has already been carried out.\nd) Is not correct. This is the second step of the IDEAL process and has already been carried out."
+  },
+  {
+    "id": 20,
+    "lo": "TM-1.5.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "You, as a test consultant, are now responsible for test improvements in a critical project at a small regional bank. The project deals with digital transformation and will continue for two more years using an Agile approach. Since the Test Maturity Model integration (TMMi) is popular in the finance domain, the bank has asked you to use TMMi during your project test improvement activities.\n\nHow would you go about using TMMi in the described context?",
+    "options": [
+      "a) Make clear that model-based improvement using TMMi is not possible on a project level.",
+      "b) Recommend that all TMMi level 2 and level 3 process areas be used for these improvement activities.",
+      "c) Focus on the TMMi process areas that especially relate to the activities at the project level, and in addition use the specific “TMMi and Agile” guideline.",
+      "d) Since the project is using an Agile approach, propose using the scrum guide for test improvement activities."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. The syllabus states that model-based improvement can be performed both at an organizational and project level.\nb) Is not correct. Rather than taking all TMMi level 2 and level 3 process areas into account it would be much more beneficial to consider the process areas that are especially project related and already applied with the current maturity level.\nc) Is correct. Per syllabus (see section 1.5.2, “Test Maturity Model integration (TMMi)”). Additionally, the syllabus mentions the specific “TMMi in the Agile world” guideline that would be beneficial here.\nd) Is not correct. The scrum guide does not provide details on how to do test improvement."
+  },
+  {
+    "id": 21,
+    "lo": "TM-1.5.4",
+    "k": "K3",
+    "pts": 2,
+    "text": "Assume that you are working for an ambitious start-up that is developing a system which provides customized loyalty and rewards programs for small and medium-sized companies selling to web-based customers. The companies using the system are able to self-enroll on the system's web store and can then create customized buttons for their websites. These buttons can then be used to allow their customers to enroll in the companies' loyalty and rewards program. Each subsequent purchase earns points, and both companies and their customers can manage the program; for example, to determine the number of points required to receive a free product or service.\n\nYour employer's marketing staff is heavily promoting the system by offering aggressive discounts on the first year's fees to sign up inaugural companies. The marketing materials state that the service will be highly reliable and extremely fast for companies and their customers.\n\nFour months ago, the requirements had been completed and the development of the software was started. When analyzing the quality risks, the adaptation of the buttons was classified as the lowest risk, while registration was classified as the highest risk. As planned in the schedule, the first release was launched a month ago and companies and their customers could start registering.\n\nThe system has now been in use by companies and their customers for a month. Your team has used a mix of risk-based testing, requirements-based testing, and reactive testing. You are now conducting a retrospective for the testing work.\n\nWhich TWO of the following areas should most likely be considered in this retrospective?",
+    "options": [
+      "a) Evaluating whether significant problems have been reported by users in button customization.",
+      "b) Deciding if the project plan included all relevant project risks that affected delivery to early-adopter companies.",
+      "c) Determining the level of detail required for enrollment, customization and managing the test cases.",
+      "d) Measuring the coverage of the enrollment requirements and reporting the results to project and business stakeholders.",
+      "e) Investigating which tests at which test level could have covered issues reported by customers."
+    ],
+    "answer": [
+      0,
+      4
+    ],
+    "explanation": "a) Is correct. Defect information should be analyzed to evaluate whether the quality risk analysis was correct in a retrospective (see syllabus, section 1.5.4, list with areas to be considered).\nb) Is not correct. While a good issue to consider in a retrospective, it is a project-wide issue, not a test-related issue. This retrospective is focusing on the test.\nc) Is not correct. This is supposed to happen during the implementation process and is not part of the test improvement process (see syllabus, section 1.5.4).\nd) Is not correct. This is part of test control and is not part of the retrospective (see syllabus, section 1.5.4).\ne) Is correct. This check is important. The earlier defects are found, almost always the more cost-effective it is (see syllabus, section 1.5.4, list with areas to be considered)."
+  },
+  {
+    "id": 22,
+    "lo": "TM-1.5.4",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are a tester in an Agile software development team that has just completed an iteration. You are preparing for the retrospective meeting with the rest of the team.\n\nWhich of the following activities is NOT part of a typical retrospective?",
+    "options": [
+      "a) Reviewing the test progress, defect detection, and test effectiveness metrics",
+      "b) Identifying the root causes of the testing problems and generating improvement ideas",
+      "c) Assigning responsibilities and defining goals and metrics for the improvement actions",
+      "d) Evaluating the test processes and tools against the industry best practices"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Reviewing the test progress, defect detection, and test effectiveness metrics are part of the test evaluation process, which is one of the areas to be considered in a retrospective (see syllabus, section 1.5.4).\nb) Is not correct. Identifying the root causes of the testing problems and generating improvement ideas is part of the problem analysis and solution generation process, which is one of the areas to be considered in a retrospective (see syllabus, section 1.5.4).\nc) Is not correct. Assigning responsibilities and defining goals and metrics for the improvement actions are part of the action planning and implementation process, which is one of the areas to be considered in a retrospective (see syllabus, section 1.5.4).\nd) Is correct. Evaluating the test processes and tools against the industry best practices is NOT part of a typical retrospective, but typically part of test process improvement activities."
+  },
+  {
+    "id": 23,
+    "lo": "TM-1.6.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are a test manager and the head of the testing team for a new product line with multiple variants for several customers. One of the first tasks you are assigned is to select and introduce a proper tool for test management, as the current tool by your company does not fit the needs of the upcoming product line.\n\nWhich is NOT a best practice for the selection of the new test management tool?",
+    "options": [
+      "a) Choose the successor of the currently used test management tool without further evaluation",
+      "b) List the criteria needed for the product line that are not met by the test management tool",
+      "c) Evaluate which licensing model will best fit the test management of a product line with multiple variants",
+      "d) Evaluate the tool against clear requirements and objective criteria"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. The successor of the currently used tool might have advantages like licensing but if you have not done a requirements analysis, you might not know if the successor fills all of your requirements. Also there might not be a successor.\nb) Is not correct. The answer is being listed as a best practice for tool selection in section 1.6.1.\nc) Is not correct. The answer is being listed as a best practice for tool selection in section 1.6.1.\nd) Is not correct. The answer is being listed as a best practice for tool selection in section 1.6.1."
+  },
+  {
+    "id": 24,
+    "lo": "TM-1.6.3",
+    "k": "K4",
+    "pts": 3,
+    "text": "You work for an international company producing hardware and software for telecom networks. Hardware and software development are carried out in separate business units. You are the test manager of one product line of network router software.\nIn your product line, there is a long tradition of creating tightly integrated products using an incremental product lifecycle. The hardware business unit produces a new version every six months. Your software product line aims to have a new version of the software ready for each new hardware version. The software is developed in two-month increments. The business unit schedules are synchronized during design.\nYour team consists of 15 testers, who have been in the company for at least two years, but mostly a lot longer. New tests are developed by the most experienced test analysts. Variations of tests and the regression test sets are run by the rest of the team.\nThe company's management requires monthly progress reports listing the number of severe defects found, as well as the status of test execution. There have also been efforts to measure the efficiency of personnel in all business units. There have been problems keeping up with the hardware development schedule.\nYou have heard that another similar software product line within your company is using an open-source tool for their test automation. They use it to automate roughly 50% of the tests and execute the remaining tests manually through the user interface of the software.\nYou are requested to investigate if it would be possible to use this tool for your product line as well.\n\nWhat should be your key concern?",
+    "options": [
+      "a) How good is the support for the open-source tool?",
+      "b) How is the usability of the new tool?",
+      "c) Is the applied test process mature enough for test automation using this tool?",
+      "d) Can all artifacts created by the tool be easily maintained?"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. This is a valid concern, as open-source tools may not have the same level of documentation, training, and technical support as commercial tools. However, this is not the key concern, as you can look for online communities, forums, and tutorials that can help you with the tool. Moreover, the fact that another software product line within your company is using the tool suggests that there is some internal knowledge and experience that you can leverage.\nb) Is not correct. This is also a valid concern, as usability can affect the ease of learning, using, and maintaining the tool. However, this is not the key concern, as usability is subjective and depends on the preferences and skills of the users. You can evaluate the usability of the tool by trying it out yourself or asking for feedback from the other software product line that is using it.\nc) Is correct. As written in the syllabus, test automation requires a certain level of test process maturity to be effective and efficient. Therefore, you need to assess whether your test process is mature enough to adopt to the next level of test automation using the tool to mitigate residual risks.\nd) Is not correct. This is another valid concern, as test automation involves creating and managing various artifacts, such as test scripts, test data, test results, and test reports. However, this is not the key concern, as the maintainability of the artifacts depends on the quality and design of the tool, as well as the best practices and standards followed by the users. You can evaluate the maintainability of the artifacts by reviewing the existing ones created by the other software product line that is using the tool."
+  },
+  {
+    "id": 25,
+    "lo": "TM-1.6.3",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are working on a software development project that is using an Agile development methodology.\n\nYou are considering introducing a test automation tool to improve the quality and efficiency of testing. You have identified three potential tools: Tool A, Tool B, and Tool C. Each tool has different features, costs, and benefits. The annual recurring costs for all three tools are equal to 20% of the acquisition costs. Before the implementation of the tool the annual manual testing effort was $ 60.000. You have performed a cost-benefit analysis and calculated the ROI for each tool based on the following information:\n\n- Tool A costs $10,000 to purchase and $2,000 per year to maintain. It has a high level of usability and maintainability, but it only supports functional testing. It can reduce the manual testing effort by 20% and the test cycle time by 10%. It can also increase the test coverage by 15%.\n- Tool B costs $15,000 to purchase and $3,000 per year to maintain. It has a moderate level of usability and maintainability, but it supports both functional and performance testing. It can reduce the manual testing effort by 30% and the test cycle time by 20%. It can also increase the test coverage by 25%.\n- Tool C costs $20,000 to purchase and $4,000 per year to maintain. It has a low level of usability and maintainability, but it supports functional, performance, and security testing. It can reduce the manual testing effort by 40% and the test cycle time by 30%. It can also increase the test coverage by 35%.\n\nAssuming that the ROI can be calculated for the given situation, which tool would you choose and why?",
+    "options": [
+      "a) Tool A, because it has the lowest initial costs",
+      "b) Tool B, because it has the best balance between costs and benefits",
+      "c) Tool C, because it has the highest reduction in effort and time and the highest increase in coverage",
+      "d) None of the tools, because they do not provide more benefits."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Tool A is not the best option, because it has the lowest benefit of all three tools. Although it has the lowest initial cost, it also has the lowest reduction in effort (annually 12,000-2,000=10,000 $, after 1 year a ROI of 100%) and time and the lowest increase in coverage. Tool A only supports functional testing, which is not sufficient for testing an agile software development project.\nb) Is not correct. Tool B is not the best option. It has higher initial cost as tool A. Although there has been an average reduction in effort (annually 18,000-3,000=15,000 $, so even after 1 year a ROI of 100%) and time as well as an average increase in overlap and supports both functional and performance testing. However, Tool B does not support security testing, which is also important for testing an agile software development project. Besides that, other offers are still superior.\nc) Is correct. Tool C is the best option among the three of them, because it has the highest reduction in effort (annually 24,000-4,000=20,000 $, so even after 1 year a ROI of 100%) and time and the highest improvement in coverage, which are important factors for improving the quality and efficiency increase of testing. Tool C also supports functional, performance, and security testing, which are essential for testing an agile software development project. This means that tool C offers the greatest benefit in relation to its cost and therefore the greatest value for the project.\nd) Is not correct. None of the tools is not the best option, because all of the tools provide a positive ROI of 100% after 1 year and provide a reduction in manual testing effort making the investment worthwhile."
+  },
+  {
+    "id": 26,
+    "lo": "TM-1.6.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "For your current project, the available custom-built tool does not meet the requirements of your test automation effort. Within your company, there is an open-source test automation tool successfully being used for identical requirements.\n\nIf you choose the same open-source tool, which of the following activities should happen as a first step when retiring the current custom-built tool in order to show the value of the new tool as quickly as possible?",
+    "options": [
+      "a) The custom-built tool must be maintained and converted to the new environment.",
+      "b) The regression test scripts of the custom-built tool must be converted to the new tool.",
+      "c) The backup and restore functionalities of the custom-built tool must be maintained.",
+      "d) All test scripts of the custom-built tool must be converted to the new tool."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. This activity is not necessary because the old tool will be retired.\nb) Is correct. This answer concerns retirement, as there are probably lots of existing scripts, and regression test scripts are the ones used most often. This is because: Regression test scripts are the ones that are used most often to verify the functionality and performance of the software after changes or updates. Converting the regression test scripts to the new tool will allow you to show the value of the new tool with a pilot phase and proof of concept as quickly as possible, as you can compare the results and efficiency of the new tool with the old one.\nc) Is not correct. This activity is not necessary because the old tool will be retired.\nd) Is not correct. Your goal is to demonstrate the value as soon as possible. Even if you would prefer it, it is not realistic to convert all the scripts in one go. Probably you wouldn´t need all the existing regression test scripts, with the old tool over time."
+  },
+  {
+    "id": 27,
+    "lo": "TM-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "As a test manager, you are required to report on different metrics during various test activities.\n\nWhich of the following mappings of metrics to test activities is most appropriate?\n\nMetrics:\n\n1. Product risk coverage\n2. Total number of resolved defects vs. total number of found defects\n3. Percentage of actual automated vs. planned automated test cases\n4. Ratio of actual vs. planned effort (hours) for test activities\n\nTest activities:\n\nA) Test planning\nB) Test monitoring and test control\nC) Test completion\nD) Test execution\n\nPlease match the test activities and corresponding metrics.",
+    "options": [
+      "a) 1B, 2B, 3C, 4A.",
+      "b) 1A, 2B, 3C, 4D.",
+      "c) 1B, 2B, 3C, 4B.",
+      "d) 1C, 2D, 3A, 4B."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "1. Product risk coverage is a test monitoring and test control metric as well as test completion.\n2. The number of resolved defects vs. total number of defects found is a test monitoring and test control metric.\n3. The percentage of actual automated vs. planned automated test cases is a test completion metric.\n4. The ratio of actual vs. planned effort (in hours) for testing activities is a metric for test monitoring and test control according to the syllabus.\n\nHence the correct answer is c) 1B, 2B, 3C, 4B."
+  },
+  {
+    "id": 28,
+    "lo": "TM-2.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Your management board is new to test metrics and asks you to explain the primary goal of using test metrics to them. Which of the following statements would you use to explain the benefit of test metrics to your management?",
+    "options": [
+      "a) Test metrics are indicators for test progress and assist to assess whether the test exit criteria or test objectives have been met.",
+      "b) Test metrics are recommending corrective actions to achieve effective and efficient testing.",
+      "c) Test metrics are used to collect data from completed test activities to consolidate lessons learned, testware and other relevant information.",
+      "d) Test metrics are used to reprioritize tests when an identified risk becomes an issue."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Test metrics are used to measure test progress and to assess whether the test exit criteria or the test tasks associated with the exit criteria or test objectives have been met. This statement is true because test metrics can help to track the status and outcome of the testing activities, such as the number of test cases executed, the number of defects found, the defect density, the test coverage, the test effectiveness, and so on. These metrics can help to evaluate whether the testing process has achieved the desired level of quality and completeness, and whether the software product is ready for release or not.\nb) Is not correct. This statement describes the role of test control, not test metrics. Test control uses the information from test monitoring, which is based on test metrics, to provide guidance and corrective actions. But metrics by themselves do not provide recommendations for actions.\nc) Is not correct. This statement describes the role of test closure, not test metrics. Test closure collects data from completed test activities, which may include test metrics to consolidate lessons learned, testware, and other relevant information.\nd) Is not correct. This statement is false because it describes an example of a control directive, not a test metric. Test metrics may be used to support the decision of reprioritizing tests, but they are not the direct cause of it."
+  },
+  {
+    "id": 29,
+    "lo": "TM-2.1.3",
+    "k": "K4",
+    "pts": 3,
+    "text": "You work for an international company that manufactures hardware and software for telecommunications networks. You are the test manager for a product line of network router software.\n\nThe hardware development team delivers a new release every six months. The software is developed in two-month increments synchronized with the hardware development.\n\nThe last overall release was delayed because critical interface errors in the software were found and fixed too late.\n\nThe development management asks you to avoid further delays for upcoming releases or at least communicate them early on.\n\nYou then plan to implement an improved, metrics-based reporting system based on prioritized user stories (P1, P2, P3) and a tiered product risk list (high, medium, low) for the test area.\n\nWhich of the metrics listed are MOST IMPORTANT for your reporting in terms of the requirements of the development management?",
+    "options": [
+      "a) Defect metrics: Evaluation of defect priority and source of the defect to report which user stories are faulty and need to be tested more thoroughly.",
+      "b) Test status/coverage metrics per user story, sorted by story priority (P1 to P3), to show which important user stories will be the focus in the coming cycles or are not yet sufficiently covered.",
+      "c) Effort/capacity metrics to forecast whether the planned remaining effort and available velocity are sufficient to test P1/P2 stories and high product risks in a timely manner.",
+      "d) Product risk metrics (retrospective): Evaluation of defects classified as high/critical at interfaces with high product risk in order to identify incorrectly defined interfaces.",
+      "e) Product risk coverage metrics: passed vs. open test cases in relation to risk level (high, medium, low) to report which high-risk areas need to be prioritized in test management."
+    ],
+    "answer": [
+      2,
+      4
+    ],
+    "explanation": "a) Is not correct. Defect priority/source metrics are reactive; they don't forecast schedule risk or surface leading indicators for early delay communication.\nb) Is not correct. Story-level status/coverage shows progress and focus, but without capacity and risk-level coverage it cannot predict milestone slippage or expose high-risk gaps.\nc) Is correct. Effort/capacity metrics (remaining effort vs. available velocity) provide a forward-looking view of whether P1/P2 stories and high-risk items can be completed within the synchronized cycles, enabling early, credible delay communication and replanning.\nd) Is not correct. Retrospective product-risk defect analysis is backward-looking; it supports root-cause improvement but is weak as a near-term delay predictor.\ne) Is correct. Product-risk coverage (passed vs. open by risk level) highlights under-tested high-risk areas—such as critical interfaces that previously caused late defects—so they can be prioritized early and communicated clearly to management."
+  },
+  {
+    "id": 30,
+    "lo": "TM-2.1.3",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are the test manager of a software project that uses a document-centric sequential development model and involves developing a desktop application for a banking system.\n\nThe project has a large and hierarchical team that works with multiple stakeholders.\n\nThe project has a low level of uncertainty and complexity due to the stable and well-defined requirements and technology. The project also has strict quality and security standards to comply with the legal regulations of the banking industry.\n\nWhat are the MOST suitable metrics that you would use to analyze the test results and create test reports that empower stakeholders to make decisions?",
+    "options": [
+      "a) Metrics related to product risks, defects, test progress, coverage, and costs and test effort.",
+      "b) Metrics related to defects, test progress, coverage, and code coverage.",
+      "c) Metrics related to product risks, defects, test progress, coverage, and environment/configuration coverage.",
+      "d) Metrics related to defects, test progress, coverage, and residual costs for untested components."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. As it covers all the categories of metrics that are relevant for the project context. Metrics related to product risks are needed to assess the quality and reliability of the system and comply with the legal regulations. Metrics related to defects are needed to measure the defect density, severity, removal efficiency, etc. Metrics related to test progress are needed to monitor and control the test activities and resources. Metrics related to coverage are needed to measure the extent to which the test basis and the system under test are exercised by the tests. Metrics related to costs and test effort are needed to evaluate the cost-benefit relationship of testing and optimize the test budget.\nb) Is not correct. It does not include metrics related to product risks and costs and test effort, which are important for the project context. Moreover, it includes code coverage metrics, which are not suitable for reporting higher level test results in a document-centric sequential development model.\nc) Is not correct. It does not include metrics related to product risks and costs and test effort, which are important for the project context.\nd) Is not correct. It does not include metrics related to product risks and costs and test effort, which are important for the project context. Moreover, it includes residual costs for untested components metrics, which are not applicable for a document-centric sequential development model that aims to achieve high levels of coverage."
+  },
+  {
+    "id": 31,
+    "lo": "TM-2.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "As a test manager you have to consider many factors for estimating test efforts. This estimation can be revised as the testing progresses. Which of the following factors is NOT relevant for test estimation during INITIAL TEST PLANNING?",
+    "options": [
+      "a) The complexity and size of the software under test.",
+      "b) The availability and skills of the test team members.",
+      "c) The quality and reliability of the test tools and environment.",
+      "d) The number and severity of the defects found during testing."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. The complexity and size of the software under test affect the scope and depth of the testing activities and tasks, which in turn influence the test effort, time and cost.\nb) Is not correct. The availability and skills of the test team members determine the productivity and efficiency of the testing process, which in turn influence the test effort, time and cost.\nc) Is not correct. The quality and reliability of the test tools and environment affect the feasibility and accuracy of the testing activities and tasks, which in turn influence the test effort, time and cost.\nd) Is correct. The number and severity of the defects found during testing are the outcomes of the testing process, not the inputs. They do not directly affect the test estimation, although they may have an impact on the test execution and reporting."
+  },
+  {
+    "id": 32,
+    "lo": "TM-2.2.3",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are working on an Agile project which takes place in multiple locations, and you are responsible for the test effort at your location. The testing strategy is a blend of risk-based testing, process-compliant test strategy, and reactive testing. Developers are following known Agile best practices, including automated component testing and continuous integration.\n\nYour task is to estimate the system test effort required for a particular iteration by your test team.\n\nWhich TWO of the following statements best describe the appropriate test techniques or approaches you should use and how you should carry out the estimation in this situation?",
+    "options": [
+      "a) Consider the average effort required per identified risk in past iterations.",
+      "b) Allocate time-boxed test sessions for each identified test charter.",
+      "c) Estimate that most defects will be found during system test execution.",
+      "d) Include effort to create detailed test documentation.",
+      "e) Assume that system tests can reuse unit test data and environments."
+    ],
+    "answer": [
+      0,
+      1
+    ],
+    "explanation": "a) Is correct. It is a way of applying risk-based testing, which is part of the testing strategy. By using historical data from past iterations, the test manager can estimate the effort needed to test the most critical and likely risks in the current iteration.\nb) Is correct. It is a way of applying reactive testing, which is part of the testing strategy. By using test charters, which are high level descriptions of test objectives, the test manager can allocate a fixed amount of time for each exploratory test session, which allows for flexibility and adaptability in testing.\nc) Is not correct. It contradicts the assumption that developers are following known Agile best practices, including automated unit testing and continuous integration. These practices should ensure that most defects are found and fixed at an early stage, reducing the defect density at system test level.\nd) Is not correct. This option is incorrect because it contradicts the Agile principle of working software over comprehensive documentation. In an Agile context, detailed test work product documentation is not necessary or desirable, as it adds overhead and reduces agility. Instead, the test manager should focus on creating lightweight and concise test documentation that supports communication and collaboration.\ne) Is not correct. It contradicts the principle of independence of testing. System tests should not rely on unit test data and environments, as they may not be representative or realistic enough for system level testing. Instead, the test management role should ensure that system tests have their own dedicated test data and environments that match the intended operational conditions."
+  },
+  {
+    "id": 33,
+    "lo": "TM-2.2.3",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are the test manager of a software project that follows the sequential model. Historical effort data based on requirements from similar projects, are available. The project requirements and the scope are fixed and well defined. However, the team setup for this project has not been finalized yet.\n\nYou need to estimate the test effort for the entire project based on the requirements specification document.\n\nWhich of the following techniques or approaches would be most suitable for your context?",
+    "options": [
+      "a) Estimation based on ratios.",
+      "b) Planning Poker",
+      "c) Three-point estimation",
+      "d) Wideband Delphi"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Estimation based on ratios is a metrics-based technique that uses historical data from similar projects to derive standard ratios for test effort. This technique is suitable for waterfall model, where the project requirements and scope are fixed and well-defined. Moreover, this technique can provide a quick and simple estimate for the entire project based on percentages of the overall project effort or staffing levels.\nb) Is not correct. In Planning Poker, the test team members discuss and compare their estimates until they reach a consensus. Moreover, this technique may be too time consuming and impractical for estimating the test effort for the entire project.\nc) Is not correct. Three-point estimation is an expert-based technique, here you make the estimation.\nd) Is not correct. Wideband Delphi method is more suitable for projects where the test effort is difficult to quantify due to the information and where you are reliant on the experience and different perspectives of the experts. This means that Wideband Delphi cannot be implemented efficiently within the time frame if you can already use the synergies from the existing requirements and historical data. You have to do the estimation yourself."
+  },
+  {
+    "id": 34,
+    "lo": "TM-2.3.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "As a tester you are typically required to create a defect report whenever you observe a defect during testing. However, there may be situations where you might not create a defect report. Which of the following is a reason why a defect report may NOT be created after a defect is detected by a test?",
+    "options": [
+      "a) The failure is caused by a defect that was introduced in the same phase as the test.",
+      "b) The failure is caused by a defect that is not to be tracked within the defect workflow.",
+      "c) The failure is caused by an invalid test that does not match the requirements specification.",
+      "d) The failure is caused by an anomaly that is not observed by the tester."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Because the phase in which a defect was introduced does not affect whether a defect report is created or not. A defect report should be created for any defect that causes a failure, regardless of when it was introduced.\nb) Is correct. This is the case in test-driven development, where component tests are used as a form of executable design specification. By the time the development of the component is complete, some or all of the tests will have failed. Therefore, the failure discovered by such a test is not necessarily caused by a defect and is typically not tracked by a defect report according to the defect workflow.\nc) Is not correct. Because an invalid test that does not match the requirements specification should be corrected or removed, but it does not prevent the creation of a defect report for the failure it causes. A defect report should be created for any failure that reveals a discrepancy between the actual results and the expected results of a test.\nd) Is not correct. A false-negative result occurs when the tester does not observe the anomaly that causes a failure. However, this does not mean that a defect report is not created. A defect report should be created for any anomaly that is observed, either by the tester or by other means (e.g., logs, reports, alerts)."
+  },
+  {
+    "id": 35,
+    "lo": "TM-2.3.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "The diagram shows an incomplete defect workflow, where two states (states X and Y) have yet to be named appropriately.\n\nWhich of the following would correctly complete the workflow?",
+    "options": [
+      "a) STATE X – RETESTED      STATE Y – RE-OPENED",
+      "b) STATE X – REJECTED      STATE Y – CLARIFICATION",
+      "c) STATE X – DUPLICATE      STATE Y – TERMINATED",
+      "d) STATE X – FIXED      STATE Y – REJECTED"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. RETESTED does not make sense after it was in RESOLVED state before. RE-OPENED is entered usually from RESOLVED if the confirmation test indicates that the defect is not fixed.\nb) Is correct. From the initial OPEN and the IN PROGRESS the defect report may be rejected (hence transition to REJECTED). If more information is needed from the reporter, the CLARIFICATION state may be used.\nc) Is not correct. While DUPLICATE state might fit the situation, the TERMINATED as state Y does not work as the workflow continues after this state back to previous state.\nd) Is not correct. REJECTED as state Y does not work the workflow continues after this state back to previous state.",
+    "image": "SETA_v1.3.3_GTB/image_35.png"
+  },
+  {
+    "id": 36,
+    "lo": "TM-2.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following represents a complete sequence of states for a defect report that leads to a terminal state? Assume that IN PROGRESS means one or more states where developers or other project stakeholders are addressing the defect.",
+    "options": [
+      "a) OPEN, IN PROGRESS, RESOLVED, CLOSED, DEFERRED.",
+      "b) OPEN, IN PROGRESS, RETURNED, IN PROGRESS, RESOLVED.",
+      "c) OPEN, IN PROGRESS, RESOLVED, CLOSED.",
+      "d) IN PROGRESS, OPEN, RESOLVED, CLOSED."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. It makes no sense to defer a defect that's already fixed and closed.\nb) Is not correct. RESOLVED is not a terminal state.\nc) Is correct. It corresponds to the most common path through the defect workflow, where a defect report is opened when it is detected, moved to in progress when it is assigned and fixed, resolved when it is verified and confirmed, and closed when it is accepted and archived.\nd) Is not correct. A defect report can't be in the IN PROGRESS before it's even reported."
+  },
+  {
+    "id": 37,
+    "lo": "TM-2.3.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are a tester in an agile team working on a new product. During the third sprint, while performing exploratory tests, you experienced a failure in the login feature which was developed during the first sprint in cooperation with the team responsible for the Identity Provider (IDP).\n\nWhat is one reason why you would choose NOT to create a defect report in this case?",
+    "options": [
+      "a) The developer will not have time to work on the fix until the following week.",
+      "b) You need to clarify the failure with a developer of your team first.",
+      "c) This failure will require cooperation with the IDP team.",
+      "d) According to the Product Owner, this failure has low severity and should be fixed in the next iteration."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Defect reports should be created for defects that cannot be resolved with the same iteration.\nb) Is correct. It is common practice in Agile teams to informally discuss defects with developers. Depending on the findings during this discussion, a defect report may be created afterward.\nc) Is not correct. When cooperation of more teams is needed the syllabus recommends creating a defect report.\nd) Is not correct. If the defect is not going to be fixed within the current iteration, it should be stored in the product backlog in the form of a defect report."
+  },
+  {
+    "id": 38,
+    "lo": "TM-2.3.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Nowadays multiple software development methodologies are used. Different methodologies in the SDLC call for an adapted test approach.\n\nYou are a test manager in a software development project which operates in a hybrid environment. Which of the following is MOST relevant regarding defect management in this context?",
+    "options": [
+      "a) All teams use the same defect management tool, whatever their methodology is.",
+      "b) Frequency of the defect management committee meetings should be determined by the largest team.",
+      "c) Agile teams should schedule their defect fixing priorities to align with the overall project plan.",
+      "d) All team members agree on the prioritization of the defects."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. While it is beneficial that all teams use the same tool for defect management, it is not as relevant as the correct option c. (cf. Syllabus section 2.3.4, 1st bullet point)\nb) Is not correct. Frequency of the defect management committee meetings should not be dictated by the size of the team (Syllabus 2.3.4, 2nd bullet point, “Defect management meetings should be more frequent in agile software development than in sequential development models” means that each team can have its own rhythm).\nc) Is correct. According to the syllabus (Section 2.3.4, 3rd bullet, “All deliverables, including defects, should be aligned with this project plan.”), the plan for new development and defect resolution must be aligned between teams and made transparent. By aligning their defect resolution priorities with the overall project plan, agile teams can coordinate their testing activities with other teams and stakeholders and avoid conflicts or delays in the delivery of the software product.\nd) Is not correct. According to the Syllabus text (Section 2.3.4), sometimes it is beneficial for a smaller group of defect management stakeholders to have the final word about prioritization."
+  },
+  {
+    "id": 39,
+    "lo": "TM-2.3.5",
+    "k": "K3",
+    "pts": 2,
+    "text": "Defect ID: [Insert Defect ID here]\n\nStatus: 24.06.2024\n\nEdited by [Max Mustermann]\nComponent: [Insert the specific component here]\nSubsystem: [Insert the specific subsystem here]\n\nWhich of the following data items is NOT mandatory for managing defect reports in most environments?",
+    "options": [
+      "a) A defect title with a short summary of the anomaly",
+      "b) The subsystem or component in which the defect lies",
+      "c) Severity of the impact on the system under test and/or the product stakeholders",
+      "d) Priority to fix the anomaly"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "According to the syllabus text (Section 2.3.5), the data items that are mandatory for managing defect reports in most environments are: a defect title with a short summary of the anomaly; a detailed description of the anomaly often including steps to reproduce the failure; severity of the impact on the system under test and/or the product stakeholders; priority to fix the anomaly.\na) Is not correct. This is a mandatory data item for managing defect reports.\nb) Is correct. Option b is not mandatory. Option b is an example of a data item that may be collected depending on context to help defect resolution, but it is not required for managing the defect report.\nc) Is not correct. This is a mandatory data item for managing defect reports.\nd) Is not correct. This is a mandatory data item for managing defect reports."
+  },
+  {
+    "id": 40,
+    "lo": "TM-2.3.5",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are the test manager on a project where system testing is being performed on software provided by a third party. You have received a complaint from the third party that the completeness of the defect data from your system testing is unacceptable.\n\nWhich of the following options could have been identified as missing from the defect reports sent to the third party?",
+    "options": [
+      "a) The project activity occurring when the problem was detected.",
+      "b) Steps to reproduce the failure, along with the actual and expected results.",
+      "c) The priority to fix the problem.",
+      "d) The technical type of the defect.",
+      "e) The software lifecycle phase in which the defect was detected."
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "explanation": "a) Is not correct. The third party already knows that these defect reports are coming from system testing.\nb) Is correct. These steps (and actual results) will help them understand the defect and the expected results will confirm that the testers understood what was expected.\nc) Is correct. The third party needs this information to aid their prioritization.\nd) Is not correct. Technical type of the defect will be determined by the person assigned by the third party to fix the defect.\ne) Is not correct. Phase of detection is already available (system test)."
+  },
+  {
+    "id": 41,
+    "lo": "TM-2.3.6",
+    "k": "K2",
+    "pts": 1,
+    "text": "Your organization has decided that it aims to improve its test and development process by reducing the number of defects introduced during development, based on already existing defect reports.\n\nWhich of the following defect report information will be MOST useful in fulfilling this objective?",
+    "options": [
+      "a) The software lifecycle phases of detection, and removal of the defect.",
+      "b) The defect's root cause information.",
+      "c) The number of defects per component.",
+      "d) The efficiency of the elimination of defects."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. The detection and removal information are not useful for reducing defect introduction.\nb) Is correct. This will help to analyze when and why defects are currently introduced, and so we can target activities to prevent future defect introduction.\nc) Is not correct. This is used for defect clustering information to target components that need extra testing – but does not directly help prevent defects.\nd) Is not correct. This tells us how efficient we are at removing defects – it does not help with reducing the introduction of defects."
+  },
+  {
+    "id": 42,
+    "lo": "TM-3.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "As a test manager you are looking for new team members. You have to write a job posting. In this posting you include the required competences of the new team members. Which of the following skills is an example of methodical competence for a test team member?",
+    "options": [
+      "a) Ability to apply test techniques to design test cases.",
+      "b) Ability to communicate test results to relevant stakeholders.",
+      "c) Ability to manage test activities and resources.",
+      "d) Ability to learn new technologies and tools."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Ability to apply test techniques to design test cases is an example of professional competence, as it involves specific knowledge and skills to deal with specialist tasks.\nb) Is not correct. Ability to communicate test results to stakeholders is an example of social competence, as it involves knowledge, skills, and abilities in relation to communication and cooperation.\nc) Is not correct. The ability to manage test tasks and resources is an example of professional competence as it involves specific knowledge and skills to deal with specialized tasks such as project management.\nd) Is correct. Ability to learn new technologies and tools is an example of methodical competence, as it involves general knowledge, skills, and abilities that enable the independent completion of complex and new tasks. This shows that the test team member can adapt to changing and emerging situations and challenges, and can acquire new knowledge and skills independently."
+  },
+  {
+    "id": 43,
+    "lo": "TM-3.1.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are responsible for staffing a test team in a company that develops a brake system for a domestic motor vehicle manufacturer. While the development of the individual software components is carried out by several AGILE teams, the system development (consisting of software and hardware) is carried out according to the V-model in close cooperation with the Agile teams.\n\nThe brake system is classified as safety-critical. The tests must be state of the art in design and documentation.\n\nThe test analyst for the system tests leaves your company while the project is in the critical phase of the system test, and the position must be filled quickly. The main task of the test analyst was the test design of the integration test in cooperation with the AGILE teams and the requirement-based test design for the system tests.\n\nBased on the information above, what is the MINIMUM combination of skills and qualifications required for this position?",
+    "options": [
+      "a) Black-box test techniques; communication skills; resilience; test documentation according to ISO 29119",
+      "b) Black-box test techniques; programming skills; resilience; AGILE certification",
+      "c) Communication skills; ability to delegate work; intercultural competence; test documentation according to ISO 29119",
+      "d) Intercultural competence; communication skills; black-box test techniques; ability to delegate."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. All required skills (Black-box test techniques; communication skills; resilience; test documentation according to CTFL 4.0 Syllabus and ISO 29119) can be determined by the given project situation.\nb) Is not correct. Programming skills and AGILE certification knowledge are not needed for the tasks of a test analyst.\nc) Is not correct. Ability to delegate work and intercultural competence are not needed for the tasks of a test analyst.\nd) Is not correct. Intercultural competence and the ability to delegate are not needed for the tasks of a test analyst.\n\nExplanation: CORRECT, black-box test techniques are required because system tests are to be designed systematically and based on requirements (section 3.1.2). FALSE, since the company is specific for domestic customers, it can be assumed that intercultural skills are not necessarily required. CORRECT, particularly in time-critical projects, a high degree of reliability and resilience is often required. CORRECT, collaboration with different teams requires communication skills for project success. FALSE, knowledge of the programming language (technical expertise) is needed for test script programming, but this is not a primary task of a test analyst. FALSE, ability to delegate work is necessary primarily as a test manager of a hierarchical test team; there is no evidence that the Test Analyst should be responsible for leading a team. CORRECT, the SDLC requires that the tests must be documented according to good practices; working to standards is a professional skill that helps. FALSE, knowledge in AGILE (a professional skill) is an advantage, but an AGILE certification is not required or defined as entry criteria for the Test Analyst."
+  },
+  {
+    "id": 44,
+    "lo": "TM-3.1.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are in a test management role in a software project that uses an Agile software development lifecycle (SDLC) and involves developing a web application for an online gambling platform. The project has a small cross-functional team that works closely with the customer. The project has a high level of uncertainty and complexity due to the frequent changes in requirements and technology. The project also has strict quality and security standards to comply with the legal regulations of the gambling industry.\n\nBased on the given project context, what are the MOST important skills you would look for when selecting test team members for this project?",
+    "options": [
+      "a) Business expertise in the gambling industry, technical expertise in web technologies and security vulnerabilities, technical expertise for automating test execution, communication and cooperation skills, self-management and discipline skills.",
+      "b) Conceptual knowledge for developing a test strategy, project management skills for managing all test tasks, analytical skills in analyzing the test basis and the product risks, judgment skills for the selection of tests.",
+      "c) Skills in test techniques and conceptual knowledge for designing the test environments, technical expertise for test script programming and setting up test environments, technical expertise for automating test execution, communication and cooperation skills.",
+      "d) Business expertise in the gambling industry, technical expertise in programming languages and interface technology, knowledge about test levels, testing roles, and specific test techniques, conflict resolution skills."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. It matches the context: gambling-domain expertise for regulatory compliance, automation of test execution to keep pace with Agile cadence, web/security vulnerability expertise for a secure web app, plus communication/cooperation and self-management to operate effectively in a small cross-functional team under frequent change.\nb) Is not correct. These are largely traditional test-management/analysis skills; they omit the critical domain, web/security, and hands-on automation capabilities needed here.\nc) Is not correct. Strong on technical testing and automation, but it lacks gambling-domain expertise and explicit self-management; it also doesn't highlight security vulnerabilities—key for this web platform.\nd) Is not correct. Although it includes gambling-domain expertise, the technical focus (programming/interfaces) is too generic and misses web/security needs; it also omits test-execution automation and broader Agile soft skills beyond conflict resolution."
+  },
+  {
+    "id": 45,
+    "lo": "TM-3.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "As a test manager, you are responsible for assessing the existing skills of team members in order to compare them with the required technical and methodological skills.\n\nWhich of the following approaches is NOT suitable for assessing existing technical and methodological skills?",
+    "options": [
+      "a) You can see how knowledgeable the members of the test team are by giving them typical test tasks and evaluating how they solve them.",
+      "b) Team members can be assessed using the Belbin team role model, which can then be used to determine their coverage of technical and methodological competencies.",
+      "c) You can evaluate the skills of individual members of the test team by reviewing and classifying their credentials, certificates, and references.",
+      "d) In agile projects, retrospectives can be used to work with the team to identify existing and missing technical and methodological skills."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. The technical and methodological competence of the members of the test team CAN VERY WELL be assessed by demonstrating typical test tasks (see syllabus, Chapter 3.1.3, third paragraph).\nb) Is correct. The Belbin Team Roles model characterizes team roles with different personality and role types and thus focuses on social and personal skills; it is NOT suitable for assessing technical and methodological competence (see syllabus, chapter 3.1.3, second paragraph).\nc) Is not correct. Competencies CAN VERY WELL be assessed through external evidence, certifications, professional experience, and degrees (see syllabus, chapter 3.1.3, fourth paragraph).\nd) Is not correct. \"Especially in agile software development, teams identify the necessary competencies by regularly participating in retrospectives and receiving feedback. Experienced coaches or mentors support them in further developing their competencies and identifying and closing knowledge gaps.\" (see syllabus, chapter 3.1.3, last paragraph)."
+  },
+  {
+    "id": 46,
+    "lo": "TM-3.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Developing the skills and competences of your team members is important to establish and maintain a high performing test team. As a test manager you have to establish personal development plans for your project team. Which of the following statements about approaches for development of test team member skills is correct?",
+    "options": [
+      "a) Training and coaching both involve predefined content delivered to multiple participants simultaneously.",
+      "b) Self-study is a recommended approach to develop social skills.",
+      "c) In peer learning, an experienced team member provides ongoing guidance to a new team member.",
+      "d) Coaching provides individual guidance to a person new to a role, helping them find solutions to improve their competencies."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Training and coaching are different approaches. Training typically involves multiple participants and predefined content, while coaching is individual and personalized. Training is often used to impart basic knowledge, whereas coaching focuses more on developing skills and competencies (section 3.1.4).\nb) Is not correct. For developing social and personal competencies, approaches such as training and coaching are recommended, as they allow for social interaction, feedback, and reflection (section 3.1.4).\nc) Is not correct. Mentoring and coaching are the approaches where an experienced person provides guidance to a less experienced person (section 3.1.4).\nd) Is correct. Coaching is an approach where a team member who is new to a role receives individual guidance from an experienced coach. The coach acts as an ongoing resource, providing advice and assistance (section 3.1.4)."
+  },
+  {
+    "id": 47,
+    "lo": "TM-3.1.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "Leading a team requires specific skills. Which of the following statements about leading a test team is correct?",
+    "options": [
+      "a) In a test team, willingness to help is more important than the ability to delegate.",
+      "b) When a new test team forms, the ability to act with appreciation is the most important competence.",
+      "c) Throughout the test team's lifecycle, all skills are equally important.",
+      "d) The ability to resolve conflicts helps to gain consensus around rules and roles in the early stages of group development."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. The syllabus does not make a blanket statement about the relative importance of skills.\nb) Is not correct. In the early phases of team formation (Forming and Storming), willingness to help and conflict resolution are more critical than appreciation. The ability to act with appreciation is needed more during the dissolution of a test team or a test team member (section 3.1.5).\nc) Is not correct. Test teams undergo dynamic development processes, requiring varying levels of different skills depending on the team's current situation (section 3.1.5).\nd) Is correct. The ability to resolve conflicts within the test team is especially needed during the storming phase, helping to establish team rules and role (section 3.1.5)."
+  },
+  {
+    "id": 48,
+    "lo": "TM-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Consider these categories of quality costs:\n\n1. Prevention costs\n2. Appraisal costs\n3. Internal failure costs\n4. External failure costs\n\nThese are the examples of quality-related activities:\n\nA. Early acceptance testing for fast feedback\nB. Performing a product risk analysis\nC. Customer complaints about poor performance\nD. Long lag time from defect reporting to resolution during testing causing increased defect management inefficiency\n\nWhich of the following CORRECTLY matches the categories of quality costs with their examples in software development?",
+    "options": [
+      "a) 1–A 2–B      3–C      4–D",
+      "b) 1–B 2–A      3–D      4–C",
+      "c) 1–A 2–B      3–D      4–C",
+      "d) 1–B 2–A      3–C      4–D"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. It does not match the correct categories of quality costs with the examples. Counterexample: Customers complaining about poor performance is an external failure cost, not an internal failure cost. (4D)\nb) Is correct. Conducting acceptance tests generates appraisal costs and aims to detect errors (1B); Performing Product risk analysis is a prevention cost as it is planned and proactively carried out to avoid poor quality (2A); Long lag time from defect reporting to resolution during testing is an internal failure cost as it extends the project duration (3D); customer complaints are an external failure cost because these customer complaints result in decreased future sales (4C).\nc) Is not correct. It does not match the correct categories of quality costs with the examples. Counterexample: Performing a product risk analysis is a prevention cost, not an appraisal cost. (1A)\nd) Is not correct. It does not match the correct categories of quality costs with the examples. Counterexample: Customers complaining about poor performance is an external failure cost, not an internal failure cost. (4D)"
+  },
+  {
+    "id": 49,
+    "lo": "TM-3.2.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are managing the testing of a mature online dating service application. The application allows users to create profiles, match with compatible people, arrange social events, and block unwanted contacts. You need to calculate the cost-benefit of testing for this application.\n\nYou have calculated the following costs of quality per defect:\n\n• Appraisal costs: $150\n• Internal failure costs: $250\n• External failure costs: $5,000\n\nThe average cost of detection and internal failure are calculated using the number of defects found prior to release, while the average costs of external is calculated using the number of defects found after release.\n\nBased on the above information, which of the following statements is correct for this application?",
+    "options": [
+      "a) The total cost of quality for this dating application is likely to be around $5,500, including prevention costs.",
+      "b) Each defect found by testing offers the organization an average of $4,600 in savings in cost of quality.",
+      "c) While cost of quality is useful in many industries, it has limited applicability in calculating the value of testing for software applications.",
+      "d) Testing provides a potential cost saving of $5,400 per defect by identifying issues before they reach the customer."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. One should not add assumption to calculate the total, and besides, the cost of defect prevention is not mentioned specifically, so you can´t just add an arbitrary sum like EUR 100 here. This statement is speculative and cannot be accurately derived from the given information.\nb) Is correct. This accurately applies the formula: Average Savings per Defect = External Failure Costs - (Appraisal Costs + Internal Failure Costs). In this case, $5,000 - ($150 + $250) = $4,600.\nc) Is not correct. Cost of quality is widely used across industries, including software development, to calculate the value of quality-related activities such as testing.\nd) Is not correct. This calculation incorrectly adds the costs instead of subtracting them. It doesn't account for the costs associated with finding and fixing defects during testing."
+  },
+  {
+    "id": 50,
+    "lo": "TM-3.2.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are the test manager of a software project with a budget of €100,000 and a deadline of six months. You have estimated that:\n\n• the average defect prevention cost per defect is €150,\n• the average appraisal cost is €400,\n• the average internal defect cost per failure is €250,\n• and the average external defect cost per failure is €3,000.\n\nYou have also determined the following project characteristics:\n• The requirements are unclear and can change frequently.\n• The technology used is new and unfamiliar to the development team.\n• The customer has high expectations in terms of quality and reliability.\n• The project has a tight schedule and scope.\n\nBased on the information, which of the following scenarios do NOT include a correct conclusion?",
+    "options": [
+      "a) Due to the ambiguity of the requirements, the average internal failure cost per defect doubles over the course of the project, resulting in an average saving of only €2100 per defect.",
+      "b) Becoming familiar with the technology in use triples the cost of defect prevention, but these costs are not included in the average savings per defect. Therefore, the savings remain unaffected at €2,350.",
+      "c) In order to meet the customer's tight deadline, the reactive measures of repeating the tests before delivery are omitted. This leads to fewer issues found pre-release and external defect costs decrease to €2,000 per defect escaped. As a result, the average savings per defect are reduced to €1,350.",
+      "d) To meet the client's tight deadline, the test team is expanded at short notice, causing the appraisal costs to rise to €500. As a result, the average savings per defect increase by €100 each."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Includes a correct conclusion. Baseline savings per defect found by testing = €3,000 − (€400+€250) = €2,350. If internal failure cost doubles to €500, savings = €3,000 − (€400+€500) = €2,100.\nb) Includes a correct conclusion. Prevention cost isn't part of the savings-per-defect-found-by-testing formula, so savings remain €2,350.\nc) Includes a correct conclusion. With external cost €2,000, savings = €2,000 − (€400+€250) = €1,350 (reduced).\nd) Is incorrect. If appraisal rises to €500, savings become €3,000 − (€500+€250) = €2,250, i.e., €100 less, not more."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 120 * 60;
+      const EXT_SECONDS = 150 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "150"
+          : "120";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 150:00 (120 min + 30 min extension). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 120:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${escHtml(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${escHtml(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagram for Question ${q.id}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

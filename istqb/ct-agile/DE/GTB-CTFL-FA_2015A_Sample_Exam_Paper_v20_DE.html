@@ -1,0 +1,1980 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CTFL-AT v2014 — Probeprüfung 2015 A v2.0 GTB</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .q-text, .option-text, .header-left { min-width: 0; overflow-wrap: anywhere; }
+      .meta-lbl { overflow-wrap: anywhere; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Foundation Extension</div>
+        <h1>CTFL-AT v2014<br /><em>Probeprüfung</em></h1>
+        <p class="start-subtitle">ISTQB® Certified Tester Agile Tester · Probeprüfung 2015 A v2.0 GTB · Lehrplan v2014. Der Timer startet mit der Prüfung.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Fragen</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">90</span>
+            <div class="meta-lbl">Minuten</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Punkte</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Bestehen</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Quelle: ISTQB® / German Testing Board — GTB-CTFL-FA_2015A_Sample_Exam_Paper_v20_DE.pdf; GTB-CTFL-FA_2015A_Sample_Exam_Paper_answers_and_justifications_v20_DE.pdf. Copyright © ISTQB® / German Testing Board e.V.. Fragen, Tabellen, Diagramme und Begründungen wurden aus diesen Quellen übernommen. Autoren und Übersetzer sind in den Quell-PDFs genannt.</p>
+        <div class="time-option-label">Prüfungsdauer</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">90 Min.</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">112,5 Min.</span>
+            <span class="time-opt-lbl">+25 % Übungszeit</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optionale Verlängerung der Übungszeit um 25 %: 22 Minuten und 30 Sekunden zusätzlich.</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Prüfung starten
+        </button>
+        <p class="start-note" id="start-note-txt">
+          Der Timer zählt von 90:00 herunter. Nach Ablauf der Zeit wird
+          die Prüfung automatisch abgegeben.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CTFL-AT v2014 · Probeprüfung 2015 A v2.0 GTB</span
+            >
+            <span class="exam-title">Certified Tester – Agile Tester</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 beantwortet
+            </div>
+            <div class="timer" id="timer">90:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Zurücksetzen
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Abgeben
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 Fragen (40 Punkte) · <strong>Bestanden ab 26 von 40 Punkten (65 %)</strong>
+            · Jede Frage ist einen Punkt wert. Die Anzahl der auszuwählenden Antworten
+            steht bei jeder Frage.
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Prüfung abgeschlossen</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Benötigte Zeit: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Richtig</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Falsch</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Unbeantwortet</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Neustart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Prüfung abgeben?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Abbrechen
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Abgeben
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "FA-1.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Das Agile Manifest formuliert 4 agile Werte. Ordnen Sie die agilen Werte oben (1-4) ihrem Gegenstück in der traditionellen Softwareentwicklung unten (i-iv) zu.\n\n1. Zusammenarbeit mit dem Kunden ist wichtiger als\n\n2. Reagieren auf Veränderungen ist wichtiger als\n\n3. Individuen und Interaktionen sind wichtiger als\n\n4. Funktionierende Software ist wichtiger als\n\ni. Prozesse und Werkzeuge\n\nii. das Befolgen eines Plans\n\niii. Vertragsverhandlungen\n\niv. umfassende Dokumentation\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) 1-iii, 2-iv, 3-ii, 4-i",
+      "b) 1-iii, 2-ii, 3-i, 4-iv",
+      "c) 1-iv, 2-ii, 3-i, 4-iii",
+      "d) 1-ii, 2-iii, 3-iv, 4-i"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch – die Zuordnungen zu 2, 3 & 4 stimmen nicht.\n\nb) Richtig – Das agile Manifest besteht aus den folgenden 4 Werten: Menschen und Interaktionen sind wichtiger als Prozesse und Werkzeuge; Funktionierende Software ist wichtiger als umfassende Dokumentation; Zusammenarbeit mit dem Kunden ist wichtiger als Vertragsverhandlungen; Reagieren auf Veränderungen ist wichtiger als das Befolgen eines Plans\n\nc) Falsch – die Zuordnungen zu 1 & 4 stimmen nicht.\n\nd) Falsch – alle Zuordnungen stimmen nicht."
+  },
+  {
+    "id": 2,
+    "lo": "FA-1.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen interpretiert eines der im Agilen Manifest formulierten Werte am besten?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Die Lieferung funktionierender Software an den Kunden ermöglicht es diesem, kurzfristig Rückmeldung an deren Entwickler zu geben.",
+      "b) Entwickler sollten Komponententest Werkzeuge verwenden, um den Testprozess zu unterstützen.",
+      "c) Fachbereichsvertreter sollten dem Entwicklungsteam eine Liste (Backlog) von User Stories inklusive zugehöriger Aufwandschätzungen zur Verfügung stellen.",
+      "d) Das Anpassen von Plänen an Änderungen erzeugt für ein agiles Projekt keinen Mehrwert."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Richtig – Aus Kunden/Anwendersicht ist funktionierende, einsatzfähige Software nützlicher, als umfangreiche Dokumentation und schafft die Möglichkeit, dem Entwicklungsteam über seine Einsatzerfahrungen kurzfristig Rückmeldung zu geben. Der korrekt formulierte Wert lautet: Funktionierende Software ist wichtiger als umfassende Dokumentation.\n\nb) Falsch – der Einsatz von Komponententest Werkzeugen/Unittest-Tools ist ein übliches Vorgehen, insbesondere bei testgetriebener Entwicklung (Test Driven Development), aber dies ist keiner, der im Agilen Manifest formulierten Werte.\n\nc) Falsch – Der dargestellte Sachverhalt entspricht nicht einem agilen Vorgehen.\n\nd) Falsch – Der korrekt formulierte Wert lautet: Reagieren auf Veränderungen ist wichtiger als das Befolgen eines Plans."
+  },
+  {
+    "id": 3,
+    "lo": "FA-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der unten genannten Aktivitäten spiegeln die Verantwortlichkeiten, die sich aus dem agilen „Whole-Team Approach“ ergeben, am BESTEN wider?\n\nWählen Sie genau ZWEI Antworten.",
+    "options": [
+      "a) Tester sind für die Entwicklung von Unit Tests verantwortlich und übergeben diese an die Entwickler zur Testdurchführung.",
+      "b) Fachbereichsvertreter haben die Aufgabe, die Tools auszuwählen, die das Entwicklungsteam zu verwenden hat.",
+      "c) Von Testern wird erwartet, dass sie mit Vertretern des Kunden zusammenarbeiten, um Abnahmetestfälle zu erstellen.",
+      "d) Das Team als Ganzes trägt Verantwortung für die Qualität des Produkts, nicht nur die Tester.",
+      "e) Von den Entwicklern wird erwartet, dass sie nichtfunktionale Anforderungen (Performance, Usability, Security, etc.) testen"
+    ],
+    "answer": [
+      2,
+      3
+    ],
+    "explanation": "a) Falsch – abhängig von den Fähigkeiten der Teammitglieder können diese Aufgabe Entwickler oder Tester übernehmen.\n\nb) Falsch – das Team wählt die Tools aus, so dass es eine effiziente und die Zusammenarbeit fördernde Arbeitsumgebung besitzt.\n\nc) Richtig – Tester unterstützen Fachbereichsvertreter dabei, passende Abnahmetestfälle zu definieren.\n\nd) Richtig - In agilen Projekten trägt jeder im Team die Verantwortung für Qualität.\n\ne) Falsch – abhängig von den Fähigkeiten der anderen Teammitglieder können Entwickler bei diesen Aufgaben unter Umständen mithelfen."
+  },
+  {
+    "id": 4,
+    "lo": "FA-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Wenn das ganze Team für die Qualität verantwortlich ist, hat das Vorteile.\n\nWelche der folgenden Aussagen benennt diese Vorteile?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Firmen müssen keine Softwaretester mehr einstellen und ausbilden.",
+      "b) Testautomatisierungs-Aufgaben sind dann in der Verantwortung des Entwicklungsteams statt in der des Testteams.",
+      "c) Die Zusammenarbeit wird gefördert und jedes Teammitglied trägt abhängig von seinen spezifischen Fähigkeiten und Sichten zum Projekterfolg bei.",
+      "d) Die Projektkosten sind niedriger, weil kein spezialisiertes Testteam benötigt wird."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Falsch – Softwaretester werden weiterhin benötigt und darüber hinaus sollen auch diejenigen Teammitglieder, die keine Testspezialisten sind, ihre Softwaretest Fähigkeiten ausbauen.\n\nb) Falsch– Dies ist abhängig von den Fähigkeiten der Teammitglieder und davon, wer verfügbar ist. Tester können auch Programmiererfahrung besitzen.\n\nc) Richtig – Die Vielzahl der unterschiedlichen Fähigkeiten der Teammitglieder werden erschlossen und für das Projekt sinnvoll genutzt.\n\nd) Falsch– Spezialisierte Softwaretester werden weiterhin benötigt und sind auch im agilen Projekt wichtig."
+  },
+  {
+    "id": 5,
+    "lo": "FA-1.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche ZWEI der folgenden Aussagen sind zutreffend?\n\nWählen Sie genau ZWEI Antworten.",
+    "options": [
+      "a) Frühes Feedback gibt Entwicklern mehr Zeit, für das System neue Leistungsmerkmale zu entwickeln, weil sie weniger Zeit für die Überarbeitung vorhandener Leistungsmerkmale benötigen.",
+      "b) Frühes Feedback ermöglicht agilen Teams diejenigen Leistungsmerkmale zuerst zu liefern, die den höchsten Geschäftswert besitzen, weil der Kunde seinen Fokus auf die Leistungsmerkmale mit dem höchsten Systemwert legt.",
+      "c) Frühes Feedback senkt Kosten, weil es die Zeit verkürzt, die für den Systemtest benötigt wird.",
+      "d) Frühes Feedback erhöht die Wahrscheinlichkeit, dass das fertige System dasjenige ist, welches der Kunde sich gewünscht hat, weil das Team die Möglichkeit hat von Iteration zu Iteration Änderungen vorzunehmen."
+    ],
+    "answer": [
+      1,
+      3
+    ],
+    "explanation": "a) Falsch – Entwickler implementieren diejenigen Leistungsmerkmale, die vom Kunden gefordert werden und die in der jeweiligen Iteration eingeplant sind. Wenn diese Aufgaben erledigt sind, helfen sie andere für die Iteration geplante Aufgaben zu erledigen.\n\nb) Richtig – Regelmäßiges Kunden Feedback lenkt den Fokus auf diejenigen Leistungsmerkmale mit dem höchsten Geschäftswert.\n\nc) Falsch – Aufgrund der regelmäßigen Änderungen kann sich der Testaufwand sogar erhöhen.\n\nd) Richtig – Kunden äußern, wenn Anforderungen verfehlt oder falsch interpretiert wurden und veranlassen eine Änderung der entsprechenden Systemeigenschaften."
+  },
+  {
+    "id": 6,
+    "lo": "FA-1.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Der agile Prozess fördert frühes und häufiges Feedback.\n\nWelche der folgenden Aussagen stellt einen daraus entstehenden Vorteil dar?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Es werden während des Projekts wesentlich mehr Defekte gefunden als in traditionellen Softwareentwicklungsprozessen wie z.B. dem Wasserfall-Modell.",
+      "b) Es gibt weniger Nacharbeiten, da der Kunde das Produkt regelmäßig betrachtet.",
+      "c) Es ist einfach, den zuständigen Entwickler zu bestimmen, der die meisten Defekte bei der Codierung erzeugt hat.",
+      "d) Es steht genügend Zeit zur Verfügung, um alle eingeplanten Features in der jeweiligen Iteration zu implementieren."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch – Die Anzahl der Defekte kann in allen Softwarenentwicklungsprozessen unabhängig vom verwendeten Modell gleich sein. Der Vorteil der agilen Vorgehensweise besteht darin, diese früher zu finden und schneller zu beheben.\n\nb) Richtig – Die frühzeitige und häufige Klärung der Kundenwünsche während der gesamten Entwicklungszeit erhöht die Wahrscheinlichkeit, dass für den Kunden die wichtigsten Anforderungen als erstes verfügbar sind, und dass das Produkt seine Erwartungen erfüllt.\n\nc) Falsch – Im agilen Kontext geht es nicht um Individuen oder gar um die Fehler Einzelner, sondern immer um das gesamte Team.\n\nd) Falsch – Es kann sein, dass in einer Iteration nicht genügend Zeit für die Fertigstellung aller Features vorhanden ist. Der agile Prozess erlaubt es dem Team aber, sich auf die wichtigsten mit dem höchsten Geschäftswert zu fokussieren."
+  },
+  {
+    "id": 7,
+    "lo": "FA-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Ordnen Sie die folgenden agilen Softwareentwicklungsansätze den jeweils passenden Umschreibungen zu.\n\n1. Extreme Programming\n\n2. Scrum\n\n3. Kanban\n\ni. Akzeptiere 5 Werte als Leitlinie der Entwicklung: Kommunikation, Einfachheit, Feedback, Mut, and Respekt\n\nii. Unterteile das Projekt in kurze Iterationen – Sprints genannt.\n\niii. Optimiert den Arbeitsfluss in einer Wertschöpfungskette.\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) 1-i, 2-iii, 3-ii",
+      "b) 1-i, 2-ii, 3-iii",
+      "c) 1-ii, 2-i, 3-iii",
+      "d) 1-iii, 2-ii, 3-i"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch – Siehe Begründung bei Antwort b.).\n\nb) Richtig – Extreme Programming: Akzeptiere 5 Werte als Leitlinie der Entwicklung: Kommunikation, Einfachheit, Feedback, Mut, and Respekt; Scrum unterteilt das Projekt in kurze Iterationen – Sprints genannt. Kanban hat keine Iterationen oder Sprints, hier wird der Arbeitsfluss in einer Wertschöpfungskette so optimiert, dass die Verweilzeiten jeder Aufgabe minimiert werden. Vergleiche Kapitel 1.2.1 des CTFL-FA-Lehrplans.\n\nc) Falsch – Siehe Begründung bei Antwort b.).\n\nd) Falsch – Siehe Begründung bei Antwort b.)."
+  },
+  {
+    "id": 8,
+    "lo": "FA-1.2.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "Während eines Iterationsplanungsmeetings diskutieren die Teammitglieder über eine User Story. Der Product Owner empfiehlt, dass der Kunde eine einzige Eingabemaske für die benötigten Informationen erhält. Der Entwickler erklärt dagegen, dass es technische Einschränkungen für dieses Feature gibt, da sehr viele Informationen dargestellt werden müssen. Ein anderer Entwickler fügt hinzu, dass es Performance Probleme geben könnte, da die Informationen in einer externen Datenbank gespeichert werden.\n\nWelches der folgenden Argumente repräsentiert AM BESTEN den Beitrag, den ein Tester zu dieser Diskussion beisteuern könnte?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Der Tester empfiehlt, nur eine Bildschirmseite für die Eingabemaske zu verwenden, um den Aufwand für die Automatisierung zu senken.",
+      "b) Der Tester empfiehlt, die Benutzbarkeit im Vergleich zur Performance als wichtiger zu bewerten.",
+      "c) Der Tester empfiehlt, die Abnahmekriterien für die Performance auf den Standardwert von maximal einer Sekunde je Datenspeicherung zu setzen.",
+      "d) Der Tester empfiehlt, zu der User Story auch die Abnahmekriterien festzulegen, um diese testbar zu machen."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Falsch – Testbarkeit und Automatisierung sind wichtige Punkte. Das Design der Anwendung sollte jedoch nicht darauf basieren, den Testaufwand zu reduzieren – ansonsten könnte das dazu führen, dass die Lösung für den Endanwender nicht zufriedenstellend ist.\n\nb) Falsch – Der Product Owner sollte die unterschiedlichen Qualitätskriterien priorisieren.\n\nc) Falsch – Die Abnahmekriterien zur Performance werden normalerweise durch den Product Owner festgelegt.\n\nd) Richtig – Der Tester hat unter anderem die Aufgabe darauf zu achten, dass das Team Abnahmekriterien zu jeder User Story definiert."
+  },
+  {
+    "id": 9,
+    "lo": "FA-1.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt AM BESTEN einen Tester als Teilnehmenden einer Retrospektive?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Als Tester in einer Retrospektive sollte ich nur die Themen einbringen, die zum Testen gehören. Alle anderen Themen werden durch die anderen Teilnehmer abgedeckt.",
+      "b) Als Tester nehme ich an einer Retrospektive als Beobachter teil und sichere damit ab, dass das Meeting den Regeln einer Retrospektive folgt und die agilen Werte berücksichtigt.",
+      "c) Als Tester in einer Retrospektive sollte ich Feedback zu allen Aktivitäten des Teams in einem Sprint geben.",
+      "d) Als Tester nehme ich nur dann an einer Retrospektive teil, wenn ich überhaupt Feedback zu den Aktivitäten des Teams in einem Sprint geben kann."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Falsch – Tester sollten bei der Besprechung aller Themen in einer Retrospektive aktiv mitwirken.\n\nb) Falsch – Tester sollten bei der Besprechung aller Themen in einer Retrospektive aktiv mitwirken.\n\nc) Richtig – Alle Mitglieder des Teams, Tester und Nicht-Tester, können zu allen Aktivitäten, also sowohl zum Testen als auch allen anderen Aktivitäten, Feedback geben.\n\nd) Falsch – Testers können aus jeder Retrospektive wertvolle Informationen erhalten, die sie in späteren Iterationen anwenden können."
+  },
+  {
+    "id": 10,
+    "lo": "FA-1.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welcher der folgenden Punkte sollte in einer Retrospektive NICHT angesprochen werden?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Es sollte künftig mehr Wert auf Komponententests gelegt werden um die Gesamtqualität zu steigern.",
+      "b) Der Build-Prozess dauert zu lange und wird manuell durchgeführt. Eine automatisierte Buildumgebung sollte eingeführt werden.",
+      "c) Ein Tester tut sich schwer, Fehler zu finden. Er benötigt eine Schulung der Testentwurfsmethoden.",
+      "d) Die automatisierten Regressionstests laufen zu lange. Es sollte ein Review der Tests durchgeführt werden um redundante und unnötige Tests zu eliminieren."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Falsch – Der Punkt hilft Fehler früher im Entwicklungsprozess zu entdecken.\n\nb) Falsch – Der Punkt kann als Prozessverbesserung genannt werden.\n\nc) Richtig – Die Retrospektive ist nicht dafür gedacht, über Einzelne aus dem Team zu sprechen. Stattdessen sollen die Prozessverbesserung und das Team als Ganzes im Mittelpunkt stehen.\n\nd) Falsch – Der Punkt kann als Prozessverbesserung genannt werden."
+  },
+  {
+    "id": 11,
+    "lo": "FA-1.2.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Prinzipien gilt NICHT für Continuous Integration?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Continuous Integration hilft Software regelmäßig und automatisiert zu bauen. Dabei werden auch Tests und das Deployment automatisiert durchgeführt.",
+      "b) Continuous Integration stellt laufend neue Builds für Tester und Stakeholder zur Verfügung.",
+      "c) Continuous Integration hilft Fehler bei der Integration früh zu entdecken und macht die Analyse dieser Fehler einfacher.",
+      "d) Continuous Integration stellt sicher, dass Build Tests manuell durchgeführt werden, da diese verlässlicher als automatisierte Tests sind."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Falsch – Das ist ein Prinzip von Continuous Integration. Builds werden mindestens einmal am Tag deployed. Dabei werden automatisierte Komponenten- und Integrationstests durchgeführt.\n\nb) Falsch – Continuous Integration ermöglicht die ständige Verfügbarkeit lauffähiger Software für Tests, Präsentationen oder zur Schulung.\n\nc) Falsch – Continuous Integration ermöglicht den Entwicklern laufend Code zu integrieren und zu testen. So können Fehler schnell erkannt werden.\n\nd) Richtig – Für ein schnelles Feedback zur Qualität müssen Komponenten- und Integrationstests automatisiert bei jedem Build durchgeführt werden und gerade nicht manuell. Automatisierte Tests sind verlässlicher als manuell durchgeführte,"
+  },
+  {
+    "id": 12,
+    "lo": "FA-1.2.5",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aktivitäten führt ein Tester während der Releaseplanung durch?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Erstellt eine Liste von Abnahmekriterien für die User Storys",
+      "b) Hilft beim Ableiten von Aufgaben (Tasks) aus den User Storys",
+      "c) Schätzt die Testaktivitäten, die durch die neuen Features dieser Iteration notwendig sind",
+      "d) Unterstützt bei der Klärung der User Storys und stellt sicher, dass diese testbar sind"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Falsch – Das ist eine Aufgabe in der Iterationsplanung.\n\nb) Falsch – Das ist eine Aufgabe in der Iterationsplanung.\n\nc) Falsch – Das ist eine Aufgabe in der Iterationsplanung.\n\nd) Richtig – Das ist eine Aufgabe in der Releaseplanung."
+  },
+  {
+    "id": 13,
+    "lo": "FA-1.-Term",
+    "k": "K1",
+    "pts": 1,
+    "text": "Was ist die angemessenste Beschreibung für „User Story“?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Ein Artefakt, das der Tester reviewen und freigeben muss, bevor die Testdurchführung beginnt.",
+      "b) Ein Artefakt, welches nur die funktionalen Anforderungen des Systems detailliert beschreibt.",
+      "c) Ein Artefakt der Vertreter des Fachbereichs, damit Entwickler und Tester die Systemanforderungen besser verstehen.",
+      "d) Ein Artefakt, welches gemeinsam mit Entwickler, Testern und Vertretern des Fachbereichs geschrieben wird, um Anforderungen zu beschreiben."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Falsch – Der Tester wirkt bei der Erstellung der User Story mit. Review und Freigabe erfolgen durch das gesamte Team.\n\nb) Falsch – Eine User Story soll sowohl funktionale als auch nicht-funktionale Anforderungen beinhalten.\n\nc) Falsch – Eine User Story wird gemeinsam mit Entwicklern, Testern und Vertretern des Fachbereichs geschrieben.\n\nd) Richtig – In agilen Projekten beinhalten User Storys Anforderungen aus Sicht der Entwickler, Tester und Vertreter des Fachbereichs. Für die gemeinsame Entwicklung der User Storys können Techniken wie beispielsweise Brainstorming oder Mind Mapping eingesetzt werden."
+  },
+  {
+    "id": 14,
+    "lo": "FA-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Testaktivitäten sind für agile Projekte typisch, jedoch für traditionelle Projekte eher unüblich?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Tester erstellen detaillierte Testpläne, damit alle Team Mitglieder verstehen, was in der nächsten Iteration getestet werden soll.",
+      "b) Tester sind erheblich an der Erstellung automatisierter Testfälle bereits ab der Integrationsteststufe beteiligt; diese werden in Folge zur Verifikation umgesetzter Anforderungen verwendet.",
+      "c) Um wichtige Fehler rasch zu finden, führen Tester explorative Tests durch.",
+      "d) Um besser zu verstehen, was getestet werden soll, arbeiten Tester mit den Entwicklern eng zusammen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch – Agiles Testen legt auf leichtgewichtige Dokumentation wert.\n\nb) Richtig – In vielen agilen Teams wird Testautomation in allen Teststufen eingesetzt. Während Entwickler auf die Automation von Komponententests fokussiert sind, legen Tester ihren Schwerpunkt auf die Automation von Integrations-, System- und Abnahmetests. In traditionellen Projekten wird hingegen nicht so intensiv auf den Einsatz von Testautomation gesetzt. Testautomation wird erst für Systemtests herangezogen, um ein stabiles System als Ausgangsbasis zu haben oder um Regressionstests für Wartungszwecke nach dem Go Live zu automatisieren.\n\nc) Falsch – Explorative Tests werden in beliebigen Softwareentwicklungspraktiken eingesetzt.\n\nd) Falsch – Die Zusammenarbeit zwischen Testern und Entwicklern ist in allen Entwicklungsmodellen empfehlenswert."
+  },
+  {
+    "id": 15,
+    "lo": "FA-2.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche Kombination folgender Vorgehensweisen sollte in agilen Projekten stattfinden?\n\ni. Strikte Einhaltung von Eingangs- und Endekriterien im Systemtest\n\nii. Zusammenarbeit zwischen Testern, Entwicklern und Fachbereich, um Abnahmekriterien zu definieren\n\niii. Funktionale Tests, um User Storys der vorangegangenen Iteration zu verifizieren\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Lediglich ii",
+      "b) i und ii",
+      "c) ii und iii",
+      "d) Lediglich iii"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Richtig – Diese drei Perspektiven (Tester, Entwickler und Fachbereich) sind für die Festlegung von Abnahmekriterien und die Definition, wann diese erfüllt / „done“ sind,, wichtig.\n\nb) Falsch – wg. i.) Testeingangs- und Endekriterien entsprechen mehr dem traditionellen Softwareentwicklungsprozess.\n\nc) Falsch – wg iii.) User-Storys sollten jeweils in derselben Iteration entwickelt und getestet werden.\n\nd) Falsch – wg. iii.) User-Storys sollten jeweils in derselben Iteration entwickelt und getestet werden."
+  },
+  {
+    "id": 16,
+    "lo": "FA-2.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche ZWEI Aussagen treffen auf agile Projekte zu?\n\nWählen Sie genau ZWEI Antworten.",
+    "options": [
+      "a) Tester sollten eng mit Entwicklern zusammen arbeiten, aber eine objektive Einschätzung bewahren.",
+      "b) In agilen Entwicklungsprojekten gibt es keine Testmanager.",
+      "c) Entwickler und Tester machen in agilen Projekten das Gleiche.",
+      "d) Entwickler sollten sich darauf verlassen können, dass Tester die automatisierten Regressionstests erstellen.",
+      "e) Eine Auswahl von Benutzern kann nach Abschluss mehrerer Iterationen Beta Tests durchführen."
+    ],
+    "answer": [
+      0,
+      4
+    ],
+    "explanation": "a) Richtig – Das ist eins der Markenzeichen agiler Projekte, gilt jedoch auch für traditionelle Entwicklung.\n\nb) Falsch – In vielen agilen Projekten existieren unabhängige Testteams mit Testmanagern.\n\nc) Falsch – Testen, richtig gemacht, ist immer noch eine gesonderte Aufgabe.\n\nd) Falsch – Entwickler und Tester arbeiten bei der Erstellung von automatisierten Regressionstests durchaus zusammen.\n\ne) Richtig – Agile Teams können verschiedene Formen von Abnahmetests einsetzen. Beta Tests sind eine der im Lehrplan genannten Möglichkeiten."
+  },
+  {
+    "id": 17,
+    "lo": "FA-2.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen über unabhängiges Testen in agilen Projekten ist FALSCH?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Es besteht das Risiko, die Unabhängigkeit im Testen bei der Einführung agiler Vorgehensweisen zu verlieren.",
+      "b) Unabhängige Tester finden mehr Fehler als Entwickler, unabhängig von der Teststufe.",
+      "c) Unabhängiges Testen kann am Ende eines Sprints eingesetzt werden.",
+      "d) Das unabhängige Testteam kann Teil eines anderen Teams sein."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch – Diese Aussage stimmt. So etwas kann durchaus passieren, wenn Tester und Entwickler eng zusammenarbeiten.\n\nb) Richtig – Diese Aussage ist falsch. Unabhängige Tester KÖNNEN mehr Fehler als Entwickler finden, aber das hängt von der Teststufe und der Erfahrung des unabhängigen Testers ab.\n\nc) Falsch – Diese Aussage stimmt. Diese Vorgehensweise ist durchaus eine Möglichkeit, Unabhängigkeit im Test zu bewahren, indem man separate Teams für Test und Entwicklung unterhält und die Tester ja nach Bedarf am Ende eines Sprints erst hinzugeholt werden.\n\nd) Falsch – Diese Aussage stimmt. Unabhängige Tester können durchaus auch außerhalb der Sprint-Zyklen oder an langlaufenden Testaktivitäten arbeiten."
+  },
+  {
+    "id": 18,
+    "lo": "FA-2.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Meldungen lässt in einem agilen Projekt die meiste Produktqualität am Ende der 6. von insgesamt 8 Iterationen für ein neues Systemrelease erwarten?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Keine Fehler mit Schweregrad 1 oder 2 aus dem Systemtest in der 6. Iteration wurden gefunden; das Team kann mit Iteration 7 beginnen.",
+      "b) Das Ergebnis eines Beta-Tests beim Kunden gegen den Software Release der 6. Iteration zeigt, dass das System richtig arbeitet und die Produktivität erhöht wurde.",
+      "c) Die Arbeit des agilen Teams entspricht den Schätzungen; bis heute konnten nur geringe Abweichungen der Burndown Charts über alle Iteration festgestellt werden.",
+      "d) Bis zur aktuellen Iteration konnten alle Story Cards der jeweiligen Iterationen mit „Done“ markiert werden; allerdings sind ein paar technische Schulden angefallen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch – Das kann ein Indikator für Qualität sein, aber es setzt voraus, dass ausreichend Tests zur Identifikation aller möglichen Fehler zusammengestellt wurden. Des Weiteren ist nicht klar, ob zu diesem Zeitpunkt das System überhaupt einsatzfähig ist.\n\nb) Richtig – Positives Kundenfeedback und einsatzfähige Software sind gute Indikatoren für Produktqualität.\n\nc) Falsch – Das ist ein guter Indikator für Team Velocity, aber kein Indikator für Produktqualität.\n\nd) Falsch – Das ist ein guter Indikator für Team Velocity, aber ebenfalls kein Indikator für Produktqualität."
+  },
+  {
+    "id": 19,
+    "lo": "FA-2.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welches der folgenden Hilfsmittel ist AM BESTEN geeignet, um den Teamfortschritt im Vergleich zu den gemachten Schätzungen aufzuzeigen?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Burndown-Charts",
+      "b) Ergebnisse der automatisiert durchgeführten Tests",
+      "c) Taskboards für den Status von User-Storys und Aufgaben",
+      "d) Fehlerverfolgungswerkzeuge"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Richtig – Burndown-Charts zeigen den geplanten Fortschritt und den tatsächlich erreichten Fortschritt der User-Storys nebeneinander vergleichbar auf.\n\nb) Falsch – Testergebnisse, egal ob aus automatisierten Tests oder nicht, belegen nur, ob ein Test erfolgreich war oder nicht und sind nicht mit irgendwelchen Schätzungen verbunden.\n\nc) Falsch – Obwohl die Taskboards den Fortschritt sichtbar machen, wird der Fortschritt in Burndown-Charts eingetragen, da ein Taskboard nichts über die Schätzung aussagt.\n\nd) Falsch – Ein Fehlerverfolgungswerkzeug kann den Fehlerverlauf zwar darstellen und Aussagen über die aktuell erreichte Produktqualität machen, aber es lässt keine Rückschlüsse über den Teamfortschritt in Relation zu den Schätzungen zu."
+  },
+  {
+    "id": 20,
+    "lo": "FA-2.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Während der Planung von Iteration 5 verlangt der Fachbereich Änderungen an Lieferobjekten aus Iteration 3.\n\nWelche der folgenden Aktivitäten sollten als erste in Angriff genommen werden, um die Risiken zu minimieren, die mit der Änderung verbunden sind?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Review und ggf. Überarbeitung aller manuellen und automatisierten Tests, die durch die Änderung betroffen sein könnten, um die neuen Abnahmekriterien zu erfüllen.",
+      "b) Neue manuelle und automatisierte Testfälle für das geänderte Feature erstellen und sie der Regressions-Testsuite hinzufügen.",
+      "c) Alle Testfälle der vergangenen Iterationen automatisieren und sie zu einer automatisierten Testsuite hinzufügen.",
+      "d) Für das gesamte System die Anzahl der automatisierten Testfälle deutlich erhöhen, um mehr Testbedingungen abzudecken."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Richtig – Da die neue Funktion schon ausgeliefert worden ist, sollten alle betroffenen Testfälle noch einmal überprüft werden und falls nötig an die geforderten Änderungen angepasst werden. Schließlich soll so vermieden werden, dass fälschlich für fehlerhaft bzw. richtig gehaltene Testergebnisse auftreten. Das wäre die erste Aufgabe, bevor man weitere Änderungen in Betracht zieht.\n\nb) Falsch – Dies wäre sicher nicht die allererste Aufgabe, weil der Tester – ohne die bisherigen Tests durchgesehen zu haben – noch nicht genau wüsste, welche neuen Testfälle noch fehlen. Außerdem ist nicht gesagt, dass durch die Änderung neue Tests nötig sind. Vielleicht müsste man nur die bisherigen entsprechend anpassen.\n\nc) Falsch – Sicher immer eine gute Idee, aber sie hat nichts mit der geplanten Änderung an der bestehenden Funktion und ihre Auswirkung auf das Regressionstestrisiko zu tun.\n\nd) Falsch – Aus dem gleichen Grund, wie Antwort B. Ohne die bestehenden Tests für diese Funktion zu kennen, lässt sich schwer sagen, ob zusätzliche Tests überhaupt nötig sind."
+  },
+  {
+    "id": 21,
+    "lo": "FA-2.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der ZWEI folgenden Aussagen sind gute Gründe dafür, dass Testautomatisierung ein ganz wesentlicher Faktor für agile Projekte ist?\n\ni. Agile Teams können damit ihre Velocity erhalten oder sogar erhöhen.\n\nii. Um zu vermeiden, dass agile Teams durch manuelle, sich wiederholende Arbeiten demotiviert werden.\n\niii. Um alle Testfälle aus vorhergehenden Iterationen erneut testen zu können.\n\niv. Um es gar nicht erst zur Verschlechterung der Software aufgrund der häufigen Änderungen am Code kommen zu lassen.\n\nv. Um sicherzustellen, dass Änderungen am Code nicht den Softwarebuild zerstören.\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) i und iv",
+      "b) i und v",
+      "c) iii und iv",
+      "d) ii und v"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch – Begründung siehe Antwort b.\n\nb) Richtig\n\ni. Diese Aussage ist richtig, weil agiles Vorgehen Änderungen erwartet und gezielt behandelt. Mit jeder Iteration steigt der Bedarf an Regressionstests und bindet daher Kräfte. Würde man auf Testautomatisierung verzichten, würde die Velocity des Teams stetig abnehmen.\n\nii. Diese Aussage passt hier nicht. Demotivation allein ist noch kein Grund, Testautomatisierung einzuführen.\n\niii. Diese Aussage ist falsch. Es können unmöglich alle Testfälle von vorhergehenden Iterationen getestet werden. Über die Zeit entstehen viele Testfälle, die zum Teil auch explorativ ermittelt wurden; es wäre unmöglich, das alles zu automatisieren.\n\niv. Diese Aussage ist in dieser Form falsch. Testautomatisierung kann zwar helfen, die Verschlechterung der Software aufgrund der vielen Änderungen am Code über die Zeit zu vermeiden, aber sie kann nicht verhindern, dass bei Änderungen Fehler in der Software entstehen.\n\nv. Diese Aussage ist richtig. Testautomatisierungs-Werkzeuge sind meist in Werkzeugen zur Continuous Integration integriert. Diese führen die wichtigsten Tests bei jedem Build aus, zeigen so rasch, ob ein Build nicht korrekt funktioniert.\n\nc) Falsch – Begründung siehe Antwort b.\n\nd) Falsch – Begründung siehe Antwort b."
+  },
+  {
+    "id": 22,
+    "lo": "FA-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "In agilen Projekten werden im Vergleich zu klassischen Projekten eher Tester gebraucht, die Testautomatisierungsskripte verstehen und auch selbst schreiben können.\n\nWelche ZWEI der folgenden Aussagen können diesen Bedarf begründen?\n\ni. Anforderungen ändern sich täglich und müssen einem Regressionstest unterzogen werden. Diese schnellen Änderungen erfordern Testautomatisierung, weil manuelles Testen zu langsam wäre.\n\nii. Der Test soll ein möglichst rasches Feedback zur Produktqualität liefern. Daher sollten alle Abnahmetests in jeder Iteration zumindest einmal ausgeführt werden, idealerweise sogar jedes Mal wenn Änderungen gemacht worden sind. In der Praxis lässt sich das nur mit Hilfe automatisierter Tests realisieren.\n\niii. Test-First und Continuous Integration erfordern, dass bei jedem „Check In“ des geänderten Codes ein Regressionstest ausgeführt wird. In der Praxis lässt sich das nur mit Hilfe automatisierter Tests realisieren.\n\niv. Iterationen oder Sprints haben eine feste Dauer. Das Team muss zusichern, dass alle Tests am letzten Tag der Iteration / des Sprints vollständig durchgeführt werden. In der Praxis lässt sich das nur mit Hilfe automatisierter Tests realisieren.\n\nv. Agile Projekte setzen eher auf Unit Tests als auf Systemtests. Da Unit Tests nicht manuell durchgeführt werden können, müssen alle Tests automatisiert sein.\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) i und iii",
+      "b) ii und v",
+      "c) iv und v",
+      "d) ii und iii"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Falsch – Begründung siehe Antwort d.\n\nb) Falsch – Begründung siehe Antwort d.\n\nc) Falsch – Begründung siehe Antwort d.\n\nd) Richtig\n\ni. Falsch – Agile Projekte befürworten und erwarten auch Änderungen. Das bedeutet aber nicht gleich, dass dies täglich passieren muss.\n\nii. Richtig – Je früher ein agiles Team Feedback zur Qualität der Software bekommt, umso besser.\n\niii. Richtig – Test-First und Continuous Integration benötigen automatisierte Tests im Rahmen des automatisierten Buildprozesses, um schnelles Feedback zur Buildqualität zu bekommen.\n\niv. Falsch – Testen muss während der gesamten Iteration stattfinden, nicht erst am letzten Tag..\n\nv. Falsch – Agile Projekte erfordern ebenfalls verschiedene Teststufen, wie beispielsweise Unittest, Systemtest und Abnahmetest."
+  },
+  {
+    "id": 23,
+    "lo": "FA-2.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche ZWEI Aufgaben sind von einem Tester in einem agilen Team üblicherweise zu erledigen?\n\ni. Über die Benutzerakzeptanz entscheiden\n\nii. Geeignete Tests entwerfen, vorbereiten und ausführen\n\niii. Planen der Fehlerberichte für die weitere Analyse\n\niv. Tests automatisieren und pflegen\n\nv. Die Programmlogik im Pair Programming zu überprüfen\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) i und iii",
+      "b) ii und iii",
+      "c) ii und iv",
+      "d) ii und v"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Falsch – Begründung siehe Antwort c.\n\nb) Falsch – Begründung siehe Antwort c.\n\nc) Richtig\n\ni. Falsch – Diese Aufgabe muss kollektiv vom gesamten Team wahrgenommen werden.\n\nii. Richtig – Diese Aufgabe wird von einem agilen Tester erwartet.\n\niii. Falsch – In agilen Projekten werden die Fehler ständig mit Stakeholdern besprochen.\n\niv. Richtig – Üblicherweise erwartet man diese Aufgabe von einem agilen Tester.\n\nv. Falsch – Pair Programming wird üblicherweise von zwei Entwicklern praktiziert. Von Testern wird man wohl weniger erwarten, die Programmlogik zu verbessern, wenngleich sie den Code sicher gut auf Test- und Wartbarkeit untersuchen können.\n\nd) Falsch – Begründung siehe Antwort c."
+  },
+  {
+    "id": 24,
+    "lo": "FA-2.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aktivitäten stellt KEINE typische Aufgabe von Testern in agilen Teams dar?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Tests automatisieren und pflegen",
+      "b) Andere Teammitglieder beraten und betreuen",
+      "c) Burndown-Charts erstellen und aktualisieren",
+      "d) An Codeanalysen teilnehmen"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Falsch – Es gehört zu den Aufgaben des Testers, Testskripte zu erstellen und zu pflegen\n\nb) Falsch – Tester sollen andere Teammitglieder in testrelevanten Themen beraten und betreuen.\n\nc) Richtig – Obwohl die Visualisierung des laufenden Fortschritts das gesamte Team betrifft, ist die Erstellung eines Burndown-Charts keine typische Aufgabe eines Testers.\n\nd) Falsch – In agilen Projekten geben Tester Feedback über alle Phasen der Entwicklung. Dies sollte auch Codeanalysen beinhalten."
+  },
+  {
+    "id": 25,
+    "lo": "FA-2.-Term",
+    "k": "K1",
+    "pts": 1,
+    "text": "Was bedeutet der Begriff „Burndown-Chart“?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Ein Diagramm, das darstellt, welche Teammitglieder am meisten arbeiten und wahrscheinlich unter Stress leiden.",
+      "b) Ein Diagramm, das den Status einer Aufgabe zeigt.",
+      "c) Ein Diagramm, das ausstehende Aufwände gegenüber der Zeit in einem Sprint zeigt.",
+      "d) Ein Diagramm, das behobene Fehler und den Zeitpunkt anzeigt, an dem offene Fehler voraussichtlich behoben werden."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Falsch – Diese Erklärung beschreibt eher Burnout als Burndown\n\nb) Falsch – Diese Erklärung beschreibt das Task Board\n\nc) Richtig – Ein Burndown-Chart zeigt den Fortschritt der Arbeiten innerhalb eines Sprints/einer Iteration. Die bereits erledigten und die noch zu erledigenden Aufgaben werden als geschätzter Aufwand gegen die verbleibende Zeit der Iteration dargestellt. Dabei werden der geschätzte zeitliche Aufwand für die verbliebenen Aufgaben auf der X- Achse gegen die verbleibende Zeit des Sprints/der Iteration auf der Y-Achse grafisch dargestellt.\n\nd) Falsch – Burndown-Charts haben keinen Bezug zu behobenen oder noch offenen Fehlern."
+  },
+  {
+    "id": 26,
+    "lo": "FA-3.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen ist im Hinblick auf testgetriebene Entwicklung FALSCH? (Testgetriebene Entwicklung = Test Driven Development, TDD)\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) TDD ist ein „test first“ Ansatz, der vor der Codeerstellung zuerst wiederverwendbare automatisierte Komponententests entwickelt.",
+      "b) Der TDD Prozess ist iterativ und die Menge der automatisierten Komponententests wächst mit der neuen Funktionalität jeder Iteration.",
+      "c) TDD hilft den Code für zukünftige Wartungsarbeiten zu dokumentieren.",
+      "d) Ein Resultat von TDD sind Testklassen, welche von den Entwicklern verwendet werden, um Testfälle zu entwerfen."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Falsch – Die Aussage ist richtig\n\nb) Falsch – Die Aussage ist richtig\n\nc) Falsch – Die Aussage ist richtig\n\nd) Richtig – Diese Aussage ist falsch, das Resultat von TDD sind automatisierte Komponententests"
+  },
+  {
+    "id": 27,
+    "lo": "FA-3.1.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche Kernaussage lässt sich aus der sog. „Testpyramide“ ableiten?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Der Testaufwand des Teams steigert sich von Sprint zu Sprint.",
+      "b) Das Backlog verkleinert sich und damit verringert sich die Anzahl der Tests.",
+      "c) Der Umfang automatisierter Komponententests ist höher als die Anzahl automatisierter Tests in höheren Teststufen.",
+      "d) Der Umfang automatisierter Tests nimmt von Sprint zu Sprint zu."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Falsch – Der Aufwand pro Sprint hat nichts mit dem Konzept der Testpyramide zu tun.\n\nb) Falsch – Das Testbacklog und die Zahl der Tests haben nichts mit dem Konzept der Testpyramide zu tun.\n\nc) Richtig – Die Testpyramide betont, dass in niedrigen Teststufen der Umfang automatisierter Tests höher ist und dass dieser in höheren Teststufen abnimmt.\n\nd) Falsch – Der Umfang automatisierter Tests je Sprint wird nicht durch die Testpyramide dargestellt, die Testpyramide zeigt das Verhältnis automatisierter Tests in den Teststufen."
+  },
+  {
+    "id": 28,
+    "lo": "FA-3.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen veranschaulicht den effektiven Einsatz der Testquadranten?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Bei der Darlegung von Testideen kann sich der Tester auf den passenden Quadranten beziehen, so dass der Rest des Teams den Zweck der Tests besser versteht.",
+      "b) Der Tester kann die mittels der Testquadranten beschriebenen Testarten als Überdeckungsmetrik nutzen; je mehr Tests eines jeden Quadranten abgedeckt sind, desto höher ist die Testabdeckung.",
+      "c) Das Team sollte für jeden Quadranten den ungefähr gleichen Umfang an Testfällen vorsehen und der Tester sollte diese Testfälle entwickeln und durchführen, um sicherzustellen, dass alle Teststufen und Testarten durchgeführt wurden.",
+      "d) Der Tester kann die Testquadranten zur Risikoanalyse einsetzen; wobei niedrigere Stufen der Quadranten ein niedrigeres Risiko für den Kunden repräsentieren."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Richtig – Die Testquadranten können als Hilfe zur Beschreibung von Testarten genutzt werden, um sie den Stakeholdern besser zu vermitteln.\n\nb) Falsch – Das ist keine gute Metrik, da nicht alle Teststufen/Testarten für ein gegebenes System geeignet sind.\n\nc) Falsch – Die Anzahl der Testfälle eines jeden Quadranten hängt vom jeweiligen System ab und wird nur selten für alle Quadranten gleich sein. In manchen Situationen kann es vorkommen, dass es für einen Quadranten gar keine Testfälle gibt.\n\nd) Falsch – Testquadranten haben keinen Bezug zu Risikostufen."
+  },
+  {
+    "id": 29,
+    "lo": "FA-3.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Gegeben seien die folgenden User Stories:\n\n• User Story 1: „Als Kassierer kann ich einfach durch das Menü und die Links navigieren und die Information finden, nach der ich suche.“\n\n• User Story 2: „In 90% der Fälle gilt für alle User, dass das System die Anfragen in weniger als 2 Sekunden anzeigen muss.“ Die dazugehörenden Testfälle:\n\n• Testfall 1: Login als Kassierer. Eingabe Kunden-ID. Verifizieren, dass die Transaktionshistorie des Kunden einfach zu finden ist und dass die Menüführung intuitiv zu bedienen ist.\n\n• Testfall 2: Login als Kassierer: Eingabe des Kundennamens. Verifizieren, dass die Kundenaccounts einfach zu finden sind und dass die Menüführung intuitiv zu bedienen ist.\n\n• Testfall 3: Simuliere den erwarteten Traffic für das System und bestätige, dass die Zeit für die Anzeige der Transaktionshistorie des Kunden unter 2 Sekunden ist. Teil welcher ZWEI Testquadranten würden die oben genannten Testfälle sein?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Q1 Unit Level, technisch orientiert & Q2 System Level, fachlich orientiert",
+      "b) Q2 System Level, fachlich orientiert & Q3 System oder Benutzerakzeptanzlevel, fachlich orientiert",
+      "c) Q3 System oder Benutzerakzeptanzlevel, fachlich orientiert & Q4 System oder betriebliches Abnahmelevel, technisch orientiert",
+      "d) Q2 System Level, fachlich orientiert & Q4 System oder betriebliches Abnahmelevel, technisch orientiert"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Falsch – Begründung siehe Antwort c.\n\nb) Falsch – Begründung siehe Antwort c.\n\nc) Richtig Q1 – Falsch – Diese Testfälle sind keine technisch orientierten Komponententests. Q2 – Falsch – Benutzbarkeits- und Performanztests sind nicht im zweiten Quadranten. Q3 – Richtig – Benutzbarkeitstests liegen im dritten Quadranten. Q4 – Richtig – Performanztests liegen im vierten Quadranten.\n\nd) Falsch – Begründung siehe Antwort c."
+  },
+  {
+    "id": 30,
+    "lo": "FA-3.1.4",
+    "k": "K3",
+    "pts": 1,
+    "text": "Zu Beginn der fünften Iteration eines Projektes wurde eine neue Anforderung zur Unterstützung eines neuartigen Browsers eingeführt. Der Tester bemerkt, dass das existierende Testautomatisierungs-Framework und die Testskripte diesen neuartigen Browser nicht unterstützen werden.\n\nWas ist DIE BESTE Handlungsoption für den Tester des Teams?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Der Tester sollte das Team informieren, dass zusätzliche Arbeitsstunden in den nächsten zwei Sprints eingeplant werden, um das existierende Testautomatisierungs-Framework und die Skripte zu überarbeiten, damit diese den neuartigen Browser unterstützen, und um den aktuellen Sprintplan nicht durcheinander zu bringen.",
+      "b) Der Tester wird das Team darüber informieren. Das Team analysiert das daraus entstehende Projektrisiko und entscheidet, dass zusätzlich zu den anderen unterstützten Browsern, Regressionstests für den neuartigen Browser durchgeführt und eventuell auch neue Test Cases erstellt werden müssen.",
+      "c) Der Tester recherchiert ein wenig und folgert, dass das Risiko, neue Fehler in den neuartigen Browser einzuführen, welche nicht bereits in anderen unterstützten Browsern gefunden wurden, gering ist. Der Tester arbeitet weiterhin nach dem existierenden Sprintplan und ändert nichts am Framework der Testautomatisierung oder an den Skripten.",
+      "d) Der Tester beendet die aktuellen Arbeiten, entwickelt spezifische Kompatibilitätstests für den neuartigen Browser und informiert das Team, dass jegliche andere Tests, die im aktuellen Sprint vorgesehen waren, auf die nächste Iteration verschoben werden müssen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch – Änderungen am Framework der Testautomatisierung und den Skripten, um den neuartigen Browser zu unterstützen, könnten den Aufwand nicht Wert sein, falls das Risiko, neue Fehler zu finden, niedrig ist. Es sollte eine Risikoanalyse unter Einbeziehung des gesamten Teams erfolgen, das dann eine gemeinsame Entscheidung treffen sollte.\n\nb) Richtig – Die Entscheidung, das Testautomatisierungs-Framework und die Skripte zu ändern sollte gemeinsam mit dem ganzen Team erfolgen. Der Tester ist dann dafür verantwortlich, den Iterationsplan entsprechend anzupassen.\n\nc) Falsch – Der Tester muss das Team informieren, das dann gemeinsam entscheidet, wie mit der Angelegenheit umgegangen wird.\n\nd) Falsch – Es ist nicht alleinige Aufgabe des Testers die Aufgabenstellung zu bestimmen. Dieses Thema wird durch eine neue User Story oder die Änderung einer bestehenden User Story angegangen, und zwar vom gesamten Team während der Sprintplanung."
+  },
+  {
+    "id": 31,
+    "lo": "FA-3.2.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Gegeben sind die folgenden Ergebnisse einer Produktrisikoanalyse, die zu Beginn einer Iteration entstanden.\n\n• User Story 1 (Performanz): Wahrscheinlichkeit: hoch, Auswirkung: hoch\n\n• User Story 2 (Sicherheit): Wahrscheinlichkeit: hoch, Auswirkung: hoch\n\n• User Story 3 (Funktional): Wahrscheinlichkeit: mittel, Auswirkung: hoch\n\n• User Story 4 (Funktional): Wahrscheinlichkeit: hoch, Auswirkung: mittel\n\n• User Story 5 (Kompatibilität): Wahrscheinlichkeit: niedrig, Auswirkung: niedrig\n\n• User Story 6 (Wiederherstellbarkeit): Wahrscheinlichkeit: niedrig, Auswirkung: niedrig\n\nWelche ZWEI der folgenden Möglichkeiten beschreiben AM BESTEN, was das Team mit dieser Information tun sollte?\n\nWählen Sie genau ZWEI Antworten.",
+    "options": [
+      "a) Zu einer Planungspoker-Sitzung übergehen, um die Aufwandsschätzung für User- Storys vorzunehmen, und um zu bestimmen, was in der aktuellen Iteration erledigt werden kann, bzw. was ins Backlog überführt werden muss.",
+      "b) User-Story 5 und 6 aus der aktuellen Iteration herausnehmen und in eine spätere Iteration einfügen.",
+      "c) Wegen der hohen Wahrscheinlichkeit mit hohen Auswirkungsrisiken, die in dieser Iteration stecken, hat das Team keine andere Möglichkeit, als den Zeitrahmen dieser Iteration um zwei Wochen zu verlängern.",
+      "d) Das Team sollte zusammenarbeiten, um effektive Lösungen für die Mitigation der hohen Wahrscheinlichkeit und des hohen Auswirkungsrisikos zu finden.",
+      "e) Das Team sollte planen, alle Aufgaben des aktuellen Sprints fertig zu stellen, dabei die Tasks mit niedrigerem Risiko an den Schluss des Sprints zu schieben und diese Elemente nur dann zu testen, falls Zeit dafür bleibt."
+    ],
+    "answer": [
+      0,
+      3
+    ],
+    "explanation": "a) Richtig – Die Informationen der Risikoanalyse werden während der Planungspoker- Sitzung genutzt, um die Dringlichkeit von Aufgaben, die in der Iteration fertig werden sollen, zu bestimmen. Erst nach der Planungspoker-Sitzung werden Tasks gegebenenfalls ins Backlog verschoben, falls bestimmt wird, dass nicht alle Aufgaben in der Iteration fertig gestellt werden können.\n\nb) Falsch – Zu diesem Zeitpunkt wissen wir nicht, ob wir Zeit haben, alle Aufgaben in der Iteration fertig zu stellen. Nur weil etwas als hohes Risiko eingestuft ist, bedeutet das nicht, dass hoher Aufwand für die Bearbeitung notwendig ist. Wir können dies erst nach der Planungspoker-Sitzung wissen.\n\nc) Falsch – Die Zeitspanne von Iterationen wird nicht verlängert. Nach der Planungspoker- Sitzung werden gegebenenfalls einige Tasks in das Backlog verschoben, falls festgestellt wird, dass nicht genügend Zeit für die Bearbeitung vorhanden ist.\n\nd) Richtig – Risikomitigation erfolgt vor der Testdurchführung, um die Risikostufe herabzusetzen.\n\ne) Falsch – Zuerst sollte eine Planungspoker-Sitzung abgehalten werden, um zu bestimmen, was in der aktuellen Iteration fertig gestellt werden kann. Wenn festgestellt wird, dass nicht genügend Zeit vorhanden ist, um alle Aufgaben zu erledigen, ist es wahrscheinlich, dass die Tasks mit niedrigerem Risiko, dem Backlog für spätere Sprints zugeführt werden."
+  },
+  {
+    "id": 32,
+    "lo": "FA-3.2.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "Gegeben ist folgende User Story: „Als Vorsitzender möchte ich, dass jene Daten, die ich hoch lade, von keinem anderen Benutzer eingesehen werden können.“ Während der ersten Planungspoker-Runde wurden folgende Story-Points auf Grund von Risiko, Aufwand, Komplexität und benötigter Tests vergeben:\n\n• Kunden: 5\n\n• Entwickler: 5\n\n• Tester: 20\n\nWelches ist DER BESTE nächste Schritt in dieser Planungssitzung?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Da die Schätzung der Kunden und der Entwickler übereinstimmen, kann das Team davon ausgehen, dass diese gut ist und damit zur nächsten User Story übergehen.",
+      "b) Das Team sollte gemeinsam ergründen, weshalb die Tester einen anderen Wert geschätzt haben. Danach kann eine weitere Runde Planungspoker stattfinden.",
+      "c) Da der Kunde am Ende das System erhält, sollte bei solchen Konflikten seine Schätzung herangezogen werden.",
+      "d) Das Planungspoker sollte solange weitergeführt werden, bis alle Schätzungen der beteiligten Vertreter denselben Wert haben."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch – Sowohl die Kunden wie auch die Entwickler haben ev. etwas übersehen oder zu wenig beachtet. Es muss über die Gründe der Abweichung diskutiert werden und das ganze Team sollte eine Einigung in Bezug auf die Schätzung erzielen.\n\nb) Richtig – Das Planungspoker sollte so lange weitergeführt werden, bis alle Beteiligten mit der Schätzung einverstanden sind.\n\nc) Falsch – Das gesamte Team soll mit der Schätzung einverstanden sein. Der Kunde alleine kann die Umsetzung einer User Story nicht abschätzen.\n\nd) Falsch – Es ist nicht notwendig, dass die Schätzungen genau gleich sind. Es kann eine Regel definiert werden, wie mit solchen Situationen umgegangen wird. Zum Beispiel wird dann die höchste Schätzung oder der Mittelwert genommen."
+  },
+  {
+    "id": 33,
+    "lo": "FA-3.3.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Ein agiles Team ist einem Projekt zugeteilt in dem es darum geht, ein bestehendes medizinisches Gerät an eine neue Technologie anzupassen. Seit dem letzten Release dieses Gerätes wurde auch eine neue Norm in Kraft gesetzt. Der Zugriff von Personen zum Gerät wird neu geregelt und wird in User-Storys abgebildet bzw. dokumentiert. Basierend auf diesen Informationen und zusätzlich zu den neuen User-Storys, welche der folgenden Informationen wäre hilfreich, um die Testaktivitäten zu unterstützen?\n\ni. Eine aktuelle Version der neuen Norm für medizinische Geräte.\n\nii. Bestehende Fehler oder typische Fehlertaxonomien im aktuellen System.\n\niii. Alte Testfälle, welche den Zugriff zum System prüfen und die Resultate dazu.\n\niv. Performanz Metriken des existierenden Systems.\n\nv. Fehler, welche innerhalb von anderen, ähnlich gelagerten Projekten von medizinischen Geräten entdeckt worden sind.\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) i, ii, iii und iv",
+      "b) ii, iv und v",
+      "c) i, ii, iv und v",
+      "d) i, iii, iv und v"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Falsch – Begründung siehe Antwort c.\n\nb) Falsch – Begründung siehe Antwort c.\n\nc) Richtig\n\ni. Dies ist hilfreich, da wir wissen, dass eine neue Version der Norm existiert und wir daher bestehende Testfälle unter Umständen anpassen oder neue entwickeln müssen.\n\nii. Dies ist während der Risikoanalyse hilfreich.\n\niii. Diese Information nützt wenig. Der Zugriff zum Gerät wurde neu geregelt und es entstanden neue User-Storys.\n\niv. Dies ist während der Risikoanalyse hilfreich.\n\nv. Da eine neue Technologie eingesetzt wird, ist kaum Erfahrung vorhanden. Daher muss die Information von anderen, ähnlichen Projekten eingeholt werden.\n\nd) Falsch – Begründung siehe Antwort c."
+  },
+  {
+    "id": 34,
+    "lo": "FA-3.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welches der untenstehenden Endekriterien ist das in einem agilen Projekt aus testfachlicher Sicht GEEIGNETSTE, um beschließen zu können “Wir können das Paket releasen!“?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Alle Testfälle wurden ausgeführt und die offenen Fehler wurden bewertet.",
+      "b) Anhand der Testergebnisse wird eingeschätzt, dass die Wahrscheinlichkeit für noch vorhandene Fehler so weit reduziert ist, dass sie vom Kunden akzeptiert werden kann.",
+      "c) Die erreichte Testüberdeckung ist genügend groß. Sie wurde aus folgenden Aspekten abgeleitet: Der Komplexität der umgesetzten Funktionalität inkl. der erfolgreich durchgeführten Testfälle sowie den verbleibenden Risiken.",
+      "d) Das Testen wurde beendet, da der Sprint zu Ende ist und die Sprint Review Sitzung wurde durchgeführt."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Falsch – Sowohl Testfälle wie auch die Test Charta werden als Basis zur Beantwortung der Frage “Was ist zu testen?” benutzt. Die Anzahl ausgeführter Testfälle gibt keinerlei Information darüber, was überdeckt wurde (auch die Anzahl der Test Chartas ergibt keine Aussage darüber).\n\nb) Falsch – Die Aussage selber ist ungenügend. Sie müsste untermauert werden durch Informationen über die Testüberdeckung und Abdeckung von Risiken.\n\nc) Richtig – Die vorgeschlagene Testüberdeckung zusammen mit den unterstützenden Informationen ergeben das beste Endekriterium, obschon noch mehr Informationen notwendig wären. Das könnten sein: Informationen über Fehler, ihre Schwere und Taxonomie (wie viele schwerwiegende Probleme in jedem Bereich). Diese Information ergibt eine breit gefächerte Basis für den Release Entscheid.\n\nd) Falsch – Das Ende einer Iteration/eines Sprints impliziert, dass das Testen beendet wurde, weil die Zeit abgelaufen ist. Dies ist sicher kein ideales Endekriterium."
+  },
+  {
+    "id": 35,
+    "lo": "FA-3.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Ein agiles Entwicklungsteam hat folgende kurze User Story formuliert: „Als Anwender möchte ich, dass der Alarmton der elektronischen Eieruhr zwar in der Lautstärke variabel einzustellen ist, ich sie aber immer hören kann“.\n\nWelches der folgenden Abnahmekriterien ist aus Testsicht am BESTEN geeignet, um eine klare Abnahmeentscheidung zu treffen?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Die Lautstärke ist auch für ältere Personen einfach einzustellen, d.h. die Tasten werden auf ihre Größe überprüft.",
+      "b) Der Tester kann den Alarmton auch auf der tiefsten Stufe gut hören.",
+      "c) Die Lautstärke kann auf max. 90 Dezibel eingestellt werden.",
+      "d) Die Lautstärkeeinstellung funktioniert in den meistverkauften Modellen dieser Eieruhr korrekt."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Falsch – nicht messbar, es sind keine abnahmerelevanten Kriterien genannt (z.B. exakte Größe der Tasten).\n\nb) Falsch – „gut hören“ - das ist nicht messbar.\n\nc) Richtig – das ist test- und messbar.\n\nd) Falsch – nicht testbar, da nicht klar ist, welche Eieruhrmodelle genau funktionieren und welche nicht. Man muss Annahmen treffen, welches die meistverkauften Eieruhren sind."
+  },
+  {
+    "id": 36,
+    "lo": "FA-3.3.3",
+    "k": "K3",
+    "pts": 1,
+    "text": "Gegeben ist folgende User Story: „Als Bankangestellter möchte ich alle Transaktionen meiner Bankkunden auf dem Bildschirm sehen können, so dass ich die Fragen eines anrufenden Kunden beantworten kann“.\n\nWelche 3 der folgenden Testfälle können als abnahmerelevant angesehen werden?\n\ni. Login als Bankangestellter; wähle aus der Liste der mir vom System zugeordneten Kunden einen Kunden aus; zeige die Kontostände für dessen Konten.\n\nii. Login als Bankangestellter; erfasse eine Kundennummer; zeige die Transaktions-Historie dieses Kontos auf dem Bildschirm.\n\niii. Login als Bankangestellter; suche eine Kundennummer durch Eingabe einer Namensabkürzung; selektiere eines der zugehörigen Kundenkonten; zeige die Transaktions-Historie dieses Kontos auf dem Bildschirm.\n\niv. Login als Bankangestellter; erfasse eine Kunden IBAN (international bank account number); zeige die Transaktions-Historie dieses Kontos auf dem Bildschirm.\n\nv. Login als Bankangestellter, erfasse eine Kundennummer; zeige die Transaktions-Historie dieses Kontos innerhalb von max. drei Sekunden auf dem Bildschirm.\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) i, ii und iv",
+      "b) i, iii und iv",
+      "c) ii, iv und v",
+      "d) ii, iii und iv"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Falsch – Begründung siehe Antwort d.\n\nb) Falsch – Begründung siehe Antwort d.\n\nc) Falsch – Begründung siehe Antwort d.\n\nd) Richtig\n\ni. Falsch – Die User Story verlangt explizit die Transaktionen und nicht die Kontostände der Kunden.\n\nii. Richtig – Dieser Test ist spezifisch für Bankangestellte und zeigt die Transaktionen des Kunden.\n\niii. Richtig – Dieser Test ist spezifisch für Bankangestellte und zeigt die Transaktionen des Kunden.\n\niv. Richtig – Dieser Test ist spezifisch für Bankangestellte und zeigt die Transaktionen des Kunden.\n\nv. Falsch – Die User Story beschreibt keine Performanz Anforderungen."
+  },
+  {
+    "id": 37,
+    "lo": "FA-3.3.4",
+    "k": "K3",
+    "pts": 1,
+    "text": "Gegeben ist folgende User-Story: „Als Anbieter möchte ich die Versandkosten abhängig von der bestellten Menge berechnen, um Versandkosten für den Kunden zu sparen:\n\n• Standard Versandkosten bei weniger als 6 gekauften Produkten\n\n• 5 EUR Versandkosten bei 6-10 gekauften Produkten\n\n• Keine Versandkosten bei mehr als 10 gekauften Produkten”\n\nWelches der folgenden Testentwurfsverfahren ist am BESTEN für die Testfallerstellung der User Story geeignet?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Zustandsbasierter Test: Test der folgenden Zustände: Suchen, angemeldet, ausgewählt, gekauft, bestätigt und abgemeldet.",
+      "b) Entscheidungstabellentest: Test der Bedingungen „Benutzer angemeldet“, „Min. 1 Produkt im Warenkorb“, „Kauf bestätigt“, „Bezahlung freigegeben“, die zu der Aktion „Versand“ führen.",
+      "c) Grenzwertanalyse: Test der folgenden Eingaben: 0, 5, 6, 10, 11, max.",
+      "d) Anwendungsfallbasierter Test: Aktor=Kunde; Vorbedingung=Kunde meldet sich an, wählt Produkte aus und kauft diese; Nachbedingung: Produkte sind verschickt."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Falsch – Der Fokus der User-Story liegt nicht im Zustand des Systems, sondern in der Berechnung der Versandkosten.\n\nb) Falsch – Der Fokus der User-Story liegt nicht darin, ob das Produkt verschickt wird, sondern in der Berechnung der Versandkosten.\n\nc) Richtig – Die Grenzwertanalyse ist am besten geeignet, die Berechnung der Versandkosten zu testen.\n\nd) Falsch – Der Fokus der User-Story liegt nicht darin, ob das Produkt wie erwartet verschickt wird, sondern in der Berechnung der Versandkosten."
+  },
+  {
+    "id": 38,
+    "lo": "FA-3.3.5",
+    "k": "K3",
+    "pts": 1,
+    "text": "Ihr Manager möchte im agilen Team exploratives Testen einführen. Er hat von anderen Kollegen Vorschläge zum Vorgehen erhalten. Diese präsentiert er Ihnen und bittet Sie um Ihre Einschätzung.\n\nWelches der folgenden Vorgehen entspricht AM EHESTEN explorativen Tests in agilen Projekten?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Die User-Storys werden den Testern zugewiesen, die diese noch nicht kennen. Für den explorativen Test der User-Story werden 120 Minuten zur Verfügung gestellt. Die Tester müssen die Testdurchführung und die Testergebnisse nicht dokumentieren, ausgenommen davon sind gefundene Fehler, die protokolliert werden müssen.",
+      "b) Die User-Storys werden den Testern zugewiesen, die bereits risikobasierte Tests in diesem Bereich durchgeführt haben. Für den explorativen Test der User-Story werden 120 Minuten zur Verfügung gestellt. Das Team erwartet am Ende der 120 Minuten eine Liste an Testideen inklusive Testdaten, Akteuren, Ergebnissen, aufgetretenen Problemen und eine Liste der im Fehlermanagementsystem erfassten Fehler.",
+      "c) Eine User-Story wird dem Vertreter des Fachbereichs zugewiesen. Er nutzt das System in der Art und Weise wie ein Kunde im Tagesgeschäft. Wenn Probleme auftreten, meldet er diese dem Tester, der sie priorisiert und protokolliert.",
+      "d) Eine User-Story wird einem Tester für den explorativen Test zugewiesen. Der Tester lernt die Funktionalität hinter der User-Story kennen, um diese auf Korrektheit zu prüfen, inkludiert dabei sind ebenfalls Negativtests. Es gibt keine definierte Deadline, wann der Test abgeschlossen ist. Das Ende hängt davon ab, was der Tester findet. Dokumentation ist nicht notwendig, Fehler werden aber im Fehlermanagementsystem erfasst."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch – Im explorativen Test dienen Testergebnisse als Basis für weitere Tests und werden dokumentiert. Als Basis für das explorative Testen dient eine Test-Charta.\n\nb) Richtig – Exploratives Testen ist bekannt als erfahrungsbasierter Ansatz, dessen Effektivität von der ausführenden Person abhängt. Der Vorteil des explorativen Testens ist, dass die erstellten und ausgeführten Tests die nächsten zu erstellenden und auszuführenden Tests beeinflussen.\n\nc) Falsch – Exploratives Testen wird in einem definierten Zeitrahmen auf Basis einer Test- Charta durchgeführt.\n\nd) Falsch – u.a. Exploratives Testen findet in einem definierten Zeitrahmen statt."
+  },
+  {
+    "id": 39,
+    "lo": "FA-3.4.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt einen Zweck eines „Application Lifecycle Management“ (ALM) Werkzeugs in einem agilen Projekt?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Ein ALM Werkzeug erlaubt es Teams, ihr Wissen über Werkzeuge und Techniken für die Entwicklung und das Testen zu vergrößern",
+      "b) Ein ALM Werkzeug liefert eine Aussage über die Details von Code Änderungen.",
+      "c) Ein ALM Werkzeug liefert eine Übersicht über den aktuellen Stand der Entwicklungstätigkeiten für die Applikation, insbesondere bei verteilten Teams.",
+      "d) Ein ALM Werkzeug erzeugt und lädt große Mengen und Wertekombinationen an Daten, um diese für das Testen verwenden zu können."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Falsch – Dies wäre das Ziel eines Wikis, nicht eines ALM Werkzeuges.\n\nb) Falsch – Dies wäre das Ziel eines Continuous Integration (CI) Werkzeuges, nicht eines ALM Werkzeuges.\n\nc) Richtig – Dies ist eines von mehreren Zielen eines ALM Werkzeuges. Die Benutzung des Werkzeuges erlaubt eine bessere Zusammenarbeit in verteilten Teams als ein physikalisches Task Board.\n\nd) Falsch – Dies wäre das Ziel eines Datenerzeugungs- und –lade Werkzeuges, nicht eines ALM Werkzeuges."
+  },
+  {
+    "id": 40,
+    "lo": "FA-3.-Term",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen ist unter dem Gesichtspunkt des agilen Testens FALSCH?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Exploratives Testen beinhaltet gemeinsames Lernen, Testdesign und Testausführung.",
+      "b) Exploratives Testen eliminiert den Zwang, das Testziel und passende Testideen vor der Testdurchführung zu entwickeln.",
+      "c) Die besten Resultate werden erreicht, wenn exploratives Testen in Kombination mit anderen Testtechniken eingesetzt wird.",
+      "d) Explorative Tester müssen das zu testende System gut kennen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Falsch – Dies ist wahr, siehe Kapitel 3.3.5 des Lehrplanes.\n\nb) Richtig – Die Test Charta wird vor der Testdurchführung erstellt und enthält bereits Testziel und Testideen.\n\nc) Falsch – Dies ist wahr, siehe Kapitel 3.3.4 des Lehrplanes.\n\nd) Falsch – Dies ist wahr; die Tester müssen die Bedienung des Systems gut verstehen."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 90 * 60;
+      const EXT_SECONDS = 90 * 60 * 1.25;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "112,5"
+          : "90";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "Der Timer zählt von 112:30 herunter (90 Minuten + 25 % Übungszeit). Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben."
+          : "Der Timer zählt von 90:00 herunter. Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          if (asset.html) return `<div class="q-table-wrap">${asset.html}</div>`;
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Zum Vergrößern öffnen</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} Punkt${q.pts > 1 ? "e" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="${escHtml(q.imageAlt || ('Abbildung zu Frage ' + q.id))}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Prüfung abgeben?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `Es sind noch <strong style="color:var(--warn)">${unanswered} Frage${unanswered > 1 ? "n" : ""} unbeantwortet</strong>. Unbeantwortete Fragen ergeben 0 Punkte.<br><br>Trotzdem abgeben?`
+            : `Alle ${questions.length} Fragen sind beantwortet. Prüfung jetzt abgeben?`;
+        document.getElementById("confirm-yes-btn").textContent = "Abgeben";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Prüfung neu starten?";
+        document.getElementById("confirm-msg").innerHTML =
+          "Alle Antworten gehen verloren. Der Timer wird zurückgesetzt auf " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Möchten Sie fortfahren?";
+        document.getElementById("confirm-yes-btn").textContent = "Neu starten";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Unbeantwortet &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Richtig (+" + q.pts + (q.pts > 1 ? " Punkte)" : " Punkt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Falsch &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (Zeit abgelaufen)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " von " + totalPoints + " Punkten (" + correctCount + " von " + questions.length + " Fragen richtig)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? `✓ BESTANDEN (≥ ${Math.ceil(totalPoints * 0.65)} Punkte)`
+          : `✗ NICHT BESTANDEN (< ${Math.ceil(totalPoints * 0.65)} Punkte)`;
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,1969 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CT-GT v2019 — Sample Exam 1.0.1</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Specialist Level</div>
+        <h1>CT-GT v2019<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">ISTQB® Certified Tester Gambling Industry Tester · Sample Exam 1.0.1 · Syllabus v2019. The timer starts when you begin the exam.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">60</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Source: ISTQB® — ISTQB_CT-GT_Sample-Exam-A-Questions_v1.0.1.pdf; ISTQB_CT-GT_Sample-Exam-A-Answers_v1.0.1.pdf. Copyright © ISTQB®. Questions, tables, diagrams and rationales follow these sources. Authors are acknowledged in the source PDFs.</p>
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">60 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">75 min</span>
+            <span class="time-opt-lbl">+25% practice time</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optional practice allowance: 25% extra time (15 minutes).</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 60:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CT-GT v2019 · Sample Exam 1.0.1</span
+            >
+            <span class="exam-title">Certified Tester – Gambling Industry Tester</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 answered
+            </div>
+            <div class="timer" id="timer">60:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 questions (40 points) · <strong>65% (≥ 26 of 40 points)</strong>
+            to pass · each question is worth one point; select one answer per question
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "GT-1.x",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which one of the following best describes Audio testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Testing to determine that the game music and sound effects interacts with the system platform functions as expected",
+      "b) Testing to determine that the game music and sound effects play without stuttering or missing elements in the game and enhance the game play",
+      "c) Testing to determine that the game music and sound effect’s function when many players simultaneously interact with the casino game",
+      "d) Testing to determine that the game music and sound effects meet jurisdictional requirement"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Audio testing does not include interacting with the system platform\n\nb) Is correct. As per the glossary\n\nc) Is not correct. Audio testing does not include load testing\n\nd) Is not correct. Audio testing does not include compliance testing"
+  },
+  {
+    "id": 2,
+    "lo": "GT-1.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which one of the following is specific skill for gambling industry testing, not required for other testing areas?\n\nSelect ONE option.",
+    "options": [
+      "a) Testing compliance to industry standards",
+      "b) Math testing, including random number generators",
+      "c) Testing the interoperability between external systems",
+      "d) Applying techniques to test coverage of code structure"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Whilst Gambling industry compliance testing is listed as a skill for Gambling testing, certification to industry standards is common across many industry types – covered in core Foundation under Acceptance testing\n\nb) Is correct. Per Syllabus ‘Math testing. Testing the multitude of pay tables, permutations, Random Number Generator (RNG) results and return to player (RTP) computations’\n\nc) Is not correct. Whilst listed in this section it does say ’Interoperability Testing is common in all software that communicates with other software, systems and/or sub-systems’ – covered in core Foundation\n\nd) Is not correct. White-box-structural testing of code applies to all application types – covered in core Foundation"
+  },
+  {
+    "id": 3,
+    "lo": "GT-1.2.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following correctly describes gambling?\n\nSelect ONE option.",
+    "options": [
+      "a) The wagering of money on an event where the outcome is unknown where the intent is to win additional money or material goods",
+      "b) The wagering of money on an event where the outcome is known where the intent is to win additional money or material goods",
+      "c) An event where the outcome is unknown where the intent is to win money or material goods",
+      "d) The wagering of money on an event where the outcome is unknown with the intent on winning back the original wager"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. The outcome of each game is unknown and based upon the outcome random result of the RNG\n\nb) Is not correct. As the outcome of each event in the game is NOT known\n\nc) Is not correct. Gambling requires a wager\n\nd) Is not correct. The intent is to win additional money not just a return on investment"
+  },
+  {
+    "id": 4,
+    "lo": "GT-1.6.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following best explains the role of an independent test lab?\n\nSelect ONE option.",
+    "options": [
+      "a) When working with an independent test lab, the regulatory commission send their finalized jurisdictional product for testing so that the games can be played in casinos or online",
+      "b) When working with an independent test lab, gaming manufacturers send their finalized jurisdictional product for testing, so that the games can be played in casinos or online",
+      "c) When working with an independent test lab, gaming manufacturers are looking for assistance in finalizing the game design",
+      "d) When working with an independent test lab, the gaming manufacturers have the independent test lab perform functional testing to ensure that the game is true to the specifications"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. It is the game manufacturer who must send their finalized jurisdictional product for testing so that the games can be played in casinos or online - not the regulatory commission\n\nb) Is correct. It is the game manufacturer who must send their finalized jurisdictional product for testing so that the games can be played in casinos or online\n\nc) Is not correct. Independent test labs certify the gaming manufactures products they do not assist in finalizing the game design\n\nd) Is not correct. Independent test labs certify the gaming manufactures products versus specific certification criteria. They do not perform functional testing to ensure that the game is true to the specifications"
+  },
+  {
+    "id": 5,
+    "lo": "GT-1.6.3",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following best explains the role of the regulatory commission?\n\nSelect ONE option.",
+    "options": [
+      "a) The regulatory commission is responsible for testing a game to ensure that it meets all jurisdictional requirements",
+      "b) The regulatory commission is responsible for revoking a game from casinos if a minor field issue occurs",
+      "c) The regulatory commission is responsible for testing a game to ensure that it meets all game spec requirements",
+      "d) The regulatory commission is responsible for revoking a game from casinos if a major field issue occurs"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. This is a minor field issue that will not involve the regulatory commissions\n\nb) Is not correct. This is a minor field issue that will not involve the regulatory commissions\n\nc) Is not correct. The regulatory commission will only revoke the game\n\nd) Is correct. It is the regulatory commission duty to revoke or the game from casinos until the game is fixed because incorrect payouts are major field issues"
+  },
+  {
+    "id": 6,
+    "lo": "GT-1.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following is NOT true of Casino Games?\n\nSelect ONE option.",
+    "options": [
+      "a) Games like simulating racing base their number selection from a computerized Random Number Generator",
+      "b) All the casino game types are typically tested",
+      "c) The main difference of VLTs and slot machines is which organization operates them",
+      "d) EGMs testing includes the operating system and the platform they are based on"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. As per syllabus simulated racing is an example of random number ticket game\n\nb) Is correct. As per syllabus typically table games are not testable, see syllabus section 1.3.1\n\nc) Is not correct. As per syllabus ‘The main difference between a VLT and a slot machine is that VLTs are gambling machines that are operated by government lotteries while slot machines are gambling machines operated by private organizations such as casinos’\n\nd) Is not correct. As per syllabus EGM testing includes operating system and the platform they are based on"
+  },
+  {
+    "id": 7,
+    "lo": "GT-1.3.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Consider the following statements:\n\nA. Games that can be played via wireless in-venue and interactive-TV channels\n\nB. Progressives are legal across jurisdictions when played online using your computer\n\nC. In-venue mobile gambling means that a player can fund an EGM with their mobile devices\n\nD. An online player can fund his account using a digital wallet\n\nE. Online gambling sites can block the access of individuals who are using proxies trying to circumvent the location-based restrictions\n\nWhich are true about online and mobile gambling?\n\nSelect ONE option.",
+    "options": [
+      "a) A, B, and D",
+      "b) B, C, and D",
+      "c) A, D, and E",
+      "d) B, C, and E"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "The True statements are:\n\nA. As per syllabus: “Online gambling includes all areas of gambling offered via Internet, mobile, wireless in-venue, and interactive-TV channels”\n\nD. As per syllabus: “This [transferring money to and from the online casino] can be accomplished by an electronic wallet (also known as a digital wallet)”\n\nE. As per syllabus: “Individuals looking to circumvent restricting online gambling to specific locations, use technical measures such as proxy servers to try to circumvent restrictions imposed by geolocation software. Some online gambling sites are capable of detecting the use of proxies and anonymizers and block their access to the online gambling systems” The Incorrect Statements are:\n\nB. Is not True because the platform with which an online player accesses the gambling service does not change the geolocation restrictions of his jurisdiction\n\nC. Is not True because in-venue mobile gambling allows players to access the Casino’s online offering which is available via a mobile browser or a mobile application only when connected to the Casino’s Wi-Fi or within their Bluetooth range Thus:\n\na) Is not correct\n\nb) Is not correct\n\nc) Is correct\n\nd) Is not correct"
+  },
+  {
+    "id": 8,
+    "lo": "GT-1.4.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements about Random Number Generators (RNG) is NOT true?\n\nSelect ONE option.",
+    "options": [
+      "a) The Random Number Generator can be a computational or a physical device",
+      "b) For machine-based gambling, hardware generators are generally preferred over pseudorandom algorithms",
+      "c) For online gambling, pseudo-random algorithms are generally preferred over hardware generators",
+      "d) The Random Number Generator is certified by either an independent test lab (ITL) or by the jurisdiction’s regulatory board"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. This statement is correct as per syllabus: “The Random Number Generator is a computational or physical device”\n\nb) Is not correct. This statement is correct as per syllabus: “[…] hardware generators are generally preferred over pseudo-random algorithms”\n\nc) Is correct. Any series of numbers produced solely by a computer can never be truly random, and online products are not an exception\n\nd) Is not correct. This statement is correct as per syllabus: “The Random Number Generator is certified by either an independent test lab (ITL) or by the jurisdiction’s regulatory board”"
+  },
+  {
+    "id": 9,
+    "lo": "GT-1.4.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following test conditions would NOT belong to a geolocation testing suite?\n\nSelect ONE option.",
+    "options": [
+      "a) Verify that the responsible gambling options/restrictions match the expected regulation for a particular region or country",
+      "b) Verify that the appropriate loyalty rewards are awarded to players of a particular region or country",
+      "c) Verify that the correct Random Number Generator (RNG) is assigned to a player based on a particular region or country",
+      "d) Verify that the player can access only the game offering of his/her region or country"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. This is a statement that we would find in the test suite. As per syllabus: “Some responsible gambling and player loyalty programs require knowing where the player is located”\n\nb) Is not correct. This is a statement that we would find in the test suite. As per syllabus: “Some responsible gambling and player loyalty programs require knowing where the player is located”\n\nc) Is correct. The RNG is not assigned to players\n\nd) Is not correct. This is a statement that we would find in the test suite. As per syllabus: “Testing this function consists of ensuring the geolocation functions accurately restricts play based on the rules mandated by the location from which the player is playing”"
+  },
+  {
+    "id": 10,
+    "lo": "GT-1.5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements are NOT true about the importance of obtaining a First Pass on a gambling product?\n\nSelect ONE option.",
+    "options": [
+      "a) The development cost increases, causing a negative impact on the project",
+      "b) The manufacture’s reputation amongst the product’s users decreases, negatively impacting the company’s revenue",
+      "c) The launch date is delayed, causing a negative impact on the project and company’s revenue",
+      "d) The certification cost increases, causing a negative impact on the project"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. This statement is correct as per syllabus: “If the product does not receive a first-time pass, there are extra costs for additional development, QA and product certification”\n\nb) Is correct. This is a false statement\n\nc) Is not correct. This statement is correct as per syllabus: “[…] a product that does not receive a first pass is delayed from entering the market until it is certified, therefore negatively impacting its time-to-market”\n\nd) Is not correct. This statement is correct as per syllabus: “If the product does not receive a first-time pass, there are extra costs for additional development, QA and product certification”"
+  },
+  {
+    "id": 11,
+    "lo": "GT-1.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT true of progressive jackpot?\n\nSelect ONE option.",
+    "options": [
+      "a) Local area linked progressive is a type of progressive jackpot",
+      "b) A small percentage of each wager placed by a player on the game contributes to the jackpot award amount",
+      "c) For each jackpot controller a jackpot server exists",
+      "d) The progressive jackpot win is associated with the highest winning combination"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Local area linked progressive is one of the 3 types of progressive jackpots\n\nb) Is not correct. As stated in the syllabus a small percentage of each wager contributes to the jackpot\n\nc) Is correct. This is NOT true, progressive jackpot server is used to manage multiple jackpot controllers\n\nd) Is not correct. The progressive jackpot is associated with the highest winning combination"
+  },
+  {
+    "id": 12,
+    "lo": "GT-1.6.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "In which of the following Gambling Product Development Lifecycle phases is the test team involved?\n\nSelect ONE option.",
+    "options": [
+      "a) Game Concept and Design Phase",
+      "b) Code Complete Phase",
+      "c) Acceptance Test Phase",
+      "d) Release Build Phase"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Game designers, sound designers, game developers and jurisdictional experts are involved in this phase\n\nb) Is correct. This is correct\n\nc) Is not correct. This is not a test phase in the gambling software lifecycle\n\nd) Is not correct. This is for the ITL to complete"
+  },
+  {
+    "id": 13,
+    "lo": "GT-2.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following best explains compliance testing?\n\nSelect ONE option.",
+    "options": [
+      "a) The equipment manufacturer performs testing to determine the RNG and that the payout percentages is within the range regulated in that jurisdiction",
+      "b) The equipment manufacturer tests against the jurisdictional specifications and independent specialist standards",
+      "c) The gambling manufacturer submits what they consider to be a finalized product to an independent test lab who tests the product versus a set of jurisdictional standards",
+      "d) The gambling manufacturer submits what they consider to be a finalized product to an independent test lab who tests the product versus the game design documents and other functional requirements"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Although this testing is part of compliance testing, the fact that it is being performed by the equipment manufacturer makes it pre-compliance testing\n\nb) Is not correct. Although this testing is part of compliance testing, the fact that it is being performed by the equipment manufacturer makes it pre-compliance testing\n\nc) Is correct. This is what compliance testing is\n\nd) Is not correct. because compliance testing does not involve game design documents or other functional requirements"
+  },
+  {
+    "id": 14,
+    "lo": "GT-2.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the below statements is true if an already deployed game presents a major defect?\n\nSelect ONE option.",
+    "options": [
+      "a) Game developers fix the defect and publish the new version to casino floors and the online platforms",
+      "b) Machine manufacturers test and certify the game follows jurisdictional rules",
+      "c) Independent test labs force its removal from casino floors and online platforms",
+      "d) Gambling regulatory commissions approve the new version of the game"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. As per syllabus: A new version of the game needs to be recertified by the ITL and approved by the regulatory commissions\n\nb) Is not correct. As per syllabus: “Machine Manufacturers – who make and sell the hardware, platforms, operating systems and games (developed in house or sub-contracted)”\n\nc) Is not correct. As per syllabus: “Independent test labs – test and certify that the game software, hardware, firmware, platform and operating system follow all the jurisdictional rules for each location where the game will be played”\n\nd) Is correct. As per syllabus: the regulatory commissions approve every game played in their jurisdiction see syllabus section 2.2.1"
+  },
+  {
+    "id": 15,
+    "lo": "GT-2.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following best explains VLTs and their ecosystem?\n\nSelect ONE option.",
+    "options": [
+      "a) The VLTs are the devices on which the players choose to play one game of the many available games. Slot machines communicate to a Site and/or Bank Controller and one or more central servers through a communication interface board",
+      "b) The VLTs ecosystem is comprised of a slot machine or EGM, a Slot Machine Interface Board (SMIB), a Data Collection Unit or Bank Controller, and Central servers such as progressive servers or slot accounting servers",
+      "c) The VLTs ecosystem is comprised of a slot machine or EGM, slot machine interface boards (SMIB), network switches, a bingo server, other central servers such as the casino accounting system and reporting servers",
+      "d) In the VLTs Ecosystem, the slot machine does not obtain its outcomes from a Random Number Generator local to the machine, instead the pull of the one-armed bandit or the press of the button mechanically decides what outcome you get"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. This answer explains the VLT ecosystem\n\nb) Is not correct. This answer is a SLOT ecosystem\n\nc) Is not correct. This answer is wrong as there is no bingo server in this ecosystem\n\nd) Is not correct. This answer is wrong because the outcome is based on the RNG, not a mechanical device"
+  },
+  {
+    "id": 16,
+    "lo": "GT-2.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following best explains Slots and their ecosystem?\n\nSelect ONE option.",
+    "options": [
+      "a) The Slots are the devices on which the players choose to play one game of the many available games. Slot machines communicate to a Site and/or Bank Controller and one or more central servers through a communication interface board",
+      "b) The SLOT ecosystem is comprised of a slot machine or EGM, a Slot Machine Interface Board (SMIB), a Data Collection Unit or Bank Controller, and Central servers such as progressive servers or slot accounting servers",
+      "c) The SLOT ecosystem is comprised of a slot machine or EGM, slot machine interface boards (SMIB), network switches, a bingo server, other central servers such as the casino accounting system and reporting servers",
+      "d) In the SLOT Ecosystem, the slot machine does not obtain its outcomes from a Random Number Generator local to the machine, instead the pull of the one-armed bandit or the press of the button mechanically decides what outcome you get"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. This answer explains the VLT ecosystem\n\nb) Is correct. This answer is a SLOT ecosystem\n\nc) Is not correct. This answer is wrong as there is no bingo server in this ecosystem\n\nd) Is not correct. This answer is wrong because the outcome is based on the RNG, not a mechanical device"
+  },
+  {
+    "id": 17,
+    "lo": "GT-3.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following would be an effective use of Exploratory testing during Game functional testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Using a Checklist to see if the game is legal in supported regions",
+      "b) Testing the Game on a variety of network speeds",
+      "c) Checking if Bonus games perform correctly",
+      "d) Checking the game is “fun to play” rather than functionally correct"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. This would not be Exploratory Testing\n\nb) Is not correct. This is Non-functional rather than Functional Testing\n\nc) Is not correct. The tester would need to know what comprises Bonus games and how they should perform\n\nd) Is correct. It is difficult to design a Checklist that quantifies the level of Fun in a game as it is so subjective. Syllabus 3.1.1 – “There is also a “fun factor or a player perspective testing”. Testers are asked to play the game, to do exploratory testing and provide feedback on whether a game is fun to play or not”"
+  },
+  {
+    "id": 18,
+    "lo": "GT-3.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following areas of testing would not be specifically targeted when performing a functional test of casino games?\n\nSelect ONE option.",
+    "options": [
+      "a) Pay tables are specific to the stake",
+      "b) Ability to recall Game History",
+      "c) Game performance does not degrade at peak times",
+      "d) Help pages are available showing how the game is expected to behave"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Syllabus 3.1.2 states “pays and pay tables” are one of the specific areas to test\n\nb) Is not correct. Syllabus 3.1.2 states “Game of Player History” are one of the specific areas to test\n\nc) Is correct. Although this is important it is potentially true of any software and is a non-functional test activity\n\nd) Is not correct. Syllabus 3.1.2 states “Help Files” are one of the specific areas to test"
+  },
+  {
+    "id": 19,
+    "lo": "GT-3.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following areas of testing is specific to casino game compliance testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Memory leaks and allocation by games",
+      "b) Adherence to jurisdictional specifications",
+      "c) Adherence of graphic sequence to game design",
+      "d) Game functioning with specified configuration parameters"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. This is not specific to casino games (see 3.1.1)\n\nb) Is correct. As described in the Syllabus 3.1.3 – “Many areas of the compliance testing will be the same as those performed in functional testing, but testing is against the jurisdictional specifications and not game specifications”\n\nc) Is not correct. This is not specific to casino games (see 3.1.1)\n\nd) Is not correct. This is not specific to casino games (see 3.1.1)"
+  },
+  {
+    "id": 20,
+    "lo": "GT-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following options does not relate to Math testing within the Gambling Industry?\n\nSelect ONE option.",
+    "options": [
+      "a) Checking the game plays at the designated percentage",
+      "b) Checking the game reports all revenue transactions",
+      "c) Checking random numbers are truly random",
+      "d) Checking the game plays as per the designated stakes"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Syllabus Section 3.2.1 first paragraph states Math Testing includes “return to player computations”\n\nb) Is correct. This is Casino Testing rather than Math testing\n\nc) Is not correct. Syllabus Section 3.2.1 first paragraph states Math Testing includes “random number generation results”\n\nd) Is not correct. Syllabus Section 3.2.1 first paragraph states Math Testing includes “multitude of different pay tables” which may well relate to different stakes"
+  },
+  {
+    "id": 21,
+    "lo": "GT-3.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following would NOT be part of Platform Functional Testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Determining the player meets the age requirements",
+      "b) Efficient payment of large amounts of coins after a big win",
+      "c) Casino system integration to business intelligence systems",
+      "d) Checking that the game returns the specified percentage"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. This would be part of the platform security features as defined in the syllabus section 3.3.1\n\nb) Is not correct. This would be part of Convenience features, such as payment processing as defined in the syllabus section 3.3.1\n\nc) Is not correct. This would be part of business-to-business platform as defined in the syllabus section 3.3.1\n\nd) Is correct. This is part of Math Testing not Platform Functional Testing"
+  },
+  {
+    "id": 22,
+    "lo": "GT-3.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "A customer complains to an operator that a Stand-Alone Progressive Pot that should increase until won is seemingly being reset on a daily basis without delivering a win. Which of the following Platform Areas is the most likely cause of this failure?\n\nSelect ONE option.",
+    "options": [
+      "a) Accounting meters",
+      "b) Tilt conditions",
+      "c) Power-up and Power-down functionality",
+      "d) Setup and configuration"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. It is unlikely that logging gameplay information will cause Pots to reset\n\nb) Is not correct. Possible but unlikely as this event seems to be Time rather than Event driven\n\nc) Is correct. The scenario indicates that the Pots may be being reset if the machine is switched off (say) overnight\n\nd) Is not correct. Unless explicitly specified then Pots should be reset on an Event rather than by a value in the Setup"
+  },
+  {
+    "id": 23,
+    "lo": "GT-3.3.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is the principal, final objective of Platform Compliance Testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Platform abstraction meets jurisdictional specifications",
+      "b) Platforms are available in jurisdictional countries",
+      "c) The game is legal in the jurisdictional countries",
+      "d) The platform supports an Open Architecture"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. As per Syllabus 3.3.3 – “The end objective of platform compliance testing is to determine that every platform abstraction level meets all the jurisdictional specifications including technical integrity, safety and security”\n\nb) Is not correct. Jurisdiction means all abstractions should not be available in all countries\n\nc) Is not correct. This is Game Compliance Testing\n\nd) Is not correct. This is Functional not Compliance Testing"
+  },
+  {
+    "id": 24,
+    "lo": "GT-3.3.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following tests would be included in a platform compliance test?\n\nSelect ONE option.",
+    "options": [
+      "a) Operator mode - validating the casino operator’s role against the game’s functional specifications",
+      "b) Testing security meters and accounting meters using the test team’s checklist and plans",
+      "c) Testing graphic sequences and game messages against the system design documents",
+      "d) Testing power up and power down against jurisdictional requirements"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Those are the right areas to test, but we do not test them versus functional requirements\n\nb) Is not correct. QA platform plans, and checklists are not used, compliance checklists are used\n\nc) Is not correct. Those are the right areas to test, but we do not test them versus game design docs\n\nd) Is correct. Right areas and versus jurisdictional requirements"
+  },
+  {
+    "id": 25,
+    "lo": "GT-3.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following tests would be included in a casino system functional test?\n\nSelect ONE option.",
+    "options": [
+      "a) Testing the tower light located on top of the gem",
+      "b) Testing the casino system reports all revenue to the government and stakeholders",
+      "c) Testing the game functions as stated in the game spec",
+      "d) Testing all peripherals integrate as per the game spec"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. As per syllabus this is a part of hardware testing\n\nb) Is not correct. As per syllabus this is a part of casino system compliance testing\n\nc) Is not correct. As per syllabus this is a part of gambling and wager functional testing\n\nd) Is correct. As per question, this is a part of casino system functional test, see syllabus 3.4.1"
+  },
+  {
+    "id": 26,
+    "lo": "GT-3.4.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following best identifies what is meant by casino system compliance testing?\n\nSelect ONE option.",
+    "options": [
+      "a) It uses compliance test plans and checklists to determine that each major area of the system and integrated system meets jurisdictional requirements",
+      "b) It uses compliance test plans and checklists to determine that each major area of the system and integrated system meets the game design specification",
+      "c) It uses compliance test plans and checklists to determine that each major area of the system and integrated system meets the technical requirements",
+      "d) It uses compliance test plans and checklists to determine that each major area of the system and integrated system meets the mathematical design specification"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. That is what we do in casino system compliance testing, see syllabus section 3.4.2\n\nb) Is not correct. It is wrong because casino system compliance testing is based on jurisdictional requirements, not game design requirements\n\nc) Is not correct. It is wrong because casino system compliance testing is based on jurisdictional requirements, not technical requirements\n\nd) Is not correct. It is wrong because casino system compliance testing is based on jurisdictional requirements, not math design specs"
+  },
+  {
+    "id": 27,
+    "lo": "GT-3.4.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following identifies an area that is covered by casino system compliance testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Ensuring diagnostic logs meet the jurisdictional specifications",
+      "b) Ensuring transactions are recorded and accessible as per the jurisdictional specifications",
+      "c) Ensuring peripherals integrate as per the game specifications",
+      "d) Ensuring the rules of play meet the jurisdictional specifications"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. This is an area covered by platform compliance testing\n\nb) Is correct. This is an area covered by casino compliance testing, see syllabus 3.4.3\n\nc) Incorrect peripheral integration is done during functional testing\n\nd) Is not correct. This is an area covered by casino game compliance testing"
+  },
+  {
+    "id": 28,
+    "lo": "GT-3.5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Your organization is developing a new casino game called Hot Pink and you have been tasked with performing protocol functional test. Which one of the following tests would you perform?\n\nSelect ONE option.",
+    "options": [
+      "a) Ensure the slot machine meter reporting and event logging are operating correctly",
+      "b) Ensure the transactions are recorded and accessible",
+      "c) Ensure the casino game reports revenue to the government and stakeholders correctly",
+      "d) Ensure the player history, what the player put in the machine and their results are accurate"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. As per syllabus this is a part of protocol functional testing\n\nb) Is not correct. As per syllabus this is a part of casino functional testing\n\nc) Is not correct. As per syllabus this is a part of casino functional testing\n\nd) Is not correct. As per syllabus this is a part of game functional testing"
+  },
+  {
+    "id": 29,
+    "lo": "GT-3.5.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following best identifies what areas are covered by casino protocol functional testing?\n\nSelect ONE option.",
+    "options": [
+      "a) During casino protocol functional testing the tester ensures the jurisdictional specifications are met for the communication link with EGM and Host",
+      "b) During casino protocol functional testing the tester ensures the jurisdictional and games specifications are met for the communication link with EGM and Host",
+      "c) During casino protocol functional testing the tester ensures the game specifications are met for the communication link with EGM and Host",
+      "d) During casino protocol functional testing the tester ensures the security specifications and game specifications are met for the communication link with EGM and Host"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Jurisdictional specs are not considered during casino protocol functional testing, See Syllabus 3.5.3\n\nb) Is not correct. Jurisdictional specs are not considered during casino protocol functional testing, See Syllabus 3.5.3\n\nc) Is correct. This is what we test when we do protocol testing\n\nd) Is not correct. Security specs are not considered during casino protocol functional testing, See Syllabus 3.8.1"
+  },
+  {
+    "id": 30,
+    "lo": "GT-3.5.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following best explains the concepts of protocol compliance testing?\n\nSelect ONE option.",
+    "options": [
+      "a) It tests the communication protocol for the non-networked EGMs against jurisdictional specifications",
+      "b) It tests gambling protocols which are used only with online gambling",
+      "c) It tests compliance of hardware on the EGMs against jurisdictional specifications",
+      "d) It tests gambling protocols which connect slot machines to the host systems for software download, remote configuration, and remote software verification against jurisdictional specifications"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Protocol compliance testing is for networked EGMs\n\nb) Is not correct. Protocol compliance is for connected slot machines\n\nc) Is not correct. This is what we test when we do platform testing\n\nd) Is correct. This is the correct answer, see section 3.5.3 in the syllabus"
+  },
+  {
+    "id": 31,
+    "lo": "GT-3.5.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following best identifies what areas are covered by protocol compliance testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Testing that critical information related to revenue, integrity, and security is preserved in the event of a communication loss, in accordance with jurisdictional specifications",
+      "b) Testing host reporting of accounting meters and communication loss for online systems in accordance with the network design specification",
+      "c) Testing that erroneous data or signals will not adversely affect the operation of an EGM in accordance with the communication protocol design specification",
+      "d) Testing that the casino system reports revenue to the government and stakeholders correctly in accordance with jurisdictional specifications"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. As stated in section 3.5.4\n\nb) Is not correct. Test basis for protocol compliance testing is not the network design specification it is the jurisdictional specifications\n\nc) Is not correct. Test basis for protocol compliance testing is not the protocol design specification it is the jurisdictional specifications\n\nd) Is not correct. We do not test the casino system during protocol compliance testing"
+  },
+  {
+    "id": 32,
+    "lo": "GT-3.6.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "A slot machine has been rigorously tested by the machine’s manufacturer. The following defects were raised during testing but the defect management tool lacks information on the types of testing each defect resulted from, information that would support defect cluster and root cause analysis.\n\nWhich one of the following defect reports should be marked as resulting from hardware testing?\n\nSelect ONE option.",
+    "options": [
+      "a) After a forced entry to the machine’s cashbox; the machine failed to identify and record the event",
+      "b) During the loss of communication between the EGM and the external servers, the player continued to place wagers, the player transactions displayed on the EGM’s game history, but they were not transmitted to the servers when the communication resumed",
+      "c) When the EGM is placed in Operator Mode the operator can set game limits above 10,000",
+      "d) When the player places a max bet, the player wins an incorrect amount"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. As per syllabus this is an area where a tester will find defects during hardware testing\n\nb) Is not correct. As per syllabus this testing takes place during protocol compliance testing\n\nc) Is not correct. As per syllabus this testing takes place during platform functional testing\n\nd) Is not correct. As per syllabus this testing takes place during math testing"
+  },
+  {
+    "id": 33,
+    "lo": "GT-3.6.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Your organization is responsible for hardware compliance testing on a new EGM for New York.\n\nWhich one of the following tests would you perform?\n\nSelect ONE option.",
+    "options": [
+      "a) Validate the Bank Note Acceptor will accept US funds and slot vouchers",
+      "b) Validate that the player identification device only accepts player identification cards configured for New York",
+      "c) Validate player bet limits are within RNG limits (Max Limit $500) for New York",
+      "d) Validate the mechanical reel spins at the speed as per the game specification"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Per syllabus, this is included in hardware functional testing\n\nb) Is correct. Per syllabus, this is included in hardware compliance testing\n\nc) Is not correct. Per syllabus, this is included in casino functional testing\n\nd) Is not correct. Per syllabus, this is included in hardware functional testing"
+  },
+  {
+    "id": 34,
+    "lo": "GT-3.6.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following best explains the concepts of hardware integration testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Hardware integration testing attempts to identify failures in the interface between hardware components, usually for a single casino platform",
+      "b) Hardware integration testing is the testing of the integration between the EGM, the operating systems, runtime libraries, and the servers",
+      "c) Hardware integration testing is the testing of the platform, protocol, and the casino system integration components",
+      "d) Hardware integration testing is limited to the testing of the EGM and how the SMIB cards integrate with it"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. This is the correct answer, see syllabus 3.6.5\n\nb) Is not correct. Hardware integration testing is limited only to hardware and the operating systems & runtime libraries are software, see syllabus 3.6.5\n\nc) Is not correct. Hardware integration testing tests hardware only, not protocols, platforms, nor casino systems, see syllabus 3.6.5\n\nd) Is not correct. This is incorrect as we are not limited to testing the integration of these two components, see syllabus 3.6.5"
+  },
+  {
+    "id": 35,
+    "lo": "GT-3.6.6",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is an example of a hardware integration defect?\n\nSelect ONE option.",
+    "options": [
+      "a) EGM volume will not go louder or quieter when being adjusted on the machine",
+      "b) Player wagers do not show up in the end of day reports",
+      "c) EGM will not go into operator mode",
+      "d) Coin acceptors do not accept the different jurisdictional currency"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Non-volatile RAM clears, rebooting, volume control is all part of protocol testing, see syllabus 3.5.2\n\nb) Is not correct. Cashless wagering, redemption, and end to end testing are all part of casino system testing, see syllabus 3.4.1\n\nc) Is not correct. setup and configuration, operator mode is all part of platform testing, see syllabus 3.3.2\n\nd) Is correct. This is the correct answer, see syllabus 3.6.6"
+  },
+  {
+    "id": 36,
+    "lo": "GT-3.7.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following best explains the concepts of remote gambling system testing?\n\nSelect ONE option.",
+    "options": [
+      "a) It tests gambling products on the Internet such as Sports Betting and Social Gambling",
+      "b) It tests the tools that manage the casino, including monitoring of credit issuance and redemption to player",
+      "c) It tests the areas of gambling offered via mobile, wireless in-venue",
+      "d) It tests gambling products which allows on premise casinos to add mobile technology and content to their existing offerings"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. This is online gambling\n\nb) Is correct. This is the correct answer, see syllabus 3.7.1\n\nc) Is not correct. This is online gambling\n\nd) Is not correct. This is in venue mobile gambling"
+  },
+  {
+    "id": 37,
+    "lo": "GT-3.8.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following does NOT describe system and network security testing in the gambling world?\n\nSelect ONE option.",
+    "options": [
+      "a) Testing that determines the network performs its critical functions have been implemented",
+      "b) Testing that determines the regulatory network security specifications are met",
+      "c) Testing that determines the network and its services are secured from unauthorized modification",
+      "d) Testing that determines the online system security features such as geolocation and age verification have been implemented"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. This is done during System and Network security testing\n\nb) Is not correct. This is done during System and Network security testing\n\nc) Is not correct. This is done during System and Network security testing\n\nd) Is correct. This is done during platform functional testing"
+  },
+  {
+    "id": 38,
+    "lo": "GT-3.9.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT a common jackpot controller defect?\n\nSelect ONE option.",
+    "options": [
+      "a) Bonus value is not subtracted from the current value",
+      "b) Player places a minimum bet and wins max bonus jackpot",
+      "c) Player enters bonus mode, wins the jackpot, and plays their remaining bonus spins.",
+      "d) Jackpot revenue report not showing the correct values"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. This is an example of a jackpot controller defect per syllabus 3.9.2\n\nb) Is not correct. This is an example of a jackpot controller defect per syllabus 3.9.2\n\nc) Is not correct. This is an example of a jackpot controller defect per syllabus 3.9.2\n\nd) Is correct. This is an example of remote gambling system testing per syllabus"
+  },
+  {
+    "id": 39,
+    "lo": "GT-3.10.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "What makes online gambling different than in-venue gambling?\n\nSelect ONE option.",
+    "options": [
+      "a) Online gambling includes unique game types, such as Sports Betting",
+      "b) Games are accessed through online websites",
+      "c) Games need to meet high user expectations",
+      "d) It must comply with rigorous legislation, including geolocation"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Sports Betting is also offered in brick-and-mortar venues\n\nb) Is correct. As per syllabus, “The internet allows us to access these games of chance through online websites, downloadable applications, and online platforms such as Valve’s Steam. See syllabus 3.10.1”\n\nc) Is not correct. Users have high expectations when playing games on the casino floor too\n\nd) Is not correct. In-venue gambling must also comply with all relevant legislation"
+  },
+  {
+    "id": 40,
+    "lo": "GT-3.10.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following test types does not relate to online gambling?\n\nSelect ONE option.",
+    "options": [
+      "a) Portability testing to ensure that a game can play on multiple types of mobile devices",
+      "b) G2S protocol testing using a checklist defined by the Gambling Standards Association",
+      "c) Functional testing to ensure that the gameplay corresponds to the rules of the game",
+      "d) Compliance testing to ensure that the game meets its jurisdictional specifications"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. This is a valid testing type for an online gambling tester\n\nb) Is correct. The G2S is the protocol that connects the slot machine (EGM – Electronic Gaming Device) to the host systems, and therefore not applicable to online gambling\n\nc) Is not correct. This is a valid testing type for an online gambling tester\n\nd) Is not correct. This is a valid testing type for an online gambling tester"
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 60 * 60;
+      const EXT_SECONDS = 75 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "75"
+          : "60";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 75:00 (60 minutes + 25% practice time). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 60:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          if (asset.html) return `<div class="q-table-wrap">${asset.html}</div>`;
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Open to enlarge</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagram for Question ${q.id}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

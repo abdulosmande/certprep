@@ -1,0 +1,1990 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CT-STE v1.0.1 — Sample Exam</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Specialist Level</div>
+        <h1>CT-STE v1.0.1<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">ISTQB® Certified Tester Security Test Engineer · Sample Exam v1.0.1 · Syllabus v1.0.1. The timer starts when you begin the exam.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">75</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Source: ISTQB® — ISTQB-STE_v1.0.1-Sample-Exam-Questions.pdf; ISTQB-STE_v1.0.1_Sample-Exam-Answers.pdf. Copyright © ISTQB®. Questions, tables, diagrams and rationales follow these sources. Authors are acknowledged in the source PDFs.</p>
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">75 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">94 min</span>
+            <span class="time-opt-lbl">+25% practice time</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optional practice allowance: 25% extra time (19 minutes).</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 75:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CT-STE v1.0.1 · Sample Exam</span
+            >
+            <span class="exam-title">Certified Tester – Security Test Engineer</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 answered
+            </div>
+            <div class="timer" id="timer">75:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 questions (43 points) · <strong>65% (≥ 28 of 43 points)</strong>
+            to pass · most questions are worth one point, three are worth two; ten questions ask for two options
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "STE-1.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following BEST describes the security level of assets regarding integrity?\n\nSelect ONE option.",
+    "options": [
+      "a) Only authenticated users should be granted access to modify files and applications",
+      "b) Only file owners can be granted access to modify data to establish proper integrity",
+      "c) The record history of unauthorized attempts must be kept for two years",
+      "d) Establish a process that allows users to access unchanged data whenever they need it"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct: integrity seeks to prevent data from modification or deletion by any unauthorized party and is measured by the degree to which an asset allows only authorized access and modification.\n\nb) Is not correct: Data modification permission is not reserved for data owners but is only granted to authorized users.\n\nc) Is not correct: The data retention policy is subject to organization policy and jurisdiction requirements.\n\nd) Is not correct: user access needs to be on the basis of authorization and not anytime a user needs the same."
+  },
+  {
+    "id": 2,
+    "lo": "STE-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following is an adequate alternative to describe how security testing can confirm that confidentiality of sensitive information has proper safeguards?\n\nSelect ONE option.",
+    "options": [
+      "a) Verifies that there are proper controls that prevent unauthorized access to confidential information",
+      "b) Verifies that there are proper controls that ensure only authorized updates can be made and all data remains reliable",
+      "c) Verifies quick recovery mechanisms to restore services promptly after an incident",
+      "d) Verifies that the organization’s response to incidents is effective, minimizing damage and downtime"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct: Confidentiality in security testing ensures that sensitive data is accessed only by authorized users. Security testing verifies that access controls mechanisms are effective, thereby preventing unauthorized access to confidential information.\n\nb) Is not correct: it is about integrity.\n\nc) Is not correct: it is about availability and quick recovery mechanisms after an incident.\n\nd) Is not correct: it is about the organization’s response to incidents"
+  },
+  {
+    "id": 3,
+    "lo": "STE-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following option BEST describes a security audit?\n\nSelect ONE option.",
+    "options": [
+      "a) A systematic evaluation of the security testing and the overall security strategy throughout the whole organization",
+      "b) A systematic security evaluation of the information system by measuring how well it conforms to an established set of criteria",
+      "c) A systematic evaluation aimed at stopping unauthorized intruders from accessing the system",
+      "d) A systematic evaluation aimed at reducing risks by identifying hardware and software subject to vulnerability"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. This is a description of security testing in general.\n\nb) Is correct. Security audit evaluates an organization’s security processes and infrastructures and is a type of static test technique\n\nc) Is not correct. Although the goal is ok, the audit focus on processes and controls\n\nd) Is not correct. Audits focus on processes and controls"
+  },
+  {
+    "id": 4,
+    "lo": "STE-1.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following options describes Zero Trust?\n\nSelect ONE option.",
+    "options": [
+      "a) Any user requires continuous verification of identity regardless of the user’s location.",
+      "b) Any device and user with access to the system is trusted by default.",
+      "c) Only devices within the trusted network get access to systems.",
+      "d) All users are granted the level of access they need."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct: all users are treated as untrusted and are required to authenticate and authorize before they can access any resources\n\nb) Is not correct: A traditional network is one in which all devices and users are trusted by default.\n\nc) Is not correct: A Zero Trust architecture refers to a security model that doesn’t inherently trust anything inside the network.\n\nd) Is not correct: A Zero Trust system ensures that no one can access data unless they have the proper credentials."
+  },
+  {
+    "id": 5,
+    "lo": "STE-1.3.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "Which of the following would you include to verify that the concept of Zero Trust has been correctly implemented?\n\nSelect TWO options.",
+    "options": [
+      "a) Implement controls that check each individual access request to any sensitive resource.",
+      "b) Access requests that are initiated by non-human service accounts are always trusted.",
+      "c) Verify that access logs produced by the system provide a permanent, time-stamped record of all activities.",
+      "d) Implement standard permission sets based on users' roles and responsibilities.",
+      "e) Focus on access controls to external network instead of controls to specific applications, resources, data, and assets."
+    ],
+    "answer": [
+      0,
+      2
+    ],
+    "explanation": "a) Is correct: Zero Trust verifies user identity, privileges as well as device identity and security for each access. Logins and connections time out periodically, forcing users and devices to be continuously re-verified.\n\nb) Is not correct: Non-human accounts must also be monitored\n\nc) Is correct: granted access to the resources must be logged permanently and as time-stamped record.\n\nd) Is incorrect: Encryption and restriction accesses of assets are based on organizational policies.\n\ne) Is not correct: Limit access controls to specific applications, resources, data, and assets, rather than the broader network."
+  },
+  {
+    "id": 6,
+    "lo": "STE-1.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "When using open-source software, which of the following is NOT a critical factor to consider when addressing security concerns?\n\nSelect ONE option.",
+    "options": [
+      "a) Alignment with OWASP and active security audits by the contributors.",
+      "b) Frequency and availability of security patches and updates.",
+      "c) Your team’s ability to manage and customize the tool for your environment.",
+      "d) Licensing requirements and compliance with open-source security guidelines."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. OWASP alignment and security audits are essential for ensuring the software’s security.\n\nb) Is not correct. Regular patches and updates are critical for addressing vulnerabilities.\n\nc) Is correct. Team customization is important but not directly tied to security concerns.\n\nd) Is not correct. Licensing compliance ensures proper usage, which can impact security indirectly."
+  },
+  {
+    "id": 7,
+    "lo": "STE-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A bank has subcontracted the development of new features for its customers portal, to improve its user experience. The development of the features is finished and has been delivered to the bank. The bank calls you to plan and perform security tests on a pre-production environment before the deployment.\n\nWhich of the following best describes how you would approach this task?\n\nSelect TWO options.",
+    "options": [
+      "a) Execute white-box testing to cover all the source code and be sure that there are no more defects before the deployment.",
+      "b) Execute grey-box vulnerability scanning to be sure that all known vulnerabilities in the scope of the project, potentially exploitable by an attacker, are or will be identified.",
+      "c) Execute black-box fault injection testing to find potential vulnerable entry points.",
+      "d) Verify that the security coding rules have been applied using a static application security testing tool.",
+      "e) Check whether vulnerabilities detected by white-box testing could be exploitable."
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "explanation": "a) Is incorrect because the source code is not available in a pre- production environment and it’s not possible to discover all defects\n\nb) Is correct because this is a best practice to do grey-box vulnerability scanning before the deployment\n\nc) Is correct because this is a best practice to check that all entry points are not vulnerable\n\nd) Is not correct because the source code is not available in a pre- production environment\n\ne) Is not correct because the source code is not available in a pre- production environment"
+  },
+  {
+    "id": 8,
+    "lo": "STE-2.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "As the security test engineer in the project you are tasked with defining the security test techniques that must be applied as static security testing.\n\nWhat would be your approach?\n\nSelect ONE option.",
+    "options": [
+      "a) Check that security coding rules are applied by the developers, check that the design has followed “security by design” best practices, and then check that the security requirements are complete.",
+      "b) Check that the coding rules are applied by the developers and then build the application and execute some SQL injections to check that input fields are correctly protected against SQL injection.",
+      "c) Check that the security requirements are complete, check that the design has followed “security by design” best practices, and then check that security coding rules are applied by the developers.",
+      "d) Check that the set of security requirements is pertinent and complete and then execute boundary value testing on the built application to check that buffer overflows are avoided by applying dedicated security coding rules."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct because security coding rules checking must be done after security requirement ruleset is complete\n\nb) Is not correct because dynamic tests are executed\n\nc) Is correct because there are only static checks, and they are well- ordered\n\nd) Is not correct because dynamic tests are executed"
+  },
+  {
+    "id": 9,
+    "lo": "STE-2.2.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "You have been given the following requirement for security testing:\n\nA user will be allowed to request their password to be reset. If they make this request, they must answer two of their three security questions correctly. If they answer correctly, a link will be sent to their email. The link will take them to a page where they can reset their password. Once reset, they can login with the new password. That link must become invalid 1 hour after it has been sent or if the user issues another password reset request. If the user sends more than two password reset requests without completing the reset, the User ID will be locked. In order to unlock the ID, the user has to contact the help desk.\n\nWhich of the following is the minimum list of test conditions to adequately test the functional security covered by this requirement?\n\nSelect ONE option.",
+    "options": [
+      "a) Invalid user; valid user; 2 correct answers; 2 incorrect answers; complete password reset; link valid; link expired; two requests without reset; 3 requests without reset.",
+      "b) Valid user; Valid user; 2 correct answers; 3 correct answers; complete password reset; link valid; two requests without reset.",
+      "c) Invalid user; Invalid user; 2 incorrect answers; link expired; 3 requests without reset; invalid characters.",
+      "d) Invalid user; valid user; invalid user; valid user; 2 correct answers; 2 incorrect answers; Buffer overflow on each input field; SQL injections."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct because it covers the main scenarios for the functional security specified in the requirement\n\nb) Is not correct because it tests only valid tests\n\nc) Is not correct because it tests only invalid conditions\n\nd) Is not correct because it expands into penetration testing"
+  },
+  {
+    "id": 10,
+    "lo": "STE-2.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "In your organization, you are responsible for the Identification & Access Management to manage and maintain users accounts and rights. During the last two months, there have been two newcomers and one person from the company changed department. Their profiles have been assigned to their new roles and rights. What security test techniques should you plan based on your responsibility?\n\nSelect TWO options.",
+    "options": [
+      "a) No testing is necessary because accounts and rights have been managed.",
+      "b) Review roles permissions of the person having changed the department.",
+      "c) Test the roles and privileges assigned to newcomers to ensure that they are set up correctly.",
+      "d) No testing is necessary because the newcomers have basic roles and privileges and the person who changed department has less privileges than before.",
+      "e) Having applied the changes, check whether the access to new applications is working."
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "explanation": "a) Is not correct because modifications of roles and rights must be reviewed\n\nb) Is correct because rights and roles set or modified must be reviewed\n\nc) Is correct because modifications of roles and rights must be verified (correctness) and validated (aligned with the person needs)\n\nd) Is not correct because we don’t know what modifications are applied to the different accounts.\n\ne) Is not correct because we have to check application access revoke as well."
+  },
+  {
+    "id": 11,
+    "lo": "STE-2.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following CORRECTLY describes security test techniques for authentication mechanism?\n\nSelect ONE option.",
+    "options": [
+      "a) Examining if users can manage system resources based on their roles.",
+      "b) Checking factory-set login detail and evaluating password strength requirements.",
+      "c) Verifying user permission levels through profile analysis.",
+      "d) Monitoring user activity logs during the login process."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct because this describes system resource monitoring, not authentication testing.\n\nb) Is correct these are valid authentication testing techniques mentioned in the syllabus for verifying authentication mechanisms.\n\nc) Is not correct because this describes authorization testing, not authentication testing.\n\nd) Is not correct because this describes performance testing, not authentication testing."
+  },
+  {
+    "id": 12,
+    "lo": "STE-2.2.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements BEST describes how to test data protection controls?\n\nSelect ONE option.",
+    "options": [
+      "a) Testing should evaluate security measures by checking compliance of encryption, access controls and data masking features.",
+      "b) Testing should exclusively measure how quickly and efficiently the protective measures operate in the system.",
+      "c) Testing should examine how users interact with the security features through screen elements and controls.",
+      "d) Testing should analyze how data storage systems perform when security features are active."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct because this describes the complete testing approach for data protection controls. o) Is not correct because while system performance is one consideration, focusing exclusively on speed and efficiency provides an incomplete view of data protection testing. p) Is not correct because testing user interactions and screen elements addresses only the surface level of security features. q) Is not correct because it represents only a small part of data protection testing."
+  },
+  {
+    "id": 13,
+    "lo": "STE-2.2.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are asked to explain procedures for evaluating system hardening as a typical example of a protective technology. What procedure might you follow to ensure the hardening mechanisms put in place are working as expected?\n\nSelect ONE option.",
+    "options": [
+      "a) Closely monitor various security performance reports and metrics to determine if the correct level of access and authentication is achieved, i.e. it is not too restrictive and not too broad",
+      "b) Frequently audit strong authentication to ensure a high level of intrusion protection is maintained at all times",
+      "c) Evaluate the hardware components that have been hardened and compare these to other hardened software components to ensure equilibrium is being achieved",
+      "d) Enlist a known hacker to conduct an independent assessment of the hardening effectiveness"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct because there are security performance reports and metrics available that can be used to determine if you have achieved the right level of hardening.\n\nb) Is not correct because strong authentication is just one aspect of hardening.\n\nc) Is not correct because equilibrium is not needed. The more critical areas may warrant better hardening.\n\nd) Is not correct. because there is the danger of the hacker not telling you what is found."
+  },
+  {
+    "id": 14,
+    "lo": "STE-3.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are responsible for all aspects of the security process, including testing. For this particular task you are to use high-level tests as a basis for manual tests and execute these from an external vendor’s perspective. Which security test task can be done in parallel with this?\n\nSelect ONE option.",
+    "options": [
+      "a) Security test creation of test conditions and test objectives",
+      "b) Security test implementation",
+      "c) Overall evaluating and reporting of security testing",
+      "d) Security test analysis and design"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct because this has already been done with the creation of the high-level tests.\n\nb) Is correct because the use of the high-level tests to create the manual tests and perform the execution is part of the security test implementation\n\nc) Is not correct because it will occur after the tests have been executed\n\nd) Is not correct because this has already been done with the creation of the high-level tests."
+  },
+  {
+    "id": 15,
+    "lo": "STE-3.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is a main characteristic of an effective security test environment?\n\nSelect ONE option.",
+    "options": [
+      "a) Closely tied to production systems to enhance security at all points",
+      "b) Isolates different old versions of the operating systems for use in the environment",
+      "c) Mimics the production environment in terms of access rights",
+      "d) Includes all production environment plug-ins as well as other plug-ins not in the production environment to ensure the most comprehensive setup"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct because the system doesn’t need to be and probably shouldn’t be connected\n\nb) Is not correct because it may be useful, but it is not a main characteristic\n\nc) Is correct because the closer the test environment mimics production, the more valid the testing will be. This is particularly true when it comes to access rights and delegation settings.\n\nd) Is not correct because it includes plug-ins that are not in production which could result in both false positives and false negatives from the testing"
+  },
+  {
+    "id": 16,
+    "lo": "STE-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "During component testing, which compiler warning would trigger the security tester most?\n\nSelect ONE option.",
+    "options": [
+      "a) Those indicating security problems that must be fixed",
+      "b) Those indicating potential issues that should be investigated",
+      "c) Those indicating coding issues that will cause functional suitability defects",
+      "d) Those indicating poor programming practices that will increase maintainability"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct because warnings do not necessarily require a fix\n\nb) Is correct because from a security testing standpoint, compiler warnings indicate potential issues that could lead to security vulnerability\n\nc) Is not correct because it may be true, but it is not related to security testing\n\nd) Is not correct because it may be true, but it is not related to security testing"
+  },
+  {
+    "id": 17,
+    "lo": "STE-3.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Given the following design specification: Component A and Component B communicate via a REST API. Which ONE of the following options is an example of a security test performed at the component integration level?\n\nSelect ONE option.",
+    "options": [
+      "a) Testing the encryption of data during API calls between component A and B",
+      "b) Testing if component A can call component B's API",
+      "c) Testing if external components are from trusted vendors.",
+      "d) Testing the response time between component A and B."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct because security test design at component integration level must include security tests of integrated APIs and configured integrated flows focusing on confidentiality and integrity between components.\n\nb) Is not correct because this is a functional integration test that only verifies the API connectivity. According to the syllabus, security tests at integration level should focus on security aspects like authorization, confidentiality and integrity of the integrated flows, not just the ability to connect.\n\nc) Is not correct because while vendor trustworthiness is important, this is an audit activity. The syllabus specifically requires actual security testing of integrated components to verify they are free of vulnerabilities, not just checking vendor credentials.\n\nd) Is not correct because this is a performance test at integration level, not a security test. According to the syllabus, security tests should focus on potential vulnerabilities and attack vectors that arise from component interactions, not their performance characteristics."
+  },
+  {
+    "id": 18,
+    "lo": "STE-3.2.3",
+    "k": "K3",
+    "pts": 1,
+    "text": "Which one of the following BEST describes the correct procedure for implementation of end-to-end security testing to test the system’s handling of unsuccessful login attempts?\n\nSelect ONE option.",
+    "options": [
+      "a) Before test execution, prepare a password manager generator to change the password upon logging in. You log out then log in using your newly created password. Three unsuccessful login attempts will generate a lock-out message.",
+      "b) After several attempts to log in you received a lock-out message, you call Service Desk to obtain a temporary password via mail. You log in with the temporary password, log out, then log in again and enter a new password.",
+      "c) After you tried to login several times without success, you press the button to get a link to change the password. After you get the link, you re-use your old password. The system accepts the password.",
+      "d) After the first attempt to use an invalid password, you pull up a list of passwords on your notepad on your PC to ensure you are using the correct one. You try another password from the list, and it works."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. This is the best security practice compared to the others\n\nb) Is not correct because the number of attempts is not quantified.\n\nc) Is not correct because reusing an old password is not good practice, as it can compromise your online security and privacy.\n\nd) Is not correct because it would definitely not be a good security practice to store not encrypted passwords in notepad."
+  },
+  {
+    "id": 19,
+    "lo": "STE-4.1.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "You are working as a test manager at a bank that is developing a new online banking application. The application will handle sensitive customer data and financial transactions. You are asked to perform security testing for that new application. There are no explicit requirements, so you select your own test cases from standards and best practices.\n\nWhich three (3) of the following statements guide you best for selecting test cases?\n\ni. Norms are valid input as they are approved by a recognized body of knowledge\nii. Standards can be classified into industry standards, de facto standards and manufacturer specific standards. Industry standards and de –facto standards are valid input, manufacturer standards might not fit to a specific context\niii. As standards are mandatory, they are valid input as they must be applied in all environments\niv. Best Practices are no valid input as they are usually on very high level\nv. De-facto-Standards are good input as they often have their roots in industry standards\n\nSelect ONE option.",
+    "options": [
+      "a) i, ii, and v",
+      "b) i, ii, and iii",
+      "c) ii, iii, and v",
+      "d) iii, iv, and v"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct, because standards are approved by a recognized body of knowledge\n\nb) Is not correct, because industry standards and de-facto-standards not mandatory\n\nc) Is not correct as standards are not mandatory.\n\nd) Is not correct as there is no correlation between level of detail and best practices, i.e. there exist very detailed best practices."
+  },
+  {
+    "id": 20,
+    "lo": "STE-4.2.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "A new start-up enterprise in the banking industry has developed a new core system. The development team has focused on good usability and excellent performance so far. Before going live, the executive board wants to get an independent view about the level of security. They are asking you as security tester to do a black-box-pentest. The task is to test for the most critical vulnerabilities that could be exploitable for the new banking app.\n\nIf you want to fulfill this job, how can you leverage standards for your task?\n\nSelect TWO options.",
+    "options": [
+      "a) You select relevant weaknesses within CWEs standard and execute listed test cases.",
+      "b) You select relevant weaknesses within CWE, choose available exploits for selected CWEs and apply them",
+      "c) You select relevant weaknesses within CWE, you prioritize selected CWEs based on CWSS standard, and you select relevant CVEs covering prioritized CWE",
+      "d) You select relevant weaknesses within CWE, you prioritize selected CWEs based on CVSS standard and derivate individual test cases related the CVSS",
+      "e) For each selected CVE you derive test cases for the banking app and execute them"
+    ],
+    "answer": [
+      2,
+      4
+    ],
+    "explanation": "a) is not correct as CWEs do not contain any test cases (abstraction layer CVE is missing)\n\nb) Is not correct as CWEs do not contain exploits (abstraction layer CVE is missing).\n\nc) Is correct as CWE clusters different attack types, CWSS prioritizes them, and CVSs are specific vulnerabilities for a given CWE.\n\nd) Is not correct as CWSSs do not contain test cases (abstraction layer CVE is missing)\n\ne) Is correct as CVE leaves it to the security tester to derive specific test cases"
+  },
+  {
+    "id": 21,
+    "lo": "STE-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "When you use test oracles for an application from standards and best practices, what do you have to consider?\n\nChoose ONE option.",
+    "options": [
+      "a) Such test oracles are valid independent from any application parameters",
+      "b) Such test oracles can only be used as fuzzy hints for security testing",
+      "c) Such test oracles can not be used for security testing",
+      "d) The less specific an application and its context is, the more efficient is reusing such test"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct, as context parameters might have an impact on the app behavior\n\nb) Is not correct, as test oracles for apps without a specific context can efficiently be used for security testing\n\nc) Is not correct, as test oracles for apps without a specific context can efficiently be used for security testing\n\nd) Is correct: If all parameters of an app are standard, test oracles can directly be reused for security testing"
+  },
+  {
+    "id": 22,
+    "lo": "STE-4.3.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "Best practices and standards deliver many artefacts, which can be used effectively for security testing. Which combinations of artefact and activity maps correctly?\n\n1. Consistent nomenclature\n2. Expert knowledge\n3. Benchmarking\n4. Holistic security overview\n\nwhich can be used for:\n\nA. easier communication\nB. reusing security expert knowledge for security testing\nC. doublecheck completeness of security testing activities\nD. easily demonstrate effectiveness of applied security testing activities\n\nChoose ONE option.",
+    "options": [
+      "a) 1-A, 2-B, 3-D, 4-C",
+      "b) 1-A, 2-B, 3-C, 4-D",
+      "c) 1-D, 2-A, 3-B, 4-C",
+      "d) 1-B, 2-D, 3-A, 4-C"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct as a consistent nomenclature enables easier communication (1a), expert knowledge reuses security expert knowledge (2b) benchmarking easily demonstrates effectiveness of applied security testing activities (3d) and holistic security overview by a group of experienced experts can doublecheck completeness of security testing activities.\n\nb) 3c is not correct (Benchmarking does not necessarily give any evidence for completeness) 4d is not correct (holistic security overview does not give eny evidence for effectiveness.\n\nc) 1d is not correct (nomenclature does not give any evidence for effectiveness), 2a is not correct (expert knowledge does not necessarily simply communication) 3b is not correct (Benchmarking does not necessarily allow for reusing expert knowledge)\n\nd) 1b is not correct (nomenclature does not reuse security expert knowledge), 2d is not correct (expert knowledge does not necessarily give any evidence for effectiveness), 3a is not correct (benchmarking does not allow for an easier communication)"
+  },
+  {
+    "id": 23,
+    "lo": "STE-5.1.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "You are hired as a security tester by the management of a medium-sized engineering company that produces different parts for automotive and is strongly dependent on their suppliers, as the price for raw materials does directly affect the profit. The company does only have a public web site and a well-known mail domain but does not offer further web services. Your task is to gain\n\naccess to the internal production environment consisting of several modern industrial facilities and compromise at least one system.\n\nWhich TWO options present best how you could take advantage of the organizational context?\n\nChoose TWO options.",
+    "options": [
+      "a) Infiltrate one of the most used suppliers to get closer to the actual target company",
+      "b) Perform a social engineering attack by faking to be an existing or a new potential supplier and try to learn more about the target, e.g. by visiting and asking for a short viewing",
+      "c) Identify the mail address of the accounting department and send fake billings containing malicious content e.g. for gaining remote access via a reverse shell",
+      "d) Scatter USB sticks around the companies’ building and wait until someone collects a stick and plugs it in.",
+      "e) Do a brute force against the SSH login of the web server"
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "explanation": "a) Is not correct: To bring the security test activities to a point of closure so the tests can be maintained and performed on a regular basis to support any new security requirements and/or detect new threats\n\nb) Is correct, since the company is highly dependent on their suppliers, there is an increased chance of having success by faking a supplier’s id\n\nc) Is correct, since the company is highly dependent on their suppliers, billings from a supplier might be more important for the accounting than others\n\nd) Is not correct, because it does not take advantage of the organizational context.\n\ne) Is not correct, because it does not take advantage of the organizational context"
+  },
+  {
+    "id": 24,
+    "lo": "STE-5.2.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Your company develops different products for the aviation industry. At the beginning of the year, a new product was announced. For the first time, this will be a communication device. Your job is to perform security testing of the new product before it is launched on the market.\n\nWhich ONE of the following aspects describes BEST what you do have to consider?\n\nChoose ONE option.",
+    "options": [
+      "a) Aviation Industry is a regulated sector; therefore, the new product and the complete development process must be compliant with current regulations.",
+      "b) Some countries have their own regulations regarding radio antennas and used standards. The product must work properly, even though some frequencies might interfere with the frequencies used by the product",
+      "c) The security tests need to be executed very fast, since the product must be launched as soon as possible",
+      "d) Employees need to prove their knowledge about radiocommunication through personal certifications"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct, aviation is strong regulated which has to be considered by security tester\n\nb) Is not correct. Even though this has to be tested, the test aims more to a functional requirement and is not scope of security testing. If there might exist negative side effects, this has to tested instead of being ignored\n\nc) Is not correct as time/budget is no constraint in any regulated context.\n\nd) Is not correct, because it does not take advantage of the organizational context and does give any guidance when focusing on test activities"
+  },
+  {
+    "id": 25,
+    "lo": "STE-5.3.1",
+    "k": "K4",
+    "pts": 2,
+    "text": "During security testing a core system you find several suspicious files that were neither created by you or other testers during the testing nor used by the applications running on that system.\n\nChoose the option BEST describing how you would proceed\n\nChoose ONE option.",
+    "options": [
+      "a) Continue the security test and report your findings after you have finished all testing activities",
+      "b) Pause the security test and write an informative global e-mail at least to all colleagues who have access to the system. Continue, if no one has a plea.",
+      "c) Stop the security test and shutdown the system immediately, because there has been an unauthorized access and further potential harm must be prevented",
+      "d) Stop the security test and follow the steps defined by the companies ‘security policy for reporting an incident. If there is no policy for incident reporting, report to the person who is responsible (e.g., IT Security Officer, CISO…)",
+      "e) Stop the security test and start investigations and follow the steps defined by the companies’ security policy for investigation"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct, as continuing testing activities can blur traces of an actual security incident. Also reporting only after finishing all testing activities might be too late in case of a serious incident\n\nb) Is not correct, as an attacker could also be an insider. Also see a) why continuing testing is not a valid solution\n\nc) Is not correct, Stopping a system might cause loss of traces in case of an incident. While this might be a valid solution in some cases, a security tester has not the authority to decide this on his own\n\nd) Is correct, as a company should have working Incident Response Mechanisms and after reporting an incident, processes should take place in order to investigate the reported incident"
+  },
+  {
+    "id": 26,
+    "lo": "STE-5.3.1",
+    "k": "K4",
+    "pts": 2,
+    "text": "Each attack is different. However, certain steps are common for almost every attack. These steps can be defined as:\n\nChoose ONE option.",
+    "options": [
+      "a) Information gathering step, followed by exploitation/gaining access and at the end persisting/maintaining access.",
+      "b) Social engineering, followed by brute-force attack and at the end persisting/maintaining access",
+      "c) Exploitation/gaining access followed by social engineering to understand the results and at the end clearing tracks",
+      "d) Information gathering, followed by clearing tracks and at the end social engineering to have a better baselining."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) As mentioned in the syllabus\n\nb) Not all attacks are starting with social engineering\n\nc) Exploitation/gaining access is done after information gathering (e.g. done by social engineering)\n\nd) The step of getting access is missing, so no attack is done"
+  },
+  {
+    "id": 27,
+    "lo": "STE-6.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which ONE of the following statements describes BEST how security testing should be implemented in the development lifecycle?\n\nChoose ONE option.",
+    "options": [
+      "a) Each development activity should have a corresponding security testing activity",
+      "b) With performing a proper threat analysis and security design most vulnerabilities can be found",
+      "c) SAST and DAST should be executed in all software development lifecycle phases",
+      "d) Security testing should be performed during all software development lifecycle phases to keep in sync with manual functional testing"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Correct as mentioned in the syllabus\n\nb) Only static security testing activities will not be able to find all vulnerabilities\n\nc) SAST and DAST can be performed but should be supplemented with extra security test activities and verifications\n\nd) There is no documented need to keep security testing in sync with manual testing"
+  },
+  {
+    "id": 28,
+    "lo": "STE-6.1.2",
+    "k": "K4",
+    "pts": 2,
+    "text": "Which TWO of the following statements does BEST describe the impact of a software development model on security testing?\n\nChoose TWO options.",
+    "options": [
+      "a) The team may involve a security enabling team to perform the security testing in every model",
+      "b) The waterfall model does best support security testing during its software development lifecycle",
+      "c) DevOps may give a better support for security testing to be performed during operations",
+      "d) It is easier to perform security testing using Kanban compared to using Scrum",
+      "e) Security testing can be better planned using the Agile software development models compared with the Waterfall model"
+    ],
+    "answer": [
+      3,
+      4
+    ],
+    "explanation": "a) Is correct as in the syllabus\n\nb) Is not correct: Waterfall model activities have to be planned up front which may cause needed changes during execution\n\nc) Is not correct: Most organization using DevOps have a security team verifying in production during operation. It is not given that the DevOps team is involved\n\nd) Is correct: Both software development models enable for ad hoc changes in tasks and the use for enabling teams when needed\n\ne) Is correct: The Agile development model opens for ad hoc plan changes when needed\n\nNote: the official answer key lists D and E as the correct pair. The source rationale above also describes a) as correct; the key is followed here."
+  },
+  {
+    "id": 29,
+    "lo": "STE-6.2.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Which of the following four statements is true for security testing within the context of maintenance testing?\n\nChoose ONE option.",
+    "options": [
+      "a) Focusing on confirming satisfaction of all security requirements after the change",
+      "b) Running the existing regression set against individual functions to check the change works",
+      "c) Testing for new vulnerabilities that might have been introduced by the change.",
+      "d) Running confirmation and regression security tests after a change is made"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect as by the glossary\n\nb) Incorrect, there is no proof for such statement\n\nc) Correct, as mentioned in the syllabus\n\nd) Incorrect"
+  },
+  {
+    "id": 30,
+    "lo": "STE-6.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following describes BEST why you should analyse security testing results?\n\nChoose ONE option.",
+    "options": [
+      "a) To gain understanding of specific security threats and risks based on security assessments, audits and standard sources of known vulnerabilities",
+      "b) To translate conceptual tests into tests that can be executed either manually or with tools",
+      "c) To define an appropriate scope of testing that corresponds to the security risks.",
+      "d) To bring the security testing activities to a point of closure so the tests can be maintained and performed on a regular basis to support any new security requirements and/or detect new threats"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct as by the glossary\n\nb) Is not correct, there is no proof for such statement\n\nc) Is correct, as mentioned in the syllabus\n\nd) Is not correct"
+  },
+  {
+    "id": 31,
+    "lo": "STE-7.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are responsible for the system’s security. Somebody in your team is interested in security testing and does a penetration test on your system, which includes OWASP Top-10 vulnerabilities. The corresponding test report consists only of succeeded and failed testcases covering these vulnerabilities. Which reasoning on accepting or rejecting the test report is correct?'\n\nChoose TWO options.",
+    "options": [
+      "a) Accepting, as the penetration test was done by an internal colleague who knows the specific security style guides.",
+      "b) Rejecting, as your acceptance criteria for security were not communicated and are not considered in the test report. So it’s unclear if the corresponding test techniques were used and if the test results are relevant for your yearly security style guide conformance check.",
+      "c) Accepting, as OWASP is Best Practice and defines a general list of acceptance criteria",
+      "d) Rejecting, because a security code style guide should be tested by white-box testing approaches, not by black-box dynamic pentests.",
+      "e) Accepting, as OWASP reflects your security code style guide."
+    ],
+    "answer": [
+      1,
+      3
+    ],
+    "explanation": "a) Is not correct as a test report must contain all information that is necessary to understand the results. It does not need any background about the specific tester.\n\nb) Is correct as project specific acceptance criteria are not necessarily part of OWASP Top-10.\n\nc) Is not correct as OWASP lists Best Practice vulnerabilities, but acceptance criteria are dependent on a specific business context.\n\nd) Is correct, as a pentest has a black-box view on that system and cannot test any white-box aspects.\n\ne) Is not correct, as there exist many different context specific security code style guides, which cannot be reflected by one generic OWASP."
+  },
+  {
+    "id": 32,
+    "lo": "STE-7.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "To leverage security testing to the highest level of efficiency and effectiveness it must:\n\nChoose TWO options.",
+    "options": [
+      "a) Be integrated into an overall security process, that tries to minimize risk and ensure business continuity.",
+      "b) Be applied on a yearly basis for all used IT-systems",
+      "c) Be used to pro-actively limit the impact of a security breach",
+      "d) Consider d2y-to-day communicated vulnerabilities.",
+      "e) Be guaranteed, that all identified vulnerabilities are remediated within an appropriate timeframe smaller 6 months"
+    ],
+    "answer": [
+      0,
+      2
+    ],
+    "explanation": "a) Is correct as security testing without any surrounding framework and regular iterations does not generate any systematically added value.\n\nb) Is not correct as a yearly frequency can be too low for very critical systems and it can be too high for a nice-to-have-tool.\n\nc) Is correct as security testing helps identifying vulnerabilities as early as possible\n\nd) Is not correct as day-to-day communicated vulnerabilities might be irrelevant for a specific context (e.g. no internet connection).\n\ne) Is not correct, as there might exist identified vulnerabilities that are irrelevant for a specific context or do not need any remediation ever as there exist other mitigating systems (e.g. a specific firewall). On the other side there might exist vulnerabilities, for which the 6 months timeframe might be too long for identified and exploitable vulnerabilities with high or critical severity."
+  },
+  {
+    "id": 33,
+    "lo": "STE-7.3.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Typical dimensions that a security test engineer can use for enhancing ISMS scope are:\n\n1) Adding additional test objects to his test scope\n2) Adding additional test techniques to his test design\n3) Improve test coverage while sticking on given test objects and test approaches\n4) Increase automation of security test execution\n\nWhich can be used for:\n\nA. bringing in additional insights into a given system that can be used to enhance an existing ISMS\nB. identifying additional weaknesses for known components to enhance an existing ISMS\nC. identifying additional weaknesses for components that are not yet part of the overall ISMS.\nD. making the existing IT-system more secure.\n\nWhich one of the following alternatives presents the correct pairing of the security test engineer's actions and goals?\n\nChoose ONE option.",
+    "options": [
+      "a) 1-C, 2-A, 3-B",
+      "b) 1-B, 2-D, 3-B",
+      "c) 1-C, 2-A, 4-B",
+      "d) 2-D, 2-C, 4-A"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct as adding additional test objects to a test plan can be used for identifying additional weaknesses (1c), adding additional test approaches can be used for bringing in additional insights into a given system (2a) and improved test coverage while sticking on given test objects and test approaches can be used for identifying additional weaknesses\n\nb) Is not correct, as 1b is not correct (additional test objects are not known to the ISMS) and 2d is not correct (additional test approaches do not make any IT system more secure.\n\nc) Is not correct, as 4b is wrong (increase automation of security test execution does not increase an ISMS in any way, neither does it identify any additional weaknesses.\n\nd) Is not correct, as 1d is wrong (additional test objects do not make any IT system more secure), 2c is wrong (additional test approaches do not identify new components), and 4a is wrong (increase automation of security test execution does not increase an ISMS in any way, neither does it generate new insights into a given system)"
+  },
+  {
+    "id": 34,
+    "lo": "STE-7.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "How can security testing improve measurability within an ISMS?\n\nChoose ONE option.",
+    "options": [
+      "a) Security tests can be used as objective analysis within the Check step of the PDCA cycle to measure effectiveness of a PDCA cycle.",
+      "b) All Security testing generates quantifiable insights into the security of a system that can be used to measure ISMS effectiveness.",
+      "c) The more security tests pass a test for a system under test, the better and more effective the ISMS is.",
+      "d) The effectiveness of an ISMS is better the more security testing techniques are used."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) The right answer is A (explained in Syllabus)\n\nb) All Security testing generates quantifiable insights into the security of a system that can be used to measure ISMS effectiveness.\n\nc) The number of security tests do not correlate with quality of security.\n\nd) The effectiveness of an ISMS is better the more security testing techniques are used."
+  },
+  {
+    "id": 35,
+    "lo": "STE-8.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Security Test reports should be handled with a high level of confidentiality. What type of data being part of most security test reports motivates this classification?\n\nChoose ONE option.",
+    "options": [
+      "a) Name of the security tester, timeframe for test execution, test results (passed and failed test cases)",
+      "b) Used test environment, pre-set preconditions of the executed tests, used test data, procedure of test execution, detected behavior",
+      "c) List of tested CVE vulnerabilities, list of named developers, identified software development method, identified software development tools",
+      "d) Used security coding conventions, identified functional test coverage, applied vulnerability scans"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct as the name of the security tester and the test frame is irrelevant\n\nb) Is correct as the test environment, pre-set preconditions of the executed tests, the used test data, the procedure of test execution as well as the detected behavior can represent confidential data.\n\nc) Is not correct as the list of named developers, the identified software development method as well as the development tools are irrelevant.\n\nd) Is not correct as the coding functions as well as the functional test coverage is irrelevant."
+  },
+  {
+    "id": 36,
+    "lo": "STE-8.2.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Imagine you executed some security test cases as part of a penetration test for a business-critical system. One of it failed and it looks like you have identified a possible vulnerability, which might have some dramatic impact for the business. What to do before you directly motivate its mitigation?\n\nChoose TWO options.",
+    "options": [
+      "a) Vulnerability demarcation, i.e. to execute similar test cases to identify demarcation of identified vulnerability.",
+      "b) Effort estimation for mitigation action, i.e. to do a break down structure of intended mitigation",
+      "c) Mitigation design, i.e. to design the solution mitigating identified vulnerability",
+      "d) Risk adjustment 1, i.e. to doublecheck that the identified vulnerability can be exploited on production",
+      "e) You immediately start to mitigate the identified vulnerability."
+    ],
+    "answer": [
+      0,
+      3
+    ],
+    "explanation": "a) Is correct as an identified vulnerabilities still might miss some information before mitigation.\n\nb) Is not correct as it is not the task of the security tester to do an effort estimation for an identified vulnerability.\n\nc) Is not correct as it is not the task of the security tester to create a design on how to mitigate an identified vulnerability.\n\nd) Is correct as it is important to doublecheck that the identified vulnerability can be exploited on production\n\ne) Is not correct as it is not the task of the security engineer to immediately repair any finding."
+  },
+  {
+    "id": 37,
+    "lo": "STE-8.2.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "Imagine you have identified a vulnerability on CVSS level 9.8. You have doublechecked that this vulnerability can even be exploited on production, and the business confirmed that this vulnerability can have very strong negative impact. On the other hand, the application is business critical, so it\n\nis decided to mitigate the identified risk associated with the identified vulnerability: What’s your recommendation:\n\nChoose TWO options.",
+    "options": [
+      "a) If the vulnerability affects a specific feature set it should be analyzed if it is possible to switch off the specific feature containing the vulnerability.",
+      "b) In most cases it’s easier to block specific traffic on the network layer, so the task is to block the specific vulnerable traffic within the firewall.",
+      "c) If you have a modern web application firewall vulnerabilities are automatically identified and mitigated.",
+      "d) If you can add an additional security control to the list of users (e.g. by IP-filtering or adding MFA) it can be considered to reduce the risk probability by this technique.",
+      "e) In most cases the fastest and cheapest mitigation action is to avoid it completely by repairing the affected systems vulnerability."
+    ],
+    "answer": [
+      0,
+      3
+    ],
+    "explanation": "a) Is correct as switching off a specific feature can mitigate an identified risk.\n\nb) Is not correct as it depends on the type of vulnerability if this technique is successful.\n\nc) Is not correct as you cannot expect all vulnerabilities to be automatically blocked in a Web Application Firewall.\n\nd) Is correct as adding security controls can reduce risk\n\ne) Is not correct as deleting vulnerabilities can be very expensive and time consuming, so other opportunities should be analyzed in advance to mitigate risk much earlier."
+  },
+  {
+    "id": 38,
+    "lo": "STE-9.1.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "In a CI/CD environment a new pipeline is being put together for the next project you are working on. Which one of the following would you recommend being the first triggered step as part of the pipeline?\n\nChoose ONE option.",
+    "options": [
+      "a) SCA",
+      "b) SAST",
+      "c) DAST",
+      "d) IAST"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. SCA is a very fast check on the components in use and should be run before any other checks.\n\nb) Is not correct. Although SAST ensures that no security vulnerabilities remain unknown it is focused on the application code\n\nc) Is not correct. This requires the application to be running.\n\nd) Is not correct. This requires the application development to be in a later stage"
+  },
+  {
+    "id": 39,
+    "lo": "STE-9.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following test scanners & methods are scanning the application under test during run time?\n\nChoose ONE option.",
+    "options": [
+      "a) DAST",
+      "b) Static analysis",
+      "c) SCA",
+      "d) SAST"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. DAST is a dynamic scanner\n\nb) Is not correct. SA is not dynamic\n\nc) Is not correct. SCA is a static testing method\n\nd) Is not correct. SAST"
+  },
+  {
+    "id": 40,
+    "lo": "STE-9.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which test objects can be scanned by static testing tools?\n\nChoose ONE option.",
+    "options": [
+      "a) Configuration files",
+      "b) Security design",
+      "c) API endpoints",
+      "d) Processes in RAM"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct as code can be analyzed\n\nb) Is not correct. A design can be reviewed manually\n\nc) Is not correct. The code can bu the service cannot\n\nd) Is not correct. Processes can be monitored but not statical analyzed"
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 75 * 60;
+      const EXT_SECONDS = 94 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "94"
+          : "75";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 94:00 (75 minutes + 25% practice time). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 75:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          if (asset.html) return `<div class="q-table-wrap">${asset.html}</div>`;
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Open to enlarge</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagram for Question ${q.id}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

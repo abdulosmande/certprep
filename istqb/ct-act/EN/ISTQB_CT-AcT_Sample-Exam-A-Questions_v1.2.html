@@ -1,0 +1,1970 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CT-AcT v2019 — Sample Exam 1.2</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Specialist Level</div>
+        <h1>CT-AcT v2019<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">ISTQB® Certified Tester Acceptance Testing · Sample Exam 1.2 · Syllabus v2019. The timer starts when you begin the exam.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">60</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Source: ISTQB® — ISTQB_CT-AcT_Sample-Exam-A-Questions_v1.2.pdf; ISTQB_CT-AcT_Sample-Exam-A-Answers_v1.2.pdf. Copyright © ISTQB®. Questions, tables, diagrams and rationales follow these sources. Authors are acknowledged in the source PDFs.</p>
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">60 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">75 min</span>
+            <span class="time-opt-lbl">+25% practice time</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optional practice allowance: 25% extra time (15 minutes).</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 60:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CT-AcT v2019 · Sample Exam 1.2</span
+            >
+            <span class="exam-title">Certified Tester – Acceptance Testing</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 answered
+            </div>
+            <div class="timer" id="timer">60:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 questions (40 points) · <strong>65% (≥ 26 of 40 points)</strong>
+            to pass · each question is worth one point; all questions are
+            single-choice
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "AcT-1.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which one of the following statements describes the relation between business goals, business needs and requirements BEST?\n\nSelect ONE option.",
+    "options": [
+      "a) Business goals and business needs are synonyms",
+      "b) Business goals, business needs and requirements describe at different levels of abstraction, what shall be achieved",
+      "c) Business needs address the business solution whereas business requirements define the business problem or opportunity",
+      "d) To derive the business needs, the business analyst first has to understand the business goals and requirements"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Business goals and needs have different levels of abstraction\n\nb) Is correct. As stated in [AcT Syllabus], business goals, business needs, business requirements, and product requirements describe, at different levels of abstraction, what shall be achieved\n\nc) Is not correct. Business needs define the business problem or opportunity, which business analysts have to understand in order to recommend appropriate solutions through business requirements\n\nd) Is not correct. Business requirements are derived from business needs"
+  },
+  {
+    "id": 2,
+    "lo": "AcT-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following statements regarding acceptance criteria is true?\n\nSelect ONE option.",
+    "options": [
+      "a) Acceptance criteria are specific to agile frameworks where they correspond to functional requirements",
+      "b) Testers should not be involved in writing acceptance criteria to make sure that the test is independent",
+      "c) In acceptance test-driven development (ATDD), acceptance criteria replace acceptance tests",
+      "d) Acceptance criteria specify what shall be tested to verify that a requirement or user story has been implemented correctly"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Acceptance criteria are not limited to agile development\n\nb) Is not correct. Independent testers should be involved to ensure early verification of the criteria\n\nc) Is not correct. In acceptance test-driven development (ATDD), acceptance tests are written at the same time as acceptance criteria are defined but do not replace them\n\nd) Is correct. Acceptance criteria represent the test conditions which determine “what” to test"
+  },
+  {
+    "id": 3,
+    "lo": "AcT-1.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following statements regarding the quality of requirements is MOST correct?\n\nSelect ONE option.",
+    "options": [
+      "a) Vague or ambiguous requirements may lead to misunderstandings both during implementation and testing",
+      "b) In Agile development lifecycle models, requirement engineering becomes less important due to the product owner role",
+      "c) INVEST is a technique that ensure the quality of user stories or requirements, thus replacing regular reviews",
+      "d) Testers may complete unclear requirements by assumptions, as long as they discuss those assumptions with at least one stakeholder"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Unclear requirements may lead to incorrect acceptance criteria, and the resulting tests will be flawed. This will lead to rework or, even worse, the running of invalid tests, thus creating unnecessary costs\n\nb) Is not correct. In Agile, requirements engineering still needs to be performed and proper skills are required from both the product owner and the team members\n\nc) Is not correct. INVEST is not replacing reviews, it defines quality characteristics for user stories, that may be used by business analysts / product owners and testers to ensure the quality of user stories\n\nd) Is not correct. Requirements should be agreed between all key stakeholders, including the team and business stakeholders. Tester do not decide on requirements. Instead, testers should work closely with business analysts to make sure that requirements are clear and well understood by all stakeholders concerned"
+  },
+  {
+    "id": 4,
+    "lo": "AcT-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "How does ISTQB CTFL test activities relate to the IQBBA FL business analysis and requirements engineering activities?\n\nSelect ONE option.",
+    "options": [
+      "a) Business analysts who follow the IQBBA requirements engineering process will not be involved in designing test cases",
+      "b) Business analysts and tester have to decide, whether they follow the IQBBA or ISTQB lifecycle processes, because they exclude each other",
+      "c) The IQBBA solution evaluation phase precedes the ISTQB test implementation and test execution activities",
+      "d) Test analysis and test design activities may result in changes of acceptance criteria"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. IQBBA process assumes business analyst involvement in testing – reviewing test cases, providing input information etc.\n\nb) Is not correct. IQBBA and ISTQB processes are not in conflict, in fact many activities defined in these processes are related and together support similar goals\n\nc) Is not correct. IQBBA solution evaluation and ISTQB test implementation, test execution may be done in parallel\n\nd) Is correct. As stated in [AcT Syllabus], testers can contribute to the definition and verification of acceptance criteria as part of test analysis and test design activities"
+  },
+  {
+    "id": 5,
+    "lo": "AcT-1.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following statements describes the collaboration between business analysts and testers BEST?\n\nSelect ONE option.",
+    "options": [
+      "a) Business analysts collaborate on test planning and risk analysis to ensure that further on, appropriate test cases are developed and prioritized",
+      "b) Business analysts usually cannot review acceptance tests, because they do not understand the technical details",
+      "c) Testers participate in identifying business needs of stakeholders to better understand the business needs and related requirements",
+      "d) Once the requirements and acceptance criteria have been defined, business analysts are no longer involved in testing activities"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Collaboration on test planning based on risk analysis is a good opportunity to ensure that the appropriate test cases will be developed and prioritized\n\nb) Is not correct. Acceptance tests do not include technical details instead they focus on checking business acceptance criteria and can and should be therefore reviewed by business analysts\n\nc) Is not correct. This is the role of a business analyst. Testers can support requirements review to ensure acceptance criteria are clear and measurable\n\nd) Is not correct. Business analysts should be involved in other test activities, including testing preparation, execution and reporting too"
+  },
+  {
+    "id": 6,
+    "lo": "AcT-1.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following statements regarding ATDD / BDD is true?\n\nSelect ONE option.",
+    "options": [
+      "a) Behavior-Driven Development (BDD) considers acceptance test design as an activity to be handled by the test team after requirements have been finalized",
+      "b) In both Acceptance-Test Driven Development (ATDD) and Behavior-Driven Development (BDD), test cases provide examples of product use",
+      "c) In Acceptance-Test Driven Development (ATDD), test cases are written prior to the acceptance criteria",
+      "d) In both Acceptance-Test Driven Development (ATDD) and Behavior-Driven Development (BDD), acceptance test cases are written by a test automation engineer as test automation code"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. BDD involves creation of acceptance tests at early stage. In this approach acceptance criteria and acceptance test cases should be created before requirements finalization to have a greater impact on the overall development of the solution\n\nb) Is correct. As stated in [AcT Syllabus], acceptance test cases represent scenarios of usage of the product\n\nc) Is not correct. Acceptance criteria define \"what\" (what to test) and acceptance test cases define \"how\". They can be defined in the same working session, but it does not make sense to define \"how\" before \"what\"\n\nd) Is not correct: With ATDD and BDD, acceptance tests can be read and understood by business analysts and other stakeholders"
+  },
+  {
+    "id": 7,
+    "lo": "AcT-2.1.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "As a tester you participate in the project of the decision support system for granting a loan. You are asked to review the acceptance criteria for the following requirement: REQ 3.28. The automated system records critical credit application data (CCAD) needed to support application screening. Assume that it is well known what kind of data CCAD are. Which of the following would be the BEST example of an acceptance criterion for this requirement?\n\nSelect ONE option.",
+    "options": [
+      "a) The CCAD are stored in the MySQL relational database after each successful data entry procedure",
+      "b) The CCAD is not recorded if it is incomplete and a message is displayed",
+      "c) The CCAD record process is quick and reversible",
+      "d) The process for collecting CCAD meets corporate usability guidelines"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. A well-written acceptance criterion does not include technical solution details\n\nb) Is correct. This is the expected behavior that an acceptance user would like to verify. Notice that it is well known when the CCAD is incomplete, because we have the CCAD precisely defined\n\nc) Is not correct. This acceptance criterion is not precise, nor measurable\n\nd) Is not correct. This acceptance criterion does not refer to the above requirement"
+  },
+  {
+    "id": 8,
+    "lo": "AcT-2.1.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "As an acceptance tester you are analyzing the following user story for a computer web-based massively multiplayer online role-playing game (MMORPG): As an unregistered player I want to be able to register myself by defining my e-mail, login and password in a registration form so that I become a registered player Consider the following propositions of the acceptance criteria:\n\ni. A registration form is displayed on the screen\n\nii. The form is written in the Groovy language; the cursor is initially set on the ‘login’ field; after pushing the TAB button the cursor switches to ‘password’, ‘repeat password’, ‘mail’, and ‘repeat mail’ forms\n\niii. I cannot register myself if the login I choose is used by another player\n\niv. After successful registration process I am informed about it by an e-mail\n\nWhich of the above statements would you consider as well-written acceptance criteria?\n\nSelect ONE option.",
+    "options": [
+      "a) Only i. and iii.",
+      "b) Only ii.",
+      "c) Only ii. and iv.",
+      "d) Only i., iii., and iv."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "Statement ii) includes technical solutions, which should be avoided in the acceptance criteria. All the other acceptance criteria are well written, as they are precise, measureable and understandable by the stakeholders. Thus:\n\na) Is not correct\n\nb) Is not correct\n\nc) Is not correct\n\nd) Is correct"
+  },
+  {
+    "id": 9,
+    "lo": "AcT-2.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following statements describes correctly how acceptance testing may be augmented with other test techniques or approaches?\n\nSelect ONE option.",
+    "options": [
+      "a) In a model-based testing approach, acceptance tests are generated from graphical or textual models",
+      "b) In a priority-based testing approach, prioritization of acceptance tests depends on identified product risks",
+      "c) In a risk-based testing approach, acceptance criteria are derived from the tester’s experience and intuition",
+      "d) In a black-box testing approach, acceptance test scenarios follow the implemented sequence of function calls in the code"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Model-based testing uses graphical (or textual) models to obtain acceptance tests\n\nb) Is not correct. Prioritization of acceptance tests based on identified product risks relate to risk-based testing approach\n\nc) Is not correct. In a risk-based testing approach, prioritization and intensity of testing depends on previously identified product risks, not on experience\n\nd) Is not correct. Black box generally refers to testing checking system reaction on provided input, without investigating the internal code behavior"
+  },
+  {
+    "id": 10,
+    "lo": "AcT-2.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following test design techniques fits accepting testing purposes BEST?\n\nSelect ONE option.",
+    "options": [
+      "a) Static code analysis",
+      "b) Input validation",
+      "c) Equivalence partitioning",
+      "d) Defect-based test design"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. This is a technique done on the source code level, while acceptance should focus on higher business levels\n\nb) Is not correct. This can be used as an element of other black box technique but is a not a single test technique by itself\n\nc) Is correct. As stated in [AcT Syllabus], this technique can be used as part of acceptance testing\n\nd) Is not correct. Defect based test design techniques may be used for integration, system testing but rather not for acceptance testing as it aims is not to search for defects, but check business readiness of a system"
+  },
+  {
+    "id": 11,
+    "lo": "AcT-2.2.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "Assume you are testing functionality of the interface of an elevator. One of the requirements is that the elevator can work only if the total weight of the passengers does not exceed 200 kg. The elevator can reach the following floors: Ground Floor, 1st floor and 2nd floor. You want to create an acceptance test using the Gherkin language. You can use the following phrases for this purpose:\n\ni. The total weight of passengers is greater than 200 kg\n\nii. The elevator is on the ground floor\n\niii. A button ‘1st floor’ was pressed\n\niv. The elevator goes to the 1st floor\n\nv. A passenger standing at the 2nd floor calls the elevator\n\nvi. A message ‘too many passengers’ is displayed on the screen\n\nWhich of the following statements correctly matches constructs of Given/When/Then with a relevant phrase in order to create a correct test case for the given requirement?\n\nSelect ONE option.",
+    "options": [
+      "a) GIVEN ii. WHEN i. THEN vi.",
+      "b) GIVEN ii. WHEN iv. THEN v.",
+      "c) GIVEN iii. WHEN ii. THEN iv.",
+      "d) GIVEN ii. WHEN v. AND vi. THEN i."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. This test represents a situation in which the elevator cannot operate, since the total weight of the passengers exceeds the allowed limits. ii) represents a situation, i) represents an action (event), and vi) the expected result\n\nb) Is not correct. This test does not cover a reasonable operation/scenario – it just describes that some combination of events iv) and v) may occur, but does not contain any reasonable, expected result in the THEN section\n\nc) Is not correct. This test is not complete, since it does not take into account the restriction on the total weight of the passengers, given in the requirements\n\nd) Is not correct. This test would represent a correct reasoning (if the weight message is shown then the total weight exceeds 200 kg), but this does not test a useful scenario. In fact, i) is not the expected result, but an action on the system. We would like test the opposite: if the weight is too big, is the message shown?"
+  },
+  {
+    "id": 12,
+    "lo": "AcT-2.2.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "Which of the following is the BEST example of a Gherkin-style test for a web-based banking application?\n\nSelect ONE option.",
+    "options": [
+      "a) GIVEN I have $5000 on my personal account X AND I have $200 on my personal account Y WHEN I transfer $1000 from X to Y THEN I should have balance $4000 on my personal account X AND I should have balance $1200 on my personal account Y",
+      "b) GIVEN I have $5000 on my personal account X AND I have $200 on my personal account Y WHEN I click ‘Make transfer’ button AND I enter ‘3000’ into ‘Amount’ field AND I enter ‘X’ into ‘From which account’ field AND I enter ‘Y’ into ‘To which account’ field AND I click ‘Confirm transaction’ button THEN I should have balance $2000 on my personal account X AND I should have balance $3200 on my personal account Y",
+      "c) GIVEN I have $5000 on my personal account X and $600 on my personal account Y WHEN I transfer $500 from Y to X THEN I should have balance $4500 on X and balance $1100 on Y",
+      "d) GIVEN I have $5000 on my personal account X WHEN I have $600 on my personal account Y THEN I have $5600 in total on my personal accounts X and Y"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. This is a good example of a Gherkin-style test: GIVEN section describes the preconditions (a situation; a precondition), WHEN – a specified behavior (an action on the system) and THEN – the expected result (post condition, expected change)\n\nb) Is not correct. According to [AcT Syllabus], WHEN section should not refer to the user interface elements, but should only describe the action we want to invoke\n\nc) Is not correct. This scenario contains an error in the THEN section – it should state that we have $5500 on X and $100 on Y\n\nd) Is not correct. This scenario states an obvious state on the system resulted from simple calculation that does not need to be a part of acceptance test scenario"
+  },
+  {
+    "id": 13,
+    "lo": "AcT-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "In Agile an exploratory test session is conducted. Which one of the following concepts applies BEST?\n\nSelect ONE option.",
+    "options": [
+      "a) Pair programming",
+      "b) Refactoring",
+      "c) Planning poker",
+      "d) Time boxing"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. This is not a concept related to exploratory testing (ET), this term refers to one of agile development approaches\n\nb) Is not correct. This is not a concept related to ET, this term refers to one of agile development practices to be followed by development team\n\nc) Is not correct. This is a planning technique, not related to ET itself\n\nd) Is correct. Timeboxing is a concept supporting managing ET sessions, as time-boxed sessions help to control the time and effort dedicated to exploratory session"
+  },
+  {
+    "id": 14,
+    "lo": "AcT-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following statements describes an exploratory test charter BEST?\n\nSelect ONE option.",
+    "options": [
+      "a) Indicating that the tester should take the role of a novice user can be part of an exploratory test charter",
+      "b) The test charter is elaborated during the testing session according to test execution results",
+      "c) Each exploratory test charter is based on a previously defined list of activities that would be interesting to test",
+      "d) Acceptance testers use the exploratory test charter during the testing session to define the test oracle"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. As stated in [AcT Syllabus], the test charter possibly contains tactics to be used during the session (such as the type of user that shall be simulated during the exploratory session)\n\nb) Is not correct. The test charter is prepared prior to the testing session and is used by the tester during the session\n\nc) Is not correct. Test charter includes information on the role the tester takes during the session, the particular objective to be achieved during the session, the setup, the activities that would be interesting to test, the test oracle and other information – in exploratory testing there is no predefined list of activities to be followed\n\nd) Is not correct. Test oracle should be defined in a test charter, before the session"
+  },
+  {
+    "id": 15,
+    "lo": "AcT-2.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "How are beta testing and acceptance testing related?\n\nSelect ONE option.",
+    "options": [
+      "a) Beta testing is a synonym for acceptance testing used in specific application domains",
+      "b) Beta testing should include predefined acceptance test scenarios based on acceptance criteria",
+      "c) Beta testing allows the product to be tested in realistic business configurations and contexts",
+      "d) Beta testing is a systematic approach to acceptance testing and provides measurable coverage of the user stories"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Beta testing is a form of acceptance testing for commercial off-the-shelf software. It is not the same as acceptance testing\n\nb) Is not correct. Beta testing is performed by potential or existing users at their location and neither follow predefined scenarios nor use a test charter and test activities are usually not documented at all\n\nc) Is correct. During beta testing, the product is tested in various realistic configurations by actual users in their business process context\n\nd) Is not correct: beta testing is not systematic or measurable"
+  },
+  {
+    "id": 16,
+    "lo": "AcT-2.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following statements defines beta testing BEST?\n\nSelect ONE option.",
+    "options": [
+      "a) Beta testing is performed by developers at the customer's location",
+      "b) Beta testing takes place early in the development process to acquire feedback from the market",
+      "c) During beta testing, genuine users define the acceptance criteria for various realistic configurations",
+      "d) Beta testers discover defects in the product that escaped during the development process"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. It is performed by potential or existing users at their location\n\nb) Is not correct. It is performed after the product is completed to allow users evaluation of the product in real environment and provide feedback to development organization\n\nc) Is not correct. In beta tests, user test the product in various realistic configurations and they neither follow predefined scenarios nor use a test charter\n\nd) Is correct. Beta testers may discover defects in the product that escaped during the development process"
+  },
+  {
+    "id": 17,
+    "lo": "AcT-3.1.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Suppose you are testing a new professional exam support system. As input the system takes two grades from two exams. For each exam the possible grade is 0 or 1 point. As output the system returns a single string – the decision about the entitlements: if the total score is 2, the candidate receives full entitlements. If the total score is 1, she receives partial entitlements. If the total score is 0, the candidate fails and receives no entitlements.\n\nWhich of the following is the correct Decision Model and Notation (DMN) model for this situation?\n\nSelect ONE option.",
+    "options": [
+      "a) [[asset:q17-a]]",
+      "b) [[asset:q17-b]]",
+      "c) [[asset:q17-c]]",
+      "d) [[asset:q17-d]]"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. This is correct DMN decision table with 2 inputs and one output\n\nb) Is not correct. The table show no inputs – this is not DMN table\n\nc) Is not correct. The format of output presentation is not correct\n\nd) Is not correct. This is not a DMN decision table (because of the ‘Result’ column and incorrect format of the ‘Output’ column)"
+  },
+  {
+    "id": 18,
+    "lo": "AcT-3.1.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Assume you would like to create a model describing a loan request process in a bank. The loan request process starts when the customer submits a loan application. The bank then reviews the application. Regardless of whether the loan request is approved or not, a letter is sent to inform the customer of the decision. If the request is approved, the loan contract is created. You have drawn the following business process model using BPMN 2.0.\n\nWhich one of the following sentences is true with respect to this process model?\n\n[[asset:q18]]\n\nSelect ONE option.",
+    "options": [
+      "a) Verifying employment is not done when the loan status is rejected",
+      "b) Creating the loan contract is defined as a sub-process",
+      "c) Performing title search and requesting credit report are sequential tasks",
+      "d) A review credit report is optional when reviewing the loan application"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct: “Verify Employment” is systematically done after the “Record Loan Application” task and prior to “Review Loan Application” in which the decision regarding the loan application is taken\n\nb) Is correct: “Create the Loan Contract” is defined as a sub-process\n\nc) Is not correct. A parallel gateway splits the flow between “Perform Title Search” and “Request Credit Report” tasks\n\nd) Is not correct. The task “Review Credit Report” has to be done before “Review Loan Application” in the process flow"
+  },
+  {
+    "id": 19,
+    "lo": "AcT-3.2.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "As an acceptance tester you want to test the $100 withdrawal process described by the following Business Process Model and Notation (BPMN) model. You would like to achieve the following coverage criterion “execute all possible process tasks”. Consider the following test cases:\n\nTest 1: balance = $100, receipt = YES\n\nTest 2: balance = $120, receipt = NO\n\nTest 3: balance = $85\n\nTest 4: balance = $20, receipt = YES\n\nWhich of the following is the minimal set of test cases allowing to achieve required coverage?\n\n[[asset:q19]]\n\nSelect ONE option.",
+    "options": [
+      "a) Test 1, Test 3",
+      "b) Test 1, Test 2, Test 3",
+      "c) Test 2, Test 4",
+      "d) Test 1, Test 2, Test 4"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Test 1 covers all the tasks except ‘Remove card (withdrawal rejected)’, which in turn is covered by Test 3. Hence, these two tests achieve the desired coverage. Notice that in Test 1 both the tasks ‘Take receipt’ and ‘Withdraw $100, remove card’ are covered, as they are executed in parallel\n\nb) Is not correct. This set of test cases achieves the required coverage, but it is not the minimal set of test cases (which is answer a with only two test cases)\n\nc) Is not correct. Test 3 covers only two out of five tasks\n\nd) Is not correct. Test 4 is incorrectly constructed, as having balance $20 does not allow us to select the receipt printing"
+  },
+  {
+    "id": 20,
+    "lo": "AcT-3.2.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "As an acceptance tester you want to test the $100 withdrawal process described by the following BPMN model. You would like to achieve decision coverage. Consider the following test cases:\n\nTest 1: balance = $100, receipt = YES\n\nTest 2: balance = $99\n\nTest 3: balance = $120, receipt = NO\n\nTest 4: balance = $2500, receipt = YES\n\nWhich of the following is the minimal set of test cases allowing to achieve full decision coverage?\n\n[[asset:q20]]\n\nSelect ONE option.",
+    "options": [
+      "a) Test 1, Test 2, Test 4",
+      "b) Test 1, Test 2",
+      "c) Test 2, Test 3",
+      "d) Test 1, Test 2, Test 3"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "There are two decisions (denoted by the rhombuses with the X sign). The first one has two outcomes: balance >= $100 and balance < $100. The second one has also two outcomes: YES and NO. To achieve full decision coverage we need to cover all these outcomes. Notice that the rhombus with the plus sign denotes a parallel sequence, so it is not a decision.\n\nTest 1 and Test 4 cover balance >= $100 and YES\n\nTest 2 covers balance < $100\n\nTest 3 covers balance >= $100 and NO Hence, we need three test cases (1, 2, 3 or 2, 3, 4) to achieve the decision coverage. Thus:\n\na) Is not correct\n\nb) Is not correct\n\nc) Is not correct\n\nd) Is correct"
+  },
+  {
+    "id": 21,
+    "lo": "AcT-3.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following statements regarding the graphical representation of business processes is true?\n\nSelect ONE option.",
+    "options": [
+      "a) Using decision tables in BPMN allows defining test conditions corresponding to the business rules under test",
+      "b) Graphical representations of business processes must describe the complete workflow in detail, including alternative and error scenarios",
+      "c) For acceptance testing, graphical business process models should focus on the user workflows to be tested",
+      "d) Business processes should be described graphically using the DMN standard and completed with decision tables"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. This is supported by decision tables, BPMN support business process modeling in the form of diagrams\n\nb) Is not correct. Graphical representations of business processes should focus on what is to be tested. Depending on the purpose, graphical representations of business processes may cover only partially the behavior of related software systems\n\nc) Is correct. Especially in user acceptance testing, the “main objective is building confidence that the users can use the system to meet their needs, fulfill requirements, and perform business processes” [ISTQB CTFL syllabus]. Therefore, graphical business process models should focus on user workflows\n\nd) Is not correct. DMN is not for graphic business process modeling, it is a notation for decision modeling"
+  },
+  {
+    "id": 22,
+    "lo": "AcT-3.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is considered as good practice regarding business process modeling?\n\nSelect ONE option.",
+    "options": [
+      "a) Keeping all model element in one diagram considerably improves the readability of BMPN models",
+      "b) BPMN diagrams and DMN tables should include information such as traceability to user stories",
+      "c) Links to requirements or risks should be well separated from the workflow description",
+      "d) Business analysts should finalize their process models before showing them to acceptance testers"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Diagrams should be as simple as possible and be structured in sub-processes\n\nb) Is correct. Additional information such as links to user stories, requirements, risks, priorities and any other information useful for acceptance testing should be added to the diagrams using annotations\n\nc) Is not correct. Links to user stories, requirements, risks, priorities and any other information useful for acceptance testing should be added to the diagrams using annotations\n\nd) Is not correct. It should be a collaborative work between business analysts and testers, and produced artifacts shared between both groups"
+  },
+  {
+    "id": 23,
+    "lo": "AcT-3.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Your company wants to establish a new human resources management application. As tester, you propose to use an ATDD approach and to use business process models for test case design.\n\nWhich of the following statements is the LEAST meaningful argument for this approach?\n\nSelect ONE option.",
+    "options": [
+      "a) The process models will help testers to understand the use cases to be tested",
+      "b) Testers will be able to show test coverage directly within the graphical representation of business processes",
+      "c) Business process models will make it easier to detect defects in the application code",
+      "d) As business process models will be updated to maintain the tests, they will be a living documentation of the product"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Business analysts and testers collaborate to model workflows when using process modeling for ATDD. This helps the testers to understand the use cases to be tested\n\nb) Is not correct. As testers derive tests from these business process models, they can show test coverage directly within the graphical representation\n\nc) Is correct. The graphical representation of business process model does not specifically allow to locate defects in the code\n\nd) Is not correct. Business process models created and maintained for ATDD can be viewed as living documentation used by business analysts to present the actual behavior of the test object"
+  },
+  {
+    "id": 24,
+    "lo": "AcT-3.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following sentences explains BEST how business process and business rule modeling can be used for ATDD?\n\nSelect ONE option.",
+    "options": [
+      "a) In an ATDD approach, business process/rule models must be created before the project starts",
+      "b) In an ATDD approach, business process models replace acceptance criteria",
+      "c) In an ATDD approach, testers use business process and business rule models to generate acceptance tests",
+      "d) In an ATDD approach, process models are created for initial test design but are not maintained afterwards"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. In visual ATDD, business analysts and testers collaborate to model workflows and business rules using graphical notations\n\nb) Is not correct. Business process/rule models are reviewed with relevant stakeholders and contribute to the validation of the requirements and acceptance criteria, and not to replace them\n\nc) Is correct. Testers derive tests from these business process/rule models to ensure and demonstrate the required coverage through the different paths and business rules\n\nd) Is not correct. Acceptance tests are derived from process models, which are updated to maintain test cases when there is a change in requirements or user stories"
+  },
+  {
+    "id": 25,
+    "lo": "AcT-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Given the following attributes:\n\ni. Commercializability\n\nii. Functional suitability\n\niii. Viability\n\niv. Reliability\n\nv. Security\n\nvi. Cognitive ability\n\nvii. Maintainability\n\nWhich one of the following answers contains quality attributes that are MOST relevant for acceptance testing?\n\nSelect ONE option.",
+    "options": [
+      "a) ii, v and vi",
+      "b) ii, v and vii",
+      "c) i, ii and vi",
+      "d) iii, iv and v"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Quality characteristics defined in ISO/IEC 25010 are:\n\n• Functional suitability\n\n• Reliability\n\n• Performance efficiency\n\n• Usability\n\n• Security\n\n• Compatibility\n\n• Maintainability\n\n• Portability\n\nWhich means that ii, v and vii are correct. Thus:\n\na) Is not correct\n\nb) Is correct\n\nc) Is not correct\n\nd) Is not correct"
+  },
+  {
+    "id": 26,
+    "lo": "AcT-4.1.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "The standard ISO 25010 defines a quality in use model with characteristics and subcharacteristics.\n\nWhich elements of the following list is a characteristic of quality in use according to this standard?\n\nSelect ONE option.",
+    "options": [
+      "a) Efficiency",
+      "b) Usability",
+      "c) Compatibility",
+      "d) Portability"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Efficiency is one out of five characteristics in the ISO 25010 quality in use model\n\nb) Is not correct. Usability is part of the non-functional characteristics according to ISO 25010 but is not part of the quality in use model\n\nc) Is not correct. Compatibility is part of the non-functional characteristics according to ISO 25010 but is not part of the quality in use model\n\nd) Is not correct. Portability is part of the non-functional characteristics according to ISO 25010 but is not part of the quality in use model"
+  },
+  {
+    "id": 27,
+    "lo": "AcT-4.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements corresponds BEST to a UX requirement analysis activity?\n\nSelect ONE option.",
+    "options": [
+      "a) Personas are used to analyze products or solutions from competitors",
+      "b) User profiles are used to determine different levels of business knowledge",
+      "c) Security requirements are derived from usage scenarios",
+      "d) Environmental conditions such as light conditions are obtained from a task analysis"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Creating personas may be part of the user profile analysis when analyzing UX requirements, but they are not used to analyze products or solutions from competitors\n\nb) Is correct. Measuring the level of business knowledge may be part of the user profile analysis when analyzing UX requirements\n\nc) Is not correct: security requirements analysis is not usually part of UX requirements analysis\n\nd) Is not correct. Context analysis may include analysis of external conditions such as light condition, but these conditions result from context analysis not from task analysis"
+  },
+  {
+    "id": 28,
+    "lo": "AcT-4.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following scenarios characterizes UX task analysis BEST?\n\nSelect ONE option.",
+    "options": [
+      "a) Users are qualified depending on their physical and intellectual characteristics",
+      "b) Use cases are analyzed and represented through business process models",
+      "c) External conditions are considered as input for subsequent design steps",
+      "d) Inspirations from similar sectors are sought to identify successful solutions"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. This relates to user analysis\n\nb) Is correct. During task analysis, functionality is identified and formalized, for example through use cases that can be therefore represented as business process models\n\nc) Is not correct. This relates to context analysis\n\nd) Is not correct. This relates to competition analysis"
+  },
+  {
+    "id": 29,
+    "lo": "AcT-4.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following usability testing techniques matches the test objective BEST?\n\nSelect ONE option.",
+    "options": [
+      "a) Expert reviews help to understand how users interact with a system and what is more or less visible",
+      "b) Biometrics-based evaluation help to understand retrospectively, how users interacted with the system and to improve it",
+      "c) Log file analysis performed by usability experts identifies strong points of an interface that attract the user's attention",
+      "d) Walkthrough and thinking aloud methods can indicate difficulties users experience with certain tasks"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. In expert reviews usability experts evaluate the usability of the system or product according to pre-defined criteria or checklists based upon usability heuristics to identify strong and weak points of an interface\n\nb) Is not correct. In biometrics-based evaluations user behavior is monitored with specific biometric devices to understand how the user interacts with a page or a system\n\nc) Is not correct. Log files analysis allows to analyze retrospectively how the users interacted with the system to improve it\n\nd) Is correct. In walkthrough and thinking aloud methods, users explore the product and may perform given specific tasks. This helps to see how they interact with the product and to learn about expectations or difficulties"
+  },
+  {
+    "id": 30,
+    "lo": "AcT-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following statements regarding performance testing is MOST correct?\n\nSelect ONE option.",
+    "options": [
+      "a) Depending on the model used to simulate the workload, performance tests are called load, stress or endurance / stability tests",
+      "b) Performance testing aims to determine a system’s robustness against malicious attacks",
+      "c) The performance of the system is measured in a context that reflects, as far as possible, representative operating conditions",
+      "d) The performance test results serve to determine hardware and software performance requirements"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. This classification refers to types of testing to be performed, depending on what needs to be measured\n\nb) Is not correct. Performance testing aims to determine a system’s responsiveness and stability under certain conditions\n\nc) Is correct. In a typical performance test, concurrent users or transactions are simulated with specific tools to generate a given workload which mimics, as close as possible, actual conditions with real users and realistic interactions\n\nd) Is not correct. Results of a performance test are measured, and compared to pre-defined performance requirements"
+  },
+  {
+    "id": 31,
+    "lo": "AcT-4.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following combinations of given perspective and statement matches BEST?\n\nSelect ONE option.",
+    "options": [
+      "a) From a business perspective, computing power and architecture are major parameters for fine-tuning the system",
+      "b) From a user perspective, missing feedback from the system when processing a request it is a problem",
+      "c) From a technical perspective, the number of concurrent user and the types of transactions performed are major elements",
+      "d) From a business perspective, the choice of performance test tools strongly depends on the applied test techniques"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Computing power and architecture belong to the technical perspective\n\nb) Is correct. From a user perspective, the perceived response time is crucial as it reflects his real experience with the system\n\nc) Is not correct. The number of concurrent user and the types of scenarios or transactions are about business perspective\n\nd) Is not correct. This is not a subject of interest for a business perspective"
+  },
+  {
+    "id": 32,
+    "lo": "AcT-4.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following acceptance criteria relates to security requirements?\n\nSelect ONE option.",
+    "options": [
+      "a) The system's response time shall not exceed 3 seconds",
+      "b) The system shall be web-based",
+      "c) The graphical user interface shall comply with corporate style guides",
+      "d) Normal users shall have restricted access to private data"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Response time requirements relate to performance quality characteristics\n\nb) Is not correct. This is a technical restriction of the solution space\n\nc) Is not correct. Corporate style guides are crucial for branding and may include aspects that relate to usability, but they usually do not cover security requirements which are rather part of programming guidelines\n\nd) Is correct. Confidentiality of private data is a security requirement"
+  },
+  {
+    "id": 33,
+    "lo": "AcT-5.1.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "The project team is currently facing a difficult situation originating from their difficulty in envisioning the future and the necessary steps to reach it together with a certain loss of motivation due to a strong feeling of stagnation. You try to unlock the situation by proposing a workshop. Which one would fit the best?\n\nSelect ONE option.",
+    "options": [
+      "a) You ask two volunteers to play a part in front of the team. One will try to defend the project and propose positive arguments and ways forward. The other will do the opposite. You then recapitulate the major arguments of both sides and debate them openly with the team",
+      "b) You draw a staircase with 11 steps, each of them representing a major milestone of the project. The bottom of the stairs corresponds to the first day of the project and the upper step means that the project is released. You locate the present situation in the middle of the stairs. The team is asked to identify and discuss the major steps down and up",
+      "c) You organize a day out with challenging physical exercises practiced in teams followed by an after work dinner and drink. After all, nothing is best for motivation than hard times together, strong common objectives and a promise of good time",
+      "d) You visualize all remaining major milestones of the project, starting with today and ending with project release. Then, you ask the team to identify and discuss the necessary actions to move forward from the present situation and to reach the milestones"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. This approach might come to help in identifying some of the problems but it will not help envisioning the future neither will it re- motivate the team\n\nb) Is correct. By identifying what has already been achieved (back) and what is left to be done and how, the team will be able to get a better understanding on where they are and how they will go forward\n\nc) Is not correct. It might work on motivation and team spirit but it will not help envision the future neither will it help in getting a clue on what has already been achieved\n\nd) Is not correct. By starting the analysis with the present situation, the team will only work on the future steps. They will not envision what has been achieved and might even get more demotivated by what is left to be done and how unreachable it might seem to be"
+  },
+  {
+    "id": 34,
+    "lo": "AcT-5.1.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "You are leading a brand new project team whose members are coming from all over the organization and have no former experience in working together. You need to build a common vision and team spirit. What workshop would fit BEST?\n\nSelect ONE option.",
+    "options": [
+      "a) You invite the team members and ask them to design their own (team-wise) emblem representing their values, beliefs, goals, tasks together than a common motto",
+      "b) You invite every member in turn to describe his/her past experience and his/her major achievements in the organization or in their former job",
+      "c) You ask every member in turn to write down three things he/she likes and dislikes in the organization and to post them on a wall. A volunteer is then chosen to read randomly some posts that are then discussed with the group",
+      "d) You draw a staircase with 11 steps, each of them representing a major milestone of the project. The bottom of the stairs corresponds to the first day of the project and the upper step means that the project is released. You locate the present situation in the top of the stairs. The team is asked to identify and discuss the major steps downwards"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. By representing their values, beliefs, goals, tasks, the team’s members will get a complete definition of the team’s identity and you will align all the members on the same vision\n\nb) Is not correct. You might either break the ice or get a very boring meeting but you will for sure completely miss the goal\n\nc) Is not correct. This workshop is rather used for expressing the unsaid. It will neither bring any team spirit nor will it align the team on a common objective\n\nd) Is not correct. This workshop is pretty useless unless the goal is to remember the good old days (as it only allows to envision the past steps when the project is achieved)"
+  },
+  {
+    "id": 35,
+    "lo": "AcT-5.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements regarding defects is MOST correct?\n\nSelect ONE option.",
+    "options": [
+      "a) Regular meetings between business analysts and testers are necessary to report discrepancies between actual and expected outcome",
+      "b) Testers should provide accurate information regarding the difference between the expected test result and the actual result",
+      "c) If the defect turns out to be a bug, the tester writes a defect report and sends it to the business analyst for further investigation",
+      "d) The tester should analyze the potential impact of a defect on system usage, before communicating it to the business analyst"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Testers first report discrepancies through defect reports which are discussed afterwards\n\nb) Is correct. A defect report contains all relevant information the tester can provide to help the business analyst understand what happened and to assess the deviation should be provided\n\nc) Is not correct. All defects should be documented and assessed by the business analyst, who may then decide. whether it is a defect or not\n\nd) Is not correct. Testers are testing experts, not business experts. It is the business analyst who is capable to judge the impact of a defect on system usage best"
+  },
+  {
+    "id": 36,
+    "lo": "AcT-5.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following activities is most likely performed by the business analyst as part of defect analysis?\n\nSelect ONE option.",
+    "options": [
+      "a) Identify the requirements / user stories that are not satisfied",
+      "b) Assess the impact of corrective actions on other parts of the system's implementation",
+      "c) Analyze the function that failed step by step to identify the cause of the defect",
+      "d) Check, whether other paths in the business process model perform as intended"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. During defect analysis activities, the business analyst identifies the acceptance criteria that are not satisfied to analyze the defect. Those criteria are part of a requirement / user story\n\nb) Is not correct. The business analyst does not have sufficient insight in the implementation to be able to assess the impact of changes on other parts of the system’s implementation. Developers do have this insight\n\nc) Is not correct. Debugging is a developer’s task\n\nd) Is not correct. In individual cases, business analysts may perform this check to gather confidence in the system, but in general, the other paths are covered by other tests which are performed by testers"
+  },
+  {
+    "id": 37,
+    "lo": "AcT-5.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following information is most likely part of an acceptance test summary report?\n\nSelect ONE option.",
+    "options": [
+      "a) Information to evaluate the level of risk for product release",
+      "b) Technical details on defect fixes",
+      "c) Test strategy and test design methods",
+      "d) Test procedure information"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Based on the test summary report, decision makers should be able to determine whether the system under test has reached the necessary pre-defined level of quality and may be released to production or not\n\nb) Is not correct. Defect fixes are documented in the related defect report\n\nc) Is not correct. Test strategy and test design methods are part of the test plan\n\nd) Is not correct. Test procedure information is contained in the test procedure specification. They may be part of a test report, but not of the test summary report"
+  },
+  {
+    "id": 38,
+    "lo": "AcT-5.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following techniques is most likely applied to ensure the quality of acceptance testing activities?\n\nSelect ONE option.",
+    "options": [
+      "a) Review of the source code to ensure traceability of user stories to system components",
+      "b) Verification of the traceability between user stories and test cases to make sure it is up to date",
+      "c) Checklist-based verification of requirements to ensure their completeness and quality",
+      "d) Eye tracking to verify the feasibility of previously defined user acceptance tests"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Code reviews are used to ensure the quality of software implementations\n\nb) Is correct. Traceability between requirements / user stories, acceptance criteria, test cases, and defects clarify dependencies and provide simple access to related information\n\nc) Is not correct. Even if acceptance testers should participate in requirements reviews, the verification of the test basis is not a QA technique for acceptance testing activities\n\nd) Is not correct. Eye tracking is a technique applied during usability testing. It is used to ensure the quality of the system, not of the acceptance tests"
+  },
+  {
+    "id": 39,
+    "lo": "AcT-5.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following sentences describes BEST a major advantage when business analysts and testers review the acceptance criteria together?\n\nSelect ONE option.",
+    "options": [
+      "a) A shared vision between the business analyst and the tester on acceptance criteria facilitates the design of acceptance test cases",
+      "b) A joint review ensures that non-functional quality criteria are taken into account",
+      "c) The review of acceptance criteria helps to verify that acceptance test cases cover business processes, business rules and business risks",
+      "d) The review of acceptance criteria is a good practice to improve the quality of test reports"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Good acceptance provide measurable pass/fail criteria, which facilitates the design of the corresponding test cases\n\nb) Is not correct. A joint review certainly reduces the risk of forgetting about non-functional quality criteria, but it is not a guarantee\n\nc) Is not correct. This is more an advantage of the review of acceptance test cases\n\nd) Is not correct. This is more an advantage of the review of test reports"
+  },
+  {
+    "id": 40,
+    "lo": "AcT-5.3.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which tool fits the mentioned acceptance test activities BEST?\n\nSelect ONE option.",
+    "options": [
+      "a) Requirements management tools for managing acceptance test execution campaigns",
+      "b) Test management and automation tools for business process model-based acceptance test generation",
+      "c) Business process management tools for modeling business processes and rules",
+      "d) Model-based testing tools for managing incidents"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Test management tools and test automation tools are used to manage test execution campaigns, but not requirements management tools\n\nb) Is not correct. Business process-based test case generators are used for generating tests from business process models\n\nc) Is correct. Business process management tools are used for modeling business processes and rules\n\nd) Is not correct. Defect / incident management tools are used for managing incidents"
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 60 * 60;
+      const EXT_SECONDS = 75 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "75"
+          : "60";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 75:00 (60 minutes + 25% practice time). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 60:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {"q17-a": {"src": "assets/ISTQB_CT-AcT_Sample-Exam-A-Questions_v1.2/q17-a.png", "alt": "Entitleme nts table\nInputs Outputs\nu Exam #1 Exam #2 Entitlements\n1 0 0 No\n2 0 1 Partial\n3 1 0 Partial\n4 1 1 Full", "kind": "table"}, "q17-b": {"src": "assets/ISTQB_CT-AcT_Sample-Exam-A-Questions_v1.2/q17-b.png", "alt": "Entitl ements table\nExam result Entitlements\n0 No\n1 Partial\n2 Full", "kind": "table"}, "q17-c": {"src": "assets/ISTQB_CT-AcT_Sample-Exam-A-Questions_v1.2/q17-c.png", "alt": "Entitleme nts table\nInputs Outputs\nu Exam #1 Exam #2 No entitlements Partial entitlements Full entitlements\n1 0 0 YES NO NO\n2 0 1 NO YES NO\n3 1 0 NO YES NO\n4 1 1 NO NO YES", "kind": "table"}, "q17-d": {"src": "assets/ISTQB_CT-AcT_Sample-Exam-A-Questions_v1.2/q17-d.png", "alt": "Entitleme nts table\nRule Exam #1 Exam #2 Result Output\n1 e1 e2 e1 + e2 0: no\n1: partial\n2: full", "kind": "table"}, "q18": {"src": "assets/ISTQB_CT-AcT_Sample-Exam-A-Questions_v1.2/q18.png", "alt": "Process diagram from the source question", "kind": "diagram"}, "q19": {"src": "assets/ISTQB_CT-AcT_Sample-Exam-A-Questions_v1.2/q19.png", "alt": "Process diagram from the source question", "kind": "diagram"}, "q20": {"src": "assets/ISTQB_CT-AcT_Sample-Exam-A-Questions_v1.2/q20.png", "alt": "Process diagram from the source question", "kind": "diagram"}};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          if (asset.html) return `<div class="q-table-wrap">${asset.html}</div>`;
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Open to enlarge</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagram for Question ${q.id}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

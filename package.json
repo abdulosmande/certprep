@@ -1,0 +1,12 @@
+{
+  "name": "certprep",
+  "private": true,
+  "scripts": {
+    "test": "node scripts/validate.cjs",
+    "test:browser": "node scripts/browser-check.cjs",
+    "test:practice": "node scripts/practice-check.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

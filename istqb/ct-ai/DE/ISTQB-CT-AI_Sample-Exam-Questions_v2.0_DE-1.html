@@ -1,0 +1,1979 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CT-AI v1.0 — Probeprüfung 2.0 DE</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .q-text, .option-text, .header-left { min-width: 0; overflow-wrap: anywhere; }
+      .meta-lbl { overflow-wrap: anywhere; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Specialist Level</div>
+        <h1>CT-AI v1.0<br /><em>Probeprüfung</em></h1>
+        <p class="start-subtitle">ISTQB® Certified Tester AI Testing · Probeprüfung 2.0 DE · Lehrplan v1.0. Der Timer startet mit der Prüfung.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Fragen</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">60</span>
+            <div class="meta-lbl">Minuten</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">47</span>
+            <div class="meta-lbl">Punkte</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Bestehen</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Quelle: ISTQB® / German Testing Board — ISTQB-CT-AI_Sample-Exam-Questions_v2.0_DE-1.pdf; ISTQB-CT-AI_Sample-Exam-Answers_v2.0_DE-1.pdf. Copyright © ISTQB® / German Testing Board e.V.. Fragen, Tabellen, Diagramme und Begründungen wurden aus diesen Quellen übernommen. Autoren und Übersetzer sind in den Quell-PDFs genannt.</p>
+        <div class="time-option-label">Prüfungsdauer</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">60 Min.</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">75 Min.</span>
+            <span class="time-opt-lbl">+25 % Übungszeit</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optionale Verlängerung der Übungszeit um 25 %: 15 Minuten zusätzlich.</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Prüfung starten
+        </button>
+        <p class="start-note" id="start-note-txt">
+          Der Timer zählt von 60:00 herunter. Nach Ablauf der Zeit wird
+          die Prüfung automatisch abgegeben.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CT-AI v1.0 · Probeprüfung 2.0 DE</span
+            >
+            <span class="exam-title">Certified Tester – AI Testing</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 beantwortet
+            </div>
+            <div class="timer" id="timer">60:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Zurücksetzen
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Abgeben
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 Fragen (47 Punkte) · <strong>Bestanden ab 31 von 47 Punkten (65 %)</strong>
+            · Je Frage sind 1–2 Punkte möglich. Die Anzahl der auszuwählenden Antworten
+            steht bei jeder Frage.
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Prüfung abgeschlossen</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Benötigte Zeit: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Richtig</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Falsch</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Unbeantwortet</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Neustart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Prüfung abgeben?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Abbrechen
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Abgeben
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "AI-1.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen liefert das BESTE Beispiel für den \"KI-Effekt\"?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Menschen verlieren ihren Arbeitsplatz, weil KI-basierte Systeme ihre Aufgaben billiger und besser erledigen",
+      "b) Wettbewerbliche Computerspiele verlieren an Popularität, da KI-basierte Systeme immer gewinnen",
+      "c) Regelbasierte Expertensysteme für die medizinische Diagnose werden nicht mehr als KI angesehen",
+      "d) Die Menschen glauben, dass die KI die Welt übernehmen wird, wie in Filmen gezeigt"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Menschen in vielen Berufen könnten ihren Arbeitsplatz durch KI-basierte Systeme verlieren, aber das ist einfach ein Fortschritt und nicht der \"KI-Effekt\". Vergleiche Definition von KI-Effekt in CT-AI Lehrplan, Kapitel 1.1, Absatz 3.\n\nb) FALSCH – Bei dem KI-Effekt geht es nicht um den Vergleich zwischen KI-basierten System und dem Wettbewerb, sondern um die Wahrnehmung dessen, was KI ausmacht. Vergleiche Definition von KI-Effekt in CT-AI Lehrplan, Kapitel 1.1, Absatz 3.\n\nc) KORREKT – Der \"KI-Effekt\" ist definiert als die Veränderung der Definition von KI im Zuge des technologischen Fortschritts. Regelbasierte Systeme für die medizinische Diagnose waren in den 1970er und 1980er Jahren beliebte Beispiele für KI, werden aber heute oft nicht als KI angesehen. Vergleiche CT-AI Lehrplan, Kapitel 1.1, Absatz 2, zweite Hälfte.\n\nd) FALSCH – Die Leichtgläubigkeit von Kinobesuchern, die glauben, dass Killerroboter die Welt erobern werden, ist nicht der \"KI-Effekt\". Vergleiche CT-AI Lehrplan, Kapitel 1.1, Absatz 2 zu Wettbewerb im Schach."
+  },
+  {
+    "id": 2,
+    "lo": "AI-1.4.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Optionen ist KEINE Technologie, die zur Implementierung von KI verwendet wird?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Stützvektormaschinen",
+      "b) Entscheidungsbäume",
+      "c) TensorFlow",
+      "d) Bayessche Modelle"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Stützvektormaschinen sind eine Form des maschinellen Lernens. Siehe CT- AI Lehrplan, Kapitel 1.4.\n\nb) FALSCH – Entscheidungsbäume sind eine Form des maschinellen Lernens. Siehe CT-AI Lehrplan, Kapitel 1.4.\n\nc) KORREKT – TensorFlow ist keine KI-Technik, sondern ein konkretes KI-Entwicklungs- Framework. Siehe CT-AI Lehrplan, Kapitel 1.5, letzter Aufzählungspunkt.\n\nd) FALSCH – Die Bayesschen Modelle sind eine Form des maschinellen Lernens. Siehe CT-AI Lehrplan, Kapitel 1.4."
+  },
+  {
+    "id": 3,
+    "lo": "AI-1.6.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen über die Hardware, die zur Implementierung von KI-basierten Systemen verwendet wird, ist am wahrscheinlichsten RICHTIG?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Die Prozessoren, die zum Trainieren eines mobilen Empfehlungssystems verwendet werden, müssen mit den Prozessoren des Mobiltelefons identisch sein.",
+      "b) Grafikprozessoren (GPUs) sind eine gute Wahl für die Implementierung eines KI-basierten Bildverarbeitungssystems",
+      "c) Deep-Learning-Systeme müssen mit KI-spezifischen Chips trainiert, bewertet und getestet werden",
+      "d) Es ist immer besser, Prozessoren mit mehr Bits zu wählen, um eine ausreichende Genauigkeit für KI-basierte Systeme zu erreichen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Die beiden Tätigkeiten des Trainings eines ML-Modells und der Inferenz aus diesem Modell sind recht unterschiedlich, so dass es normalerweise keinen Grund gibt, sie auf denselben Prozessoren durchzuführen. Vergleiche CT-AI Lehrplan, Kapitel 1.6, Absatz 1.\n\nb) KORREKT – Grafikprozessoren sind für die parallele Verarbeitung von Bildern mit Tausenden von Kernen ausgelegt, was in etwa dem entspricht, was für ein KI-basiertes Computer-Vision-System erforderlich ist, das höchstwahrscheinlich als neuronales Netz implementiert würde. Vergleiche CT-AI Lehrplan, Kapitel 1.6, Absatz 3, Satz 2.\n\nc) FALSCH – Es ist nach wie vor möglich, ein einfaches Deep-Learning-System auf einem PC mit begrenzter GPU-Unterstützung zu trainieren, zu bewerten und zu testen - es sind also keine speziellen Chips für KI erforderlich, aber sie wären viel schneller. Vergleiche CT-AI Lehrplan, Kapitel 1.6, Absatz 1, Satz 1 und 2: Auch universelle CPUs sind möglich.\n\nd) FALSCH – Viele KI-basierte Systeme konzentrieren sich nicht auf exakte Berechnungen, sondern eher auf probabilistischen Bestimmungen, so dass die Genauigkeit von Prozessoren mit vielen Bits oft unnötig ist. Vergleiche CT-AI Lehrplan, Kapitel 1.6, Absatz 2, Aufzählungspunkt 1"
+  },
+  {
+    "id": 4,
+    "lo": "AI-1.8.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Optionen beschreibt ein realistisches Risiko für das Transferlernen eines neuen Modells auf Basis eines vortrainierten Modells?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Die mit der Aufgabe betrauten Datenwissenschaftler kennen die erforderliche Funktion des neuen Modells nicht.",
+      "b) Durch das Transferlernen sinkt die Transparenz der wiederverwendeten Teile des vortrainierten Modells.",
+      "c) Verzerrungen aus dem zum Training des vortrainierten Modells könnten unerkannt übernommen werden.",
+      "d) Die Verwendung derselben Datenvorbereitungsschritte für beide Modelle kann in unterschiedlichen funktionalen Leistungen münden."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Die mit der Aufgabe betrauten Datenwissenschaftler kennen eher die Unterschiede nicht. Siehe CT AI-Lehrplan, Kapitel 1.8.3, Aufzählungspunkt 2. Die Funktion des neuen (!) Modells sollten sie sehr wohl kennen. Das ist immerhin ihr Job. Insofern könnte das durchaus ein generelles Risiko sein. Es ist jedoch nicht spezifisch für Transferlernen.\n\nb) FALSCH – Es kann eher dem vortrainierten Modell an Transparenz mangeln und dieser Mangel kann übernommen werden. Das heißt, dass insgesamt die Transparenz des neuen Modells geringer sein kann als die Transparenz eines komplett neu entwickelten Modells. Siehe CT AI-Lehrplan, Kapitel 1.8.3, Aufzählungspunkte 1, 4 und 5. Auf die (Transparenz der) wiederverwendeten Teile selbst hat die Wiederverwendung jedoch keinen Einfluss.\n\nc) KORREKT – Unzulänglichkeiten wie z. B. Verzerrungen im vortrainierten Modell können unerkannt übernommen werden. Siehe CT AI-Lehrplan, Kapitel 1.8.3, Aufzählungspunkt 4.\n\nd) FALSCH – Die Verwendung unterschiedlicher Datenvorbereitungsschritte kann in unterschiedlichen funktionalen Leistungen münden. Siehe CT AI-Lehrplan, Kapitel 1.8.3, Aufzählungspunkt 3. Durch die Verwendung derselben Schritte könnten Unzulänglichkeiten mit übernommen werden. Das würde jedoch nicht in unterschiedlicher funktionaler Leistung münden."
+  },
+  {
+    "id": 5,
+    "lo": "AI-2.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen ist AM EHESTEN geeignet, eine Anforderung an die Autonomie eines KI-basierten Systems zu spezifizieren?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Das System muss einen sicheren Abstand zu anderen Fahrzeugen einhalten, bis der Fahrer die Bremse oder das Gaspedal betätigt.",
+      "b) Das System soll durch Fernüberwachung des E-Mail-Verkehrs die bevorzugte Art der Beantwortung von E-Mails lernen.",
+      "c) Das System vergleicht seine Vorhersagen zu den Hauspreisen mit den tatsächlichen Verkaufspreisen, um festzustellen, ob es neu trainiert werden muss.",
+      "d) Es muss möglich sein, das Verhalten des Systems in weniger als einem Tag so zu ändern, dass es mit verschiedenen Arten von Benutzern funktioniert."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Diese Anforderung definiert die menschlichen Eingriffe, die das Ende des autonom arbeitenden Systems bestimmen. Vergleiche CT-AI Lehrplan, Kapitel 2.2, Absatz 3: „In diesem Lehrplan wird Autonomie als die Fähigkeit des Systems betrachtet, über längere Zeiträume unabhängig von menschlicher Aufsicht und Kontrolle zu arbeiten.“\n\nb) FALSCH – Diese Anforderung spezifiziert eine erforderliche Funktion, wie das System selbstlernend arbeiten soll. Hier wird kein Bezug dazu hergestellt, ob das System unabhängig vom Menschen arbeiten soll. Vergleiche CT-AI Lehrplan, Kapitel 2.2, Absatz 3.\n\nc) FALSCH – Diese Anforderung legt fest, wie das System mit der Konzeptabweichung umgeht, die in diesem Fall höchstwahrscheinlich durch Veränderungen auf dem Immobilienmarkt verursacht wird. Hier wird kein Bezug dazu hergestellt, ob das System unabhängig vom Menschen arbeiten soll. Vergleiche CT-AI Lehrplan, Kapitel 2.2, Absatz 3.\n\nd) FALSCH – Es handelt sich um eine Anforderung an die Anpassungsfähigkeit – die maximale Zeit, die für eine Änderung des Systems benötigt werden sollte. Hier wird kein Bezug dazu hergestellt, ob das System unabhängig vom Menschen arbeiten soll. Vergleiche CT-AI Lehrplan, Kapitel 2.2, Absatz 3."
+  },
+  {
+    "id": 6,
+    "lo": "AI-2.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen über Verzerrungen in KI-basierten Systemen ist NICHT richtig?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Voreingenommenheit kann dadurch verursacht werden, dass die Nutzer eines Buchempfehlungssystems Entscheidungen treffen, die das System absichtlich dazu veranlassen, schlechte Vorschläge zu machen",
+      "b) Das System zur Vorhersage des Sterbealters von Arbeitnehmern kann verzerrt werden, wenn die Trainingsdaten aus einem Datensatz von Patienten stammen, die alle im Ruhestand sind.",
+      "c) Die Verwendung von Trainingsdaten, die von Personen stammen, die eine Kreditkarte besitzen und verwenden, kann zu Verzerrungen im Kreditwürdigkeitssystem führen.",
+      "d) Das Navigationssystem kann durch die Verwendung eines Routenplanungsalgorithmus verzerrt werden, der zu komplex ist, um ihn typischen Nutzern zu erklären."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Voreingenommenheit kann dadurch verursacht werden, dass die Nutzer absichtlich die Selbstlernfähigkeit eines KI-basierten Systems vergiften. Siehe „Stichprobenverzerrung“ in CT-AI Lehrplan, Kapitel 2.4, Absatz 3, Stichpunkt 2.\n\nb) FALSCH – Eine Verzerrung kann entstehen, wenn die Trainingsdaten nicht korrekt mit den Personen übereinstimmen, auf die das System angewendet werden soll. Zum Beispiel sind Angestellte in der Regel jünger als Patienten im Ruhestand. Siehe „Stichprobenverzerrung“ in CT-AI Lehrplan, Kapitel 2.4, Absatz 3, Stichpunkt 2.\n\nc) FALSCH – Eine Verzerrung kann entstehen, wenn die Trainingsdaten nicht korrekt mit den Personen übereinstimmen, auf die das System angewendet werden soll. So werden beispielsweise die meisten Kreditkartennutzer bereits als kreditwürdig eingestuft, was ein typisches Beispiel für eine Verzerrung der Stichprobe ist. Siehe „Stichprobenverzerrung“ in CT-AI Lehrplan, Kapitel 2.4, Absatz 3, Stichpunkt 2.\n\nd) KORREKT – Wenn der Algorithmus nicht erklärt werden kann, dann fehlt es ihm an Erklärbarkeit, aber das bedeutet nicht, dass er voreingenommen oder unvoreingenommen ist bzw. dass Verzerrung vorliegt. Mit Erklärbarkeit kann das Vertrauen gestärkt werden, siehe CT-AI Lehrplan, Kapitel 2.8, zweite Aufzählung, Stichpunkt 3."
+  },
+  {
+    "id": 7,
+    "lo": "AI-2.6.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welcher der folgenden Fälle ist AM EHESTEN ein Beispiel für Reward- Hacking?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Das Programmierer-Assistententool optimiert den Code, um die Antwortzeiten zu verkürzen und gleichzeitig sicherzustellen, dass die funktionalen Anforderungen erfüllt werden.",
+      "b) Ein Anästhesiegerät, das die Patienten während der Operation stabil halten soll, gibt zu viele Dosen ab und die Patienten wachen nicht so schnell auf wie erwartet.",
+      "c) Die Drittentwicklungsorganisation bezahlte ihre KI-Programmierer auf der Grundlage der Anzahl der von ihnen geschriebenen Codezeilen.",
+      "d) Eine Art von KI, die bei Computerspielen gegen Menschen eingesetzt wird und darauf ausgerichtet ist, die höchste Punktzahl zu erreichen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Es scheint, dass das Instrument seine beiden Ziele erreicht und keine nachteiligen Auswirkungen hat, so dass es sich wahrscheinlich nicht um \"Belohnungs- Hacking\" handelt. Belohnungs-Hacking resultiert in unerwarteten oder gar schädlichen Funktionen, siehe CT-AI Lehrplan, Kapitel 2.7, Satz 1.\n\nb) KORREKT – Dies könnte ein \"Belohnungs-Hacking\" sein (siehe CT-AI Lehrplan, Kapitel 2.7, Satz 1), wenn das System ein Ziel zum Nachteil anderer erreicht, in diesem Fall die Notwendigkeit, dass die Patienten aufwachen.\n\nc) FALSCH – Belohnungs-Hacking ist keine Form der Bezahlung von KI-Entwicklern. Siehe CT-AI Lehrplan, Kapitel 2.7, Satz 1.\n\nd) FALSCH – Einige spielerische KI-basierte Systeme werden durch eine Belohnungsfunktion gesteuert, aber dies ist kein \"Belohnungs-Hacking\", bei dem es um unerwartete oder schädliche Ergebnisse geht, siehe CT-AI Lehrplan, Kapitel 2.7, Satz 1."
+  },
+  {
+    "id": 8,
+    "lo": "AI-2.8.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der nachstehend aufgeführten Eigenschaften eines KI-basierten Systems dürfte Schwierigkeiten verursachen, wenn es in einem sicherheitsrelevanten Bereich angewendet werden soll?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Probabilistisch",
+      "b) Erklärbar",
+      "c) Interpretierbar",
+      "d) Deterministisch"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Probabilistisch - ein eindeutiges Problem für sicherheitsrelevante Systeme, siehe CT-AI Lehrplan, Kapitel 2.9 (eigentlich 2.8, wenn 2.5 nicht fehlen würde), Aufzählungspunkt 3\n\nb) FALSCH – Erklärbar - normalerweise für sicherheitsrelevante Systeme erforderlich und somit nicht problematisch, vergleiche CT-AI Lehrplan Kapitel 2.8, letzter Aufzählungspunkt „Erklärbarkeit“\n\nc) FALSCH – Interpretierbar - normalerweise für sicherheitsrelevante Systeme erforderlich und somit nicht problematisch, vergleiche CT-AI Lehrplan Kapitel 2.8, vorletzter Aufzählungspunkt „Interpretierbarkeit“\n\nd) FALSCH – Deterministisch - normalerweise für sicherheitsrelevante Systeme erforderlich, siehe auch CT-AI Lehrplan Kapitel 2.9, zweiter Aufzählungspunkt „Nicht- Determinismus“, der ein Problem beschreibt. Somit ist Determinismus kein Problem."
+  },
+  {
+    "id": 9,
+    "lo": "AI-3.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt Klassifikation und Regression im Kontext des überwachten Lernens AM BESTEN?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Bei der Regression wird geprüft, ob sich die Testergebnisse des ML-Modells nicht ändern, wenn die gleichen Testdaten ausgeführt werden.",
+      "b) Unter Klassifikation versteht man die Einteilung von nicht gekennzeichneten Daten in wenige vordefinierte Klassen.",
+      "c) Klassifikation ist die Kennzeichnung der Daten für das Training des ML- Modells.",
+      "d) Regression ist die Vorhersage der Anzahl der Klassen, die vom ML-Modell ausgegeben werden."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Regression im Kontext des überwachten Lernens bedeutet im Allgemeinen, dass das ML-Modell ein numerisches Ergebnis ausgibt. Vergleiche Definition von Regression in CT-AI Lehrplan, Kapitel 3.1.1, Absatz 2, Aufzählungspunkt 2 und Absatz 3.\n\nb) KORREKT – Bei der Klassifikation werden die Eingabedaten für ein ML-Modell in eine von mehreren vordefinierten Klassen eingestuft. Vergleiche Definition von Klassifikation in CT-AI Lehrplan, Kapitel 3.1.1, Absatz 2, Aufzählungspunkt 1.\n\nc) FALSCH – Für das Training beim überwachten Lernen müssen die Daten gekennzeichnet werden, aber diese Tätigkeit wird nicht als Klassifikation bezeichnet. Klassifikation im Kontext des überwachten Lernens bedeutet im Allgemeinen, dass das ML-Modell eine Eingabe in eine von wenigen vordefinierten Klassen eingeordnet. Vergleiche Definition von Klassifikation in CT-AI Lehrplan, Kapitel 3.1.1, Absatz 2, Aufzählungspunkt 1.\n\nd) FALSCH – Regression bedeutet, dass die Ausgabe des ML-Modells numerisch ist, aber die Ausgabe ist nicht eine Anzahl von Klassen. Ein Beispiel für die numerische Aussage ist Vorhersage des Alters einer Person auf der Grundlage von Eingabedaten. Vergleiche Definition von Regression in CT-AI Lehrplan, Kapitel 3.1.1, Absatz 2, Aufzählungspunkt 2."
+  },
+  {
+    "id": 10,
+    "lo": "AI-3.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Optionen beschreibt AM BESTEN ein Beispiel für Verstärkungslernen?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Die mobile Spiele-App aktualisiert ihr Feedback, die Reaktionszeit und die Anzahl der Benutzeroptionen, die sie anbietet, je nachdem, wie viel die Spieler ausgeben",
+      "b) Die Sprachübersetzungs-App sucht im Internet nach Texten in mehreren Sprachen, um die Übersetzungsfunktion zu verbessern",
+      "c) Das Qualitätskontrollsystem in der Fabrik verwendet Videokameras und Audioanalysen, um fehlerhafte Produkte zu identifizieren, die von einem Mitarbeiter der Qualitätskontrolle überwacht werden",
+      "d) Das System zur Vorhersage von Softwarekomponententests verwendet eine Reihe von Qualitätsmaßstäben, um festzustellen, welche Komponenten wahrscheinlich die meisten Fehler enthalten werden"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Der ausgegebene Betrag kann als die Belohnungsfunktion für dieses System betrachtet werden, wobei das System sein Verhalten ändert, um den ausgegebenen Betrag zu erhöhen. Vergleiche Definition von bestärkendem Lernen in CT-AI Lehrplan, Kapitel 3.1.3, Absatz 1.\n\nb) FALSCH – Die App verwendet Text in einer Sprache, die als Ausgangssprache betrachtet werden kann, und eine \"korrekte\" Übersetzung dieser Quelle. Text und Übersetzung bilden dabei Paare von Eingabedaten. Die App stützt sich also auf eine Form des überwachten Lernens, ohne dass eine Belohnungsfunktion erwähnt wird. Vergleiche Definition von überwachtem Lernen vs. Definition von bestärkendem Lernen in CT-AI Lehrplan, Kapitel 3.1.1, Absatz 1 und Kapitel 3.1.3, Absatz 1.\n\nc) FALSCH – Das System verwendet den menschlichen Qualitätskontrolleur als eine Art \"Goldstandard\" und stützt sich somit auf eine Form des überwachten Lernens. Vergleiche Definition von überwachtem Lernen vs. Definition von bestärkendem Lernen in CT-AI Lehrplan, Kapitel 3.1.1, Absatz 1 und Kapitel 3.1.3, Absatz 1.\n\nd) FALSCH – Es gibt keinen Hinweis darauf, dass eine Belohnungsfunktion wie im bestärkenden Lernen verwendet wird. Stattdessen ist es sehr wahrscheinlich, dass das Vorhersagesystem seine Fehlerbestimmung auf frühere Erfahrungen stützt. Daher stützt es sich wahrscheinlich auch auf ein überwachtes Lernsystem. Vergleiche Definition von bestärkendem Lernen in CT-AI Lehrplan, Kapitel 3.1.3, Absatz 1."
+  },
+  {
+    "id": 11,
+    "lo": "AI-3.3.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie wurden um Ihre Meinung zu dem ML-Ansatz gebeten, der für ein neues System verwendet werden soll, das Teil des Verkehrsmanagements für eine SMART City ist. Die Idee ist, dass das neue System die Ampeln in der Stadt steuert, um einen reibungslosen Verkehrsfluss durch und um die Stadt zu gewährleisten.\n\nWelcher der folgenden Ansätze wird Ihrer Meinung nach AM EHESTEN Erfolg haben?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Unüberwachtes Lernen, das auf der Identifizierung von Clustern in der Stadt basiert, in denen die Verkehrsdichte über dem Durchschnitt liegt",
+      "b) Eine Regressionslösung mit überwachtem Lernen, die auf Tausenden von Fahrten basiert, die sowohl mit der Länge als auch der Dauer der Fahrt gekennzeichnet sind",
+      "c) Verstärkungslernen, das auf einer Belohnungsfunktion basiert, die Lösungen bestraft, die zu einer höheren Verkehrsüberlastung führen",
+      "d) Eine Klassifizierungslösung mit überwachtem Lernen, die darauf basiert, dass Fahrer und Fahrgäste ihre bevorzugten Routen für die Fahrt durch die Stadt angeben"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Das unüberwachte Lernsystem sollte in der Lage sein, überlastete Bereiche zu identifizieren, aber das allein löst das Problem nicht, das Erkennen der Überlastung allein nicht zu einer Optimierung des Verkehrsflusses beiträgt. Vergleiche Definition von unüberwachten Lernen in CT-AI Lehrplan, Kapitel 3.1.2, Absatz 1, und Leitlinien zur Auswahl einer Art von ML in CT-AI Lehrplan, Kapitel 3.3, Aufzählungspunkte 6-8.\n\nb) FALSCH – Es ist unwahrscheinlich, dass mit einer Regressionslösung das gewünschte Ergebnis erzielt wird, da die vorhergesagte Geschwindigkeit der einzelnen Fahrten keine Gesamtlösung für die stadtweite Überlastung bietet. Vergleiche Definition von Regression beim überwachten Lernen in CT-AI Lehrplan, Kapitel 3.1.1, Absatz 2, Aufzählungspunkt 2, und Leitlinien zur Auswahl einer Art von ML in CT-AI Lehrplan, Kapitel 3.3, Aufzählungspunkt 5.\n\nc) KORREKT – Ein sich ständig verbesserndes System des verstärkenden Lernens mit einer Belohnungsfunktion, die auf einem niedrigeren Grad der Überlastung als Maß für den Erfolg basiert, ist für diese Art von System gültig. Zudem interagiert das System hier über die Ampelsteuerung mit der Umwelt. Vergleiche Definition von bestärkendem Lernen in CT-AI Lehrplan, Kapitel 3.1.3, Absatz 1, und Leitlinien zur Auswahl einer Art von ML in CT-AI Lehrplan, Kapitel 3.3, Aufzählungspunkt 9.\n\nd) FALSCH – Diese Lösung hängt davon ab, dass Freiwillige subjektive Meinungen abgeben, was höchstwahrscheinlich zu einer Lösung führen wird, die sich immer wieder ändert, wenn das System bevorzugte Routen annimmt, die dann überlastet werden. Vergleiche Definition von Klassifikation beim überwachten Lernen in CT-AI Lehrplan, Kapitel 3.1.1, Absatz 2, Aufzählungspunkt 1, und Leitlinien zur Auswahl einer Art von ML in CT-AI Lehrplan, Kapitel 3.3, Aufzählungspunkt 4."
+  },
+  {
+    "id": 12,
+    "lo": "AI-3.5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Beim Testen eines trainierten Modells stellte ein ML-Ingenieur fest, dass das Modell bei der Evaluierung mit Validierungsdaten sehr genau war, bei unabhängigen Testdaten jedoch schlecht abschnitt.\n\nWelche der folgenden Optionen verursachte AM EHESTEN diese Situation?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Unteranpassung",
+      "b) Konzeptdrift",
+      "c) Überanpassung",
+      "d) Schlechte Akzeptanzkriterien"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Das Modell schneidet bei den Validierungsdaten gut ab, es handelt sich also nicht um eine Unteranpassung. Vergleiche Definition von Unteranpassung in CT-AI Lehrplan, Kapitel 3.5.2.\n\nb) FALSCH – Der Konzeptdrift bezieht sich auf Änderungen nach der Phase Modelltraining und -validierung. Vergleiche Erläuterungen zu Konzeptdrift in CT-AI Lehrplan, Kapitel 7.6, Absatz 1.\n\nc) KORREKT – Die schlechte Leistung bei den unabhängigen Testdaten und die gute Leistung bei den Validierungsdaten lässt auf eine Überanpassung schließen. Vergleiche Definition von Überanpassung in CT-AI Lehrplan, Kapitel 3.5.1.\n\nd) FALSCH – Schlechte Akzeptanzkriterien sollten mit verschiedenen Datensätzen konsistent sein, so dass es unwahrscheinlich ist, dass sie zu einem Unterschied zwischen den Testergebnissen mit Validierungsdaten und unabhängigen Testdaten führen. Dies ergibt sich aus der geforderten Gleichwertigkeit von Trainings-, Validierungsund Testdatensätzen. Vergleiche Erläuterungen zu Datensätzen im ML-Workflow in CT- AI Lehrplan, Kapitel 4.2, Absatz 1."
+  },
+  {
+    "id": 13,
+    "lo": "AI-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welches der folgenden Beispiele ist eine Herausforderung, die bei der Entwicklung und dem Testen einer ML-Lösung auftreten kann?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Für die Anonymisierung von Daten sind in der Regel Kenntnisse verschiedener ML-Algorithmen erforderlich",
+      "b) Bei den verwendeten Daten kann es sich um unstrukturierte Daten handeln",
+      "c) Ein großer Prozentsatz des Budgets wird allein für die Datenaufbereitung ausgegeben",
+      "d) Die Skalierbarkeit der Datenpipeline ist eine Herausforderung beim Training des Modells"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Für die Anonymisierung von Daten sind keine Kenntnisse über ML- Algorithmen erforderlich. Es handelt sich um eine Herausforderung bei der Beschaffung von Testdaten. Vergleiche Testdaten zum Testen KI-basierter Systeme in CT-AI Lehrplan, Kapitel 7.3, Aufzählungspunkt 3.\n\nb) FALSCH – Unstrukturierte Daten stellen keine Herausforderung dar. Bilder, Audio, frei fließender Text sind alles Beispiele für unstrukturierte Daten. Auch durch die Datenvorverarbeitung, z. B. durch Bereinigung, Umwandlung oder Anreicherung im Rahmen der Datenvorbereitung, wird die grundsätzliche Eigenschaft, dass es sich um unstrukturierte Daten handelt, nicht geändert. Vergleiche Datenvorbereitung als Teil des ML-Workflows in CT-AI Lehrplan, Kapitel 4.1, Abschnitt Vorverarbeitung der Daten.\n\nc) KORREKT – Bis zu 43 % des Aufwands für ML-Workflows können auf die Datenvorbereitung entfallen. Vergleiche Datenvorbereitung als Teil des ML-Workflows in CT-AI Lehrplan, Kapitel 4.1, Absatz 1, und Herausforderungen bei der Datenvorbereitung in CT-AI Lehrplan, Kapitel 4.1.1, Aufzählungspunkt 4.\n\nd) FALSCH – Skalierbarkeit ist in der Regel eine Anforderung bei der Bereitstellung der Produktionsdatenpipeline und nicht beim Training. Vergleiche Herausforderungen bei der Datenvorbereitung in CT-AI Lehrplan, Kapitel 4.1.1, Aufzählungspunkt 3, und Unterschiede zwischen den Datenpipelines für das Training und den Betrieb in CT-AI Lehrplan, Kapitel 7.2.1, Absatz 2."
+  },
+  {
+    "id": 14,
+    "lo": "AI-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Für das Training werden unzureichende Daten verwendet.\n\nWelche der folgenden Optionen weist AM EHESTEN auf dieses Problem mit der Datenqualität hin?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Es ist besonders aufwendig, das Modell mit den vorhandenen Daten zu trainieren. Wird dagegen ein Teil des Datensatzes für das Training nicht verwendet, führt das Training schneller zu positiven Ergebnissen.",
+      "b) Das Modell arbeitet korrekt, bevorzugt aber bestimmte Konstellationen bei der Vorhersage übermäßig.",
+      "c) Für das Training des Modells werden reale Kundendaten verwendet, obwohl die Einwilligung der Kunden nicht vorliegt.",
+      "d) Das Modell kann nicht mit einem bestimmten Algorithmus trainiert werden, obwohl andere Algorithmen mit denselben Trainingsdaten funktionieren."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Da das Training des Modells besonders aufwendig und damit ressourcenintensiv ist, weist dies auf irrelevante Daten im Datensatz hin. Werden die irrelevanten Daten dagegen beim Training nicht genutzt, ist das Training schneller beendet. Vergleiche Erläuterung zu irrelevanten Daten in CT-AI Lehrplan, Kapitel 4.3, Tabelle 1, Zeile 11.\n\nb) FALSCH – Es handelt sich um ein verzerrtes Modell, das durch unvollständige, unausgewogene, unfaire, wenig vielfältige oder doppelte Daten verursacht werden kann. Vergleiche Erläuterung zum verzerrten Modell in CT-AI Lehrplan, Kapitel 4.4, Absatz 2, Aufzählungspunkt 2.\n\nc) FALSCH – Hier wurden Fragen des Datenschutzes nicht beachtet. Vergleiche Erläuterung zu Fragen des Datenschutzes in CT-AI Lehrplan, Kapitel 4.3, Tabelle 1, Zeile 12.\n\nd) KORREKT – Dass Modelle, die auf einigen Lernalgorithmen basieren, mit den Daten trainiert werden können, es jedoch bei einem bestimmten Algorithmus nicht funktioniert, liegt höchstwahrscheinlich daran, dass die Datenmenge für diesen bestimmten Algorithmus nicht ausreicht. Die erforderliche Mindestdatenmenge für verschiedene Algorithmen kann unterschiedlich sein. Vergleiche Erläuterung zu unzureichenden Daten in CT-AI Lehrplan, Kapitel 4.3, Tabelle 1, Zeile 5."
+  },
+  {
+    "id": 15,
+    "lo": "AI-4.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "DataSure ist ein Start-Up-Unternehmen mit einem Produkt, das verspricht, die Qualität von ML-Modellen zu verbessern. DataSure behauptet, dass diese Verbesserung durch die Überprüfung, ob die Daten korrekt gekennzeichnet wurden, erreicht wird.\n\nWelcher der folgenden Defekte hätte durch die Verwendung dieses Produkts AM EHESTEN verhindert werden können?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Das Modell weist Sicherheitslücken auf.",
+      "b) Das Modell hat eine geringe Genauigkeit.",
+      "c) Das Modell liefert Ergebnisse, die als nicht ausgewogen empfunden werden.",
+      "d) Das Modell liefert verzerrte Ergebnisse."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Datenschutz- und Sicherheitsfragen werden nicht behandelt. Daher wird das Produkt Sicherheitsprobleme nicht verhindern. Vergleiche Datenqualität und ihre Auswirkungen auf das ML-Modell in CT-AI Lehrplan, Kapitel 4.4, Absatz 2, Aufzählungspunkt 3.\n\nb) KORREKT – Falsch gekennzeichnete Daten führen zu einer geringeren Genauigkeit des ML-Modells. Vergleiche Datenqualität und ihre Auswirkungen auf das ML-Modell in CT-AI Lehrplan, Kapitel 4.4, Absatz 2, Aufzählungspunkt 1.\n\nc) FALSCH – Ein Modell, das als nicht ausgewogen empfundene Ergebnisse liefert, ergibt sich aus unfairen Daten, nicht aus falsch gekennzeichneten Daten. Vergleiche Erläuterung zu unfairen Daten in CT-AI Lehrplan, Kapitel 4.3, Tabelle 1, Zeile 9.\n\nd) FALSCH – Ein verzerrtes Modell resultiert eher aus unvollständigen Daten, unausgewogenen Daten, unfairen Daten, unzureichender Datenvielfalt oder doppelten Daten als aus falsch gekennzeichneten Daten. Vergleiche Datenqualität und ihre Auswirkungen auf das ML-Modell in CT-AI Lehrplan, Kapitel 4.4, Absatz 2, Aufzählungspunkt 2."
+  },
+  {
+    "id": 16,
+    "lo": "AI-4.5.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Als ein ML-Ingenieur feststellt, dass die Trainingsdaten nicht ausreichen, rotiert er gekennzeichnete Bilder, um zusätzliche Trainingsdaten zu erstellen.\n\nWelcher der folgenden Ansätze zur Kennzeichnung wird in diesem Beispiel angewandt?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Crowdsourcing",
+      "b) Intern",
+      "c) KI-unterstützt",
+      "d) Ausgelagert"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Crowdsourcing bedeutet, dass eine große Anzahl von Menschen eine bestimmte Aufgabe übernimmt. In diesem Fall führt nur eine Person die Aufgabe aus. Vergleiche Definition von Crowdsourced in CT-AI Lehrplan, Kapitel 4.5.1, Absatz 1, Aufzählungspunkt 3.\n\nb) KORREKT – Hier erfolgt die Anreicherung bereits etikettierter Daten durch den ML- Entwickler selbst, also innerhalb des für die Datenkennzeichnung verantwortlichen Unternehmens. Vergleiche Definition von interner Kennzeichnung in CT-AI Lehrplan, Kapitel 4.5.1, Absatz 1, Aufzählungspunkt 1.\n\nc) FALSCH – Die KI wird nicht zur Kennzeichnung der Daten verwendet. Vergleiche Definition von KI-unterstützter Kennzeichnung in CT-AI Lehrplan, Kapitel 4.5.1, Absatz 1, Aufzählungspunkt 4.\n\nd) FALSCH – Der ML-Ingenieur hat die Aufgabe nicht an eine dritte Partei ausgelagert. Vergleiche Definition von ausgelagerter Kennzeichnung in CT-AI Lehrplan, Kapitel 4.5.1, Absatz 1, Aufzählungspunkt 2."
+  },
+  {
+    "id": 17,
+    "lo": "AI-5.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Betrachten Sie die folgende Konfusionsmatrix für einen Bildklassifikator:\n\n[[asset:p15-2]]\n\nWelche der folgenden Optionen stellt die Präzision des Klassifikators dar?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) 20/120 *100%",
+      "b) 78/120 *100%",
+      "c) 78/100 *100%",
+      "d) 22/100 *100%"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Siehe Antwort c) für die richtige Formel und Berechnung.\n\nb) FALSCH – Siehe Antwort c) für die richtige Formel und Berechnung.\n\nc) KORREKT – Die Formel für Präzision = RP/(RP+FP)*100 % = 78/(78+22)*100% = 78/100*100 % (siehe Kap. 5.1, 3. Absatz, 2. Aufzählungspunkt “Präzision”).\n\nd) FALSCH – Siehe Antwort c) für die richtige Formel und Berechnung."
+  },
+  {
+    "id": 18,
+    "lo": "AI-5.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Für die verschiedenen Arten von ML-Problemen gibt es unterschiedliche funktionale Leistungsmetriken.\n\nWelche der folgenden Aussagen dazu ist korrekt?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Die Fläche unter der Kurve (AUC) zeigt, wie gut das Modell an die abhängigen Variablen angepasst ist.",
+      "b) Der mittlere quadratische Fehler (MQF) gibt anhand der Messung der ROC- Kurve an, wie gut das Modell zwischen verschiedenen Klassen unterscheidet.",
+      "c) Die Metrik R-Quadrat stellt dar, wie gut der Klassifikator trennt, d.h. wie gut das Modell zwischen den Klassen unterscheidet.",
+      "d) Der Silhouettenwert basiert auf der Messung der durchschnittlichen clusterübergreifenden und clusterinternen Abstände der Datenpunkte."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Die Fläche unter der Kurve (AUC) stellt den Grad der Trennbarkeit eines Klassifikators da (s. Kap. 5.2, 2. Absatz, 2. Aufzählungspunkt). Wie gut das Modell an die abhängigen Variablen angepasst ist, wird durch die Metrik R-Quadrat beurteilt (s. Kap. 5.2, 3. Absatz, 2. Aufzählungspunkt).\n\nb) FALSCH – Der mittlere quadratische Fehler ist der Durchschnitt der quadrierten Differenzen zwischen dem tatsächlichen Wert und dem vorhergesagten Wert (s. Kap. 5.2, 3. Absatz, 1. Aufzählungspunkt). Wie gut das Modell zwischen verschiedenen Klassen unterscheidet, zeigt die Fläche unter der Kurve (AUC) (s. Kap. 5.2, 2. Absatz, 2. Aufzählungspunkt).\n\nc) FALSCH – Die Metrik R-Quadrat wird für die überwachte Regression angewendet (s. Kap. 5.2, 3. Absatz, 2. Aufzählungspunkt) und nicht für Klassifikationsprobleme, das zeigt die Fläche unter der Kurve (AUC) (s. Kap. 5.2, 2. Absatz, Metriken für überwachte Klassifikation, 2. Aufzählungspunkt).\n\nd) KORREKT – siehe KI-Lehrplan, Abschnitt 5.2, 4. Absatz (Metriken für unüberwachte Clusterbildung), 3. Aufzählungspunkt."
+  },
+  {
+    "id": 19,
+    "lo": "AI-5.4.1",
+    "k": "K4",
+    "pts": 2,
+    "text": "KnowYourPet ist eine App, die mithilfe von ML ermittelt, ob ein Haustier hungrig ist oder nicht. Es wird davon ausgegangen, dass ein Hund die meiste Zeit nicht hungrig ist, wie aus den Trainingsdaten hervorgeht. Wenn der Hund fälschlicherweise als hungrig eingestuft wird, kann dies zu einer Überfütterung des Hundes führen, was wiederum ernste gesundheitliche Probleme zur Folge haben kann.\n\nWelche der folgenden Metriken würden Sie wählen, um die Eignung des zu prüfenden Modells zu bestimmen?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Genauigkeit",
+      "b) Präzision",
+      "c) Rückruf",
+      "d) F1-Note"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Die Genauigkeit (RP + RN) / (RP + RN + FP + FN) ist nicht so sinnvoll, wenn ein Ungleichgewicht zwischen den erwarteten Klassen besteht, die nicht hungrige Klasse (FP+RN) in diesem Fall dominiert und nur große falsch-positive Ergebnisse FP gefährlich sind (Überfütterung). Genauigkeit: Siehe Kap. 5.1, 3. Absatz, 1. Aufzählungspunkt.\n\nb) KORREKT – Es sollte die Präzision RP / (RP + FP) * 100% herangezogen werden, da die Kosten für falsch-positive Ergebnisse FP (Überfütterung des Hundes) hoch sind (ernste Gesundheitsprobleme) und sich dies nur bei der Präzision entscheidend auswirkt (s. Kap. 5.1, 3. Absatz, 2. Aufzählungspunkt).\n\nc) FALSCH – Sensitivität ist nützlich, wenn die tatsächlich positiven Fälle RP+FN betrachtet werden sollen. Im vorliegenden Fall sind aber die falsch-positiven Fälle FP sehr wichtig, die bei der Sensitivität gar nicht kalkuliert werden (s. Kap. 5.1, 3. Absatz, 3. Aufzählungspunkt).\n\nd) FALSCH – Der F1-Score ist nützlich, wenn es ein Ungleichgewicht in den erwarteten Klassen gibt und wenn Präzision und Sensitivität ähnlich wichtig sind. Im vorliegenden Fall ist die Präzision aber viel wichtiger als die Sensitivität (s. Begründungen zu den Antworten b und c). F1-Score: Siehe Kap. 5.1, 3. Absatz, 4. Aufzählungspunkt."
+  },
+  {
+    "id": 20,
+    "lo": "AI-6.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Optionen beschreibt AM BESTEN ein tiefes neuronales Netz?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Es besteht aus einer hierarchischen Struktur von Neuronen, wobei die untersten (tiefsten) Neuronen die meisten Entscheidungen treffen",
+      "b) Es besteht aus miteinander verbundenen Neuronen, wobei jedes Neuron einen Bias und jede Verbindung ein Gewicht hat",
+      "c) Es besteht aus mehreren Schichten, wobei jede Schicht (mit Ausnahme der Eingabe- und Ausgabeschichten) mit jeder anderen Schicht verbunden ist und sich Fehler rückwärts durch das Netz fortpflanzen",
+      "d) Es besteht aus Schichten von Neuronen, von denen jede einen Aktivierungswert auf der Grundlage der anderen Neuronen in derselben Schicht erzeugt"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Ein neuronales Netz hat keine hierarchische Struktur mit einer Rangordnung von „oben“ bis „unten“, sondern Schichten: Eingabeschicht, Ausgabeschicht und dazwischen versteckte Schichten. Es gibt keine Regel über die Anzahl der Entscheidungen von Neuronen in einer Schicht (s. Kap. 6.1, 3. Absatz).\n\nb) KORREKT – Ein künstliches neuronales Netz besteht aus miteinander verbundenen Neuronen. Um einen Aktivierungswert zu berechnen, wird jedem Neuron ein Bias und jeder Verbindung ein Gewicht zugewiesen (s. Kap. 6.1, 5. Absatz).\n\nc) FALSCH – Ein neuronales Netz besteht aus mehreren Schichten, und Fehler werden durch das Netz rückwärts propagiert, aber die Schichten eines neuronalen Netzes sind nur mit den nächsten Schichten verbunden – nicht mit jeder anderen Schicht (s. Kap. 6.1,\n\n4. Absatz).\n\nd) FALSCH – Ein neuronales Netz besteht aus Schichten von Neuronen, aber der Aktivierungswert basiert auf den Neuronen in der vorangegangenen Schicht – nicht in derselben Schicht (s. Kap. 6.1, 5. Absatz)."
+  },
+  {
+    "id": 21,
+    "lo": "AI-6.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt ein Überdeckungskriterium für neuronale Netze ZUTREFFEND?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Die Wertänderungsüberdeckung beruht darauf, dass einzelne Neuronen die Gesamtausgabe des neuronalen Netzes beeinflussen.",
+      "b) Die Schwellenwertüberdeckung basiert auf Neuronen, die einen Aktivierungswert ausgeben, der größer als ein definierter Wert ist.",
+      "c) Die Neuronenüberdeckung ist ein Maß für den Anteil der Neuronen, die zu einem beliebigen Zeitpunkt während des Tests aktiviert sind.",
+      "d) Die Vorzeichenwechselüberdeckung misst die Abdeckung der Neuronen, die sowohl positive, negative als auch Null-Aktivierungswerte ausgeben"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Die Wertänderungsabdeckung ist ein Maß für den Anteil der aktivierten Neuronen, deren Aktivierungswerte sich um mehr als einen vorgegebenen Änderungsbetrag unterscheiden. Es geht nicht um die Gesamtleistung des neuronalen Netzes (s. Kap. 6.2, 4. Absatz, 4. Aufzählungspunkt).\n\nb) KORREKT – Die Schwellenwertabdeckung misst den Anteil der Neuronen, die während des Tests aktiviert werden und deren Wert größer ist als ein vorgegebener Schwellenwert (s. Kap. 6.2, 4. Absatz, 2. Aufzählungspunkt).\n\nc) FALSCH – Alle Neuronen werden potenziell jedes Mal \"aktiviert\", wenn ein neuronales Netz \"ausgeführt\" wird, jedoch ändern sich die von den Neuronen ausgegebenen Werte, was durch die Neuronenabdeckung gemessen wird. Die Abdeckung wird durch einen Wert größer als Null erreicht (s. Kap. 6.2, 4. Absatz, 1. Aufzählungspunkt).\n\nd) FALSCH – Die Vorzeichenwechselabdeckung ist ein Maß für den Anteil der Neuronen, die sowohl mit positiven als auch mit negativen Aktivierungswerten aktiviert werden, aber nicht mit Null (s. Kap. 6.2, 4. Absatz, 3. Aufzählungspunkt)."
+  },
+  {
+    "id": 22,
+    "lo": "AI-7.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Anforderungen an ein KI-gestütztes System ist AM EHESTEN eine große Herausforderung beim Testen?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Das System muss eine höhere Genauigkeit aufweisen als das System, welches es ersetzt.",
+      "b) Die KI-Komponente des Systems muss eine 100%ige Genauigkeit aufweisen.",
+      "c) Ein menschlicher Bediener sollte in der Lage sein, das System innerhalb von 1 Sekunde außer Kraft zu setzen.",
+      "d) Das System soll die menschlichen Emotionen eines typischen Spielers nachahmen"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Dies ist eine spezifische Anforderung, wobei das zu ersetzende System als Testorakel dient. Das sollte daher in der Regel keine Probleme beim Testen verursachen (zur Definition von „Genauigkeit“ s. Kap. 5.1, 3. Absatz).\n\nb) FALSCH – Dies kann eine schwer zu erfüllende Anforderung sein, ist aber für die Prüfung kein Problem, da “Genauigkeit” exakt definiert und prüfbar ist (s. Kap. 5.1, 3. Absatz).\n\nc) FALSCH – Dies ist eine Anforderung, die mit einem Performanztest prüfbar ist (vgl. Kap. 4.5 im Lehrplan CTAL-TTA – Technical Test Analyst).\n\nd) KORREKT – Diese Anforderung ist äußerst komplex zu testen, ohne alle menschlichen Emotionen und die Art und Weise, wie das System sie nachahmen könnte, zu definieren (s. Kap. 7.1, 2. Absatz, 4. Aufzählungspunkt)."
+  },
+  {
+    "id": 23,
+    "lo": "AI-7.3.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welcher der folgenden Faktoren, der mit den Testdaten verbunden ist, kann das Testen von KI-basierten Systemen erschweren?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Beschaffung von Big Data mit hoher Geschwindigkeit",
+      "b) Beschaffung von Daten aus einer einzigen Quelle",
+      "c) Zu hohe Priorisierung der Überprüfung auf Fehlerzustände, die in die Datenpipeline eingebracht werden",
+      "d) Die Unfairness von Daten (ein subjektives Qualitätsmerkmal), kann selten festgestellt werden"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Die Beschaffung von Daten für KI-Systeme, die große Mengen von Hochgeschwindigkeitsdaten verwenden, kann schwierig sein (s. Lehrplan, Kap. 7.3, 1. Absatz, erster Aufzählungspunkt).\n\nb) FALSCH – Die Beschaffung qualitativ hochwertiger Daten aus verschiedenen Quellen kann schwierig sein (s. Lehrplan, Kap. 4.1.1, zweiter Aufzählungspunkt). Die Beschaffung aus einer einzigen Quelle dürfte daher aber keine Probleme machen.\n\nc) FALSCH – Eine Herausforderung bei der Datenvorbereitung ist, dass “der Überprüfung auf Fehlerzustände, die ... in die Datenpipeline eingebracht werden, ... nicht genügend Priorität eingeräumt” wird (s. Lehrplan, Kap. 4.1.1, zweitletzter (Haupt-) Aufzählungspunkt).\n\nd) FALSCH – Laut Kap. 4.3, Tabelle 1, Zeile “Unfaire Daten” gilt: “Fairness ist ein subjektives Qualitätsmerkmal, kann aber oft festgestellt werden.”"
+  },
+  {
+    "id": 24,
+    "lo": "AI-7.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen bzgl. der Automatisierungsverzerrung ist zutreffend?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Bei der Automatisierungsverzerrung prüft der Mensch die Empfehlungen des Systems gegen Eingaben aus anderen Quellen.",
+      "b) Die Aufmerksamkeit eines menschlichen Fahrzeuginsassen hat nichts mit der Automatisierungsverzerrung zu tun.",
+      "c) Wegen der Automatisierungsverzerrung muss die Qualität der menschlichen Eingaben, nicht aber die Qualität der Systemempfehlungen, getestet werden.",
+      "d) Menschliche Entscheidungen können von geringerer Qualität sein, wenn sie von einem KI-basierten System empfohlen wurden."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – „Eine Form der Automatisierungsverzerrung besteht darin, dass der Mensch die Empfehlungen des Systems akzeptiert und die Eingaben aus anderen Quellen ... nicht berücksichtigt“ (s. Kap. 7.4, erster Aufzählungspunkt, erster Satz).\n\nb) FALSCH – Die Aufmerksamkeit eines menschlichen Fahrzeuginsassen hat durchaus etwas mit der Automatisierungsverzerrung zu tun, denn laut Lehrplan, Kap. 7.4, zweiter Aufzählungspunkt, 3. Satz, gilt bei der zweiten Form der Automatisierungsverzerrung: „Typischerweise wird der menschliche Fahrzeuginsasse allmählich zu vertrauensvoll gegenüber den Fähigkeiten des Systems, das Fahrzeug zu steuern, und beginnt, weniger aufmerksam zu sein.“\n\nc) FALSCH – Die Tester sollten „sowohl die Qualität der Systemempfehlungen als auch die Qualität der entsprechenden menschlichen Eingaben durch repräsentative Benutzer testen“ (Kap. 7.4, letzter Absatz).\n\nd) KORREKT – „Es hat sich gezeigt, dass „die erste „Form der Automatisierung“ („der Mensch akzeptiert die Empfehlungen des Systems“) „die Qualität der getroffenen Entscheidungen typischerweise um 5 % verringert, aber je nach Systemkontext kann dieser Wert noch viel höher sein.“ (Kap. 7.4, erster Aufzählungspunkt, 1. und 3. Satz)."
+  },
+  {
+    "id": 25,
+    "lo": "AI-7.7.1",
+    "k": "K4",
+    "pts": 2,
+    "text": "Eine ML-basierte Lösung zur Mauterhebung bestimmt die Art der einfahrenden Fahrzeuge anhand der von einer Kamera aufgenommenen Bilder. Es stehen verschiedene Kameratypen zur Verfügung, und der Lösungsanbieter behauptet, Kameras mit unterschiedlichen Auflösungen verwenden zu können. Die Bilder müssen im jpeg-Format mit einer Größe von 320 x 480 Pixeln vorliegen, um das Modell zu trainieren und das Ergebnis vorhersagen zu können. Das Modell sollte in der Lage sein, die Fahrzeugtypen mit einem bestimmten gewünschten hohen Genauigkeitsgrad zu klassifizieren und sollte auf Schwachstellen getestet werden. Jede Mautstelle verfügt über ein eigenes komplettes System, das mit keinem anderen System verbunden ist.\n\nWelche der folgenden Testarten sind die AM BESTEN geeigneten Optionen für die Tests, die Sie für Systemtests wählen würden?\n\nWählen Sie genau ZWEI Antworten.",
+    "options": [
+      "a) Prüfung auf Konzeptdrift",
+      "b) Widersprüchliche Tests",
+      "c) Prüfung der Skalierbarkeit",
+      "d) Prüfung der Fairness",
+      "e) Testen von Datenpipelines"
+    ],
+    "answer": [
+      1,
+      4
+    ],
+    "explanation": "a) FALSCH – Der Konzeptdrift wird nach der Einführung getestet und fokussiert auf eine Änderung der Einsatzumgebung. Siehe CT AI-Lehrplan, Kapitel 7.6. Dieses ist für das gegebene Szenario nicht relevant.\n\nb) KORREKT – Gegnerisches Testen ist wichtig, weil die Anforderungen besagen, dass das System gegen Schwachstellen getestet werden soll. Siehe CT AI-Lehrplan, Kapitel 9.1.1: hierbei geht es um falsche Vorhersagen des Systems, die durch Angreifer verursacht werden.\n\nc) FALSCH – Die Prüfung der Skalierbarkeit wurde nicht als eine der Anforderungen erwähnt. Es handelt sich um unabhängige, miteinander verbundene Systeme, die nicht mit anderen Systemen verbunden sind. Diese Option ist zwar nicht eindeutig ausgeschlossen, hat aber mit dem Fragetext nicht viel zu tun uns ist daher keine der wahrscheinlicheren Optionen.\n\nd) FALSCH – Fairness bedeutet, dass (positiv) verzerrte Daten für das Training verwendet werden. Siehe CT AI-Lehrplan, Kapitel 4.3. Da in dem beschriebenen Szenario kein Fall von positiver Diskriminierung bekannt ist, ist der Fairness-Test nicht relevant.\n\ne) KORREKT – Das Testen der Datenpipeline ist erforderlich, weil die Bilder in verschiedenen Formaten und Auflösungen vorliegen können. Damit das Modell trainiert werden kann, sollten alle Bilder das gleiche Format haben, daher ist dieser Test wichtig. Siehe CT AI-Lehrplan, Kapitel 7.7, Tabelle, Zeile 2."
+  },
+  {
+    "id": 26,
+    "lo": "AI-8.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Optionen beschreibt eine Herausforderung für das Testen selbstlernender Systeme?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Das Systemverhalten kann sich so stark ändern, dass anfangs entworfene Testfälle nicht mehr gültig sind. Das kann auch nicht durch einen besonders geschickten Testentwurf behoben werden.",
+      "b) Im Rahmen der Weiterentwicklung des Systems müssen auch die Akzeptanzkriterien für Systemänderungen selbstlernend weiterentwickelt werden.",
+      "c) Da sich die Einsatzumgebung des selbstlernenden Systems ändern kann, müssen Tests entworfen werden, die das Systemverhalten auch ohne das Wissen über die möglichen Einsatzumgebungen abdecken.",
+      "d) Die Durchführung von Tests kann das Verhalten des selbstlernenden Systems beeinflussen. In Abhängigkeit von den verwendeten Testfällen kann es zu unerwünschten Verhaltensänderungen kommen."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Der Entwurf von Testfällen, die auch bei geändertem Systemverhalten gültig bleiben, ist eine Herausforderung für den Test. Vergleiche CT AI-Lehrplan, Kapitel 8.1, erster Stichpunkt\n\nb) FALSCH – Die Akzeptanzkriterien für Änderungen des selbstlernenden Systems müssen im Vorfeld definiert werden. Die Akzeptanz jeder Systemänderung wird darüber gesteuert. Wenn diese Kriterien sich ebenfalls im Verlauf der Zeit ändern, dann könnten zukünftige Systemänderungen nicht mehr positive Änderungen forcieren, sondern ggf. negative. Vergleiche CT AI-Lehrplan, Kapitel 8.1, zweiter Stichpunkt.\n\nc) FALSCH – Das Ziel ist nicht der Testentwurf ohne Wissen über die Einsatzumgebung. Das würde mögliche Angriffe durch Datenverunreinigungen ermöglichen. Stattdessen muss es das Ziel sein, alle Einsatzumgebungen abzudecken oder Akzeptanzkriterien für alle möglichen Änderungen der Einsatzumgebung zu spezifizieren. Vergleiche CT AI- Lehrplan, Kapitel 8.1, fünfter Stichpunkt.\n\nd) KORREKT – Unerwünschte Verhaltensänderungen sind eine Herausforderung beim Test selbstlernender Systeme. Vergleiche CT AI-Lehrplan, Kapitel 8.1, siebter / letzter Stichpunkt."
+  },
+  {
+    "id": 27,
+    "lo": "AI-8.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Optionen beschreibt einen gültigen Test auf Verzerrungen?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Review der Quelle der Trainingsdaten und der Verfahren zur Datengewinnung, um algorithmische Verzerrungen zu identifizieren",
+      "b) Messung des Einflusses von Systemeingaben auf -ausgaben mit Fokus auf Personen, für oder gegen die das System unangemessen verzerrt ist",
+      "c) Beschaffung zusätzlicher Informationen über die Eingabedaten, um die Vorverarbeitung der Daten auf Verzerrungen prüfen zu können",
+      "d) Review der Aktivitäten zu Training oder Optimierung des Modells, um Stichprobenverzerrungen finden zu können"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Mit dem Review der Quelle der Trainingsdaten und der Verfahren zur Datengewinnung findet man hauptsächlich Stichprobenverzerrungen. Siehe CT AI- Lehrplan, Kapitel 8.3, Stichpunkte 1 und 2.\n\nb) KORREKT – Diese Option beschreibt einen gültigen Test auf Verzerrungen. Vergleiche CT AI-Lehrplan, Kapitel 8.3, Stichpunkt 4.\n\nc) FALSCH – Die Beschaffung zusätzlicher Informationen kann sinnvoll sein, um „versteckte“ Variablen zu finden, die für die Bewertung der Verzerrung relevant sind, jedoch selbst keine Eingabe des Modells darstellen (siehe CT AI-Lehrplan, Kapitel 8.3, Stichpunkt 5). Das Review der Vorverarbeitung von Daten kann zwar sinnvoll sein (siehe CT AI-Lehrplan, Kapitel 8.3, Stichpunkt 3). Jedoch können die „versteckten“ Variablen aus der Beschaffung zusätzlicher Informationen keinen Einfluss auf die bisher implementierte Vorverarbeitung von Daten haben, da sie eben gar nicht verarbeitet werden. Daher ist diese Option in sich unlogisch.\n\nd) FALSCH – Mit dem Review der Aktivitäten zu Training oder Optimierung des Modells findet man vorrangig algorithmische Verzerrungen. Siehe CT AI-Lehrplan, Kapitel 8.3, Stichpunkte 1 und 2."
+  },
+  {
+    "id": 28,
+    "lo": "AI-8.5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Optionen beschreibt eine Herausforderung beim Test komplexer, KI-basierter Systeme?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Das Testorakel-Problem in diesem Kontext besagt, dass KI-basierte Systeme oftmals ein schlechteres Testorakel finden als menschliche Tester.",
+      "b) Durch die Komplexität des Verhaltens sind nur White-Box-Testverfahren sinnvoll, jedoch keine Black-Box-Testverfahren mehr.",
+      "c) Die Komplexität KI-basierter Systeme und ihrer Tests nimmt zu, wenn diese Systeme probabilistisch agieren und nicht-deterministisch sind.",
+      "d) Die Komplexität KI-basierter Systeme und ihrer Tests nimmt nicht weiter zu, nur weil die Systeme aus mehreren interagierenden Komponenten besteht."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Dieses Testorakel-Problem besteht darin, dass das Verhalten solcher Systeme zu komplex ist, um von Menschen in der nötigen Tiefe verstanden zu werden, damit sie daraus ein Testorakel ableiten können. Siehe CT-AI Lehrplan, Kapitel 8.5, Absatz 1.\n\nb) FALSCH – Das Gegenteil ist der Fall. Da die Struktur solcher Systeme oftmals automatisch generiert ist, ist sie zu komplex, um daraus sinnvoll Tests für eine White- Box-Überdeckung abzuleiten. Daher sind oftmals nur Black-Box-Tests sinnvoll. Siehe CT-AI Lehrplan, Kapitel 8.5, Absatz 2.\n\nc) KORREKT – Probabilistische Ergebnisse und Nicht-Determinismus verschärfen die Komplexität der Systeme und somit auch des Tests für sie. Siehe CT-AI Lehrplan, Kapitel 8.5, Absatz 3.\n\nd) FALSCH – Siehe CT-AI Lehrplan, Kapitel 8.5, Absatz 4: „Die Probleme mit nichtdeterministischen Systemen werden noch verschärft, wenn ein KI-basiertes System aus mehreren interagierenden Komponenten besteht…“"
+  },
+  {
+    "id": 29,
+    "lo": "AI-8.8.1",
+    "k": "K4",
+    "pts": 2,
+    "text": "Das Gesundheitsministerium setzt ein KI-basiertes System ein, um gefährdete Patientengruppen zu identifizieren, die unterstützt und beraten werden sollen, um zu verhindern, dass sie in Zukunft an Krankheiten leiden, für die sie anfällig sind. Die Ergebnisse werden auch anderen staatlichen Stellen und Krankenversicherungen zur Verfügung gestellt. Das System wird zunächst anhand eines umfangreichen Datensatzes trainiert, den das Gesundheitsministerium in zwei Umfragen bei 5 000 Männern über 50 Jahren und 25 000 Frauen über 30 Jahren erhoben hat. Das System wird weiterhin gefährdete Patienten identifizieren, indem es Informationen aus öffentlich zugänglichen sozialen Medien sammelt.\n\nWelche der folgenden Attribute sollten bei der Festlegung der Ziele und Akzeptanzkriterien für das System AM SORGFÄLTIGSTEN berücksichtigt werden?\n\nWählen Sie genau ZWEI Antworten.",
+    "options": [
+      "a) Anpassungsfähigkeit",
+      "b) Vorurteil",
+      "c) Erklärbarkeit",
+      "d) Flexibilität",
+      "e) Autonomie"
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "explanation": "a) FALSCH – Anpassbarkeit ist die Fähigkeit des Systems, verändert zu werden (normalerweise, um weiterhin die funktionalen und nicht-funktionalen Anforderungen zu erfüllen). Siehe CT-AI Lehrplan, Kapitel 8.8, Tabelle, Zeile 1. Es gibt keinen aus dem Szenario ersichtlichen Grund zu der Annahme, dass sich das betriebliche Umfeld für das System wesentlich ändern wird und somit auch keinen Grund zu der Annahme, dass das System geändert werden muss.\n\nb) KORREKT – Verzerrung bedeutet z. B., dass die für die Ausbildung verwendeten Daten verzerrt sind. Siehe CT-AI Lehrplan, Kapitel 8.8, Tabelle Zeile 6, sowie Kapitel 8.3. Hier liegt eine Verzerrung in den Daten bezüglich der biologischen Geschlechter (25.000 Frauen gegenüber 5.000 Männer) und gegenüber bestimmten Altersgruppen vor. Daher muss die Verzerrung sorgfältig berücksichtigt werden.\n\nc) KORREKT – Erklärbarkeit ist gefordert, wenn die Ergebnisse sich auf die identifizierten gefährdeten Patienten sowohl in medizinischer als auch in finanzieller Hinsicht beträchtlich auswirken können. Mit der Erklärbarkeit können mögliche Zusammenhänge zwischen Ein- und Ausgaben hergestellt werden. Siehe CT-AI Lehrplan, Kapitel 8.6, Absatz 4 und Kapitel 8.8. Sie sollten in der Lage sein zu sehen, warum sie evtl. als gefährdet eingestuft wurden, damit sie sicherstellen können, dass sie richtig ausgewählt wurden, und als Teil der Anforderungen an die Erklärbarkeit im Zusammenhang mit dem Datenschutz.\n\nd) FALSCH – Flexibilität ist die Fähigkeit eines Systems, sein Verhalten zu ändern. Siehe CT-AI Lehrplan, Kapitel 8.8, Tabelle, Zeile 2. Aber zum jetzigen Zeitpunkt gibt es auf Grundlage des Szenarios keinen Grund zu der Annahme, dass dieses System außerhalb der ursprünglichen Spezifikation verwendet werden muss, so dass nicht erwartet wird, dass sein Verhalten geändert werden muss.\n\ne) FALSCH – Autonomie ist die Fähigkeit des Systems, über die Notwendigkeit menschlicher Eingriffe selbst zu entscheiden. Siehe CT-AI Lehrplan, Kapitel 8.2, Absatz\n\n1. Es gibt keinen Grund zu der Annahme, dass das System über längere Zeiträume hinweg ohne Eingriffe arbeiten können oder über die Notwendigkeit menschlicher Eingriffe entscheiden können muss."
+  },
+  {
+    "id": 30,
+    "lo": "AI-9.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Optionen beschreibt eine valide Beziehung zwischen Tests von ML-Systemen und der Verhinderung von gegnerischen Angriffen oder Datenverunreinigungen?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Das gegnerische Testen besteht daraus, durch die Durchführung gegnerischer Angriffe Schwachstellen zu finden und zu beheben.",
+      "b) Vergleichendes Testen kann genutzt werden, um Abweichungen zwischen der vorherigen Version des Systems und der neuen Version zu finden.",
+      "c) Nach der Identifikation gegnerischer Beispiele muss verhindert werden, dass diese mit dem System in Kontakt kommen können, z. B. durch eine Firewall.",
+      "d) Da KI-basierte Systeme ständig weiterlernen und ihr Verhalten anpassen, ist der Einsatz von Regressionstests nicht sinnvoll."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Siehe CT-AI-Lehrplan, Kapitel 9.1.1, letzter Absatz.\n\nb) FALSCH – Vergleichendes Testen wird verwendet, wenn eine alternative Version des Systems als Pseudo-Orakel verwendet werden soll (evtl. bereits bestehend oder von einem anderen Team entwickelt). Siehe CT-AI Lehrplan, Kapitel 9.3, Absatz 1. Hier sollen jedoch Versionen desselben Systems verglichen werden. Es handelt sich also um A/B-Tests. Siehe CT-AI Lehrplan, Kapitel 9.1.2, letzter Absatz.\n\nc) FALSCH – Die identifizierten Beispiele werden zu den Trainingsdaten hinzugefügt, damit das System lernen kann, mit ihnen umzugehen. Siehe Kapitel 9.1.1, letzter Absatz.\n\nd) FALSCH – Mit einer entsprechend vertrauenswürdigen Testsuite kann durchaus festgestellt werden, ob ein System verunreinigt wurde. Vergleiche CT-AI Lehrplan, Kapitel 9.1.2, letzter Absatz, letzter Satz."
+  },
+  {
+    "id": 31,
+    "lo": "AI-9.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Für welche der folgenden Situationen ist das paarweise Testen AM BESTEN geeignet?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Bei einer hohen Anzahl von Software-Testern für KI-basierte Systeme",
+      "b) Bei einer hohen Anzahl von Systemkomponenten des KI-basierten Systems",
+      "c) Bei einer hohen Anzahl von Testfällen für das KI-basierte System",
+      "d) Bei einer sehr hohen Anzahl Parameter für das KI-basierte System"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Das paarweise Testen bezieht sich auf eine hohe Anzahl Parameter, die für das KI-basierte System von Interesse sind. Siehe CT-AI Lehrplan, Kapitel 9.2, Absatz 1 und 3. Die Anzahl der Tester spielt hierfür keine Rolle. Zwar kann im Rahmen des Pair Programming auch der Einsatz mehrerer Entwickler / Tester am selben PC erwogen werden. Das ist dann aber nicht / sehr selten durch eine zu hohe Zahl an Testern bedingt.\n\nb) FALSCH – Das paarweise Testen bezieht sich auf eine hohe Anzahl Parameter, die für das KI-basierte System von Interesse sind. Siehe CT-AI Lehrplan, Kapitel 9.2, Absatz 1 und 3. Die Anzahl der Systemkomponenten spielt hierfür keine Rolle.\n\nc) FALSCH – Das paarweise Testen bezieht sich auf eine hohe Anzahl Parameter, die für das KI-basierte System von Interesse sind. Siehe CT-AI Lehrplan, Kapitel 9.2, Absatz 1 und 3. Eine hohe Anzahl an Testfällen ist hierfür irrelevant.\n\nd) KORREKT – Siehe CT-AI Lehrplan, Kapitel 9.2, Absatz 1, Absatz 3. Das paarweise Testen bezieht sich auf eine hohe Anzahl Parameter."
+  },
+  {
+    "id": 32,
+    "lo": "AI-9.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Ein Testmanager beschließt, ein Nicht-KI-System mit ähnlicher Funktionalität wie das KI-basierte zu testende System (SUT) zu bauen, um den Systemtest zu unterstützen.\n\nWelche der folgenden Aussagen ist AM EHESTEN RICHTIG?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Der Testmanager hat sich für Back-to-Back-Tests entschieden, weil damit das Problem des Testorakels gelöst werden kann, indem ein Pseudo-Orakel verwendet wird",
+      "b) Der Testmanager hat sich für A/B-Tests entschieden, weil damit das Problem des Testorakels gelöst werden kann, indem ein Pseudorakel verwendet wird",
+      "c) Der Testmanager hat sich für Back-to-Back-Tests entschieden, weil die nichtfunktionalen Anforderungen des SUT anhand des Pseudo-Orakels verifiziert werden können",
+      "d) Der Testmanager hat sich für A/B-Tests entschieden, weil die nichtfunktionalen Anforderungen des SUT anhand des Pseudo-Orakels verifiziert werden können"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Es handelt sich um ein Beispiel für Vergleichendes Testen, bei denen das Nicht-AI-System als Pseudo-Orakel verwendet wird. Siehe CT AI-Lehrplan, Kapitel 9.3, Absatz 1: „Bei vergleichenden Tests wird eine alternative Version des Systems als Pseudo-Orakel verwendet“\n\nb) FALSCH – Bei A/B-Tests verwenden wir eine Variante des SUT zum Vergleich mit dem SUT. Siehe CT AI-Lehrplan, Kapitel 9.4, letzter Absatz: „bei A/B-Testen [werden] in der Regel zwei Varianten desselben Systems miteinander verglichen“. Hier haben wir lediglich zwei Systeme mit ähnlicher Funktionalität. Sie sind sogar derart unterschiedlich, dass es ein KI-basiertes und ein nicht auf KI basierendes System ist.\n\nc) FALSCH – Die Ressourcen und nicht-funktionalen Eigenschaften des Pseudo-Orakels und des SUT sind wahrscheinlich unterschiedlich, daher kann das alternative System nicht für nicht-funktionale Tests verwendet werden. Beim vergleichenden Test kann die Performance der beiden Systeme sehr unterschiedlich sein. Siehe CT-AI Lehrplan, Kapitel 9.3, Absatz 1, letzter Satz: „Es muss beispielsweise nicht so schnell ausgeführt werden…“\n\nd) FALSCH – Bei A/B-Tests verwenden wir eine Variante des SUT zum Vergleich mit dem SUT. Siehe CT AI-Lehrplan, Kapitel 9.4, letzter Absatz: „bei A/B-Testen [werden] in der Regel zwei Varianten desselben Systems miteinander verglichen“. Hier haben wir lediglich zwei Systeme mit ähnlicher Funktionalität. Sie sind sogar derart unterschiedlich, dass es ein KI-basiertes und ein nicht auf KI basierendes System ist."
+  },
+  {
+    "id": 33,
+    "lo": "AI-9.5.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Ein KI-gestütztes Mobiltelefon-Empfehlungssystem bietet eine Liste von Mobiltelefonen an, und zwar auf der Grundlage seines Wissens über die angegebenen Präferenzen des Nutzers, d.h. möglichst großes Display, möglichst großer Speicher und lange Laufzeit des Akkus. Das System gibt für jede Konstellation dieser Größen einen akzeptablen Preis an. Für den Test des Mobiltelefon-Empfehlungssystems werden drei Ausgangstestfälle (T1 bis T3) verwendet. Zusätzlich werden neue Testfälle A bis D vorgeschlagen.\n\n[[asset:p27-2]]\n\n[[asset:p27-3]]\n\nWelche der neuen Tests sind Folgetestfälle für metamorphes Testen?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) A, B sind Folgetestfälle; C, D sind keine Folgetestfälle",
+      "b) A, C sind Folgetestfälle; B, D sind keine Folgetestfälle",
+      "c) A, B, C sind Folgetestfälle; D ist kein Folgetestfall",
+      "d) B, C, D sind Folgetestfälle; A ist kein Folgetestfall"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "Antwort c) ist KORREKT, die anderen Antworten sind falsch, denn:\n\n1. A, B und C sind Folgetestfälle\n\n2. D ist kein Folgetestfall Die metamorphen Relationen sind: Eine Vergrößerung der Eingabewerte (Displaydiagonale, Speichergröße, Akkulaufzeit) zeigt bessere Eigenschaften des Mobiltelefons an und erhöht den Preis, der akzeptabel ist. Test A ist ein Folgetestfall, der sich aus T1 ableitet. Gegenüber T1 ist die Akkulaufzeit geringer (30 Std. statt 36 Std.) – bei sonst gleichen anderen Werten. Mit T2 und T3 ist Test A nicht vergleichbar. Daher ist der akzeptable Preis höchstens so hoch wie bei T1, also 200 €. Test B ist ein Folgetestfall. Er leitet sich nur aus T2 ab, denn er hat eine im Vergleich zu diesem erhöhte Akkulaufzeit (30 Std. statt 24 Std.) – bei gleichen anderen Werten. Mit T1 und T3 ist Test B nicht vergleichbar. Daher ist der akzeptable Preis mindestens so hoch wie bei T2, also mindestens 250€. Test C Ist ein Folgetestfall. Mit den Tests T1 und T2 ist er nicht vergleichbar. Mit T3 sind die Mobiltelefongrößen vergleichbar: Displaygröße und Speicher sind gleich groß, die Akkulaufzeit ist mit 20 Stunden größer als bei T3 (16 Std.). Daher ist der akzeptable Preis mindestens so hoch wie bei T3, also mindestens 220 €. Test D ist kein Folgetestfall. Mit den Tests T1 und T2 ist er nicht vergleichbar. Mit T3 sind die Mobiltelefongrößen vergleichbar: Displaygröße und Speicher sind gleich groß, die Akkulaufzeit ist mit 24 Stunden größer als bei T3 (16 Std.). Daher ist der der akzeptable Preis mindestens so hoch wie bei T3, also mindestens 220 €, also nicht höchstens 200 € – wie bei Test D angegeben."
+  },
+  {
+    "id": 34,
+    "lo": "AI-9.6.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen für KI-basierte Systeme ist eine korrekte Aussage bzgl. des erfahrungsbasierten Testens?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Beim explorativen Testen werden die Trainingsdaten mit Hilfe von Tools visualisiert, um verschiedene Aspekte der Daten zu betrachten.",
+      "b) Bei der intuitiven Testfallermittlung werden die existierenden Testfälle dynamisch angepasst, zum Beispiel auf Basis des metamorphen Testens.",
+      "c) Für das explorative Testen wird unter anderem die \"ML-Test-Checkliste\" von Google verwendet.",
+      "d) Das erfahrungsbasierte Testen erfordert die Berechnung der funktionalen Leistungsmetriken von ML."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Es handelt sich um eine explorative Datenanalyse, die eine explorative Methode ist (s. Kap. 9.6, 5. Absatz, letzte zwei Sätze).\n\nb) FALSCH – Dies ist ein Vorgehen beim explorativen Testen (s. Kap. 9.6, 3. Absatz). Die intuitive Testfallermittlung basiert dagegen auf dem Wissen von Testern über typische Entwicklerfehlhandlungen und Fehlerwirkungen in ähnlichen Systemen (s. Kap. 9.6, 2. Absatz).\n\nc) FALSCH – Dies ist eine checklistenbasierte Prüfung (s. Kap. 9.6, erster und sechster Absatz). Beim explorativem testen wird nicht mit Checklisten gearbeitet (s. Kap. 9.6, 3. Absatz).\n\nd) FALSCH – Die Berechnung der funktionalen Leistungsmetriken von ML (s. Kap. 5) ist für die Einschätzung der Qualität eines KI-Systems wichtig, hat aber mit erfahrungsbasiertem Testen nichts zu tun (s. Kap. 9.6)."
+  },
+  {
+    "id": 35,
+    "lo": "AI-9.7.1",
+    "k": "K4",
+    "pts": 2,
+    "text": "LAIgal Systems verfügt über ein KI-basiertes Produkt zur Extraktion relevanter günstiger Urteile, die einem bestimmten Rechtsfall ähnlich sind. Dieses Produkt wird von Richtern an den Gerichten verwendet. Die Details des aktuellen Falles werden zur Verfügung gestellt, und das System erstellt entsprechende Urteile. Das System muss vor böswilligen Eingaben sicher sein. Ein ähnliches Open-Source-Produkt existiert und ist verfügbar. Das Fehlen eines geeigneten Testorakels stellt eine Herausforderung beim Testen dar.\n\nWelche der folgenden Testtechniken sollte gewählt werden, um die neue Version während des Systemtests zu testen?\n\nWählen Sie genau ZWEI Antworten.",
+    "options": [
+      "a) A/B-Tests",
+      "b) Back-to-Back-Tests",
+      "c) Widersprüchliche Tests",
+      "d) Prüfung von Zustandsübergängen",
+      "e) Berechnung funktionaler ML-Leistungskennzahlen"
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "explanation": "a) FALSCH – A/B-Tests sind am nützlichsten, wenn zwei Varianten verglichen werden, um zu entscheiden, ob die neue Variante eine Verbesserung gegenüber der älteren Variante darstellt (s. Kap. 9.7, 1. Absatz, 2. Aufzählungspunkt). Hier handelt es sich aber um verschiedene Versionen.\n\nb) KORREKT – Bei Vergleichenden Tests wird ein gleichwertiges System als Pseudo- Orakel für Tests verwendet darstellt (s. Kap. 9.7, 1. Absatz, 1. Aufzählungspunkt). Hier liegt ein ähnliches Open-Source-Produkt vor.\n\nc) KORREKT – Gegnerisches Testen ist hier wichtig, da das System vor gegnerischen Eingaben sicher sein muss (s. Kap. 9.1.1, letzter Absatz).\n\nd) FALSCH – Zustandsübergangstests (s. Kap. 4.2.4, CTFL-Lehrplan V3.1D) könnten zwar nützlich sein, aber nichts im Szenario deutet darauf hin, dass Zustände des Systems eine wesentliche Rolle spielen. Daher sollte dieses Testverfahren nicht gewählt werden.\n\ne) FALSCH – Die Berechnung funktionaler Leistungsmetriken von ML ist in der Phase der Modellprüfung für Klassifizierungsprobleme geeignet (s. Kap. 5.1). Bei Nicht- Klassifizierungsproblemen ist sie in der Systemtestphase nicht angebracht."
+  },
+  {
+    "id": 36,
+    "lo": "AI-10.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen ist ein Beispiel für einen Unterschied zwischen einer Testumgebung für KI-basierte Systeme und einer Testumgebung für herkömmliche Systeme?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Testumgebungen für KI-basierte Systeme können einen Mechanismus erfordern, um festzustellen, wie eine bestimmte Entscheidung getroffen wird. Für herkömmliche Systeme wird das nicht verlangt.",
+      "b) Testumgebungen für KI-basierte Systeme benötigen Simulatoren und virtuelle Umgebungen, während herkömmliche Systeme diese nicht benötigen.",
+      "c) Testumgebungen für KI-basierte Systeme benötigen große Datenmengen, während herkömmliche Systeme keine großen Datenmengen benötigen.",
+      "d) Testumgebungen für KI-basierte Multiagentenysteme müssen möglicherweise nicht-determiniert sein, Testumgebungen herkömmlicher Multiagentenysteme jedoch nicht."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Für KI-Umgebungen müssen möglicherweise Erklärungsmechanismen vorgesehen werden – wenn es schwierig ist festzustellen, wie das System seine Entscheidungen getroffen hat (s. Kap. 10.1, 4. Aufzählungspunkt).\n\nb) FALSCH – Für konventionelle Systeme werden häufig Simulatoren und virtuelle Umgebungen benötigt (s. Kap. 10.2).\n\nc) FALSCH – Auch für konventionelle Systeme kann eine große Datenmenge erforderlich sein (s. Kap. 10.1, letzter Aufzählungspunkt)\n\nd) FALSCH – Nicht-Determinismus der Testumgebung ist gemäß Kap. 10.1, 3. Aufzählungspunkt, bei KI-Systemen möglicherweise nötig; für herkömmliche Multiagentensysteme gilt das aber auch, da es unkalkulierbare Zeitverzögerungen geben kann."
+  },
+  {
+    "id": 37,
+    "lo": "AI-11.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen bzgl. des Einsatzes von KI zur Analyse neuer Fehler ist AM EHESTEN korrekt?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Eine geringe Anzahl von Fehlerzuständen in einer neuen Anwendung kann mit Hilfe eines geeigneten ML-Ansatzes gut kategorisiert werden.",
+      "b) Wenn eine große Anzahl von Fehlerzuständen bei einer kleinen Anwendung gemeldet wird, kann die Fehlerbehebungszeit durch Fehler-Triage optimiert werden.",
+      "c) Die KI-basierte Kategorisierung von Fehlern ist für automatisierte Fehlermeldungssysteme und große Projekte nicht von Nutzen.",
+      "d) Für ein neues Entwicklungsteam können ML-Modelle vorschlagen, welcher Entwickler am besten geeignet ist, bestimmte Fehler zu beheben."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Wenn eine kleine Anzahl von Fehlern kategorisiert werden muss und keine historischen Daten vorliegen, können bei einem ML-Ansatz keine Trainingsdaten verwendet werden (s. Kap. 3.3, 1. Aufzählungspunkt).\n\nb) KORREKT – Wenn eine große Anzahl von Fehlerzuständen bei einer kleinen Anwendung gemeldet wird, besteht höchstwahrscheinlich ein Nutzen durch die Möglichkeit, Duplikate zu identifizieren und damit die Fehlerbehebungszeit zu optimieren (s. Kap. 11.2, 1. Absatz und 1. Aufzählungspunkt, „Fehler-Triage“).\n\nc) FALSCH – Die KI-basierte Kategorisierung von Fehlern ist für automatisierte Fehlermeldungssysteme und große Projekte besonders nützlich (s. Kap. 11.2, 1. Aufzählungspunkt, letzter Satz).\n\nd) FALSCH – Damit die ML-Modelle den Entwickler empfehlen können, der am besten bestimmte Fehler beheben kann, müsste sie frühere/historische Daten über die Inhalte der Fehlermeldungen und Entwicklerzuordnungen zur Verfügung haben (s. Kap. 11.2, letzter Aufzählungspunkt „Zuweisung“)."
+  },
+  {
+    "id": 38,
+    "lo": "AI-11.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen über die KI-basierte Testfallgenerierung ist korrekt?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Die Grundlage für die KI-basierte Erstellung der Testfälle bildet der Quellcode, aber nicht ein maschinenlesbares Testmodell.",
+      "b) Das Testorakel-Problem bei der KI-basierten Erstellung der Testfälle kann durch vergleichendes Testen gelöst werden.",
+      "c) Für KI-basiert generierte funktionale Testfälle sind stets erwartbare Ergebnisse verfügbar.",
+      "d) Forschungen zeigen, dass KI-basierte Testfallgenerierungswerkzeuge keine gleichwertigen Überdeckungsgrade wie Fuzz-Testing-Werkzeuge erreichen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Die Grundlage für die KI-basierte Erstellung der Testfälle bildet der Quellcode und ein maschinen-lesbares Testmodell (s. Kap. 11.3, 1. Absatz, 2. Satz).\n\nb) KORREKT – Das Testorakel-Problem bei der KI-basierten Erstellung der Testfälle wird durch vergleichendes Testen gelöst, wenn ein geeignetes System zur Verfügung steht, das als Pseudo-Orakel verwendet werden kann (s. Kap. 11.3, 2. Absatz, 2. Satz).\n\nc) FALSCH – „Wenn jedoch kein Testmodell, das die erforderlichen Verhaltens-weisen definiert, als Grundlage für die Testfälle verwendet wird, leidet ... (die) Testfallgenerierung im Allgemeinen unter einem Testorakelproblem, da das KI-basierte Werkzeug nicht weiß, welche Ergebnisse für einen bestimmten Satz von Testdaten zu erwarten sind.“ (Kap. 11.3, 2. Absatz, 1. Satz).\n\nd) FALSCH – Forschungen, die KI-basierte Testfallgenerierungswerkzeuge mit ähnlichen ... Fuzz-Testing-Werkzeugen vergleichen, zeigen, dass die KI-basierten Werkzeuge einen gleichwertigen Überdeckungsgrad erreichen (s. Kap. 11.3, 3. Absatz, 1. Satz)."
+  },
+  {
+    "id": 39,
+    "lo": "AI-11.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Optionen gibt RICHTIG an, wie ein KI-basiertes Tool die Optimierung von Regressionstestsuiten durchführen kann?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Durch die Analyse falsch positiver Testergebnisse",
+      "b) Durch die Analyse von Informationen aus früheren Testaktivitäten",
+      "c) Durch den Einsatz genetischer Algorithmen zur Erstellung neuer Testfälle",
+      "d) Durch Aktualisierung der erwarteten Ergebnisse, um der Konzeptabweichung entgegenzuwirken"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Das Ziel der Optimierung von Regressionstests ist es, den Umfang einer Testsuite zu verringern, Prioritäten zu setzen oder sie zu erweitern (s. Kap. 11.4, 1. Absatz), nicht aber, die Zahl der Fehlalarme zu reduzieren.\n\nb) KORREKT – Die Optimierung von Regressionstestsuiten erfolgt durch die Analyse von Informationen über frühere Testdurchführungen (s. Kap. 11.4, 2. Absatz).\n\nc) FALSCH – Gemäß Abschnitt 11.4 des Lehrplans wird die Optimierung von Regressionstests in der Regel anhand der Daten früherer Testausführungen durchgeführt (s. Kap. 11.4, 2. Absatz). Durch die Verwendung genetischer Algorithmen zur Erstellung neuer Tests wird die Regressionstestsuite aber nicht optimiert.\n\nd) FALSCH – Konzeptdrift bedeutet die Änderung der Einsatzumgebung der Software (s. Kap. 7.6). Wenn deswegen die Software geändert wurde, sind zusätzliche Regressionstestfälle nötig. Das führt aber nicht zu einer Optimierung der Regressionstestsuite."
+  },
+  {
+    "id": 40,
+    "lo": "AI-11.5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Optionen gibt zutreffend an, wie oder zu welchem Zweck ein KI-basiertes Testwerkzeug eine Fehlervorhersage durchführen kann?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Durch die Analyse von Auffälligkeiten in Quellcode-Metriken – wie die Anzahl der Codezeilen und die zyklomatische Komplexität – können Fehler vorhergesagt werden.",
+      "b) Die Vorhersage von Fehlerzuständen, die auf früheren Erfahrungen mit derselben Codebasis oder denselben Entwicklern beruht, sollte unter Verwendung eines KI-basierten Ansatzes erfolgen.",
+      "c) Durch die Analyse von in der Vergangenheit beobachteter falsch positiver Testergebnisse können Fehler vorhergesagt werden.",
+      "d) Zur Prioritätensetzung für den Test von Komponenten, die mehr Fehlerzustände enthalten als andere, sind auch unausgereifte Testwerkzeuge geeignet, wenn sie KI-basiert sind."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Quellcode-Metriken wie die Anzahl der Codezeilen und die zyklomatische Komplexität sind nicht beste Prädikatoren für die Vorhersage von Fehlern (s. Kap. 11.5,\n\n3. Absatz, 2. Satz).\n\nb) KORREKT – Die Fehlervorhersage erfolgt durch die KI-basierte Suche nach Korrelationen zwischen Code-/Prozess-/Personal-Metriken und Fehlern in derselben Codebasis oder mit denselben Entwicklern (s. Kap. 11.5, 2. Absatz).\n\nc) FALSCH – Das Ziel der Fehlervorhersage besteht nicht darin, Fehler mit einem falschpositiven Ergebnis zu identifizieren, sondern wie viele Fehlerzustände überhaupt vorhanden sind und ob sie gefunden werden können (s. Kap. 11.5, 1. Absatz).\n\nd) FALSCH – “Die Ergebnisse der Fehlervorhersage werden in der Regel dazu verwendet, Prioritäten für die Tests zu setzen (z. B. mehr Tests für Komponenten, für die mehr Fehlerzustände vorhergesagt werden).” “Diese Fähigkeit hängt von der Ausgereiftheit des verwendeten Werkzeugs ab.“ (s. Kap. 11.5, 1. Absatz, 3. und 2. Satz)."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 60 * 60;
+      const EXT_SECONDS = 75 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "75"
+          : "60";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "Der Timer zählt von 75:00 herunter (60 Minuten + 25 % Übungszeit). Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben."
+          : "Der Timer zählt von 60:00 herunter. Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {"p15-2": {"src": "assets/ISTQB-CT-AI_Sample-Exam-Questions_v2.0_DE-1/p15-2.png", "alt": "Konfusionsmatrix Tatsächlich positiv Tatsächlich negativ\nVorhergesagt positiv 78 22\nVorhergesagt negativ 6 14", "kind": "table", "page": 15}, "p27-2": {"src": "assets/ISTQB-CT-AI_Sample-Exam-Questions_v2.0_DE-1/p27-2.png", "alt": "T1 T2 T3\nDisplaydiagonale 4 Zoll 4 Zoll 5 Zoll\nSpeichergröße 8 GB 16 GB 8 GB\nAkkulaufzeit 36 Std. 24 Std. 16 Std.\nAkzeptabler Preis <= 200 € >= 250 € >= 220 €", "kind": "table", "page": 27}, "p27-3": {"src": "assets/ISTQB-CT-AI_Sample-Exam-Questions_v2.0_DE-1/p27-3.png", "alt": "Test A Test B Test C Test D\nDisplaydiagonale 4 Zoll 4 Zoll 5 Zoll 5 Zoll\nSpeichergröße 8 GB 16 GB 8 GB 8 GB\nAkkulaufzeit 24 Std. 30 Std. 20 Std. 24 Std.\nAkzeptabler Preis <=200 € >=250 € >=220 € <=200 €", "kind": "table", "page": 27}};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          if (asset.html) return `<div class="q-table-wrap">${asset.html}</div>`;
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Zum Vergrößern öffnen</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} Punkt${q.pts > 1 ? "e" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="${escHtml(q.imageAlt || ('Abbildung zu Frage ' + q.id))}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Prüfung abgeben?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `Es sind noch <strong style="color:var(--warn)">${unanswered} Frage${unanswered > 1 ? "n" : ""} unbeantwortet</strong>. Unbeantwortete Fragen ergeben 0 Punkte.<br><br>Trotzdem abgeben?`
+            : `Alle ${questions.length} Fragen sind beantwortet. Prüfung jetzt abgeben?`;
+        document.getElementById("confirm-yes-btn").textContent = "Abgeben";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Prüfung neu starten?";
+        document.getElementById("confirm-msg").innerHTML =
+          "Alle Antworten gehen verloren. Der Timer wird zurückgesetzt auf " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Möchten Sie fortfahren?";
+        document.getElementById("confirm-yes-btn").textContent = "Neu starten";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Unbeantwortet &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Richtig (+" + q.pts + (q.pts > 1 ? " Punkte)" : " Punkt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Falsch &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (Zeit abgelaufen)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " von " + totalPoints + " Punkten (" + correctCount + " von " + questions.length + " Fragen richtig)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? `✓ BESTANDEN (≥ ${Math.ceil(totalPoints * 0.65)} Punkte)`
+          : `✗ NICHT BESTANDEN (< ${Math.ceil(totalPoints * 0.65)} Punkte)`;
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

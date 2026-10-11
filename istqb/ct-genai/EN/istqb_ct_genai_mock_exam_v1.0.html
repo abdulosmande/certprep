@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISTQB CT-GenAI — Mock Exam</title>
+
+<style>
+  :root {
+    --bg: #080c12; --surface: #0e1420; --card: #111827; --border: #1e2840;
+    --accent: #38bdf8; --accent2: #818cf8; --correct: #34d399;
+    --incorrect: #f87171; --warn: #fbbf24; --text: #cbd5e1;
+    --muted: #475569; --heading: #f1f5f9;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  /* START SCREEN */
+  #start-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(56,189,248,0.06) 0%, transparent 70%); }
+  .start-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 3.5rem 3rem; max-width: 540px; width: 100%; text-align: center; position: relative; overflow: hidden; }
+  .start-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(56,189,248,0.03) 0%, transparent 50%, rgba(129,140,248,0.03) 100%); pointer-events: none; border-radius: 20px; }
+  .start-badge { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.2); padding: 0.3rem 1rem; border-radius: 99px; display: inline-block; margin-bottom: 1.6rem; }
+  .start-card h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.9rem, 4.5vw, 2.8rem); font-weight: 800; color: var(--heading); line-height: 1.1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+  .start-card h1 em { font-style: normal; color: var(--accent); }
+  .start-subtitle { font-size: 0.88rem; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.7; }
+  .start-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 2.5rem; }
+  .meta-item { background: var(--surface); padding: 1.1rem 0.5rem; text-align: center; }
+  .meta-val { font-family: 'DM Mono', monospace; font-size: 1.5rem; font-weight: 500; color: var(--heading); display: block; }
+  .meta-lbl { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.25rem; }
+  .btn-start { font-family: 'DM Mono', monospace; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.08em; padding: 1rem 2.5rem; background: var(--accent); color: #080c12; border: none; border-radius: 10px; cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; width: 100%; text-transform: uppercase; }
+  .btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(56,189,248,0.35); }
+  .start-note { font-size: 0.73rem; color: var(--muted); margin-top: 1rem; line-height: 1.6; }
+
+  /* TIME EXTENSION TOGGLE */
+  .time-option-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.65rem; font-family: 'DM Mono', monospace; }
+  .time-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .time-opt { background: var(--surface); padding: 0.85rem 0.5rem; text-align: center; cursor: pointer; transition: background 0.18s, color 0.18s; border: none; width: 100%; font-family: 'DM Mono', monospace; color: var(--muted); }
+  .time-opt:first-child { border-right: 1px solid var(--border); }
+  .time-opt.active { background: rgba(56,189,248,0.12); color: var(--heading); }
+  .time-opt-val { font-size: 1.25rem; font-weight: 500; color: inherit; display: block; line-height: 1.2; }
+  .time-opt-lbl { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; display: block; opacity: 0.7; }
+  .time-opt.active .time-opt-val { color: var(--accent); }
+  .time-ext-note { font-size: 0.68rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; padding: 0.6rem 0.9rem; background: rgba(129,140,248,0.06); border: 1px solid rgba(129,140,248,0.15); border-radius: 8px; }
+
+  /* EXAM SCREEN */
+  #exam-screen { display: none; }
+  header { background: rgba(11,16,28,0.96); border-bottom: 1px solid var(--border); padding: 0.85rem 2rem; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px); }
+  .header-inner { max-width: 920px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .header-left { display: flex; flex-direction: column; }
+  .exam-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .exam-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; }
+  .timer-block { display: flex; align-items: center; gap: 1rem; }
+  .timer { font-family: 'DM Mono', monospace; font-size: 2rem; font-weight: 500; color: var(--accent); letter-spacing: 0.04em; transition: color 0.3s; min-width: 95px; text-align: right; }
+  .timer.warn { color: var(--warn); }
+  .timer.danger { color: var(--incorrect); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .answered-count { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); text-align: right; line-height: 1.5; }
+  .answered-count span { color: var(--text); font-weight: 500; }
+  .header-buttons { display: flex; gap: 0.5rem; align-items: center; }
+  .progress-bar-wrap { max-width: 920px; margin: 0.5rem auto 0; height: 2px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 99px; transition: width 0.4s ease; width: 0%; }
+
+  /* MAIN */
+  main { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+  .exam-toolbar { display: flex; justify-content: flex-start; align-items: center; margin-bottom: 1.5rem; }
+  .toolbar-info { font-size: 0.8rem; color: var(--muted); }
+  .toolbar-info strong { color: var(--text); }
+  .btn-submit { font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; padding: 0.5rem 1.2rem; background: var(--accent); color: #080c12; border: none; border-radius: 7px; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; text-transform: uppercase; white-space: nowrap; }
+  .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(56,189,248,0.3); }
+  .btn-secondary { font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; padding: 0.5rem 1rem; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 7px; cursor: pointer; transition: color 0.15s, border-color 0.15s; text-transform: uppercase; white-space: nowrap; }
+  .btn-secondary:hover { color: var(--text); border-color: var(--muted); }
+
+  /* QUESTION CARDS */
+  .question-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; margin-bottom: 1rem; transition: border-color 0.25s; animation: fadeUp 0.2s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+  .question-card.correct-card   { border-color: rgba(52,211,153,0.4); }
+  .question-card.incorrect-card { border-color: rgba(248,113,113,0.4); }
+  .q-header { display: flex; gap: 0.9rem; align-items: flex-start; margin-bottom: 1.1rem; }
+  .q-meta { display: flex; flex-direction: column; gap: 0.3rem; flex-shrink: 0; }
+  .q-num { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; color: var(--accent); background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.18); border-radius: 5px; padding: 0.18rem 0.5rem; white-space: nowrap; }
+  .q-lo  { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--muted); background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
+  .q-pts { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--accent2); background: rgba(129,140,248,0.08); border: 1px solid rgba(129,140,248,0.18); border-radius: 4px; padding: 0.14rem 0.4rem; white-space: nowrap; }
+  .q-text { font-size: 0.92rem; color: var(--heading); line-height: 1.7; flex: 1; white-space: pre-wrap; }
+  .multi-hint { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.63rem; color: var(--accent2); letter-spacing: 0.06em; margin: 0.65rem 0 0.75rem; padding: 0.18rem 0.5rem; background: rgba(129,140,248,0.1); border: 1px solid rgba(129,140,248,0.2); border-radius: 4px; }
+  .options { display: flex; flex-direction: column; gap: 0.45rem; }
+
+  /* --- OPTION ROWS --- */
+  .option-row { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.7rem 1rem;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; transition: border-color 0.15s, background 0.15s; user-select: none; }
+  .option-row:hover:not(.disabled) { border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.03); }
+  .option-row:focus-within { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .option-row.disabled { cursor: default; }
+
+  .option-marker { flex-shrink: 0; width: 17px; height: 17px; border-radius: 50%;
+    border: 2px solid var(--border); background: transparent; margin-top: 2px;
+    transition: border-color 0.15s, background 0.15s; display: flex; align-items: center; justify-content: center; }
+  .option-row.is-checkbox .option-marker { border-radius: 4px; }
+
+  .option-marker::after { content: ''; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent); opacity: 0; transition: opacity 0.15s; }
+  .option-row.is-checkbox .option-marker::after { border-radius: 2px; width: 8px; height: 8px; }
+
+  .option-row.selected { border-color: rgba(56,189,248,0.45); background: rgba(56,189,248,0.06); }
+  .option-row.selected .option-marker { border-color: var(--accent); }
+  .option-row.selected .option-marker::after { opacity: 1; }
+
+  .option-row.reveal-correct { border-color: var(--correct) !important; background: rgba(52,211,153,0.07) !important; }
+  .option-row.reveal-correct .option-marker { border-color: var(--correct); background: rgba(52,211,153,0.15); }
+  .option-row.reveal-correct .option-marker::after { background: var(--correct); opacity: 1; }
+
+  .option-row.reveal-wrong { border-color: var(--incorrect) !important; background: rgba(248,113,113,0.07) !important; }
+  .option-row.reveal-wrong .option-marker { border-color: var(--incorrect); background: rgba(248,113,113,0.15); }
+  .option-row.reveal-wrong .option-marker::after { background: var(--incorrect); opacity: 1; }
+
+  .option-text { font-size: 0.87rem; line-height: 1.55; color: var(--text); flex: 1; }
+
+  .result-tag { display: none; align-items: center; gap: 0.4rem; font-family: 'DM Mono', monospace; font-size: 0.67rem; font-weight: 500; letter-spacing: 0.04em; margin-top: 1rem; padding: 0.4rem 0.75rem; border-radius: 6px; }
+  .result-tag.show { display: flex; }
+  .result-tag.correct   { background: rgba(52,211,153,0.1);  color: var(--correct);   border: 1px solid rgba(52,211,153,0.25); }
+  .result-tag.incorrect { background: rgba(248,113,113,0.1); color: var(--incorrect); border: 1px solid rgba(248,113,113,0.25); }
+
+  .explanation { display: none; margin-top: 0.85rem; padding: 0.85rem 1rem; background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent2); border-radius: 0 6px 6px 0; font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+  .explanation.show { display: block; }
+
+  /* SUMMARY */
+  #summary { display: none; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 3rem 2.5rem; text-align: center; margin-top: 2rem; animation: fadeUp 0.4s ease; }
+  #summary h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--heading); margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+  .big-score { font-family: 'DM Mono', monospace; font-size: 4.8rem; font-weight: 500; color: var(--accent); line-height: 1; margin: 1rem 0 0.2rem; }
+  .sub { font-size: 0.86rem; color: var(--muted); margin-bottom: 0.6rem; }
+  .time-taken { font-family: 'DM Mono', monospace; font-size: 0.76rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .time-taken span { color: var(--text); }
+  .grade-badge { display: inline-block; padding: 0.4rem 1.2rem; border-radius: 8px; font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; margin-bottom: 2rem; }
+  .grade-badge.pass { background: rgba(52,211,153,0.12); color: var(--correct); border: 1px solid rgba(52,211,153,0.3); }
+  .grade-badge.fail { background: rgba(248,113,113,0.12); color: var(--incorrect); border: 1px solid rgba(248,113,113,0.3); }
+  .stat-row { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .stat .val { font-family: 'DM Mono', monospace; font-size: 1.7rem; font-weight: 500; color: var(--heading); }
+  .stat .lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.1rem; }
+
+  /* CONFIRM OVERLAY */
+  #confirm-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
+  #confirm-overlay.show { display: flex; }
+  .confirm-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; max-width: 420px; width: 90%; text-align: center; animation: fadeUp 0.22s ease; }
+  .confirm-box h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--heading); margin-bottom: 0.75rem; }
+  .confirm-box p { font-size: 0.86rem; color: var(--muted); margin-bottom: 1.75rem; line-height: 1.65; }
+  .confirm-btns { display: flex; gap: 0.75rem; justify-content: center; }
+  .btn-confirm-yes { font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; padding: 0.65rem 1.5rem; background: var(--accent); color: #080c12; border: none; border-radius: 8px; cursor: pointer; transition: transform 0.15s; }
+  .btn-confirm-yes:hover { transform: translateY(-1px); }
+  .btn-confirm-no { font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; padding: 0.65rem 1.5rem; background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: color 0.15s; }
+  .btn-confirm-no:hover { color: var(--text); }
+
+  @media (max-width: 600px) {
+    header { padding: 0.75rem 1rem; }
+    main { padding: 1.25rem 0.9rem 3rem; }
+    .question-card { padding: 1.1rem 0.9rem; }
+    .start-card { padding: 2.5rem 1.5rem; }
+    .timer { font-size: 1.4rem; min-width: 75px; }
+    .stat-row { gap: 1.5rem; }
+    .header-buttons { gap: 0.35rem; }
+    .btn-submit, .btn-secondary { font-size: 0.7rem; padding: 0.4rem 0.7rem; }
+  }
+</style>
+<link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="start-screen">
+  <div class="start-card">
+    <div class="start-badge">ISTQB Specialist Level</div>
+    <h1>Testing with<br><em>Generative AI</em></h1>
+    <p class="start-subtitle">CT-GenAI Sample Exam Set A — Timed examination under simulated exam conditions. The timer begins the moment you press Start.</p>
+    <p class="start-subtitle source-credit">Source: ISTQB-CT-GenAI_Sample-Exam-A-Questions_v1.0.pdf; ISTQB-CT-GenAI_Sample-Exam-A-Answers_v1.0.pdf. © ISTQB®. Authors and translators are acknowledged in the source PDFs.</p>
+    <div class="start-meta">
+      <div class="meta-item"><span class="meta-val">40</span><div class="meta-lbl">Questions</div></div>
+      <div class="meta-item"><span class="meta-val" id="meta-minutes">60</span><div class="meta-lbl">Minutes</div></div>
+      <div class="meta-item"><span class="meta-val">65%</span><div class="meta-lbl">Pass Mark</div></div>
+    </div>
+
+    <div class="time-option-label">Time allowance</div>
+    <div class="time-toggle">
+      <button class="time-opt active" id="opt-standard" onclick="selectTime(false)">
+        <span class="time-opt-val">60 min</span>
+        <span class="time-opt-lbl">Standard</span>
+      </button>
+      <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+        <span class="time-opt-val">75 min</span>
+        <span class="time-opt-lbl">+15 min extension</span>
+      </button>
+    </div>
+    <div class="time-ext-note" id="ext-note" style="display:none;">
+      &#9432;&nbsp; The 15-minute extension applies to candidates whose mother tongue is not English, as per ISTQB regulations.
+    </div>
+
+    <button class="btn-start" onclick="startExam()">&#9654; Start Exam</button>
+    <p class="start-note" id="start-note-txt">The clock counts down from 60:00. Submit before time runs out — the exam auto-submits when time expires.</p>
+  </div>
+</div>
+
+<!-- EXAM SCREEN -->
+<div id="exam-screen">
+  <header>
+    <div class="header-inner">
+      <div class="header-left">
+        <span class="exam-label">ISTQB CT-GenAI · Sample Exam A</span>
+        <span class="exam-title">Testing with Generative AI</span>
+      </div>
+      <div class="timer-block">
+        <div class="answered-count"><span id="answered-num">0</span>/40 answered</div>
+        <div class="timer" id="timer">60:00</div>
+        <div class="header-buttons">
+          <button class="btn-secondary" onclick="confirmReset()">&#8635; Reset</button>
+          <button class="btn-submit" onclick="confirmSubmit()">Submit</button>
+        </div>
+      </div>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill"></div></div>
+  </header>
+
+  <main>
+    <div class="exam-toolbar">
+      <div class="toolbar-info">40 questions &mdash; <strong>65%</strong> required to pass &mdash; questions marked "select all that apply" may have multiple correct answers</div>
+    </div>
+    <div id="questions-container"></div>
+    <div id="summary">
+      <h2>Exam Complete</h2>
+      <div class="big-score" id="final-score-pct">—</div>
+      <div class="sub" id="final-score-raw"></div>
+      <div class="time-taken">Time used: <span id="time-used">—</span></div>
+      <div class="grade-badge" id="grade-badge"></div>
+      <div class="stat-row">
+        <div class="stat"><div class="val" id="stat-correct">—</div><div class="lbl">Correct</div></div>
+        <div class="stat"><div class="val" id="stat-wrong">—</div><div class="lbl">Wrong</div></div>
+        <div class="stat"><div class="val" id="stat-skipped">—</div><div class="lbl">Skipped</div></div>
+      </div>
+      <button class="btn-secondary" onclick="confirmReset()">&#8635; Restart Exam</button>
+    </div>
+  </main>
+</div>
+
+<!-- CONFIRM OVERLAY -->
+<div id="confirm-overlay">
+  <div class="confirm-box">
+    <h3 id="confirm-title">Submit Exam?</h3>
+    <p id="confirm-msg"></p>
+    <div class="confirm-btns">
+      <button class="btn-confirm-no" onclick="closeConfirm()">Cancel</button>
+      <button class="btn-confirm-yes" id="confirm-yes-btn" onclick="doConfirm()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── QUESTION DATA (exact wording from CT-GenAI Sample Exam A PDF) ───────────
+const questions = [
+  {
+    "id": 1,
+    "lo": "GenAI-1.1.1",
+    "k": "K1",
+    "pts": 1,
+    "multi": false,
+    "text": "Match each type of AI technology (1-4) with its CORRECT description (A-D):\n1. Symbolic AI\n2. Classical machine learning\n3. Deep learning\n4. Generative AI\nA. Uses neural networks to automatically learn features from data .\nB. Uses rule-based systems to mimic human decision-making.\nC. Uses deep learning to create new data by learning from its training data .\nD. Uses a data-driven approach that requires feature selection.",
+    "options": [
+      "1D, 2B, 3A, 4C",
+      "1D, 2C, 3B, 4A",
+      "1C, 2B, 3D, 4A",
+      "1B, 2D, 3A, 4C"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "Considering:\n• Symbolic AI uses a rule-based system to mimic human decision-\nmaking, representing knowledge using symbols and logical rules\n(1B).\n• Classical machine learning uses a data-driven approach that requires\ndata preparation, feature selection and model training (2D).\n• Deep learning uses neural networks (machine learning structures) to\nautomatically learn features from data (3A).\n• Generative AI uses deep learning techniques to create new data by\nlearning and mimicking patterns from its training data (4C).\nThus:\na) Is not correct.\nb) Is not correct.\nc) Is not correct.\nd) Is correct."
+  },
+  {
+    "id": 2,
+    "lo": "GenAI-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "Consider the realm of Large Language Models (LLMs). Which of the following options BEST explains\nwhy context window limitations affect LLM’s text processing capabilities?",
+    "options": [
+      "Because context windows restrict temporal processing sequences, preventing LLMs from\nmaintaining chronological consistency across extended text analysis.",
+      "Because context windows prevent cross-referencing capabilities, limiting LLMs’ ability to\nconnect information across different document sources simultaneously.",
+      "Because context windows force LLMs to discard earlier information, which may contain\nrelevant details needed for understanding later content.",
+      "Because context windows constrain parsing granularity levels, restricting LLMs from\nadjusting between character-level and document-level analysis approaches."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct because context windows do not control temporal\nsequencing but limit the scope of text that can be simultaneously\nconsidered.\nb) Is not correct because context windows affect scope within the current\ninput, not cross-document referencing capabilities.\nc) Is correct. When text exceeds the context window size, the model cannot\nsimultaneously consider all parts of the document. As the model\nprocesses new tokens, it must effectively “forget” or discard tokens that\nfall outside its context window boundary.\nd) Is not correct because context windows do not determine parsing\napproaches but limit the amount of text that can be processed\nsimultaneously."
+  },
+  {
+    "id": 3,
+    "lo": "GenAI-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "Which of the following statements BEST describes tokenization in processing text for LLMs?",
+    "options": [
+      "Tokenization converts tokens into high-dimensional vectors to capture their meaning.",
+      "Tokenization creates the building blocks used to understand and generate text.",
+      "Tokenization generates contextually appropriate responses using neural networks.",
+      "Tokenization predicts the next token in a sequence based on learned relationships."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. This describes embeddings, not tokenization.\nb) Is correct. Tokenization involves splitting text into smaller units (tokens)\nthat represent the building blocks of natural language generation tasks\nand enable LLMs to understand and generate text. See also the definition\nof “Tokenization” in the syllabus (see “Appendix D – Generative AI\nSpecific Terms”).\nc) Is not correct. This describes the general function of LLMs, not\ntokenization.\nd) Is not correct. This refers to how LLMs generate text, not tokenization."
+  },
+  {
+    "id": 4,
+    "lo": "GenAI-1.1.3",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "In the context of software testing, which of the following statements (i-v) about foundation,\ninstruction-tuned, and reasoning LLMs are CORRECT?\ni. Foundation LLMs excel at generating test cases from high -level requirements without\nstructured input.\nii. Reasoning LLMs excel at creating test scripts that strictly follow predefined organizational\ntemplates.\niii. Instruction-tuned LLMs excel at autonomously prioritizing test execution based on real -\ntime user feedback.\niv. Reasoning LLMs excel at synthesizing data from defect reports to detect trends and\nprioritize test efforts.\nv. Instruction-tuned LLMs excel at generating test cases that adhere to Gherkin language\nsyntax.",
+    "options": [
+      "i, ii, and iii",
+      "ii, iii, and iv",
+      "i, ii, and v",
+      "iv, and v"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "Considering:\ni. Is not correct. While foundation LLMs can generate test cases, they\ndo not inherently “excel” at this task without structured input .\nGenerating test cases without structured input misrepresents their\ncapabilities.\nii. Is not correct. Creating template-based test scripts requires executing\nexplicit instructions, which is the role of instruction-tuned LLMs, not\nreasoning LLMs. Reasoning LLMs specialize in logical inference and\nproblem-solving, not rigid template adherence.\niii. Is not correct. Instruction-tuned LLMs are designed to follow\nstructured prompts, not make autonomous decisions. Prioritizing\ntests based on feedback requires reasoning, which is beyond their\nscope.\niv. Is correct. Reasoning LLMs are explicitly designed for synthesizing\nmultiple data sources and performing logical inference, problem -\nsolving, and decision-making. Detecting trends and prioritizing test\nefforts aligns with their role in contextual analysis a nd the description\nprovided.\nv. Is correct. Instruction-tuned LLMs are specifically trained to follow\ninstructions, including adhering to requested formats, styles, and\nsyntax rules. Generating test cases conforming to Gherkin language\nsyntax, is a task well-suited to their capabilities.\nThus:\na) Is not correct.\nb) Is not correct.\nc) Is not correct.\nd) Is correct."
+  },
+  {
+    "id": 5,
+    "lo": "GenAI-1.1.4",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "Which of the following statements BEST describes the relation between multimodal LLMs and vision-\nlanguage models?",
+    "options": [
+      "Multimodal LLMs are a subset of vision-language models designed to handle diverse inputs.",
+      "Vision-language models are a subset of multimodal LLMs focusing on visual and textual data.",
+      "Vision-language models are unrelated to multimodal LLMs and focus only on the user\ninterface.",
+      "Multimodal LLMs and vision-language models are interchangeable terms."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Vision-language models are a subset of multimodal LLMs,\nnot the reverse.\nb) Is correct. Vision-language models specifically integrate visual and\ntextual data, making them a subset of multimodal LLMs.\nc) Is not correct. Vision-language models are closely related to multimodal\nLLMs and focus on both visual and textual data.\nd) Is not correct. Multimodal LLMs and vision-language models have distinct\nscopes and are not interchangeable."
+  },
+  {
+    "id": 6,
+    "lo": "GenAI-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "multi": true,
+    "text": "Which TWO of the following options represent key capabilities of LLMs in test tasks?",
+    "options": [
+      "Identifying ambiguities and inconsistencies in requirements.",
+      "Generating complete application code for deployment.",
+      "Automating the execution of all test scripts without human intervention.",
+      "Performing exploratory testing on software applications.",
+      "Creating diverse test data with various combinations and boundary values."
+    ],
+    "answer": [
+      0,
+      4
+    ],
+    "explanation": "a) Is correct. LLMs can analyze and clarify requirements by identifying\nambiguities and inconsistencies.\nb) Is not correct. Generating complete application code is not a key\ncapability of LLMs in test tasks.\nc) Is not correct. LLMs can support test automation by suggesting\nimprovements to test scripts and identifying design patterns but do not\ndirectly execute test scripts or fully automate test scripts without human\noversight.\nd) Is not correct. LLMs cannot perform manual exploratory testing because\nit is an intuitive and adaptive process that requires human creativity,\nexperience, and decision-making.\ne) Is correct. LLMs can generate diverse test data, including combinations\nand boundaries."
+  },
+  {
+    "id": 7,
+    "lo": "GenAI-1.2.2",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "Which of the following statements BEST explains the difference between AI chatbots and LLM-\npowered testing applications in the context of software testing?",
+    "options": [
+      "AI chatbots are more suited for specific test tasks, while LLM-powered testing applications\nfocus on ad hoc interactions.",
+      "Both AI chatbots and LLM-powered testing applications are designed to perform identical\ntasks without any configuration differences.",
+      "LLM-powered testing applications rely on conversational prompts, while AI chatbots require\nintegration into test tools and test processes.",
+      "AI chatbots offer conversational interfaces for ad hoc test tasks, while LLM-powered testing\napplications provide customized solutions for specific test tasks."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. AI chatbots are best suited for ad hoc interactions, not\nspecific test tasks.\nb) Is not correct. AI chatbots and LLM-powered testing applications have\ndistinct purposes and are not identical in functionality or configurability.\nc) Is not correct. LLM-powered testing applications focus on integration into\ntest processes, not conversational prompts. AI chatbots do not require\nintegration into test tools and into test processes because their primary\nfunction is to facilitate ad hoc interactions rather than performing specific\ntest tasks.\nd) Is correct. AI chatbots provide conversational interfaces for ad hoc tasks,\nwhile LLM-powered testing applications deliver customized solutions for\nspecific needs."
+  },
+  {
+    "id": 8,
+    "lo": "GenAI-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "A tester is examining a structured prompt used to obtain LLM assistance for performance test\nanalysis. One of the components of this prompt reads: “Test reports from performance testing tools,\nsystem monitoring logs during peak usage periods, and application performance benchmarks from\nprevious releases”.\nIn which component of the six-part prompt structure would this description MOST LIKELY appear?",
+    "options": [
+      "Context",
+      "Input data",
+      "Constraints",
+      "Output format"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Context provides background information about the test\nenvironment or system being tested, not specific (input) data to be\nanalyzed. While this mentions performance testing, it is listing actual data\nsources rather than providing background information.\nb) Is correct. The description lists specific data sources (test reports,\nmonitoring logs, performance benchmarks) that will be processed by the\nLLM to perform the analysis task.\nc) Is not correct. Constraints outline restrictions or special considerations\nfor how the task should be performed. The description lists actual data\nsources rather than restrictions on the analysis approach.\nd) Is not correct. Output format specifies the expected structure and\ncharacteristics of the LLM’s response. The description lists actual data\nsources, without any reference to how results should be presented ."
+  },
+  {
+    "id": 9,
+    "lo": "GenAI-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "A tester wants an LLM to analyze a requirements specification for potential defects. In the structured\nprompt the tester is using, one line reads: “The potential defects must be provided in a markdown\ntable with the following columns: ID, requirement reference, defect type, description, severity”.\nIn which component of the six-part prompt structure would this line MOST LIKELY appear?",
+    "options": [
+      "Instructions",
+      "Constraints",
+      "Output format",
+      "Context"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. The given line does not describe what task to perform, but\nrather how to present the results. Instructions tell the LLM what to do,\nwhile this line tells the LLM how to format the output.\nb) Is not correct. The given line is not imposing restrictions or limitations on\nthe analysis process, but rather specifying the desired presentation\nformat. Constraints might include aspects like “exclude cosmetic issues”\nwhereas this line is about formatting the output.\nc) Is correct. The given line matches the syllabus definition of output format\nspecifications that guide how the LLM should format the output.\nd) Is not correct. The given line provides no background information such\nas the context of the requirements specification. Instead, it is about\nformatting the output."
+  },
+  {
+    "id": 10,
+    "lo": "GenAI-2.1.2",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "Which of the following BEST differentiates prompt chaining, few-shot prompting, and meta prompting\ntechniques?",
+    "options": [
+      "Prompt chaining focuses on providing examples, few-shot prompting breaks tasks into\nsubtasks, and meta prompting refines prompts manually.",
+      "Few-shot prompting provides guidance with examples, prompt chaining breaks tasks into\nmultiple prompts, and meta prompting allows the model to iteratively refine its own prompts.",
+      "Meta prompting emphasizes breaking down tasks into steps, prompt chaining uses\nexamples, and few-shot prompting focuses on manual optimization of prompts.",
+      "Prompt chaining provides guidance without examples, few-shot provides guidance with\nexamples, and meta prompting relies on tester-defined prompts."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Prompt chaining is actually defined by decomposing a task\ninto sequential prompts, not by “providing examples”. Few-shot\nprompting is the technique that supplies examples, not the one that\n“breaks tasks into subtasks”. Meta prompting relies on the LLM to revise\nprompts by itself, not on the tester “refining prompts manually”.\nb) Is correct. Few-shot prompting provides guidance with examples, prompt\nchaining decomposes tasks into intermediate steps (multiple prompts),\nand meta prompting uses AI to refine its own prompts iteratively.\nc) Is not correct. Meta prompting’s core purpose is automatic prompt\nrefinement by the LLM, not “breaking tasks into steps”. Prompt chaining\nis characterized by step-by-step decomposition, not by “using examples”\nas stated. Few-shot prompting is the method that supplies examples to\nthe model and it is not centered on “manual optimization of prompts”.\nd) Is not correct. Prompt chaining is defined by stepwise decomposition, not\n“guidance without examples”. Meta prompting relies on the LLM to\ngenerate/refine prompts, not solely on tester-defined wording."
+  },
+  {
+    "id": 11,
+    "lo": "GenAI-2.1.3",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "What is the primary function of a system prompt in interactions with LLMs?",
+    "options": [
+      "To provide a framework for the LLM behavior for the entire conversation.",
+      "To provide specific questions or instructions from the user to the LLM.",
+      "To adjust dynamically with each user interaction and set the conversation's context.",
+      "To include visible input from the user and set rules for the conversation."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. The system prompt stays constant throughout the interaction\nsession and establishes the fundamental framework for how the LLM\nshould respond.\nb) Is not correct. This describes the function of a user prompt, not a system\nprompt.\nc) Is not correct. The system prompt does not adjust dynamically; it remains\nconstant.\nd) Is not correct. The system prompt is hidden and does not include visible\ninput from the user."
+  },
+  {
+    "id": 12,
+    "lo": "GenAI-2.2.1",
+    "k": "K3",
+    "pts": 2,
+    "multi": false,
+    "text": "You are tasked with applying the following test approach to a set of stable requirements for a new\nproject: generate test conditions, prioritize them based on risk level, and identify potential coverage\ngaps. The requirements have already been thoroughly reviewed for defects.\nWhich of the following sequences of steps (i-v) should you follow to effectively apply Generative AI\nto implement this test approach using a prompt chaining technique to implement this test approach?\ni. Submit the requirements to the LLM and prompt it to produce test conditions based on those\nrequirements.\nii. Provide the test conditions to the LLM, ensuring it understands the context for prioritization,\nand prompt it to prioritize those test conditions accordingly.\niii. Provide the prioritized test conditions to the LLM and prompt it to analyze them to determine\nwhether all aspects of the requirements are addressed in the test conditions .\niv. Submit the requirements to the LLM and prompt it to produce prioritized test conditions that\naddress all aspects of the requirements.\nv. Submit the requirements to the LLM and prompt it to detect inconsistencies and ambiguities\nin those requirements.",
+    "options": [
+      "i, ii, and iii",
+      "iv, and ii",
+      "i, iii, and v",
+      "v, and iv"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "Considering:\ni. Is correct because it ensures the process begins with generating test\nconditions from the requirements which aligns with the syllabus\ndescription that test analysis with GenAI involves generating test\nconditions based on the test basis, for example on requirements.\nii. Is correct because it clarifies the need for acceptance criteria (test\nconditions) to improve LLM-generated outputs and follows the\nsyllabus guidance that LLMs can prioritize test conditions based on\nrisk level when provided with proper context .\niii. Is correct because it directs the LLM to perform coverage analysis,\naddressing all aspects of the requirements , which matches the\nsyllabus statement that LLMs can perform coverage analysis to\ndetermine whether all aspects of the test basis are covered .\niv. Is not correct because relying on minimal input without guidance does\nnot align with the prompt chaining technique or ensure effectiveness .\nThis options attempts to do everything in one step rather than\nbreaking it down.\nv. Is not correct because defect identification is not central to the test\nobjective of generating prioritized test conditions and identifying\ncoverage gaps. The scenario specifically states the requirements are\nstable and already thoroughly reviewed for defects (which typically\ninclude ambiguities and inconsistencies).\nThus:\na) Is correct.\nb) Is not correct.\nc) Is not correct.\nd) Is not correct."
+  },
+  {
+    "id": 13,
+    "lo": "GenAI-2.2.2",
+    "k": "K3",
+    "pts": 2,
+    "multi": false,
+    "text": "Consider applying the few-shot structured prompting technique to generate Gherkin-style test cases\n(i.e., scenario-based) for the following user story and acceptance criterion:\n- User story: “As a user, I want to reset my password so that I can regain access to my account\nif I forget it.”\n- Acceptance criterion: “When a user submits a registered email address then they receive a\npassword reset email.”\nYou can rely on predefined examples that include user stories, acceptance criteria, and Gherkin-\nstyle test cases. Your task is to create a prompt to guide the LLM in generating accurate test cases\naligned with the acceptance criterion for the user story above.\nWhich one of the following prompts is BEST suited to this task?",
+    "options": [
+      "Prompt A\nRole: Act as a test analyst.\nContext: You are testing a password reset functionality.\nInstruction: Generate Gherkin-style test cases for the user story and acceptance criterion. using\nthe following predefined examples as a guide: << predefined examples >>.\nInput Data: <<< user story >>> and <<< acceptance criterion >>>.\nConstraints: Rely on best practices to create test cases.\nOutput Format: Generate test cases with expected results.",
+      "Prompt B\nRole: Act as a test analyst specializing in Gherkin-style test cases.\nContext: You are testing a password reset functionality.\nInstruction: Generate Gherkin-style test cases for the user story and acceptance criterion, using\nthe following predefined examples as a guide: << predefined examples >>.\nInput Data: <<< user story >>> and <<< acceptance criterion >>>.\nConstraints: Use \"Given-When-Then\" syntax and ensure alignment with the acceptance criterion.\nOutput Format: Respect the given Gherkin-style test case format.",
+      "Prompt C\nRole: Act as a test analyst.\nContext: You are testing a password reset functionality.\nInstruction: Generate Gherkin-style test cases for the user story and acceptance criterion. Rely\non best practices to create test cases.\nInput Data: <<< user story >>> and <<< acceptance criterion >>>.\nConstraints: Use \"Given-When-Then\" syntax and ensure alignment with the acceptance criterion.\nOutput Format: Respect the given Gherkin-style test case format.",
+      "Prompt D\nRole: Act as a test analyst.\nContext: You are testing a password reset functionality.\nInstruction: Generate at least two Gherkin-style test cases for the user story and acceptance\ncriterion. Focus on edge cases.\nInput Data: <<< user story >>> and <<< acceptance criterion >>>.\nConstraints: Ensure all test cases follow \"Given-When-Then\" syntax.\nOutput Format: Respect the given Gherkin-style test case format."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. While it specifies using predefined examples, it does not\nexplicitly require the use of the “Given-When-Then” syntax, which is\ncrucial for Gherkin-style test cases. It also indicates reliance on vague\nbest practices in defining the constraints and does not specifically ensure\nalignment with the acceptance criterion.\nb) Is correct. Comprehensive and leverages predefined examples to guide\nthe LLM.\nc) Is not correct. Lacks emphasis on using predefined examples and\nindicates reliance on vague best practices in defining the instructions.\nd) Is not correct. Focuses on edge cases but neglects comprehensive\ncoverage and the use of examples for guidance."
+  },
+  {
+    "id": 14,
+    "lo": "GenAI-2.2.3",
+    "k": "K3",
+    "pts": 2,
+    "multi": false,
+    "text": "You are tasked with applying structured prompting to analyze regression test results. Here is an\ninitial draft of the prompt:\nRole: Act as a test analyst.\nContext: Analyze raw regression test results from a recent test execution cycle.\nInstruction: Identify discrepancies in the test results.\nInput Data: Use the attached file containing raw test results .\nConstraints: Use the known anomalies list for cross -checking.\nOutput Format: Provide a list of discrepancies using a table format.\nYou are asked to improve this prompt. Which of the following improvements would BEST align the\nprompt with structured prompt engineering best practices for comprehensive regression test report\nanalysis?",
+    "options": [
+      "Add a step to cluster similar issues and cross-check findings against the known anomalies\nlist.",
+      "Specify that the role is a regression test analyst specializing in actionable insights.",
+      "Expand the instruction to include separating expected results and actual results, clustering\nissues, and highlighting discrepancies.",
+      "Include references to regression testing principles such as \"Given-When-Then\" in the\nconstraints."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Addresses clustering and cross-checking but misses other\ncritical steps like separating test results.\nb) Is not correct. Improves role clarity but does not expand instructions or\naddress structured steps.\nc) Is correct. Expands instructions to include all critical structured analysis\nsteps. Separating expected results and actual results helps to pinpoint\nmismatches effectively, clustering issues facilitates better prioritization\nand reduces redundancy, and highlighting discrepancies helps to focus\nattention on the most important findings.\nd) Is not correct. Introduces irrelevant constraints, misaligning the prompt\nwith the task requirements."
+  },
+  {
+    "id": 15,
+    "lo": "GenAI-2.2.4",
+    "k": "K3",
+    "pts": 2,
+    "multi": false,
+    "text": "You are using an LLM to assist in preparing actionable test metrics from raw data. The metrics\ninclude test progress, defect trends, and coverage, which are graphically displayed and explained\nwith text. Your goal is to improve the test process to ensure the generated metrics are accurate,\nactionable, and easily interpretable by stakeholders.\nHere is an initial draft of a prompt used to instruct the AI:\nRole: Act as a test manager.\nContext: You are provided with raw data from test tools.\nInstruction: Generate test progress metrics, defect trend metrics, and coverage metrics\nfrom the raw data.\nInput Data: Use the attached file containing raw test results.\nConstraints: Ensure that the output is concise and understandable.\nOutput Format: Display metrics on a dashboard.\nYou are asked to improve this prompt. Which of the following improvements would BEST enhance\nthe LLM’s ability to produce accurate and actionable metrics ?",
+    "options": [
+      "Specify that the role is a test manager focusing on actionable insights and decision support,\nensuring comprehensive analysis of test data.",
+      "Add an instruction to include potential risks identified from the trends in the generated\nmetrics, along with their impact assessment and priority levels.",
+      "Expand the output format to include a plain-language summary that interprets the metrics\nand outlines next steps for stakeholders.",
+      "Emphasize constraints that the output is also easily interpretable by stakeholders, using clear\nlanguage and avoiding technical jargon throughout the response."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Clarifies the role but does not add any concrete instruction\nthat improves accuracy, actionability, or interpretability of the delivered\nmetrics.\nb) Is not correct. Adds a risk-analysis task that could distract the model from\nthe core metrics and still offers no mechanism for making results clear to\nstakeholders.\nc) Is correct. Expanding the output format with a plain-language summary\nthat interprets the metrics and outlines next steps directly supports\nstakeholder understanding and actionability (see also the syllabus in\nsection 2.2.4: “Enhanced test metrics visualization and reporting”).\nd) Is not correct. Merely re-states an existing constraint and gives no\nspecific guidance on how the LLM should achieve stakeholder-level\ninterpretability."
+  },
+  {
+    "id": 16,
+    "lo": "GenAI-2.2.5",
+    "k": "K3",
+    "pts": 2,
+    "multi": false,
+    "text": "Your goal is to create test cases for an AI-based system that suffers from the test oracle problem,\npreventing you from determining expected results. You can only count on a few existing test cases\nwith known expected results. Through appropriate analysis, you have identified a set of well-defined\ntransformation rules that specify how changes to inputs affect expected results. These rules can be\napplied to all existing test cases. You have decided to rely on Generative AI, providing a given LLM\nwith the following information: the existing test cases with their inputs and expected results, a clear\ndescription of the transformation rules, and guidelines for generating additional test cases by\nprecisely applying these rules to the relevant existing test cases. With the specified information, the\nchosen LLM can directly generate additional test cases in line with your expectations.\nWhich of the following prompting techniques is BEST suited to achieve your goal in this scenario?",
+    "options": [
+      "Few-shot prompting",
+      "Prompt chaining",
+      "Meta prompting",
+      "Zero-shot prompting"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Few-shot prompting is ideal in this scenario because it allows\nyou to provide some examples (the existing test cases with inputs and\nexpected results) to guide the LLM. By illustrating how these\ntransformation rules are applied to generate new test cases, few-shot\nprompting can help the LLM understand and replicate the process to\ngenerate additional test cases.\nb) Is not correct. While prompt chaining could be used, it could\nunnecessarily complicate this very straightforward task.\nc) Is not correct. While meta-prompting could be used, it is not as direct and\nspecific as few-shot prompting to address this very straightforward task .\nd) Is not correct. Zero-shot prompting would not be effective since it would\nnot leverage existing test cases as examples."
+  },
+  {
+    "id": 17,
+    "lo": "GenAI-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "You are leveraging Generative AI to assist in testing an entertainment software application. The\nGenerative AI model generates test cases for user interaction scenarios, test scripts for API\ninteractions, and synthetic test data to address edge cases.\nTo effectively evaluate the Generative AI model’s performance and to refine prompts, which\ncombination of metrics and actions BEST ensures comprehensive assessment and improvement?",
+    "options": [
+      "Evaluate the diversity of test cases to ensure varied input scenarios and use test execution\nsuccess rate to validate the functionality of generated API test scripts.",
+      "Apply accuracy and completeness metrics to validate test cases against entertainment\nsoftware requirements and rely on time efficiency to compare AI-generated test scripts with\nmanual test efforts.",
+      "Focus on precision to ensure generated test data meets entertainment software compliance\nstandards, while contextual fit and test execution success rate assesses the alignment and\nusability of test scripts.",
+      "Prioritize relevance and contextual fit for all outputs to maintain consistency with\nentertainment software requirements and include diversity metrics to expand edge case\ncoverage."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Diversity ensures comprehensive coverage of edge cases, and\ntest execution success rate evaluates the reliability of API test scripts\n(see the description and example for the \"diversity\" metric provided by\nthe syllabus within the table in section 2.3.1).\nb) Is not correct. While accuracy and completeness are important, relying\nprimarily on time efficiency does not fully evaluate coverage or test\nexecution reliability.\nc) Is not correct. Precision and contextual fit are valuable but do not address\ndiversity or thoroughly evaluate test execution success for API test\nscripts.\nd) Is not correct. Relevance and contextual fit are crucial, but without\nconsidering metrics like test execution success rate or accuracy, critical\naspects of evaluation are missed."
+  },
+  {
+    "id": 18,
+    "lo": "GenAI-2.3.2",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "Which of the following techniques for evaluating and iteratively refining prompts is BEST suited for\ndetermining why an LLM consistently generates test cases with wrong expected results that\ncontradict the input requirements, thereby providing insights to optimize the prompt and prevent\nsimilar errors?",
+    "options": [
+      "Output analysis",
+      "A/B testing of prompts",
+      "Adjusting prompt length and specificity",
+      "Integrating user feedback"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Output analysis examines LLM outputs for inaccuracies or\ninconsistencies. By classifying the wrong expected results that contradict\nthe requirements, it reveals why the prompt misled the LLM and provides\nconcrete insights for prompt refinement.\nb) Is not correct. A/B testing of prompts is better suited for comparing\ndifferent prompt versions than for diagnosing the cause of wrong\nexpected results.\nc) Is not correct. While adjusting the length and specificity of prompts can\nimprove the quality of responses by adding or reducing context, it does\nnot directly address the cause of wrong expected results.\nd) Is not correct. While using the insights gathered from testers about the\nusefulness and clarity of generated output can help refine prompts to\nbetter meet real-world testing needs, it does not directly address the\ncause of wrong expected results."
+  },
+  {
+    "id": 19,
+    "lo": "GenAI-3.1.1",
+    "k": "K1",
+    "pts": 1,
+    "multi": false,
+    "text": "What is a hallucination in the context of LLM outputs?",
+    "options": [
+      "A logical error where the LLM fails to follow a multi-step reasoning process accurately.",
+      "A bias in the LLM output caused by the training data favoring certain perspectives.",
+      "A generation of irrelevant or factually incorrect output by the LLM for a given task.",
+      "A limitation of the LLM to understand non-English perspectives in test generation tasks."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. This describes reasoning errors, not hallucinations.\nb) Is not correct. This described biases in AI output, not hallucinations.\nc) Is correct. Hallucinations occur when the LLM generates output that is\nfactually incorrect or irrelevant to a given task. See the syllabus in section\n3.1.1.\nd) Is not correct. This describes biases due to underrepresentation in\ntraining data, not hallucinations."
+  },
+  {
+    "id": 20,
+    "lo": "GenAI-3.1.2",
+    "k": "K3",
+    "pts": 2,
+    "multi": false,
+    "text": "You are using Generative AI to create test cases for an e-commerce (e-shop) application. The\nfollowing features have been explicitly mentioned in the project briefing:\n• cart management\n• discount code application\n• order confirmation email generation\nBased on these details, which of the following AI-generated test cases MOST LIKELY represents a\nhallucination?",
+    "options": [
+      "Verify that a user can add multiple items to their cart and proceed to checkout.",
+      "Verify that a user cannot apply an expired discount code during checkout.",
+      "Verify that a user receives a confirmation email after successfully placing an order.",
+      "Verify that a user can create a wishlist to save favorite items for later."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Cart management is explicitly mentioned in the project\nbriefing, making this test case relevant.\nb) Is not correct. Discount code application is explicitly mentioned in the\nproject briefing, making this test case relevant.\nc) Is not correct. Order confirmation emails are explicitly mentioned in the\nproject briefing, so this test case is valid.\nd) Is correct. Wishlist management is not mentioned in the project briefing,\nmaking this the most likely hallucinated test case."
+  },
+  {
+    "id": 21,
+    "lo": "GenAI-3.1.3",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "Which of the following options refers to a benefit that is MOST directly associated with using clear\nand structured input data formats when working with LLMs for test tasks?",
+    "options": [
+      "Helps reduce the effort to fine-tune the LLMs for test tasks.",
+      "Helps LLMs generate less ambiguous outputs for test tasks.",
+      "Helps LLMs generate more context-relevant outputs for test tasks.",
+      "Helps LLMs generate more creative outputs for test tasks."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. The effort to fine-tune LLMs for test tasks is associated\nwith further training of these models on a targeted dataset, enabling them\nto learn the domain-specific knowledge and nuances needed to perform\nthose test tasks. The use of clear and structured input data formats does\nnot affect this effort.\nb) Is correct. When input data is presented in a clear and structured way,\npotential misunderstandings are minimized. Ambiguity often arises from\nunclear and poorly structured data.\nc) Is not correct. Context relevance is more dependent on providing the right\ncontextual information rather than just using clear and structured input\ndata formats.\nd) Is not correct. The use of clear and structured input data formats does\nnot increase the creativity of LLMs in generating outputs. In particular, the\nuse of these formats does not encourage novel responses, as it requires\nLLMs to generate responses that adhere to the specified formats."
+  },
+  {
+    "id": 22,
+    "lo": "GenAI-3.1.4",
+    "k": "K1",
+    "pts": 1,
+    "multi": false,
+    "text": "Which strategy can help reduce variability in LLM outputs by narrowing the probability distribution\nduring inference?",
+    "options": [
+      "Increasing the learning rate.",
+      "Lowering the temperature setting.",
+      "Increasing the random seed.",
+      "Lowering the random seed."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Learning rate is a setting (chosen before training begins)\nthat controls the learning process of neural networks. This setting\ndetermines how much to change the model's weights during training. It is\nnot related to inference variability. Increasing it can lead to faster\nconvergence during training but does not affect the variability of outputs\nduring inference.\nb) Is correct. Temperature is a parameter that controls the randomness of\nthe output by acting on the probability distribution during inference.\nLowering the temperature reduces randomness, leading to more\nconsistent outputs.\nc) and d) are not correct. While setting a random seed can improve\nreproducibility, it does not in itself narrow the probability distribution\nduring inference. Moreover, whether its value is high or low is irrelevant."
+  },
+  {
+    "id": 23,
+    "lo": "GenAI-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "Which of the following statements about data privacy concerns related to using Generative AI for\nsoftware testing is INCORRECT?",
+    "options": [
+      "Generative AI can unintentionally expose sensitive data through its outputs.",
+      "Generative AI tools may store and process sensitive data without explicit user consent,\nleading to misuse.",
+      "Using Generative AI tools without adhering to data protection regulations, such as General\nData Protection Regulation (GDPR), can lead to legal disputes.",
+      "An LLM is likely to expose real sensitive data if it hallucinates while generating synthetic test\ndata, regardless of the data it was trained on."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. This is a privacy concern, as “Unintentional data exposure”\nrelates to generative AI (GenAI) outputs revealing sensitive information\naccidentally.\nb) Is not correct. This is a privacy concern, as it involves the lack of control\nover how sensitive data is stored or processed.\nc) Is not correct. This is a privacy concern related to non-compliance with\nregulations such as the General Data Protection Regulation (GDPR),\nleading to legal risks.\nd) Is correct. An LLM does not expose real sensitive data if it hallucinates\nwhen generating synthetic test data, as long as it was not trained on real\nsensitive data. In this case hallucinations would be purely synthetic and\nbased on patterns and structures the model learned during training. The\nLLM could unintentionally generate synthetic test data that matches real\nsensitive data (and this is definitely a concern) but it would not be\nexposing real sensitive data. However, this unintentional generation is\nvery unlikely."
+  },
+  {
+    "id": 24,
+    "lo": "GenAI-3.2.2",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "An attacker injects falsified test results into the training dataset of an LLM intended to recommend\noptimal test coverage strategies. What type of attack vector does this description BEST refer to?",
+    "options": [
+      "Malicious code generation",
+      "Data exfiltration",
+      "Request manipulation",
+      "Data poisoning"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Malicious code generation involves “manipulating an LLM\nto generate backdoors (e.g., external command calls) during use”, not\ninjecting false data into training datasets.\nb) Is not correct. Data exfiltration involves “sending requests designed to\nextract confidential training data”, not injecting false data into training\ndatasets.\nc) Is not correct. Request manipulation involves “introducing data that\ndisrupts the AI’s output” during runtime use, not injecting false data into\ntraining datasets.\nd) Is correct. According to the syllabus in section 3.2.2, data poisoning\ninvolves “manipulating training data” with the specific example of\n“providing fake evaluations when rating the results of an AI-generated\ntest report”. The question describes this attack vector: an attacker is\ninjecting falsified test (execution) results into the training dataset, which\ndirectly manipulates the training data to compromise the LLM’s ability to\naccurately recommend optimal test coverage strategies."
+  },
+  {
+    "id": 25,
+    "lo": "GenAI-3.2.2",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "Match each type of attack vector against an LLM (1-4) with the corresponding example (A-D):\n1. Data exfiltration\n2. Request manipulation\n3. Data poisoning\n4. Malicious code generation\nA. An attacker maliciously modifies the data associated with traceability links between\nrequirements and test cases into the dataset used for fine-tuning an LLM,\ncompromising its accuracy in generating test cases from requirements .\nB. An attacker maliciously crafts and provides deceptive prompts that induce an LLM,\nfine-tuned to assist testers in automated test script generation, to produce vulnerable\ntest scripts with hidden security flaws.\nC. An attacker maliciously provides large specially crafted prompts that induce an LLM,\nfine-tuned to assist testers in generating test cases, to accidentally reveal confidential\nAPI keys inherited from past test projects.\nD. An attacker maliciously submits carefully modified reference screenshots into a visual\ntesting framework that uses an LLM for comparative visual analysis, to trick the LLM\ninto systematically ignoring genuine UI issues during regression testing .",
+    "options": [
+      "1C, 2D, 3A, 4B",
+      "1B, 2D, 3A, 4C",
+      "1D, 2C, 3B, 4A",
+      "1C, 2B, 3D, 4A"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "Considering:\n• Data exfiltration is based on sending requests designed to extract\nconfidential training data. (1C)\n• Request manipulation is based on introducing an image that disrupts\nthe LLM output. (2D)\n• Data poisoning is based on manipulating recommendations through\nfake evaluations used in training. (3A)\n• Malicious code generation is based on manipulating a LLM to\ngenerate backdoors (e.g., external command calls) during use. (4B)\nThus:\na) Is correct.\nb) Is not correct.\nc) Is not correct.\nd) Is not correct."
+  },
+  {
+    "id": 26,
+    "lo": "GenAI-3.2.3",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "Which of the following strategies BEST addresses data privacy risks in the context of Generative AI-\npowered software testing?",
+    "options": [
+      "Using multiple LLMs to evaluate and compare test results for improved accuracy.",
+      "Replacing sensitive test data with an anonymized version of the same.",
+      "Allowing unrestricted access to sensitive test data to improve Generative AI model training.",
+      "Disabling encryption of sensitive test data to streamline data storage and transmission\nprocesses."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. While evaluating outputs by comparing multiple LLMs is a\nuseful practice, in this case it focuses on output quality in terms of\naccuracy without addressing data privacy risks.\nb) Is correct. Anonymization is an effective strategy to mitigate data privacy\nrisks.\nc) Is not correct. Unrestricted access to sensitive data increases the risk of\nsensitive data breach.\nd) Is not correct. Disabling encryption of sensitive data weakens security\nand increases the risk of sensitive data theft."
+  },
+  {
+    "id": 27,
+    "lo": "GenAI-3.3.1",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "Which of the following options about the impact of LLM usage on energy consumption and CO₂\nemission is CORRECT?",
+    "options": [
+      "Image generation tasks consume substantially more energy than text generation tasks, but\nproduce fewer CO₂ emissions.",
+      "Generative AI-powered searches consume significantly less energy than traditional web\nsearches due to their optimized algorithms.",
+      "Image generation tasks consume substantially more energy than text generation tasks due\nto their higher computational complexity.",
+      "Text generation tasks consume very little energy, allowing them to be performed by millions\nof users without significant energy consumption."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Image generation is by far much more energy- and CO₂-\nintensive than text generation. Energy consumption and CO₂ emissions\nare typically correlated unless a key factor (like energy source\ndifferences) is specified.\nb) Is not correct. On the contrary, GenAI-powered searches consume\nconsiderably more energy than traditional web searches.\nc) Is correct. Image generation requires significantly more computational\nresources than text generation, making it much more energy intensive.\nd) Is not correct. The cumulative impact of text generation across millions of\nusers is not negligible."
+  },
+  {
+    "id": 28,
+    "lo": "GenAI-3.4.1",
+    "k": "K1",
+    "pts": 1,
+    "multi": true,
+    "text": "Which TWO of the following standards, or parts of them, are MOST relevant to the use of Generative\nAI in software testing?",
+    "options": [
+      "ISO/IEC 25010:2023",
+      "ISO/IEC 23053:2022",
+      "ISO/IEC/IEEE 29119-2:2021",
+      "ISO/IEC 42001:2023",
+      "ISO/IEC/IEEE 29119-3:2021"
+    ],
+    "answer": [
+      1,
+      3
+    ],
+    "explanation": "a) Is not correct. ISO/IEC 25010:2023 is a standard (not mentioned in the\nsyllabus, but mentioned in the CTFL syllabus) that defines a product\nquality model that relate to quality properties of ICT/software products. It\ndoes not address the use of GenAI in software testing.\nb) Is correct. ISO/IEC 23053:2022 is a standard (mentioned in section 3.4.1\nof the syllabus) that provides a framework for data quality, transparency,\nand fault tolerance when using GenAI for testing.\nc) Is not correct. ISO/IEC/IEEE 29119-2:2021 is a part (volume) of the\nstandard (not mentioned in the syllabus, but mentioned in the CTFL\nsyllabus) that deals with test processes. It does not address the use of\nGenAI in software testing.\nd) Is correct. ISO/IEC 42001:2023 is a standard (mentioned in section 3.4.1\nof the syllabus) that specifies requirements for managing AI-based\nsystems within an organization, providing best practices for GenAI in\nsoftware testing and promoting consistency and reliability.\ne) Is not correct. ISO/IEC/IEEE 29119-3:2021 is a part (volume) of the\nstandard (not mentioned in the syllabus, but mentioned in the CTFL\nsyllabus) that deals with test documentation. It does not address the use\nof GenAI in software testing."
+  },
+  {
+    "id": 29,
+    "lo": "GenAI-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "Which of the following components of an LLM-powered testing application is responsible for\ncombining user input with structured and semantically similar data to prepare a prompt for the LLM?",
+    "options": [
+      "Back-end",
+      "Front-end",
+      "Authentication component",
+      "Post-processing component"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. The back-end is responsible for retrieving data from relational\nand vector databases, combining it with user input, and preparing the\nprompt tailored for the LLM.\nb) Is not correct. The front-end serves as the user interface for submitting\ninput, but it does not prepare the prompt for the LLM.\nc) Is not correct. The authentication component ensures secure access but\nis unrelated to data retrieval or prompt preparation.\nd) Is not correct. The post-processing component refines the output\ngenerated by the LLM but does not handle prompt preparation."
+  },
+  {
+    "id": 30,
+    "lo": "GenAI-4.1.2",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "You are a tester working on a banking application that includes features such as user login, account\nmanagement, and secure transactions. The system documentation, including API specifications and\nsecurity requirements, is stored in a vector database, while historical test cases are stored in a\nrelational database. Your task is to generate test cases using a Retrieval-Augmented Generation\n(RAG) framework to ensure alignment with the latest specifications and requirements.\nWhich of the following options represents the MOST appropriate use of the RAG framework in this\nscenario?",
+    "options": [
+      "Submit a query specifying one function to be tested. The RAG framework will retrieve relevant\nspecifications and requirements from the vector database, combine them with historical test\ncases, and automatically generate accurate and context-aware test cases through the LLM.",
+      "Submit a query specifying all functions to be tested. The RAG framework will retrieve relevant\nspecifications and requirements from the vector database, combine them with historical test\ncases, and automatically generate accurate and context-aware test cases through the LLM.",
+      "Use the RAG framework to retrieve historical test cases from the relational database and\nsecurity requirements from the vector database. Manually review the retrieved information\nbefore refining the query for the LLM to generate targeted test cases.",
+      "Rely on the LLM’s internal training data to generate test cases while using the RAG\nframework or reference retrieval without directly integrating retrieved information into the\ngeneration process."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. RAG automatically retrieves the relevant specifications and\nhistorical test-case chunks and feeds them to the LLM, which then\ngenerates accurate, context-aware test cases.\nb) Is not correct. RAG is better used when asked to retrieve specific targeted\ninformation from the vector database and not the whole dataset.\nc) Is not correct. Manually reviewing and refining the query adds\nunnecessary effort, which contradicts RAG’s design to automate retrieval\nand use retrieved data dynamically in the LLM’s response generation.\nd) Is not correct. Relying on the LLM’s internal data ignores RAG’s core\ncapability of enhancing responses by integrating external, up-to-date\ninformation."
+  },
+  {
+    "id": 31,
+    "lo": "GenAI-4.1.3",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "Which of the following options BEST describes the enhancements that autonomous and semi -\nautonomous LLM-powered agents bring to automating test processes?",
+    "options": [
+      "They can enhance both efficiency and quality in automating test processes through a\nbalanced use of single-agent and multi-agent systems.",
+      "They can enhance quality in automating test processes by adding complex verification\nchecks although at the expense of efficiency.",
+      "They can enhance both efficiency and quality in automating test processes by leveraging\ntheir ability to operate with varying levels of human interaction.",
+      "They can enhance both efficiency and quality in automating test processes while eliminating\nthe need for verification within these test processes."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Autonomous and semi-autonomous agents can be\nimplemented as single-agent and/or multi-agent systems to improve both\nefficiency and quality in test processes. However, the key enhancements\nthat these agents bring refer to increased efficiency and quality in test\nprocesses due to their ability to balance autonomy with human oversight.\nb) Is not correct. While autonomous and semi-autonomous agents\nincorporate verifications to ensure quality, these verifications are also\ndesigned to be efficient. The use of automated checks actually aims to\nstreamline the test processes and enhance quality without sacrificing\nefficiency (and vice versa) which, in turn, is also enhanced.\nc) Is correct. Autonomous agents increase efficiency by executing test tasks\nwithin the test processes with minimal human intervention and by using\nautomated checks designed to be efficient. Semi-autonomous agents\ninvolve strategic human oversight, which ensures the quality of test\nresults. These two types of agents allow implementing a balanced\napproach to achieve both efficiency and quality by leveraging their ability\nto operate with varying levels of human interaction.\nd) Is not correct. The complete elimination of verification is neither realistic\nnor desirable. Verification remains crucial even when using advanced\ntechnologies like autonomous and semi-autonomous LLM-powered\nagents."
+  },
+  {
+    "id": 32,
+    "lo": "GenAI-4.2.1",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "Which of the following statements about fine-tuning language models for specific test tasks is\nINCORRECT?",
+    "options": [
+      "Fine-tuning involves training a pre-trained model on task-specific data to enhance its\nperformance and domain knowledge.",
+      "Fine-tuning equips a language model with new capabilities by replacing its general\nknowledge with task-specific reasoning, ensuring the absence of overfitting.",
+      "Fine-tuning modifies a pre-trained model’s parameters using a targeted dataset to adapt it\nfor a specific domain or task.",
+      "Fine-tuning requires high-quality, task-specific datasets to avoid biased or inaccurate results."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. This is a correct description of fine-tuning, which enhances\na model’s performance in a specific domain through task-specific training.\nb) Is correct. This statement is incorrect because fine-tuning does not\nreplace the model's general knowledge, and overfitting remains a\npotential challenge.\nc) Is not correct. This is a correct description, as fine-tuning involves\nparameter adjustment using targeted datasets.\nd) Is not correct. This is a correct description of the challenges associated\nwith fine-tuning, as high-quality datasets are crucial for effective\nadaptation."
+  },
+  {
+    "id": 33,
+    "lo": "GenAI-4.2.2",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "Which of the following BEST describes the primary focus of Large Language Model Operations\n(LLMOps) when deploying and managing LLMs for test tasks?",
+    "options": [
+      "Preventing reliance on Generative AI in test processes.",
+      "Managing LLMs effectively across their lifecycle, including privacy, security, and cost\nconsiderations.",
+      "Limiting LLM usage to chatbot-based testing solutions to reduce complexity.",
+      "Fully automating all test tasks without requiring human oversight."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Large Language Model Operations (LLMOps) focuses on\nmanaging LLMs, not preventing their use.\nb) Is correct. LLMOps manages LLMs across their lifecycle, addressing\nprivacy, security, and cost for testing.\nc) Is not correct. LLMOps applies to various applications, not just chatbot-\nbased solutions.\nd) Is not correct. LLMOps does not aim to fully automate all test tasks or\neliminate human oversight."
+  },
+  {
+    "id": 34,
+    "lo": "GenAI-5.1.1",
+    "k": "K1",
+    "pts": 1,
+    "multi": false,
+    "text": "Which of the following statements about shadow AI is CORRECT?",
+    "options": [
+      "Shadow AI enforces compliance with organizational data policies and general AI regulations.",
+      "Shadow AI eliminates the need for clear licensing agreements in AI tools.",
+      "Shadow AI reduces the risk of intellectual property disputes.",
+      "Shadow AI may lead to unauthorized accesses to sensitive information."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Using unapproved GenAI tools does not enforce\norganizational data policies.\nb) Is not correct. Shadow AI introduces risks related to unclear licensing\nagreements, which can lead to intellectual property disputes.\nc) Is not correct. Shadow AI increases, rather than reduces, the risk of\nintellectual property disputes.\nd) Is correct. Unapproved AI tools often lack robust security measures,\nincreasing the risk of data breaches or unauthorized access."
+  },
+  {
+    "id": 35,
+    "lo": "GenAI-5.1.2",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "What is a key aspect to consider when defining a Generative AI strategy for software testing?",
+    "options": [
+      "Prepare training programs designed to ensure that team members obtain certifications\nspecific to each LLM they use.",
+      "Select LLMs that can be integrated appropriately with existing test environments and test\ntools.",
+      "Ensure that as much input data as possible is available to increase the likelihood of obtaining\neffective LLM outputs.",
+      "Collect standard supervised machine learning metrics to evaluate the effectiveness of LLM\noutputs."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. While certifications for specific LLMs could be useful (and\nmore available in the future), training programs should be designed to\nensure that test team members have the technical skills necessary to use\nGenAI tools effectively.\nb) Is correct. Selecting LLMs that are compatible with existing test\ninfrastructure and scalability requirements is a critical aspect of a GenAI\nstrategy. Test tools and test environments are fundamental elements of\ntest infrastructure.\nc) Is not correct. Data quality and structured, secure input are crucial for\nachieving reliable results with GenAI. It is necessary to have an adequate\namount of high-quality input data (according to the test objectives), not\nas much data as possible.\nd) Is not correct. Section 5.1.2 states that a GenAI strategy for software\ntesting must collect task-specific metrics to measure the effectiveness of\nLLM outputs. The metrics listed in section 2.3.1 (e.g., relevance,\nexecution-success rate, time efficiency) are tailored to test tasks rather\nthan borrowed wholesale from classical supervised -machine learning."
+  },
+  {
+    "id": 36,
+    "lo": "GenAI-5.1.3",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "Which of the following statements BEST describes one of the key criteria to select an appropriate\nLLM for specific test tasks within a test organization?",
+    "options": [
+      "A key selection criterion involves evaluating the LLM’s performance for the test tasks against\nthe publicly available benchmarks for LLMs in code generation.",
+      "A key selection criterion involves evaluating recurring costs such as those associated with\nthe computational resources required to run the LLM.",
+      "A key selection criterion involves evaluating the LLM against the publicly available community\nbenchmarks to ensure full compatibility with them.",
+      "A key selection criterion involves evaluating recurring costs such as those associated with a\nproof of concept aimed at demonstrating the suitability of an LLM for the test tasks."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. A key selection criterion involves evaluating the model’s\nperformance for the test tasks against the organization's benchmarks\nusing metrics such as those presented in the syllabus itself (see the\nsyllabus in section 5.1.3). The specified criterion may be relevant if the\ntest tasks involve code generation. However, it is not applicable for other\ntypes of test tasks.\nb) Is correct. A key selection criterion involves evaluating recurring costs\n(see the syllabus in section 5.1.3), and this answer refers to a typical\nexample of a recurring cost.\nc) Is not correct. Evaluating the LLM against the publicly available\ncommunity benchmarks to ensure full compatibility with them is not one\nof the key criteria mentioned in the syllabus (in section 5.1.3) for selecting\nan appropriate LLM for specific test tasks.\nd) Is not correct. A key selection criterion involves evaluating recurring costs\n(see the syllabus in section 5.1.3), but this answer refers to a typical\nexample of a non-recurring cost."
+  },
+  {
+    "id": 37,
+    "lo": "GenAI-5.1.4",
+    "k": "K1",
+    "pts": 1,
+    "multi": false,
+    "text": "What are the key phases in the adoption of Generative AI in a test organization?",
+    "options": [
+      "Discovery, initiation and usage definition, utilization and iteration",
+      "Awareness, usage prioritization, performance monitoring",
+      "Planning, experimentation, evaluation and refinement",
+      "Training, testing, implementation, and scaling"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "The syllabus describes the following 3 key phases:\n• Discovery\n• Initiation and usage definition\n• Utilization and iteration\nThus:\na) Is correct: explicitly mentions all these 3 key phases.\nb) Is not correct: does not explicitly mention any of these 3 phases (only\nmentions some objectives and/or activities associated with these\nphases).\nc) Is not correct: does not explicitly mention any of these 3 phases (only\nmentions some objectives and/or activities associated with these\nphases).\nd) Is not correct: does not explicitly mention any of these 3 phases (only\nmentions some objectives and/or activities associated with these\nphases)."
+  },
+  {
+    "id": 38,
+    "lo": "GenAI-5.2.1",
+    "k": "K2",
+    "pts": 1,
+    "multi": false,
+    "text": "Which of the following options BEST refers to an example of knowledge and/or skills required for\ntesters to work effectively with LLMs in test processes?",
+    "options": [
+      "Mastering techniques specifically aimed at preventing LLMs from hallucinating and incurring\nreasoning errors when performing specific test tasks.",
+      "Selecting and implementing suitable test automation approaches, such as keyword-driven\ntest automation, for automating test processes.",
+      "Choosing the most appropriate LLM based on criteria such as its capability to be adapted or\ncustomized to perform specific test tasks .",
+      "Ensuring the validation and test data used in the development of the LLMS are of the highest\nquality."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Hallucinations in LLMs are intrinsic challenges with current\nAI technologies, and testers cannot prevent hallucinations and reasoning\nerrors from occurring. Instead, testers should be able to (identify and)\nmitigate the risks of hallucinations and reasoning errors (and also biases)\nwhen testing with GenAI.\nb) Is not correct. While proficiency in test automation is valuable, it does not\nspecifically address the integration of GenAI into test processes.\nc) Is correct. The syllabus names “assessing LLM capabilities” as a key\ncompetency. This naturally entails comparing candidate models and\nselecting the one that can be adapted or fine-tuned for particular test\ntasks. That is a direct example of knowledge/skills testers need to work\neffectively with LLMs.\nd) Is not correct. It refers to skills that are required for developing the LLMs\nsuch as AI researchers and data scientists, not testers using GenAI for\ntest tasks. These testers focus on ensuring the quality of the test data\nthey directly use when interacting with LLMs."
+  },
+  {
+    "id": 39,
+    "lo": "GenAI-5.2.2",
+    "k": "K1",
+    "pts": 1,
+    "multi": false,
+    "text": "What is the BEST approach for cultivating skills within test teams to specifically support the adoption\nof Generative AI?",
+    "options": [
+      "Rely mainly on external expert courses with hands-on practice, aiming to integrate AI into all\ndaily test tasks at once.",
+      "Encourage independent experimentation with various LLMs without following a structured\nprocess.",
+      "Adopt a hands-on, gradual learning process supported by guided exercises, peer learning,\nand knowledge-sharing communities.",
+      "Rely mainly on theoretical courses from external experts, aiming to gradually integrate AI into\ndaily test tasks in line with actual learning."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. While external expert courses with hands-on practice can\nbe beneficial, mainly relying on them diminishes the importance of\ninternal practice and community building. Moreover, integrating AI into all\ndaily test tasks in a ‘big-bang’ fashion is not recommended.\nb) Is not correct. While experimentation is part of the learning process,\nindependent experimentation without structure may not lead to consistent\nor effective skill development.\nc) Is correct. Focusing on developing practical skills through structured\nactivities, peer learning, and knowledge-sharing communities is a\nrecommended approach.\nd) Is not correct. Mainly relying on theoretical courses from external experts\ndiminishes the importance of developing practical skills and know-how\nthrough sharing within the organization."
+  },
+  {
+    "id": 40,
+    "lo": "GenAI-5.2.3",
+    "k": "K1",
+    "pts": 1,
+    "multi": false,
+    "text": "Which of the following answers BEST describes how the roles and responsibilities of testers and test\nmanagers within a test organization are impacted by the adoption of Generative AI for software\ntesting?",
+    "options": [
+      "Testers shift their focus from manually designing test cases to guiding and verifying AI-\ngenerated testware.",
+      "Test managers shift their focus from managing test projects to understanding the inner\nworking of Generative AI technologies.",
+      "Testers shift their focus from manually designing test cases to overseeing AI -based test\nprocesses.",
+      "Test managers shift their focus from relying on people to relying solely on Generative AI to\nboost productivity in test tasks."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Testers evolve into AI-assisted testing specialists, refining\nprompts and verifying AI outputs.\nb) Is not correct. The responsibilities of the test managers are updated to\ninclude the development of an AI-based test strategy, AI-based risk\nmanagement, and oversight of AI-based test processes. Thus, their focus\nis still on test management and not on understanding the (technically\ncomplex) inner workings of GenAI technologies.\nc) Is not correct. Testers do not shift their focus to overseeing AI-based test\nprocesses. This oversight is the responsibility of test managers.\nd) Is not correct. Test managers must balance human and AI capabilities to\nachieve efficient results."
+  }
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+const BASE_SECONDS = 60 * 60;
+const EXT_SECONDS  = 75 * 60;
+let timeExtended  = false;
+let TOTAL_SECONDS = BASE_SECONDS;
+let userAnswers   = questions.map(() => []);
+let timerInterval = null;
+let secondsLeft   = TOTAL_SECONDS;
+let examDeadline = null;
+let examSubmitted = false;
+let pendingAction = null;
+
+// ─── TIME SELECTION ───────────────────────────────────────────────────────────
+function selectTime(extended) {
+  timeExtended  = extended;
+  TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+  document.getElementById('opt-standard').classList.toggle('active', !extended);
+  document.getElementById('opt-extended').classList.toggle('active',  extended);
+  document.getElementById('meta-minutes').textContent = extended ? '75' : '60';
+  document.getElementById('ext-note').style.display   = extended ? 'block' : 'none';
+  document.getElementById('start-note-txt').textContent =
+    extended
+      ? 'The clock counts down from 75:00 (standard 60 min + 15 min extension). Submit before time runs out — the exam auto-submits when time expires.'
+      : 'The clock counts down from 60:00. Submit before time runs out — the exam auto-submits when time expires.';
+}
+
+// ─── START ────────────────────────────────────────────────────────────────────
+function startExam() {
+  secondsLeft = TOTAL_SECONDS;
+  examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+  const initDisplay = timeExtended ? '75:00' : '60:00';
+  document.getElementById('timer').textContent = initDisplay;
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('exam-screen').style.display  = 'block';
+  renderQuestions();
+  timerInterval = setInterval(tickTimer, 1000);
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function renderQuestions() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'card-' + qi;
+    card.style.animationDelay = (qi * 0.012) + 's';
+
+    // options HTML — no onclick on the row itself; we use a real <input> onchange
+    let optsHTML = '';
+    q.options.forEach((opt, oi) => {
+      const type     = q.multi ? 'checkbox' : 'radio';
+      const rowClass = q.multi ? 'option-row is-checkbox' : 'option-row';
+      optsHTML += `
+        <label class="${rowClass}" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+          <input type="${type}" name="q${qi}" value="${oi}"
+                 id="inp-${qi}-${oi}"
+                 onchange="handleChange(${qi},${oi},this)"
+                 style="position:absolute;opacity:0;width:1px;height:1px;">
+          <span class="option-marker"></span>
+          <span class="option-text"><strong>${String.fromCharCode(65+oi)}.</strong> ${escHtml(opt)}</span>
+        </label>`;
+    });
+
+    const ptsLabel = q.pts > 1 ? q.pts + ' pts' : '1 pt';
+
+    card.innerHTML = `
+      <div class="q-header">
+        <div class="q-meta">
+          <span class="q-num">Q${q.id}</span>
+          <span class="q-lo">${q.lo}</span>
+          <span class="q-pts">${ptsLabel}</span>
+        </div>
+        <div class="q-text" id="q-text-${qi}">${escHtml(q.text)}</div>
+      </div>
+      ${q.multi ? '<div class="multi-hint">SELECT ALL THAT APPLY</div>' : ''}
+      <div class="options" role="group" aria-labelledby="q-text-${qi}">${optsHTML}</div>
+      <div class="result-tag" id="result-${qi}"></div>
+      <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>
+    `;
+    container.appendChild(card);
+  });
+
+}
+
+function escHtml(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/\n/g, '<br>');
+}
+
+// Called by onchange (keyboard/assistive tech fallback) — keeps state in sync
+function handleChange(qi, oi, inp) {
+  tickTimer();
+  if (examSubmitted) return;
+  syncAnswer(qi);
+}
+
+function syncAnswer(qi) {
+  const q = questions[qi];
+  // Rebuild answer array from checked inputs
+  userAnswers[qi] = [];
+  q.options.forEach((_, oi) => {
+    const inp = document.getElementById('inp-' + qi + '-' + oi);
+    if (inp && inp.checked) userAnswers[qi].push(oi);
+  });
+  // Update visual selection state
+  q.options.forEach((_, oi) => {
+    const row = document.getElementById('opt-' + qi + '-' + oi);
+    if (!row) return;
+    row.classList.toggle('selected', userAnswers[qi].includes(oi));
+  });
+  updateProgress();
+}
+
+// ─── PROGRESS ────────────────────────────────────────────────────────────────
+function updateProgress() {
+  const answered = userAnswers.filter(a => a.length > 0).length;
+  document.getElementById('answered-num').textContent = answered;
+  document.getElementById('progress-fill').style.width = (answered / questions.length * 100) + '%';
+}
+
+// ─── TIMER ───────────────────────────────────────────────────────────────────
+function tickTimer() {
+  if (examSubmitted || examDeadline === null) return;
+  secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+  const m = Math.floor(secondsLeft / 60), s = secondsLeft % 60;
+  const el = document.getElementById('timer');
+  el.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  if      (secondsLeft <= 300)  el.className = 'timer danger';
+  else if (secondsLeft <= 900)  el.className = 'timer warn';
+  else                          el.className = 'timer';
+  if (secondsLeft === 0) doSubmit(true);
+}
+
+// ─── CONFIRM DIALOGS ─────────────────────────────────────────────────────────
+function confirmSubmit() {
+  const answered   = userAnswers.filter(a => a.length > 0).length;
+  const unanswered = questions.length - answered;
+  document.getElementById('confirm-title').textContent = 'Submit Exam?';
+  document.getElementById('confirm-msg').innerHTML = unanswered > 0
+    ? `You have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered>1?'s':''}</strong>. Unanswered questions count as wrong.<br><br>Submit anyway?`
+    : `All ${questions.length} questions answered. Ready to submit?`;
+  document.getElementById('confirm-yes-btn').textContent = 'Submit';
+  pendingAction = 'submit';
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function confirmReset() {
+  document.getElementById('confirm-title').textContent = 'Restart Exam?';
+  document.getElementById('confirm-msg').innerHTML = 'All answers and progress will be lost. The timer resets to ' + (timeExtended ? '75:00' : '60:00') + '.<br><br>Are you sure?';
+  document.getElementById('confirm-yes-btn').textContent = 'Restart';
+  pendingAction = 'reset';
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function closeConfirm() {
+  document.getElementById('confirm-overlay').classList.remove('show');
+  pendingAction = null;
+}
+
+function doConfirm() {
+  if (pendingAction === 'submit') doSubmit(false);
+  else if (pendingAction === 'reset') doReset();
+  closeConfirm();
+}
+
+// ─── SUBMIT ───────────────────────────────────────────────────────────────────
+function doSubmit(timedOut) {
+  if (examSubmitted) return;
+  secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+  timedOut = timedOut || secondsLeft === 0;
+  examSubmitted = true;
+  document.querySelectorAll('.option-row input').forEach(input => { input.disabled = true; });
+  clearInterval(timerInterval);
+  closeConfirm();
+
+  let correctCount = 0, totalPoints = 0, earnedPoints = 0;
+
+  questions.forEach((q, qi) => {
+    const correct   = q.answer.slice().sort().join(',');
+    const given     = userAnswers[qi].slice().sort().join(',');
+    const isCorrect = given !== '' && correct === given;
+    totalPoints  += q.pts;
+    if (isCorrect) { correctCount++; earnedPoints += q.pts; }
+
+    // Disable and reveal options
+    q.options.forEach((_, oi) => {
+      const row = document.getElementById('opt-' + qi + '-' + oi);
+      if (!row) return;
+      row.classList.add('disabled');
+      row.classList.remove('selected');
+      if (q.answer.includes(oi))           row.classList.add('reveal-correct');
+      else if (userAnswers[qi].includes(oi)) row.classList.add('reveal-wrong');
+    });
+
+    // Result tag
+    const rt   = document.getElementById('result-' + qi);
+    const expl = document.getElementById('expl-' + qi);
+    const card = document.getElementById('card-' + qi);
+    rt.classList.add('show');
+    expl.classList.add('show');
+
+    if (given === '') {
+      rt.classList.add('incorrect');
+      rt.innerHTML = '&mdash; Unanswered &middot; Correct: ' + q.answer.map(i => String.fromCharCode(65+i)).join(', ');
+      card.classList.add('incorrect-card');
+    } else if (isCorrect) {
+      rt.classList.add('correct');
+      rt.innerHTML = '&#10003; Correct' + (q.pts > 1 ? ' (+' + q.pts + ' pts)' : '');
+      card.classList.add('correct-card');
+    } else {
+      rt.classList.add('incorrect');
+      rt.innerHTML = '&#10007; Incorrect &middot; Correct: ' + q.answer.map(i => String.fromCharCode(65+i)).join(', ');
+      card.classList.add('incorrect-card');
+    }
+  });
+
+  const pct    = Math.round(earnedPoints / totalPoints * 100);
+  const pass   = pct >= 65;
+  const skipped = userAnswers.filter(a => a.length === 0).length;
+  const wrong  = questions.length - correctCount - skipped;
+
+  const usedSec = TOTAL_SECONDS - secondsLeft;
+  const um = Math.floor(usedSec / 60), us = usedSec % 60;
+  const totalLabel = timeExtended ? '75:00' : '60:00';
+  const timeStr = timedOut
+    ? totalLabel + ' (time expired)'
+    : String(um).padStart(2,'0') + ':' + String(us).padStart(2,'0');
+
+  if (timedOut) { const el = document.getElementById('timer'); el.textContent = '00:00'; el.className = 'timer danger'; }
+
+  document.getElementById('final-score-pct').textContent = pct + '%';
+  document.getElementById('final-score-raw').textContent =
+    earnedPoints + ' of ' + totalPoints + ' points · ' + correctCount + ' correct out of ' + questions.length + ' questions';
+  document.getElementById('time-used').textContent = timeStr;
+  const badge = document.getElementById('grade-badge');
+  badge.textContent = pass ? '✓ PASS (≥65%)' : '✗ FAIL (<65%)';
+  badge.className   = 'grade-badge ' + (pass ? 'pass' : 'fail');
+  document.getElementById('stat-correct').textContent = correctCount;
+  document.getElementById('stat-wrong').textContent   = wrong;
+  document.getElementById('stat-skipped').textContent = skipped;
+
+  document.getElementById('summary').style.display = 'block';
+  document.getElementById('summary').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── RESET ────────────────────────────────────────────────────────────────────
+function doReset() {
+  examSubmitted = false;
+  userAnswers   = questions.map(() => []);
+  secondsLeft   = TOTAL_SECONDS;
+  examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+  clearInterval(timerInterval);
+  document.getElementById('timer').textContent = timeExtended ? '75:00' : '60:00';
+  document.getElementById('timer').className   = 'timer';
+  document.getElementById('answered-num').textContent = '0';
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('summary').style.display = 'none';
+  renderQuestions();
+  timerInterval = setInterval(tickTimer, 1000);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

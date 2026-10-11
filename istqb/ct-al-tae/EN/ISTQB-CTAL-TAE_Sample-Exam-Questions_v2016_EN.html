@@ -1,0 +1,1958 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CTAL-TAE · 2016 — Sample Exam · English 2016</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    </style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Advanced Level</div>
+        <h1>CTAL-TAE · 2016<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">
+          ISTQB® Certified Tester Advanced Level Test Automation Engineer (CTAL-TAE) ·
+          Sample Exam · English 2016 · Test Automation Engineer Syllabus 2016. The
+          timer starts as soon as you click "Start Exam".
+        </p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">90</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">75</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Source: ISTQB® Test Automation Engineer sample exam, English 2016 edition (Version 1.0). Copyright © ISTQB®. Questions and rationales follow the supplied question and answer PDFs.</p>
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">90 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">112.5 min</span>
+            <span class="time-opt-lbl">+25% practice time</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optional practice allowance: 25% extra time (22 minutes 30 seconds).</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 90:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CTAL-TAE · 2016 · Sample Exam · English 2016</span
+            >
+            <span class="exam-title">Certified Tester Advanced Level – Test Automation Engineer</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 answered
+            </div>
+            <div class="timer" id="timer">90:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 questions (75 points) · <strong>65% (≥ 49 of 75 points)</strong>
+            to pass · points vary per question (1–3) and some questions are
+            multi-select (see marking on each question)
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "ALTA-E-1.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is considered to be an advantage of test automation over manual testing?\n\nSelect ONE option.",
+    "options": [
+      "a) The time required for test execution is lengthened and the coverage is increased",
+      "b) The time required for test execution is shortened and the coverage is increased",
+      "c) The time required for test execution is lengthened and the coverage is reduced",
+      "d) The time required for test execution is shortened and the coverage is reduced"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. There is an expectation with good test automation that the time required for test execution will be reduced while the overall test coverage is increased."
+  },
+  {
+    "id": 2,
+    "lo": "ALTA-E-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is an important technical success factor for any significant automation project?\n\nSelect ONE option.",
+    "options": [
+      "a) The TAA must be designed for learnability",
+      "b) The TAA must support the ability to automate all manual tests",
+      "c) The SUT must be self-documenting",
+      "d) The GUI interaction and data must be coupled with the graphical interface"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. It must be designed for learnability, maintainability, and performance. B is incorrect; not all manual tests can or should be automated. C is incorrect; the code could be self-documenting but the entire SUT would not be. D is incorrect; automation is easier with decoupling."
+  },
+  {
+    "id": 3,
+    "lo": "ALTA-E-2.1.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are deciding on the functional test automation approach for a highly complex system which is expected to be used in production for many years. You have already conducted a survey with the major tool vendors and you have determined that you will not be able to use any of their tools to create your test automation due to the non-standard interfaces that were required for the software. You and the developers have decided that your best automation approach will be through custom interfaces implemented specifically for testing. What are two concerns you should have with this approach? (Pick 2)\n\nSelect TWO options.",
+    "options": [
+      "a) If the interfaces are not disabled before release, there could be a security risk",
+      "b) The performance of the test interfaces may be much faster than the performance of the real interfaces",
+      "c) The effort spent to develop test automation will not be justified by the expected lifespan of the code in production",
+      "d) Because there is a high level of intrusion, there may be false alarms generated",
+      "e) Because there is a low level of intrusion, the test results will not be representative of the production code"
+    ],
+    "answer": [
+      0,
+      3
+    ],
+    "explanation": "A and D are correct. A is noted in section 3.2.3 of the syllabus where it talks about checking for security risks if you leave test interfaces in place. D is correct because developing custom test interfaces is considered a high level of intrusion and this may generate false alarms due to the different code being exercised. B is not correct because we are testing the code, not the performance. C is not correct because it is stated in the question that this is a long-lived, complex product. E is not correct because the custom interfaces introduce a high level of intrusion."
+  },
+  {
+    "id": 4,
+    "lo": "ALTA-E-2.1.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "You have been automating a legacy application that provides critical functionality to the business. An update to the legacy system has been approved and the developers plan to use third party software to provide the new functionality. The third party software has already been tested but the interface between the existing software and the new software is problematic. Your existing test automation needs to be extended to test the interface between these two products. How should you approach implementing the best automation solution?\n\nSelect ONE option.",
+    "options": [
+      "a) Develop test automation for the entire system including the legacy and third party applications",
+      "b) Investigate if automation is possible via the APIs used to interface with the third party software",
+      "c) Develop new automation to test via the GUI of the third party software",
+      "d) Investigate if automation can be implemented using the CLI to replace the existing GUI automation"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct; if APIs are available automation at the API level makes sense. A is incorrect; there is no reason to fully automate the testing of the third party system. C is incorrect; we are not testing the GUI of the third party software. D is incorrect; this is not a logical approach."
+  },
+  {
+    "id": 5,
+    "lo": "ALTA-E-2.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are evaluating functional test automation tools. The tool that you prefer can provide your organization with a favorable cost-benefit ratio, which appeals to senior management. Additionally, you feel the tool is superior in meeting your other technical criteria. However, the tool has many features most of which will never be used. As a result, you feel this makes the tool overly complex and confusing. What should your next steps be regarding selection of this tool?\n\nSelect ONE option.",
+    "options": [
+      "a) Consider another tool that is more user friendly",
+      "b) Explore the possibility of configuring the tool to turn off unnecessary features",
+      "c) Plan to supplement selection of this tool with lengthy and comprehensive training sessions",
+      "d) Consider acquiring an additional tool that can provide a more user friendly interface to the preferred tool"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct; tools are often configurable and allow functionality to be hidden. A is incorrect; the preferred tool meets your criteria, finding another tool may be difficult. C is incorrect; training sessions take away from testing time and the need for training would continue for the life of the tool, which would be an expensive alternative. D is incorrect; additional tool costs, configuration, and maintenance would make this an unacceptable alternative."
+  },
+  {
+    "id": 6,
+    "lo": "ALTA-E-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "When a system is designed for testability, one of the characteristics is that the test cases can access interfaces into the system that can be used to verify the expected behavior actually occurred as a result of the test. What is this characteristic called?\n\nSelect ONE option.",
+    "options": [
+      "a) Observability",
+      "b) Controllability",
+      "c) Maintainability",
+      "d) Interoperability"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. A system that allows visibility to the results of a test has the property of observability. B is not correct because controllability is the ability of the interface to control behavior of the system. C and D are not correct because they are quality characteristics rather than specific testability characteristics."
+  },
+  {
+    "id": 7,
+    "lo": "ALTA-E-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is an important testability consideration when designing a SUT?\n\nSelect ONE option.",
+    "options": [
+      "a) Interoperability",
+      "b) Controllability",
+      "c) Maintainability",
+      "d) Transportability"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct; this is necessary because it provides accessible interfaces. A and C are incorrect; they are quality characteristics that will not necessarily influence testability. D is incorrect; this is not a legitimate term."
+  },
+  {
+    "id": 8,
+    "lo": "ALTA-E-3.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "What layer of the gTAA structure provides tool support for designing manual test cases and creating automated test cases?\n\nSelect ONE option.",
+    "options": [
+      "a) Test Adaptation Layer",
+      "b) Test Definition Layer",
+      "c) Test Generation Layer",
+      "d) Test Flexibility Layer"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct; it supports generating test cases from models of the SUT and manual test case design. A is incorrect; it provides the interface between the test automation and the SUT. B is incorrect; it may specify test cases but does not generate test cases. D is incorrect; this is not part of the gTAA structure."
+  },
+  {
+    "id": 9,
+    "lo": "ALTA-E-3.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are working on the design of a test automation project. The gTAA was set up by a consulting company prior to your being hired. You are now looking to create the TAA from the gTAA. You have the following requirements that must be addressed by your TAA:\n\n1. The TAA must support independence across technologies. It is likely that this same test suite will be used in different test environments and on different target technologies\n\n2. The test artifacts need to be portable\n\n3. Vendor-neutrality is preferable\n\n4. It is vitally important that the TAA be maintainable and maintenance costs be minimized\n\n5. It is preferred that less technical people be able to maintain the system even though highly technical people have built it\n\n6. There is a large project budget for this effort for the next two years, but the budget will decrease after that time\n\nGiven these requirements, which one of the following should the TAE consider during the implementation of the TAA?\n\nSelect ONE option.",
+    "options": [
+      "a) The communication protocols used by the TAS to interact with the SUT",
+      "b) The number of automated test cases to be maintained by the system",
+      "c) The test roles that will be supported by the implementation",
+      "d) The use of abstraction in the implementation"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct. Abstraction will likely be needed to accomplish the stated goals. A, B, and C are incorrect; while these are certainly considerations for the implementation of the TAA, they will not help address the stated goals."
+  },
+  {
+    "id": 10,
+    "lo": "ALTA-E-3.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Why is it important for the TAA to separate the test definition from the test execution?\n\nSelect ONE option.",
+    "options": [
+      "a) Separating the two increases the speed of execution",
+      "b) The test definition can be completed without knowledge of the tool that will be used for execution",
+      "c) The execution will be able to add test cases to the test definition as needed during execution",
+      "d) The test definition layer will supply the adaptation necessary for the tests to run with various tools and interfaces"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct; by separating the definition from the execution, the definition is immune from the tool selection and usage. If another tool is used, the definition doesn’t have to change – only the execution layer will change. See section 3.1.1. A is incorrect; separating the two does not have anything to do with speed of execution. C is incorrect; test cases are not added during execution. D is incorrect; adaptation is supplied by the adaptation layer."
+  },
+  {
+    "id": 11,
+    "lo": "ALTA-E-3.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "When designing the test adaptation layer, which of the following should occur?\n\nSelect ONE option.",
+    "options": [
+      "a) Selecting the interpretation or compilation approach for the test procedures",
+      "b) Selecting data-driven, keyword-driven, pattern-based or model-driven test definition",
+      "c) Selecting manual or automated test generation",
+      "d) Selecting tools that will be used to stimulate and observe test interfaces"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct; this is one of the considerations for the test adaptation layer. A is incorrect; this should be selected at the test execution layer. B is incorrect; this should be selected at the test definition layer. C is incorrect; this should be selected at the test generation layer."
+  },
+  {
+    "id": 12,
+    "lo": "ALTA-E-3.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "When is the best time, for test automation, to consider legal and/or standards requirements of an SUT?\n\nSelect ONE option.",
+    "options": [
+      "a) When developing a TAS",
+      "b) When implementing the SUT",
+      "c) When designing a TAA",
+      "d) When creating a TAF"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct; SUT standards and legal settings should be considered and any design requirements understood when designing the TAA. A, B, and D are incorrect; consideration for standards and legal settings should have occurred before this time."
+  },
+  {
+    "id": 13,
+    "lo": "ALTA-E-3.2.4",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are working on a test automation project that will automate business scenarios for the user acceptance testers to use when conducting UAT. The business scenarios are well-defined and frequently repeated during UAT. The goal is to also be able to test these same scenarios as part of regression testing by executing the test automation. Structured scripting has already been used to develop the library of functions that can be used by the test automation. What scripting technique should be used to build upon the structured scripting that has already been done and to implement this test automation to meet the business goals?\n\nSelect ONE option.",
+    "options": [
+      "a) Scenario-driven scripting",
+      "b) Keyword-driven scripting",
+      "c) Process-driven scripting",
+      "d) Linear scripting"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct. This will allow building on the structured scripting that has already been done and the libraries that have been created while automating the business processes. A is incorrect; this is not a real scripting type. B is incorrect; this could feed into the process-driven scripting, but C is more complete. D is incorrect; it is referring to a more basic type of scripting and it has already been specified that structured scripting has been done."
+  },
+  {
+    "id": 14,
+    "lo": "ALTA-E-3.2.4",
+    "k": "K4",
+    "pts": 3,
+    "text": "Your manager has requested you develop test automation to be used for a legacy system that is going to go through a series of infrastructure migrations. The scripts will be used to verify basic functionality during these infrastructure changes. You need a solution that is simple and fast. Maintainability of the scripts is not a consideration because no changes to the software are anticipated. Which of the following is the best scripting approach in this situation?\n\nSelect ONE option.",
+    "options": [
+      "a) Structured scripting",
+      "b) Data-driven scripting",
+      "c) Keyword-driven scripting",
+      "d) Linear scripting"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct; little prep work is required and the maintenance concerns are not an issue for this project. A, B, and C are incorrect; these are more complex techniques that would result in more sustainable code but the additional cost and complexity are not justified for this project."
+  },
+  {
+    "id": 15,
+    "lo": "ALTA-E-3.3.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are using a gTAA to create a TAS for a project. You have reviewed the project and determined that the test automation should be focused at the command line level rather than the user interface level due to the rapid and continual changes occurring in the user interface. The command line interface allows you to access all the functionality and will be a part of the released project. Given this information, what part of the standard gTAA can you leave out of the TAS?\n\nSelect ONE option.",
+    "options": [
+      "a) The test data component of the test definition layer",
+      "b) The GUI component of the test adaptation layer",
+      "c) The test model component of the test generation layer",
+      "d) The user interface component of the test execution layer"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. A is incorrect; you are still likely to need test data for your tests. C is incorrect; there is nothing in the question that indicates this is not needed; D is incorrect; it is not a component of the test execution layer."
+  },
+  {
+    "id": 16,
+    "lo": "ALTA-E-3.3.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are implementing a TAS from a TAA. The SUT communicates with another system, which is stable and available for use during testing. The test interface will be through the GUI. Given this information what component of the TAA can you exclude from the TAS?\n\nSelect ONE option.",
+    "options": [
+      "a) The test generation layer",
+      "b) The simulator within the test adaption layer",
+      "c) Test execution within the test execution layer",
+      "d) The GUI from the test adaptation layer"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct; a simulator is not needed because you can communicate directly with the external system. A, C, and D are incorrect; because these components are still needed to create the TAS."
+  },
+  {
+    "id": 17,
+    "lo": "ALTA-E-3.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is true about reuse?\n\nSelect ONE option.",
+    "options": [
+      "a) Reuse is built into the TAA and maintained and improved in the TAS",
+      "b) Reuse is built in both the TAA and TAS and maintained in the gTAA",
+      "c) Reuse is only applicable for the gTAA",
+      "d) Reuse is built into the TAS and maintained and improved in the TAA"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct; per the syllabus the TAA must designed for reuse but the TAS can increase the ability for reuse; B, C, and D are incorrect; only A contains the proper wording per the syllabus."
+  },
+  {
+    "id": 18,
+    "lo": "ALTA-E-4.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Senior management wants to implement test automation into your organization and has asked you to lead this initiative. The organization has a number of systems of varying criticality, some of which may benefit from automation once a TAA is mature. You have been given direction to start with a pilot. How do you select a suitable project for the TAS?\n\nSelect ONE option.",
+    "options": [
+      "a) A high visibility project in order to highlight the success of the pilot",
+      "b) A non-critical project in order to mitigate any delays the TAS may cause",
+      "c) A project that is simple and easy to automate",
+      "d) A new project that is immature and still in development"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct; the pilot should have minimal impact upon normal business but should be conducted with a realistic project. A is incorrect; this may result in great risk to the automation project if it fails. C is incorrect; a trivial project will be of little benefit. D is incorrect; new projects are not good candidates for automation."
+  },
+  {
+    "id": 19,
+    "lo": "ALTA-E-4.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You have been asked to conduct a pilot for the test automation tool. You have identified a suitable target project (average size and cost), planned the pilot (treating it as a development effort), and conducted the pilot. What should be your next step?\n\nSelect ONE option.",
+    "options": [
+      "a) Conduct another pilot on a critical project to ensure the tool will work when it really matters",
+      "b) Conduct another pilot on a trivial project to ensure the time requirements will not be too high on small projects",
+      "c) Evaluate the results engaging the stakeholders to gather their viewpoints",
+      "d) Evaluate the results within the pilot testing team and prepare a report for management"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct; it is important to gather input from the stakeholders before moving forward. A and B are incorrect; critical or trivial projects should not be used for a pilot. D is incorrect; this will occur, but the management report should not be prepared until there is feedback from the stakeholders."
+  },
+  {
+    "id": 20,
+    "lo": "ALTA-E-4.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Your team has been working on creating a strong and maintainable TAS. The TAS is expected to be used for at least five years, so good maintainability is critical. The team has done the following:\n\n1. Created an impact analysis process for all proposed changes to the system\n\n2. Documented the usage for the TAS\n\n3. Documented the third party dependencies, including contacts within the third party organization\n\n4. Verified that the TAS runs in an environment separate from the SUT environment\n\nGiven this information, what is a major factor of maintainability that has not been addressed?\n\nSelect ONE option.",
+    "options": [
+      "a) The TAS must be modular, so key components can be replaced as needed",
+      "b) The TAS must be a copy of the gTAA",
+      "c) The SUT must reside in the same environment as the TAS",
+      "d) The TAS must unite the test scripts with the TAF"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. The TAS must be modular for maintainability. B is incorrect; the TAS is an instantiation of the gTAA. C is incorrect; the two must reside in separate environments. D is incorrect; the TAS must separate the scripts from the TAF."
+  },
+  {
+    "id": 21,
+    "lo": "ALTA-E-4.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "You have just updated your TAS to include new features. What steps should you take to ensure that the changes have not adversely affected any existing functionality?\n\nSelect ONE option.",
+    "options": [
+      "a) Compare the new and old TAS versions and assess the impact of any differences",
+      "b) Statically check to ensure procedures for the new and old TAS versions are identical",
+      "c) Ensure the same stubs and drivers are used in the new TAS",
+      "d) Use SUT release notes as a way to ensure the new TAS will operate correctly"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct; the TAS is like any other software and changes must be assessed to mitigate risk. B is incorrect; procedures will change as the TAS changes. C is incorrect; stubs and drivers should not be present in an active TAS. D is incorrect; system release notes of the SUT may have nothing to do with identifying vulnerabilities in the TAS."
+  },
+  {
+    "id": 22,
+    "lo": "ALTA-E-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Why is it important to have standard naming conventions for a TAS?\n\nSelect ONE option.",
+    "options": [
+      "a) A TAS that uses standard names will enable faster execution of the test automation",
+      "b) A TAS that uses standard names will be easier for a new person to learn",
+      "c) A TAS that uses standard names will support global substitutions when test automation standards change",
+      "d) A TAS that uses standard names will allow separation of the test scripts from the TAF"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct; standard names will be easier for a new person to learn and will make the code easier to understand. A, C and D are incorrect; using a standard naming convention won’t affect any of these areas."
+  },
+  {
+    "id": 23,
+    "lo": "ALTA-E-5.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Your manager is concerned that it will be difficult to assess the success of the test automation implementation unless it is possible to show that the quality of the tested software steadily improves. You have explained that pass/fail numbers are reported at the end of each execution, but your manager wants to see this information provided automatically to a dashboard that will allow drilling down to the details. How can you automatically provide this information from the test automation software?\n\nSelect ONE option.",
+    "options": [
+      "a) You can’t. This information will have to be gathered manually at the end of each execution",
+      "b) The automated testware can be used to report this information to a database and a dashboard can be created from the data in the database that will show the trends in passed/failed test cases",
+      "c) The automated testware can report each set of test execution results to a spreadsheet that can be published showing the detailed results",
+      "d) The TAE can record the information during execution and report that into a graphing tool that can be provided for management reporting"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct; this is an automated solution that will utilize the tools to provide accurate current and trend information. A is incorrect; you can provide this information. C is incorrect; it will provide only current execution information but no overall trending. D is incorrect; it is a manual process not an automated solution."
+  },
+  {
+    "id": 24,
+    "lo": "ALTA-E-5.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You normally start execution of an automated regression test suite at the end of the workday as it is a lengthy test. Occasionally the test does not complete by the start of the next workday even though it should complete within five hours of starting. What is the most efficient approach you could take to determine the cause of the problem?\n\nSelect ONE option.",
+    "options": [
+      "a) Run the test at the beginning of the day and monitor it manually",
+      "b) Evaluate a vendor reporting tool that measures test progress",
+      "c) Supplement your staff with a night shift to monitor the test while it is running",
+      "d) Automate collection of the test execution results"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct; automated collection is inexpensive and effective. A is incorrect; it interferes with other planned activities. B is incorrect; this is an unnecessary cost. C is incorrect; it is not practical."
+  },
+  {
+    "id": 25,
+    "lo": "ALTA-E-5.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "When implementing results reporting for test automation, what is a good way to allow the reader to make a quick assessment of the progress of the test execution?\n\nSelect ONE option.",
+    "options": [
+      "a) Spreadsheets",
+      "b) Traffic lights",
+      "c) Detailed reports with percentages of completion",
+      "d) Database of results"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct; using colors, such as traffic lights, to indicate progress is mentioned in the syllabus. A and C are incorrect; these will not allow quick analysis. D is incorrect; the data would still have to be derived from the database before it could be analyzed."
+  },
+  {
+    "id": 26,
+    "lo": "ALTA-E-5.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You have been asked to distribute the results of your test automation daily. The preferred method for distribution of these results is via e-mail. What is an important characteristic of your test automation reporting that will allow you to provide this information?\n\nSelect ONE option.",
+    "options": [
+      "a) It should integrate with a common third party tool",
+      "b) It should allow you to supplement the results with manual commentary",
+      "c) It should provide a way to publish the test log library",
+      "d) It should allow you to capture an audio message to accompany test results"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct; importing to commonly known tools such as Excel makes it easier for a broader audience to view and manipulate the data. B is incorrect; this would be inefficient and left to individual interpretation of the commentary. C is incorrect; this provides too much data for a general audience. D is incorrect; this would be an unrealistic expectation of a test reporting tool. Specialized audio capture tools would be more practical."
+  },
+  {
+    "id": 27,
+    "lo": "ALTA-E-5.3.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "You have been working with a test automation suite that provides good test coverage. The suite contains 500 scripts and has previously run without any problems. Recently, a number of the tests late in the test run have been failing. You have done some analysis and it appears that the test failures are being caused by a SUT failure that is not being detected by one or more tests earlier in the test run. You need more information to pinpoint the test or tests with a false-negative result. What type of logging do you need in order to complete your analysis and get the information to help identify the problem?\n\n1. The status of execution for each test case (pass/fail)\n\n2. Timing information for each step in each test case\n\n3. Dynamic information about the SUT\n\n4. All actions of each test case to allow replaying each test\n\n5. Failure information for any step in a test case that encounters an error\n\nSelect ONE option.",
+    "options": [
+      "a) 1, 2, 3",
+      "b) 2, 4, 5",
+      "c) 2, 3, 5",
+      "d) 1, 4, 5"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct; this would be the most useful information. This is going to be a multi-step analysis starting with the first failure (which is probably at the step rather than test cases level) then replaying it to see what is actually happening and then looking at all the details of the failure. A, B and C are incorrect; the timing information is probably not pertinent and the SUT information is also probably not relevant to the problem although, if it is, it is likely it will be seen when the data in 1, 4, 5 is analyzed."
+  },
+  {
+    "id": 28,
+    "lo": "ALTA-E-5.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "When publishing a test execution report which key attribute must the report contain?\n\nSelect ONE option.",
+    "options": [
+      "a) Test case steps",
+      "b) Test environment",
+      "c) Assessment of the reliability of the SUT",
+      "d) Root cause of any failures"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct; the test environment information is important in determining test coverage and test validity. A is incorrect; this is too specific. C is incorrect; this information may be derived from the report, but is not a key attribute. D is incorrect; this level of detail would be in the defect report and not in a test execution report."
+  },
+  {
+    "id": 29,
+    "lo": "ALTA-E-6.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You have been asked to implement test automation for a system that has been in production for two years. The software is relatively stable, updates are made once a quarter, and the quality of the software is extremely important. The organization follows a V-model lifecycle and has used this model for many years. Software quality is good on the quarterly releases, but there is concern that the time required for the regression testing is not cost effective and is inhibiting the flow of new features. You see several challenges in this implementation, the greatest of which is the creation and preservation of test data. While the test environments are stable and controlled, the test data is frequently refreshed from production, which makes it difficult to write maintainable test automation.\n\nGiven this information, which of the following is most likely to be a problem for this test automation effort?\n\nSelect ONE option.",
+    "options": [
+      "a) Maturity of the test process",
+      "b) Suitability of automation for the stage of the software product lifecycle",
+      "c) Frequency of use",
+      "d) Complexity to automate"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct because dealing with the data issue adds a level of complexity to the test automation. It is likely that it will need to create and maintain its own data and preserve this data across the production refreshes. A is incorrect; they follow a mature process. B is incorrect; this is a good time to automate because the software is stable and the updates are made quarterly. C is incorrect; the software will be used frequently and for a long time."
+  },
+  {
+    "id": 30,
+    "lo": "ALTA-E-6.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is the most common basis for an automated test script?\n\nSelect ONE option.",
+    "options": [
+      "a) The gTAA",
+      "b) The SUT",
+      "c) A manual test case",
+      "d) The functional requirements"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct; automated test scripts are commonly written from manual test cases. A and B are incorrect; these would not provide the basis for a test script. D is incorrect; while it may provide the basis for the testing it is not usually the basis for an automated test script."
+  },
+  {
+    "id": 31,
+    "lo": "ALTA-E-6.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is a stated goal for automated regression test coverage if it is to ascertain the overall quality of the SUT?\n\nSelect ONE option.",
+    "options": [
+      "a) Cursory",
+      "b) Broad",
+      "c) Deep",
+      "d) Broad and deep"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct; per the syllabus. A is incorrect; this will not give an indication of overall quality. B and C are incorrect; both broad and deep are needed."
+  },
+  {
+    "id": 32,
+    "lo": "ALTA-E-6.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Who should provide feedback to the TAE when implementing new features to an existing TAS?\n\nSelect ONE option.",
+    "options": [
+      "a) Business Analysts",
+      "b) Senior Managers",
+      "c) Test Designers with domain expertise",
+      "d) System Administrators"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct. Test designers with domain expertise must ensure the TAS will work with the new features. A, B, and D are all incorrect; they are not versed in the specific TAS design."
+  },
+  {
+    "id": 33,
+    "lo": "ALTA-E-6.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is the best reason for automating the confirmation testing of a defect?\n\nSelect ONE option.",
+    "options": [
+      "a) To close a gap in the existing automation",
+      "b) To ensure that the fix works and continues to work",
+      "c) To justify the time spent finding the defect",
+      "d) To test the configuration management processes"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct; you are trying to be sure the fix works and make sure that the fix doesn’t break later or get lost because of a configuration management problem. A is incorrect; while there may be gaps in the test automation this is not the primary reason to automate confirmation testing. C is incorrect; the time spent finding the defect should have been justified by the severity of the defect. D is incorrect; this is a side effect and, while it doesn’t test all the configuration management processes, it does make sure that the fix isn’t lost for some reason."
+  },
+  {
+    "id": 34,
+    "lo": "ALTA-E-7.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are having problems with the reliability of the automated test environment and setup. You have decided to create a test suite you can execute to verify the environment before you run the actual test scripts. Which of the following would provide the best quick test of the environment?\n\nSelect ONE option.",
+    "options": [
+      "a) Run a set of tests that are known to pass and verify that they still pass",
+      "b) Run a set of tests that are known to fail and verify that they still fail",
+      "c) Run a set of tests containing both passes and fails and verify that the results are consistent",
+      "d) Run the entire set of automated tests and verify the results because a subset will not be representative"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct; this is the best option assuming you have picked a good set of tests. You want to test that good tests pass and failed tests fail. D is incorrect; you are looking for a quick test. A and B are incorrect; this would be limited in scope and would not provide sufficient coverage."
+  },
+  {
+    "id": 35,
+    "lo": "ALTA-E-7.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are testing a system that is updated by monthly service packs. You are testing multiple versions of the SUT simultaneously. Your TAS is complex and you need to ensure it remains consistent across the different SUT environments. How will you ensure that the same version of the TAS is used to test each SUT?\n\nSelect ONE option.",
+    "options": [
+      "a) Update the TAS each time the SUT is patched",
+      "b) Revert back to manual testing",
+      "c) Install the TAS into the SUT environments from a central repository",
+      "d) Develop a tool to track historical test results"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct; downloading a copy from a repository ensures a consistent TAS. A is incorrect; this is not feasible. B is incorrect; reverting to manual testing is not warranted. D is incorrect; historical data tracking will only illustrate the symptom of inconsistent results."
+  },
+  {
+    "id": 36,
+    "lo": "ALTA-E-7.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You have executed an automated test suite for a product that was released to production. Although your tests passed, there was a major failure in production in an area that is well covered by your automated tests. You have verified that your tests did pass and that the reporting of the results was correct. What should you do now to verify the validity of your tests?\n\nSelect ONE option.",
+    "options": [
+      "a) Run tests that should fail and verify that they fail",
+      "b) Run tests that should pass and verify that they pass",
+      "c) Check that the post conditions of each test case are being verified correctly",
+      "d) Change your test data and run the tests again"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct; given this information, the post conditions are not being checked correctly so test cases are being marked as passed even though something did not work correctly. A and B are incorrect; they won’t show any problems because the test results were all good when you ran the suite. D is incorrect; this is unlikely to change anything."
+  },
+  {
+    "id": 37,
+    "lo": "ALTA-E-7.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are preparing to execute a test automation suite for a safety critical healthcare application. Which approach should you take to verify the accuracy of the test results?\n\nSelect ONE option.",
+    "options": [
+      "a) Execute test cases with known failures and verify that they continue to fail",
+      "b) Extract data from the production system and verify compatibility with the TAS",
+      "c) Examine historical test trends on a similar SUT",
+      "d) Execute the test suite slowly and methodically"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct; this is a recognized way to test automation suite. B is incorrect; test data should already have been used to validate the TAS. C is incorrect; historical test trends will not be useful in verifying the actual test results. D is incorrect; the speed of execution should not affect the accuracy of the testing results."
+  },
+  {
+    "id": 38,
+    "lo": "ALTA-E-8.1.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "You have been reviewing the test cases in your TAS and have discovered that there is a wide variety of methods the TAEs have used to handle system errors. How should you handle this?\n\nSelect ONE option.",
+    "options": [
+      "a) Establish an error recovery process in the TAS and ensure all test cases are using that process",
+      "b) Create a library of recovery processes so there is better reuse between the different scripts",
+      "c) Move to a keyword-driven approach and make recovery one of the keywords",
+      "d) Provide better wait time handling in the scripts to avoid system errors"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct; per the syllabus this is a best-practice. B and C are incorrect; these are still going to be duplicating processes, potentially. D is incorrect; there is no indication that the problem is due to better wait time."
+  },
+  {
+    "id": 39,
+    "lo": "ALTA-E-8.1.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Up until now you have provided automated testing for a stable SUT. Because of changing business demands, the SUT will be updated to include several new features and plug-ins that communicate via APIs. In what way should you update the TAS?\n\nSelect ONE option.",
+    "options": [
+      "a) Improve TAS recovery to make it more fault-tolerant when API calls fail",
+      "b) Update the documentation for the TAS including its support for APIs",
+      "c) Improve the logging to capture the anticipated increase in defects due to API failures",
+      "d) Modify the adaptation layer in the TAA to enable the TAS to test via the APIs"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct; modifying the adaptation layer to enable API testing will allow the TAS to access the plug- ins. A, B, and C are incorrect; these do not directly enhance the API testing capabilities of the TAS"
+  },
+  {
+    "id": 40,
+    "lo": "ALTA-E-8.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "You have been conducting a quality review for your TAS. You have discovered that it has not been updated for three years. The TAS functions properly and provides good coverage of the SUT; however, you want to ensure that it is working as efficiently as possible. What step should you consider in order to increase efficiency of the TAS?\n\nSelect ONE option.",
+    "options": [
+      "a) Ensure consistent naming standards for new automation code",
+      "b) Make changes to the TAS in rapid succession to keep pace with leading edge practices",
+      "c) Ensure the latest libraries are incorporated into the TAS",
+      "d) Enlist a third party vendor to evaluate the current TAS"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct; using the latest DLLs tends to improve efficiency and effectiveness. A is incorrect; while this is a good practice, new automation code is not being written. B is incorrect; speed of change to the TAS is risky and there is no indication that leading edge practices will be more efficient. D is incorrect; it might help identify inconsistencies as it is not cost effective."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 90 * 60;
+      const EXT_SECONDS = 90 * 60 * 1.25;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "112.5"
+          : "90";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 112:30 (90 minutes + 25% practice time). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 90:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${escHtml(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${escHtml(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagram for Question ${q.id}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>
