@@ -1,0 +1,1976 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CT-FT v1.0 — Sample Exam 1.0</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Specialist Level</div>
+        <h1>CT-FT v1.0<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">ISTQB® Certified Tester Finance Testing · Sample Exam 1.0 · Syllabus v1.0. The timer starts when you begin the exam.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">60</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">45</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Source: ISTQB® — ISTQB-CT-FT_Sample_Exam_Set_A_Questions_v1.0-2.pdf; ISTQB-CT-FT_Sample_Exam_Set_A_Answers_v1.0-2.pdf. Copyright © ISTQB®. Questions, tables, diagrams and rationales follow these sources. Authors are acknowledged in the source PDFs.</p>
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">60 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">75 min</span>
+            <span class="time-opt-lbl">+25% practice time</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optional practice allowance: 25% extra time (15 minutes).</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 60:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CT-FT v1.0 · Sample Exam 1.0</span
+            >
+            <span class="exam-title">Certified Tester – Finance Testing</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 answered
+            </div>
+            <div class="timer" id="timer">60:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 questions (45 points) · <strong>65% (≥ 30 of 45 points)</strong>
+            to pass · points vary per question (1–2) and some questions are
+            multi-select (see marking on each question)
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "FT-1.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is a primary objective of finance testing?\n\nSelect ONE answer.",
+    "options": [
+      "a) Marketing campaign effectiveness",
+      "b) UI theme consistency",
+      "c) Customer retention optimization",
+      "d) Regulatory compliance"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Incorrect. Marketing campaign effectiveness is a marketing objective and is not listed as a primary objective of finance testing\n\nb) Incorrect. UI theme consistency may be relevant for usability or branding, but it is not a primary objective of finance testing.\n\nc) Incorrect. Customer retention optimization is a business objective, not a primary objective of finance testing.\n\nd) Correct. It is explicitly listed as a primary objective of finance testing."
+  },
+  {
+    "id": 2,
+    "lo": "FT-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "A financial system exchanges and validates standardized financial data between institutions as part of end-to-end transaction processing. Which type of financial test environment is MOST appropriate?\n\nSelect ONE answer.",
+    "options": [
+      "a) Omnichannel consumer environment",
+      "b) High-throughput and low-latency environment",
+      "c) Schema-driven messaging environment",
+      "d) Time-dependent and actuarial environment"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect. Omnichannel consumer environments focus on customer interactions across channels such as mobile, web, and ATM systems.\n\nb) Incorrect. High-throughput and low-latency environments focus primarily on transaction speed and performance requirements.\n\nc) Correct. Schema-driven messaging environments support validation of standardized financial data exchanged between institutions during transaction processing.\n\nd) Incorrect. Time-dependent and actuarial environments focus on long-term calculations and processing such as loans, policies, and actuarial models."
+  },
+  {
+    "id": 3,
+    "lo": "FT-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which TWO of the following are typical technical requirements of financial test environments?\n\nSelect TWO answers.",
+    "options": [
+      "a) Financial processes cross multiple systems and must be validated end to end.",
+      "b) Auditability is mainly relevant for production systems rather than test environments.",
+      "c) Sensitive financial data must be protected while remaining usable for testing.",
+      "d) Manual configuration activities support environment setup and maintenance.",
+      "e) Validation activities focus primarily on unit-level testing."
+    ],
+    "answer": [
+      0,
+      2
+    ],
+    "explanation": "a) Correct. Financial processes often span multiple interconnected systems and therefore require end-to-end validation.\n\nb) Incorrect. Auditability is also important in financial test environments because regulated systems require traceability and evidence during testing.\n\nc) Correct. Financial test environments must protect sensitive financial data while still supporting effective testing activities.\n\nd) Incorrect. Manual configuration activities may support environment setup, but they are not a typical technical requirement defining financial test environments.\n\ne) Incorrect. Financial systems require broader validation beyond primarily unit-level testing activities."
+  },
+  {
+    "id": 4,
+    "lo": "FT-1.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "A financial institution is documenting core financial systems to ensure consistent understanding across IT, business, and testing teams. Match each financial system with its correct function. Systems:\n\n1. Core Banking System (CBS)\n\n2. Payment Gateway\n\n3. AML System\n\n4. Trading System Functions:\n\nA. Executes buy and sell orders in financial markets\n\nB. Manages customer accounts, deposits, loans, and balances\n\nC. Detects suspicious financial activity and potential fraud\n\nD. Routes and processes payment transactions between institutions\n\nSelect ONE answer.",
+    "options": [
+      "a) 1-B, 2-D, 3-C, 4-A",
+      "b) 1-C, 2-B, 3-D, 4-A",
+      "c) 1-B, 2-C, 3-D, 4-A",
+      "d) 1-A, 2-D, 3-C, 4-B"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Correct. Each financial system is correctly mapped to its primary operational function within standard banking architecture.\n\nb) Incorrect. Core banking and payment gateway functions are incorrectly swapped.\n\nc) Incorrect. AML and payment processing responsibilities are incorrectly assigned.\n\nd) Incorrect. Trading system responsibilities are incorrectly mapped to account management."
+  },
+  {
+    "id": 5,
+    "lo": "FT-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A tester must verify the expected result of a derivatives calculation. Which domain knowledge BEST supports independent validation?\n\nSelect ONE answer.",
+    "options": [
+      "a) Validate results using alternative market reference data",
+      "b) Compare the result with downstream reconciliation records",
+      "c) Confirm the calculation using applicable pricing rules",
+      "d) Validate consistency of input parameters only"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect. Supports validation but does not directly confirm calculation logic.\n\nb) Incorrect. Focuses on reconciliation rather than independent validation of calculation correctness.\n\nc) Correct It directly supports independent validation of the calculation result.\n\nd) Incorrect. Input validation alone does not verify calculation correctness."
+  },
+  {
+    "id": 6,
+    "lo": "FT-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A regulation is written in abstract legal language and needs to be interpreted before being translated into executable tests. How is domain knowledge BEST applied?\n\nSelect ONE answer.",
+    "options": [
+      "a) Reuse existing compliance test conditions as a starting point for analyzing the new regulation",
+      "b) Interpret the regulation using assumptions based on similar financial products",
+      "c) Focus interpretation primarily on the regulatory wording before evaluating affected business processes",
+      "d) Translate the regulatory intent into testable acceptance criteria and relevant validation rules"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Incorrect. Existing compliance tests may support analysis, but they do not replace interpretation of the new regulation itself.\n\nb) Incorrect. Assumptions from similar products may not fully reflect the new regulatory requirements.\n\nc) Incorrect. Regulatory wording alone may not fully capture the affected financial workflows and controls.\n\nd) Correct. It directly applies domain knowledge to convert regulatory intent into executable test conditions."
+  },
+  {
+    "id": 7,
+    "lo": "FT-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A financial audit team is designing a compliance testing strategy for a regulated financial system. They want to ensure both regulatory adherence and reliable financial reporting.\n\nWhich of the following statements are correct? Statements: I. Control testing helps achieve compliance objectives by evaluating whether controls can prevent or detect non-compliance before it affects financial data II. Substantive testing contributes to compliance objectives by directly verifying that financial data and transactions are accurate and complete III. Control testing relies primarily on substantive testing because validating outputs makes control evaluation unnecessary IV. Control testing and substantive testing have the same objective, as both are focused on validating the accuracy of financial output\n\nSelect ONE answer.",
+    "options": [
+      "a) I and II",
+      "b) I, II and III",
+      "c) II and IV",
+      "d) II, III and IV"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Correct. Statement I reflects that control testing supports compliance by ensuring mechanisms exist to prevent or detect issues early, aligning with risk identification and control validation. Statement II shows that substantive testing supports compliance by validating the accuracy and completeness of actual outputs, contributing to evidence provision.\n\nb) Incorrect. Statement III is incorrect as compliance testing does not rely primarily on substantive testing, nor can it replace control testing.\n\nc) Incorrect. Statement IV is incorrect as control testing and substantive testing do not have the same objective.\n\nd) Incorrect. Both statements are incorrect."
+  },
+  {
+    "id": 8,
+    "lo": "FT-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A financial system produces end-of-day reports based on processed transactions from multiple integrated systems. Reported account balances are reviewed against recorded system information after processing is completed.\n\nWhat is the tester primarily verifying?\n\nSelect ONE answer.",
+    "options": [
+      "a) That system logs contain complete records of all processing events",
+      "b) That system rules are correctly applied during transaction processing",
+      "c) That financial report values correctly reflect the processed transaction results",
+      "d) That transaction approvals were correctly enforced before execution"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect. Logging completeness supports auditability but is not the primary objective of substantive testing. g) b) Incorrect. This relates to control testing, which focuses on whether processing rules and controls operate correctly, not on validating final outputs.\n\nc) Correct. Substantive testing focuses on verifying the correctness, completeness, and validity of financial outputs by comparing them against underlying transaction data or processed results. Option C directly reflects this objective by ensuring that reported financial values are consistent with processed transaction results.\n\nd) Incorrect. Approval enforcement relates to preventive controls prior to transaction execution and does not validate financial output correctness."
+  },
+  {
+    "id": 9,
+    "lo": "FT-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A financial system is subject to regulatory expectations requiring verification of transaction approval mechanisms. An audit evaluates whether the system’s controls function correctly during transaction processing.\n\nWhich testing approach is MOST appropriate for this objective?\n\nSelect ONE answer.",
+    "options": [
+      "a) Testing whether financial transaction results are accurate and complete after processing",
+      "b) Testing whether approval controls enforce defined authorization rules during execution",
+      "c) Testing approval behavior across different transaction processing conditions",
+      "d) Testing whether transaction processing outcomes align with expected financial records"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. This is substantive testing, focused on output correctness rather than control behavior.\n\nb) Correct. Control testing evaluates whether controls operate effectively during execution. Option B directly evaluates whether approval controls enforce authorization rules, matching the objective of compliance control verification.\n\nc) Incorrect. This describes general behavioral variation testing and does not directly evaluate control enforcement.\n\nd) Incorrect. This focuses on outcome validation against records, which is also substantive testing rather than control testing."
+  },
+  {
+    "id": 10,
+    "lo": "FT-2.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A financial organization is implementing a regulated payment system that must comply with overlapping supervisory requirements affecting how transactions are executed and governed. Why is PSD2 the most relevant regulation when defining test coverage for this system?\n\nSelect ONE answer.",
+    "options": [
+      "a) It defines requirements for managing systemic risk across interconnected financial transaction environments",
+      "b) It defines requirements for reporting operational incidents to financial supervisory authorities in a standardized format",
+      "c) It defines requirements for governing execution of payment activities involving external account access under regulated conditions",
+      "d) It defines requirements for controlling user authentication mechanisms in regulated financial systems"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect. This relates to systemic risk management across financial ecosystems, which is not the defining scope of PSD2 for payment execution.\n\nb) Incorrect. This relates to incident reporting obligations to supervisory authorities, which is outside PSD2’s primary focus on payment service execution.\n\nc) Correct. PSD2 establishes regulatory requirements governing the execution of payment activities where external account access is involved under regulated conditions. This directly determines the scope of what must be validated in system testing for such payment systems.\n\nd) Incorrect. This relates to authentication mechanisms in digital systems, which is a control implementation aspect rather than the broader regulatory scope of PSD2 governing payment services."
+  },
+  {
+    "id": 11,
+    "lo": "FT-2.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which consequence is MOST directly associated with non-compliance with financial regulations for a financial institution?\n\nSelect ONE answer.",
+    "options": [
+      "a) Regulatory sanctions such as fines, restrictions, or enforcement actions",
+      "b) Increased supervisory monitoring and mandatory compliance reporting obligations",
+      "c) Requirement to perform corrective remediation under regulatory oversight",
+      "d) Reduction in test environment stability due to audit-driven changes"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Correct. Regulatory sanctions such as fines, restrictions, or enforcement actions are direct and formal consequences imposed by regulatory authorities when financial institutions fail to comply with applicable regulations.\n\nb) Incorrect. Increased supervisory monitoring and reporting obligations may occur, but they are indirect oversight effects rather than direct enforcement sanctions.\n\nc) Incorrect. Corrective remediation is typically an internal response to findings rather than a formal regulatory consequence.\n\nd) Incorrect. Test environment stability is an indirect technical side effect and not a regulatory consequence of non-compliance."
+  },
+  {
+    "id": 12,
+    "lo": "FT-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A regulatory update requires changes to how interest is calculated and reported across multiple integrated financial systems. What is the MOST appropriate testing response?\n\nSelect ONE answer.",
+    "options": [
+      "a) Assess reporting outputs for compliance updates",
+      "b) Validate calculation changes within impacted system components",
+      "c) Execute regression testing across related business processes",
+      "d) Analyze regulatory impact and update test conditions"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Incorrect. Restricts validation to reporting outputs and excludes upstream system behavior\n\nb) Incorrect. Limits validation scope and may miss cross-system impacts\n\nc) Incorrect. Focuses on execution rather than regulatory impact analysis\n\nd) Correct. Regulatory changes require end-to-end impact analysis across affected systems, with corresponding updates to test conditions to ensure compliance and correctness."
+  },
+  {
+    "id": 13,
+    "lo": "FT-2.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which activity MOST effectively supports auditability in financial system testing?\n\nSelect ONE answer.",
+    "options": [
+      "a) End-to-end lifecycle traceability of testing artefacts",
+      "b) Bidirectional traceability between requirements and test results",
+      "c) Logging execution results linked to test runs",
+      "d) Storing tester notes as audit evidence"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. Too broad and not specifically bidirectional.\n\nb) Correct. Auditability requires bidirectional traceability between requirements and test results.\n\nc) Incorrect. Logs support evidence but not full traceability.\n\nd) Incorrect. Notes are informal and not controlled audit evidence."
+  },
+  {
+    "id": 14,
+    "lo": "FT-3.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A risk analysis exercise is being performed to classify different risks affecting a financial system under test. Group the following risks into correct categories. Items:\n\n1. API integration failure\n\n2. Fraud detection failure\n\n3. Regulatory non-compliance\n\n4. Incorrect financial calculation\n\n5. UI rendering issue Categories:\n\nA. Business Risk\n\nB. Technical Risk\n\nC. Regulatory Risk\n\nSelect ONE answer.",
+    "options": [
+      "a) A: 4, 5 | B: 1 | C: 2, 3",
+      "b) A: 3, 4 | B: 1, 5 | C: 2",
+      "c) A: 5 | B: 1, 4 | C: 2, 3",
+      "d) A: 4 | B: 1, 2, 5 | C: 3"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. Fraud detection is incorrectly classified under regulatory risk only.\n\nb) Correct. Business risks relate to financial correctness, technical risks relate to system functionality, and regulatory risks relate to compliance obligations within financial systems.\n\nc) Incorrect. Business and technical risk categories are incomplete and misaligned.\n\nd) Incorrect. Regulatory risk is incorrectly reduced to a single isolated item."
+  },
+  {
+    "id": 15,
+    "lo": "FT-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A financial platform is preparing for system testing. Due to limited execution time, only one component can be fully tested first.\n\nWhich component should be prioritized FIRST based on combined financial and regulatory impact of failure during live transaction processing?\n\nSelect ONE answer.",
+    "options": [
+      "a) Component processing high transaction volume with occasional calculation inconsistencies",
+      "b) Component of transaction processing with external regulatory reporting obligations",
+      "c) Component aggregating transactional data used in regulatory reporting with dependencies on upstream data accuracy",
+      "d) Component managing authentication and session control across multiple user roles with privileged access dependencies"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. Operational impact is high but lacks regulatory exposure.\n\nb) Correct. External regulatory reporting combined with live transaction processing creates the highest financial and compliance impact if failure occurs\n\nc) Incorrect. Indirect impact only through analytics dependency.\n\nd) Incorrect. Security impact exists but no direct financial execution risk."
+  },
+  {
+    "id": 16,
+    "lo": "FT-3.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A bank is making a change to its payment processing service. Risk analysis identifies high business impact if payments fail and moderate likelihood of defects due to complex integrations.\n\nWhich TWO areas should receive priority test focus?\n\nSelect TWO answers.",
+    "options": [
+      "a) End-to-end payment processing across integrated systems",
+      "b) Exception handling and recovery behavior for failed transactions",
+      "c) Reconciliation of posted payments against ledger entries",
+      "d) Settlement timing accuracy across cross-border flows",
+      "e) Data integrity between gateway events and internal records"
+    ],
+    "answer": [
+      0,
+      1
+    ],
+    "explanation": "a) Correct. End-to-end processing mitigates the highest risk area of business impact and integration complexity\n\nb) Correct. Failure handling mitigates the one of the highest risks of business impact\n\nc) Incorrect. While important for financial correctness, reconciliation is not the primary risk driver in this scenario\n\nd) Incorrect. Settlement timing is relevant but secondary to core transaction processing and failure resilience.\n\ne) Incorrect. Data integrity is important, but in this context it is less directly impactful than end-to-end flow and failure handling risks."
+  },
+  {
+    "id": 17,
+    "lo": "FT-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Why are data accuracy and data consistency especially important in financial systems?\n\nSelect ONE answer.",
+    "options": [
+      "a) Because the same financial data may be used in different processes that produce separate operational and reporting results",
+      "b) Because numeric values may be interpreted differently when processed independently in separate financial calculations",
+      "c) Because data differences between related systems can lead to conflicting records of the same financial transaction",
+      "d) Because financial systems store data locally in each component without relying on shared or exchanged information"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect. It describes reuse of data across processes but does not directly address the risk of inconsistency.\n\nb) Incorrect. It focuses on calculation interpretation rather than system-wide data consistency impact.\n\nc) Correct. Because inconsistencies between related financial systems can result in conflicting representations of the same transaction, affecting correctness of records and downstream financial reliability.\n\nd) Incorrect. Financial systems are integrated and rely on shared or exchanged data, not isolated storage."
+  },
+  {
+    "id": 18,
+    "lo": "FT-4.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "A payments channel shows end-of-day totals that do not match the general ledger after overnight processing. What is the MOST appropriate next reconciliation step?\n\nSelect ONE answer.",
+    "options": [
+      "a) Compare transaction-level records between the payment system and the general ledger to identify differences",
+      "b) Compare batch settlement outputs between systems to identify differences in posted financial entries",
+      "c) Compare processing cut-off datasets between systems to identify timing-related posting differences",
+      "d) Compare aggregation results between systems to identify discrepancies in calculated financial totals"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Correct. It applies data reconciliation by comparing transactionlevel records across systems to identify mismatches, missing entries, or inconsistencies in financial postings.\n\nb) Incorrect. Focuses on batch-level reconciliation rather than direct transaction matching.\n\nc) Incorrect. Focuses on timing differences rather than direct reconciliation of records.\n\nd) Incorrect. Focuses on aggregation-level validation rather than identifying record-level mismatches."
+  },
+  {
+    "id": 19,
+    "lo": "FT-4.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "During financial system migration, transaction counts and account balances differ between the legacy system and the target system after data load completion. What is the MOST appropriate primary reconciliation approach?\n\nSelect ONE answer.",
+    "options": [
+      "a) Perform comparison of transaction datasets and account balances between legacy and target systems",
+      "b) Use checksum validation to confirm whether the extracted dataset was transferred without structural corruption during migration",
+      "c) Apply statistical sampling on high-value accounts to estimate whether reconciliation issues are likely concentrated in specific segments",
+      "d) Review batch control totals from extraction and load phases to verify whether data was truncated or duplicated during transfer processing"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Correct. It applies full data reconciliation by directly comparing transaction and balance data between source and target systems to identify inconsistencies in migrated financial records.\n\nb) Incorrect. Validates structural integrity but does not perform full reconciliation of financial values.\n\nc) Incorrect. Provides estimation rather than complete reconciliation coverage.\n\nd) Incorrect. Provides control validation but does not directly reconcile detailed financial records across systems."
+  },
+  {
+    "id": 20,
+    "lo": "FT-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Why is data privacy and data protection important in finance testing activities?\n\nSelect ONE answer.",
+    "options": [
+      "a) Protecting test data may conflict with realistic dataset usage",
+      "b) Test environments may contain sensitive data requiring controlled handling",
+      "c) Privacy is more relevant in production than in testing environments",
+      "d) Sensitive financial and customer data may be exposed without safeguards"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Incorrect. Misrepresents privacy as optional trade-off rather than requirement.\n\nb) Incorrect. Describes handling mechanism rather than primary reason.\n\nc) Incorrect. Incorrect assumption about environment relevance.\n\nd) Correct. Finance testing involves sensitive data that must be protected to prevent exposure and regulatory violations"
+  },
+  {
+    "id": 21,
+    "lo": "FT-5.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "A bank introduces a new savings product where interest is calculated daily and credited monthly.\n\nWhich approach BEST verifies correct implementation of this requirement?\n\nSelect ONE answer.",
+    "options": [
+      "a) Design tests for daily calculations, monthly posting, and relevant date boundaries",
+      "b) Design tests for screen displays, customer statements, and visible account balances",
+      "c) Design tests for access controls, fraud prevention, and transaction security",
+      "d) Design tests for user behavior, exploratory scenarios, and unexpected interactions"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Correct. This directly validates the functional business rule by covering calculation logic, posting cycles, and important financial boundaries such as month-end processing.\n\nb) Incorrect. Interface and statement validation confirm presentation but do not sufficiently verify underlying interest calculation accuracy.\n\nc) Incorrect. Security-related tests are important for system protection but do not primarily validate financial calculation correctness.\n\nd) Incorrect. Exploratory and behavioral testing may reveal issues, but they do not provide systematic verification of deterministic financial rules."
+  },
+  {
+    "id": 22,
+    "lo": "FT-5.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following situations is MOST likely to create peak-load performance risk in retail banking systems?\n\nSelect ONE answer.",
+    "options": [
+      "a) Processing scheduled account maintenance while branches perform moderate daily service requests",
+      "b) Executing monthly batch processing while customers perform high volumes of online transactions",
+      "c) Updating product configurations while the support teams review standard operational reports",
+      "d) Running software deployment activities while testers execute isolated regression scenarios"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. Routine maintenance and moderate service requests generally create lower operational stress than true peak-load events.\n\nb) Correct. Simultaneous execution of resource-intensive batch jobs and large customer transaction volumes can create substantial contention, throughput degradation, and peak-load risks.\n\nc) Incorrect. Product configuration updates and reporting activities are less likely to generate significant transaction-driven performance bottlenecks.\n\nd) Incorrect. Deployment and isolated regression testing typically occur in controlled environments and do not represent major retail banking peak-load scenarios."
+  },
+  {
+    "id": 23,
+    "lo": "FT-5.3.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "A payments platform must support 5,000 transactions per second during a major shopping event. The bank also wants to evaluate behavior beyond expected transaction volumes.\n\nWhich strategy BEST addresses these objectives?\n\nSelect ONE answer.",
+    "options": [
+      "a) Assess sustained capacity and evaluate long-term resource stability",
+      "b) Assess internal scalability and evaluate component response efficiency",
+      "c) Assess expected throughput and evaluate overload resilience",
+      "d) Assess peak transaction handling and evaluate recovery stability behavior"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect. Endurance-related stability is valuable for prolonged operation but does not specifically address peak-load thresholds or overload breaking points.\n\nb) Incorrect. Component scalability analysis provides useful subsystem insights but does not sufficiently validate full-system throughput under real peak transactional conditions.\n\nc) Correct. This strategy directly validates required peak transaction capacity while also examining system behavior when operational demand exceeds planned thresholds.\n\nd) Incorrect. Recovery stability evaluation addresses post-recovery behavior rather than resilience under overload conditions."
+  },
+  {
+    "id": 24,
+    "lo": "FT-5.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Why are security and availability testing especially important for financial systems?\n\nSelect ONE answer.",
+    "options": [
+      "a) Financial systems prioritize functional correctness while reducing emphasis on resilience controls",
+      "b) Financial systems focus availability testing primarily on selected internal processing environments",
+      "c) Financial systems depend on infrastructure controls to manage most security and continuity risks",
+      "d) Financial systems handle confidential data and require resilience against service disruption"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Incorrect. Functional accuracy remains important in financial systems, but there is no definition of prioritization over resilience and operational protection controls, which are also essential quality requirements.\n\nb) Incorrect. Availability requirements apply broadly across both internal and customer-facing systems, not only selected internal environments.\n\nc) Incorrect. Infrastructure protections contribute to security and availability, but dedicated system-level testing remains necessary to validate resilience.\n\nd) Correct. Financial systems handle confidential data and critical business operations, making both protection and service continuity essential."
+  },
+  {
+    "id": 25,
+    "lo": "FT-5.5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which use of GenAI BEST supports financial software testing while maintaining tester accountability?\n\nSelect ONE answer.",
+    "options": [
+      "a) Generating release recommendations that testers validate before governance decisions",
+      "b) Generating draft test ideas that testers review before formal adoption",
+      "c) Generating audit summaries that testers use as primary compliance evidence",
+      "d) Generating environment access solutions that testers apply during restricted scenarios"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. GenAI may assist decision-making, but release governance requires broader accountability than predictive recommendations alone.\n\nb) Correct. GenAI can effectively support testing by generating draft ideas while human testers retain responsibility for validation, refinement, and final decisions.\n\nc) Incorrect. Audit and compliance evidence require verified documentation and cannot rely primarily on generated summaries.\n\nd) Incorrect. Access controls and security restrictions must be governed through authorized processes, not AI-generated circumvention methods."
+  },
+  {
+    "id": 26,
+    "lo": "FT-6.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "How can test automation MOST likely improve efficiency in financial system testing?\n\nSelect ONE answer.",
+    "options": [
+      "a) By accelerating repetitive regression execution while improving result consistency",
+      "b) By expanding exploratory coverage while reducing tester analytical involvement",
+      "c) By supporting compliance activities while reducing audit validation requirements",
+      "d) By improving defect detection while increasing automated execution coverage"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Correct. Test automation increases efficiency by rapidly executing repetitive checks with greater consistency, enabling faster and more reliable feedback cycles.\n\nb) Incorrect. Exploratory testing still depends heavily on human analysis and cannot be effectively replaced through automation alone.\n\nc) Incorrect. Automation may assist compliance processes, but regulatory and audit obligations still require independent verification and traceability.\n\nd) Incorrect. Automation can improve defect detection and execution coverage, but broader testing effectiveness still depends on appropriate test design and analysis."
+  },
+  {
+    "id": 27,
+    "lo": "FT-6.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "A bank has a legacy mainframe core system and modern API-based digital services. The team wants to establish maintainable automation with reliable coverage.\n\nWhich strategy is MOST appropriate?\n\nSelect ONE answer.",
+    "options": [
+      "a) Prioritize interface automation while combining extensive end-to-end validation",
+      "b) Prioritize modernization planning while delaying broad automation investment",
+      "c) Prioritize stable service interfaces while combining selective end-to-end validation",
+      "d) Prioritize database validation while combining direct backend verification"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect. Heavy UI and full end-to-end dependence increase brittleness, maintenance cost, and diagnostic difficulty.\n\nb) Incorrect. Delaying automation reduces efficiency and risk coverage during ongoing transformation efforts.\n\nc) Correct. Focusing automation on stable APIs and service layers improves maintainability while selective end-to-end testing ensures integrated business assurance across legacy and modern systems.\n\nd) Incorrect. Database-focused automation may miss important business logic, service integration, and regulated behavioral validation."
+  },
+  {
+    "id": 28,
+    "lo": "FT-6.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Consider the following statements about test automation in regulated financial environments: I. Automated tests should generate evidence appropriate for audit and compliance review II. Sensitive test data may require masking, anonymization, or controlled handling III. Automated test assets do not require formal configuration management or version control IV. Changes to automated tests may require approval, documentation, and traceability V. Automated test failures may be resolved through automated reruns without investigation\n\nWhich option lists ONLY correct statements?\n\nSelect ONE answer.",
+    "options": [
+      "a) I, II and IV",
+      "b) I, III and V",
+      "c) II, IV and V",
+      "d) I, II, III and IV"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Correct. Audit-quality evidence, protected data handling, and traceable controlled changes are essential expectations in regulated financial automation.\n\nb) Incorrect. Statements III and V are incorrect because automated assets require formal governance and failures require proper investigation.\n\nc) Incorrect. Statement V is incorrect because failure triage and investigation remain necessary in regulated environments.\n\nd) Incorrect. Statement III is incorrect because automation assets remain subject to configuration management, versioning, and governance controls."
+  },
+  {
+    "id": 29,
+    "lo": "FT-6.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which challenge is MOST specific to automating tests across mobile, frontend, and backend components in financial applications?\n\nSelect ONE answer.",
+    "options": [
+      "a) Maintaining broad coverage across development standards and platform consistency",
+      "b) Maintaining backend efficiency across restricted interface automation strategies",
+      "c) Maintaining production realism across reduced environment management controls",
+      "d) Maintaining reliable coverage across changing interfaces and transaction layers"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Incorrect. Development standards and platform consistency are secondary concerns compared with automation architecture complexity.\n\nb) Incorrect. Backend efficiency alone does not address broader challenges of coordinated multi-layer automation.\n\nc) Incorrect. Production realism does not remove the need for structured environments or solve cross-component automation complexity.\n\nd) Correct. Cross-layer financial automation must address interface volatility while preserving reliable validation of critical transaction behavior across integrated systems."
+  },
+  {
+    "id": 30,
+    "lo": "FT-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which TWO factors are MOST commonly cited as PRIMARY drivers of testing complexity in financial systems?\n\nSelect TWO answers.",
+    "options": [
+      "a) Complex financial calculations and valuation rules",
+      "b) Stable requirements with minimal compliance obligations",
+      "c) High interdependency across transactions and data flows",
+      "d) Limited business impact from processing errors",
+      "e) Frequent regulatory and policy changes"
+    ],
+    "answer": [
+      0,
+      4
+    ],
+    "explanation": "a) Correct. Financial systems often involve sophisticated calculations, pricing models, and business rules that significantly increase testing complexity.\n\nb) Incorrect. Stable requirements and minimal compliance obligations generally reduce complexity rather than increase it.\n\nc) Incorrect. While high interdependency across transactions and data flows contributes to operational complexity, this question focuses on complexity drivers in financial testing.\n\nd) Incorrect. Financial systems typically involve high business impact, and limited impact would reduce testing criticality.\n\ne) Correct. Regulatory and policy changes frequently require updates, retesting, and compliance validation, increasing overall complexity."
+  },
+  {
+    "id": 31,
+    "lo": "FT-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A testing team is preparing test data for validating a financial system that processes customer transactions and personal information. They must ensure compliance with data privacy and data protection requirements during testing\n\nWhich ONE of the following approaches BEST reflects the importance of data privacy and data protection in finance testing?\n\nSelect ONE answer.",
+    "options": [
+      "a) Using production data directly in testing to ensure realistic validation of financial processes",
+      "b) Applying masking or anonymization techniques to sensitive data while maintaining data usability for testing",
+      "c) Providing broader access to test data within the team to support efficient collaboration during testing",
+      "d) Capturing detailed transaction logs, including customer data, to support troubleshooting and test analysis"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. Using production data without appropriate protection mechanisms introduces significant privacy risks and does not align with data protection requirements.\n\nb) Correct. Masking or anonymization protects sensitive data while maintaining its structure and usability, supporting both compliance and effective testing.\n\nc) Incorrect. While collaboration is important, access to test data must be restricted to authorized individuals to comply with data protection requirements.\n\nd) Incorrect. Detailed logging is useful for analysis, but including unprotected sensitive data in logs can expose confidential information and violates privacy principles."
+  },
+  {
+    "id": 32,
+    "lo": "FT-2.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A financial institution is designing system tests for a European customer platform that processes personal information, supports payment transactions, and must satisfy regulatory obligations.\n\nWhich regulation is MOST directly relevant when defining privacy-focused testing requirements for personal customer data?\n\nSelect ONE answer.",
+    "options": [
+      "a) PSD2 for secure payment access and customer authentication controls",
+      "b) MiFID II for investor transparency and customer communication governance",
+      "c) GDPR for lawful personal data processing and privacy protection",
+      "d) Basel III for operational resilience and institutional risk management"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect. PSD2 includes customer protection elements and secure payment controls, but its primary focus is payment services rather than broad personal data privacy regulation.\n\nb) Incorrect. MiFID II governs financial market conduct and investor protections but is not the primary framework for personal data privacy obligations.\n\nc) Correct. GDPR specifically governs personal data privacy, lawful processing, consent, and protection obligations for individuals within the European context.\n\nd) Incorrect. Basel III addresses banking resilience and capital adequacy rather than privacy-focused customer data governance."
+  },
+  {
+    "id": 33,
+    "lo": "FT-2.4.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "A financial institution is implementing DevOps pipelines for regulated software releases and wants compliance requirements validated continuously during development, testing, and deployment.\n\nWhat is the PRIMARY objective of Continuous Automated Compliance Validation in this context?\n\nSelect ONE answer.",
+    "options": [
+      "a) Centralize compliance approval within final operational governance reviews",
+      "b) Embed continuous compliance verification across software delivery activities",
+      "c) Prioritize regulatory reviews during scheduled post-deployment checkpoints",
+      "d) Delegate compliance assurance primarily to manual audit functions"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. Final governance remains important, but centralized end-stage approval alone does not provide continuous validation.\n\nb) Correct. Continuous Automated Compliance Validation embeds compliance verification throughout delivery activities, supporting early detection, traceability, and ongoing assurance.\n\nc) Incorrect. Post-deployment checkpoints are valuable but do not fulfill continuous lifecycle integration objectives.\n\nd) Incorrect. Manual audits complement but do not replace continuous automated compliance assurance."
+  },
+  {
+    "id": 34,
+    "lo": "FT-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A financial feature is assessed as having a high business impact but relatively low probability of failure.\n\nHow should this assessment MOST appropriately influence testing priorities?\n\nSelect ONE answer.",
+    "options": [
+      "a) Prioritize meaningful testing depth due to significant potential business consequences",
+      "b) Prioritize limited validation depth due to relatively infrequent failure probability",
+      "c) Prioritize lower test investment due to balanced overall operational exposure",
+      "d) Prioritize standard coverage depth due to moderate overall implementation risk"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Correct. High-impact failures in financial systems can create severe business, regulatory, or customer consequences, requiring substantial testing attention even when likelihood is relatively low.\n\nb) Incorrect. Lower likelihood may influence prioritization but does not justify insufficient validation for high-impact features.\n\nc) Incorrect. High business impact generally requires stronger risk mitigation than balanced risk assumptions suggest.\n\nd) Incorrect. Standard coverage alone may not sufficiently address the severity of potential high-impact failures."
+  },
+  {
+    "id": 35,
+    "lo": "FT-3.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A banking release includes the following changes:\n\n1. A fraud detection enhancement affecting real-time payment blocking, with high business impact but moderate implementation confidence\n\n2. A customer dashboard redesign affecting visual layout, with broad user exposure but limited financial consequence\n\n3. An internal regulatory reporting update required for quarterly compliance submissions, with moderate business impact and strict audit deadlines\n\nGiven limited testing capacity, which prioritization strategy is MOST appropriate?\n\nSelect ONE answer.",
+    "options": [
+      "a) Prioritize customer interface changes first, fraud controls second, and reporting updates last",
+      "b) Prioritize compliance reporting first, interface changes second, and fraud controls last",
+      "c) Prioritize lower-effort changes first to maximize overall testing coverage and execution efficiency",
+      "d) Prioritize fraud controls first, compliance reporting second, and cosmetic changes last"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Incorrect. Broad user exposure alone does not outweigh higher financial and fraud-related business risks.\n\nb) Incorrect. Compliance deadlines are important, but delaying fraud-related validation creates unacceptable operational and financial exposure.\n\nc) Incorrect. Prioritizing primarily by implementation effort, broader coverage, and execution efficiency does not adequately address business risk and operational criticality in financial testing.\n\nd) Correct. Fraud prevention carries the highest financial and customer protection risk, regulatory reporting has important compliance obligations, and cosmetic UI changes generally present lower criticality."
+  },
+  {
+    "id": 36,
+    "lo": "FT-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Following corporate actions processing, a customer-facing trading portal displays positions that differ from those recorded in the institution’s internal risk management platform. Why is detecting this discrepancy during testing MOST important?\n\nSelect ONE answer.",
+    "options": [
+      "a) Inconsistent position data may reflect acceptable timing differences across operational platforms",
+      "b) Inconsistent position data may primarily affect interface presentation rather than core controls",
+      "c) Inconsistent position data may compromise customer reporting and enterprise risk controls",
+      "d) Inconsistent position data may be resolved through routine reconciliation without major exposure"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect. Timing differences may occur operationally, but unresolved inconsistencies in regulated financial systems present significant control risks.\n\nb) Incorrect. Position inconsistencies extend beyond presentation concerns and may affect core business, regulatory, and financial integrity.\n\nc) Correct. Position discrepancies can create inaccurate customer statements, flawed exposure calculations, compliance issues, and material financial control failures.\n\nd) Incorrect. Reconciliation processes are important, but relying on later correction does not eliminate serious defect impact."
+  },
+  {
+    "id": 37,
+    "lo": "FT-5.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A bank expects significantly increased login and balance inquiry traffic immediately after monthly salary deposits are processed.\n\nWhich testing activity BEST supports release readiness for this anticipated operational risk?\n\nSelect ONE answer.",
+    "options": [
+      "a) Analyze architectural efficiency and validate component responsiveness under isolated conditions",
+      "b) Validate business workflows and confirm representative user experience under standard conditions",
+      "c) Simulate projected concurrent demand and validate performance against defined service targets",
+      "d) Review implementation quality and confirm expected scalability through development controls"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect. Architectural and component analysis provides useful insights but does not fully validate end-to-end system performance under projected user demand.\n\nb) Incorrect. Workflow and user validation help functional assurance but do not adequately assess peak-load performance risks.\n\nc) Correct. Load simulation under realistic peak concurrency directly validates whether the system can meet operational performance expectations before release.\n\nd) Incorrect. Development quality reviews contribute to preparedness but cannot replace empirical performance validation."
+  },
+  {
+    "id": 38,
+    "lo": "FT-5.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A financial platform must maintain operational continuity during infrastructure or service failures.\n\nWhich testing activity BEST validates this availability requirement before production release?\n\nSelect ONE answer.",
+    "options": [
+      "a) Validate failover transitions and recovery behavior under controlled failure scenarios",
+      "b) Validate sustained throughput and processing speed under prolonged transaction demand",
+      "c) Validate security controls and access restrictions during sensitive transaction processing",
+      "d) Validate functional workflows and business accuracy during representative user operations"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Correct. Availability expectations require direct validation of resilience, failover capability, and recovery continuity during operational disruptions.\n\nb) Incorrect. Throughput and endurance testing assess performance capacity, but do not directly validate operational continuity during failures.\n\nc) Incorrect. Security controls are critical but do not primarily assess service availability under system failure conditions.\n\nd) Incorrect. Functional workflow validation confirms business correctness but does not sufficiently test resilience and failover behavior."
+  },
+  {
+    "id": 39,
+    "lo": "FT-5.5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A tester uses GenAI to draft test cases for a regulated financial application.\n\nWhich tester action MOST effectively reduces the risk of inaccurate or hallucinated generated content?\n\nSelect ONE answer.",
+    "options": [
+      "a) Review generated outputs primarily for formatting consistency and execution efficiency",
+      "b) Review generated outputs against business rules, expected outcomes, and compliance obligations",
+      "c) Review generated outputs primarily through automated reuse across similar releases",
+      "d) Review generated outputs primarily through accelerated governance workflow delegation"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. Formatting and efficiency reviews alone do not sufficiently validate substantive correctness.\n\nb) Correct. Human validation against authoritative business, regulatory, and testing requirements is essential to mitigate hallucinations and maintain accountability.\n\nc) Incorrect. Automated reuse may propagate errors if generated content is not properly validated.\n\nd) Incorrect. Governance acceleration does not replace tester responsibility for verifying accuracy and compliance."
+  },
+  {
+    "id": 40,
+    "lo": "FT-6.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A bank must demonstrate to external auditors that a defined set of compliance checks for card transaction processing has been executed against every release. The team currently performs and documents these checks manually after each release.\n\nWhich contribution of test automation MOST directly supports test efficiency in this situation?\n\nSelect ONE answer.",
+    "options": [
+      "a) Automated execution of the compliance checks can systematically produce repeatable, time-stamped evidence suitable for audit review",
+      "b) Automated execution of the compliance checks can replace the need for independent audit activity within the organisation",
+      "c) Automated execution of the compliance checks can remove the requirement for traceability between regulatory requirements and test cases",
+      "d) Automated execution of the compliance checks can eliminate the need for risk-based prioritisation across the regression suite"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Correct. Per syllabus Chapter 6.1, test automation in finance supports improved compliance and security by systematically verifying compliance with standards such as PCI DSS and generating auditable evidence. This directly improves test efficiency when checks must be repeated for every release.\n\nb) Incorrect. Independent audit activity remains required by regulators regardless of how the underlying compliance checks are executed.\n\nc) Incorrect. Bidirectional traceability between regulatory requirements and test cases is required for auditability and is not removed by automation.\n\nd) Incorrect. Risk-based prioritisation remains required regardless of whether the test set is executed manually or automatically."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 60 * 60;
+      const EXT_SECONDS = 75 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "75"
+          : "60";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 75:00 (60 minutes + 25% practice time). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 60:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          if (asset.html) return `<div class="q-table-wrap">${asset.html}</div>`;
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Open to enlarge</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagram for Question ${q.id}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

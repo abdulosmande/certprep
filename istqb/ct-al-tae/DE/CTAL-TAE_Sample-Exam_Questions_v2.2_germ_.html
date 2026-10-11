@@ -1,0 +1,1978 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CTAL-TAE · v2.2 — Probeprüfung v2.2 DE (Deutsch)</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .q-text, .option-text, .header-left { min-width: 0; overflow-wrap: anywhere; }
+      .meta-lbl { overflow-wrap: anywhere; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    </style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Advanced Level</div>
+        <h1>CTAL-TAE · v2.2<br /><em>Probeprüfung</em></h1>
+        <p class="start-subtitle">
+          ISTQB® Certified Tester Testautomatisierungsentwickler (CT-TAE) ·
+          Probeprüfung v2.2 DE · GTB-Edition · Test Automation Engineering. Der
+          Timer startet, sobald Sie auf „Prüfung starten“ klicken.
+        </p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Fragen</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">90</span>
+            <div class="meta-lbl">Minuten</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">66</span>
+            <div class="meta-lbl">Punkte</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Bestehen</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Quelle: ISTQB® / German Testing Board, Probeprüfung v2.2 DE (12.09.2025). Copyright © ISTQB®. Fragen und Begründungen folgen den bereitgestellten Fragen- und Antwort-PDFs.</p>
+        <div class="time-option-label">Prüfungsdauer</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">90 Min.</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">112,5 Min.</span>
+            <span class="time-opt-lbl">+25 % Übungszeit</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optionale Verlängerung der Übungszeit um 25 %: 22 Minuten und 30 Sekunden zusätzlich.</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Prüfung starten
+        </button>
+        <p class="start-note" id="start-note-txt">
+          Der Timer zählt von 90:00 herunter. Nach Ablauf der Zeit wird
+          die Prüfung automatisch abgegeben.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CTAL-TAE · v2.2 · Probeprüfung v2.2 DE · GTB-Edition</span
+            >
+            <span class="exam-title">Certified Tester – Testautomatisierungsentwickler</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 beantwortet
+            </div>
+            <div class="timer" id="timer">90:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Zurücksetzen
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Abgeben
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 Fragen (66 Punkte) · <strong>Bestanden ab 43 von 66 Punkten (65 %)</strong>
+            · Je Frage sind 1–3 Punkte möglich. Die Anzahl der auszuwählenden Antworten
+            steht bei jeder Frage.
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Prüfung abgeschlossen</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Benötigte Zeit: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Richtig</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Falsch</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Unbeantwortet</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Neustart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Prüfung abgeben?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Abbrechen
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Abgeben
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "TAE-1.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt eine Einschränkung der Testautomatisierung?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Testautomatisierung kann nur für Schnittstellentests wirklich effektiv genutzt werden.",
+      "b) Die Testautomatisierung kann nur auf manuell ausführbare Tests angewendet werden.",
+      "c) Die Testautomatisierung kann nur Ergebnisse überprüfen, die visuell verifiziert werden können.",
+      "d) Die Testautomatisierung kann nur Ergebnisse überprüfen, die automatisiert bzw. maschinell überprüfbar sind."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Die Testautomatisierung ist nicht auf Schnittstellentests beschränkt, sondern kann insbesondere da unterstützen, wo manuelle Tests an ihre Grenzen kommen, siehe Lehrplan, Kapitel 1.1.1, zweite Aufzählung, zweiter Spiegelstrich.\n\nb) FALSCH – Testautomatisierung ist effektiver und effizienter als manuelle Tests, siehe Lehrplan, Kapitel 1.1.1, erste Aufzählung, zweiter Spiegelstrich.\n\nc) FALSCH – Testautomatisierung beschränkt sich nicht auf visuelle Überprüfungsergebnisse, sondern kann alles prüfen, was mit einem automatisierten Testorakel verglichen werden kann. Siehe Lehrplan, Kapitel 1.1.1, letzte Aufzählung, letzter Spiegelstrich.\n\nd) KORREKT – Wie im Lehrplan steht: „Testautomatisierung kann nur Testergebnisse überprüfen, die von einem automatisierten Testorakel verifiziert werden können.“ Das bedeutet, dass automatisierte Skripte nur solche Ergebnisse kontrollieren können, die maschinell überprüfbar sind. Siehe Lehrplan, Kapitel 1.1.1, letzte Aufzählung, letzter Spiegelstrich."
+  },
+  {
+    "id": 2,
+    "lo": "TAE-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen über Testautomatisierung und den Einsatz in den verschiedenen Softwareentwicklungslebenszyklus- Modellen (SDLC) trifft zu?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) In der agilen Softwareentwicklung beschränken sich automatisierte Tests in der Regel auf Akzeptanz- und Komponententests.",
+      "b) Im Wasserfallmodell findet die Implementierung der Testautomatisierung immer während der Verifizierungsphase statt.",
+      "c) Im V-Modell erfolgt die automatisierte Testdurchführung nach der manuellen Testdurchführung.",
+      "d) Im V-Modell wird das Testautomatisierungsframework (TAF) in Abhängigkeit der Bedürfnisse für die jeweilige Teststufe bereitgestellt."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Laut Lehrplan, Kapitel 1.2.1, Absatz “Agile Softwareentwicklung” können Teams alle Teststufen mit einer Testautomatisierung in angemessenen Umfang und Tiefe abdecken. Es sollte entsprechend auch keine Teststufe kategorisch ausgeschlossen werden.\n\nb) FALSCH – Die Implementierung der Testautomatisierung erfolgt normalerweise parallel zur oder nach der Implementierungsphase, siehe Lehrplan, Kapitel 1.2.1, Abschnitt “Wasserfall”.\n\nc) FALSCH – Das V-Modell schreibt keine solche Reihenfolge vor. Es leitet aus den Prozessschritten die traditionellen Teststufen ab, siehe Lehrplan, Kapitel 1.2.1, Abschnitt “V-Modell”. Aber macht keine Vorgaben ob und wann automatisiert werden muss.\n\nd) KORREKT – Die Bereitstellung eines Testautomatisierungsframeworks (TAF) für jede Teststufe ist möglich, siehe Lehrplan, Abschnitt 1.2.1, Absatz “V-Modell”."
+  },
+  {
+    "id": 3,
+    "lo": "TAE-1.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welcher der folgenden Faktoren muss bei der Auswahl geeigneter Testautomatisierungswerkzeuge NICHT berücksichtigt werden?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Architektur des SUT",
+      "b) Zusammensetzung und Erfahrung des Testteams",
+      "c) Lizenzmodel und Support des Testwerkzeugs",
+      "d) Anzahl an eingesetzten Testwerkzeugen"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Die Architektur des SUT muss unbedingt beachtet werden, je nach verwendeter Architektur und dadurch bedingten Features können unterschiedliche Werkzeuge zum Einsatz kommen, siehe Lehrplan, Kapitel 1.2.2, Absatz 2 und S.12 im Kapitel 0.11 Aufbau des Lehrplans unter Kapitel 1 steht: \"Der Tester lernt, wie sich die Architektur eines SUT auf die Eignung von Testwerkzeugen auswirkt.\".\n\nb) FALSCH – Die Zusammensetzung und Erfahrung des Testteams sind entscheidend für den erfolgreichen Einsatz eines Werkzeugs, siehe Lehrplan, Kapitel 1.2.2, Absatz 3.\n\nc) FALSCH –“Die Verwendung kommerzieller Standardsoftware oder auch die Implementierung einer benutzerdefinierten Lösung auf Basis von Open-Source- Technologie kann durchaus ein komplexer Prozess sein” (Lehrplan, Kapitel 1.2.2, Absatz 2). Daher sollte das bei der Auswahl berücksichtigt werden.\n\nd) KORREKT –“Es gibt keine Begrenzung für die Anzahl der Testautomatisierungswerkzeuge und -funktionen, die verwendet oder ausgewählt werden können” siehe Lehrplan, Kapitel 1.2.2, Absatz 2."
+  },
+  {
+    "id": 4,
+    "lo": "TAE-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Wenn ein System auf Testbarkeit ausgelegt ist, gehört zu den Eigenschaften, dass das Testautomatisierungsframework (TAF) auf Schnittstellen zugreifen kann, um Aktionen auf dem System auszuführen.\n\nWie heißt diese Eigenschaft?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Beobachtbarkeit",
+      "b) Steuerbarkeit",
+      "c) Wartbarkeit",
+      "d) Interoperabilität"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Beobachtbarkeit bedeutet, dass man Einblick in den Systemzustand erhält, siehe Lehrplan, Kapitel 2.1.1, 2. Aufzählung, 1. Spiegelstrich.\n\nb) KORREKT – Steuerbarkeit bezeichnet die Fähigkeit, Aktionen über Schnittstellen zu steuern (siehe Lehrplan, Kapitel 2.1.1, 2. Aufzählung, 2. Spiegelstrich).\n\nc) FALSCH – Wartbarkeit ist ein Qualitätsmerkmal, dass den Grad bestimmt, zu dem das TAF gewartet werden kann, siehe auch ISTQB Glossar.\n\nd) FALSCH – Interoperabilität beschreibt die Fähigkeit verschiedener Systeme zur Zusammenarbeit und ist ebenfalls ein Qualitätsmerkmal (siehe auch ISTQB Glossar)."
+  },
+  {
+    "id": 5,
+    "lo": "TAE-2.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche Art der Testautomatisierung wird hauptsächlich in der Vorproduktionsumgebung eingesetzt?\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) Komponententest",
+      "b) Benutzerabnahmetests",
+      "c) Statische Analysen",
+      "d) Low-Level-Tests",
+      "e) Nicht-funktionale Tests"
+    ],
+    "answer": [
+      1,
+      4
+    ],
+    "explanation": "a) FALSCH – Komponententests werden typischerweise in der Build- oder Entwicklungsumgebung ausgeführt (siehe Lehrplan, Kapitel 2.1.2, Absatz “Build- Umgegbung”).\n\nb) KORREKT – Benutzerabnahmetests finden in der Vorproduktionsumgebung statt, um reale Einsatzszenarien unter möglichst produktionsnahen Bedingungen zu prüfen (siehe Lehrplan, Kapitel 2.1.2, Absatz “Vorproduktionsumgebung”).\n\nc) FALSCH – Statische Analysen werden in der Entwicklungsumgebung durchgeführt (siehe Lehrplan, Kapitel 2.1.2, Absatz “Lokale Entwicklungsumgebung”).\n\nd) FALSCH – Low-Level-Tests, wie z.B. Komponentenintegrationstests, erfolgen in der Build Umgebung, nicht in der Vorproduktion (siehe Lehrplan, Kapitel 2.1.2, Absatz “Build- Umgebung”).\n\ne) KORREKT – Nicht-funktionale Tests werden auch insbesondere in Vorproduktionsumgebungen ausgeführt (siehe Lehrplan, Kapitel 2.1.2, Absatz “Vorproduktionsumgebung”)."
+  },
+  {
+    "id": 6,
+    "lo": "TAE-2.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche Aussage zum Einsatz von Testautomatisierung in verschiedenen Umgebungen ist korrekt?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) In Vorproduktionsumgebungen liegt ein wichtiger Schwerpunkt darin, dass die einzelnen Komponenten einzeln für sich richtig funktionieren.",
+      "b) Die Build-Umgebung ist vor allem dazu da, die Software zu bauen, es werden hier nur statische Analysen aber keine dynamischen Tests ausgeführt.",
+      "c) In der Produktions- bzw. Betriebsumgebung kommt zum ersten Mal die komplette Testsuite mit allen funktionalen Tests zum Einsatz.",
+      "d) In der Integrationsumgebung kommen ausschließlich Black-Box-Tests zum Einsatz."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – In Vorproduktions- oder Staging-Umgebungen liegt der Fokus meist nicht auf den Komponenten, sondern vor allem auf nicht-funktionale Qualitätsmerkmale, siehe Lehrplan, Kapitel 2.1.2, Abschnitt “Vorproduktionsumgebung”.\n\nb) FALSCH – Die Build-Umgebung ist auch für erste, einfache Checks gedacht. Also auch Komponententests (siehe Lehrplan, Kapitel 2.1.2, Abschnitt “Vorproduktionsumgebung”).\n\nc) FALSCH – Funktionale Testsuiten werden in der Regel zum ersten Mal in der Integrationsumgebung vollständig ausgeführt (siehe Lehrplan, Kapitel 2.1.2, Abschnitt “Integrationsumgebung”).\n\nd) KORREKT – In der Integrationsumgebung gibt es nur Black-Box-Tests (d. h. Systemintegrations- und/oder Abnahmetests), siehe Lehrplan, Kapitel 2.1.2, Abschnitt “Integrationsumgebung”."
+  },
+  {
+    "id": 7,
+    "lo": "TAE-2.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie arbeiten für ein IT-Unternehmen, welches Software für ein integriertes auf Android basierendes Multimediasystem für Autos entwickelt. Die Software besteht aus mehreren miteinander kommunizierenden Komponenten. Die Entwickler verfolgen einen testgetriebenen Entwicklungsansatz (TDD). Nach Abschluss der Entwicklung wird die Software an ein anderes IT-Unternehmen übergeben, welches die Software in die Hardware integriert und als Gesamtpaket an einen Automobilhersteller verkauft. Sie analysieren das System unter Test, um die geeignete Testautomatisierungslösung zu bestimmen.\n\nWelche der folgenden Punkte sollten bei der Erfassung der Testautomatisierungsanforderungen durch das entwickelnde IT- Unternehmen berücksichtigt werden?\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) Die Teststufe Komponententests soll unterstützt werden um die einzelnen Komponenten automatisiert testen zu können.",
+      "b) Die Testaktivität Testentwurf soll automatisiert werden, damit dem Entwickler die Testfälle für TDD jederzeit zur Verfügung stehen.",
+      "c) Die Testart Fahrzeugtest ist erforderlich, um die Funktionalität der Software in möglichst vielen verschiedenen Fahrzeugtypen sicherzustellen.",
+      "d) Der Entwickler entwirft und automatisiert zunächst seine Testfälle und entwickelt seinen Code so lange inkrementell weiter bis diese erfolgreich durchlaufen.",
+      "e) Die Simulation des AppStores muss verfügbar sein, um die erfolgreiche Integration Ihrer Software in diesen zu verifizieren."
+    ],
+    "answer": [
+      0,
+      3
+    ],
+    "explanation": "a) KORREKT – Komponententests werden bereits vom entwickelnden IT-Unternehmen durchgeführt und müssen daher unterstützt werden (siehe Szenario-Beschreibung).\n\nb) FALSCH – Falsch im TDD wird nicht der Entwurf, sondern die Testrealisierung automatisiert und durchgeführt (siehe Szenario und Glossar Testrealisierung, Testentwurf).\n\nc) FALSCH – Die Auswahl und Durchführung von fahrzeugspezifischen Tests obliegt dem Integrationsunternehmen, da es das Endprodukt an die Kunden verkauft. Die entwickelnde Firma kennt die Zielfahrzeuge gar nicht (siehe Szenario).\n\nd) KORREEKT – Dies ist die Vorgehensweise im testgetriebenen Entwicklungsansatz (siehe Szenario und Glossar TDD).\n\ne) FALSCH – Ein Test in der simulierten Umgebung eines AppStores hängt von den Zielsystemen ab. Die entwickelnde Firma kennt weder die Zielsysteme noch die Randbedingungen und kann daher keine Tests gegen eine Simulation durchführen. Dies ist ebenfalls Aufgabe der integrierenden Firma (siehe Szenario)."
+  },
+  {
+    "id": 8,
+    "lo": "TAE-2.2.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie bewerten Testautomatisierungswerkzeuge. Für eines der Werkzeuge liegen folgende Erkenntnisse vor:\n\n• Ein sehr informatives Dashboard zeigt alle relevanten Testinformationen zum SUT an.\n\n• Eine Testprotokollierungskomponente erfasst alle notwendigen Informationen zur Fehlerbehebung bei auftretenden Problemen.\n\n• Eine anpassbare Testberichterstattungskomponente ist vorhanden.\n\n• Im Proof of Concept arbeitete das Werkzeug im Vergleich zu den anderen getesteten Tools sehr langsam.\n\n• Die aktuelle Testumgebung erfüllt laut Release Notes alle Hardware und Softwareanforderungen.\n\nWelche der folgenden Antworten sollte Ihr nächster Schritt bei der Auswahl dieses Werkzeugs sein?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Deutlich mehr Hardware Ressourcen für die Live-Umgebung einplanen, um Leistungseinbußen auszuschließen.",
+      "b) Die Testprotokollierung vollständig deaktivieren, um die Performance des Werkzeugs zu verbessern.",
+      "c) Aufgrund der Performance von der Auswahl dieses Werkzeugs abraten.",
+      "d) Das SUT auf die neueste Version aktualisieren, damit sich die Performance des Werkzeuges steigert."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Die Testumgebung erfüllt bereits alle in den Release Notes genannten Anforderungen (siehe Szenario).\n\nb) FALSCH – Die Protokollierung ist für die Fehlersuche unerlässlich und darf nicht vollständig deaktiviert werden (siehe Szenario).\n\nc) KORREKT – Da das Werkzeug bereits in einer Testumgebung eine schlechte Performance liefert, sollte es nicht weiterverfolgt werden, da in der Live-Umgebung nicht mit besserer Performance zu rechnen ist – im Gegenteil wird das Tool im Live-Betrieb aufgrund intensiverer Nutzung höchstwahrscheinlich noch langsamer sein (siehe Szenario).\n\nd) FALSCH – Die Version des SUT sollte keinen Einfluss auf die Performance des Werkzeuges haben (siehe Szenario)."
+  },
+  {
+    "id": 9,
+    "lo": "TAE-3.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Ordnen Sie die folgenden Aufgaben den entsprechenden Hauptfunktionen der Testautomatisierungsarchitektur zu:\n\n1. Automatisierte Ableitung von Testfällen aus Testmodellen.\n\n2. Erstellung von Schlüsselwort-Testfällen unter Verwendung von Schlüsselwort-Testbibliotheken.\n\n3. Testprotokollierung mit detaillierten Informationen über Testschritte und SUT-Verhalten.\n\n4. Anbindung einer automatisierten Testsuite über einen MQTT-Adapter an das SUT. Hauptfunktionen:\n\nA. Testdefinition\n\nB. Testanpassung\n\nC. Testgenerierung\n\nD. Testausführung\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) 1 → D, 2 → C, 3 → B,4 → C",
+      "b) 1 → C, 2 → A, 3 → B, 4 → D",
+      "c) 1 → A, 2 → B, 3 → D, 4→ C",
+      "d) 1 → C, 2 → A, 3→ D, 4→ B"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) 1 → C (Testgenerierung). Diese Hauptfunktion unterstützt den automatisierten Entwurf von Testfällen (z. B. modellbasierte Testfallgenerierung). (Siehe Syllabus, Kapitel 3.1.1 Absatz Testgenerierung).\n\nb) 2 → A (Testdefinition). Hier erfolgt die konkrete Implementierung der Testfälle und Testsuiten (siehe Syllabus, Kapitel 3.1.1 Absatz Testdefinition) sowie die Verwaltung von Testbibliotheken.\n\nc) 3 → D (Testdurchführung). Diese Fähigkeit umfasst die Ausführung der Tests sowie das Protokollieren der Testausführung (siehe Syllabus, Kapitel 3.1.1 Absatz Testdurchführung).\n\nd) 4 → B (Testanpassung). Adapter und Verbindungsmechanismen passen automatisierte Tests an die Schnittstellen des SUT an (siehe Syllabus, Kapitel 3.1.1 Absatz Testanpassung). Damit ist Antwort d) korrekt."
+  },
+  {
+    "id": 10,
+    "lo": "TAE-3.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aspekte müssen NICHT ZWINGEND im technischen Entwurf der Testautomatisierungslösung (TAS) enthalten sein?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Auswahl der Werkzeuge für die Testautomatisierung und der werkzeugspezifischen Bibliotheken.",
+      "b) Analyse und Identifikation der API-Anforderungen für das Werkzeug der Testautomatisierung.",
+      "c) SUT-spezifische Anpassungen für das ausgewählte Werkzeug für die Testautomatisierung.",
+      "d) Konnektoren zwischen der TAS und dem Testmanagementwerkzeug."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Eine Auswahl der werkzeugspezifischen Bibliotheken ist zu treffen. Siehe TAE- Lehrplan v2.0, Kapitel 3.1.2, 2. Absatz, Aufzählungspunkt Werkzeuge: „Auswahl von Werkzeugen zur Testautomatisierung und werkzeugspezifischen Bibliotheken“.\n\nb) FALSCH – Die Anforderungen an die Konnektivität/Schnittstellen (z. B. API) des Werkzeugs für die Testautomatisierung soll im techn. Entwurf definiert sein. Siehe TAE-Lehrplan v2.0, Kapitel 3.1.2, 2. Absatz, Aufzählungspunkt Schnittstellen: „Identifizierung von Anforderungen an Konnektivität und Schnittstellen (z. B. Firewalls, Datenbanken, URLs/Verbindungen, Mocks/Platzhalter, Message Queues und Protokolle)“.\n\nc) KORREKT – Die TAS benötigt NICHT zwingend SUT-spezifische Anpassungen. Standardisierte Werkzeuge für Testautomatisierung sind mit vielen der verbreiteten Schnittstellen kompatibel. Siehe Syllabus, Kapitel 3.1.2 1. Absatz, zweiter Satz. „Eine TAS … benötigt möglicherweise zusätzliche SUT-spezifische Anpassungen“.\n\nd) FALSCH – Eine Verbindung zwischen Testmanagement und TAS ist erforderlich, um die automatisierten Testfälle in der TAS mit den Definitionen im Testmanagement verbinden zu können. Siehe Syllabus, Kapitel 3.1.2 zweiter Absatz Aufzählungspunkt Testmanagement sowie Kapitel 3.1.1 Absatz Schnittstellen."
+  },
+  {
+    "id": 11,
+    "lo": "TAE-3.1.3",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie pflegen ein Testautomatisierungsframework (TAF) für Android- Applikationen. Nun soll die dazugehörige Testautomatisierungslösung (TAS) auch iOS-Applikationen unterstützen. Da Zeit und Budget knapp sind, wurden Sie gebeten, das bestehende TAF an die neuen Anforderungen anzupassen. In welcher Schicht konfigurieren Sie die Verbindung zur neuen Anwendung?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Schicht der Kernbibliotheken",
+      "b) Schicht der Testskripte",
+      "c) Schicht der Testausführung",
+      "d) Schicht der Geschäftslogik"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Die Kernbibliotheken sind anwendungsunabhängig und sollten daher keine SUT-spezifischen Logiken oder Informationen enthalten. Vgl. TAE-Lehrplan v2.0, Kapitel 3.1.3, Abschnitt Kernbibliotheken.\n\nb) FALSCH – Testskripte sollten ausschließlich Testabläufe beschreiben, aber keine Details über Verbindung zum SUT beinhalten. Vgl. TAE-Lehrplan v2.0, Kapitel 3.1.3, Abschnitt Testskripte.\n\nc) FALSCH – Schicht der Testausführung gehört nicht zu den TAF-Schichten. Diese Schicht gehört zur TAS. Abgesehen davon, ist die Testausführungsschicht nicht für die Verbindung zum SUT gedacht. Vgl. TAE-Lehrplan v2.0, Kapitel 3.1.1, Abschnitt Fähigkeiten von Werkzeugen und Bibliotheken zur Testautomatisierung.\n\nd) KORREKT – In der Geschäftslogik-Schicht wird u.a. die Verbindung zum SUT eingerichtet und konfiguriert. Vgl. TAE-Lehrplan v2.0, Kapitel 3.1.3, Abschnitt Geschäftslogik."
+  },
+  {
+    "id": 12,
+    "lo": "TAE-3.1.4",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie arbeiten an einem Testautomatisierungsprojekt, das GUI-Tests für einen webbasierten öffentlichen Verkehrsdienst automatisiert. Das Projekt hat einen engen Zeitrahmen. Es liegen manuelle Testfälle vor, die möglichst schnell automatisiert werden sollen. Ein Ziel ist, Testfälle direkt in automatisierte Testskripte zu überführen.\n\nWelche beiden Ansätze sollten AM EHESTEN eingesetzt werden, um dieses Ziel zu erreichen?\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) Schlüsselwortgetriebenes Testen",
+      "b) Verhaltensgetriebene Entwicklung (BDD)",
+      "c) Mitschnitt",
+      "d) Datengetriebenes Testen",
+      "e) Lineare Skripterstellung"
+    ],
+    "answer": [
+      2,
+      4
+    ],
+    "explanation": "a) FALSCH – Schlüsselwortgetriebenes Testen erfordert aufwändige Framework- Erweiterungen und ist für schnelle Automatisierung nicht optimal, siehe Syllabus, Kapitel 3.1.4 Absatz „Schlüsselwortgetriebenes Testen“.\n\nb) FALSCH – BDD bringt einen hohen initialen Aufwand für Feature-Definitionen und ist in einem engen Zeitrahmen nicht praktikabel, siehe Syllabus, Kapitel 3.1.4 Absatz „Verhaltensgetriebene Entwicklung“.\n\nc) KORREKT – Der Mitschnitt lässt sich (vor allem anfänglich) sehr schnell aufsetzen und verwenden, daher eignet er sich gut für die zügige Automatisierung vorhandener Testfälle, siehe Syllabus, Kapitel 3.1.4 Absatz „Mitschnitt“.\n\nd) FALSCH – Datengetriebenes Testen erfordert umfangreiche Testdaten-Frameworks und sind für eine kurzfristige Lösung zu komplex, siehe Syllabus, Kapitel 3.1.4 Absatz „Datengetriebenes Testen“.\n\ne) KORREKT – Die lineare Skripterstellung ist einfach einzurichten und umzusetzen. Insbesondere im Zusammenspiel mit dem Mitschnittansatz liefert die lineare Skripterstellung schnelle und brauchbare Ergebnisse in Bezug auf das Szenario. Wie der Mitschnittansatz eignet sie sich daher gut für die zügige Automatisierung vorhandener Testfälle, siehe Syllabus, Kapitel 3.1.4 Absatz „Lineare Skripterstellung“."
+  },
+  {
+    "id": 13,
+    "lo": "TAE-3.1.4",
+    "k": "K3",
+    "pts": 2,
+    "text": "Ordnen Sie die Fragmente von Testskripten, die unterschiedliche Testautomatisierungsansätze repräsentieren, den jeweiligen Testautomatisierungsansätzen zu: Testfälle (bzw. Fragmente davon):\n\nA. testfall create_user ($Benutzername, $Passwort, $mail) {… testbibliothek.setMailAddress($mail) ….}\n\nB. testfall create_user() {… var user = new User(“Max Mustermann”, “GeheimesPasswort“, max@mustermann.example); …}\n\nC. Create User $Benutzername $Passwort $Mail\n\nD. Start Sequenzaufzeichnung: Textfeld “Benutzername” eingeben: Max Mustermann Textfeld “E-Mail” eingeben: max@mustermann.example Textfeld “Passwort” eingeben: geheimesPasswort Button “Create Account” klicken Testautomatisierungsansätze:\n\n1. Lineare Skripterstellung\n\n2. Mitschnittansatz\n\n3. Strukturierte Skripterstellung\n\n4. Schlüsselwortgetriebenes Testen\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) 1-A, 2-B, 3-C, 4-D",
+      "b) 1-B, 2-D, 3-A, 4-C",
+      "c) 1-B, 2-A, 3-D, 4-C",
+      "d) 1-C, 2-A, 3-D, 4-B"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Die richtige Kombination ist 1-B, 2-D, 3-A, 4-C und damit Option b) Die folgenden Kombinationen sind korrekt: Kombination 1-B: Vgl. TAE-Lehrplan v2.0, Kapitel 3.1.4, Unterkapitel Lineare Skripterstellung: „Die lineare Skripterstellung ist eine Programmiertätigkeit, die keine von TAEs erstellten Testbibliotheken“ Das vorliegende Fragment verwendet keinerlei Testbibliotheken, noch folgt es einem datengetriebenen Ansatz; folglich basiert dieser Testfall auf der linearen Skripterstellung. Kombination 2-D: Vgl. TAE-Lehrplan v2.0, Kapitel 3.1.4, Unterkapitel Mitschnittansatz: „Der Mitschnitt (engl. Capture/Playback) ist ein Ansatz, der die Interaktionen mit dem SUT aufzeichnet, während eine Sequenz von Aktionen manuell ausgeführt wird. Diese Werkzeuge erzeugen während der Erfassung Testskripte, und je nach verwendetem Werkzeug kann der Code für die Testautomatisierung modifizierbar sein.“ Der Testfall entspricht dem Mitschnittansatz; die Aktionen nach der Sequenzaufzeichnung entsprechen den manuell aufgezeichneten Schritten. Kombination 3-A: Vgl. TAE-Lehrplan v2.0, Kapitel 3.1.4, Unterkapitel Strukturierte Skripterstellung: „Es werden Testbibliotheken mit wiederverwendbaren Elementen, Testschritten und/oder User Journeys eingeführt. Für die Erstellung und Wartung von Testskripten sind bei diesem Ansatz Programmierkenntnisse erforderlich.“ Der Testfall ruft u.a. einen Testschritt aus einer Testbibliothek zum Setzen des Benutzernamens auf. Der Testschritt testbibliothek.setUserName() kann aus beliebig vielen Testskripten bei Bedarf aufgerufen werden. Kombination 4-C: Vgl. TAE-Lehrplan v2.0, Kapitel 3.1.4, Unterkapitel Schlüsselortgetriebenes Testen: „Bei schlüsselwortgetriebenen Tests (engl. Keyword Driven Testing, KDT) handelt es sich um eine Liste oder Tabelle von Testschritten, die aus Schlüsselwörtern und den Testdaten abgeleitet werden, auf denen die Schlüsselwörter operieren. Die Schlüsselwörter werden aus der Sicht des Benutzers definiert.“ Create User ist ein solches Schlüsselwort, welches aus Benutzersicht eine fachliche Aktion beschreibt."
+  },
+  {
+    "id": 14,
+    "lo": "TAE-3.1.5",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie sind an einem Testautomatisierungsprojekt beteiligt, das GUI-Tests für eine E-Commerce-Website automatisiert. Die Webseite enthält u.a. einen neuartigen digitalen Assistenten, der das Anlegen von Benutzerkonten mit Namen, Rechnungs- und Lieferadresse sowie Sicherheitsdaten vereinfacht. Die Entwicklung verläuft iterativ, insbesondere das GUI-Layout ist beinahe in jeder Iteration Gegenstand von Änderungen. Der Workflow des Assistenten hingegen ist weitestgehend stabil. Aktuell müssen die Änderungen an der GUI in jedem Testskript nachgezogen werden, was einen enormen Wartungsaufwand bedeutet. Sie sind gebeten worden kurzfristig für Abhilfe zu sorgen.\n\nWelches Entwurfsmuster empfehlen Sie in der aktuellen Situation, um kurzfristig die Wartungsaufwände zu reduzieren?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Page-Object-Model: Durch die Trennung der Testskripte von und den UI- Details, müssen Änderungen nur in den Page-Objects angepasst werden und sind dann für alle Testfälle aktuell.",
+      "b) Flow-Model-Pattern: Durch die Abbildung der Workflows des Assistenten, werden die Testskripte weniger anfällig für fachliche Änderungen im Workflow.",
+      "c) Polymorphismus: Durch die Erstellung abstrakter Klassen und deren Überladung in Unterklassen, wird es möglich, die Testskripte an jedes GUI- Layout anzupassen.",
+      "d) Singleton-Muster: Nutzung eines einzigen Objekts für die Elementlokalisierung."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Das Page-Object-Model ist in dieser Situation das am besten geeignete Entwurfsmuster. Es konzentriert sich auf die Trennung von Testskripten und den GUI- Elementen zwecks besserer Wartbarkeit der Testskripte. Vgl. TAE-Lehrplan v2.0, Kapitel 3.1.5, Abschnitt Entwurfsmuster, 3. Absatz: “ Wann immer sich die Struktur des SUT ändert, muss der TAE nur an einer Stelle Aktualisierungen vornehmen, nämlich am Locator innerhalb eines Seitenmodells, anstatt die Locatoren in jedem Testfall zu aktualisieren. Das Page-Object-Model ist im Gegensatz zum Flow-Model-Pattern einfacher und schneller zu realisieren, da keinerlei Benutzerinteraktionen in dem Model umzusetzen sind.\n\nb) FALSCH – Das Flow-Model-Pattern würde langfristig gesehen sicherlich ebenfalls eine positive Auswirkung auf die Wartbarkeit der Testskripte haben, allerdings ist in diesem Szenario klar kommuniziert, dass der Workflow des Assistenten stabil bleibt. Der Aufwand für die Entwicklung eines Flow-Model-Patterns ist größer als für das Page- Object-Model, weswegen es nicht kurzfristig umsetzbar ist, und ist daher nicht die beste Lösung.\n\nc) FALSCH – Polymorphismus ist kein Entwurfsmuster im eigentlichen Sinne, sondern ein objektorientiertes Grundkonzept. Polymorphismus hat prinzipiell erst einmal keinen positiven Effekt auf die Wartungsaufwände. Zudem ist der beschriebene angedachte Verwendungszweck nur schwer vorstellbar. Vgl. TAE-Lehrplan v2.0, Kapitel 3.1.5 Abschnitt Objektorientierte Programmierprinzipien“.\n\nd) FALSCH – Das Singleton-Muster ist dafür gedacht, um Kontrolle über die Instanziierung von Objekten zu behalten, die Abstraktion bzw. Kapselung von Lokatoren ist nicht das Ziel des Singleton-Musters."
+  },
+  {
+    "id": 15,
+    "lo": "TAE-4.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Die Geschäftsleitung möchte in Ihrer Organisation eine Testautomatisierungslösung (TAS) einführen und hat Sie beauftragt, ein Pilotprojekt zu starten und zu leiten.\n\nWelche der folgenden Punkte können als Grundlage für Anforderungen an dieses Pilotprojekt AM BESTEN genutzt werden?\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) Identifizierung von Wissen und Erfahrung der einzelnen Teammitglieder.",
+      "b) Identifizierung von Metriken und Messmethoden zur Überwachung des SUT in der Produktionsumgebung.",
+      "c) Bewertung des Effektes der verschiedenen Ansätze.",
+      "d) Evaluierung von Lizenzierungsoptionen und unternehmensspezifischen Vorgaben.",
+      "e) Festlegung des am besten geeigneten CI/CD-Setups."
+    ],
+    "answer": [
+      0,
+      3
+    ],
+    "explanation": "a) KORREKT – Die Erfahrung der Teammitglieder sollte berücksichtigt werden (siehe Lehrplan, Kapitel 4.1.1, Aufzählung zu nicht-technischen Aspekten).\n\nb) FALSCH – Die Überwachung des SUT in der Produktion gehört nicht zum typischen Fokus eines Pilotprojekts zur Einführung von TAS.\n\nc) FALSCH – Die Bewertung des Effektes (also des Erfolgs oder der Fehlerwirkung) erfolgt erst nach Abschluss des Pilotprojektes (siehe Syllabus, Kapitel 4.1.1, letzter Absatz.\n\nd) KORREKT – Details zu den Lizenzierungsoptionen und Unternehmensregeln sollten sich auch in den Anforderungen an das Pilotprojekt wieder finden, siehe Lehrplan, Kapitel 4.1.1. Aufzählungen zu nicht-technischen Aspekte.\n\ne) Das anfängliche CI/CD-Setup der Pilotierung lässt sich jederzeit ändern, siehe Lehrplan, Kapitel 4.1.1, 6. Absatz."
+  },
+  {
+    "id": 16,
+    "lo": "TAE-4.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Ihr Unternehmen entwickelt verteilte Systeme und testet diese auf verschiedenen Teststufen. Nach der Integration werden die Security- Konzepte aktiviert, welche den Zugriff auf bestimmte Schnittstellen unterbinden. Im Systemtest, der in der Produktivumgebung durchgeführt wird, soll trotzdem über diese Schnittstellen automatisiert getestet werden. Entsprechend wird die Konfiguration des Systems für die automatisierten Systemtests angepasst. Die Testsuiten werden für die unterschiedlichen Teststufen aus verschiedenen Repositorien abgerufen. Für jede Teststufe wird eine separate Umgebung für die Testautomatisierung genutzt.\n\nWelches der folgenden Risiken sehen Sie als gegeben?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Durch die sequenzielle Durchführung von Tests auf verschiedenen Teststufen kann es zu einem Performanzproblem kommen.",
+      "b) Die verschiedenen Ebenen der Testprotokollierung können pro Teststufe unterschiedliche Bedeutungen haben.",
+      "c) Nach dem Systemtest könnten nicht geschlossene Firewall-Ports Zugriff auf einzelne SUT-Schnittstellen weiterhin ermöglichen.",
+      "d) Die Testrahmen müssen häufiger aktualisiert werden, damit unterschiedliche Teststufen problemlos hintereinander durchgeführt werden können."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Es sind keine Performanzprobleme zu erwarten. Die Tests werden sequenziell durchgeführt und für jede Teststufe gibt es eine separate Umgebung für die Testautomatisierung. Siehe Text und Beschreibung Option a).\n\nb) FALSCH – Davon ist nicht auszugehen, da die verschiedenen Ebenen eine klare Definition haben und allein aus der Verwendung für verschiedene Teststufen keine Verwirrung zu erwarten ist. Siehe 4.2.1, Abschnitt „Protokollierung“.\n\nc) KORREKT – Für die Automatisierung des Systemtests wurden einige Schnittstellen für die Zugriffe „von außen“ geöffnet. Wenn diese Konfiguration nach der Testdurchführung nicht wieder zurückgenommen wird, besteht das Risiko, dass Zugriff bspw. über Firewall- Ports zu eigentlich geschützten Bereichen besteht. Generell ist das Risiko von offenen Firewall-Ports nach dem Test ein generelles Risiko, welches sorgfältig adressiert werden sollte, das nicht unbedingt nur mit der Testautomatisierung zusammenhängt. Siehe 4.2.1, Absatz 3 und 4.\n\nd) FALSCH – Die verwendeten Testrahmen sollten für die Testdurchführung klar definiert werden. Allein die Durchführung von Tests auf verschiedenen Stufen spricht nicht für den Bedarf, die Testrahmen häufiger zu aktualisieren – das hängt eher an der Verfügbarkeit von Updates."
+  },
+  {
+    "id": 17,
+    "lo": "TAE-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche zwei der beiden folgenden Punkte ist ein wichtiger Faktor zur Verbesserung der Wartbarkeit des Codes für die Testautomatisierung?\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) Definieren von generischen Funktionen mit allen notwendigen Parametern.",
+      "b) Vermeiden Sie typische Entwurfsmuster.",
+      "c) Verwenden Sie statische Analysatoren, um den Code sauber zu halten.",
+      "d) Nutzen Sie hardcodierte Werte, um ihre Bedeutung leicht verständlich zu machen.",
+      "e) Fokussieren Sie sich darauf, den Code testbar zu halten."
+    ],
+    "answer": [
+      2,
+      4
+    ],
+    "explanation": "a) FALSCH – Nur generische Funktionen mit allen Parametern zu definieren, verbessert nicht automatisch die Wartbarkeit (siehe Lehrplan, Aufzählung in Kapitel 4.3.1, Spiegelstriche 4 und 5).\n\nb) FALSCH – Beliebige, individuelle Variablennamen führen eher zu Inkonsistenzen und erschweren die Wartung (siehe Lehrplan, Aufzählung in Kapitel 4.3.1, Spiegelstrich 7).\n\nc) KORREKT – Statische Analysatoren erkennen Codesmells, Stilverstöße und potenzielle Fehler frühzeitig und fördern so die Wartbarkeit (siehe Lehrplan, Aufzählung in Kapitel 4.3.1, vorletzter Absatz).\n\nd) FALSCH – Hartcodierte Werte verringern die Flexibilität und Verständlichkeit des Codes und verschlechtern somit die Wartbarkeit (siehe Lehrplan, Aufzählung in Kapitel 4.3.1, dritter Absatz).\n\ne) KORREKT – Sie sollten sich auf Testbarkeit der Features fokussieren. Siehe Lehrplan, Aufzählung in Kapitel 4.3.1, letzter Spiegelstrich."
+  },
+  {
+    "id": 18,
+    "lo": "TAE-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Bringen Sie die folgenden Empfehlungen für eine bessere Wartbarkeit mit den entsprechenden Begründungen zusammen!\n\n1. Hardcoding von Testdaten in einem Testskript sollte vermieden werden, weil …\n\n2. Schlüsselwörter sollten nur eine minimale nötige Anzahl von Parametern definieren, weil …\n\n3. Entwurfsmuster sollten zielführend verwendet werden, weil …\n\n4. Namenskonventionen und Programmierrichtlinien bei der Implementierung von Testskripten verwendet und durch IDEs unterstützt werden, weil …\n\nA. … dadurch die Lesbarkeit und Modifizierbarkeit der Testskripte verbessert wird.\n\nB. … dadurch Redundanzen erzeugt werden, die den Wartungsaufwand je Testskript erhöhen.\n\nC. … dadurch das Verständnis und die Verwendung innerhalb von Testskripten erleichtert wird.\n\nD. … dadurch gut strukturierter und wiederverwendbarer Testcode erzeugt wird.\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) 1-A, 2-D, 3-C, 4-B",
+      "b) 1-B, 2-C, 3-D, 4-A",
+      "c) 1-B, 2-C, 3-A, 4-D",
+      "d) 1-B, 2-A, 3-D, 4-C"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Die folgende Kombination ist korrekt: 1-B, 2-C, 3-D, 4-A und damit Option b) Begründung für 1-B „Hardcoding von Testdaten in einem Testskript sollte vermieden werden, weil dadurch Redundanzen erzeugt werden, die den Wartungsaufwand je Testskript erhöhen.“: Hartkodierte Testdaten in Testskripten führen dazu, dass auch Testskripte dupliziert werden müssen, die durch datengetriebenes Testen eigentlich vereinheitlicht werden könnten. Dadurch entstehen zu großen Teilen redundante Testfälle, die sich nur in den hartkodierten Testdaten unterscheide. Dies erhöht mitunter enorm den Wartungsaufwand. Vgl. TAE-Lehrplan v2.0, Kapitel 4.3.1: „Es kann durch datengetriebene Tests vermieden werden, so dass die Testdaten aus einer gemeinsamen Quelle stammen, die leichter zu pflegen ist. Hardcoding verkürzt die Entwicklungszeit, ist aber nicht empfehlenswert, da sich die Daten häufig ändern können und die Pflege zeitaufwendig ist.“ Begründung für 2-C „Schlüsselwörter sollten nur eine minimale nötige Anzahl von Parametern definieren, weil dadurch das Verständnis und die Verwendung innerhalb von Testskripten erleichtert wird“: Besitzt ein Schlüsselwort sehr viele, unter Umständen sogar optionale Parameter, erschwert dies zum einen Dokumentation des Schlüsselworts an sich, als auch dessen Einsatz. Die TAEs müssen alle Parameter verstehen und sicher sein, dass das Auslassen eines Parameters bei der Verwendung des Schlüsselworts keinen unerwünschten Seiteneffekt hat. Zudem ist es auch zeitaufwändiger, eine Schlüsselwortimplementierung mit vielen Parametern zu warten. Begründung für 3-D „Entwurfsmuster sollten zielführend verwendet werden, weil dadurch gut strukturierter und wiederverwendbarer Testcode erzeugt wird.“: Werden Entwurfsmuster zielführend und korrekt eingesetzt werden, helfen sie, um wiederverwendbare und lesbare Codestrukturen (wie bspw. beim Page-Object-Modell) zu erzeugen. Vgl. TAE-Lehrplan v2.0, Kapitel 4.3.1: „Die Nutzung von Entwurfsmustern ist ebenfalls sehr zu empfehlen. Die Entwurfsmuster - wie in Kapitel 3.1.5 beschrieben - ermöglichen die Implementierung eines strukturierten und gut wartbaren Codes für die Testautomatisierung, sofern die Entwurfsmuster richtig verwendet werden.“ Begründung für 4-A „Namenskonventionen und Programmierrichtlinien sollten durch IDEs unterstützt werden, weil dadurch die Lesbarkeit und Modifizierbarkeit der Testskripte verbessert wird.“: Namenskonventionen und Programmierrichtlinien vereinheitlichen die Art und Weise, wie Strukturen und Konzepte (bspw. Variablen oder Schlüsselwörter) in Testskripten bezeichnet bzw. verwendet werden. Nach einer Einarbeitungszeit lässt sich dadurch schnell die Bedeutung, die hinter einem Konzept in einem Testskript (oder dem Testskript selbst) steckt anhand seines Namens erschließen. Vgl. TAE-Lehrplan v2.0, Kapitel 4.1.3:“ Namenskonventionen sind sehr hilfreich, um den Zweck einer bestimmten Variablen zu identifizieren. Verständliche Variablennamen wie \"loginButton\", \"resetPasswordButton\" helfen den TAEs zu verstehen, welche Komponente zu verwenden ist:“"
+  },
+  {
+    "id": 19,
+    "lo": "TAE-5.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Ein Entwicklungsteam implementiert eine CI/CD-Pipeline für ein neues Softwareprojekt.\n\nWie werden Teststufen AM EHESTEN in die Pipelines integriert?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Komponententests werden nach der Integrationspipeline ausgeführt, Systemtests werden vor dem Code-Commit ausgeführt, und Abnahmetests werden während der Deployment-Pipeline ausgeführt.",
+      "b) Alle Komponententests und Systemtests werden nach dem Deployment ausgeführt, während Abnahmetests später in der Produktionsumgebung ausgeführt werden.",
+      "c) Komponententests werden während des Builds ausgeführt, Systemtests werden nach dem Deployment in einer Testumgebung ausgeführt, und Abnahmetests werden in einer Vorproduktionsumgebung ausgeführt.",
+      "d) Alle vorhandenen Tests werden gleichzeitig nach dem Deployment in der Produktionsumgebung ausgeführt, um die Durchlaufzeit der Pipeline zu minimieren."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Laut Lehrplan, Kapitel 5.1.1, Aufzählung im 2. Absatz, werden Komponententests typischerweise während des Builds oder vor dem Deployment ausgeführt und nicht nach der Integrationspipeline. Systemtests sollten nicht vor dem Code-Commit ausgeführt werden, da sie in der Regel eine vollständige Systemumgebung benötigen.\n\nb) FALSCH – Obwohl Komponententests vor dem Deployment ausgeführt werden können, ist es laut Lehrplan, Kapitel 5.1.1, Aufzählung im 2. Absatz nicht die Regel. Abnahmetests werden in der Regel in einer Vorproduktionsumgebung ausgeführt, die der Produktionsumgebung so ähnlich wie möglich ist, siehe auch Lehrplan, Kapitel 2.1.2, Abschnitt “Vorproduktionsumgebung”.\n\nc) KORREKT – Siehe Lehrplan, Kapitel 5.1.1, Aufzählung im 2. Absatz, beschreibt, dass Komponententests in der Regel während des Builds ausgeführt werden, Systemtests oft Teil einer kontinuierlichen Delivery-Pipeline als Quality Gates sind und nach dem Deployment in einer Testumgebung ausgeführt werden können, und Abnahmetests in der Regel in einer Vorproduktionsumgebung ausgeführt werden, die der Produktionsumgebung so ähnlich wie möglich ist, siehe auch Lehrplan, Kapitel 2.1.2, Abschnitt “Vorproduktionsumgebung”.\n\nd) FALSCH – Laut Lehrplan, Kapitel 5.1.1, Aufzählung im 2. Absatz, wird nicht empfohlen alle Tests gleichzeitig und erst nach dem Deployment in der Produktionsumgebung auszuführen, sondern die einzelnen Teststufen sollten möglichst in unterschiedlichen Pipelines in unterschiedlichen Entwicklungsschritten aufgeführt sein. Außerdem würde so ein Vorgehen dem \"Shift-Left\"-Ansatz widersprechen, bei dem Fehler so früh wie möglich im Entwicklungsprozess erkannt werden sollen."
+  },
+  {
+    "id": 20,
+    "lo": "TAE-5.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Welcher der folgenden Ansätze ist am besten geeignet, um Systemintegrationstests in eine CI/CD-Pipeline zu integrieren, wenn die Tests als Quality Gates dienen sollen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Die Tests werden in einer separaten Pipeline ausgeführt, die durch ein erfolgreiches Deployment ausgelöst wird.",
+      "b) Die Tests werden als Teil des Deployments nach der Bereitstellung der Komponente ausgeführt.",
+      "c) Die Tests werden in der lokalen Entwicklungsumgebung ausgeführt, bevor Code in das Repository eingecheckt wird.",
+      "d) Die Tests werden nur in der Vorproduktionsumgebung ausgeführt, um die Produktionsumgebung zu simulieren."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – da bei diesem Ansatz die Tests nicht als Quality Gates fungieren. Siehe Syllabus Kapitel 5.1.1 Absatz mit den Hauptansätzen, 2ter Hauptansatz 3ter Satz: “In diesem Fall fungieren Tests nicht als Quality Gate.” Wenn die Tests in einer separaten Pipeline ausgeführt werden, die nach einem erfolgreichen Deployment ausgelöst wird, können sie ein fehlgeschlagenes Deployment nicht verhindern. Laut Lehrplan, Kapitel 5.1.1, Aufzählung 4, Absatz, sind in diesem Fall andere, in der Regel manuelle Maßnahmen erforderlich, um ein fehlgeschlagenes Deployment rückgängig zu machen.\n\nb) KORREKT – Laut Lehrplan, Kapitel 5.1.1, siehe Aufzählung 4. Absatz können Systemintegrationstests als Teil des Deployments nach der Bereitstellung der Komponente ausgeführt werden. Dies kann von Vorteil sein, da aufgrund der Testergebnisse das Deployment fehlgeschlagen sein kann und auch wieder rückgängig gemacht werden kann. Dieser Ansatz ermöglicht es den Tests, als Quality Gates zu fungieren.\n\nc) FALSCH – da Systemintegrationstests typischerweise nicht in der lokalen Entwicklungsumgebung ausgeführt werden (siehe Lehrplan, Kapitel 2.1.2, Abschnitt “Integrationsumgebung”). Laut Lehrplan, Kapitel 5.1.1, Aufzählung im 2. Absatz werden in der lokalen Entwicklungsumgebung hauptsächlich Komponententests, GUI-Tests und API-Tests durchgeführt, nicht jedoch Systemintegrationstests.\n\nd) FALSCH – da Systemintegrationstests (laut Lehrplan, Kapitel 5.1.1, Aufzählung im 2. Absatz) oft Teil einer kontinuierlichen Delivery-Pipeline als Quality Gates sind und nicht ausschließlich in der Vorproduktionsumgebung ausgeführt werden. Die Vorproduktionsumgebung wird hauptsächlich zur Bewertung nicht-funktionaler Qualitätsmerkmale verwendet, siehe auch Lehrplan, Kapitel 2.1.2, Absatz “Vorproduktionsumgebung”."
+  },
+  {
+    "id": 21,
+    "lo": "TAE-5.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche Aussage zum Konfigurationsmanagement in der Testautomatisierung ist AM EHESTEN zutreffend?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Das Konfigurationsmanagement ermöglicht die Verwaltung von Testsuiten und Testumgebungskonfigurationen.",
+      "b) Das Konfigurationsmanagement verwaltet Testdaten und Testmittel immer unabhängig von der Software unter Test (SUT).",
+      "c) Das Konfigurationsmanagement ermöglicht die Verwaltung von Benutzerrechten für den Zugriff auf die Testautomatisierung.",
+      "d) Das Konfigurationsmanagement stellt die Ergebnisse der Testautomatisierung dar und ermöglicht somit eine leichte Analyse von Trends."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Testmittel und Testumgebungskonfigurationen können unter Konfigurationsmanagement gestellt und versioniert verwaltet werden, siehe Lehrplan, Kapitel 5.1.2, Abschnitt “Konfiguration der Testumgebung”.\n\nb) FALSCH – Testmittel werden durchaus auch abhängig von der SUT im Konfigurationsmanagement verwaltet, siehe Lehrplan, Kapitel 5.1.2, Abschnitt “Testsuiten/Testfälle”.\n\nc) FALSCH – Die Verwaltung von Benutzerrechten fällt in den Bereich des Benutzer- oder Rollenmanagements, nicht des Konfigurationsmanagements, siehe Lehrplan, Kapitel 5.1.2.\n\nd) FALSCH – Das Konfigurationsmanagement dient nicht der Analyse von Testergebnissen, sondern der Nachvollziehbarkeit und Reproduzierbarkeit von Testumgebungen und - daten, siehe Kapitel 5.1.2."
+  },
+  {
+    "id": 22,
+    "lo": "TAE-5.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welches der folgenden Elemente ist NICHT Teil der Testumgebungskonfiguration?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Uniform Resource Locators (URLs)",
+      "b) Anmeldedaten",
+      "c) Testdaten",
+      "d) Gemeinsame Kernbibliothek"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – URLs gehören zur Konfiguration der Testumgebung, z. B. zur Definition von Zielsystemen, siehe Lehrplan, Kapitel 5.1.2, Abschnitt “Konfiguration der Testumgebung”.\n\nb) FALSCH – Anmeldedaten sind Teil der Testumgebung, da sie für die Authentifizierung im Testsystem benötigt werden, siehe Lehrplan, Kapitel 5.1.2, Abschnitt “Konfiguration der Testumgebung”.\n\nc) FALSCH – Testdaten sind ebenfalls ein Bestandteil der Testumgebungskonfiguration, siehe Lehrplan, Kapitel 5.1.2, Abschnitt “Testdaten”.\n\nd) KORREKT – Die gemeinsame Kernbibliothek gehört zum Testautomatisierungsframework TAF (Syllabus 3.1.3), In manchen Setups kann die Testumgebungskonfiguration in einer gemeinsamen Kernbibliothek abgelegt werden (Ablageort), sie ist aber weiterhin Konfiguration. Kapitel 5.1.2, Abschnitt “Konfiguration der Testumgebung”."
+  },
+  {
+    "id": 23,
+    "lo": "TAE-5.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Was ist eine Grundlage für die Testautomatisierung von APIs?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Die Nutzung von Shift-Left bei API-Tests, um Tests ausschließlich auf der höchsten Teststufe durchzuführen.",
+      "b) Die Best Practice, dass Komponentenintegrationstests die einzigen Tests sind, die für eine API-Infrastruktur durchgeführt werden sollten.",
+      "c) Die Annahme, dass API-Verbindungen keine Geschäftslogik-Beziehungen berücksichtigen müssen.",
+      "d) Die API-Dokumentation, die relevante Informationen wie Parameter, Kopfzeilen und Arten von Request-Response enthält."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Beim Shift-Left-Ansatz geht es darum so früh wie möglich zu testen, siehe ISTQB Glossar. Laut wird das Testen mit Shift-Left empfohlen, um Tests auf mehrere Teststufen aufzuteilen (siehe Lehrplan, Kapitel 5.1.3, zweiter Absatz).\n\nb) FALSCH – Der Lehrplan spricht davon API-Tests auf verschiedene Teststufen aufzuteilen und das eine Erweiterung der Tests durch Vertragstests, eine bewährte Praxis ist (siehe Lehrplan, Kapitel 5.1.3, zweiter Absatz).\n\nc) FALSCH – Im Lehrplan steht das Gegenteil, dass die Geschäftslogik und die Beziehungen zwischen den APIs sehr wohl relevant ist (siehe Lehrplan, Kapitel 5.1.3, Aufzählung).\n\nd) KORREKT – Die API-Dokumentation dient als Grundlage für die Testautomatisierung (siehe Lehrplan, Kapitel 5.1.3, Aufzählung)."
+  },
+  {
+    "id": 24,
+    "lo": "TAE-5.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Wie kann der Vertragstest dabei helfen Abhängigkeiten in der API- Intrastruktur aufzuzeigen?\n\nWählen Sie die beiden Aussagen zu Vertragstests, die zutreffend sind.\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) Vertragstests ersetzen eine vollständige Schemavalidierung der Daten.",
+      "b) Vertragstests helfen bei einer frühen Identifikation von Fehlerzuständen im SDLC.",
+      "c) Vertragstests garantieren, dass alle API-Endpunkte jederzeit verfügbar sind.",
+      "d) Vertragstests helfen bei der Validierung von Interaktionen zwischen Diensten.",
+      "e) Vertragstests zeigen, dass der Anbieter immer die gleichen Ergebnisse liefert."
+    ],
+    "answer": [
+      1,
+      3
+    ],
+    "explanation": "a) FALSCH – Der Vertragstest geht über die Schemavalidierung hinaus, ersetzt sie aber nicht und verlangt von beiden Kommunikationsparteien einen Konsens über die zulässigen Interaktionen, siehe Lehrplan, Kapitel 5.1.3, Abschnitt “Vertragstest”. Insofern stimmt es nicht, dass der Vertragstests eine Schemavalidierung ersetzt, da sie ein Bestandteil ist.\n\nb) KORREKT – Siehe Lehrplan, Kapitel 5.1.3, Abschnitt “Vertragstest”. Vertragstests helfen, Fehler früh im SDLC zu finden.\n\nc) FALSCH – Der Vertragstest erfasst die Interaktionen, die zwischen den einzelnen Diensten ausgetauscht werden, garantiert aber keine Verfügbarkeit von Endpunkten.“ siehe Lehrplan, Kapitel 5.1.3, Abschnitt “Vertragstest”.\n\nd) KORREKT – Laut Lehrplan, Kapitel 5.1.3, Abschnitt “Vertragstest”, wird die Validierung von Interaktionen unterstützt.\n\ne) FALSCH – Die Kommunikation steht im Fokus der Vertragstest und ob sich die Teilnehmer an vereinbarten Interaktionen halten, siehe Lehrplan, Kapitel 5.1.3, Abschnitt “Vertragstest”."
+  },
+  {
+    "id": 25,
+    "lo": "TAE-6.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie starten die Ausführung einer automatisierten Regressionstestsuite normalerweise am Ende des Arbeitstages, weil es ein länger laufender Test ist. Gelegentlich wird der Test bis zum Beginn des nächsten Werktags jedoch nicht abgeschlossen, obwohl er eigentlich innerhalb von fünf Stunden nach Beginn beendet sein sollte. Es scheint, dass einer oder mehrere Regressionstests deutlich länger benötigen als angenommen.\n\nWie lässt sich AM EFFIZIENTESTEN ermitteln, welche der Regressionstests diesen Zeitverzug verschulden?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Sie starten den Regressionstest zu Beginn Ihres Arbeitstages und überwachen ihn manuell.",
+      "b) Sie automatisieren die Verifikationsfunktionen bis auf die tiefste technische Detailebene, sodass diese die tatsächlichen und erwarteten Ergebnisse automatisiert vergleichen und die jeweilige Abweichung hervorheben.",
+      "c) Sie implementieren eine zusätzliche Funktion in die Testprotokollierung, welche für jeden Testschritt, egal ob erfolgreich oder nicht, ein Screenshot automatisiert erzeugt.",
+      "d) Sie automatisieren die Erfassung des Startzeitpunktes, sowie der Dauer und ggf. des Endzeitpunktes der Tests innerhalb der Testautomatisierungslösung."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Das wäre kein effizientes Vorgehen und würde Sie bei Ihrer täglichen Arbeit blockieren, deutlich effizienter wäre dagegen Antwort d).\n\nb) FALSCH – Die Implementierung von Vergleichsfunktionen ist zwar ein guter Ansatz und sollte, insbesondere bei komplexen Vergleichen, wenn möglich eingesetzt werden. (vgl. TAE-Lehrplan v2.0, Kapitel 6.1.1, Abschnitt „Features der Testautomatisierung, die Messungen und die Testberichterstellung unterstützen“, dritter Absatz), allerdings lässt sich so nicht herausfinden, welcher Test zu langsam läuft bzw. den Zeitverzug verschuldet. Eben weil der Fokus auf den Testfällen liegt, sollte auch hier in der Analyse angesetzt werden.\n\nc) FALSCH – Auch die Erfassung von Screenshots bei allen Testschritten ist ein probates Mittel sein, um Erkenntnisse über die automatisierte Testausführung zu dokumentieren, allerdings hilft es nicht, um den Zeitverzug zu erklären.\n\nd) KORREKT – Die Erfassung der Start- und Endzeitpunkte, sowie der Dauer eines Tests ist in dieser Situation eine äußerst effiziente Möglichkeit rasch zu ermitteln, welcher der Tests zu langsam läuft bzw. den Zeitverzug verschuldet. Vgl. TAE-Lehrplan v2.0 Kapitel 6.1.1, Abschnitt TAS-Protokollierung, 1. Aufzählungspunkt."
+  },
+  {
+    "id": 26,
+    "lo": "TAE-6.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie arbeiten an einem Projekt, in dem Sie verantwortlich sind, das bestehende Testautomatisierungsframework (TAF) für Webdiensttests, um erweiterte Testprotokollierungsfunktionen zu ergänzen. Ziel ist es, neben Dateiprotokollen auch einen HTML-Bericht zur schnellen Visualisierung der Testergebnisse zu erstellen. Das SUT – ein Webdienst ohne Benutzeroberfläche – kommuniziert mit mehreren Legacy-Testsystemen. Leider sind die Tests sehr instabil. Sie sollen aussagekräftige Informationen in die Protokollierung aufnehmen, um die Fehlerursachen besser analysieren zu können.\n\nWelche der folgenden Informationen sollten Sie AM EHESTEN in die Testprotokollierung aufnehmen – und warum?\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) Zeitstempel für die Testschritte, um zu erkennen, ob der Fehler mit einem Ausfall eines bestimmten Legacy-Systems zusammenhängt.",
+      "b) Screenshots, um die tatsächlichen Anfrage-Antwort-Paare zu dokumentieren.",
+      "c) Zufällig generierte Werte, um die Analyse der tatsächlichen Ergebnisse zu ermöglichen.",
+      "d) Ausgaben von Zählern, um leicht festzustellen, wie oft ein bestimmter Testfall ausgeführt wurde.",
+      "e) Skriptsprachen der verwendeten Testwerkzeuge, um Fehlerursachen in bestimmten Tests auszuschließen."
+    ],
+    "answer": [
+      0,
+      2
+    ],
+    "explanation": "a) KORREKT – Zeitstempel sind hilfreich, um Fehler zeitlich einzuordnen und mögliche Zusammenhänge mit Ausfällen von Legacy-Systemen zu erkennen, siehe Lehrplan, Kapitel 6.1.1, Aufzählung in Abschnitt “TAS-Protokollierung”.\n\nb) FALSCH – Da es sich um einen Webdienst ohne Benutzeroberfläche handelt, sind Screenshots nicht sinnvoll, siehe Aufgabentext. Stattdessen sollten Anforderungs- und Antwortdaten textuell protokolliert werden.\n\nc) KORREKT – Zufällig generierte Werte sollten unbedingt protokolliert werden, da sie zur späteren Reproduzierbarkeit und Fehlersuche notwendig sind, siehe Lehrplan, Kapitel 6.1.1, Aufzählung in Abschnitt “TAS-Protokollierung”.\n\nd) FALSCH – Sie wissen bereits das die Tests instabil sind, Zählerstände helfen Ihnen nicht dabei der Ursache dieser Fehler auf den Grund zu gehen. Die Zähler helfen vor allem bei Zuverlässigkeits-und Stresstests. Siehe Syllabus, Kapitel 6.1.1, Aufzählung in Abschnitt TAS-Protokollierung.\n\ne) FALSCH – Die Skriptsprachen sind in den Anforderungen an die TAS definiert. Zudem sollten Fehlerursachen durch Testwerkzeuge vor dem Einsatz der TAS verifiziert werden, siehe Lehrplan, Kapitel 7.1.1, “Die Verifizierung der Testautomatisierungsumgebung planen, einschließlich der Einrichtung der Testwerkzeuge”, erster Absatz. Daher haben die verwendeten Skriptsprachen für die Testprotokollierung keine Relevanz."
+  },
+  {
+    "id": 27,
+    "lo": "TAE-6.1.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie sollen eine Testautomatisierungslösung für Last- und Stresstests eines zeitkritischen SUT entwerfen. Das System besteht aus mehreren Microservices, die jeweils strikten Anforderungen an ihr individuelles Antwortzeitverhalten genügen müssen. Ziel ist es, die Performanz sowohl transaktionsübergreifend (End-to-End) als auch pro Mikroservice zu messen und auswertbar zu machen.\n\nWie automatisieren Sie die Erhebung des Antwortzeitverhaltens so, dass die Ergebnisse möglichst einfach analysiert und korreliert werden können?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Den Start- und Endzeitpunkt jeder Transaktion im Testprotokoll hinterlegen.",
+      "b) CPU- und Speicherauslastung der Microservices protokollieren, da diese Metriken zur Identifikation von Performanzproblemen ausreichen.",
+      "c) Für jede Transaktion eine Trace-ID vergeben und diese über alle Microservices hinweg durchreichen; alle gemessenen Zeitwerte mit der Trace- ID (und optional Span-IDs) verknüpfen, um Performanzdaten zu korrelieren.",
+      "d) Die Testprotokolle bewusst einfach halten und die Auswertung anschließend manuell durchführen."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Eine rein aggregierte Betrachtung zeigt zwar Gesamtperformanz, aber keine Ursachen auf Microservice-Ebene. Anforderungen verlangen explizit beide Sichten (System + Microservice).\n\nb) FALSCH – Ressourcenauslastung kann Hinweis auf Engpässe geben, ist aber kein Ersatz für Messung von Antwortzeiten. CPU-Auslastung? Benutzer-perzipierte Performanz.\n\nc) KORREKT – Durch den Einsatz von Trace-IDs kann die Performance über die beteiligten Mikroservices hinweg eindeutig für jede Transaktion zugeordnet und analysiert werden.\n\nd) FALSCH – Manuelles Durchsuchen widerspricht dem Sinn einer automatisierten Protokollierung und skaliert nicht. Automatisierte Korrelation über Trace-IDs sind deutlich effizienter."
+  },
+  {
+    "id": 28,
+    "lo": "TAE-6.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche wichtigen Informationen sollte ein Testfortschrittsbericht bei seiner Veröffentlichung typischerweise enthalten?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Eine präzise Beschreibung der im Detail durchgeführten Testschritte je Testfall.",
+      "b) Informationen zur Entwicklungsumgebung, mit der das System unter Test entwickelt wurde.",
+      "c) Eine begründete Darstellung, warum bestimmte Tests fehlgeschlagen sind (Ursachen von Abweichungen).",
+      "d) Den Namen der Person, die den festgestellten Fehlerzustand korrigiert hat."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Detaillierte Testschritte gehören in Testprotokolle/Testausführungsprotokolle, nicht in den Testfortschrittsbericht.\n\nb) FALSCH – Die Informationen zur Entwicklungsumgebung des Systems unter Test ist für den Testfortschrittsbericht irrelevant. Die Testumgebung ist ein wichtiger Punkt, der in einem Testausführungsbericht erwähnt werden sollte. Vgl. TAE-Lehrplan v2.0, Kapitel 6.1.3, Abschnitt Inhalt eines Testfortschrittsberichts, 1. Absatz.\n\nc) KORREKT – Ein Testfortschrittsbericht enthält eine Zusammenfassung der Ergebnisse einschließlich nicht bestandener Tests und deren Gründe/Abweichungen (Diagnose/Ursachen). Vgl. TAE-Lehrplan v2.0, Kapitel 6.1.3, Abschnitt Inhalt eines Testfortschrittsberichts, 2. Absatz.\n\nd) FALSCH – Die Person, die den Fehlerzustand korrigiert hat, ist keine sinnvolle Information für einen Testfortschrittsbericht. Die Korrektur eines Fehlerzustands erfolgt gemeinhin erst nach der Bereitstellung eines Testfortschrittsberichts auf Basis eines gemeldeten Fehlerberichts."
+  },
+  {
+    "id": 29,
+    "lo": "TAE-7.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie wurden zu einem Testautomatisierungsprojekt im Bankenbereich hinzugezogen, bei dem automatisierte Tests sporadisch fehlschlagen. Die wiederkehrende manuelle Prüfung der Testprotokolle kostet Zeit und führt dazu, dass das Vertrauen in die Testautomatisierung auf Leitungsebene gemindert wird. Nach genauerer Analyse fiel Ihnen auf, dass die nicht zuverlässig laufenden Tests mit einem externen Service interagieren, der die Validität von Transaktionen überprüft. Der Service ist nicht Teil des SUT, d. h., sein Verhalten wird nicht durch die Testfälle verifiziert. Sie stellen fest, dass aus Ihnen unbekannten Gründen, der externe Service zeitweise nicht zur Verfügung steht, was auch der Grund für die fehlgeschlagenen Tests ist.\n\nWelcher der nachfolgenden Schritte ist für die Verifizierung der TAS in dieser Situation AM EHESTEN anzuwenden?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Prüfen des Intrusionsgrads der Testskripte, um auszuschließen, dass zu niedrige Intrusion für die technischen Fehler verantwortlich ist.",
+      "b) Anmeldung beim externen Service als Teil der Vorbedingungen eines Testfalls, um sicherzugehen, dass der Service für die Testausführung verfügbar ist.",
+      "c) Überprüfen, dass die TAS aus einem zentralen Installationsrepositorium in der Testumgebung installiert wurde, um sicherzugehen, dass die letzte Version bzw. Konfiguration der TAS verwendet wird.",
+      "d) Konfigurationsmanagement einsetzen, um die Konsistenz von Testdaten und Testskripte über verschiedene Versionen hinweg sicherzustellen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Es ist in dem gegebenen Szenario nicht ersichtlich, dass ein zu hoher Intrusionsgrad ein Grund für die technischen Fehler war. Zudem ist die Begründung grundlegend falsch. Ein niedriger Grad an Intrusion ist üblicherweise nicht für Fehlerwirkungen oder Fehlschläge bzw. technische Fehler verantwortlich. Vgl. TAE- Lehrplan v2.0, Kapitel 7.1.2, Abschnitt Berücksichtigung der Intrusivität von Testautomatisierungswerkzeugen: „Die TAS ist oft eng mit dem SUT gekoppelt. […] Eine solche enge Integration kann jedoch auch zu nachteiligen Ergebnissen führen. […] Ein hoher Grad an Intrusion kann Fehlerwirkungen beim Testen hervorrufen, die in der Produktionsumgebung nicht auftreten.“\n\nb) KORREKT – Bevor Testfälle mit externen Services bzw. Servern ausgeführt werden, ist es eine bewährte Vorgehensweise zu überprüfen, ob die externen Services bzw. Server auch verfügbar sind (vgl. TAE-Lehrplan v2.0, Kapitel 7.1.1, Abschnitt Konnektivität der internen und externen Systeme/Schnittstellen: „Es ist zum Beispiel eine bewährte Verfahrensweise, sich bei Servern anzumelden […]. Die Festlegung von Vorbedingungen für die Testautomatisierung ist wichtig, um sicherzustellen, dass die TAS korrekt installiert und konfiguriert wurde. In diesem Fall würden die Testfälle bei Nicht- Verfügbarkeit zwar ebenfalls fehlschlagen, allerdings bereits schon in den Vorbedingungen. Gegebenenfalls wäre es sogar möglich, auf die Nichtverfügbarkeit zu reagieren – etwa durch die Nutzung eines alternativen oder virtualisierten Dienstes. In jedem Fall verfügt Testteam damit über ein Mittel, um Tests, die aufgrund der Nicht- verfügbarkeit fehlschlagen würden, frühzeitig zu erkennen.\n\nc) FALSCH – Die Installation der TAS in die Testumgebung ist grundsätzliche eine sehr bewährte und empfohlene Vorgehensweise (vgl. TAE-Lehrplan v2.0, Kapitel 7.1.1, Abschnitt Installation, Einrichtung, Konfiguration und Anpassung von Testwerkzeugen, 2. Absatz: „Eine automatisierte Installation oder auch das Kopieren aus einem zentralen Repository hat Vorteile. Dies garantiert, dass Tests auf unterschiedlichen SUTs mit der gleichen Version und der gleichen Konfiguration der TAS durchgeführt werden, falls dies gefordert wird.“) allerdings steht die korrekte Installation nicht im Zusammenhang mit sporadisch auftretenden Nichtverfügbarkeit des externen Service.\n\nd) FALSCH – Konfigurationsmanagement ist zwar hilfreich und eine bewährte Vorgehensweise, allerdings hat Konfigurationsmanagement nichts mit der Aufgabenstellung und der sporadischen Nicht-Verfügbarkeit des externen Service zu tun."
+  },
+  {
+    "id": 30,
+    "lo": "TAE-7.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie arbeiten in einem Softwareentwicklungsteam, das Tests in unterschiedlichen Testumgebungen durchführen muss. Ihr Vorgesetzter hat festgestellt, dass viel Zeit darauf verwendet wird, falsch-positive Ergebnisse zu analysieren, weil die Testautomatisierungslösung (TAS) in neuen Umgebungen nicht korrekt konfiguriert ist. Zudem gibt es Versionsunterschiede zwischen den TAS-Installationen in den einzelnen Umgebungen.\n\nWelche beiden der folgenden Maßnahmen wären AM BESTEN geeignet, diese Situation zu verbessern?\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) Sie erstellen ein automatisiertes Installationsskript für die Werkzeuge und Konfigurationen, aus denen die TAS besteht.",
+      "b) Sie beschränken die Nutzung der TAS auf die Testumgebungen, auf denen die Konfiguration korrekt erstellt wurde und funktioniert.",
+      "c) Sie nutzen ein zentrales Repository zum Speichern der TAS, auf das alle Testumgebungen zugreifen können.",
+      "d) Sie führen manuelle Tests durch, um zu überprüfen, ob die TAS in allen Testumgebungen korrekt eingerichtet ist.",
+      "e) Sie überspringen aus Zeitgründen die Implementierung von Komponententests für die TAS."
+    ],
+    "answer": [
+      0,
+      2
+    ],
+    "explanation": "a) KORREKT – Automatisierte Installations- und Konfigurationsskripte stellen sicher, dass die TAS in allen Umgebungen konsistent eingerichtet wird (siehe Lehrplan, Kapitel 7.1.1, Absatz “Installation, Einrichtung, Konfiguration und Anpassung von Testwerkzeugen”).\n\nb) FALSCH – Die TAS sollte gerade so gestaltet sein, dass sie in verschiedenen Testumgebungen zuverlässig funktioniert (siehe Lehrplan, u. a. Kapitel 7.1.1, Absatz “Installation, Einrichtung, Konfiguration und Anpassung von Testwerkzeugen”). Einfach Testumgebungen auszusparen ist keine gute Option.\n\nc) KORREKT – Ein zentrales Repository ermöglicht die Verwendung einheitlicher TAS- Versionen und verhindert veraltete Installationen (siehe Lehrplan, Kapitel 7.1.1, Absatz “Installation, Einrichtung, Konfiguration und Anpassung von Testwerkzeugen”).\n\nd) FALSCH – Die Konfigurationen sind nicht korrekt und es gibt Versionsunterschiede bei der TAS auf den unterschiedlichen Umgebungen, ist laut Aufgabenstellung bereits bekannt. Manuelle Prüfungen sind zudem nicht skalierbar und beheben auch nicht das zugrundeliegende Problem der inkonsistenten Einrichtung.\n\ne) FALSCH – Komponententests sind wichtig und üblich, um Probleme frühzeitig zu erkennen – ihr Verzicht kann zu instabiler Funktionalität führen (siehe Lehrplan, Kapitel 7.1.1, Absatz “TAF-Komponententests”)."
+  },
+  {
+    "id": 31,
+    "lo": "TAE-7.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Sie sind dabei, eine automatisierte Testsuite zu verifizieren. Während dieses Prozesses stellen Sie fest, dass einige Testskripte bei einem Durchlauf auf ihrer Testumgebung erfolgreich sind, beim nächsten Durchlauf jedoch fehlschlagen – sie liefern also keine zuverlässigen Ergebnisse.\n\nWas sollten Sie als ERSTES tun, um die Gültigkeit dieser Testskripte zu überprüfen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Sie führen die Tests manuell aus, um Fehlerwirkungen durch die Intrusivität der Testwerkzeuge auszuschließen.",
+      "b) Sie führen die automatisierte Testsuite erneut auf einem frisch gestarteten System aus und analysieren die Ergebnisse.",
+      "c) Sie isolieren die betroffenen Testskripte und analysieren Sie sie separat.",
+      "d) Sie prüfen die betroffenen Testskripte mittels statischer Code-Analysen."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Die Intrusivität macht sich vor allem durch unterschiedliche Ausführungsergebnisse zwischen Test- und Produktionsumgebung bemerkbar, siehe Lehrplan, Kapitel 7.1.2, “Berücksichtigung der Intrusivität von Testautomatisierungswerkzeugen”. Laut Aufgabenstellung liefen die Tests aber auf der gleichen Plattform mit unterschiedlichen Ergebnissen.\n\nb) FALSCH – Ein reiner Wiederholungslauf liefert keine neuen Erkenntnisse, wenn die Ursache nicht untersucht wird und erzeugt nur zusätzlichen Aufwand. Die unzuverlässigen Tests sollten besser separat analysiert werden, siehe Lehrplan, Kapitel 7.1.2, Absatz “Berücksichtigung der Wiederholbarkeit von Tests”.\n\nc) KORREKT – Das gezielte Isolieren und Analysieren der instabilen Testskripte ist der erste sinnvolle Schritt zur Fehleridentifikation, siehe Lehrplan, Kapitel 7.1.2, Absatz “Berücksichtigung der Wiederholbarkeit von Tests”.\n\nd) FALSCH – Statische Analysen können proaktiv zur Qualitätssicherung eingesetzt werden (siehe Lehrplan, Kapitel 7.1.4). Als ersten Schritt wäre es ratsamer die betroffenen Tests zu isolieren und separat zu analysieren, siehe Lehrplan, Kapitel 7.1.2, Absatz “Berücksichtigung der Wiederholbarkeit von Tests”."
+  },
+  {
+    "id": 32,
+    "lo": "TAE-7.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Sie erweitern eine API-basierte Testautomatisierungslösung (TAS) für eine Webapplikation auf die grafische Benutzungsschnittstelle (GUI). Dazu haben Sie ein kommerzielles GUI-Testautomatisierungswerkzeug angeschafft und erfolgreich in die TAS eingebunden. Nach einigen Testläufen stellen Sie fest, dass einige Tests unzuverlässig laufen und Funktionen, die beim API-Test erfolgreich getestet werden beim GUI-Test fehlschlagen. Um falsch-positive Ergebnisse auszuschließen, führen Sie und Ihr Team die fehlgeschlagenen GUI-Tests manuell aus und stellen erstaunt fest, dass alle Tests bestanden wurden. Sie prüfen daraufhin die Konfiguration des neuen GUI-Testautomatisierungswerkzeug. Dort stellen Sie fest, dass der dynamische Wartemechanismus für die Steuerungen und Beobachtungen der Steuerelemente deaktiviert ist,\n\nd. h., die Kommandos werden von dem GUI- Testautomatisierungswerkzeug sofort an das SUT abgesetzt.\n\nWelche der nachfolgenden Vermutungen ist AM EHESTEN zutreffend?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Die Testskripte verfügen über zu wenig Verifikationspunkte.",
+      "b) Die enge Kopplung zwischen TAS und SUT über die GUI sorgt für Race Conditions im SUT.",
+      "c) Die Konfiguration der Testumgebung muss geprüft werden.",
+      "d) Die Intrusion des GUI-Testautomatisierungswerkzeugs ist zu hoch."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Es gibt in diesem Szenario keinen Hinweis darauf, dass nicht ausreichend Verifikationspunkte vorhanden sind. Im Gegenteil: die vorhandenen Verifikationspunkte liefern Ergebnisse – nur eben unzuverlässig.\n\nb) FALSCH – Es gibt in dem Szenario keinen Hinweis darauf, dass es sich bei dem System um ein nebenläufiges bzw. verteiltes System handelt. Daher ist auch die Vermutung von race conditions nicht naheliegend.\n\nc) FALSCH – Die Testumgebung ist in beiden Fällen dieselbe. Es geht hier lediglich um einen GUI-basierten Test für eine Webapplikation. Daher kann das keine Ursache sein.\n\nd) KORREKT – Ein automatisierter GUI-Test bzw. ein GUI-Testwerkzeug greift in das Verhalten eines SUTs ein, indem es mit den UI-Steuerungselementen mithilfe von Softwarefunktionen interagiert. D.h., das SUT wird grundsätzlich anders bedient als in der späteren Produktivumgebung. Dadurch, dass die Kommandos an die UI- Steuerungselement ohne Wartezeit an das SUT abgesetzt werden, kann es leicht dazu kommen, dass das SUT es schlichtweg zeitlich nicht schafft, diese Kommandos gleichschnell abzuarbeiten. Als Resultat kann es dazu kommen, dass UI- Steuerungselemente, Dialoge oder ganze Seite noch gar nicht erschienen sind, der Testfall aber bereits eine Eigenschaft von diesen Komponenten auslesen oder eine Aktion auf einem nicht vorhandenen UI-Steuerungselement ausführen möchte. Dies führt zu sporadisch auftretenden Fehlschlägen, nicht jedoch, wenn die Testfälle manuell ausgeführt werden. Vgl. TAE-Lehrplan v2.0, Kapitel 7.1.2, Abschnitt Berücksichtigung der Intrusivität von Testautomatisierungswerkzeugen."
+  },
+  {
+    "id": 33,
+    "lo": "TAE-7.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Sie arbeiten an einem Projekt zur Automatisierung einer Regressionstestsuite für ein System unter Test (SUT). Bei der letzten manuellen Ausführung wurden alle Tests bestanden. Wenn Sie dieselbe Suite jedoch über die Testautomatisierungslösung (TAS) ausführen, schlagen einige Tests fehl.\n\nWas sollten Sie in dieser Situation am EHESTEN tun?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Analysieren Sie die Protokolldateien des SUT und der TAF, um die Ursache des Problems zu ermitteln.",
+      "b) Führen Sie eine Schemavalidierung durch, um die Datentypen und Wertebereiche ihrer Daten zu prüfen.",
+      "c) Erstellen Sie einen Fehlerbericht für das SUT, um das Problem zu dokumentieren.",
+      "d) Ignorieren Sie das Verhalten, da automatisierte Tests sich naturgemäß anders verhalten als manuelle Tests."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Die Analyse der Protokolle hilft, die Ursache der fehlgeschlagenen Tests zu identifizieren. siehe Lehrplan, Kapitel 7.1.3, erster Absatz, zweiter Satz: „Prüfung der Testprotokolle…“.\n\nb) FALSCH – Laut Aufgabenstellung scheint es bei manueller Ausführung der Test keine Probleme zu geben, daher wäre naheliegender erst einmal die Protokolldateien auf Probleme hin zu untersuchen.\n\nc) FALSCH – Ein Fehlerbericht enthält die Doku des Auftretens, der Art und Status und wird nur erstellt werden, wenn der Fehlerzustand im SUT analysiert wurde. Laut der Aufgabenbeschreibung laufen die Tests manuell, aber erfolgreich durch (siehe ISTQB Glossar zu Fehlerbericht).\n\nd) FALSCH – Ein solches Verhalten widerspricht dem Zweck der Testautomatisierung und muss analysiert werden. Siehe Syllabus, Kapitel 1.1.1 Vorteile der Testautomatisierung (verbesserte Konsistenz über Zyklen hinweg, weniger anfällig für menschliche Fehlhandlungen, ...)"
+  },
+  {
+    "id": 34,
+    "lo": "TAE-7.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Sie bereiten die Ausführung einer Testautomatisierungssuite für eine sicherheitskritische Anwendung vor, die höchsten Sicherheitsanforderungen genügen muss.\n\nWelche Maßnahme sollten Sie am EHESTEN wählen, um den Code der Testautomatisierung gegenüber möglichen Sicherheitsmängeln robuster zu machen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Sie führen eine automatisierte statische Analyse der Testprotokolle nach möglichen Anmeldedaten aus.",
+      "b) Sie verwenden in ihren Testfällen gängige Entwurfsmuster, um Sicherheitsmängel auszuschließen.",
+      "c) Sie führen die Tests der Testsuite isoliert und methodisch aus, um potenzielle Sicherheitslücken zu erkennen.",
+      "d) Sie verwenden ein Werkzeug zur statischen Analyse, um Sicherheitslücken zu identifizieren."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Es sollte der Quellcode der Testautomatisierung statisch analysiert werden, siehe Lehrplan, Kapitel 7.1.4, erster Absatz.\n\nb) FALSCH – Die Verwendung von Entwurfsmustern ist eine Maßnahme die Wartbarkeit ihrer Testautomatisierung zu erhöhen (siehe Lehrplan, Kapitel 4.3.1), sie ist aber keine gute Maßnahme, um Sicherheitsmängel zu prüfen oder auszuschließen.\n\nc) FALSCH – Eine isolierte Ausführung führt nicht automatisch zur Aufdeckung von Sicherheitslücken, sondern ist eher eine Maßnahme, um Testfälle zu prüfen, die unerwartete Ergebnisse liefern, siehe Lehrplan, Kapitel 7.1.3).\n\nd) KORREKT – Statische Analysewerkzeuge helfen, potenzielle Sicherheitsschwachstellen im Code frühzeitig zu identifizieren, (siehe Lehrplan, Kapitel, 7.1.4, letzter Absatz)."
+  },
+  {
+    "id": 35,
+    "lo": "TAE-8.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie arbeiten an einem Testautomatisierungsprojekt zur Automatisierung der Tests der grafischen Benutzeroberfläche (GUI) eines Online- Webshops. Der Webshop enthält einen Assistenten, der Benutzern bei der Einrichtung ihrer Konten hilft – einschließlich Name, Rechnungs-und Lieferadresse sowie Sicherheitsdaten. Derzeit befindet sich die Entwicklung der Software in einer Phase, in der Usability-Tester den Assistenten prüfen und iterativ Empfehlungen für Änderungen abgeben: Die Entwickler ändern die grafische Benutzeroberfläche, die Usability-Tester prüfen die Änderungen und wiederholen ihre Tests. Die Testautomatisierung konzentriert sich dabei auf Wartungstests. In diesen GUI-basierten Tests enthalten die Testdaten auch UI-Locator-Werte. Ein bestehendes Problem ist, dass Entwickler häufig die internen Bezeichner der UI-Elemente ändern, was den Wartungsaufwand für die Tests stark erhöht.\n\nWelche der folgenden Maßnahmen bietet die BESTE Verbesserung?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Führen Sie eine Schema-Validierung durch, um sicherzustellen, dass alle erforderlichen GUI-Elemente vorhanden sind.",
+      "b) Verbessern Sie die Testprotokollierung, um Informationen über UI-Elemente und ihre Locator-Werte einzuschließen.",
+      "c) Erstellen Sie ein Test-Histogramm, das es TAEs ermöglicht, besonders fehleranfällige Testfälle zu identifizieren.",
+      "d) Verwenden Sie einen KI-basierten Algorithmus mit Bilderkennung, um veränderte Selektoren zu erkennen."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Schema-Validierung ist eher für API-Tests geeignet und hilft nicht bei der Stabilisierung von GUI-Locator-Werten (siehe Lehrplan, Kapitel 8.1.1, Abschnitt “Schemavalidierung”)\n\nb) FALSCH – Verbesserte Protokollierung erleichtert die Fehleranalyse, löst aber nicht das Locator-Problem, das geht am ehesten mit KI, siehe Lehrplan, Kapitel 8.1.1, Abschnitt “Künstliche Intelligenz”.\n\nc) FALSCH – Ein Histogramm zeigt anfällige Testfälle, reduziert aber nicht den Wartungsaufwand, es ist eher geeignet, um unzuverlässige Tests aufzudecken, siehe Lehrplan 8.1.1, Abschnitt “Testhistogramm”.\n\nd) KORREKT – KI-gestützte Lokator-Erkennung und Selbstheilung helfen, den Aufwand bei häufigen UI-Änderungen zu verringern siehe Lehrplan, Kapitel 8.1.1, Abschnitt “Künstliche Intelligenz”."
+  },
+  {
+    "id": 36,
+    "lo": "TAE-8.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Ihr Unternehmen verfügt über eine Regressionstestsuite mit mehr als 1000 automatisierten Testfällen, die sich über die Jahre als äußerst zuverlässig erwiesen hat. Kürzlich hat das Entwicklungsteam beschlossen, den Technologie-Stack zu modernisieren und überarbeitet derzeit die Funktionsweise des Frontends. Sie stellen fest, dass die Anwendung nun deutlich stärker API-gesteuert ist als zuvor, was Auswirkungen auf die Darstellung der UI-Elemente hat. Sie gehen davon aus, dass etwa 75 % Ihrer automatisierten Testfälle davon betroffen sein könnten.\n\nWie gehen Sie AM BESTEN bei der Analyse und Beseitigung der Auswirkungen durch die beschriebenen Umstellungen vor?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Führen Sie die Testfälle mehrfach in einer CI/CD-Pipeline aus, analysieren Sie die Ergebnisse visuell und leiten Sie Erkenntnisse aus einem Test- Histogramm ab.",
+      "b) Nutzen Sie Schemavalidierungswerkzeuge, um Schemaverletzungen durch die neue API auszuschließen und zu beheben.",
+      "c) Führen Sie keine Datenanalyse durch und erstellen stattdessen die automatisierten Testfälle neu, die Aufgrund der Umstellung nicht ordnungsgemäß funktionieren.",
+      "d) Schreiben Sie Assertions, um zu prüfen, ob die Parameter den Vorgaben entsprechen und nicht NULL sind."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Die Analyse von Test-Histogrammen bei über 1000 Testfällen ist sehr zeitaufwendig und eher dazu geeignet, um unzuverlässige Tests aufzudecken, siehe Lehrplan 8.1.1, Abschnitt “Testhistogramm”. Zudem lässt sich der Einfluss auf die Testfälle bereits aus der technischen Umstellung ableiten, siehe Aufgabenstellung.\n\nb) KORREKT – API-Schema-Validierungstools ermöglichen eine schnelle Prüfung von Änderungen auf API-Ebene, siehe Lehrplan, Kapitel 8.1.1, Abschnitt “Schemavalisierung”.\n\nc) FALSCH – Das vollständige Neuerstellen von 75 % der Testfälle ist nicht effizient, solange bessere Alternativen (Lehrplan, Kapitel 8.1.1) existieren.\n\nd) FALSCH – Eine Schemavalidierung, macht es überflüssig einzelne Assertions zu schreiben, um Elemente zu prüfen, weil das die Werkzeuge übernehmen (siehe Lehrplan, Kapitel 8.1.1, Abschnitt “Schemavalidierung”)."
+  },
+  {
+    "id": 37,
+    "lo": "TAE-8.1.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie arbeiten an einer automatisierten Regressionstest-Suite, deren Ausführung aktuell zu lange dauert und die über Nacht nicht vollständig abgeschlossen werden kann. Die Testumgebung steht dabei ausschließlich nachts für Regressionstests zur Verfügung. Eine parallele Ausführung der Tests ist nicht möglich, da das Zielsystem teuer ist und nur in einer einzigen Instanz vorliegt.\n\nWas sollten AM BESTEN Ihre nächsten Schritte sein, um sicherzustellen, dass die Ausführung der Tests über Nacht vollständig abgeschlossen wird, ohne den Abdeckungsgrad der Tests zu verringern?\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) Teilen Sie die Regressionstest-Suite auf und führen Sie Teilmengen an verschiedenen Nächten aus.",
+      "b) Zentralisieren/entkoppeln Sie Setup- und Teardown-Methoden auf Suite- /Fixture-Ebene, um redundante Initialisierung zu vermeiden und die Laufzeit zu reduzieren.",
+      "c) Ersetzen Sie ereignis-/bedingungsbasierte Warte- bzw. Polling-Mechanismen durch hartcodierte feste Wartezeiten, um die Ausführung zu vereinfachen.",
+      "d) Entfernen Sie besonders lange Tests aus der Suite, um die Gesamtlaufzeit zu verringern.",
+      "e) Identifizieren und entfernen Sie überlappende bzw. duplizierte Tests, sofern sie keinen zusätzlichen Abdeckungsbeitrag liefern (nachweisbar z. B. über eine Abdeckungsmatrix)."
+    ],
+    "answer": [
+      1,
+      4
+    ],
+    "explanation": "a) FALSCH – Das Aufteilen der Testsuite auf mehrere Nächte ermöglicht NICHT die vollständige Testausführung innerhalb des verfügbaren Zeitfensters über Nacht, siehe Lehrplan, Kapitel 8.1.2, Abschnitt “Testausführung”.\n\nb) KORREKT – Suite/Fixture-basiertes Setup/Teardown-Methoden vermeidet Mehrfach- Initialisierung und reduziert Laufzeiten ohne Abdeckungsverlust (vgl. Optimierung, siehe Lehrplan, Kapitel 8.1.2, Absatz Setup und Teardown).\n\nc) FALSCH – Feste Wartezeiten sind unflexibel und typischerweise langsamer/unzuverlässiger als bedingte/ereignisbasiertes Sutup/Tea Waits (siehe Lehrplan, Kapitel 8.1.2 unter Aufzählungspunkt “Evaluierung von Wartemechanismen”)\n\nd) FALSCH – Das Entfernen von langsamen Tests reduziert die Abdeckung, was laut Aufgabenstellung keine Option bzw. unzulässig ist, und birgt das Risiko, dass Fehler in die Produktion gelangen.\n\ne) KORREKT – Das Entfernen von redundanten Tests kann die Gesamtlaufzeit der Testsuite reduzieren, siehe Lehrplan, Kapitel 8.1.2, Abschnitt “Testausführung”."
+  },
+  {
+    "id": 38,
+    "lo": "TAE-8.1.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "Sie wurden als TAE beratend zu einem Testautomatisierungsprojekt hinzugezogen, bei dem die Testautomatisierer sich über nicht mehr kontrollierbarer Inkonsistenzen bei der Wiederherstellung des SUT nach einer Fehlerwirkung beschweren. Sie haben die Testfälle sorgfältig analysiert und festgestellt, dass eine Vielzahl von Methoden implementiert wurden, um die Wiederherstellung des SUT nach Fehlern zu handhaben. Teilweise ist die Fehlerbehandlung Teil des automatisierten Testfalls, teilweise Teil des Setups des Testfalls und der Testsuite, andere Testfälle verwenden separat bereitgestellte Schnittstellen, um direkt mit dem SUT zu interagieren. Diese Variabilität macht die Analyse und Anpassung der Testfälle zeitaufwändig und wirkt sich daher negativ auf den Wartungsaufwand generell aus.\n\nWelche Verbesserung würden Sie in dieser Situation AM EHESTEN empfehlen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Etablieren eines einheitlichen Fehlerwiederherstellungsprozesses in der TAS und Einbindung in die zentralen Funktionen der Testautomatisierungslösung.",
+      "b) Wechsel zu einem schlüsselwortgetriebenen Ansatz mit der Wiederherstellung als eines der Schlüsselwörter.",
+      "c) Anlegen einer Bibliothek mit verschiedenen Funktionen für die Wiederherstellung des SUT, damit eine bessere skriptübergreifende Wiederverwendung gegeben ist.",
+      "d) Auslagern der aktuellen Mechanismen für die SUT-Wiederherstellung in die Setup- bzw. Teardown-Methoden der Testfälle."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Die Implementierung eines einheitlichen Fehlerwiederherstellungsprozesses in den zentralen Funktionsbibliotheken der Testautomatisierungslösung bringt in dieser Situation den größten Nutzen, da diese Verbesserung den Inkonsistenzen entgegenwirkt und zu einer Vereinheitlichung der Testskripte beiträgt. Dadurch, dass der Fehlerwiederherstellungsprozess in die zentralen Funktionsbibliotheken der Testautomatisierungslösung eingebunden wird, steht der Fehlerwiederherstellungsmechanismus allen Testskripten gleichermaßen zur Verfügung und kann durchgehend eingesetzt werden. Vgl. TAE-Lehrplan, Kapitel 8.1.2, Abschnitt Skripterstellung, zweiter Absatz, zweiter Listenpunkt.\n\nb) FALSCH – Eine Umstellung des Automatisierungsansatzes für die einheitliche Verwendung eines Wiederherstellungsprozesses ist nicht erforderlich. Zum einen bewirkt die Bereitstellung von Schlüsselwörtern der aktuellen Mechanismen keine Vereinheitlichung, zum anderen sind diese auch nicht in die zentralen Funktionsbibliotheken eingebunden. Der Testautomatisierungsansatz kann zwar grundsätzlich auch geändert werden (vgl. Lehrplan, Kapitel 8.1.2, Abschnitt “Skripterstellung”, 1. Absatz), dies erzeugt aber einen sehr hohen Aufwand, Antwort a) bringt den gewünschten Effekt mit weniger Aufwand.\n\nc) FALSCH – Die Implementierung von verschiedenen Funktionen in einer Bibliothek ändert nichts an dem Problem, der inkonsistenten Verwendung der Fehlerwiederherstellung des SUT. Es erfolgt keine Konsolidierung bzw. Vereinheitlichung der Testskripte im Gegensatz zu Antwort a).\n\nd) FALSCH – Die Verwendung von Setup- und Teardown-Methoden ist generell eine empfohlene Vorgehensweise, um die Wartbarkeit von Testfällen zu vereinfachen, da wiederkehrende Aktionen die vor oder nach jedem Testskript / jeder Testsuite wiederholt werden, ausgelagert und übergreifend verwendet werden (vgl. TAE-Lehrplan, Kapitel 8.1.2 Abschnitt Setup und Teardown, durch die alleinige Auslagerung der aktuellen Mechanismen wird das Problem der Variabilität und Vielzahl der Wiederherstellungs- Methoden an diversen Stellen nicht gelöst!"
+  },
+  {
+    "id": 39,
+    "lo": "TAE-8.1.3",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie sind als Test Automation Engineer (TAE) für die Testautomatisierung einer Webanwendung verantwortlich. Vor Kurzem wurde ein neues Release des Testobjekts (SUT) mit umfangreichen Änderungen an Front- und Backend veröffentlicht. Sie sollen beurteilen, ob die bestehende Testautomatisierungslösung (TAS) und die automatisierten Testmittel angepasst werden müssen.\n\nWelche der nachfolgenden Aktivitätsabfolgen ist in dieser Situation am BESTEN geeignet?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Durchführen einer Änderungsauswirkungsanalyse; Planung der Umsetzung der Anpassungen in der TAA; schrittweise Umsetzung der Anpassungen inklusive Smoke-Tests; Durchführung eines vollständigen Regressionstests; gegebenenfalls Ursachenanalyse festgestellter Fehlerwirkungen.",
+      "b) Durchführen einer Änderungsauswirkungsanalyse, schrittweise Umsetzung der Anpassungen in der TAA; Durchführung ausgewählter funktionaler Regressionstests; Zurücksetzen der Änderungen bei fehlgeschlagenen Testfällen; gegebenenfalls Ursachenanalyse.",
+      "c) Durchführen einer Änderungsauswirkungsanalyse, Planung der Umsetzung der Anpassungen in der TAA; Umsetzung aller Anpassungen inklusive eines vollständigen Regressionstest, Freigabe der TAS für den Einsatz an den Testmanager; gegebenenfalls Ursachenanalyse.",
+      "d) Durchführen einer Änderungsauswirkungsanalyse; Planung der Umsetzung der Anpassungen in der TAA; schrittweise Umsetzung der Anpassungen inklusive Smoke-Tests; Durchführung eines vollständigen Regressionstests; Zurücksetzen der Änderungen bei fehlgeschlagenen Testfällen. Ein fehlgeschlagener Test ist nicht zwingend auf eine Fehlerwirkung in der TAS zurückzuführen."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Diese Abfolge an Aktivitäten umfasst die im Lehrplan empfohlene Vorgehensweise um Änderungen an den Komponenten der Testumgebung, der Testautomatisierungslösung, den automatisierten Testmitteln zu identifizieren, umzusetzen und qualitätszusichern. „Durchführen einer Änderungsauswirkungsanalyse“ --> Vgl. TAE-Lehrplan v2.0. Kapitel 8.1.2, Abschnitt Identifizieren von Änderungen an den Komponenten der Testumgebung: „Es ist zu beurteilen, welche Änderungen und Verbesserungen vorgenommen werden müssen und ob dadurch Änderungen an den Testmitteln, den angepassten Funktionsbibliotheken oder dem Betriebssystem erforderlich sind. Jede dieser Änderungen hat Auswirkungen auf die Leistung der TAS. […]“„Planung der Umsetzung der Anpassungen in der TAA“ --> Vgl. TAE-Lehrplan v2.0. Kapitel 8.1.2, Abschnitt Refaktorisierung der TAA, um mit den Änderungen im SUT-Schritt zu halten: „Bei der Erweiterung von Funktionalitäten muss darauf geachtet werden, dass diese nicht ad hoc implementiert werden, sondern analysiert und in der TAA geändert werden.“ „Schrittweise Umsetzung der Anpassungen inklusive Smoketests“ --> Vgl. TAE-Lehrplan v2.0. Kapitel 8.1.2, Abschnitt Identifizieren von Änderungen an den Komponenten der Testumgebung: „Änderungen sollten schrittweise vorgenommen werden […], damit die Auswirkungen auf die TAS durch eine möglichst geringe Anzahl an auszuführenden Tests bewertet werden kann.“ „Durchführung eines vollständigen Regressionstests“ --> Vgl. TAE-Lehrplan v2.0. Kapitel 8.1.2, Abschnitt Identifizieren von Änderungen an den Komponenten der Testumgebung: „Ein vollständiger Regressionstestlauf ist der letzte Schritt, um zu überprüfen, ob sich die Änderung nicht negativ auf die automatisierten Testskripte ausgewirkt hat. Während der Ausführung dieser Regressionstests können Fehlerwirkungen festgestellt werden.“ „Ggf. Analyse der Grundursache von Fehlerwirkungen“ --> Vgl. TAE-Lehrplan v2.0. Kapitel 8.1.2, Abschnitt Identifizieren von Änderungen an den Komponenten der Testumgebung: „Die Identifizierung der Grundursache dieser Fehlerwirkungen (z. B. durch Testberichterstattung, Testprotokolle und Testdatenanalyse) stellt sicher, dass diese nicht auf die Verbesserung der Testautomatisierung zurückzuführen sind.“\n\nb) FALSCH – Im Vergleich zu Antwort a) fehlt die Planung der Umsetzung innerhalb der TAA. Zudem sollte ein vollständiger Regressionstest durchgeführt werden, diese beinhaltet auch nicht- funktionale Tests. Bei fehlgeschlagenen Tests gibt es erst einmal einen Grund, die Änderungen zurückzusetzen. Ein fehlgeschlagener Test ist nicht zwangsläufig auf eine Fehlerwirkung in der TAS zurückzuführen.\n\nc) FALSCH – Die Umsetzung der Änderungen bzw. Anpassungen sollte schrittweise erfolgen und nicht auf einmal. Die Freigabemeldung der TAS an den Testmanager darf nicht erfolgen, bevor potenzielle Fehlerwirkung analysiert wurden. Zudem ist dieser Schritt auch nicht Bestandteil des Lehrplans.\n\nd) FALSCH – Es fehlt die Analyse der Fehlerwirkungen, die möglicherweise durch den Regressionstest aufgedeckt wurden. Bei fehlgeschlagenen Tests gibt es erst einmal einen Grund, die Änderungen zurückzusetzen. Ein fehlgeschlagener Test ist nicht zwangsläufig auf eine Fehlerwirkung in der TAS zurückzuführen."
+  },
+  {
+    "id": 40,
+    "lo": "TAE-8.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Ordnen Sie die nachfolgenden Aktivitäten den entsprechenden weiteren Einsatzmöglichkeiten von Testautomatisierungslösungen zu: Aktivität:\n\n1. Implementierung von Testskripten, die über eine separat bereitgestellte REST-API Datensätze bereinigen, die bei der Ausführung einer Systemstestsuite modifiziert wurden.\n\n2. Die Releasemanagerin möchte, dass auch jeder erfolgreiche Testschritt der automatisierten GUI-Testfälle mit einem Screenshot dokumentiert wird, um dem Projektmanagement gegenüber bei Fehlerwirkungen im Feld argumentieren zu können.\n\n3. Nach jeder automatisierten Testfallausführung werden die durch die Testfälle erstellten Verzeichnisstrukturen im Zuge des Teardowns komplett gelöscht.\n\n4. Während des Setups einer automatisierten Testsuite im Automotivebereich wird der Hardware-in-the-Loop-Prüfstand vollständig initialisiert, so dass im Anschluss des Setups die automatisierten Testfälle ausgeführt werden können. Einsatzmöglichkeiten:\n\nA. Steuerung der Umgebung\n\nB. Datenmanipulation\n\nC. Screenshot- und Videoerstellung\n\nD. Einrichtung der Umgebung\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) 1-A, 2-C, 3-D, 4-B",
+      "b) 1-C, 2-D, 3-A, 4-B",
+      "c) 1-D, 2-C, 3-A, 4-B",
+      "d) 1-B, 2-C, 3-A, 4-D"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "Die korrekte Kombination ist 1-B, 2-C, 3-A, 4-D, damit ist Option d) korrekt. Erläuterung zu 1-B: Die Bereinigung von Daten, die während eines Testfalls bzw. einer Testsuite verändert wurden, kann Teil der Testautomatisierung sein. Insbesondere in repräsentativen Umgebungen (Vorproduktionsumgebung bzw. Produktionsumgebung) ist es oftmals notwendig separate Schnittstellen für diesen Zweck einzuführen, insbesondere dann, wenn es per se keine SUT-Schnittstellen für den Zugriff bzw. die Manipulation von Daten gibt. Vgl. TAE-Lehrplan v2.0, Kapitel 8.1.4, Abschnitt Datenalterung: „Mit Hilfe der Testautomatisierung lassen sich Testdaten in der Testumgebung manipulieren.“ Erläuterung zu 2-C: Die Dokumentation des tatsächlichen Verhaltens der SUT kann in einigen Situationen hilfreich sein, um sich gegenüber Vorwürfen der Projektmanagements oder des Kunden bei Fehlerwirkungen im Feld abzusichern. Vgl. TAE-Lehrplan v2.0, Kapitel 8.1.4, Abschnitt Screenshot- und Videoerstellung. Erläuterung zu 3-A: Die Bereinigung bzw. Manipulation der Umgebung durch die Testautomatisierung ist ein effektives Mittel, um sicherzustellen, dass nachfolgende Testfälle in einer definierten und funktionsfähigen Umgebung ausgeführt werden können. Dazu gehört u.a. auch die Entfernung von Verzeichnissen und Dateien, die während der Testausführung erzeugt wurden. Vgl. TAE-Lehrplan v2.0, Kapitel 8.1.4, Abschnitt Einrichtung und Steuerung der Umgebung. Erläuterung zu 4-D: Setup-Funktionen ermöglichen es, dass die Testautomatisierung die Einrichtung der Umgebung vornimmt, so dass die Testfälle in einer definierten Konfiguration der Umgebung ausgeführt werden. Vgl. TAE-Lehrplan v2.0, Kapitel 8.1.4, Abschnitt Einrichtung und Steuerung der Umgebung."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 90 * 60;
+      const EXT_SECONDS = 90 * 60 * 1.25;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "112,5"
+          : "90";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "Der Timer zählt von 112:30 herunter (90 Minuten + 25 % Übungszeit). Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben."
+          : "Der Timer zählt von 90:00 herunter. Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${escHtml(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} Punkt${q.pts > 1 ? "e" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${escHtml(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="${escHtml(q.imageAlt || ('Abbildung zu Frage ' + q.id))}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Prüfung abgeben?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `Es sind noch <strong style="color:var(--warn)">${unanswered} Frage${unanswered > 1 ? "n" : ""} unbeantwortet</strong>. Unbeantwortete Fragen ergeben 0 Punkte.<br><br>Trotzdem abgeben?`
+            : `Alle ${questions.length} Fragen sind beantwortet. Prüfung jetzt abgeben?`;
+        document.getElementById("confirm-yes-btn").textContent = "Abgeben";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Prüfung neu starten?";
+        document.getElementById("confirm-msg").innerHTML =
+          "Alle Antworten gehen verloren. Der Timer wird zurückgesetzt auf " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Möchten Sie fortfahren?";
+        document.getElementById("confirm-yes-btn").textContent = "Neu starten";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Unbeantwortet &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Richtig (+" + q.pts + (q.pts > 1 ? " Punkte)" : " Punkt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Falsch &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (Zeit abgelaufen)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " von " + totalPoints + " Punkten (" + correctCount + " von " + questions.length + " Fragen richtig)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? `✓ BESTANDEN (≥ ${Math.ceil(totalPoints * 0.65)} Punkte)`
+          : `✗ NICHT BESTANDEN (< ${Math.ceil(totalPoints * 0.65)} Punkte)`;
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

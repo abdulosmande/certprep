@@ -1,0 +1,1961 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CT-GenAI v1.1 — Probeprüfung SET A</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #475569;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+    </style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Specialist</div>
+        <h1>CT-GenAI<br /><em>Probeprüfung</em></h1>
+        <p class="start-subtitle">
+          ISTQB® Certified Tester AI Testing (CT-GenAI) · SET A v1.1 · GTB
+          Edition · Lehrplan CT-GenAI v1.1. Der Timer startet, sobald Sie auf
+          „Prüfung starten" klicken.
+        </p>
+        <p class="start-subtitle source-credit">Quelle: ISTQB_CT_GenAI-Sample-Exam_Fragen_SET-A_v1.1_GTB-edition_germ-MASTER.pdf; ISTQB_CT_GenAI-Sample-Exam_Antworten_SET-A_v1.1_GTB-edition_germ-MASTER.pdf. © ISTQB® / German Testing Board e.V.. Autoren und Übersetzer sind in den Quell-PDFs genannt.</p>
+    <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Fragen</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">60</span>
+            <div class="meta-lbl">Minuten</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">46</span>
+            <div class="meta-lbl">Punkte</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Bestehen</div>
+          </div>
+        </div>
+
+        <div class="time-option-label">Zeitvorgabe</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">60 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">75 min</span>
+            <span class="time-opt-lbl">+15 min Verlängerung</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">
+          &#9432;&nbsp; Die 15-minütige Verlängerung gilt für Kandidaten, deren
+          Muttersprache nicht die Prüfungssprache ist (gemäß ISTQB-Regelung).
+        </div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Prüfung starten
+        </button>
+        <p class="start-note" id="start-note-txt">
+          Der Timer läuft von 60:00 herunter. Bei Zeitablauf erfolgt
+          automatische Abgabe.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CT-GenAI v1.1 · SET A · GTB Edition</span
+            >
+            <span class="exam-title">Certified Tester Specialist – GenAI</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 beantwortet
+            </div>
+            <div class="timer" id="timer">60:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Abgeben
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 Fragen (46 Punkte) · <strong>65% (≥ 30 von 46 Punkten)</strong> zum
+            Bestehen · einige Fragen sind Mehrfachauswahl bzw. mit 2 Punkten
+            bewertet (siehe Markierung je Frage)
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Prüfung abgeschlossen</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Benötigte Zeit: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Richtig</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Falsch</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Offen</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Neu starten
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Prüfung abgeben?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Abbrechen
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Abgeben
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const questions = [
+  {
+    "id": 1,
+    "lo": "GenAI-1.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Ordnen Sie den folgenden Arten von KI-Technologien (1–4) die passende Beschreibung (A-D) zu:\n\nKI-Technologie:\n1. Symbolische KI\n2. Klassisches maschinelles Lernen\n3. Deep Learning\n4. Generative KI\n\nBeschreibung:\nA. Verwendet neuronale Netze, um Merkmale automatisch aus Daten zu lernen.\nB. Verwendet regelbasierte Systeme, um menschliche Entscheidungen nachzuahmen.\nC. Verwendet Deep Learning, um neue Inhalte zu erstellen, basierend auf den gelernten Trainingsdaten.\nD. Verwendet einen datengesteuerten Ansatz, der in der Regel (manuelle) Merkmalauswahl erfordert.\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) 1D, 2B, 3A, 4C",
+      "b) 1D, 2C, 3B, 4A",
+      "c) 1C, 2B, 3D, 4A",
+      "d) 1B, 2D, 3A, 4C"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "Symbolische KI verwendet ein regelbasiertes System, um menschliche Entscheidungsfindung nachzuahmen, wobei Wissen mithilfe von Symbolen und logischen Regeln dargestellt wird (1B). Klassisches maschinelles Lernen nutzt einen datengesteuerten Ansatz, der Datenaufbereitung, Merkmalauswahl und Modelltraining erfordert (2D). Deep Learning ist eine Unterdisziplin des maschinellen Lernens und nutzt neuronale Netze, die Merkmale automatisch aus Daten lernen (3A). Generative KI nutzt Deep Learning-Verfahren, um aus Trainingsdaten neue Inhalte zu erzeugen (4C).\na) FALSCH\nb) FALSCH\nc) FALSCH\nd) KORREKT – 1B, 2D, 3A, 4C (siehe CT-GenAI-Lehrplan V1.1)."
+  },
+  {
+    "id": 2,
+    "lo": "GenAI-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Betrachten Sie Large-Language-Modelle (LLMs).\n\nWelche der folgenden Optionen bietet DIE BESTE Erklärung dafür, warum die begrenzte Größe des Kontextfensters die Textverarbeitungsfähigkeiten von LLMs beeinträchtigen kann?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Weil das Kontextfenster zeitliche Verarbeitungssequenzen einschränkt und LLMs daran hindert, bei der Analyse längerer Texte die chronologische Konsistenz aufrechtzuerhalten.",
+      "b) Weil das Kontextfenster Querverweise begrenzt und damit die Fähigkeit von LLMs einschränkt, Informationen aus verschiedenen Dokumenten gleichzeitig zu verknüpfen.",
+      "c) Weil die begrenzte Größe des Kontextfensters LLMs dazu zwingt, frühere Informationen zu verwerfen, die jedoch relevante Details enthalten können, die für das Verständnis späterer Inhalte erforderlich sind.",
+      "d) Weil das Kontextfenster die Granularität der Analyse einschränkt und LLMs daran hindert, zwischen Zeichen- und Dokumentebene zu wechseln."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – das Kontextfenster steuert nicht die zeitliche Abfolge, sondern begrenzt lediglich den Umfang des gleichzeitig berücksichtigten Textes.\nb) FALSCH – das Kontextfenster begrenzt die Anzahl gleichzeitig berücksichtigter Tokens, nicht spezifisch Querverweise zwischen Dokumenten.\nc) KORREKT – ein Überschreiten der Größe des Kontextfensters führt dazu, dass das Modell frühere Tokens verwerfen muss, darunter möglicherweise relevante Informationen für das Verständnis späterer Inhalte.\nd) FALSCH – das Kontextfenster steuert nicht die Detailstufe der Analyse, sondern ausschließlich die Menge an Tokens, die das Modell gleichzeitig berücksichtigen kann."
+  },
+  {
+    "id": 3,
+    "lo": "GenAI-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt die Tokenisierung bei der Textverarbeitung für LLMs AM BESTEN?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Die Tokenisierung wandelt Token in hochdimensionale Vektoren um, um ihre Bedeutung zu erfassen.",
+      "b) Die Tokenisierung generiert die Bausteine, die zum Verstehen und Generieren von Text verwendet werden.",
+      "c) Die Tokenisierung generiert mithilfe neuronaler Netze kontextuell angemessene Antworten.",
+      "d) Die Tokenisierung sagt das nächste Token in einer Sequenz auf der Grundlage gelernter Beziehungen voraus."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – das beschreibt die Vektordarstellung von Spracheinheiten (Embeddings), nicht die Tokenisierung.\nb) KORREKT – bei der Zerlegung von Text in kleinere Einheiten (Token) dienen diese als Bausteine für das Verstehen und Erzeugen von Sprache (siehe CT-GenAI-Lehrplan V1.1, Anhang D).\nc) FALSCH – das beschreibt die allgemeine Funktion von LLMs, nicht die Tokenisierung.\nd) FALSCH – das bezieht sich darauf, wie LLMs Text generieren, nicht auf die Tokenisierung."
+  },
+  {
+    "id": 4,
+    "lo": "GenAI-1.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche zwei der folgenden Aussagen über Foundation-LLMs, Instruction-tuned LLMs und Reasoning LLMs sind im Kontext des Softwaretestens korrekt?\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) Foundation-LLMs sind hervorragend geeignet, um Testfälle aus übergreifenden Anforderungen ohne strukturierte Eingaben zu generieren.",
+      "b) Reasoning-LLMs zeichnen sich durch die Erstellung von Testskripten aus, die sich streng an vordefinierte organisatorische Vorlagen halten.",
+      "c) Instruction-Tuned LLMs priorisieren die Testdurchführung autonom auf der Basis von Echtzeit-Benutzerfeedback.",
+      "d) Reasoning-LLMs sind hervorragend geeignet, um Daten aus Fehlerberichten zu synthetisieren, um Trends zu erkennen und Testmaßnahmen zu priorisieren.",
+      "e) Instruction-Tuned LLMs sind gut geeignet, Testfälle zu generieren, die der Gherkin-Syntax entsprechen."
+    ],
+    "answer": [
+      3,
+      4
+    ],
+    "explanation": "a) FALSCH – Foundation-LLMs sind ohne strukturierte Eingaben nicht „hervorragend geeignet“ für diese Aufgabe.\nb) FALSCH – vorlagenbasierte Testskripte zu erstellen ist die Aufgabe von Instruction-Tuned LLMs, nicht von Reasoning-LLMs.\nc) FALSCH – autonome Priorisierung von Tests auf Basis von Echtzeit-Feedback liegt außerhalb des Aufgabenbereichs von Instruction-Tuned LLMs.\nd) KORREKT – Reasoning-LLMs sind darauf ausgelegt, mehrere Datenquellen zu synthetisieren sowie logische Schlussfolgerungen durchzuführen.\ne) KORREKT – Instruction-Tuned LLMs sind speziell darauf trainiert, Instruktionen inklusive gewünschter Formate und Syntaxregeln zu befolgen."
+  },
+  {
+    "id": 5,
+    "lo": "GenAI-1.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt die Beziehung zwischen multimodalen LLMs und Vision-Language-Modellen AM BESTEN?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Multimodale LLMs sind eine Untergruppe von Vision-Language-Modellen und für die Verarbeitung verschiedener Eingaben entwickelt.",
+      "b) Vision-Language-Modelle sind eine Untergruppe multimodaler LLMs, die speziell visuelle und textuelle Daten verarbeiten.",
+      "c) Vision-Language-Modelle stehen in keinem Zusammenhang mit multimodalen LLMs und beziehen sich ausschließlich auf die Benutzungsschnittstelle.",
+      "d) Multimodale LLMs und Vision-Language-Modelle sind gleichbedeutende Begriffe."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Vision-Language-Modelle sind eine Untergruppe multimodaler LLMs, nicht umgekehrt.\nb) KORREKT – Vision-Language-Modelle integrieren speziell visuelle und textuelle Daten und sind damit eine Untergruppe multimodaler LLMs.\nc) FALSCH – Vision-Language-Modelle sind eng mit multimodalen LLMs verwandt.\nd) FALSCH – die Begriffe haben unterschiedliche Anwendungsbereiche und sind nicht gleichbedeutend."
+  },
+  {
+    "id": 6,
+    "lo": "GenAI-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche zwei der folgenden Optionen stellen die wichtigsten Fähigkeiten von LLMs beim Test dar?\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) Identifizieren von Mehrdeutigkeiten und Inkonsistenzen in Anforderungen.",
+      "b) Generieren von vollständigem Anwendungscode für die Bereitstellung.",
+      "c) Automatisierung der Ausführung aller Testskripte ohne menschliches Eingreifen.",
+      "d) Vollständig eigenständige Durchführung explorativer Tests direkt an der Anwendung ohne Testerinteraktion.",
+      "e) Erstellen von vielfältigen Testdaten mit verschiedenen Kombinationen und Grenzwerten."
+    ],
+    "answer": [
+      0,
+      4
+    ],
+    "explanation": "a) KORREKT – LLMs können Anforderungen analysieren und klären, indem sie Unklarheiten und Inkonsistenzen identifizieren.\nb) FALSCH – die Generierung vollständigen Anwendungscodes ist keine Schlüsselkompetenz von LLMs beim Testen.\nc) FALSCH – LLMs können die Testautomatisierung unterstützen, aber keine vollständig eigenständige Ausführung ohne menschliches Eingreifen leisten.\nd) FALSCH – LLMs können exploratives Testen unterstützen, führen aber keine vollständig eigenständigen explorativen Tests ohne Testerinteraktion durch.\ne) KORREKT – LLMs können vielfältige Testdaten generieren, einschließlich Kombinationen und Grenzwerten."
+  },
+  {
+    "id": 7,
+    "lo": "GenAI-1.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen erklärt AM BESTEN den Unterschied zwischen KI-Chatbot und LLM-gestützten Testanwendungen im Zusammenhang mit Softwaretesten?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Ein KI-Chatbot eignet sich besser für spezifische Testaufgaben, während LLM-gestützte Testanwendungen vor allem für Ad-hoc-Interaktionen gedacht sind.",
+      "b) Sowohl KI-Chatbot als auch LLM-gestützte Testanwendungen sind so konzipiert, dass sie ohne wesentliche Anpassung für dieselben Testaufgaben eingesetzt werden können.",
+      "c) LLM-gestützte Testanwendungen basieren auf Konversations-Prompts, während KI-Chatbots in Testwerkzeugen und -prozessen integriert werden müssen.",
+      "d) KI-Chatbots dienen als Konversationsschnittstellen für Ad-hoc-Tests, während LLM-gestützte Testanwendungen angepasste Lösungen für spezifische Testaufgaben bieten."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – KI-Chatbots eignen sich am besten für Ad-hoc-Interaktionen, nicht primär für spezifische Testaufgaben.\nb) FALSCH – in der Praxis sind beide nicht ohne Weiteres austauschbar.\nc) FALSCH – hier werden die Rollen vertauscht: KI-Chatbots basieren auf Konversations-Prompts, LLM-gestützte Testanwendungen werden in Werkzeuge und Prozesse integriert.\nd) KORREKT – KI-Chatbots dienen als Konversationsschnittstellen für Ad-hoc-Tests, während LLM-gestützte Testanwendungen angepasste Lösungen für spezifische Testaufgaben bieten."
+  },
+  {
+    "id": 8,
+    "lo": "GenAI-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Ein Tester untersucht einen strukturierten Prompt, mit dem LLM-Unterstützung für die Performanzanalyse eingeholt werden soll.\n\nEine der Komponenten dieses Prompts enthält: „Testberichte von Performanztestwerkzeugen, Systemüberwachungsprotokolle während Spitzenlastzeiten und Anwendungsbenchmarks aus früheren Versionen“.\n\nWelcher Komponente der sechsteiligen Prompt-Struktur lässt sich diese Beschreibung AM BESTEN zuordnen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Kontext",
+      "b) Eingabedaten",
+      "c) Einschränkungen",
+      "d) Ausgabeformat"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – der Kontext liefert Hintergrundinformationen über die Testumgebung, nicht konkrete Datenquellen.\nb) KORREKT – die Beschreibung listet spezifische Datenquellen auf, die vom LLM verarbeitet werden.\nc) FALSCH – Einschränkungen beschreiben Regeln oder besondere Bedingungen, nicht Datenquellen.\nd) FALSCH – das Ausgabeformat legt fest, wie die Antwort strukturiert sein soll, nicht welche Daten verwendet werden."
+  },
+  {
+    "id": 9,
+    "lo": "GenAI-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Ein Tester möchte, dass ein LLM eine Anforderung auf potenzielle Fehlerzustände analysiert. Im strukturierten Prompt, den der Tester verwendet, lautet eine Zeile: „Die potenziellen Fehlerzustände müssen in einer Markdown-Tabelle mit den folgenden Spalten angegeben werden: ID, Anforderung, Fehlerzustand, Beschreibung, Fehlerschweregrad“.\n\nWelcher Komponente der sechsteiligen Prompt-Struktur lässt sich diese Zeile AM BESTEN zuordnen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Instruktionen",
+      "b) Einschränkungen",
+      "c) Ausgabeformat",
+      "d) Kontext"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – die Zeile beschreibt nicht, welche Aufgabe auszuführen ist, sondern wie die Ergebnisse dargestellt werden sollen.\nb) FALSCH – die Zeile legt keine Einschränkungen für den Analyseprozess fest, sondern definiert das gewünschte Ausgabeformat.\nc) KORREKT – die Zeile entspricht der Definition des Ausgabeformats, das festlegt, wie das LLM die Ergebnisse präsentieren soll.\nd) FALSCH – die Zeile enthält keine Hintergrundinformationen, sondern beschreibt ausschließlich das Ausgabeformat."
+  },
+  {
+    "id": 10,
+    "lo": "GenAI-2.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt AM BESTEN die Unterschiede zwischen den Techniken „Prompt-Verkettung (prompt chaining)“, „Few-Shot-Prompting“ und „Meta-Prompting“?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Prompt-Verkettung konzentriert sich auf die Bereitstellung von Beispielen, Few-Shot-Prompting unterteilt Aufgaben in Teilaufgaben und Meta-Prompting verfeinert Prompts manuell.",
+      "b) Few-Shot-Prompting nutzt mehr als ein Beispiel; Prompt-Verkettung zerlegt Aufgaben in Zwischenschritte, deren Ergebnisse überprüft und verfeinert und in den nächsten Prompt übernommen werden; Meta-Prompting nutzt Instruktionen auf höherer Ebene, damit das LLM Prompts iterativ generiert/verbessert – mit Testerbewertung.",
+      "c) Meta-Prompting legt den Schwerpunkt auf die Aufteilung von Aufgaben in Schritte, Prompt-Verkettung verwendet Beispiele und Few-Shot-Prompting konzentriert sich auf die manuelle Optimierung von Prompts.",
+      "d) Prompt-Verkettung bietet Anleitung ohne Beispiele, Few-Shot-Prompting bietet Anleitung mit Beispielen und Meta-Prompting stützt sich auf vom Tester definierte Prompts."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Prompt-Verkettung zerlegt Aufgaben, nutzt keine Beispiele; Few-Shot-Prompting liefert Beispiele; Meta-Prompting verfeinert iterativ durch das LLM, nicht manuell.\nb) KORREKT – Few-Shot-Prompting bietet Anleitung anhand von Beispielen, Prompt-Verkettung zerlegt Aufgaben in Zwischenschritte, Meta-Prompting ermöglicht dem LLM, eigene Prompts iterativ zu verfeinern.\nc) FALSCH – Meta-Prompting dient der automatischen Verfeinerung durch das LLM, nicht der Aufteilung in Schritte.\nd) FALSCH – Prompt-Verkettung basiert auf schrittweiser Zerlegung, nicht auf „Anleitung ohne Beispiele“."
+  },
+  {
+    "id": 11,
+    "lo": "GenAI-2.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Was ist die Hauptfunktion eines System-Prompts in Interaktionen mit LLMs?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Bereitstellung eines Rahmens für das LLM-Verhalten während der gesamten Konversation.",
+      "b) Übermittlung spezifischer Fragen oder Instruktionen vom Benutzer an das LLM.",
+      "c) Dynamische Anpassung an jede Benutzerinteraktion und Festlegung des Konversationskontexts.",
+      "d) Einbeziehung sichtbarer Benutzereingaben und Festlegung von Regeln für die Konversation."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – der System-Prompt setzt den Rahmen für Verhalten, Ton und Regeln des LLM über die gesamte Konversation (typischerweise statisch).\nb) FALSCH – das beschreibt einen Benutzer-Prompt, nicht den System-Prompt.\nc) FALSCH – ein System-Prompt passt sich nicht automatisch jeder Interaktion an, er ist in der Regel statisch.\nd) FALSCH – der System-Prompt ist für Nutzer in der Regel nicht sichtbar und enthält keine Benutzereingaben."
+  },
+  {
+    "id": 12,
+    "lo": "GenAI-2.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie sollen stabile, bereits auf Fehler geprüfte Anforderungen eines neuen Projekts mit generativer KI analysieren, indem Sie\n\n(1) Testbedingungen generieren,\n(2) diese risikobasiert priorisieren und\n(3) potenzielle Lücken in der Testüberdeckung\n\nmithilfe eines Prompt-Verkettungs-Ansatzes identifizieren.\n\nWelche zwei Vorgehensweisen sind zur Erreichung der Ziele (1)-(3) in diesem Szenario AM WENIGSTEN geeignet und NICHT im Sinne des beschriebenen Prompt-Verkettungs-Ansatzes?\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) Übermitteln Sie die Anforderungen an das LLM und fordern Sie es auf, auf Grundlage dieser Anforderungen Testbedingungen zu erstellen.",
+      "b) Stellen Sie dem LLM die Testbedingungen zur Verfügung, geben Sie den Kontext für die Priorisierung (z. B. Risikobewertungen, Qualitätsziele) und fordern Sie eine Priorisierung an.",
+      "c) Stellen Sie dem LLM die priorisierten Testbedingungen zur Verfügung und fordern Sie eine Abdeckungsanalyse gegen die Anforderungen an.",
+      "d) Übermitteln Sie die Anforderungen an das LLM und fordern Sie es auf, in einem Schritt priorisierte Testbedingungen zu erstellen, die alle Aspekte abdecken.",
+      "e) Übermitteln Sie die Anforderungen an das LLM und fordern Sie es ausschließlich auf, Inkonsistenzen/Unklarheiten zu finden, anstatt Testbedingungen zu generieren, zu priorisieren und die Überdeckung zu analysieren."
+    ],
+    "answer": [
+      3,
+      4
+    ],
+    "explanation": "a) FALSCH – gehört zum korrekten ersten Schritt des Prompt-Chaining.\nb) FALSCH – entspricht dem zweiten, kontextgestützten Schritt (risikobasierte Priorisierung).\nc) FALSCH – entspricht dem dritten Schritt (Abdeckungsanalyse).\nd) KORREKT – „Alles-in-einem-Schritt“ widerspricht dem Prompt-Verkettungs-Prinzip und verringert die Steuerbarkeit/Nachvollziehbarkeit.\ne) KORREKT – dieser Schritt trägt nicht zur Zielerreichung (1)-(3) bei, da er anstatt der Generierung/Priorisierung/Überdeckungsanalyse nur Unklarheiten sucht."
+  },
+  {
+    "id": 13,
+    "lo": "GenAI-2.2.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "Erwägen Sie die Anwendung des sogenannten Few-Shot Prompting, um Testfälle im Gherkin-Stil (d. h. szenariobasiert) für die folgende User-Story und das folgende Akzeptanzkriterium zu generieren:\n\na) User-Story: „Als Benutzer möchte ich mein Passwort zurücksetzen, damit ich wieder Zugriff auf mein Konto erhalte, wenn ich das Passwort vergesse.“\nb) Akzeptanzkriterium: „Gibt ein Benutzer eine registrierte E-Mail-Adresse an, wird an diese Adresse eine E-Mail mit einem Link zum Zurücksetzen des Passworts gesendet.“\n\nSie können sich auf vordefinierte Beispiele stützen, die User Stories, Akzeptanzkriterien und Testfälle im Gherkin-Stil enthalten. Ihre Aufgabe besteht darin, eine Eingabeaufforderung zu erstellen, die das LLM bei der Generierung präziser Testfälle anleitet, die mit den Akzeptanzkriterien für die oben genannte User-Story übereinstimmen.\n\nWelche der folgenden Prompts eignet sich AM BESTEN für diese Aufgabe?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Prompt A:\nRolle: Agieren Sie als Testanalyst.\nKontext: Sie führen einen Test der Funktion zum Zurücksetzen des Passworts durch.\nInstruktion: Generieren Sie Testfälle im Gherkin-Stil für die User-Story und das Akzeptanzkriterium. Verwenden Sie dabei die folgenden vordefinierten Beispiele als Leitfaden: << vordefinierte Beispiele >>.\nEingabedaten: <<< User-Story >>> und <<< Akzeptanzkriterium >>>.\nEinschränkungen: Stützen Sie sich bei der Erstellung von Testfällen auf bewährte Verfahren.\nAusgabeformat: Generieren Sie Testfälle mit den erwarteten Ergebnissen.",
+      "b) Prompt B:\nRolle: Agieren Sie als Testanalyst, der auf Testfälle im Gherkin-Stil spezialisiert ist.\nKontext: Sie führen einen Test der Funktion zum Zurücksetzen des Passworts durch.\nInstruktion: Erstellen Sie Testfälle im Gherkin-Stil für die User-Story und das Akzeptanzkriterium, wobei Sie sich an den folgenden vordefinierten Beispielen orientieren: <<< vordefinierte Beispiele >>>.\nEingabedaten: <<< User-Story >>> und <<< Akzeptanzkriterium >>>.\nEinschränkungen: Verwenden Sie die „Given-When-Then”-Syntax und stellen Sie sicher, dass diese mit dem Akzeptanzkriterium übereinstimmt.\nAusgabeformat: Beachten Sie das vorgegebene Format für Testfälle im Gherkin-Stil.",
+      "c) Prompt C:\nRolle: Agieren Sie als Testanalyst.\nKontext: Sie führen einen Test der Funktion zum Zurücksetzen des Passworts durch.\nInstruktion: Erstellen Sie Testfälle im Gherkin-Stil für die User-Story und das Akzeptanzkriterium. Stützen Sie sich bei der Erstellung der Testfälle auf bewährte Verfahren (Best Practices).\nEingabedaten: <<< User-Story >>> und <<< Akzeptanzkriterium >>>.\nEinschränkungen: Verwenden Sie die „Given-When-Then”-Syntax und stellen Sie sicher, dass die Testfälle mit den Akzeptanzkriterien übereinstimmen.\nAusgabeformat: Halten Sie sich an das vorgegebene Format für Testfälle im Gherkin-Stil.",
+      "d) Prompt D:\nRolle: Agieren Sie als Testanalyst.\nKontext: Sie testen eine Funktion zum Zurücksetzen des Passworts.\nInstruktion: Erstellen Sie mindestens zwei Testfälle im Gherkin-Stil für die User-Story und das Akzeptanzkriterium. Konzentrieren Sie sich dabei auf Randfälle.\nEingabedaten: <<< User-Story >>> und <<< Akzeptanzkriterium >>>.\nEinschränkungen: Stellen Sie sicher, dass alle Testfälle der „Given-When-Then”-Syntax entsprechen.\nAusgabeformat: Halten Sie sich an das vorgegebene Format für Testfälle im Gherkin-Stil."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – die zwingende Verwendung der „Given-When-Then“-Syntax wird nicht gefordert, und die Übereinstimmung mit dem Akzeptanzkriterium wird nicht ausdrücklich sichergestellt.\nb) KORREKT – umfassend, nutzt vordefinierte Beispiele, verlangt die „Given-When-Then“-Syntax und stellt die Übereinstimmung mit dem Akzeptanzkriterium sicher.\nc) FALSCH – es fehlen vordefinierte Beispiele; der Verweis auf „Best Practices“ bleibt vage.\nd) FALSCH – konzentriert sich auf Randfälle und vernachlässigt eine umfassende Überdeckung; auch hier fehlen Beispiele."
+  },
+  {
+    "id": 14,
+    "lo": "GenAI-2.2.3",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie haben die Aufgabe, strukturierte Eingabeaufforderungen zur Analyse von Regressionstestergebnissen anzuwenden. Hier ist ein erster Entwurf der Eingabeaufforderung:\n\nRolle: Agieren Sie als Testanalyst.\nKontext: Analysieren Sie die Rohdaten der Regressionstestergebnisse aus einem kürzlich durchgeführten Testzyklus.\nInstruktion: Identifizieren Sie Unstimmigkeiten in den Testergebnissen.\nEingabedaten: Verwenden Sie die angehängte Datei mit den Roh-Testergebnissen.\nEinschränkungen: Verwenden Sie die Liste bekannter Anomalien zur Gegenprüfung.\nAusgabeformat: Stellen Sie eine Liste der Unstimmigkeiten in Tabellenform bereit.\n\nSie werden gebeten, diese Eingabeaufforderung zu verbessern. Welche der folgenden Verbesserungen würde die Eingabeaufforderung AM BESTEN an die bewährten Verfahren des strukturierten Prompt-Engineering für eine umfassende Analyse von Regressionstestberichten anpassen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Fügen Sie einen Schritt hinzu, um ähnliche Probleme zu gruppieren und die Befunde mit der Liste bekannter Anomalien abzugleichen.",
+      "b) Geben Sie an, dass es sich um einen Analysten für Regressionstests handelt, der auf umsetzbare Erkenntnisse spezialisiert ist.",
+      "c) Erweitern Sie die Instruktion um die Trennung von erwarteten Ergebnissen und Ist-Ergebnissen, die Gruppierung von Problemen und das Hervorheben von Diskrepanzen.",
+      "d) Nehmen Sie Verweise auf Regressionstest-Prinzipien wie „Given-When-Then” in die Einschränkungen auf."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – berücksichtigt Gruppierung und Gegenprüfung, aber nicht die Trennung von Soll- und Ist-Ergebnissen.\nb) FALSCH – sorgt für Rollenklarheit, erweitert aber weder die Instruktionen noch adressiert es strukturierte Analyseschritte.\nc) KORREKT – erweitert die Instruktionen um alle wichtigen strukturierten Analyseschritte: Trennung von Soll-/Ist-Ergebnissen, Gruppierung und Hervorhebung von Diskrepanzen.\nd) FALSCH – führt irrelevante Einschränkungen ein, die nicht zu den Aufgabenanforderungen passen."
+  },
+  {
+    "id": 15,
+    "lo": "GenAI-2.2.4",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie verwenden ein LLM, um die Erstellung umsetzbarer Testmetriken aus Rohdaten zu unterstützen. Die Metriken umfassen den Testfortschritt, Fehlertrends und die Abdeckung, die sowohl grafisch dargestellt als auch mit Text erläutert werden. Ihr Ziel ist es, den Testprozess zu verbessern, um sicherzustellen, dass die generierten Metriken genau, umsetzbar und für die Beteiligten leicht interpretierbar sind.\n\nHier ist ein erster Entwurf eines Prompts, der zur Instruktion der KI verwendet wird:\n\nRolle: Agieren Sie als Testmanager.\nKontext: Ihnen werden Rohdaten aus Testtools zur Verfügung gestellt.\nInstruktion: Generieren Sie aus den Rohdaten Metriken zum Testfortschritt, zu Fehlertrends und zur Abdeckung.\nEingabedaten: Verwenden Sie die angehängte Datei mit den Rohdaten der Testergebnisse.\nEinschränkungen: Stellen Sie sicher, dass die Ausgabe prägnant und verständlich ist.\nAusgabeformat: Zeigen Sie die Metriken in einem Dashboard-Format.\n\nSie werden gebeten, diesen Prompt zu überarbeiten.\n\nWelche der folgenden Anpassungen würde die Interpretierbarkeit der generierten Metriken für Stakeholder und die Ableitung nächster Schritte AM STÄRKSTEN verbessern?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Erweitern Sie das Ausgabeformat um eine Zusammenfassung in einfacher Sprache, die die Metriken interpretiert und die nächsten Schritte für die Beteiligten umreißt.",
+      "b) Geben Sie an, dass die Rolle ein Testmanager ist, der sich auf umsetzbare Erkenntnisse und Entscheidungsunterstützung konzentriert, um eine umfassende Analyse der Testdaten sicherzustellen.",
+      "c) Fügen Sie eine Instruktion hinzu, potenzielle Risiken, die aus den Trends in den generierten Metriken identifiziert wurden, zusammen mit ihrer Folgenabschätzung und Priorisierung aufzunehmen.",
+      "d) Betonen Sie die Einschränkung, dass die Ausgabe auch für die Stakeholder leicht interpretierbar sein muss, durch die Verwendung klarer Sprache und den Verzicht auf Fachjargon."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – die Erweiterung des Ausgabeformats um eine Zusammenfassung in einfacher Sprache unterstützt direkt Verständnis und Umsetzbarkeit für Stakeholder (vgl. Lehrplan, Abschnitt 2.2.4).\nb) FALSCH – erläutert zwar die Rolle, enthält aber keine konkreten Instruktionen zur Verbesserung der Interpretierbarkeit.\nc) FALSCH – ergänzt eine Risikoanalyse, bietet aber keinen Mechanismus, um die Ergebnisse für Stakeholder verständlich zu machen.\nd) FALSCH – wiederholt lediglich eine bestehende Einschränkung, ohne konkrete Hinweise zur Interpretierbarkeit auf Stakeholder-Ebene."
+  },
+  {
+    "id": 16,
+    "lo": "GenAI-2.2.5",
+    "k": "K3",
+    "pts": 2,
+    "text": "Ihr Ziel ist es, Testfälle für ein KI-basiertes System zu erstellen, das unter dem Testorakelproblem leidet, bei dem das erwartete Ergebnis nicht eindeutig bestimmt werden kann. Sie können sich nur auf wenige vorhandene Testfälle mit bekannten erwarteten Ergebnissen verlassen. Durch geeignete Analysen haben Sie eine Reihe klar definierter Transformationsregeln identifiziert, die festlegen, wie sich Änderungen an den Eingaben auf die erwarteten Ergebnisse auswirken. Diese Regeln können auf alle vorhandenen Testfälle angewendet werden.\n\nSie haben sich entschieden, eine generative KI einzusetzen und einem LLM die folgenden Informationen bereitzustellen:\ndie vorhandenen Testfälle mit ihren Eingaben und erwarteten Ergebnissen, eine klare Beschreibung der Transformationsregeln sowie Richtlinien für die Generierung zusätzlicher Testfälle durch präzise Anwendung dieser Regeln auf die relevanten vorhandenen Testfälle.\nMit den angegebenen Informationen kann das ausgewählte LLM direkt zusätzliche Testfälle generieren, die Ihren Erwartungen entsprechen.\n\nWelche der folgenden Prompting-Techniken eignet sich AM BESTEN, um Ihr Ziel in diesem Szenario zu erreichen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Prompt-Verkettung (Prompt Chaining)",
+      "b) Meta-Prompting",
+      "c) Zero-Shot-Prompting",
+      "d) Few-Shot-Prompting"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Prompt-Verkettung wäre möglich, würde die einfache Aufgabe jedoch unnötig verkomplizieren.\nb) FALSCH – Meta-Prompting ist nutzbar, aber weniger direkt und zielgerichtet als Few-Shot-Prompting.\nc) FALSCH – Zero-Shot-Prompting ist hier nicht effektiv, weil keine bestehenden Testfälle als Beispiele genutzt werden.\nd) KORREKT – Few-Shot-Prompting ist ideal, weil sich damit vordefinierte Beispiele bereitstellen lassen, die das LLM gezielt anleiten und die Transformationsregeln demonstrieren."
+  },
+  {
+    "id": 17,
+    "lo": "GenAI-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Sie verwenden generative KI, um das Testen einer Unterhaltungssoftwareanwendung zu unterstützen.\n\nIhr Ziel ist es, sowohl typische Nutzungsszenarien als auch Randfälle möglichst umfassend abzudecken.\n\nDas generative KI-Modell generiert dazu Testfälle für Benutzerinteraktionsszenarien, Testskripte für API-Interaktionen und synthetische Testdaten zur Abdeckung von Randfällen.\n\nWelche Kombination aus Metriken und deren Nutzung bewertet die Leistung der generativen KI in diesem Szenario AM BESTEN und liefert eine geeignete Grundlage zur Verfeinerung der Prompts?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Bewerten Sie die Genauigkeit und Sensitivität der Testfälle gegenüber den Anforderungen an die Unterhaltungssoftware und nutzen Sie Zeiteffizienzmetriken, um KI-generierte Testskripte mit manuellen Testaktivitäten zu vergleichen.",
+      "b) Messen Sie die Vielfalt der generierten Testfälle, um unterschiedliche Eingabeszenarien und Randfälle abzudecken, und erfassen Sie die Ausführungserfolgsrate der generierten API-Testskripte, um deren Zuverlässigkeit zu bewerten.",
+      "c) Konzentrieren Sie sich auf die Genauigkeit der synthetischen Testdaten im Hinblick auf Konformitätsstandards für Unterhaltungssoftware und ergänzen Sie dies durch Relevanz und Kontext-Angemessenheit sowie die Ausführungserfolgsrate, um Übereinstimmung und Verwendbarkeit der Testskripte zu bewerten.",
+      "d) Priorisieren Sie Relevanz und Kontext-Angemessenheit aller Ergebnisse, um die Konsistenz mit den Anforderungen an die Unterhaltungssoftware zu gewährleisten, und setzen Sie Vielfalt-Metriken ein, um die Überdeckung von Randfällen zu erweitern, ohne die Ausführungserfolgsrate zu berücksichtigen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – adressiert primär Konformität und Aufwand, nicht explizit die Abdeckung unterschiedlicher Nutzungsszenarien/Randfälle oder die Zuverlässigkeit der Skriptausführung.\nb) KORREKT – die Diversität der Testfälle unterstützt eine umfassende Abdeckung, und die Ausführungserfolgsrate misst die Zuverlässigkeit der generierten API-Testskripte (vgl. Lehrplan, Abschnitt 2.3.1, Metrik „Diversität“).\nc) FALSCH – es fehlt eine explizite Betrachtung der Vielfalt der generierten Testfälle und Randfälle.\nd) FALSCH – ohne Metriken wie die Ausführungserfolgsrate bleibt unklar, ob die generierten Testskripte zuverlässig ausgeführt werden."
+  },
+  {
+    "id": 18,
+    "lo": "GenAI-2.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welches der folgenden Verfahren eignet sich AM BESTEN, um zu analysieren, warum ein LLM wiederholt Testfälle mit falschen erwarteten Ergebnissen generiert, die den Eingaben widersprechen, und daraus Erkenntnisse zur Optimierung des Prompts und zur Vermeidung ähnlicher Fehler abzuleiten?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Ausgabeanalyse",
+      "b) A/B-Test von Prompts.",
+      "c) Anpassung der Länge und Spezifität von Prompts.",
+      "d) Integration von Benutzer-Feedback."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – die Ausgabeanalyse untersucht LLM-Ausgaben auf Ungenauigkeiten und Inkonsistenzen und liefert so konkrete Hinweise für das Prompt-Refinement.\nb) FALSCH – A/B-Tests eignen sich eher zum Vergleich verschiedener Prompt-Versionen als zur Ursachendiagnose.\nc) FALSCH – die Anpassung von Länge und Spezifität adressiert nicht unmittelbar die Ursachen fehlerhafter erwarteter Ergebnisse.\nd) FALSCH – die Integration von Benutzer-Feedback unterstützt das Prompt-Refinement, adressiert aber nicht unmittelbar die Ursachen."
+  },
+  {
+    "id": 19,
+    "lo": "GenAI-3.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Was ist eine Halluzination im Zusammenhang mit LLM-Ausgaben?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Ein logischer Fehler, bei dem das LLM einen mehrstufigen Denkprozess nicht korrekt nachvollziehen kann.",
+      "b) Eine Generierung irrelevanter oder sachlich falscher Ergebnisse durch das LLM für eine bestimmte Aufgabe.",
+      "c) Eine Verzerrung in der LLM-Ausgabe, die dadurch verursacht wird, dass die Trainingsdaten bestimmte Perspektiven bevorzugen.",
+      "d) Eine Einschränkung des LLM beim Verstehen nicht-englischer Perspektiven bei der Testgenerierung."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – das beschreibt argumentative Fehlschlüsse, keine Halluzinationen.\nb) KORREKT – Halluzinationen liegen vor, wenn ein LLM Ausgaben erzeugt, die sachlich falsch oder für die jeweilige Aufgabe irrelevant sind (siehe CT-GenAI-Lehrplan V1.1, Abschnitt 3.1.1).\nc) FALSCH – das beschreibt Verzerrungen (Bias), nicht Halluzinationen.\nd) FALSCH – das beschreibt Verzerrungen infolge Unterrepräsentation in den Trainingsdaten, nicht Halluzinationen."
+  },
+  {
+    "id": 20,
+    "lo": "GenAI-3.1.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "Sie verwenden generative KI, um Testfälle für eine E-Commerce-Anwendung (Online-Shop) zu erstellen. Die folgenden Merkmale wurden in der Projektbeschreibung ausdrücklich erwähnt:\n\nWarenkorbverwaltung, Anwendung von Rabattcodes, Generierung von Bestellbestätigungs-E-Mails\n\nWelche der folgenden KI-generierten Testfälle stellt auf Grundlage dieser Angaben AM EHESTEN eine Halluzination dar?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Überprüfe, ob ein Benutzer mehrere Artikel in seinen Warenkorb legen und zur Kasse gehen kann.",
+      "b) Überprüfe, ob ein Benutzer beim Bezahlen keinen abgelaufenen Rabattcode anwenden kann.",
+      "c) Überprüfe, ob ein Benutzer nach erfolgreicher Bestellung eine Bestellbestätigungs-E-Mail erhält.",
+      "d) Überprüfe, ob ein Benutzer eine Wunschliste erstellen kann, um Lieblingsartikel für später zu speichern."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – die Warenkorbverwaltung wird ausdrücklich erwähnt, daher ist dieser Testfall relevant.\nb) FALSCH – die Verwendung von Rabattcodes wird ausdrücklich erwähnt, daher ist dieser Testfall relevant.\nc) FALSCH – Bestellbestätigungs-E-Mails werden ausdrücklich erwähnt, daher ist dieser Testfall gültig.\nd) KORREKT – die Wunschlistenverwaltung wird in der Projektbeschreibung nicht erwähnt und ist daher der am ehesten halluzinierte Testfall."
+  },
+  {
+    "id": 21,
+    "lo": "GenAI-3.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Optionen beschreibt AM BESTEN einen unmittelbaren Vorteil klarer und strukturierter Eingabedatenformate (z. B. Tabellen, JSON, fest definierte Felder) beim Einsatz von LLMs für Testaufgaben?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Führt dazu, dass der Aufwand für das Fein-Tuning von LLMs für Testaufgaben reduziert wird.",
+      "b) Führt dazu, dass LLMs kontextrelevantere und präzisere Ausgaben für Testaufgaben erzeugen.",
+      "c) Führt dazu, dass LLMs grundsätzlich keine mehrdeutigen Ergebnisse für Testaufgaben mehr erzeugen.",
+      "d) Führt dazu, dass LLMs kreativere Ergebnisse für Testaufgaben erzeugen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – die Verwendung klarer Eingabedatenformate hat keinen Einfluss auf den Fein-Tuning-Aufwand.\nb) KORREKT – klare Formate wie Tabellen, JSON oder fest definierte Felder reduzieren Interpretationsspielräume und unterstützen präzisere, kontextbezogenere Ausgaben.\nc) FALSCH – strukturierte Eingaben können Mehrdeutigkeiten reduzieren, schließen mehrdeutige Ergebnisse jedoch nicht grundsätzlich aus.\nd) FALSCH – strukturierte Formate schränken kreative Variationen eher ein, als sie zu erhöhen."
+  },
+  {
+    "id": 22,
+    "lo": "GenAI-3.1.4",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche Strategie kann dazu beitragen, die Variabilität der Ausgaben eines LLMs zu verringern, indem die Wahrscheinlichkeitsverteilung während der Antwortgenerierung eingeschränkt wird?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Senkung des Temperaturparameters.",
+      "b) Erhöhung der Lernrate.",
+      "c) Erhöhung des Anfangswerts für den Zufallsgenerator (Random Seed).",
+      "d) Senkung des Anfangswerts für den Zufallsgenerator (Random Seed)."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – die Temperatur steuert die Zufälligkeit der Ausgabe; eine Senkung reduziert die Zufälligkeit und führt zu konsistenteren Ausgaben.\nb) FALSCH – die Lernrate steuert den Trainingsprozess und hat keinen Einfluss auf die Variabilität der Inferenz.\nc), d) FALSCH – der Zufallsstartwert kann die Reproduzierbarkeit verbessern, verengt jedoch nicht von selbst die Wahrscheinlichkeitsverteilung während der Inferenz; sein Wert (hoch oder niedrig) ist dabei irrelevant."
+  },
+  {
+    "id": 23,
+    "lo": "GenAI-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen zu Datenschutzbedenken bei der Verwendung generativer KI in Softwaretests ist NICHT korrekt?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Generative KI kann unbeabsichtigt sensible Daten durch ihre Ausgabe offenlegen.",
+      "b) Generative KI-Tools können sensible Daten ohne ausdrückliche Zustimmung des Benutzers speichern und verarbeiten, was zu Missbrauch führen kann.",
+      "c) Die Verwendung von generativen KI-Tools ohne Einhaltung von Datenschutzbestimmungen wie der Datenschutz-Grundverordnung (DSGVO) kann zu Rechtsstreitigkeiten führen.",
+      "d) Ein LLM kann unter Umständen echte sensible Daten offenlegen, wenn es bei der Generierung synthetischer Testdaten halluziniert, unabhängig von den Trainingsdaten."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH (d.h. diese Aussage ist korrekt) – unbeabsichtigte Datenoffenlegung durch Ausgaben generativer KI ist ein reales Datenschutzproblem.\nb) FALSCH (korrekt) – fehlende Kontrollmechanismen bei Speicherung/Verarbeitung sensibler Daten sind ein reales Datenschutzproblem.\nc) FALSCH (korrekt) – Nichteinhaltung der DSGVO kann zu rechtlichen Risiken führen.\nd) KORREKT (als NICHT korrekte Aussage gesucht) – ein LLM gibt keine echten sensiblen Daten preis, wenn es bei der Generierung synthetischer Testdaten halluziniert, solange es nicht mit echten sensiblen Daten trainiert wurde; eine solche Generierung ist sehr unwahrscheinlich."
+  },
+  {
+    "id": 24,
+    "lo": "GenAI-3.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Ein Angreifer schleust gefälschte Testergebnisse in den Trainingsdatensatz eines LLMs ein, das dafür vorgesehen ist, optimale Testabdeckungsstrategien zu empfehlen.\n\nAuf welche Art von Angriffsvektor bezieht sich diese Beschreibung AM BESTEN?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Generierung von bösartigem Code.",
+      "b) Datenverunreinigung",
+      "c) Kontextmanipulation",
+      "d) Manipulation von Anfragen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – die Generierung von bösartigem Code betrifft die Manipulation eines LLM zur Erzeugung von Hintertüren, nicht das Einschleusen falscher Trainingsdaten.\nb) KORREKT – Datenverunreinigung umfasst die Manipulation von Trainingsdaten, z. B. durch gefälschte Testergebnisse, um die Empfehlungen des LLM zu beeinträchtigen (siehe CT-GenAI-Lehrplan V1.1, Abschnitt 3.2.2).\nc) FALSCH – Kontextmanipulation zielt darauf ab, vertrauliche Trainingsdatensätze zu extrahieren, nicht falsche Daten einzuschleusen.\nd) FALSCH – bei der Manipulation von Anfragen werden Laufzeitdaten verändert, nicht Trainingsdaten eingeschleust."
+  },
+  {
+    "id": 25,
+    "lo": "GenAI-3.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Ordnen Sie jede Art von Angriffsvektor (1-4)\n\n1. „Kontextmanipulation”\n2. „Manipulation von Anfragen”\n3. „Datenverunreinigung”\n4. „Generierung von bösartigem Code”\n\ndem entsprechenden Beispiel (A-D) zu:\n\nA. Ein Angreifer verändert in böswilliger Absicht Daten, die die Rückverfolgbarkeit zwischen Anforderungen und Testfällen betreffen, innerhalb des Datensatzes, der zum Fein-Tuning eines LLM verwendet wird, und beeinträchtigt damit dessen Genauigkeit bei der Generierung von Testfällen aus Anforderungen.\nB. Ein Angreifer erstellt und übermittelt böswillig manipulierte Eingabeaufforderungen (Prompts), die ein LLM, das zur Unterstützung von Testern bei der automatisierten Testskriptgenerierung feinabgestimmt wurde, dazu veranlassen, verwundbare Testskripte mit versteckten Sicherheitslücken zu erstellen.\nC. Ein Angreifer übermittelt in böswilliger Absicht umfangreiche, speziell präparierte Eingabeaufforderungen (Prompts), die ein LLM, das zur Unterstützung von Testern bei der Generierung von Testfällen feinabgestimmt wurde, dazu verleiten, versehentlich vertrauliche API-Schlüssel preiszugeben, die aus früheren Testprojekten stammen.\nD. Ein Angreifer übermittelt in böswilliger Absicht sorgfältig manipulierte Referenz-Screenshots an ein visuelles Testframework, das ein LLM für vergleichende visuelle Analysen verwendet, um das LLM zu täuschen, sodass es während Regressionstests echte UI-Probleme systematisch ignoriert.\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) 1C, 2D, 3A, 4B",
+      "b) 1B, 2D, 3A, 4C",
+      "c) 1D, 2C, 3B, 4A",
+      "d) 1C, 2B, 3D, 4A"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "1C – Kontextmanipulation: Prompt-Injection veranlasst das LLM, vertrauliche API-Schlüssel preiszugeben (Exfiltration sensibler Daten).\n2D – Manipulation von Anfragen: böswillig veränderte Referenz-Screenshots sind Laufzeit-Eingaben, die die Ausgabe verfälschen.\n3A – Datenverunreinigung (Poisoning): der Fein-Tuning-Datensatz wird manipuliert, sodass das Modell falsche Korrelationen lernt.\n4B – Generierung von bösartigem Code: ein Prompt zwingt das LLM, verwundbare Skripte mit Hintertüren zu erzeugen.\nDaher ist a) KORREKT."
+  },
+  {
+    "id": 26,
+    "lo": "GenAI-3.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Strategien adressiert die Risiken für den Datenschutz im Zusammenhang mit auf generativer KI basierenden Softwaretesten AM BESTEN?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Mehrere LLMs zur Bewertung und zum Vergleich von Testergebnissen verwenden, um die Genauigkeit zu verbessern.",
+      "b) Uneingeschränkten Zugriff auf sensible Testdaten gewähren, um das Training generativer KI zu verbessern.",
+      "c) Die Verschlüsselung sensibler Testdaten deaktivieren, um die Datenspeicherung und Übertragungsprozesse zu vereinfachen.",
+      "d) Sensible Testdaten durch eine anonymisierte Version derselben ersetzen."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – der Vergleich mehrerer LLMs fokussiert auf Ausgabequalität, nicht auf Datenschutzrisiken.\nb) FALSCH – uneingeschränkter Zugriff auf sensible Daten erhöht das Risiko einer Verletzung des Datenschutzes.\nc) FALSCH – die Deaktivierung der Verschlüsselung schwächt die Sicherheit und erhöht das Risiko des Datendiebstahls.\nd) KORREKT – Anonymisierung ist eine effektive Strategie zur Minderung von Datenschutzrisiken."
+  },
+  {
+    "id": 27,
+    "lo": "GenAI-3.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen über die Auswirkungen der Verwendung von LLMs auf den Energieverbrauch und die CO₂-Emissionen ist korrekt?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Bildgenerierungsaufgaben verbrauchen wesentlich mehr Energie als Textgenerierungsaufgaben, verursachen jedoch weniger CO₂-Emissionen.",
+      "b) Generative KI-gestützte Suchvorgänge verbrauchen aufgrund ihrer optimierten Algorithmen deutlich weniger Energie als herkömmliche Websuchen.",
+      "c) Bildgenerierungsaufgaben verbrauchen aufgrund ihrer höheren Komplexität erheblich mehr Energie als Textgenerierungsaufgaben.",
+      "d) Textgenerierungsaufgaben verbrauchen sehr wenig Energie und können daher von Millionen Nutzern ausgeführt werden, ohne einen nennenswerten Energieverbrauch zu verursachen."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Energieverbrauch und CO₂-Emissionen stehen in der Regel im Zusammenhang; Bildgenerierung ist beides intensiver.\nb) FALSCH – GenAI-gestützte Suchanfragen verbrauchen im Gegenteil erheblich mehr Energie als herkömmliche Websuchen.\nc) KORREKT – die Bildgenerierung erfordert deutlich mehr Rechenressourcen und ist daher wesentlich energieintensiver als Textgenerierung.\nd) FALSCH – die kumulativen Auswirkungen der Textgenerierung durch Millionen von Nutzern sind nicht zu vernachlässigen."
+  },
+  {
+    "id": 28,
+    "lo": "GenAI-3.4.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche zwei der folgenden Normen – oder Teile davon – sind für den Einsatz von generativer KI beim Testen von Software AM EHESTEN relevant?\n\nWählen Sie ZWEI Optionen! (2 aus 5)",
+    "options": [
+      "a) ISO/IEC 25010:2023",
+      "b) ISO/IEC 23053:2022",
+      "c) ISO/IEC/IEEE 29119-2:2021",
+      "d) ISO/IEC 42001:2023",
+      "e) ISO/IEC/IEEE 29119-3:2021"
+    ],
+    "answer": [
+      1,
+      3
+    ],
+    "explanation": "a) FALSCH – ISO/IEC 25010:2023 definiert ein Produktqualitätsmodell, befasst sich aber nicht mit GenAI beim Softwaretesten.\nb) KORREKT – ISO/IEC 23053:2022 (Lehrplan Abschnitt 3.4.1) stellt einen Rahmen für Datenqualität, Transparenz und Fehlertoleranz bei der Verwendung von GenAI im Testkontext bereit.\nc) FALSCH – ISO/IEC/IEEE 29119-2:2021 befasst sich mit Testprozessen, nicht mit GenAI beim Softwaretesten.\nd) KORREKT – ISO/IEC 42001:2023 (Lehrplan Abschnitt 3.4.1) legt Anforderungen für das Management von KI-basierten Systemen fest und fördert Konsistenz und Zuverlässigkeit.\ne) FALSCH – ISO/IEC/IEEE 29119-3:2021 befasst sich mit Testdokumentation, nicht mit GenAI beim Softwaretesten."
+  },
+  {
+    "id": 29,
+    "lo": "GenAI-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Komponenten einer LLM-gestützten Testanwendung ist dafür verantwortlich, Benutzereingaben mit strukturierten, semantisch ähnlichen Daten zu kombinieren, um einen Prompt für das LLM vorzubereiten?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Backend",
+      "b) Frontend",
+      "c) Authentifizierungskomponente",
+      "d) Post-Processing-Komponente"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – das Backend (Orchestrator/LLM-gestützter Agent) ruft Daten aus relationalen und Vektordatenbanken ab, kombiniert sie mit Benutzer-Prompts und bereitet den Prompt für das LLM vor.\nb) FALSCH – das Frontend dient als Benutzerschnittstelle, bereitet aber nicht den Prompt vor.\nc) FALSCH – die Authentifizierungskomponente gewährleistet sicheren Zugriff, ist aber nicht an der Prompt-Vorbereitung beteiligt.\nd) FALSCH – die Post-Processing-Komponente verfeinert die LLM-Ausgabe, nicht die Prompt-Vorbereitung."
+  },
+  {
+    "id": 30,
+    "lo": "GenAI-4.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Als Tester sind Sie für eine Bankanwendung zuständig, die Funktionen wie die Benutzeranmeldung, die Kontoverwaltung und sichere Transaktionen umfasst. Die Systemdokumentation, einschließlich der API-Spezifikationen und Sicherheitsanforderungen, ist in einer Vektordatenbank gespeichert. Historische Testfälle sind dagegen in einer relationalen Datenbank gespeichert.\n\nIhre Aufgabe besteht darin, mithilfe eines Retrieval-Augmented Generation-(RAG)-Frameworks Testfälle zu erstellen, um die Übereinstimmung mit den neuesten Spezifikationen und Anforderungen sicherzustellen.\n\nWelche der folgenden Optionen stellt die AM BESTEN geeignete Verwendung des RAG-Frameworks in diesem Szenario dar?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Eine Abfrage absenden, in der alle zu testenden Funktionen angegeben sind. Das RAG-Framework ruft relevante Spezifikationen und Anforderungen aus der Vektordatenbank ab, kombiniert sie mit historischen Testfällen und generiert automatisch präzise und kontextbezogene Testfälle über das LLM.",
+      "b) Eine Abfrage absenden, die eine zu testende Funktion angibt. Das RAG-Framework ruft relevante Spezifikationen und Anforderungen aus der Vektordatenbank ab, kombiniert sie mit passenden historischen Testfällen und erzeugt über das LLM kontextbezogene Testfallvorschläge, die anschließend überprüft werden können.",
+      "c) Das RAG-Framework verwenden, um historische Testfälle aus der relationalen Datenbank und Sicherheitsanforderungen aus der Vektordatenbank abzurufen. Die abgerufenen Informationen manuell überprüfen, bevor die Abfrage für das LLM verfeinert wird, um gezielte Testfälle zu generieren.",
+      "d) Sich auf die internen Trainingsdaten des LLM verlassen, um Testfälle zu generieren, während das RAG-Framework oder die Referenzabfrage verwendet wird, ohne die abgerufenen Informationen direkt in den Generierungsprozess einzubeziehen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – RAG eignet sich besser für gezieltes Retrieval spezifischer Informationen, nicht für den gesamten Datensatz auf einmal.\nb) KORREKT – eine gezielte Abfrage zu einer bestimmten Funktion unterstützt ein fokussiertes Retrieval und erhöht die Wahrscheinlichkeit kontextbezogener, genauerer Testfallvorschläge.\nc) FALSCH – beschreibt nicht den am besten geeigneten RAG-Ablauf; RAG zielt darauf ab, abgerufene Informationen unmittelbar als Kontext für die Generierung zu nutzen.\nd) FALSCH – ignoriert die Kernfunktion von RAG, externe aktuelle Informationen in die Generierung einzubeziehen."
+  },
+  {
+    "id": 31,
+    "lo": "GenAI-4.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Optionen beschreibt AM BESTEN die Verbesserungen, die autonome und semiautonome LLM-gestützte Agenten für die Automatisierung von Testprozessen mit sich bringen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Sie können Effizienz und Qualität primär durch die Wahl zwischen Single-Agenten und Multi-Agenten-Systemen verbessern, unabhängig vom Grad menschlicher Interaktion.",
+      "b) Sie können die Qualität bei der Automatisierung von Testprozessen durch zusätzliche Verifizierungsschritte verbessern, jedoch auf Kosten der Effizienz.",
+      "c) Sie können sowohl die Effizienz als auch die Qualität bei der Automatisierung von Testprozessen verbessern, indem sie ihre Fähigkeit nutzen, mit unterschiedlichen Graden menschlicher Interaktion zu arbeiten.",
+      "d) Sie können sowohl die Effizienz als auch die Qualität bei der Automatisierung von Testprozessen verbessern und gleichzeitig die Notwendigkeit von Verifikationen innerhalb dieser Testprozesse beseitigen."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – die wichtigsten Verbesserungen beziehen sich auf die Fähigkeit, Autonomie mit menschlicher Aufsicht in Einklang zu bringen, nicht primär auf die Wahl zwischen Single- und Multi-Agenten-Systemen.\nb) FALSCH – automatisierte Verifizierungen zielen darauf ab, Qualität zu verbessern, ohne die Effizienz zu beeinträchtigen.\nc) KORREKT – autonome Agenten erhöhen die Effizienz durch minimalen menschlichen Eingriff, semiautonome Agenten sichern durch strategische menschliche Überwachung die Qualität – ein ausgewogener Ansatz mit unterschiedlichen Graden menschlicher Interaktion.\nd) FALSCH – die vollständige Abschaffung der Verifizierung ist weder realistisch noch wünschenswert."
+  },
+  {
+    "id": 32,
+    "lo": "GenAI-4.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen über das Fein-Tuning von Sprachmodellen für spezifische Testaufgaben ist FALSCH?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Fein-Tuning umfasst das Training eines vortrainierten Modells mit aufgabenspezifischen Daten, um dessen Leistung und Fachkenntnisse zu verbessern.",
+      "b) Durch Fein-Tuning wird ein Sprachmodell mit neuen Fähigkeiten ausgestattet, indem sein allgemeines Wissen durch aufgabenspezifisches Denken ersetzt wird, wodurch eine Überanpassung vermieden wird.",
+      "c) Durch Fein-Tuning werden die Parameter eines vortrainierten Modells anhand eines gezielten Datensatzes modifiziert, um es an einen bestimmten Bereich oder eine bestimmte Aufgabe anzupassen.",
+      "d) Fein-Tuning erfordert qualitativ hochwertige, aufgabenspezifische Datensätze, um verzerrte oder ungenaue Ergebnisse zu vermeiden."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH (d.h. diese Aussage ist korrekt) – korrekte Beschreibung von Fein-Tuning.\nb) KORREKT (als FALSCHE Aussage gesucht) – Fein-Tuning ersetzt nicht das allgemeine Wissen des Modells, und Überanpassung bleibt eine potenzielle Herausforderung.\nc) FALSCH (korrekt) – zutreffende Beschreibung der Parameteranpassung durch Fein-Tuning.\nd) FALSCH (korrekt) – zutreffende Beschreibung der Datenanforderungen für effektives Fein-Tuning."
+  },
+  {
+    "id": 33,
+    "lo": "GenAI-4.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt AM BESTEN den Schwerpunkt von Large-Language-Model-Operations (LLMOps) bei der Bereitstellung und Verwaltung von LLMs für Testaufgaben?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Effiziente Verwaltung, Überwachung und Optimierung von LLMs über ihren Lebenszyklus hinweg, einschließlich Datenschutz-, Sicherheits- und Kostenaspekten.",
+      "b) Vermeidung der Abhängigkeit von generativer KI in Testprozessen.",
+      "c) Die Beschränkung der LLM-Nutzung auf Chatbot-basiertes Testen, um die Komplexität zu reduzieren.",
+      "d) Vollständige Automatisierung aller Testaufgaben ohne menschliche Beteiligung."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – LLMOps verwaltet LLMs über deren Lebenszyklus hinweg und befasst sich mit Datenschutz, Sicherheit und Kosten.\nb) FALSCH – LLMOps konzentriert sich auf die Verwaltung von LLMs, nicht auf die Verhinderung ihrer Nutzung.\nc) FALSCH – LLMOps findet in verschiedenen Anwendungsbereichen Verwendung, nicht nur bei Chatbot-basierten Lösungen.\nd) FALSCH – LLMOps zielt auf einen kontrollierten, effizienten Betrieb, nicht auf vollständige Automatisierung ohne menschliche Beteiligung."
+  },
+  {
+    "id": 34,
+    "lo": "GenAI-5.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen über Schatten-KI ist richtig?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Schatten-KI erzwingt die Einhaltung der Datenrichtlinien des Unternehmens und der geltenden KI-Vorschriften.",
+      "b) Schatten-KI macht klare Lizenzvereinbarungen für KI-Tools überflüssig.",
+      "c) Schatten-KI verringert das Risiko von Streitigkeiten über geistiges Eigentum.",
+      "d) Schatten-KI kann zu unbefugten Zugriffen auf sensible Informationen führen."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – Schatten-KI unterläuft Unternehmensrichtlinien, statt sie durchzusetzen.\nb) FALSCH – Schatten-KI birgt Risiken im Zusammenhang mit unklaren Lizenzvereinbarungen.\nc) FALSCH – Schatten-KI erhöht das Risiko von Streitigkeiten über geistiges Eigentum.\nd) KORREKT – Schatten-KI verfügt oft nicht über robuste Sicherheit, was das Risiko von Datenpannen oder unbefugtem Zugriff erhöht."
+  },
+  {
+    "id": 35,
+    "lo": "GenAI-5.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Was ist ein wichtiger Aspekt, der bei der Definition einer generativen KI-Strategie für das Testen zu berücksichtigen ist?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Planung von Schulungsprogrammen, um sicherzustellen, dass die Teammitglieder Zertifizierungen für jedes verwendete LLM erhalten.",
+      "b) Auswahl von LLMs, die sich effizient in bestehende Testumgebungen und Testtools integrieren lassen.",
+      "c) Sicherstellen der Verfügbarkeit möglichst vieler Eingabedaten, um die Wahrscheinlichkeit einer höheren LLM-Ausgabequalität zu gewährleisten.",
+      "d) Erhebung von standardisierten Metriken aus dem überwachten maschinellen Lernen, um die Effektivität der LLM-Ausgaben zu bewerten."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Schulungsprogramme sollten auf den Erwerb technischer Fähigkeiten zum effektiven Einsatz von GenAI-Tools ausgerichtet sein, nicht primär auf Zertifizierungen.\nb) KORREKT – die Auswahl von LLMs, die mit der bestehenden Testinfrastruktur kompatibel sind, ist ein zentraler Aspekt einer GenAI-Strategie.\nc) FALSCH – entscheidend ist eine ausreichende Menge qualitativ hochwertiger Eingabedaten entsprechend den Testzielen, nicht möglichst viele Daten.\nd) FALSCH – eine GenAI-Strategie sollte aufgabenspezifische Metriken erfassen, nicht unverändert aus dem klassischen überwachten maschinellen Lernen übernommene Metriken."
+  },
+  {
+    "id": 36,
+    "lo": "GenAI-5.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt AM BESTEN ein wesentliches Kriterium für die Auswahl eines geeigneten Large-Language-Modells (LLM) für bestimmte Testaufgaben in einer Testorganisation?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Die Leistung des LLM sollte ausschließlich anhand unternehmensinterner Benchmarks für die jeweiligen Testaufgaben bewertet werden.",
+      "b) Die Bewertung des LLM sollte sich an öffentlich verfügbaren Community-Benchmarks orientieren, um vollständige Kompatibilität sicherzustellen.",
+      "c) Die wiederkehrenden Kosten, z. B. für die benötigten Rechenressourcen, sollten berücksichtigt werden.",
+      "d) Die wiederkehrenden Kosten sollten anhand der Einbindung des LLM an das Testmanagement-Werkzeug bewertet werden, um die Eignung des LLM für Testaufgaben nachzuweisen."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – die ausschließliche Bewertung anhand unternehmensinterner Benchmarks ist kein hinreichendes alleiniges Auswahlkriterium.\nb) FALSCH – die Orientierung an öffentlichen Community-Benchmarks zur vollständigen Kompatibilität ist kein im Lehrplan genanntes Schlüsselkriterium.\nc) KORREKT – die Bewertung wiederkehrender Kosten (z. B. Rechenressourcen) ist ein wichtiges Auswahlkriterium (siehe Lehrplan, Abschnitt 5.1.3).\nd) FALSCH – das beschriebene Kriterium bezieht sich auf einmalige Kosten, nicht auf die relevanten wiederkehrenden Kosten."
+  },
+  {
+    "id": 37,
+    "lo": "GenAI-5.1.4",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche Phasen sind bei der Einführung von generativer KI in einem Unternehmen BESONDERS WICHTIG?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Erkundung, Einführung und Definition der Nutzung, sowie Nutzung und Iteration.",
+      "b) Bewusstsein, Priorisierung der Nutzung, Leistungsüberwachung.",
+      "c) Planung, Experimentieren, Bewertung und Verfeinerung (Refinement).",
+      "d) Schulung, Testen, Implementierung und Skalierung."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "Der Lehrplan (Abschnitt 5.1.4) beschreibt drei Schlüsselphasen bei der Einführung von generativer KI in einem Unternehmen: Erkundung; Einführung und Definition der Nutzung; Nutzung und Iteration.\na) KORREKT – alle drei Schlüsselphasen werden ausdrücklich erwähnt.\nb) FALSCH – enthält keine der drei Phasen, sondern nur Ziele bzw. Aktivitäten.\nc) FALSCH – bezieht sich auf Projektaktivitäten, nicht auf die im Lehrplan genannten Phasen.\nd) FALSCH – beschreibt Implementierungsschritte, nicht die Einführungsphasen."
+  },
+  {
+    "id": 38,
+    "lo": "GenAI-5.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Optionen beschreibt AM BESTEN ein Beispiel für Anforderungen an Kenntnisse und/oder Fähigkeiten, die Tester benötigen, um in Testprozessen mit Large-Language-Modellen (LLMs) effektiv zu arbeiten?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Beherrschung von Techniken, die speziell darauf abzielen, zu verhindern, dass LLMs bei bestimmten Testaufgaben Halluzinationen oder Argumentationsfehler begehen.",
+      "b) Auswahl und Implementierung geeigneter Testautomatisierungsansätze, wie z. B. der schlüsselwortgetriebenen Testautomatisierung, zur Automatisierung von Testprozessen.",
+      "c) Auswahl des am besten geeigneten LLM anhand von Kriterien wie seiner Fähigkeit, an spezifische Testaufgaben angepasst oder feinabgestimmt (fine-tuned) zu werden.",
+      "d) Sicherstellung, dass die bei der Entwicklung der LLMs verwendeten Validierungs- und Testdaten von höchster Qualität sind."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – Halluzinationen sind ein inhärentes Problem aktueller KI-Technologien; Tester können sie nicht verhindern, sondern müssen deren Risiken erkennen und mindern.\nb) FALSCH – Kenntnisse in Testautomatisierung sind wertvoll, befassen sich aber nicht spezifisch mit der Integration von GenAI.\nc) KORREKT – die Bewertung und Auswahl geeigneter LLMs, einschließlich ihrer Anpassungs-/Fine-Tuning-Fähigkeit, ist eine Schlüsselkompetenz laut Lehrplan.\nd) FALSCH – das betrifft die Entwicklung von LLMs (z. B. durch KI-Forscher), nicht den Einsatz von GenAI in Testaufgaben durch Tester."
+  },
+  {
+    "id": 39,
+    "lo": "GenAI-5.2.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Was ist der BESTE Ansatz, um innerhalb von Testteams Fähigkeiten zu fördern, die speziell die Einführung von generativer KI unterstützen?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Hauptsächlich auf externe Expertenkurse mit praktischen Übungen setzen, mit dem Ziel, KI sofort in alle täglichen Testaufgaben zu integrieren.",
+      "b) Unabhängiges Experimentieren mit verschiedenen LLMs fördern, ohne einem strukturierten Lernprozess zu folgen.",
+      "c) Hauptsächlich auf theoretische Kurse von externen Experten setzen, um KI schrittweise im Einklang mit dem tatsächlichen Lernfortschritt in die täglichen Testaufgaben zu integrieren.",
+      "d) Einen praxisorientierten, schrittweisen Lernprozess einführen, der durch angeleitete Übungen, Peer-Learning und Wissensaustausch-Communities unterstützt wird."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – eine überwiegende Abhängigkeit von externen Kursen mindert internes Training und Community-Aufbau; ein „Big-Bang“-Ansatz ist nicht empfehlenswert.\nb) FALSCH – unabhängiges Experimentieren ohne Struktur führt möglicherweise nicht zu konsistenter Kompetenzentwicklung.\nc) FALSCH – eine überwiegende Abhängigkeit von theoretischen Kursen mindert die Bedeutung praktischer Fähigkeiten und internen Wissensaustauschs.\nd) KORREKT – der Lehrplan empfiehlt einen schrittweisen, praxisorientierten Lernprozess mit Peer-Learning und Wissensaustausch-Communities."
+  },
+  {
+    "id": 40,
+    "lo": "GenAI-5.2.3",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Antworten beschreibt AM BESTEN, wie sich die Einführung von generativer KI für das Testen auf die Rolle von Testern innerhalb einer Testorganisation auswirkt?\n\nWählen Sie EINE Option! (1 aus 4)",
+    "options": [
+      "a) Tester verlagern ihren Schwerpunkt vom manuellen Testentwurf/-ausführung hin zum Steuern und Reviewen von KI-generierten Testartefakten.",
+      "b) Testmanager verlagern ihren Fokus vom Management von Testprojekten auf das Verständnis der inneren Funktionsweise generativer KI-Technologien.",
+      "c) Tester verlagern ihren Fokus vom manuellen Entwerfen von Testfällen hin zur Überwachung KI-basierter Testprozesse.",
+      "d) Testmanager verlagern ihren Fokus von der Abhängigkeit von Menschen hin zur ausschließlichen Nutzung generativer KI, um die Produktivität bei Testaufgaben zu steigern."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Tester entwickeln sich zu Spezialisten für KI-gestützte Tests, die Prompts verfeinern und KI-Ausgaben überprüfen.\nb) FALSCH – die Verantwortlichkeiten der Testmanager erweitern sich um KI-basierte Teststrategie und Risikomanagement, der Fokus bleibt auf Testmanagement, nicht auf dem technischen Verständnis von GenAI.\nc) FALSCH – die operative Überwachung KI-basierter Testprozesse liegt überwiegend beim Testmanagement; Tester prüfen/kuratieren KI-Artefakte.\nd) FALSCH – Testmanager sollen Fähigkeiten von Menschen und KI ausbalancieren, nicht ausschließlich auf generative KI setzen."
+  }
+];
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 60 * 60;
+      const EXT_SECONDS = 75 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let examDeadline = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "75"
+          : "60";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "Der Timer läuft von 75:00 herunter (60 min + 15 min Verlängerung). Bei Zeitablauf erfolgt automatische Abgabe."
+          : "Der Timer läuft von 60:00 herunter. Bei Zeitablauf erfolgt automatische Abgabe.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = timeExtended
+          ? "75:00"
+          : "60:00";
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${escHtml(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} Punkt${q.pts > 1 ? "e" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${escHtml(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="${escHtml(q.imageAlt || ('Abbildung zu Frage ' + q.id))}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Prüfung abgeben?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `Sie haben noch <strong style="color:var(--warn)">${unanswered} unbeantwortete Frage${unanswered > 1 ? "n" : ""}</strong>. Unbeantwortete Fragen ergeben 0 Punkte.<br><br>Trotzdem abgeben?`
+            : `Alle ${questions.length} Fragen beantwortet. Prüfung jetzt abgeben?`;
+        document.getElementById("confirm-yes-btn").textContent = "Abgeben";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Prüfung neu starten?";
+        document.getElementById("confirm-msg").innerHTML =
+          "Alle Antworten gehen verloren. Der Timer wird auf " +
+          (timeExtended ? "75:00" : "60:00") +
+          " zurückgesetzt.<br><br>Sicher?";
+        document.getElementById("confirm-yes-btn").textContent = "Neu starten";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach(input => input.disabled = true);
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correct = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correct++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Nicht beantwortet &middot; Korrekt: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Richtig (+" + q.pts + (q.pts > 1 ? " Pkte)" : " Pkt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Falsch &middot; Korrekt: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const total = questions.length;
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = pct >= 65;
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const um = Math.floor(usedSec / 60),
+          us = usedSec % 60;
+        const totalLabel = timeExtended ? "75:00" : "60:00";
+        const timeStr = timedOut
+          ? totalLabel + " (Zeit abgelaufen)"
+          : String(um).padStart(2, "0") + ":" + String(us).padStart(2, "0");
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " von " + totalPoints + " Punkten (" + correct + " von " + questions.length + " Fragen richtig)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ BESTANDEN (≥ 65%)"
+          : "✗ NICHT BESTANDEN (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correct;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = timeExtended
+          ? "75:00"
+          : "60:00";
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    document.addEventListener("visibilitychange", () => { if (examDeadline !== null && !examSubmitted) tickTimer(); });
+</script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

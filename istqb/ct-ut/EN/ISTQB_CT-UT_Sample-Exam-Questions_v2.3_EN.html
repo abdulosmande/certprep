@@ -1,0 +1,1929 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CT-UT — Sample Exam v2.3</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Specialist Level</div>
+        <h1>CT-UT<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">ISTQB® Certified Tester Usability Testing · Sample Exam v2.3 · Foundation Level Usability Tester Syllabus 2017. The timer starts when you begin the exam.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">60</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Source: ISTQB® — ISTQB-CTFL_Usability_Tester_FL_Sample_Exam_v2.3_EN.pdf; ISTQB-CTFL_Usability_Tester_FL_Sample_Exam_Answers-v2.3_EN.pdf. Copyright © ISTQB®. Questions, tables, diagrams and rationales follow these sources. Authors are acknowledged in the source PDFs.</p>
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">60 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">75 min</span>
+            <span class="time-opt-lbl">+25% practice time</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optional practice allowance: 25% extra time (15 minutes).</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 60:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CT-UT · Sample Exam v2.3</span
+            >
+            <span class="exam-title">Certified Tester – Usability Testing</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 answered
+            </div>
+            <div class="timer" id="timer">60:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 questions (40 points) · <strong>65% (≥ 26 of 40 points)</strong>
+            · one point per question; all questions are single-choice
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "UTFL-1.1.1",
+    "pts": 1,
+    "text": "Which of the following is true?\n\nSelect ONE option.",
+    "options": [
+      "A. Usability deals with specified users achieving specified goals in a specified context of use with a software product; User experience deals with a person’s perceptions and responses resulting from using the software product.",
+      "B. Usability is measured in terms of effectiveness, efficiency and satisfaction; Accessibility deals with a person’s perceptions and responses resulting from using the software product.",
+      "C. User experience deals with specified users achieving specified goals in a specified context of use with a software product; Usability deals with a person’s perceptions and responses resulting from using the software product.",
+      "D. User experience deals with a person’s perceptions and responses resulting from using the software product; accessibility deals with a person’s emotions, beliefs and perceptions."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct.\n\nB is incorrect. The usability definition is correct, but the second part refers to user experience, not accessibility.\n\nC is incorrect. The first part is Usability and the second part is user experience.\n\nD is incorrect. Both parts refer to user experience."
+  },
+  {
+    "id": 2,
+    "lo": "UTFL-1.1.2",
+    "pts": 1,
+    "text": "Which of the following is a reasonable goal of accessibility evaluation?\n\nSelect ONE option.",
+    "options": [
+      "A. To ensure that within a specific context of use, anyone can use the software",
+      "B. To verify that the external influencing factors, such as presentation, are working effectively for the overall user experience",
+      "C. To ensure learnability of the software",
+      "D. To verify that the software is usable by people with specific disabilities"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct.\n\nA is not correct, this is a usability test.\n\nB is not correct, this is a factor in user experience.\n\nC is not correct, this is a factor in user experience."
+  },
+  {
+    "id": 3,
+    "lo": "UTFL-1.2.1",
+    "pts": 1,
+    "text": "When the evaluation includes the services received prior to and after the use of the software product, what type of evaluation is being conducted?\n\nSelect ONE option.",
+    "options": [
+      "A. Usability",
+      "B. User experience",
+      "C. Accessibility",
+      "D. Usability and User experience"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. These evaluation areas are included only for the evaluation of user experience."
+  },
+  {
+    "id": 4,
+    "lo": "UTFL-1.2.2",
+    "pts": 1,
+    "text": "You are asked to evaluate the usability of a specialized medical software application. Due to time and budget constraints, it is not possible to include users in the evaluation process.\n\nWhich of the following is a valid approach for evaluating the usability in this case?\n\nSelect ONE option.",
+    "options": [
+      "A. Accessibility Evaluation",
+      "B. Usability testing",
+      "C. User surveys",
+      "D. Usability Review"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct. The usability review includes expert-based approaches, which do not necessarily require users to be involved. A is incorrect. An accessibility evaluation, just like a usability evaluation, may use one of the three other mentioned approaches. B is incorrect. Usability testing definitely needs users to be performed\n\nC is incorrect. User surveys, as the name states, needs users to answer the survey."
+  },
+  {
+    "id": 5,
+    "lo": "UTFL-1.2.3",
+    "pts": 1,
+    "text": "In a project that is employing usability evaluation practices, which of the following should come first?\n\nSelect ONE option.",
+    "options": [
+      "A. Formative testing",
+      "B. Summative testing",
+      "C. Formative and summative should occur at the same time during requirements gathering",
+      "D. Formative and summative should occur at the same time during design"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. Formative is designed to identify and analyze usability problems and is a qualitative technique that is used during design. Summative is focused on obtaining measurements and is quantitative in nature and is used after the product has been released to production (or near to release)."
+  },
+  {
+    "id": 6,
+    "lo": "UTFL-1.3.1",
+    "pts": 1,
+    "text": "Which of the following options decribe activities found in the key elemments of human-centered design?\n\nSelect ONE option.",
+    "options": [
+      "A. Observe users at work, develop the software, refine prototypes",
+      "B. Interview users, evaluate a prototype by watching people use it, refine prototypes",
+      "C. Develop prototypes, perform expert usability reviews, show the design to users",
+      "D. Interview users, automate usability tests, refine prototypes"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. All activities can be found in key elements of human- centered design: Users are included, prototypes are evaluated and then refined.\n\nA is incorrect. Developing the software is not explicitly part of human-centered design: .\n\nC is incorrect. Although this approach takes the prototyping aspect and the evaluation into consideration, the users are only shown the design. They must be directly involved in creating it.\n\nD is incorrect. This approach may take the users and evaluation aspects into consideration, but automating usability tests is not part of human-centered design."
+  },
+  {
+    "id": 7,
+    "lo": "UTFL-1.3.2",
+    "pts": 1,
+    "text": "What is the purpose of the evaluation step in the human-centered design process?\n\nSelect ONE option.",
+    "options": [
+      "A. To reduce the need for requirements analysis",
+      "B. To simplify the design process",
+      "C. To allow the user to see and use versions of the software as it evolves",
+      "D. To implement feedback and improve the product until the usability requirements are achieved"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct per the syllabus. The human-centered design process requires that the user be involved in all phases. They should see the software as it evolves and provide feedback that can be incorporated into the design.\n\nA is incorrect. Evaluation does not replace requirements analysis\n\nB is incorrect. Evaluation is not performed with the purpose of simplifying the design process\n\nD is incorrect. Evaluation helps to provide feedback, but this is not its principal purpose in the context of human-centered design."
+  },
+  {
+    "id": 8,
+    "lo": "UTFL-1.3.3",
+    "pts": 1,
+    "text": "Which of the following are the best usability evaluation approaches for an agile software development lifecycle?\n\nSelect ONE option.",
+    "options": [
+      "A. RITE, discount, weekly testing",
+      "B. RAD, informal and quick, monthly cycle testing",
+      "C. RUP, usability reviews, usability acceptance criteria",
+      "D. REST, formative, daily usability labs"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. Rapid Iterative Testing and Evaluation (RITE), informal and quick (discount) usability testing and usability testing conducted consistently on a weekly basis are evaluation approaches that are particularly well-suited for an agile environment.\n\nB is not correct because monthly cycle testing would not be fast enough for agile and RAD is a development process.\n\nC is not correct because the Rational Unified Process is a development process rather than a usability evaluation approach. D is not correct. REST is a communication protocol and not a usability evaluation approach."
+  },
+  {
+    "id": 9,
+    "lo": "Glossary term",
+    "pts": 1,
+    "text": "What is “think aloud” usability testing?\n\nSelect ONE option.",
+    "options": [
+      "A. It is testing conducted by a pair of usability testers who discuss the tests as they execute them",
+      "B. It is a form of post-session review where the usability tester discusses what they were thinking as they ran the tests",
+      "C. It is a method used during formative evaluation to “talk through” the proposed user interface",
+      "D. It is a method used to encourage the user to voice their thoughts as they are conducting their tests"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct. The think aloud method is used by the moderator to understand what the user is thinking as they are conducting their tests."
+  },
+  {
+    "id": 10,
+    "lo": "Glossary term",
+    "pts": 1,
+    "text": "What is accessibility?\n\nSelect ONE option.",
+    "options": [
+      "A. Usability of a software product by everyone regardless of capabilities or disabilities",
+      "B. Usability of a software product by people with limited vision, hearing, dexterity, cognition or physical mobility",
+      "C. Usability of a software product by people of different nationalities and languages",
+      "D. Usability of the software product focusing on the direct interaction of the software with the user"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is the correct definition per the syllabus / glossary"
+  },
+  {
+    "id": 11,
+    "lo": "Glossary term",
+    "pts": 1,
+    "text": "If you are evaluating the services that a user receives prior to using the software, what type of evaluation are you doing?\n\nSelect ONE option.",
+    "options": [
+      "A. Usability",
+      "B. User experience",
+      "C. Accessibility",
+      "D. User services"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is the correct definition per the syllabus / glossary"
+  },
+  {
+    "id": 12,
+    "lo": "Glossary term",
+    "pts": 1,
+    "text": "Which of the following is the correct description of the user interface?\n\nSelect ONE option.",
+    "options": [
+      "A. The user interface consists of all components of a software product that provide information and controls for the user to accomplish specific tasks with the software product",
+      "B. The user interface is a software defect which results in difficulty for the user when using the software product",
+      "C. The user interface describes a person’s perceptions and responses that result from the use and/or anticipated use of a product, system or service",
+      "D. The user interface is a process through which information about the usability of a software product is gathered in order to improve the software product or to assess the value of the software product’s usability."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is the correct definition per the syllabus / glossary"
+  },
+  {
+    "id": 13,
+    "lo": "Glossary term",
+    "pts": 1,
+    "text": "If the users are made uncomfortable by the software when they use it, what type of issue is this?\n\nSelect ONE option.",
+    "options": [
+      "A. Efficiency",
+      "B. Functional",
+      "C. Effectiveness",
+      "D. Satisfaction"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is the correct definition per the syllabus / glossary"
+  },
+  {
+    "id": 14,
+    "lo": "UTFL-2.2.1",
+    "pts": 1,
+    "text": "You have just purchased a new defect tracking tool but you are having some problems with the installation. You have called the customer support number and they helped you install the software but also said that you should have been able to figure it out yourself and told you to read the manual before you call them again. Given your experience, what type of risk would you associate with this situation?\n\nSelect ONE option.",
+    "options": [
+      "A. Accessibility risk",
+      "B. User experience risk",
+      "C. Usability risk",
+      "D. Support risk"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. This is a problem with the user experience which includes the entire user experience around the product, not just working with the product itself.\n\nA is not correct because this is not an accessibility risk.\n\nC is not correct because this is a user experience risk dealing with entire user experience, not just usability.\n\nD is not correct because the risk is not related to the supportability of the product but rather the people in the support department."
+  },
+  {
+    "id": 15,
+    "lo": "UTFL-2.2.2",
+    "pts": 1,
+    "text": "Your company has developed a new printer that is meant to automatically configure itself when installed. Previous versions of the printer have had installation issues resulting in the printer either failing to install or installing incorrectly and disabling the color printing capability. When this occurred most people brought the printer back and demanded a refund even though the printer itself functioned correctly. Given this experience, what is a reasonable usability risk that should be tracked for the new printer release?\n\nSelect ONE option.",
+    "options": [
+      "A. Users cannot figure out the installation issues and as a result they report their dissatisfaction to their friends on social media creating a negative image of the company",
+      "B. The user documentation is not sufficient to help with the installation issues and the support team is slow in answering the phone",
+      "C. The lack of color printing capability causes an accessibility issue for people who need color printing to be able to read certain medical forms",
+      "D. The lack of time available for the design team is causing poor usability design and analysis"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. This is risk in that the users cannot figure out how to install the software and spread their dissatisfaction to their friends.\n\nB is not correct because this is actually a user experience risk rather than a usability risk.\n\nC is not correct because this is an accessibility risk rather than a usability risk.\n\nD is not correct because this is a project risk."
+  },
+  {
+    "id": 16,
+    "lo": "UTFL-3.1.1",
+    "pts": 1,
+    "text": "Which of the following is a valid example of a user interface guideline?\n\nSelect ONE option.",
+    "options": [
+      "A. The company logo must appear in the upper left corner of each page. Its position must be exactly the same as on the home page. Clicking the logo must cause the home page to be displayed.",
+      "B. Error messages must be constructive, precise, comprehensible and polite.",
+      "C. Errors must be handled in a polite and tolerant way, never blaming the user for an error.",
+      "D. The user interface must be suitable for the task."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. This example appears in the Syllabus, section 3.1.\n\nB is incorrect. This is a heuristic, not a user interface guideline.\n\nC is incorrect. This is the dialogue principle “Error tolerance”, it is not a user interface guideline.\n\nD is incorrect. This is the dialogue principle. “Suitability for the task” is not a user interface guideline."
+  },
+  {
+    "id": 17,
+    "lo": "UTFL-3.2.1",
+    "pts": 1,
+    "text": "AWCAG guideline 1.1.1 says “Text Alternatives: Provide text alternatives for any non-text content so that it can be changed into other forms people need, such as large print, braille, speech, symbols or simpler language.”\n\nWhich of the following suggestions best illustrates the WCAG guideline?\n\nSelect ONE option.",
+    "options": [
+      "A. Users should be able to easily magnify text up to 300%.",
+      "B. Images should include equivalent alternative text in the markup/code.",
+      "C. Braille (embossed text for blind people) equivalents should be available for all text.",
+      "D. For all text that is difficult to understand, a simplified text alternative should be offered."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. This suggestion addresses images – that is, non-text content. The example is included in the Syllabus, section 3.2.2. It originates from http://www.w3.org/standards/webdesign/accessibility. A, C and D are incorrect. The suggestions addresses text, not “non- text content”."
+  },
+  {
+    "id": 18,
+    "lo": "UTFL-3.2.2",
+    "pts": 1,
+    "text": "Which of the following laws specifically requires private websites to be accessible to blind or visually impaired Internet users?\n\nSelect ONE option.",
+    "options": [
+      "A. The Equality Act",
+      "B. The Americans with Disabilities Act",
+      "C. The Rehabilitation Act",
+      "D. Section 508"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. This is highlighted in the ADA regarding private websites.\n\nA is not correct. It does not specifically reference web sites.\n\nC is not correct. This act was enacted in 1973 and refers to Federal agencies.\n\nD is not correct because it has a more general focus that everyone should have the same access to information."
+  },
+  {
+    "id": 19,
+    "lo": "UTFL-4.1.1",
+    "pts": 1,
+    "text": "What is an important input to an effective usability review?\n\nSelect ONE option.",
+    "options": [
+      "A. A detailed overview of the system architecture",
+      "B. Questionairre templates for the user survey",
+      "C. A visible user interface, either real or simulated",
+      "D. A list of known usability issues"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct. The more realistic the UI, the more accurate and effective the review will be.\n\nA is not correct because a detailed overview of the system architecture doesn’t provide the look and feel that a real UI does. B is not correct for the same reason as A.\n\nD is not correct. This might help in testing, but not during the usability review since that review is usually conducted by experts and those familiar with how the software must work."
+  },
+  {
+    "id": 20,
+    "lo": "UTFL-4.2.1",
+    "pts": 1,
+    "text": "If a planned usability review is being conducted and the most experienced person in the review has six months of usability testing experience, what type of review is this?\n\nSelect ONE option.",
+    "options": [
+      "A. A formal usability review",
+      "B. An informal usability review",
+      "C. An expert usability review",
+      "D. An ad hoc usability review"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. This is an informal usability review with people who may have some awareness of usability, but are not recognized experts.\n\nA is not correct because a formal usability review requires usability experts.\n\nC is not correct because six months does not constitute an expert.\n\nD is not correct because this review has been planned and prepared."
+  },
+  {
+    "id": 21,
+    "lo": "UTFL-4.2.2",
+    "pts": 1,
+    "text": "You are conducting usability testing on software that is used by people to register for a driver’s license. This software gathers the user’s information and assigns a driver’s license number. The user is then taken to another page where they are asked about car insurance information. On that page they are required to enter their newly acquired driver’s license number.\n\nGiven this information, which item on the heuristic checklist would identify a usability problem with this software?\n\nSelect ONE option.",
+    "options": [
+      "A. User control and freedom",
+      "B. Error prevention",
+      "C. Visibility of system status",
+      "D. Recognition rather than recall"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct. The user is being asked to remember the driver’s license number and re-enter it. The software should supply the number (since it just assigned it) rather than requiring the user to recall it. A, B, and C are checklist items but are not applicable to this scenario."
+  },
+  {
+    "id": 22,
+    "lo": "UTFL-5.2.1",
+    "pts": 1,
+    "text": "Gathering comments from the users is a part of which principal step in usability testing?\n\nSelect ONE option.",
+    "options": [
+      "A. Preparing the usability test",
+      "B. Conducting the usability test session",
+      "C. Communicating the findings from the test session",
+      "D. Conducting the retrospective after the testing has completed"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. The post-session interview is part of the test session and is used to get the user’s feedback and impressions."
+  },
+  {
+    "id": 23,
+    "lo": "UTFL-5.3.1",
+    "pts": 1,
+    "text": "Which of the following actions should be taken as part of usability test planning?\n\nSelect ONE option.",
+    "options": [
+      "A. Selecting the moderator for the tests",
+      "B. Determining how to analyze the results of previous usability tests",
+      "C. Deciding where to document known defects in the software",
+      "D. Presenting the briefing instructions to the users"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. The moderator’s name is normally included in the test plan so it is determined during the test planning. B and C are not correct because they refer to previous tests and defects that may not be relevant for this testing. Known defects could change though if testing is on-going.\n\nD is not correct because these details are not usually known at the time the test plan is written and are likely to change. The briefing instructions are included in the usability test scripts which are prepared after planning is complete."
+  },
+  {
+    "id": 24,
+    "lo": "UTFL-5.3.2",
+    "pts": 1,
+    "text": "Questions that are asked of the user at the conclusion of the usability session are included in which usability testing documentation?\n\nSelect ONE option.",
+    "options": [
+      "A. The usability test plan",
+      "B. The usability risk register",
+      "C. The usability checklist",
+      "D. The usability test script"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct. The pre-session and post-session interview questions to be used by the moderator are included in the usability test script."
+  },
+  {
+    "id": 25,
+    "lo": "UTFL-5.3.3",
+    "pts": 1,
+    "text": "You are creating tasks to be completed during a usability test. The software is used for people to register for a driver’s license. This software gathers the user’s information and assigns a driver’s license number. Once the person has their number, they are then given a series of questions regarding their insurance information. Given this information, what would you suggest as a good first task for the usability participants?\n\nSelect ONE option.",
+    "options": [
+      "A. Conduct detailed exploratory testing",
+      "B. Write down their impressions of the home page",
+      "C. Try to enter their name and address into the application",
+      "D. Take the simplest path through the application"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct. The first task should be simple and easy for the user. Taking the simplest path should allow users to have a good experience with their first use of the software.\n\nA is not correct because we want them to follow a script rather than explore.\n\nB is not correct because this will be gathered in the post-session interview.\n\nC is not correct. A good test task is relevant from the test participant’s point of view. Simply entering name and address is not relevant from the test participant’s point of view."
+  },
+  {
+    "id": 26,
+    "lo": "UTFL-5.3.4",
+    "pts": 1,
+    "text": "When considering a location for a usability test, what requirements do observers have?\n\nSelect ONE option.",
+    "options": [
+      "A. They should be able to come and go as needed",
+      "B. They should be constrained and focused on the users during the entire test",
+      "C. They should not have access to refreshments in the observation room",
+      "D. They should be able to interact with the user during the test"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. Observers should be able to come and go without interfering with the test.\n\nB is not correct because mobility in the observers is often necessary, particularly for long sessions.\n\nC is not correct because it is a regulation that limits the observers. D is not correct because the moderator interacts with the user at the beginning and end of the session, not the observers."
+  },
+  {
+    "id": 27,
+    "lo": "UTFL-5.3.5",
+    "pts": 1,
+    "text": "Which of the following is a disadvantage to using a usability lab?\n\nSelect ONE option.",
+    "options": [
+      "A. Observers are restricted to a specific area",
+      "B. The room may feel artificial to the user",
+      "C. Each test will be conducted in a similar environment",
+      "D. Observers can come and go during the session"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. This is a risk with a usability lab because it may not be representative of the real environment.\n\nA is not a disadvantage because observers can collaborate with each other without disturbing the test. C and D are all advantages to using a usability lab."
+  },
+  {
+    "id": 28,
+    "lo": "UTFL-5.4.1",
+    "pts": 1,
+    "text": "If a user has become confused and frustrated during a test session, what actions should the moderator take?\n\nSelect ONE option.",
+    "options": [
+      "A. The moderator should help the user and provide instructions as needed to get them back on track",
+      "B. The moderator should point the user to the documentation but should not help",
+      "C. The moderator should wait until the user is blocked before helping the user move to the next test task",
+      "D. The moderator should have no interaction with the user regardless of how confused or frustrated the user gets"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct. The moderator should only step in if the user is completely stuck and then should help by directing the user to the next task. The point of the moderator is to observe and encourage the user to think aloud, not to help the user."
+  },
+  {
+    "id": 29,
+    "lo": "UTFL-5.5.2",
+    "pts": 1,
+    "text": "Which of the following is an example of a positive usability finding?\n\nSelect ONE option.",
+    "options": [
+      "A. A user found a defect that will need to be fixed prior to release",
+      "B. A user mentioned that a feature should not be changed",
+      "C. A user was able to follow the steps of the scenario",
+      "D. The user told the moderator that they liked the feeling of privacy provided by the usability test lab"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. Positive usability findings include feedback to the development team about which features should not be modified or deleted.\n\nA is incorrect because a defect is not a positive find.\n\nC is incorrect. It relates to a usaibilty test task and not the software application.\n\nD is incorrect. It relates to a usaibilty test environment and not the software application."
+  },
+  {
+    "id": 30,
+    "lo": "UTFL-5.6.1",
+    "pts": 1,
+    "text": "You have written a usability test report and have included the detailed findings and recommendations, the objectives of the test, the purpose of the test, and a description of the evaluation method that was used during the testing. You have included a one page executive summary. Your findings list includes 80 defects that were found including for each defect a brief description and a proposed resolution The report includes an anonymized list of test participants. What should you change to align the report with best practices for this type of report?\n\nSelect ONE option.",
+    "options": [
+      "A. Make the problem descriptions more extensive so that the stakeholders can understand the problems more easily",
+      "B. Provide e-mail addresses of test participants to ensure they can be contacted if there are any follow-up questions",
+      "C. Remove the less important defects from the list to keep the list to a more suitable size",
+      "D. Remove the executive summary because that should be written as a separate document"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct. 80 defects included on the report is too high and must be reduced\n\nA is not correct because the descriptions should be breif and not wordy. Making them more extensive may make them less understandable.\n\nB is not correct. Providing the e-mail addresses of participants goes against the best practice of respecting private information.\n\nD is not correct because the executive summary is an important part of the report."
+  },
+  {
+    "id": 31,
+    "lo": "UTFL-5.6.2",
+    "pts": 1,
+    "text": "In what way does the Agile software development methodology help reduce internal resistance to usability findings?\n\nSelect ONE option.",
+    "options": [
+      "A. Because the software is evolving all the time, usability findings are raised more often and they are therefore more easy to accept",
+      "B. Because the whole-team approach is used, the team is accustomed to freely exchanging views about usability",
+      "C. Because agile projects place more importance on usability issues, resistance to usability findings is lower",
+      "D. Because there is often no formal documentation there is more acceptance for design and usability decisions"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. A whole-team approach encourages exchange of views and shared ownership of usability. This will help to reduce internal resistance to usabilty findings.\n\nA is not correct. Just because there are “frequent changes” does not means there is a tendency to accept usability issues more easily.\n\nC is not correct. Usabilty is not considered to be “more important” in agile projects.\n\nD is not correct Just because there is less documentation does not means there is a tendency to accept usability issues more easily."
+  },
+  {
+    "id": 32,
+    "lo": "UTFL-5.6.3",
+    "pts": 1,
+    "text": "You have conducted several usability lab sessions and it is becoming clear that the software is quite difficult to use. The users can’t figure out what to do and end up frustrated with the software when trying to complete fairly simple tasks. You have shared these results with the developers but they don’t think there is a problem. What approach should you take to convince the developers that an issue exists?\n\nSelect ONE option.",
+    "options": [
+      "A. Write defect reports for each issue and give each a high severity rating",
+      "B. Explain to the developer the issue is likely design-related",
+      "C. Have the developers sit with the users and walk them through the software so the users don’t get frustrated",
+      "D. Have the developers observe a usability session to better understand where the users are getting confused"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "D is correct. This is the best way to get the developers to understand the problems that the users are experiencing and to get them to understand that the users aren’t just being stupid but that they are legitimately confused.\n\nA will not help because it won’t create the understanding that’s needed from the developers.\n\nB is not correct because an open confrontation won’t build understanding.\n\nC is not correct because the developers need to observe not instruct."
+  },
+  {
+    "id": 33,
+    "lo": "UTFL-5.7.1",
+    "pts": 1,
+    "text": "When conducting quality control activities for a usability test, why should you observe the first two or three test sessions?\n\nSelect ONE option.",
+    "options": [
+      "A. To ensure the sessions are conducted in accordance with the usability test script",
+      "B. To ensure the sessions are conducted in accordance with the usability test plan",
+      "C. To ensure the sessions are conducted by a test manager",
+      "D. To ensure the sessions are documented properly in the test management system"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. The usability test script describes how usability test sessions should be run.\n\nB is not correct because the plan does not describe the test sessions at the appropriate level.\n\nC is not correct because the sessions should be conducted by a moderator.\n\nD is not correct because the sessions are usually documented in reports rather than in the test management system."
+  },
+  {
+    "id": 34,
+    "lo": "UTFL-5.8.1",
+    "pts": 1,
+    "text": "Which of the following is the most common problem that occurs when the usability tests are scheduled too late?\n\nSelect ONE option.",
+    "options": [
+      "A. The test team does not have time to support the test effort as they are busy with the final release testing",
+      "B. The management is not interested in the results of the test because they do not understand the goals of usability testing",
+      "C. The results may be received when the development team does not have time to make any necessary changes",
+      "D. The system testing schedule will be delayed waiting for the completion of usability testing"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct. The biggest issue is that the results may arrive too late for the developers to be able to make the changes.\n\nA is not correct because, although the testers may be time compressed as well, it doesn’t matter because the developers don’t have time to make the changes.\n\nB is not correct. It’s not a problem that’s isolated to the usability testing happening late in the schedule. This can be a problem regardless of when the tests are run.\n\nD is not correct because usability testing is usually done during or after system testing and would not delay system testing."
+  },
+  {
+    "id": 35,
+    "lo": "UTFL-6.2.1",
+    "pts": 1,
+    "text": "If a company has just launched a new mobile application, what information would they expect to get from a user survey?\n\nSelect ONE option.",
+    "options": [
+      "A. An understanding of the users’ satisfaction with the software",
+      "B. An understanding of any learnability issues with the software",
+      "C. An assessment of the efficiency and effectiveness of the software",
+      "D. An assessment of the market reception of the software and predictive sales information"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. Evaluating the level of user satisfaction is the primary goal of a usability survey."
+  },
+  {
+    "id": 36,
+    "lo": "UTFL-6.3.1",
+    "pts": 1,
+    "text": "Your company has recently released software that supports an ultrasound medical device and is interested in how the usability is perceived by the end users. Marketing wants to use a short questionnaire that will allow the user to respond subjectively to a small set of statements. Which questionnaire would be most appropriate to use to gather this information?\n\nSelect ONE option.",
+    "options": [
+      "A. SUMI",
+      "B. WAMMI",
+      "C. SUS",
+      "D. RITE"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "C is correct. SUS is the System Usability Scale and uses a 10 item questionnaire to provide a high-level subjective assessment of usability.\n\nA is not correct because SUMI has 50 questions so is not “short”. B is not correct because WAMMI is focused on web software. This is not web software.\n\nD is not correct. RITE it not a standardized questionnaire. It is a test method."
+  },
+  {
+    "id": 37,
+    "lo": "UTFL-7.1.1",
+    "pts": 1,
+    "text": "You have been asked to develop an approach to verify the usability for a new software product that will control irrigation systems for farms. The development organization hired a third party group to design the user interface, but then decided they didn’t like the design and re-worked it. In doing the re-design, they asked several user representatives for early feedback. However, feedback was inconsistent. When they implemented the code, the developers ignored some of the feedback. Given this information, what is the best approach to use to verify the usability?\n\nSelect ONE option.",
+    "options": [
+      "A. A usability review should be used to ensure that the design is optimal",
+      "B. A usability test should be conducted to ensure the feedback is not dismissed as opinion",
+      "C. A usability maturity assessment should be conducted to ensure the team is using best practices",
+      "D. A formative usability analysis should be conducted to ensure the design contains important usability characteristics"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. This is a team with a low usability maturity and they are most likely to value feedback from real users now that the code has been developed.\n\nA is not correct because the results from the review are likely to be dismissed by this immature team.\n\nC is not correct because that assessment is not really needed at this point. It’s clear that they have a low level of maturity because they asked a few users and then picked and chose which comments they wanted to take.\n\nD is not correct because a formative analysis should be done during design, not after implementation."
+  },
+  {
+    "id": 38,
+    "lo": "Glossary term",
+    "pts": 1,
+    "text": "You are in a café and have 10-15 minutes available with potential mobile application users. What is your best option regarding usability testing?\n\nSelect ONE option.",
+    "options": [
+      "A. Perform an informal test session where the potential users try to use the product",
+      "B. Perform a survey-based test",
+      "C. Perform a questionnaire-based test",
+      "D. Perform formative testing for 15 minutes"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. This form of usability testing is both informal and quick. It is done in an informal environment, such as a café, and is usually conducted in short time periods such as 15 minutes. B, C and D are not correct. There is not enough time to conduct these forms of evaluation."
+  },
+  {
+    "id": 39,
+    "lo": "UTFL-8.1.1",
+    "pts": 1,
+    "text": "Your organization has a need to perform a usability survey. Who is responsible for selecting an appropriate questionnaire?\n\nSelect ONE option.",
+    "options": [
+      "A. The usability test moderator",
+      "B. The usability tester",
+      "C. The test manager",
+      "D. The project manager"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "B is correct. Selecting an appropriate questionnaire is a principle task of the usability tester."
+  },
+  {
+    "id": 40,
+    "lo": "UTFL-8.2.1",
+    "pts": 1,
+    "text": "At the end of the usability session, the users will be interviewed to gather their opinions on what worked and what didn’t work, what they liked and what they found difficult to use. Who should conduct this interview?\n\nSelect ONE option.",
+    "options": [
+      "A. The usability test moderator",
+      "B. The usability tester",
+      "C. The test manager",
+      "D. The project manager"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "A is correct. Conducting the post-session interview is the responsibility of the moderator of the usability test."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 60 * 60;
+      const EXT_SECONDS = 75 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "75"
+          : "60";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 75:00 (60 minutes + 25% practice time). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 60:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          if (asset.html) return `<div class="q-table-wrap">${asset.html}</div>`;
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Open to enlarge</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo}${q.k ? " (" + q.k + ")" : ""}</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagram for Question ${q.id}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

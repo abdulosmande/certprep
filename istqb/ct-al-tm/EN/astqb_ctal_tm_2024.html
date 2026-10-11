@@ -1,0 +1,2138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASTQB CTAL-TM v3.0 · Sample Exam 2024</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      .source-note { margin: 0.75rem 0; color: var(--text); font-size: 0.8rem; }
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+    </style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ASTQB Advanced Level</div>
+        <h1>CTAL-TM v3.0<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">
+          ASTQB Certified Tester Advanced Level Test Management (CTAL-TM) ·
+          Sample Exam 2024 (ASTQB) · Test Management Syllabus v3.0. The
+          timer starts as soon as you click "Start Exam".
+        </p>
+        <p class="start-subtitle source-credit">Source: ISTQB_CTAL-TM_Sample-Exam-Questions_v30_1.1.1.pdf; ATM_Sample-Answers-2024.pdf. © ASTQB / ISTQB®. Authors and translators are acknowledged in the source PDFs.</p>
+    <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">50</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">120</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">88</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle">Source: ATM_Sample-Questions-2024.pdf and ATM_Sample-Answers-2024.pdf. Questions, scoring and explanations follow this version’s source documents.</p>
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">120 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">150 min</span>
+            <span class="time-opt-lbl">+30 min extension</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">
+          &#9432;&nbsp; The 30-minute extension applies to candidates who are
+          not sitting the exam in their native language (per ISTQB rules).
+        </div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 120:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ASTQB CTAL-TM v3.0 · Sample Exam 2024 (ASTQB)</span
+            >
+            <span class="exam-title">Certified Tester Advanced Level – Test Management</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/50 answered
+            </div>
+            <div class="timer" id="timer">120:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            50 questions (88 points) · <strong>65% (≥ 58 of 88 points)</strong>
+            to pass · points vary per question (1–3) and some questions are
+            multi-select (see marking on each question)
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "text": "Which of the following is the most complete answer for who needs to accept the test plan?\n\nSelect ONE option.",
+    "options": [
+      "a) All company executives and the steering group",
+      "b) All vendors and their developers",
+      "c) All end users",
+      "d) All stakeholders"
+    ],
+    "pts": 1,
+    "answer": [
+      3
+    ],
+    "lo": "TM-1.1.1",
+    "k": "K2",
+    "explanation": "D is correct. All project stakeholders must agree with and work within the test plan. This is why their acceptance of it is required. Not all stakeholders will need to sign off on the plan, but they must abide by it. (TM-1.1.1 (K2) Summarize test planning)"
+  },
+  {
+    "id": 2,
+    "text": "When does testware handover occur?\n\nSelect ONE option.",
+    "options": [
+      "a) During test planning",
+      "b) During test monitoring",
+      "c) During test completion",
+      "d) During test control"
+    ],
+    "pts": 1,
+    "answer": [
+      2
+    ],
+    "lo": "TM-1.1.3",
+    "k": "K2",
+    "explanation": "C is correct. This occurs during the test completion activities. (TM-1.1.3 (K2) Summarize test completion)"
+  },
+  {
+    "id": 3,
+    "text": "In the stakeholder quadrants, which of the following is classified as “Low Influence, High Interest”?\n\nSelect ONE option.",
+    "options": [
+      "a) Promoters",
+      "b) Latents",
+      "c) Defenders",
+      "d) Apathetics"
+    ],
+    "pts": 1,
+    "answer": [
+      2
+    ],
+    "lo": "TM-1.2.2",
+    "k": "K2",
+    "explanation": "C is correct per the syllabus. (TM-1.2.2 (K2) Explain why stakeholders’ knowledge is important in test management)"
+  },
+  {
+    "id": 4,
+    "text": "What is the difference in dashboard usage between a V-model project and a Scrum project?\n\nSelect ONE option.",
+    "options": [
+      "a) V-model requires it, Scrum project does not use it",
+      "b) V-model can use it, Scrum project must use it",
+      "c) V-model must use it, Scrum project can use it",
+      "d) V-model doesn’t use it, Scrum project does not use it"
+    ],
+    "pts": 1,
+    "answer": [
+      1
+    ],
+    "lo": "TM-1.2.4",
+    "k": "K2",
+    "explanation": "B is correct. While it is nice to have one in a V-model project, in a Scrum project it is an expectation. (TM-1.2.4 (K2) Summarize test management activities for various software development lifecycles)"
+  },
+  {
+    "id": 5,
+    "text": "At what testing level are test management responsibilities shared with the development team?\n\nSelect ONE option.",
+    "options": [
+      "a) Component Integration testing",
+      "b) System testing",
+      "c) System Integration testing",
+      "d) Acceptance testing"
+    ],
+    "pts": 1,
+    "answer": [
+      0
+    ],
+    "lo": "TM-1.2.5",
+    "k": "K2",
+    "explanation": "A is correct. The development team usually managed unit testing on their own. At the point of component integration testing, the test manager begins management of the testing, but works closely with the developers. (TM-1.2.5 (K2) Explain test management activities at various test levels)"
+  },
+  {
+    "id": 6,
+    "text": "You are researching tools to determine the best accessibility testing tool available. What type of testing are you helping facilitate?\n\nSelect ONE option.",
+    "options": [
+      "a) Black-box",
+      "b) White-box",
+      "c) Functional",
+      "d) Non-functional"
+    ],
+    "pts": 1,
+    "answer": [
+      3
+    ],
+    "lo": "TM-1.2.6",
+    "k": "K2",
+    "explanation": "D is correct. Accessibility testing is a non-functional test type. (TM-1.2.6 (K2) Explain test management activities for various test types)"
+  },
+  {
+    "id": 7,
+    "text": "Your team is working on testing the software for an exciting new medical device which will dramatically improve the outcomes from cardiac surgery. The testing has strictly followed the requirements which were approved and signed off by the appropriate stakeholders. You have implemented standards for the depth of test cases as well as plans for the various types of non-functional testing that are required.\n\nGiven this information what else do you urgently need to be investigating and reviewing for testing impacts and risks to the testing process?\n\nSelect ONE option.",
+    "options": [
+      "a) The production implementation plan to ensure there will be adequate time for testing during the rollout",
+      "b) The acceptance test procedure and steps required by the users to provide their acceptance",
+      "c) The security test plan and contract with the security testing organization",
+      "d) The risk mitigation required to meet applicable regulations and standards for testing this type of medical software"
+    ],
+    "pts": 3,
+    "answer": [
+      3
+    ],
+    "lo": "TM-1.2.7",
+    "k": "K4",
+    "explanation": "D is correct. This is medical software so it will have regulatory requirements provided by the FDA at a minimum. A, B and C will also need to be done, but these are not as urgent. D is the most urgent because it will affect test documentation, execution, reporting, coverage, etc. (TM-1.2.7 (K4) Analyze a given project and determine test management activities emphasizing test planning, test monitoring, and test control)"
+  },
+  {
+    "id": 8,
+    "text": "You have taken over a project that is a mess. The testing was being done entirely by the onsite team who was working closely with the developers and BAs. Someone in management decided it was too expensive to do testing that way, so they have required that at least half the testing be assigned to the offshore team. This offshore team has just been assembled and no one has worked with them before. There are good tools in place for test management and defect tracking, so information sharing should be straightforward. There is a project manager for the offshore team who will facilitate communications. The onsite team is unsure what to do or how to allocate work to the offshore team.\n\nWhat should you do now to help the project move forward?\n\nSelect ONE option.",
+    "options": [
+      "a) Remove the offshore team and go back to the totally onsite model which will be less expensive in the long run",
+      "b) Develop a test team configuration plan so the team knows who is responsible for what",
+      "c) Develop an offshore test plan so the offshore team can follow the same processes as the onsite team",
+      "d) Elect an offshore test team manager who can be your counterpart"
+    ],
+    "pts": 3,
+    "answer": [
+      1
+    ],
+    "lo": "TM-1.2.7",
+    "k": "K4",
+    "explanation": "B is correct. At this point everyone seems to be confused about who is supposed to do what. A team configuration plan will clarify the responsibilities and should help everyone to get the access and support they need. A is probably not feasible since the decision has already been made. C is not correct because the one project test plan should be applicable to both teams. D is not correct because you probably don’t have the budget to add another management team member. There is already an offshore project manager so another test manager should not be needed. (TM-1.2.7 (K4) Analyze a given project and determine test management activities emphasizing test planning, test monitoring, and test control)"
+  },
+  {
+    "id": 9,
+    "text": "Which of the following is a way in which risk analysis drives test execution?\n\nSelect ONE option.",
+    "options": [
+      "a) It determines which tests should be executed first",
+      "b) It guides the selection of test conditions that must be covered by testing",
+      "c) It influences the format of the test summary report that will be written at the end of the testing",
+      "d) It drives root cause analysis for any defects found"
+    ],
+    "pts": 1,
+    "answer": [
+      0
+    ],
+    "lo": "TM-1.3.1",
+    "k": "K2",
+    "explanation": "A is correct. This is applicable for test execution. B is applicable for test analysis. C and D are not really affected by risk although defect prioritization often is. (TM-1.3.1 (K2) Explain the different ways that risk-based testing responds to risks)"
+  },
+  {
+    "id": 10,
+    "text": "Which of these is a factor that influences the likelihood of a risk occurring?\n\nSelect ONE option.",
+    "options": [
+      "a) Geographically distributed team",
+      "b) Damage to reputation",
+      "c) Safety",
+      "d) Legal sanctions"
+    ],
+    "pts": 1,
+    "answer": [
+      0
+    ],
+    "lo": "TM-1.3.3",
+    "k": "K2",
+    "explanation": "A is correct. This is a likelihood factor. B, C and D are all impact factors. (TM-1.3.3 (K2) Summarize the factors that determine the risk levels related to product quality)"
+  },
+  {
+    "id": 11,
+    "text": "You are managing the testing for a bank card project. The testing was scheduled to take 10 weeks but by the time the software was developed, only six weeks was available for testing. Knowing there were a lot of risks with the software, your team started testing activities early by overseeing code reviews, defining acceptance criteria by working with the users and by doing all test creation prior to the code arriving. You are now three days away from the go-live date. Your testing has mitigated all the high and medium risk items, leaving only the low-risk elements unmitigated by testing. You estimate it will take two weeks to manually test the low-risk elements. At this point, what should you do?\n\nSelect ONE option.",
+    "options": [
+      "a) Automate the testing of the untested elements to ensure they are covered",
+      "b) Block the go-live and start testing the low-risk elements immediately",
+      "c) Perform breadth testing for the low-risk items to assess the residual risk",
+      "d) Select one of the low-risk elements and perform depth testing to assess the residual risk"
+    ],
+    "pts": 3,
+    "answer": [
+      2
+    ],
+    "lo": "TM-1.3.4",
+    "k": "K4",
+    "explanation": "C is correct. Breadth testing of the untested areas will give you a quick look at the residual risk. Based on what you find, you may need to delay the release or transfer the risk, but at least you’ll have a better idea of what is lurking. A is not correct because there isn’t enough time to do this. B would be nice, but it is unlikely you’d have this much power. D doesn’t make sense. If anything, you’d be better to do breadth testing. (TM-1.3.4 (K4) Select appropriate test activities to mitigate risks according to their risk level in a given context)"
+  },
+  {
+    "id": 12,
+    "text": "You are managing the test team that is testing a new mobile application that provides a “step-by-step” hiking guide. Your risk assessment resulted in the following table:\n\nWhat type of testing needs to be applied to the accuracy of the GPS data?\n\nSelect ONE option.",
+    "options": [
+      "a) Breadth testing across a wide sample of scenarios, depth testing for the accuracy of the information in any particular set of conditions",
+      "b) Usability of the GPS data",
+      "c) Coordination of the information in the GPS data and the trail finder",
+      "d) Expert testing conducted by a sample set of users with extensive back country hiking experience paired with deep usability testing experience"
+    ],
+    "pts": 3,
+    "answer": [
+      0
+    ],
+    "lo": "TM-1.3.4",
+    "k": "K4",
+    "explanation": "A is the best approach here. Very high-risk level items are best addressed with a combination of breadth and depth testing to cover the widest range of scenarios and fully testing the capabilities. B is not correct because usability does not affect the accuracy of the GPS data – although it does potentially affect the usage of that data. C needs to be tested, but that is not a very high-risk item. D is not correct. A GIS expert might be useful for this testing, but actual hiking experience doesn’t help with the accuracy testing. (TM-1.3.4 (K4) Select appropriate test activities to mitigate risks according to their risk level in a given context)",
+    "image": "astqb_ctal_tm_2024_assets/q12.png",
+    "imageAlt": "Source figure for question 12: Risk Level Test Object Mitigation Very high Accuracy of GPS data Test for accuracy within 3 feet High Usability Perform usability analysis Medium Trail finder Test for access to information on all supported trails Low Feedback page Test for access to feedback page and capture of data"
+  },
+  {
+    "id": 13,
+    "text": "You have just completed a project and have released it to production. Even though you applied a risk-based approach, there were significant problems found in production. After further analysis you have determined that key risks were missed in the risk analysis. What should be done for future projects to ensure this does not happen again?\n\nSelect ONE option.",
+    "options": [
+      "a) Be sure that the risk mitigation is consistently monitored during testing",
+      "b) Verify that testing is aligned with the risk mitigation goals of the project",
+      "c) Be sure the right people are involved in the risk analysis, so a wider set of information is used to identify and prioritize the risks",
+      "d) Verify that the testing techniques being used are appropriate to identify the risk items and check that reporting was accurate"
+    ],
+    "pts": 1,
+    "answer": [
+      2
+    ],
+    "lo": "TM-1.3.6",
+    "k": "K2",
+    "explanation": "C is correct. The problem here is that the risks were never identified, so more information was needed from the stakeholders to be able to identify the risks. A, B and D are all about using testing to mitigate the known risks. (TM-1.3.6 (K2) Give examples of success metrics and difficulties associated with risk-based testing)"
+  },
+  {
+    "id": 14,
+    "text": "Which of the following is required to apply a white-box testing approach?\n\nSelect ONE option.",
+    "options": [
+      "a) Detailed requirements",
+      "b) Usage models",
+      "c) Access to the internal structure of the test object",
+      "d) A full risk-assessment to support risk prioritization"
+    ],
+    "pts": 1,
+    "answer": [
+      2
+    ],
+    "lo": "TM-1.4.1",
+    "k": "K2",
+    "explanation": "C is correct. (TM-1.4.1 (K2) Explain typical choices for a test approach)"
+  },
+  {
+    "id": 15,
+    "text": "Your team has been assigned to test a loyalty card program for a supermarket chain. Because this is a highly competitive market, significant investment has been made to determine the shortcomings of the products offered by competitors. Several features have been identified as having a high impact on the user experience and the project team wants to prioritize the testing of these features to ensure there are no failures. Testing time is quite limited, so you want to be sure you use the time efficiently.\n\nGiven only this information, what test approach would be most appropriate?\n\nSelect ONE option.",
+    "options": [
+      "a) Model-based",
+      "b) Experience-based",
+      "c) Risk-based",
+      "d) Requirements-based"
+    ],
+    "pts": 3,
+    "answer": [
+      2
+    ],
+    "lo": "TM-1.4.2",
+    "k": "K4",
+    "explanation": "C is correct. As features have been identified as having a high impact, you’ll need to measure the likelihood of failure, but clearly these are the highest risk items, so risk-based testing makes sense as an approach. In addition, there are time constraints so it will be important to get the high-risk items tested first. (TM-1.4.2 (K4) Analyze an organizational test strategy and the project context to select the appropriate test approach)"
+  },
+  {
+    "id": 16,
+    "text": "Your team has been assigned to test a new product that processes blood tests and flags any anomalies. This software must be approved by the FDA prior to release into production.\n\nGiven this information, what testing approach is the most appropriate?\n\nSelect ONE option.",
+    "options": [
+      "a) Risk-based",
+      "b) Risk-based plus regulatory",
+      "c) Model-based",
+      "d) Model-based plus experience-based"
+    ],
+    "pts": 3,
+    "answer": [
+      1
+    ],
+    "lo": "TM-1.4.2",
+    "k": "K4",
+    "explanation": "B is the best answer. (TM-1.4.2 (K4) Analyze an organizational test strategy and the project context to select the appropriate test approach)"
+  },
+  {
+    "id": 17,
+    "text": "Once again, your team has released a product to production that has inadequate security. Only system administrators should be allowed to access some functionality, but in fact everyone can access everything. You have set the following goal for the next release: “All access rights will be tested against the allowed functionality, according to the access matrix.”\n\nWhich of the following is likely an issue with this goal being defined as “SMART”?\n\nSelect ONE option.",
+    "options": [
+      "a) It is not clear if this is achievable in the time allowed",
+      "b) It is not specific on what needs to be done",
+      "c) It is not relevant to the project objectives",
+      "d) It is not measurable against the goals of the project"
+    ],
+    "pts": 2,
+    "answer": [
+      0
+    ],
+    "lo": "TM-1.4.3",
+    "k": "K3",
+    "explanation": "A is correct. We don’t know how big the matrix is or how long it will take to test it. (TM-1.4.3 (K3) Use the S.M.A.R.T. goal methodology to define measurable test objectives and exit criteria)"
+  },
+  {
+    "id": 18,
+    "text": "You have decided that your team should implement better quality practices. You have told them that every test case will have a status of “unreviewed” until it has been peer reviewed and approved by at least one other tester. When the review is complete, the status will be updated to “reviewed” and the test case can be executed. Your team is not happy about this rule, and they feel they are being punished for a problem that does not exist – in this case, low quality test cases.\n\nAccording to the SMART goals, according to your team, what is missing from this goal that you have set?\n\nSelect ONE option.",
+    "options": [
+      "a) It is not specific",
+      "b) It is not measurable",
+      "c) It is not achievable",
+      "d) It is not relevant"
+    ],
+    "pts": 2,
+    "answer": [
+      3
+    ],
+    "lo": "TM-1.4.3",
+    "k": "K3",
+    "explanation": "D is correct. They don’t feel this new process is relevant to what they are doing as they don’t perceive a problem with the current working process. (TM-1.4.3 (K3) Use the S.M.A.R.T. goal methodology to define measurable test objectives and exit criteria)"
+  },
+  {
+    "id": 19,
+    "text": "What is the purpose of the IDEAL model?\n\nSelect ONE option.",
+    "options": [
+      "a) To ensure goals are clear and achievable",
+      "b) To support process improvement initiatives",
+      "c) To classify and mitigate risk in testing",
+      "d) To provide a skillset evaluation standard"
+    ],
+    "pts": 1,
+    "answer": [
+      1
+    ],
+    "lo": "TM-1.5.1",
+    "k": "K2",
+    "explanation": "B is correct. (TM-1.5.1 (K2) Explain how to use the IDEAL model for test process improvement on a given project)"
+  },
+  {
+    "id": 20,
+    "text": "Which of the following is a characteristic of an analytical-based test process improvement model?\n\nSelect ONE option.",
+    "options": [
+      "a) It is based on comparison to external best practices",
+      "b) It defines best practices",
+      "c) It uses only quantitative data",
+      "d) It is reliant on data analysis"
+    ],
+    "pts": 1,
+    "answer": [
+      3
+    ],
+    "lo": "TM-1.5.3",
+    "k": "K2",
+    "explanation": "D is correct. (TM-1.5.3 (K2) Summarize the analytical-based improvement approach to test process improvement and understand how to apply it on a project context)"
+  },
+  {
+    "id": 21,
+    "text": "Your project has been having retrospectives for the last two months. Each meeting results in a list of improvements to make, but at least 80% of the improvements are the same from meeting to meeting. What step in the process is missing?\n\nSelect ONE option.",
+    "options": [
+      "a) Collecting data",
+      "b) Identifying improvements",
+      "c) Determining causes",
+      "d) Deciding on improvement actions"
+    ],
+    "pts": 2,
+    "answer": [
+      3
+    ],
+    "lo": "TM-1.5.4",
+    "k": "K3",
+    "explanation": "D is most likely missing. A, B are already happening. C may be needed to be more complete before D can be implemented, but D is not happening. (TM-1.5.4 (K3) Implement a project or iteration retrospective to evaluate test processes and discover testing areas to improve)"
+  },
+  {
+    "id": 22,
+    "text": "You have been getting ready to attend a retrospective meeting. One of the issues you want to raise is that the developers are rejecting defect reports saying there is not enough information, even though the information is actually provided. What data could you bring to the meeting to support your concerns?\n\nSelect ONE option.",
+    "options": [
+      "a) The number of times a defect is rejected by the developers",
+      "b) The number of defects rejected by the developers for lack of information",
+      "c) The number of defects closed by testers",
+      "d) The number of defects that are fixed by developers"
+    ],
+    "pts": 2,
+    "answer": [
+      1
+    ],
+    "lo": "TM-1.5.4",
+    "k": "K3",
+    "explanation": "B is correct. Even more interesting would be the number that are rejected and then subsequently fixed with no additional information added. A, C and D are not pertinent to the problem. (TM-1.5.4 (K3) Implement a project or iteration retrospective to evaluate test processes and discover testing areas to improve)"
+  },
+  {
+    "id": 23,
+    "text": "Which type of tool is usually the least expensive?\n\nSelect ONE option.",
+    "options": [
+      "a) COTS",
+      "b) Open-source",
+      "c) Custom or home-grown",
+      "d) Project management"
+    ],
+    "pts": 1,
+    "answer": [
+      1
+    ],
+    "lo": "TM-1.6.2",
+    "k": "K2",
+    "explanation": "B is correct. Open-source tools are usually the least expensive. (TM- 1.6.2 (K2) Explain the impact of technical and business aspects on the decision for a tool type)"
+  },
+  {
+    "id": 24,
+    "text": "Your manager has decided that your team of manual testers should all become test automation engineers. Your team is much stronger in analysis than in technical testing, so you are concerned about their ability to adapt. When evaluating tool vendors, which of the following would be helpful in this situation?\n\nSelect ONE option.",
+    "options": [
+      "a) Low license costs",
+      "b) Remote storage of the test automation scripts",
+      "c) Free online training and support",
+      "d) Tools that are java-based"
+    ],
+    "pts": 3,
+    "answer": [
+      2
+    ],
+    "lo": "TM-1.6.3",
+    "k": "K4",
+    "explanation": "C is correct. Since the team is not technical, anything that can help them create the test scripts will be beneficial. Having training and support available to them for free will save money in the long run. (TM- 1.6.3 (K4) Analyze a given context to create a plan for tool selection, including risks, costs, and benefits)"
+  },
+  {
+    "id": 25,
+    "text": "Your team has been assigned to test a mobile application. The application has been developed by a vendor who is continually making changes. There is a high incidence of regressions. Your team does not have the time or experience to implement test automation, but everyone agrees it is needed. As a result, you have decided to have a third-party testing organization implement the test automation using the tool you have selected. They are on schedule to complete the automation within budget.\n\nWhat should be your main concern now?\n\nSelect ONE option.",
+    "options": [
+      "a) Who will maintain/update the automation code",
+      "b) Will your testers be insulted now that there is automation available",
+      "c) With faster cycles for regression testing, will there be a push to eliminate manual testing roles",
+      "d) What happens if the automated tests find issues the manual testing has missed"
+    ],
+    "pts": 3,
+    "answer": [
+      0
+    ],
+    "lo": "TM-1.6.3",
+    "k": "K4",
+    "explanation": "A should be your primary concern. B, C and D are real concerns, but are a part of any automation effort. At this point, with a third party doing the automation development, the biggest issue is how/who will maintain the automation as changes occur. (TM-1.6.3 (K4) Analyze a given context to create a plan for tool selection, including risks, costs, and benefits)"
+  },
+  {
+    "id": 26,
+    "text": "How can code coverage information help testing?\n\nSelect ONE option.",
+    "options": [
+      "a) It indicates the important areas for testing",
+      "b) It indicates the most commonly used code segments",
+      "c) It indicates which parts of the code still need to be tested",
+      "d) It indicates how many defects have been found per line of code"
+    ],
+    "pts": 1,
+    "answer": [
+      2
+    ],
+    "lo": "TM-1.6.5",
+    "k": "K2",
+    "explanation": "C is correct. (TM-1.6.5 (K2) Give examples for metric collection and evaluation by using tools)"
+  },
+  {
+    "id": 27,
+    "text": "Which group of metrics is used to measure achievement of test objectives?\n\nSelect ONE option.",
+    "options": [
+      "a) Test planning metrics",
+      "b) Test monitoring metrics",
+      "c) Test control metrics",
+      "d) Test completion metrics"
+    ],
+    "pts": 1,
+    "answer": [
+      3
+    ],
+    "lo": "TM-2.1.1",
+    "k": "K2",
+    "explanation": "D is correct. Test completion metrics look at what has been achieved whereas test monitoring and control metrics are used to track progress. (TM-2.1.1 (K2) Give examples of metrics to achieve the test objectives)"
+  },
+  {
+    "id": 28,
+    "text": "You are halfway through testing a project and you want to know if you are on schedule. Which of the following metrics can help you determine if your progress is adequate?\n\nSelect ONE option.",
+    "options": [
+      "a) Number of requirements tested vs still untested",
+      "b) Number of test cases executed vs not executed",
+      "c) Number of defects found vs expected to be found",
+      "d) Number of budget dollars used"
+    ],
+    "pts": 1,
+    "answer": [
+      1
+    ],
+    "lo": "TM-2.1.2",
+    "k": "K2",
+    "explanation": "B will be the most accurate assuming test cases are relatively all the same size/effort. A seems like it would be a good one, but some requirements take a lot longer to test than others, so this may not give an accurate picture. C is interesting but may not be helpful if the estimate was incorrect. D may indicate when you will be done, but not if your progress is where it should be. (TM-2.1.2 (K2) Explain how to control test progress using test metrics)"
+  },
+  {
+    "id": 29,
+    "text": "What is a problem with having a target metric of 95% for passed test cases for high-risk items?\n\nSelect ONE option.",
+    "options": [
+      "a) It is very difficult to calculate accurately",
+      "b) You do not know if the 5% not tested might be critical",
+      "c) It does not consider the overall failure number for all test cases",
+      "d) Outstanding defects are not included in the calculation"
+    ],
+    "pts": 3,
+    "answer": [
+      1
+    ],
+    "lo": "TM-2.1.3",
+    "k": "K4",
+    "explanation": "B is correct. The problem with percentage metrics that are not 100% is that you have to look at the part that is not covered to determine if it’s safe to go forward. (TM-2.1.3 (K4) Analyze test results to create test reports that empower stakeholders to make decisions)"
+  },
+  {
+    "id": 30,
+    "text": "You have been tracking some cost of quality metrics and you are seeing that defects are consistently being introduced at two or three test levels before they are being found. For example, you found that 40% of the defects were introduced in development but were not caught until system testing. Ideally, if a defect is introduced during coding, where should it be found?\n\nSelect ONE option.",
+    "options": [
+      "a) In requirements reviews",
+      "b) In unit testing",
+      "c) In integration testing",
+      "d) In system testing"
+    ],
+    "pts": 3,
+    "answer": [
+      1
+    ],
+    "lo": "TM-2.1.3",
+    "k": "K4",
+    "explanation": "B is correct. Defects should be found in the same level in which they are introduced. If they are not, this constitutes an escape and increases the cost of quality. (TM-2.1.3 (K4) Analyze test results to create test reports that empower stakeholders to make decisions)"
+  },
+  {
+    "id": 31,
+    "text": "When making test estimates, which of the following is the most necessary resource?\n\nSelect ONE option.",
+    "options": [
+      "a) Test environments",
+      "b) Test data",
+      "c) Testers",
+      "d) Test results"
+    ],
+    "pts": 1,
+    "answer": [
+      2
+    ],
+    "lo": "TM-2.2.2",
+    "k": "K2",
+    "explanation": "C is correct. People are a critical factor to the project, but they also tend to be the most unstable factor. (TM-2.2.2 (K2) Give examples of factors which may influence test estimates)"
+  },
+  {
+    "id": 32,
+    "text": "You are working on an Agile project and plan to use an expert- based technique to perform the estimation for a set of sprints.\n\nWhich technique allows you to use the expertise in the team to create the estimation?\n\nSelect ONE option.",
+    "options": [
+      "a) Burndown chart",
+      "b) Three-point estimation",
+      "c) Planning poker",
+      "d) Estimation based on ratios"
+    ],
+    "pts": 3,
+    "answer": [
+      2
+    ],
+    "lo": "TM-2.2.3",
+    "k": "K4",
+    "explanation": "C is correct. Planning poker can estimate the work required to deliver individual stories. The burndown chart is actually a metrics-based technique which is derived from the story points the team is able to capture. (TM-2.2.3 (K4) Analyze the given context to select an appropriate technique or approach for test estimation)"
+  },
+  {
+    "id": 33,
+    "text": "You have been asked to estimate a project. You know that your team will normally make 10 test cases for a high-risk test item, 5 for a medium risk, and 1 for a low risk. You also know it takes your team, on average, 1 hour to create a test case and 2 hours to execute one (that includes the time required to setup the preconditions). You have estimated there will be 530 defects found and, on average, you know your team spends 5 hours per defect (finding it, reproducing, writing it up, retesting the fix). You know how many risk items there are, and you know their classification.\n\nGiven all this information, what estimation method should you use?\n\nSelect ONE option.",
+    "options": [
+      "a) Estimation based on ratios",
+      "b) Burndown charts",
+      "c) Wideband delphi",
+      "d) Three-point estimation"
+    ],
+    "pts": 3,
+    "answer": [
+      0
+    ],
+    "lo": "TM-2.2.3",
+    "k": "K4",
+    "explanation": "A is correct. You have good information regarding the hours required based on the items and you know how many items you have, so the ratios are there and ready to be used. (TM-2.2.3 (K4) Analyze the given context to select an appropriate technique or approach for test estimation)"
+  },
+  {
+    "id": 34,
+    "text": "You have noticed a concerning trend that defects that cannot be fixed with a release are being Closed. This means they are not being reviewed for future fixing when the open defects are reviewed. What type of status should you use, that will allow you to track these defects effectively until they are either fixed or the decision is made to never fix them?\n\nSelect ONE option.",
+    "options": [
+      "a) Deferred",
+      "b) Open",
+      "c) Re-Open",
+      "d) Rejected"
+    ],
+    "pts": 2,
+    "answer": [
+      0
+    ],
+    "lo": "TM-2.3.1",
+    "k": "K3",
+    "explanation": "A is correct. Deferred is the proper status. This indicates the defect is not fixed and a decision has not yet been made, but it will not be in the current release. (TM-2.3.1 (K3) Implement a defect management process, including the defect workflow, that can be used to monitor and control defects)"
+  },
+  {
+    "id": 35,
+    "text": "You are having issues with developers rejecting defect reports when they have a question regarding the steps that were taken to make the failure occur. This is resulting in frustration from the testers and a significant amount of re-opening rejected defect reports. What would help to clarify the process and alleviate some of the frustration?\n\nSelect ONE option.",
+    "options": [
+      "a) Do not allow developers to reject defect reports",
+      "b) Add a status “Information Needed” that can be used by the developers when they have questions",
+      "c) Add a status “Blocked” that can be used by the developers when they have questions",
+      "d) Implement a review step for every defect report that must be followed before it is created"
+    ],
+    "pts": 2,
+    "answer": [
+      1
+    ],
+    "lo": "TM-2.3.1",
+    "k": "K3",
+    "explanation": "B is correct. This is the easiest fix and should help remove the frustration. If it is determined that this status is used too frequently (and it will be easy to tell how often it is used) then a process like the one in D might be implemented. In general, a pre-review is time consuming and doesn’t add much value – it’s better to train people once how to write a good defect report and then address any individual problems. (TM-2.3.1 (K3) Implement a defect management process, including the defect workflow, that can be used to monitor and control defects)"
+  },
+  {
+    "id": 36,
+    "text": "Why should project management be included in the defect management committee?\n\nSelect ONE option.",
+    "options": [
+      "a) They usually manage the schedule and budget, and defect fixes may have budget and schedule impact",
+      "b) They own the defect process and can control the flow of defects into the process",
+      "c) They are responsible for quality",
+      "d) They know the number of defects that are allowed for a project and can cut off the flow as needed"
+    ],
+    "pts": 1,
+    "answer": [
+      0
+    ],
+    "lo": "TM-2.3.2",
+    "k": "K2",
+    "explanation": "A is correct. There are some decisions that have to be made about defect fixes that can impact the schedule and budget of the project. This is particularly true if the defect is a missed or incorrect requirement. (TM-2.3.2 (K2) Explain the process and participants required for effective defect management)"
+  },
+  {
+    "id": 37,
+    "text": "When does a defect report become a backlog item in an Agile project?\n\nSelect ONE option.",
+    "options": [
+      "a) When it cannot be fixed in the current sprint",
+      "b) When the developer does not want to fix it",
+      "c) When the defect cannot be fixed",
+      "d) When the defect was written in error"
+    ],
+    "pts": 1,
+    "answer": [
+      0
+    ],
+    "lo": "TM-2.3.3",
+    "k": "K2",
+    "explanation": "A is correct. (TM-2.3.3 (K2) Explain the specifics of defect management in Agile software development)"
+  },
+  {
+    "id": 38,
+    "text": "What is the product owner’s contribution to defect management meetings?\n\nSelect ONE option.",
+    "options": [
+      "a) Clarifying the priority of the fix from the user’s perspective",
+      "b) Setting the timeline for the fix",
+      "c) Discussing technical solution options",
+      "d) Determining root case"
+    ],
+    "pts": 1,
+    "answer": [
+      0
+    ],
+    "lo": "TM-2.3.4",
+    "k": "K2",
+    "explanation": "A is correct. (TM-2.3.4 (K2) Explain the challenges of defect management in hybrid software development)"
+  },
+  {
+    "id": 39,
+    "text": "When is the change history needed when looking at efficient defect management?\n\nSelect ONE option.",
+    "options": [
+      "a) It can be used to determine the time between status changes, such as open to closed",
+      "b) It can be used to determine how many defects are open for a given area of the software",
+      "c) It can be used to determine how quickly the opened and closed trends are converging",
+      "d) It can be used to determine which non-functional areas require additional testing"
+    ],
+    "pts": 2,
+    "answer": [
+      0
+    ],
+    "lo": "TM-2.3.5",
+    "k": "K3",
+    "explanation": "A is correct. With this information, you can determine how efficiently defects are moving from stage to stage in their lifecycle. If they are languishing anywhere, that is an opportunity for an efficiency improvement. (TM-2.3.5 (K3) Use the data and classification information that should be gathered during defect management)"
+  },
+  {
+    "id": 40,
+    "text": "You are reviewing a defect database and you have found a disturbing trend in the data. Despite there being many dropdown lists for the tester to use when writing the defect report, the testers are just taking the default values. This is resulting in the reporting showing that all defects are due to Logic Errors (the first item in the root cause list) and found during Unit Testing (the first item in the test level list) and are in the Data component (the first item in the component list).\n\nWhat should you do about this to ensure the data is more accurate?\n\nSelect ONE option.",
+    "options": [
+      "a) Remove the fields from the defect management tool",
+      "b) Autofill the data based on preferences set by the user",
+      "c) Review the number and type of fields required when creating a defect and remove any that are not specifically needed",
+      "d) Remove all dropdown lists and allow free form text to be entered by the creator of the defect report"
+    ],
+    "pts": 2,
+    "answer": [
+      2
+    ],
+    "lo": "TM-2.3.5",
+    "k": "K3",
+    "explanation": "C is correct. Since people are just picking the defaults there may be too many required fields and it takes too long to write a defect report. There also may be too many items on the dropdown lists and people may be tired of reading through to find the right one. D is not correct because this would make reporting much more difficult if not impossible. (TM-2.3.5 (K3) Use the data and classification information that should be gathered during defect management)"
+  },
+  {
+    "id": 41,
+    "text": "Which of the following defect statistics will provide input to be used for reducing the cost of quality?\n\nSelect ONE option.",
+    "options": [
+      "a) Number of defect reports re-opened",
+      "b) Number of defects in a particular area of the code",
+      "c) Number of defect reports rejected by the developers",
+      "d) Number of defects found in a phase later than they were introduced"
+    ],
+    "pts": 1,
+    "answer": [
+      3
+    ],
+    "lo": "TM-2.3.6",
+    "k": "K2",
+    "explanation": "D is correct. This is an indication that defects are escaping from the phase in which they are introduced, and this is causing a higher cost of quality than necessary. (TM-2.3.6 (K2) Explain how defect report statistics can be used to devise process improvement)"
+  },
+  {
+    "id": 42,
+    "text": "You have an ongoing issue with one of your team members. He really likes to talk and does not take hints from others that they are tired of listening and need to get back to work. Given this information, in what competence area does this person need to improve?\n\nSelect ONE option.",
+    "options": [
+      "a) Professional competence",
+      "b) Methodical competence",
+      "c) Social competence",
+      "d) Personal competence"
+    ],
+    "pts": 1,
+    "answer": [
+      2
+    ],
+    "lo": "TM-3.1.1",
+    "k": "K2",
+    "explanation": "C is correct. This person is not taking social queues from his co- workers. He needs to work on his social competence. (TM-3.1.1 (K2) Give examples of typical skills needed by test team members within four areas of competence)"
+  },
+  {
+    "id": 43,
+    "text": "You are conducting a large UAT effort with about 20 business SMEs. Your team will be working closely with these folks to understand what needs to be tested, to document the tests in the test management system, to record any defects found, and to train the users in testing.\n\nGiven this information, what three competence areas will be the most important for your team to possess?\n\nSelect ONE option.",
+    "options": [
+      "a) Professional, methodical, social",
+      "b) Social, personal, methodical",
+      "c) Personal, professional, methodical",
+      "d) Social, personal, professional"
+    ],
+    "pts": 3,
+    "answer": [
+      0
+    ],
+    "lo": "TM-3.1.2",
+    "k": "K4",
+    "explanation": "A is correct. Your team will need to be proficient in testing and the right way to do testing to be able to train the users (professional). They will also need to demonstrate good analysis skills and test script/defect documentation (methodical). Great social skills will be needed to communicate with the users in a welcoming manner, while providing the guidance to them. While always needed, in this instance the least important competency set is personal. (TM-3.1.2 (K4) Analyze a given project context to determine required skills for test team members)"
+  },
+  {
+    "id": 44,
+    "text": "You are managing a technical team of software testers. You have noticed that some of them are willing to learn any new tool or technology where others are much less likely to step forward to build their knowledge and skills. What is likely lacking in those who do not want to learn?\n\nSelect ONE option.",
+    "options": [
+      "a) Professional competence",
+      "b) Methodical competence",
+      "c) Social competence",
+      "d) Personal competence"
+    ],
+    "pts": 3,
+    "answer": [
+      3
+    ],
+    "lo": "TM-3.1.2",
+    "k": "K4",
+    "explanation": "D is correct. This is a sign that personal competence is somewhat lacking because they are not interested in continually building their skills. (TM-3.1.2 (K4) Analyze a given project context to determine required skills for test team members)"
+  },
+  {
+    "id": 45,
+    "text": "You want to evaluate your team’s social competence. Which of the following would be the best activity to provide you the information you need?\n\nSelect ONE option.",
+    "options": [
+      "a) Develop a state transition table from a supplied set of requirements",
+      "b) Bake a cake and share it with the team",
+      "c) Build a matchstick bridge working as a team",
+      "d) Write a short introduction for themselves and read it to the team"
+    ],
+    "pts": 1,
+    "answer": [
+      2
+    ],
+    "lo": "TM-3.1.3",
+    "k": "K2",
+    "explanation": "C is correct because this requires effective social interaction. (TM-3.1.3 (K2) Explain typical techniques for skill assessments for test team members)"
+  },
+  {
+    "id": 46,
+    "text": "Self-study is best used to develop which competency?\n\nSelect ONE option.",
+    "options": [
+      "a) Social",
+      "b) Professional",
+      "c) Personal",
+      "d) Biological"
+    ],
+    "pts": 1,
+    "answer": [
+      1
+    ],
+    "lo": "TM-3.1.4",
+    "k": "K2",
+    "explanation": "B is correct. This is a great way to develop professional competency without requiring social interaction. (TM-3.1.4 (K2) Differentiate between the typical approaches for developing skills of test team members)"
+  },
+  {
+    "id": 47,
+    "text": "Which of the following is a hygiene factor for test teams?\n\nSelect ONE option.",
+    "options": [
+      "a) Regular bathing",
+      "b) Good working conditions",
+      "c) Recognition for work done",
+      "d) Autonomy in task completion"
+    ],
+    "pts": 1,
+    "answer": [
+      1
+    ],
+    "lo": "TM-3.1.6",
+    "k": "K2",
+    "explanation": "B is correct, although A should never be disregarded! C and D are motivators rather than hygiene factors. (TM-3.1.6 (K2) Give examples of motivating and hygiene factors for test team members)"
+  },
+  {
+    "id": 48,
+    "text": "Which of the following is an example of an external failure cost?\n\nSelect ONE option.",
+    "options": [
+      "a) Damage to the environment",
+      "b) Bringing on contractors to help with test execution",
+      "c) Redefining the flow of code into the test environment to reduce false positives",
+      "d) Fixing defects found during testing"
+    ],
+    "pts": 1,
+    "answer": [
+      0
+    ],
+    "lo": "TM-3.2.1",
+    "k": "K2",
+    "explanation": "A is correct. This is an example of an external failure which has caused damage to the environment in some way and will likely have to be rectified. (TM-3.2.1 (K2) Give examples for each of the four categories determining the cost of quality)"
+  },
+  {
+    "id": 49,
+    "text": "You have assembled the following cost of quality numbers. 1000 defects were found prior to release and 100 were found after.\n\nGiven this information, what is the total cost of quality for this project?\n\nSelect ONE option.",
+    "options": [
+      "a) $1,000,000",
+      "b) $500,000",
+      "c) $300,000",
+      "d) $0"
+    ],
+    "pts": 2,
+    "answer": [
+      0
+    ],
+    "lo": "TM-3.2.2",
+    "k": "K3",
+    "explanation": "A is correct. Defect prevention + (appraisal * defects found) + (internal failure * defects found) + (external failure * defects found) = total cost of quality",
+    "image": "astqb_ctal_tm_2024_assets/q49.png",
+    "imageAlt": "Source figure for question 49: Average Cost Amount # of Defects Total Cost Defect prevention $50,000 N/A $50,000 Appraisal $250 1000 $250,000 Internal failure $200 1000 $200,000 External failure $5000 100 $500,000",
+    "sourceNote": "The answer PDF omits the learning-objective reference for this item. TM-3.2.2 (K3) is inferred from the matching cost-benefit task in Q50."
+  },
+  {
+    "id": 50,
+    "text": "You have assembled the following cost of quality numbers. 1000 defects were found prior to release and 100 were found after.\n\nGiven this information, what should you conclude?\n\nSelect ONE option.",
+    "options": [
+      "a) Testing was highly effective and the cost is fully justified by the low number of high cost external failures",
+      "b) More effort was needed in testing to drive the external failure number down further",
+      "c) Less testing will be acceptable for the next release given that only 1% of defects escaped",
+      "d) More releases are needed so fixes can be quickly released to production to resolve the 10 defects"
+    ],
+    "pts": 2,
+    "answer": [
+      1
+    ],
+    "lo": "TM-3.2.2",
+    "k": "K3",
+    "explanation": "B is correct. At this point, the cost of external failure is still higher than the cost of testing. (TM-3.2.2 (K3) Apply a cost-benefit calculation to estimate the added value of testing for stakeholders)",
+    "image": "astqb_ctal_tm_2024_assets/q50.png",
+    "imageAlt": "Source figure for question 50: Average Cost Amount # of Defects Total Cost Defect prevention $50 N/A $50,000 Appraisal $250 1000 $250,000 Internal failure $200 1000 $200,000 External failure $100,000 10 $1,000,000",
+    "sourceNote": "The source stem says 100 defects were found after release, but its table and options use 10 external failures. Both are retained as printed; answer B follows the source answer key."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 120 * 60;
+      const EXT_SECONDS = 150 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "150"
+          : "120";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 150:00 (120 min + 30 min extension). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 120:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${escHtml(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${escHtml(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="${escHtml(q.imageAlt || ('Diagram for Question ' + q.id))}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="source-note">Source note: ${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,1979 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CT-TAS v1.0 — Sample Exam Set A v1.2</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Specialist Level</div>
+        <h1>CT-TAS v1.0<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">ISTQB® Certified Tester Test Automation Strategy · Sample Exam Set A v1.2 · Syllabus v1.0. The timer starts when you begin the exam.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">60</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">49</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Source: ISTQB® — ISTQB_CT-TAS_Sample_Exam_Questions_v1.2.pdf; ISTQB_CT-TAS_Sample_Exam_Answers_v1.2.pdf. Copyright © ISTQB®. Questions, tables, diagrams and rationales follow these sources. Authors are acknowledged in the source PDFs.</p>
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">60 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">75 min</span>
+            <span class="time-opt-lbl">+25% practice time</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optional practice allowance: 25% extra time (15 minutes).</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 60:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CT-TAS v1.0 · Sample Exam Set A v1.2</span
+            >
+            <span class="exam-title">Certified Tester – Test Automation Strategy</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 answered
+            </div>
+            <div class="timer" id="timer">60:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 questions (49 points) · <strong>65% (≥ 32 of 49 points)</strong>
+            to pass · questions are worth one or two points; five questions ask for two options
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "CT-TAS-1.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You discuss the introduction of test automation with project management. Which statements about the advantages and limitations of test automation are correct?\n\nSelect TWO options.",
+    "options": [
+      "a) Automated test cases are consistent and can be repeated any number of times on diﬀerent versions of the system under test (SUT) and/or environments",
+      "b) Resources limited in their allocation only to test automation are no longer available for manual testing",
+      "c) Automated test tools must be continuously maintained to be up to date. This maintenance effort has a negative impact on the costs of the testing",
+      "d) With test automation, tests can be performed that cannot be executed manually or only with significant effort",
+      "e) Feedback on software quality takes much longer because the test results usually have to be evaluated by a tester"
+    ],
+    "answer": [
+      0,
+      3
+    ],
+    "explanation": "a) Is correct. As with any automation repeatability is a major benefit\n\nb) Is not correct. Resources can affect the whole project, not just test automation\n\nc) Is not correct. If well implemented there is no continuous maintenance requirement\n\nd) Is correct. Automated tests cases are able to execute scripts in a way that would be cumbersome or difficult (like if crucial timing is needed) for a human being to perform\n\ne) Is not correct. Test automation provides feedback more quickly"
+  },
+  {
+    "id": 2,
+    "lo": "CT-TAS-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements describes an important technical success factor for any major test automation project?\n\nSelect ONE option.",
+    "options": [
+      "a) The test automation strategy must ensure that different areas of the SUT can be tested in the same way",
+      "b) In automated GUI testing, test data and interaction controls should be very tightly coupled to the GUI layout",
+      "c) Ensure that automated test scripts can be isolated and retired easily when they are no longer useful or necessary in a current test execution",
+      "d) The test automation project must support the automation of all manual tests for the test automation to achieve long-term value"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. There is no requirement for test automation to work the same way\n\nb) Is not correct. Test data should be independent from controls for flexibility\n\nc) Is correct. This is explained in Chapter 1.1.2\n\nd) Is not correct. There may be manual tests that cannot be automated, or where the test automation effort would exceed the derived value"
+  },
+  {
+    "id": 3,
+    "lo": "CT-TAS-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT a recommended approach for establishing an easy to use and maintainable Test Automation Framework (TAF)?\n\nSelect ONE option.",
+    "options": [
+      "a) Define and implement test reporting facilities",
+      "b) Enable easy troubleshooting",
+      "c) Include test automation that is sensitive to user interface (UI) changes",
+      "d) Keep the automated tests up to date"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) It aligns with the TAF success factor of \"Defined and implemented test reporting\" mentioned in Chapter 1.1.2, which emphasizes the importance of documenting and communicating test results effectively.\n\nb) This approach directly corresponds to the \"Easy troubleshooting\" success factor outlined in Chapter 1.1.2. It is crucial for maintainability, as it allows testers to quickly identify and resolve issues with failing tests.\n\nc) Correct - Creating test automation that closely mirrors the UI structure is NOT recommended, as it makes the tests sensitive to UI changes, reducing maintainability. A TAF should use more stable interfaces or abstraction layers to interact with the system under test.\n\nd) Incorrect - Regularly updating and maintaining automated test scripts is vital for the long-term success of a TAF, ensuring that tests remain relevant and effective as the system under test evolves."
+  },
+  {
+    "id": 4,
+    "lo": "CT-TAS-1.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is NOT a success faction for a Test Automation Project?\n\nSelect ONE option.",
+    "options": [
+      "a) Testing that supports test automation",
+      "b) Decoupling of GUI interaction and test data",
+      "c) Test automation challenges of the SUT should be targeted first",
+      "d) Exposing APIs as public"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. This facilitates SUT testability, which is a key success factor mentioned in Chapter 1.1.2.\n\nb) Is not correct. A well-documented and easily maintainable test automation framework is listed as a success factor in Chapter 1.1.2.\n\nc) Is correct. Prioritizing challenges is not mentioned as a success factor. In fact, starting with the most challenging aspects could potentially hinder the project's success.\n\nd) Is not correct. Formulating a comprehensive test automation strategy is explicitly mentioned as a success factor in Chapter 1.1.2."
+  },
+  {
+    "id": 5,
+    "lo": "CT-TAS-1.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Your company is planning to introduce test automation and has asked you to lead the test automation project. There are several projects in the company, some of which would benefit from automating test execution. To test the effectiveness of the test automation, which project should you choose to pilot?\n\nSelect ONE option.",
+    "options": [
+      "a) Project Alpha, which is a very small project and is a minimal functional addition to another project. They hope that the simplicity of the project will result in rapid test automation successes",
+      "b) Project Beta, which is your company's mature standard application. With this selection, you hope to be able to try out the test automation solution (TAS) in a realistic scenario",
+      "c) Project Gamma, which is still in prototyping. At this early stage, the project is still unstable, and you hope to find many defects with test automation",
+      "d) Project Delta, which is already late. By automating, you hope to deliver on time, demonstrating a great test automation success"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. It will likely not provide a high return on investment given its limited nature\n\nb) Is correct. A mature standard application will likely have a long life and good test automation return on investment (ROI)\n\nc) Is not correct. Test automation can be brittle when applied to unstable software\n\nd) Is not correct. Project delays are usually not attributed to the lack of test automation"
+  },
+  {
+    "id": 6,
+    "lo": "CT-TAS-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Your board of directors gives you the requirement to save costs on your development project. Which of the following is NOT a good argument for outsourcing your test automation?\n\nSelect ONE option.",
+    "options": [
+      "a) Your company has very specialized software that is not easy to understand, so you would like to outsource test automation so your people can focus on other projects",
+      "b) The project is part of a larger project, so that knowledge is already available in the company",
+      "c) There are some test automation engineers (TAEs) in your company with the required skills who need a new occupation in the long term but are not yet available in the short term for your organization",
+      "d) No additional software or hardware needs to be purchased for test automation"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. A complex software project is a risk to assign to an outsourced vendor if company resources move to other projects\n\nb) Is not correct. There is little risk with company resources having the know-how\n\nc) Is not correct. Having the skills within the organization allows the work to be done\n\nd) Is not correct. The cost of hardware and software is absorbed by the outsourced vendor"
+  },
+  {
+    "id": 7,
+    "lo": "CT-TAS-2.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is the main advantage of a floating license?\n\nSelect ONE option.",
+    "options": [
+      "a) Those who use software under this license will only be billed for the time they use the software",
+      "b) There are many users of the software which makes it easier to gather information and get support",
+      "c) Software under this license can easily be modified if necessary",
+      "d) Software under this license can be used by many employees on different systems"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. You pay for the license up front whether you use it or not\n\nb) Is not correct. Although there may be many users, only one user can use a floating license at one time\n\nc) Is not correct. The license cannot be modified\n\nd) Is correct. A floating license allows for the flexibility of who runs it and where it is run"
+  },
+  {
+    "id": 8,
+    "lo": "CT-TAS-2.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "What cost factor should NOT influence your decision about a test automation implementation strategy and a TAS to be used?\n\nSelect ONE option.",
+    "options": [
+      "a) Hardware and licenses",
+      "b) Time constraints",
+      "c) Number of TASs",
+      "d) Maintenance"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Hardware and licensing costs should influence the implementation strategy and the TAS\n\nb) Is not correct. Time constraints strongly influence the implementation strategy and the TAS\n\nc) Is correct. The number of TASs does not influence the test automation implementation strategy and the TAS\n\nd) Is not correct. Maintenance is a cost factor for the implementation strategy. A TAS should be developed with that in mind"
+  },
+  {
+    "id": 9,
+    "lo": "CT-TAS-2.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are a test leader in a project, and you are looking to strengthen your test team. What skills should you focus on in your search?\n\nSelect TWO options.",
+    "options": [
+      "a) The applicant has strong technical knowledge about different software development lifecycles (SDLCs)",
+      "b) The applicant is knowledgeable and is very self-confident",
+      "c) The applicant is a good programmer but prefers to work alone on a challenge",
+      "d) The applicant has good team skills and can explain facts well",
+      "e) The applicant has often led test teams"
+    ],
+    "answer": [
+      0,
+      3
+    ],
+    "explanation": "a) Is correct. A TAE should have strong technical knowledge about different software development lifecycles.\n\nb) Is not correct. People do not need to know everything and be too confident.\n\nc) Is not correct. TAEs should be able to work together to make the quality better.\n\nd) Is correct. Teamplay and communication skills are important for TAEs.\n\ne) Is not correct. The project already has a test leader, and the project needs more TAEs not another lead."
+  },
+  {
+    "id": 10,
+    "lo": "CT-TAS-3.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Match the statements to the correct test automation pyramid shape.\n\n1. Pyramid shaped\n2. Ice cream cone shaped\n3. Hourglass shaped\n4. Umbrella shaped\n\nA. Automated tests are performed mainly as application UI tests\nB. Testing relies heavily on API and UI tests. Defects are found late in the SDLC due to the lack of low-level testing such as component testing\nC. Less testing on the upper levels and more testing on the lower levels with stable and faster tests and therefore quick feedback\nD. Little to no integration testing, but extensive testing at the highest and lowest test levels. Integration issues may go undetected.\n\nSelect ONE option.",
+    "options": [
+      "a) 1A, 2B, 3C, 4D",
+      "b) 1C, 2B, 3D, 4A",
+      "c) 1B, 2D, 3C, 4A",
+      "d) 1D, 2A, 3D, 4C"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Only 2B has the correct pattern match\n\nb) Is correct.\n\nc) Is not correct. Only 4A has the correct pattern match\n\nd) Is not correct. Only 3D has the correct pattern match"
+  },
+  {
+    "id": 11,
+    "lo": "CT-TAS-3.1.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "You define a test strategy and break down the layers in your approach as follows: UI, API, integration, and component. Which statements are true?\n\n1. It is tempting to ignore rare configurations in UI testing, but they can still be relevant to production environments\n2. API testing includes testing APIs directly in isolation with mocks and as part of the end- to-end transactions performed during integration testing\n3. Agile and DevOps teams working with short iterations and fast feedback loops are finding that GUI testing requires very little maintenance, while API testing requires more maintenance\n4. API testing is recommended for the vast majority of test automation efforts and as much boundary value analysis as possible\n5. Component tests are reserved for validating system-level use cases, mobile tests, and usability tests\n6. An integration test determines whether the interaction and the interfaces between the components work as intended\n7. With the help of component tests, errors can be detected at an early stage, and, under certain circumstances, they can even be narrowed down to the line in the code that caused them\n8. The more complicated the functionality the less important the component tests\n\nSelect ONE option.",
+    "options": [
+      "a) 1, 2, 4, 6, 7",
+      "b) 1, 2, 5, 6, 8",
+      "c) 1, 3, 5, 7, 8",
+      "d) 2, 4, 5, 6, 7"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Each statement is correct\n\nb) Is not correct. Statements 3,5,8 are negations of the true statements\n\nc) Is not correct. Statements 3,5,8 are negations of the true statements\n\nd) Is not correct. Statements 3,5,8 are negations of the true statements"
+  },
+  {
+    "id": 12,
+    "lo": "CT-TAS-3.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Give TWO reasons why you should consider shift right.\n\nSelect TWO options.",
+    "options": [
+      "a) To save tester resources for later",
+      "b) To expand the scope of test automation and coverage",
+      "c) To move the tests forward to the beginning of the SDLC",
+      "d) To identify problems in a production system at an early stage",
+      "e) To roll out components that have already been thoroughly tested as canary releases"
+    ],
+    "answer": [
+      1,
+      3
+    ],
+    "explanation": "a) Is not correct. Saving tester resources is not an advantage of shift right\n\nb) Is correct. The scope of test automation can be improved by the feedback of the users and the actual performance of the application.\n\nc) Is not correct. Moving tests forward is the shift-left approach\n\nd) Is correct. With shift right the teams can get feedback earlier from the end users and improve the SUT and coverage based on it\n\ne) Is not correct. Canary releases are not specifically for test automation"
+  },
+  {
+    "id": 13,
+    "lo": "CT-TAS-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "As a test leader, you are to take on a project with legacy software. What are TWO important aspects for your test automation project?\n\nSelect TWO options.",
+    "options": [
+      "a) Convert the architecture of the legacy software to a microservices architecture before writing new tests, to keep the tests compact and efficient.",
+      "b) Rewrite all tests first. Legacy software TASs tend to be outdated, underperforming, and should not be used again",
+      "c) Increase the coverage at the system integration test level to detect possible errors early",
+      "d) Focus on system testing. There is no point in writing new component tests for legacy software",
+      "e) Introduce more meaningful component tests to expand the possibilities of code refactoring"
+    ],
+    "answer": [
+      2,
+      4
+    ],
+    "explanation": "a) Is not correct. Converting the architecture of the SUT for test automation is not a valid decision to make\n\nb) Is not correct. It is not recommended to drop the existing tests and reimplement them\n\nc) Is correct. Increasing the integration tests to detect defects earlier is a best practice for test automation\n\nd) Is not correct. Component tests can detect defects much earlier, so it is always recommended to write them\n\ne) Is correct. Increasing component testing coverage increases confidence in the quality as well. It is a best practice"
+  },
+  {
+    "id": 14,
+    "lo": "CT-TAS-3.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which ONE of the following statements best describes how test automation projects conform with Agile software development best practices?\n\nSelect ONE option.",
+    "options": [
+      "a) Test automation is more technical than manual functional testing and therefore fits Agile software development that is also more technical than a sequential development model",
+      "b) Agile software development promotes sustainable development, and this can be achieved with a proper balance of automated tests among all test levels",
+      "c) Typically, Agile teams do not include an estimate of test effort in an Agile software development approach, but as test automation does make it easier, it will be done",
+      "d) One principle of Agile software development is “continuous attention to technical excellence and good design enhances agility” and test automation fits this"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. A sequential development model could also be technical\n\nb) Is correct. See Chapter 3.2.2\n\nc) Is not correct. Test automation does not make test effort estimation easier\n\nd) Is not correct. Test automation could also be done wrong and then it does not fit this principle"
+  },
+  {
+    "id": 15,
+    "lo": "CT-TAS-3.2.3",
+    "k": "K3",
+    "pts": 2,
+    "text": "Your company has a mature, disciplined approach to test automation. Teams have implemented test automation on all test levels defined in the organization: UI, API, integration, and component. However, the build pipeline in some of the teams takes a long time to execute all the steps. As the head of test automation architecture (TAA), you are responsible for finding a solution that will help each team. Which of the following should you NOT consider when providing your recommendations?\n\nSelect ONE option.",
+    "options": [
+      "a) Reduce the scope of UI test automation to a smoke test suite",
+      "b) Execute the full regression test suite separately from the build pipeline",
+      "c) Perform boundary value analysis manually",
+      "d) Replace the existing test automation tool"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a), b) and c) are not correct. All three of these considerations follow DevOps best practices regarding test automation\n\nd) Is correct. A replacement should only be carried out after a pilot project proves that the benefits are greater than the time invested in replacing the existing tool"
+  },
+  {
+    "id": 16,
+    "lo": "CT-TAS-3.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is a good reason to ask: “Is the test case highly repeatable?” when selecting and prioritizing test cases for test automation?\n\nSelect ONE option.",
+    "options": [
+      "a) A highly repeatable test case will be easier to implement",
+      "b) A highly repeatable test case should not be automated",
+      "c) A highly repeatable test case has potential for a good ROI",
+      "d) A highly repeatable test case is already proven to run well"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. A repeatable test case is not easier to implement than any other test case\n\nb) Is not correct. This kind of test case is the best to automate due to ROI\n\nc) Is correct. A test case that will be executed several times will have a high ROI\n\nd) Is not correct. It is not certain that this test case has been executed before"
+  },
+  {
+    "id": 17,
+    "lo": "CT-TAS-3.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is a challenge that can only be addressed by test automation?\n\nSelect ONE option.",
+    "options": [
+      "a) There is a need to integrate test results into a development pipeline",
+      "b) There are still licenses for the test automation tool available",
+      "c) Manual intervention in executing test cases is needed",
+      "d) The specification is unclear, but testing must start now"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. See Chapter 3.3.2, bullet point three\n\nb) Is not correct. This is not a real challenge that only test automation can address\n\nc) Is not correct. This is not a challenge for test automation. This is a limitation of test automation\n\nd) Is not correct. It would not be a good idea to automate things that are not clearly defined"
+  },
+  {
+    "id": 18,
+    "lo": "CT-TAS-3.3.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is a test condition that is difficult to automate?\n\nSelect ONE option.",
+    "options": [
+      "a) It is possible to have many data combinations within the system",
+      "b) The UI must be consistent across different platforms",
+      "c) The system must work even if thousands of users are online",
+      "d) The functional suitability of the system must be tested on different devices"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a), c) and d) are not correct. These situations would not be difficult to automate\n\nb) Is correct. See Chapter 3.3.3 bullet point 1"
+  },
+  {
+    "id": 19,
+    "lo": "CT-TAS-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "How does test automation facilitate getting a product to market in a timely manner?\n\nSelect ONE option.",
+    "options": [
+      "a) By following a shift-left approach and enabling parallel test execution",
+      "b) Test automation facilitates timely product to market by reducing manual effort to develop test cases",
+      "c) Test automation helps decrease manual testing time by reducing the effort to cover the scope of testing",
+      "d) Test automation can cover more data combinations in the same time as manual testing"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. This option accurately reflects the benefits of test automation as described in Chapter 4.1.1. Parallel test execution reduces overall test execution time, while earlier testing (shift-left approach) helps identify and fix issues sooner in the development process.\n\nb) Is not correct. Test automation does not necessarily reduce the effort to develop test cases. In fact, creating automated tests often requires more initial effort than manual test case development.\n\nc) Is not correct. While this statement is partially true, it doesn't fully capture the main benefit of test automation in reducing time to market. The decrease in manual testing time is a means to achieve faster market delivery, not the primary mechanism.\n\nd) Is not correct. Although test automation can cover more data combinations, this alone does not directly address how it supports getting a product to market faster. The focus should be on time-saving aspects of automation."
+  },
+  {
+    "id": 20,
+    "lo": "CT-TAS-4.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is the best reason for automating confirmation testing of a defect?\n\nSelect ONE option.",
+    "options": [
+      "a) To close a gap in the existing test automation",
+      "b) To ensure that the fix to a defect works and continues to work",
+      "c) To justify the time spent finding a defect based on its severity",
+      "d) To test the configuration management process"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. While there may be gaps in the test automation this is not the primary reason to automate confirmation testing\n\nb) Is correct. You are trying to ensure that the fix to a defect works and ensure that the fix does not break later or get lost because of a configuration management problem\n\nc) Is not correct. The time spent finding a defect should have been justified by the severity of the defect\n\nd) Is not correct. This is a side effect and, while it does not test the entire configuration management process, it does ensure that the fix is not lost for some reason"
+  },
+  {
+    "id": 21,
+    "lo": "CT-TAS-4.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following approaches is MOST suitable for testing operationally relevant scenario “Update of the software”?\n\nSelect ONE option.",
+    "options": [
+      "a) Failover testing",
+      "b) Backup and restore point testing",
+      "c) Security testing",
+      "d) Operational documentation review"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Failover testing is primarily used to test system recovery when hardware fails, not specifically for software updates\n\nb) Is not correct. While backup and restore testing is important for software updates, it's not the MOST suitable approach for testing the update process itself\n\nc) Is not correct. Security testing is crucial but not the primary focus when testing a software update scenario\n\nd) Is correct. Operational documentation review is the MOST suitable approach for testing a software update scenario. It ensures that the documentation is updated to reflect the new version, which is crucial for maintaining and operating the software after an update"
+  },
+  {
+    "id": 22,
+    "lo": "CT-TAS-4.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following includes all the items that must be taken into account in a good test automation deployment strategy?\n\nSelect ONE option.",
+    "options": [
+      "a) Test environment; people; application access; test script storage; test data provisioning",
+      "b) Tools; test data; application access; test script storage; software licenses",
+      "c) Test environment; tools; requirements; test script storage; test data provisioning",
+      "d) Test environment; tools; application access; test script storage; test data provisioning"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. This option incorrectly includes \"people\" instead of \"tools\"\n\nb) Is not correct. This option incorrectly includes \"software licenses\" and omits \"test environment\"\n\nc) Is not correct. This option incorrectly includes \"requirements\" instead of \"application access\"\n\nd) Is correct. This option correctly lists all items mentioned in Chapter 4.2.1 for a good test automation deployment strategy"
+  },
+  {
+    "id": 23,
+    "lo": "CT-TAS-4.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT a consideration that a TAE should take into account when developing and deploying a TAS?\n\nSelect ONE option.",
+    "options": [
+      "a) Test environment configuration",
+      "b) Test tool licensing requirements",
+      "c) Central storage for test scripts",
+      "d) Manual test case design techniques"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Test environment configuration is a crucial consideration for developing and deploying a TAS to ensure automated test scripts can run in multiple environments with minimal changes\n\nb) Is not correct. Understanding test tool licensing is important, especially for commercial tools, to ensure proper access in different test environments\n\nc) Is not correct. A central location for storing and managing automated test scripts is essential for accessibility from multiple test environments\n\nd) Is correct. Manual test case design techniques are not directly related to TAS development and deployment. While test case design is important for overall testing, it's not specific to the deployment of automated testing solutions"
+  },
+  {
+    "id": 24,
+    "lo": "CT-TAS-4.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following technical issues can lead to a risk for the project/product?\n\nSelect ONE option.",
+    "options": [
+      "a) Delays in introducing test automation",
+      "b) Wrongly defined keywords",
+      "c) Staffing issues",
+      "d) Delays in updating the TAS"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a), c) and d) are not correct. They are typical deployment project risks, not technical ones\n\nb) Is correct. Incorrectly defined keywords may lead to missing or incorrectly verified use cases"
+  },
+  {
+    "id": 25,
+    "lo": "CT-TAS-4.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is important when mitigating test automation deployment risks?\n\nSelect ONE option.",
+    "options": [
+      "a) The right people must be available during the deployment",
+      "b) The right time of the day for the deployment must be selected",
+      "c) The TAS needs to be controlled under configuration management",
+      "d) The SUT must already be installed"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. While having a documented deployment procedure is important, it is not the MOST important factor for mitigating deployment risks. The configuration management of the TAS itself is more crucial for risk mitigation\n\nb) Is not correct. Scheduling the deployment during off-peak hours is not explicitly mentioned as a critical factor for mitigating deployment risks. While timing can be important, it's not as fundamental as proper configuration management of the TAS\n\nc) Is correct. This is the most important factor for mitigating test automation deployment risks. Configuration management ensures version control, traceable changes, and proper documentation, which are crucial for successful deployments and risk mitigation\n\nd) Is not correct. This is not the MOST important factor for mitigating deployment risks. It's a necessary step for running tests, but doesn't address the core issues of version control and change management that configuration management provides"
+  },
+  {
+    "id": 26,
+    "lo": "CT-TAS-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following would NOT be considered a component of the test automation environment?\n\nSelect ONE option.",
+    "options": [
+      "a) Tools",
+      "b) System Under Test (SUT)",
+      "c) Test suites",
+      "d) Test Automation Architecture (TAA)"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Tools are a crucial component of the test automation environment, used for various purposes including UI test automation, API testing, and monitoring.\n\nb) Is not correct. The System Under Test (SUT) is a major component of the test environment, as stated in the syllabus.\n\nc) Is not correct. Test suites are executed in the test environment and are defined as a component in the syllabus.\n\nd) Is correct. The TAA helps derive requirements for the TAF, which is a component of the test automation environment"
+  },
+  {
+    "id": 27,
+    "lo": "CT-TAS-4.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following option contains ALL correct MAJOR infrastructure components of test automation:\n\nSelect ONE option.",
+    "options": [
+      "a) Network, interface with the SUT, host machines",
+      "b) Platform, network, code",
+      "c) Host machines, platform, proxy",
+      "d) Code, host machines, network"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Network, interface with the SUT (e.g., browser), and host machines are major infrastructure components\n\nb) Is not correct. Code is not a major infrastructure component\n\nc) Is not correct. A proxy is not a major infrastructure component for test automation, though that does not exclude it from being used\n\nd) Is not correct. Code is not a major infrastructure component"
+  },
+  {
+    "id": 28,
+    "lo": "CT-TAS-4.3.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "A Test Automation Engineer (TAE) is designing automated tests for a web application that stores records in a database. Which of the following statements is NOT correct regarding the definition of test automation data and interface requirements for this system?\n\nSelect ONE option.",
+    "options": [
+      "a) The TAE can use browser automation for UI testing and an API for database interaction testing",
+      "b) The Test Automation Architecture (TAA) must be used to define all test conditions",
+      "c) Contract testing can be employed to verify compatibility between the web application and the database system",
+      "d) User interface testing should be performed on both desktop and mobile devices to ensure cross- platform compatibility"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. This is a valid approach. Browser automation can be used for UI testing, while APIs can be used for database interaction testing, aligning with the interface considerations mentioned in Chapter 4.3.3.\n\nb) Is correct. This statement is incorrect. The TAA is a high-level design and is not used to define test conditions. Test conditions should be derived from requirements and other test basis documents.\n\nc) Is not correct. Contract testing is a valid method for verifying compatibility between two systems, such as the web application and the database in this scenario.\n\nd) Is not correct. Testing the user interface on different devices and platforms is a valid consideration for defining interface requirements, as mentioned in Chapter 4.3.3"
+  },
+  {
+    "id": 29,
+    "lo": "CT-TAS-5.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "[[asset:q29-table]]\n\nThe above table shows the progress of and return on the automated test case development. The team has previously defined 500 test cases that were executed manually. The average test case manual execution time is 10 minutes, while with test automation it is decreased to 1 minute. All the savings and investment calculations are found in the table.\n\nWhich sprint is the turning point for the return on investment of the test automation development efforts?\n\nSelect ONE option.",
+    "options": [
+      "a) Sprint 6",
+      "b) Sprint 7",
+      "c) Sprint 8",
+      "d) Sprint 9"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a), b) and d) are not correct. a) and b) are below 1.00 while d) is past the turning point, which was already reached in c)\n\nc) Is correct. The turning point is the sprint in which the cumulative ROI reaches 1.00"
+  },
+  {
+    "id": 30,
+    "lo": "CT-TAS-5.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You have recently taken over the leadership of a test team that is responsible for the end-to-end validation of UI testing of a retail store. The team consists of one manual tester and one TAE. There have been constant complaints about testing, primarily highlighting both manual and test automation being time-consuming. There is no opportunity to add more TAEs to the group. The TAF is currently not integrated into the CI/CD pipeline, and there has not been an ROI calculation performed yet. For that, the time numbers are provided in minutes below. Test execution is based on each sprint.\n1. Time to run a test case manually\n2. Number of automated test scripts implemented\n3. Average maintenance time of an automated test script\n4. Number of test cases\n5. Average time to develop automated test scripts\n6. Time to run an automated test case Which two options cover the inputs for a Return on Investment calculation?\n\nSelect TWO options.",
+    "options": [
+      "a) 1, 2, 5",
+      "b) 2, 3, 5",
+      "c) 4, 5, 6",
+      "d) 1, 4, 6",
+      "e) 3, 4, 6"
+    ],
+    "answer": [
+      1,
+      3
+    ],
+    "explanation": "Consider:\n1. This is a saving\n2. This is an investment\n3. This is an investment\n4. This is a saving\n5. This is an investment\n6. This is a saving\n\nThus:\na) Is not correct\nb) Is correct\nc) Is not correct\nd) Is correct\ne) Is not correct"
+  },
+  {
+    "id": 31,
+    "lo": "CT-TAS-5.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following metrics is important to collect to track the percentage of requirements covered by automated test cases?\n\nSelect ONE option.",
+    "options": [
+      "a) Number of automated test cases",
+      "b) Functional coverage of test automation",
+      "c) Pass-fail ratio",
+      "d) Code coverage"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. The number of automated test cases indicates the progress of test case automation, but it is not bound together with the requirements\n\nb) Is correct. This is the only metric related to requirements coverage\n\nc) Is not correct. The test execution pass-fail ratio is not related to requirements\n\nd) Is not correct. Code coverage does not indicate the requirements coverage, rather it indicates how much of the production code is covered by component tests"
+  },
+  {
+    "id": 32,
+    "lo": "CT-TAS-5.3.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You join a product development team as a new hire and as the only TAE. While developing the automated test cases, you see that some of your test cases are unreliable, not repeatedly providing the same test results due to changing test data. It turns out that other testers are using some of the same testware as your TAS.\n\nWhich of the following organizational considerations did you miss to identify before starting the TAS development work?\n\nSelect ONE option.",
+    "options": [
+      "a) Policies and practices for software development",
+      "b) Existing active test automation projects and their status",
+      "c) Test tools and licenses",
+      "d) Availability of separate test data and test environments"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. Policies and practices focus on the development guidelines and processes followed along with the documentation storing those recommendations\n\nb) Is not correct. Existing active test automation projects focus on the TAS components that can be leveraged\n\nc) Is not correct. Existing tools and licenses do not focus on project specific test data\n\nd) Is correct. Using the same test data on a given test environment can cause trouble for testers, and it is advised to either create a dedicated set of data or a dedicated test environment specific to test automation use"
+  },
+  {
+    "id": 33,
+    "lo": "CT-TAS-5.3.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "The CIO of a healthcare company hires you as a consultant for a 6-week assessment. Your responsibility is to provide a list of recommendations on how the company could improve their test automation practices across the organization.\n\nWhich of the following project characteristics will help you define successful test automation goals that will enable you and the CIO to convince the TAEs to follow the recommended changes?\n\nSelect ONE option.",
+    "options": [
+      "a) Management support and budgeting",
+      "b) Maturity of the project",
+      "c) Team knowledge and relevant experience",
+      "d) Create a new architecture"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Management support addresses the buy-in from management, not from the TAEs\n\nb) Is not correct. The maturity of the project focus is on the overall team structure and their practices\n\nc) Is correct. Team knowledge and relevant experience addresses individual challenges such as learning new technologies through training\n\nd) Is not correct. Creating a new architecture is not a project characteristic. It's an engineering activity."
+  },
+  {
+    "id": 34,
+    "lo": "CT-TAS-5.3.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "You join a company as a Quality Architect. Your first assignment is evaluating the TAS of a small subdepartment of the IT department. This group is focused on payment solutions. Currently, the TAS is only capable of checking the API’s status and ability to connect to services. Which of the following quality characteristics should you evaluate first?\n\nSelect ONE option.",
+    "options": [
+      "a) Portability",
+      "b) Reliability",
+      "c) Maintainability",
+      "d) Functional completeness"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a), b) and c) are not correct. These quality characteristics are not discussed in the assignment\n\nd) Is correct. Functional completeness addresses the functionality that covers all the specified tasks and user objectives"
+  },
+  {
+    "id": 35,
+    "lo": "CT-TAS-5.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which one of the following decisions is NOT typically made by a strategic test automation person during the consolidation of test automation reports?\n\nSelect ONE option.",
+    "options": [
+      "a) Advise business representatives on new features to be added in future releases",
+      "b) Advise developers on areas to improve in the code",
+      "c) Identify trends and perform root cause analysis",
+      "d) Advise on overall software development processes"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. The purpose of test automation does not revolve around the scope of product development\n\nb), c) and d) are not correct. All three can be considered by a strategic test automation person upon analysis of a test automation report"
+  },
+  {
+    "id": 36,
+    "lo": "CT-TAS-6.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which describes the analysis needed to ensure that the same test automation steps are not repeated across multiple scripts?\n\nSelect ONE option.",
+    "options": [
+      "a) Cost transitioning",
+      "b) Data sharing",
+      "c) Functional overlap",
+      "d) Test execution preconditions"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Transitioning costs describe the cost associated with moving from manual to automated test cases\n\nb) Is not correct. Data sharing occurs when test cases leverage the same data and data sources\n\nc) Is correct. Functional overlap occurs when test script developers repeat code within multiple test cases\n\nd) Is not correct. Test interdependency describes how some tests rely on execution order. Some tests can only be executed after other tests have executed"
+  },
+  {
+    "id": 37,
+    "lo": "CT-TAS-6.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "What factors should be considered from a quality assurance perspective to provide a smooth and easy transition from manual tests to automated ones?\n\nSelect ONE option.",
+    "options": [
+      "a) Test tool licenses",
+      "b) Component testing coverage",
+      "c) Coverage",
+      "d) Availability of the CI/CD System"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Test tool licenses may not be required if using open- source tools\n\nb) Is not correct. Component testing coverage does not relate to the transition from manual to automated tests\n\nc) Is correct. Coverage can be used to see where the organization stands in terms of the features covered by tests and where they can enhance this with test automation\n\nd) Is not correct. CI/CD systems are not essentially connected to the transition of test cases from manual to automated"
+  },
+  {
+    "id": 38,
+    "lo": "CT-TAS-6.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "What CI/CD process is leveraged to include an additional step for automated UI tests within the application build process?\n\nSelect ONE option.",
+    "options": [
+      "a) Build orchestration tool",
+      "b) Pipelines",
+      "c) Test harness",
+      "d) Code repository"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Build orchestration tools are used for scheduling and executing pipelines\n\nb) Is correct. Pipelines are a set of procedures that control the build process. A step can be added to the pipeline sequence for UI testing\n\nc) Is not correct. A test harness covers the TAF but is not within the CI/CD\n\nd) Is not correct. The code repository within CI/CD is typically responsible for storing the application code"
+  },
+  {
+    "id": 39,
+    "lo": "CT-TAS-6.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Your organization has invested in the development of a brand-new TAS. It has been utilized as both a standalone tool for the test team and leveraged within the CI/CD pipeline. You are responsible for evaluating its effectiveness and suggesting areas for improvement. After three sprint cycles, you make the following observations:\n\n1. Although test cases are automated, there is a significant amount of manual hours spent creating initial user accounts and enabling their access within the application database.\n2. The team is spending a significant amount of time updating test automation code related to the application home page in several different automated test cases. This is because developers have been refactoring and renaming object properties.\n3. As the team creates more automated test cases, the CI/CD process seems to be losing its velocity.\n\nWhich of the following set of changes should be made to address these observations?\n\nSelect ONE option.",
+    "options": [
+      "a) Only use one user account for all test cases, do not automate the home page since it is changing constantly, and add more hardware resources to the CI/CD environment.",
+      "b) Create automated precondition test scripts, identify opportunities to decompose and modularize test scripts, and decrease the pipeline scope of integrated tests to the most critical ones.",
+      "c) Virtualize the database with default data, ask the developers to stop changing object properties on the home page, and only use one automated test case in the CI/CD pipeline.",
+      "d) Ask the development team to create a batch process that will create user accounts for the test team, ask for more TAEs on the team to keep up with changes, and do not include UI tests in the CI/CD pipeline."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. One user account is not sufficient for proper testing. Avoiding pages is not an option. Adding hardware implies increased cost. This should be a last resort\n\nb) Is correct. These changes would automate the user account steps, make the home page more manageable when the home page changes, and provide the most velocity for builds by only including automated test cases that are necessary\n\nc) Is not correct. Virtualized data does not guarantee it will sync with every version of the application. Developers need to be able to change code as needed. One automated test case in the CI/CD pipeline is not sufficient\n\nd) Is not correct. The test team should look to be self-sufficient and leveraging other teams as a last resort. Adding TAEs before adjusting test script modularization does not scale. UI tests should be leveraged in CI/CD pipelines"
+  },
+  {
+    "id": 40,
+    "lo": "CT-TAS-6.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You join an ongoing project where there is a TAS that needs some refactoring and functional extension due to recent business requests. There is documentation for the TAS which was updated based on the project load and capacity.\n\nWhich of the following steps should be considered during refactoring the existing functionality of the TAS?\n\ni. Ignore the documentation as it was outdated already\nii. Disable the failing test suites\niii. Make a list of additional possible improvements\niv. Update the documentation of the TAS based on the changes\nv. Change the dependencies of the TAS without any investigations\n\nSelect ONE option.",
+    "options": [
+      "a) i, ii, v",
+      "b) ii, iv",
+      "c) i, iii, v",
+      "d) iii, iv"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "Consider:\ni. The documentation should be kept up-to-date based on the recent changes\nii. The failing test suites should be checked and fixed and failing test should be fixed according to the changes\niii. Additional improvements should be also noted for the future\niv. The documentation should be also updated in case of any changes to the TAS\nv. Dependency changes should be investigated before the implementation\n\nThus:\na) Is not correct\nb) Is not correct\nc) Is not correct\nd) Is correct"
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 60 * 60;
+      const EXT_SECONDS = 75 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "75"
+          : "60";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 75:00 (60 minutes + 25% practice time). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 60:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {"q29-table": {"html": "<table><thead><tr><th>Sprint</th><th>Number of test cases at the end of the sprint</th><th>Savings achieved in the sprint</th><th>Cumulative savings</th><th>Investment in the sprint (implementation + maintenance)</th><th>Cumulative investment</th><th>Cumulative ROI</th></tr></thead><tbody><tr><td>1</td><td>50</td><td>900</td><td>900</td><td>3155</td><td>4115</td><td>0.22</td></tr><tr><td>2</td><td>100</td><td>1800</td><td>2700</td><td>3310</td><td>7425</td><td>0.36</td></tr><tr><td>3</td><td>150</td><td>2700</td><td>5400</td><td>3465</td><td>10890</td><td>0.50</td></tr><tr><td>4</td><td>200</td><td>3600</td><td>9000</td><td>3620</td><td>14510</td><td>0.62</td></tr><tr><td>5</td><td>250</td><td>4500</td><td>13500</td><td>3775</td><td>18285</td><td>0.74</td></tr><tr><td>6</td><td>300</td><td>5400</td><td>18900</td><td>3930</td><td>22215</td><td>0.85</td></tr><tr><td>7</td><td>350</td><td>6300</td><td>25200</td><td>4085</td><td>26300</td><td>0.96</td></tr><tr><td>8</td><td>400</td><td>7200</td><td>32400</td><td>4240</td><td>30540</td><td>1.06</td></tr><tr><td>9</td><td>450</td><td>8100</td><td>40500</td><td>4395</td><td>34935</td><td>1.16</td></tr><tr><td>10</td><td>500</td><td>9000</td><td>49500</td><td>4550</td><td>39485</td><td>1.25</td></tr></tbody></table>"}};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          if (asset.html) return `<div class="q-table-wrap">${asset.html}</div>`;
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Open to enlarge</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagram for Question ${q.id}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

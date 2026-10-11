@@ -1,0 +1,1989 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CTAL-TA v3.1 — Sample Exam 2.6</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Advanced Level</div>
+        <h1>CTAL-TA v3.1<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">ISTQB® Certified Tester Advanced Level Test Analyst · Sample Exam 2.6 · Syllabus v3.1. The timer starts when you begin the exam.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">120</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">80</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Source: ISTQB® — ISTQB-CTAL-TA-v3.1_Sample-Exam-A-Questions_v2.6.pdf; ISTQB-CTAL-TA-v3.1_Sample-Exam-A-Answers_v2.6.pdf. Copyright © ISTQB®. Questions, tables, diagrams and rationales follow these sources. Authors are acknowledged in the source PDFs.</p>
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">120 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">150 min</span>
+            <span class="time-opt-lbl">+25% practice time</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optional practice allowance: 25% extra time (30 minutes).</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 120:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CTAL-TA v3.1 · Sample Exam 2.6</span
+            >
+            <span class="exam-title">Certified Tester Advanced Level – Test Analyst</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 answered
+            </div>
+            <div class="timer" id="timer">120:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 questions (80 points) · <strong>65% (≥ 52 of 80 points)</strong>
+            to pass · points vary per question (1–3) and some questions are
+            multi-select (see marking on each question)
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "TA-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements is TRUE with respect to when the test analyst should become involved during different software development lifecycle models?\n\nSelect ONE option.",
+    "options": [
+      "a) In sequential V-model projects the test analyst should start test analysis concurrently with coding",
+      "b) In sequential V-model projects the test analyst should start test analysis concurrently with requirement specification",
+      "c) There are no differences in the moment of involvement for test analysts for the various software development lifecycles",
+      "d) In Agile software development the test analyst should start test analysis and design concurrently with coding"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Test analysis must start earlier, already during  requirement specification in sequential lifecycle models\n\nb) Is correct. As per syllabus. This is the correct option of how testing activities should be aligned to the sequential lifecycle model phases\n\nc) Is not correct. As stated in the syllabus, there may be many differences in how the testing activities are aligned\n\nd) Is not correct. As stated in the syllabus a Test Analyst should be involved from the beginning in agile software development"
+  },
+  {
+    "id": 2,
+    "lo": "TA-1.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following answers describes the most appropriate and complete set of activities for the Test Analyst to focus on during test analysis and design?\n\nSelect ONE option.",
+    "options": [
+      "a) Analyze the test basis, select test techniques, create high-level test conditions for risk mitigation, create test cases to achieve desired coverage of the test basis, create risk mitigation test cases",
+      "b) Analyze risks, create test conditions to address risks, create high-level test cases to meet test conditions for risk mitigation, create all low-level test cases",
+      "c) Select test techniques, create high-level test cases to meet test conditions, create highlevel test cases to mitigate risks, create low level tests cases to achieve desired coverage",
+      "d) Analyze the test basis, identify test conditions at appropriate levels to address the test basis, add test conditions for risk mitigation, select test techniques to achieve desired coverage, design test cases"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. This option ignores test conditions for risk mitigation and  goes straight to test cases, and it is not specific about the objectives of test conditions\n\nb) Is not correct. This option ignores analysis of user stories and omits mention of desired coverage\n\nc) Is not correct. This option ignores test conditions altogether and goes straight to test cases\n\nd) Is correct. With risk mitigation added on to test conditions from the test basis"
+  },
+  {
+    "id": 3,
+    "lo": "TA-1.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements does NOT give a good reason why test cases should be reviewed and understood by stakeholders?\n\nSelect ONE option.",
+    "options": [
+      "a) Customer and users review the test cases in order to verify them against requirements, business processes and business rules",
+      "b) The test manager reviews the test cases in order to control the work of the test analyst and to create the organization’s test strategy",
+      "c) Testers review test cases written by other testers in order to ensure that the test cases are consistent, understandable and executable by testers other than the author",
+      "d) Developers review test cases written by testers in order to align their understanding of requirements with the testers’ and to align component testing with system testing"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Yes, this is one of the good reasons, that is to verify that  the test cases match the business processes and rules\n\nb) Is correct. Test cases should be created to comply with the organization’s test strategy, not the other way around\n\nc) Is not correct. Yes, this is another good reason, namely that other testers should be able to understand and execute test cases\n\nd) Is not correct. Yes, developers need to be sure that they have the same understanding of the requirements as the testers in order to catch misunderstandings and also to participate in the optimization of tests"
+  },
+  {
+    "id": 4,
+    "lo": "TA-1.4.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "The insurance company SecureLife has started a project IQ (Improved Quality) to implement a new health insurance application. The intention is to make it possible to create online transactions for health insurance claims raised by employees and members of companies or associations having health insurance agreements. The project team for IQ have testers who are business users with lots of domain knowledge but without much formal test training. At the same time another project, HIPPOS (Health Insurance Product Public Order Sales), has been started by the marketing department of SecureLife with the purpose of launching a new Internet application that will allow potential buyers of health insurance to use a calculator to calculate insurance premiums. The new project HIPPOS application will be developed and tested by a team, which have worked together with the marketing department for the last three years, developing marketing web applications. The team consists of well-trained testers and developers. They have implemented test automation for regression testing, and they have checklists of common defects and common security problems which they use in their retrospectives. As senior Test Analyst in SecureLife you are responsible for designing test cases that achieve high levels of coverage. You need to decide the level of detail and documentation required for test cases in the two projects.\n\nWhich of the following are the BEST options?\n\nSelect TWO options.",
+    "options": [
+      "a) In project HIPPOS the test cases should be written at a high level allowing the testers flexibility in varying the details to achieve higher coverage",
+      "b) In project IQ the test cases should be written at a high level. The testers are business users and they know their business rules and calculations so no need for detailed documentation",
+      "c) In both project IQ and HIPPOS the test cases should be written as low-level test cases, with thorough documentation and detailed procedures",
+      "d) In project IQ the test cases should be written at a low level with documented procedures and traceability to requirements",
+      "e) In project HIPPOS the test cases should be written at a low level with documented procedures and audit trails"
+    ],
+    "answer": [
+      0,
+      3
+    ],
+    "explanation": "a) Is correct. This is the best recommendation for project HIPPOS, the  team has experience in testing and the availability of checklists would ensure a good level of coverage\n\nb) Is not correct. The testers do not have much testing experience, so logical level is not good as they need more detail on what to execute\n\nc) Is not correct. There are no arguments that support the same detailed level of documentation as the characteristics of the two test teams differ\n\nd) Is correct. The testers do not have much test experience and low-level test cases should achieve the high level of coverage\n\ne) Is not correct. There are no arguments that support the need for lowlevel test design for project HIPPOS as the testers are experienced and have access to checklists"
+  },
+  {
+    "id": 5,
+    "lo": "TA-1.4.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "An e-commerce company has started a project to implement an electronic trading platform that allows traders a direct access to Fixed Income OTC (over-the-counter) markets, called B-OTC. Using B-OTC, traders will be able to submit orders online to these markets to get a faster order execution. B-OTC will process an order through different phases:\n\n• A validation phase of the order\n\n• A price determination phase where several markets are examined looking for the best price\n\n• An execution phase where the order is completed\n\nWhich of the following is LEAST likely to influence the decision to design low-level or high-level test cases?\n\nSelect ONE option.",
+    "options": [
+      "a) The requirements specification for B-OTC is very clear, detailed and exhaustive",
+      "b) B-OTC must be compliant to several regulations and an audit of the tests is mandatory",
+      "c) The testers are domain experts without specific knowledge of formal testing",
+      "d) The sequence of phases an online order will pass through"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. The level of detail in the specifications will influence the  choice of level of test design. For instance, if there no detailed requirements then low-level test design is not an option\n\nb) Is not correct. Audits to support regulatory compliance require low-level test design\n\nc) Is not correct. Testers without formal testing experience executing highlevel test cases will not achieve acceptable levels of coverage\n\nd) Is correct. The sequence of phases is a functional requirement for B- OTC and will not influence the choice of level of test design"
+  },
+  {
+    "id": 6,
+    "lo": "TA-1.5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements is INCORRECT regarding test implementation activities?\n\nSelect ONE option.",
+    "options": [
+      "a) Test Analysts may create data to be used with keyword-driven test automation",
+      "b) If a risk-based test strategy is being used, risk priority order may dictate the execution order for the test cases",
+      "c) When creating the test execution schedule, manual and automated test execution are considered to be independent activities",
+      "d) Test Analysts must verify the procedures that gather data for evaluating current status against exit criteria"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Unscripted testing should be conducted in time boxed  sessions\n\nb) Is not correct. If a risk-based test strategy is being used, risk priority order may dictate the execution order for the test cases\n\nc) Is correct. When creating the test execution schedule, dependencies between manual and automated test execution must be considered. The activities are not independent\n\nd) Is not correct. Test Analysts must verify the procedures that gather data for evaluating current status against exit criteria"
+  },
+  {
+    "id": 7,
+    "lo": "TA-2.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "A project to develop a foreign exchange Automated Teller Machine for an airport has been planned and a risk assessment has shown that there are three key risks:\n\n• There is a risk that usability will be a problem for visually impaired users because the operation requires viewing several screens in sequence with relatively small text. This has been assessed as medium likelihood with high impact\n\n• There is a risk that response will be relatively slow because the foreign exchange rates will be checked before each transaction; this has been assessed as medium likelihood with medium impact\n\n• There is a risk that accuracy of calculations could lead to cumulative errors. This has been assessed as low likelihood with high impact The test strategy currently requires performance testing and usability testing during system test, and functional correctness testing at every test level. The project schedule is under time pressure.\n\nWhich of the following possible risk mitigation actions should be prioritized highest?\n\nSelect ONE option.",
+    "options": [
+      "a) Review the calculation algorithms and work with specialists to define a data set for calculation tests",
+      "b) Defer usability testing until UAT and recruit visually impaired testers to join the UAT team",
+      "c) Involve visually impaired users in the review of the user interface design",
+      "d) Spend time with developers to identify operational scenarios to test performance"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Is a good suggestion but is a lower priority because the  risk is lower\n\nb) Is not correct. Is a good suggestion as the usability risk has a medium likelihood with high impact, but will not mitigate the risk until late in the development life cycle\n\nc) Correct. The usability risk has a medium likelihood with high impact. This is certainly the highest identified risk level, no matter which method is used to calculate the risk level, and it mitigates the risk early in the development life cycle\n\nd) Is not correct. This is a good suggestion but is a lower priority because the risk is lower"
+  },
+  {
+    "id": 8,
+    "lo": "TA-3.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "A company has set up an employee wellness program and combined it with the payment for health insurance: The program has the following rules:\n\n1. Employees who consume 20 units or less of alcohol per week get $30 off their payment\n\n2. Employees who fill in a \"health risk assessment\" will be rewarded with a $25 reduction in payment\n\n3. Employees who participate in a health control programme at the company:\n\n1. Receive a $50 reduction in their payment for having a BMI of 27.5 or less, and a $25 reduction for having a BMI below 30\n\n2. Non-smokers receive an additional $50 reduction in their payment\n\n3. Smokers who have joined a stop-smoking class receive a $25 reduction\n\n4. Smokers who have not joined a stop-smoking class pay an additional premium of $75\n\nHow many test cases are needed to achieve 100% coverage of equivalence partitions of the valid input parameters, when testing this specification by applying the equivalence partitioning test technique?\n\nSelect ONE option.",
+    "options": [
+      "a) 3 test cases",
+      "b) 4 test cases",
+      "c) 5 test cases",
+      "d) 12 test cases"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "The following are the equivalence classes for this question:  alcohol (2 classes): (a1) ≤20 unit per week (a2) >20 unit per week filling in a \"health risk assessment\" (2 classes): (h1) No (h2) Yes Participation in the health control programme: (p1) No (p2) Yes BMI: (3 classes): (b1) BMI ≤ 27.5 (b2) 27.5 < BMI <30 (b3) BMI ≥ 30 Smokers: (3 classes): (s1) Not smoking (s2) Smoking and joining a stop-smoking class (s3) Smoking and not joining the class Note that BMI and Smokers cases can only be tested when using p2, otherwise these parameters are not considered. There are two variables that have 3 equivalence classes. Therefore, you have to have at least 3 tests. Since the second parameter (smoking) is only active when “program participation” = Yes”, it means that none of the 3 values of Smoking will be tested when Participation = No. So you need 3 tests with Participation=”Yes”, and one more test to allow Participation to be set to “No”. The other parameters, having only 2 EC, will be covered by the same tests. Thus:\n\na) Is not correct\n\nb) Is correct\n\nc) Is not correct\n\nd) Is not correct"
+  },
+  {
+    "id": 9,
+    "lo": "TA-3.2.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are working on a customer loyalty application for a restaurant. Customers earn points by spending money on food. There are four categories for awards that are based on the number of points earned.\n\n• Casual: 1 - 40 points\n\n• Regular: 41 - 150 points\n\n• Frequent: 151 - 300 points\n\n• Elite: more than 300 points Existing tests cases have already covered the point values 12, 150, 151, 152 and 301.\n\nWhat is the percentage of boundary value coverage you have already achieved with existing test cases?\n\nSelect ONE option.",
+    "options": [
+      "a) 37.5%",
+      "b) 42.8%",
+      "c) 50%",
+      "d) 62.5%"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "One needs the following 8 values to achieve 100% coverage of two-value  boundary values (BVs): 0, 1, 40, 41, 150, 151, 300, 301 Existing tests cases have already covered the point values 12, 150, 151, 152 and 301. 12 and 152 are not two-value boundary values. So we have 3 BVs covered out of the 8. 3/8 = 37.5% Thus:\n\na) Is correct\n\nb) Is not correct\n\nc) Is not correct\n\nd) Is not correct"
+  },
+  {
+    "id": 10,
+    "lo": "TA-3.2.3",
+    "k": "K4",
+    "pts": 3,
+    "text": "The Business Analysts have provided the following specification for the payment options of an internet store: “A customer must provide credit card details (including expiry date) to the internet store during registration. They can use any of the three payment options: credit card, instant transfer, and direct debit payment. Direct debit is only available for purchase amounts up to 500 €. For nonregistered customers, the only allowed payment option is instant transfer.” A Test Analyst has designed the following collapsed decision table that should contain rules for the possible combinations: [[asset:p13-1]] You are reviewing the decision table for completeness, correctness, and consistency. Which of the following are CORRECT findings?\n\nSelect TWO options.",
+    "options": [
+      "a) The table is incomplete because three Boolean conditions require 23 = 8 rules",
+      "b) The rule R3 is not correct because it potentially offers the credit card option to registered customers whose credit card has expired",
+      "c) The value ‘-‘ (don’t care) for condition C2 in rule R4 should rather be a ‘N/A’ (not applicable) because the system has no information on credit cards for non-registered customers",
+      "d) The value ‘-‘ (don’t care) for condition C3 in rule R4 is incorrect, because if Amount <= 500€ is ‘True’, direct debit should be offered",
+      "e) The table is inconsistent because for a registered customer with an expired credit card and a purchase amount > 500€ both rules R2 and R3 apply"
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "explanation": "a) Is not correct. Due to the “don’t care” values, the collapsed decision  table needs less than 2n rules. If we expanded the “don’t care” values, to a full decision table, R3 would expand to two rules and R4 to four rules, which yields the correct number of 8 rules.\n\nb) Is correct. The “don’t care” value for C2 in rule R3 is wrong. The rule must be split into two rules with the do not care value replaced with ‘True’ and ‘False’ respectively, because action A1 depends on condition C2.\n\nc) Is correct. A non-registered customer cannot have a registered credit card, so the system cannot provide card expiry information and the value should be a ”N/A”\n\nd) Is not correct. According to the last sentence in the specification, direct debit is not allowed for non-registered customers, regardless of the purchase amount. Hence, the ”don’t care” value for condition C3 ‘Amount <= 500€’ is correct\n\ne) Is not correct. In R2, C3 is TRUE, and option e) describes a situation where C3 is FALSE (purchase amount > 500€)"
+  },
+  {
+    "id": 11,
+    "lo": "TA-3.2.3",
+    "k": "K4",
+    "pts": 3,
+    "text": "As a Test Analyst, you are testing the download functionality of a mobile application via the cellular network with the decision table testing technique. The specification states: “Before starting a download, the application verifies that the cellular network connectivity is at least two bars strong and the subscription has sufficient data volume to download the file. In the borderline case of two bars connectivity, a buffer of at least 20 KB additional data volume is needed.” During test analysis, you have designed and successfully reviewed the following decision table: [[asset:p14-1]] connectivity” You are designing a test suite that should cover all five decision rules.\n\nWhich of the following statements about a test suite for this specification covering all five rules is CORRECT?\n\nSelect ONE option.",
+    "options": [
+      "a) The test cases should have two inputs: mobile cellular connection strength and the difference between the data volume available and the file size",
+      "b) The test data should contain at least two files of different sizes: one greater than or equal to 20 KB and one less than 20 KB",
+      "c) The test suite should contain at least three different test cases with connection strength = 2 bars which cover the three possible expected outcomes respectively: A1, A2, and A3",
+      "d) Any test case with an input consisting of connection strength, data volume available and a file size to be downloaded will cover exactly one rule of the decision table"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. The calculation of the difference between the data  volume available and the file size is part of what the application does; it is not an input to the application. The inputs are the connectivity, file size and the available volume\n\nb) Is not correct. It is the difference between file size and available volume that is related to 20 KB\n\nc) Is not correct. Connection strength = 2 bars is only mandatory for two test cases covering the two rules R3 and R4\n\nd) Is correct. The inputs are the connectivity, file size and the available volume. Given that the decision table is correct, it means that any given test case will only cover a single rule"
+  },
+  {
+    "id": 12,
+    "lo": "TA-3.2.4",
+    "k": "K4",
+    "pts": 3,
+    "text": "The following state transition diagram describes the behavior of a generic scheduler of an Operating System (OS): [[asset:p15-1]] Assume a test always starts in the “Ready” state and ends when the system returns to the “Ready” state, so a test input consists of a sequence (“Ready”, event, next state, …, event, “Ready”), where all states except first and last one is different than “Ready”.\n\nWhat is the MINIMUM number of tests needed to achieve 1-switch coverage?\n\nSelect ONE option.",
+    "options": [
+      "a) 2",
+      "b) 3",
+      "c) 4",
+      "d) 5"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "There are nine feasible 1-switches: S1: Ready (Run) Running (Block) Blocked1 S2: Ready (Suspend) Blocked3 (Resume) Ready S3: Running (Block) Blocked1 (Unblock) Ready S4: Running (Block) Blocked1) (Suspend) Blocked2 S5: Blocked1 (Suspend) Blocked2 (Resume) Blocked1 S6: Blocked1 (Suspend) Blocked2 (Release) Blocked3 S7: Blocked2 (Resume) Blocked1 (Unblock) Ready S8: Blocked2 (Resume) Blocked1 (Suspend) Blocked2 S9: Blocked2 (Release) Blocked3 (Resume) Ready There are also 4 other 1-switches: Blocked1 (Unblock) Ready (Run) Running Blocked1 (Unblock) Ready (Suspend) Blocked3 Blocked3 (Resume) Ready (Suspend) Blocked3 Blocked3 (Resume) Ready (Run) Running They are infeasible, since the state in the middle is “Ready”, which forces the test to stop after reaching this state. Hence, we need to cover nine unique 1-switches S1-S9. Notice that four of them end in the “Ready” state, so no two of these four can be included in a single test case. Therefore, we need at least four test cases, and this is enough, for example: TC1: Ready (Suspend) Blocked3 (Resume) Ready TC2: Ready (Run) Running (Block) Blocked1 (Unblock) Ready TC3: Ready (Run) Running (Block) Blocked1 (Suspend) Blocked2 (Resume) Blocked1 (Suspend) Blocked2 (Release) Blocked3 (Resume) Ready TC4: Ready (Run) Running (Block) Blocked1 (Suspend) Blocked2 (Resume) Blocked1 (Unblock) Ready TC1 covers S2 TC2 covers in addition S1 and S3 TC3 covers in addition S4, S5, S8, S6, S9 TC4 covers in addition S7 Thus\n\na) Is not correct\n\nb) Is not correct\n\nc) Is correct\n\nd) Is not correct"
+  },
+  {
+    "id": 13,
+    "lo": "TA-3.2.4",
+    "k": "K4",
+    "pts": 3,
+    "text": "A mobile device operates in one of three states: IDLE, STAND-BY, and READY. Its behavior is depicted by the following state transition diagram. GPRS Paging Detach Request IDLE READY STAND-BY GPRS READY Attach Timer Expired STANDBY Timer Expired Considering only the READY state, what is the number of test cases required to achieve round-trip coverage for this state?\n\nSelect ONE option.",
+    "options": [
+      "a) 3",
+      "b) 4",
+      "c) 6",
+      "d) 7"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "GPRS Paging Detach Request IDLE READY STAND-BY GPRS READY Attach Timer Expired STANDBY Timer Expired 100% roundtrip coverage is achieved when all loops from any state back to the same state have been tested for all states at which loops begin and end. This loop cannot contain more than one occurrence of any particular state (except the initial/final one). Considering only READY state, following are the valid test cases:\n\n1. READY > STAND-BY > READY\n\n2. READY > IDLE > READY\n\n3. READY > STAND-BY > IDLE > READY Thus\n\na) Is correct\n\nb) Is not correct\n\nc) Is not correct\n\nd) Is not correct"
+  },
+  {
+    "id": 14,
+    "lo": "TA-3.2.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements does NOT describe the use of classification trees to support black-box test techniques?\n\nSelect ONE option.",
+    "options": [
+      "a) Classification trees support the identification of equivalence partitions",
+      "b) Classification trees support the identification of boundary values",
+      "c) Classification trees support the identification of rules to be used in a decision table",
+      "d) Classification trees support pairwise testing"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. Classification trees support the identification of  equivalence partitions\n\nb) Is not correct. Classification trees support the identification boundary values\n\nc) Is correct. Classification trees do not support the identification of rules to be used in a decision table\n\nd) Is not correct. Classification trees support pairwise testing"
+  },
+  {
+    "id": 15,
+    "lo": "TA-3.2.6",
+    "k": "K4",
+    "pts": 3,
+    "text": "A company offering house insurance policies has several policy options. They depend on the following factors: Building type: house, semi-detached, apartment building, cottage Material: wood, concrete, brick, mixed Location: city, suburb, countryside, wilderness You are testing the system and using the pairwise technique for creating test cases. Using the pairwise technique, how many test cases are required to achieve all pairs coverage?\n\nSelect ONE option.",
+    "options": [
+      "a) 16",
+      "b) 12",
+      "c) 64",
+      "d) 4"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. We need at least 4 * 4 = 16 test cases to cover all  combinations for \"Material\" and \"Location\". That 16 combinations are sufficient can be seen from the following table: case # Value 1 Value 2 Value 3 1 house wood city 2 house concrete suburb 3 house brick countryside 4 house mixed wilderness 5 semi-detached wood suburb 6 semi-detached concrete countryside 7 semi-detached brick wilderness 8 semi-detached mixed city 9 apartment wood countryside 10 apartment concrete wilderness 11 apartment brick city 12 apartment mixed suburb 13 cottage wood wilderness 14 cottage concrete city 15 cottage brick suburb 16 cottage mixed countryside\n\nb) Is not correct. This is the result of the number of parameters multiplied by the choices (3 * 4). But we need at least 16 test cases, because this is the number of combinations for \"Material\" and \"Location\"\n\nc) Is not correct. Even for the full combination coverage (which subsumes pairwise) the required number of tests would be 4 * 4 * 4 = 64\n\nd) Is not correct. This is 1-wise coverage. But we need at least 16 test cases, because this is the number of combinations for \"Material\" and \"Location"
+  },
+  {
+    "id": 16,
+    "lo": "TA-3.2.6",
+    "k": "K4",
+    "pts": 3,
+    "text": "Consider a multi-language web application with the following requirements:\n\n• Support three different languages: English, French and Japanese\n\n• Run on three different browsers: Br1, Br2, Br3\n\n• Run on three different operating systems: OpS1, OpS2 and OpS3 You have been asked to test the correct behavior of this application for various combinations of languages, browsers and operating systems. Due to the restricted amount of time you decide to apply the pairwise test technique for creating test cases. Using the pairwise technique, what is the MINIMUM number of test cases needed to achieve allpairs coverage?\n\nSelect ONE option.",
+    "options": [
+      "a) 3",
+      "b) 6",
+      "c) 9",
+      "d) 27"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "To achieve the required coverage, we have to generate a set of test cases  that covers all possible discrete combinations of each pair of input parameters. In this case the required coverage can be achieved with 9 test cases as shown in the following table: TC Language Browser OS 1 English Br1 OpS1 2 English Br2 OpS2 3 English Br3 OpS3 4 French Br1 OpS3 5 French Br2 OpS1 6 French Br3 OpS2 7 Japanese Br1 OpS2 8 Japanese Br2 OpS3 9 Japanese Br3 OpS1 Thus:\n\na) Is not correct\n\nb) Is not correct\n\nc) Is correct\n\nd) Is not correct. The question requires the minimum number of test cases"
+  },
+  {
+    "id": 17,
+    "lo": "TA-3.2.7",
+    "k": "K4",
+    "pts": 3,
+    "text": "Easytravel is a card which is used to paying for journeys on buses and subways. The user can store credit to the card at the Easytravel Loading Machines and the system automatically deducts the journey fee when the user inserts the card into the card reader/writer on a bus or at the subway station. You are a member of the Easytravel project team, and the following user story has been given to you for reviewing. USE CASE: ADD TO EASYTRAVEL BALANCE FROM CREDIT CARD Use case ID: UC-201201 Purpose: User is increasing the balance on their Easytravel card Actors: user, system Pre-conditions: User has a valid Easytravel card and a credit card Main behavior [[asset:p19-1]] Exceptions [[asset:p19-2]] End-result: User’s Easytravel card balance has been increased with the selected amount and the equal amount has been charged to the credit card.\n\nHow many test cases are required to achieve the minimum coverage for this use case?\n\nSelect ONE option.",
+    "options": [
+      "a) 2 test cases",
+      "b) 1 test case",
+      "c) 9 test cases",
+      "d) 6 test cases"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. This is a situation with a test case for mainstream and  one test case for the exceptions\n\nb) Is not correct. 1 is the minimum for mainstream but does not take into account the alternatives nor the exceptions\n\nc) Is not correct. The figure for this answer is calculated by adding test cases for the options with separate use cases to the correct number given in the correct answer\n\nd) Is correct. The correct number has one test case for the mainstream plus all the exception paths of which there are 4 E1’s and 1 E2"
+  },
+  {
+    "id": 18,
+    "lo": "TA-3.2.7",
+    "k": "K4",
+    "pts": 3,
+    "text": "TS is a skills portal which is made available to all IT professionals. Individual IT professionals first discuss their training needs with their manager and as a result may receive a voucher from the manager for any of the course types provided at the company. The IT professional uses TS and their voucher to select a specific course and make a reservation. USE CASE: COURSE REGISTATION Use Case ID: UC-15504 Purpose: Enable IT professionals to select and reserve a course for which they have been given a voucher Actors: IT Professional (ITP); TS Skills Portal (SP) Pre-conditions: none Main behavior [[asset:p20-1]] Alternative behavior steps [[asset:p20-2]] Exceptions [[asset:p20-3]] please log out and talk to your manager “. SP returns to the home page (step 2)\n\nHow many test cases are required to achieve the minimum coverage for this use case?\n\nSelect ONE option.",
+    "options": [
+      "a) 1",
+      "b) 2",
+      "c) 4",
+      "d) 3"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "We need one test case for the main behavior. The remaining two alternative  behaviors and two exceptions can be covered by three other test cases, so four test cases are needed in all, for example: TC1: main path: 1, 2, 3, 4, 5, 6, 7, 8, 9 TC2: forcing alternative 3a and exception E1: 1, 2, 3a, 2, E1 TC3: forcing alternative 8a: 1, 2, 3, 4, 5, 6, 7, 8a, 9 TC4: forcing E2: 1, 2, 3, E2 Note that we cannot cover the two alternative behaviors 3a and 8a and the two exceptions E1 and E2 with less than three test cases, because testing 8a requires to not invoke E1 and E2 (these events are before the step 8), and each exception must be tested with a separate test case, since the occurrence of an exception immediately ends the use case. Alternative 3a can be combined with the occurrence of E1 (or E2). Thus:\n\na) Is not correct\n\nb) Is not correct\n\nc) Is correct\n\nd) Is not correct"
+  },
+  {
+    "id": 19,
+    "lo": "TA-3.2.8",
+    "k": "K4",
+    "pts": 3,
+    "text": "A new mobile app is to be developed for managing the membership of a soccer club which runs several teams. One of the key objectives of the club owners is to replace the outdated manual method required for registration of new members. The functionality of the app is to remain relatively simple because not all users will be familiar with modern user interfaces. The club owners have therefore placed emphasis on the ease with which users can navigate between the various screens and the usability of the application. An objective is also to manage the numbers of players who can register for a team. Limits are therefore to be enforced which may result in applicants being placed on a waiting list.\n\nWhich TWO of the following test techniques would be MOST appropriate for testing the mobile app?\n\nSelect TWO options.",
+    "options": [
+      "a) State transition testing",
+      "b) Decision table testing",
+      "c) Boundary value analysis",
+      "d) Use case testing",
+      "e) Pairwise testing"
+    ],
+    "answer": [
+      0,
+      2
+    ],
+    "explanation": "a) Is correct. State transition testing is appropriate because it will test for  the correct navigation between the various screens. It will also enable management of the waiting list to be evaluated (e.g., transitions between application approved and waiting list)\n\nb) Is not correct: With the current specification, the use of decision table testing will only be of limited value\n\nc) Is correct. The specification mentions that an objective is to manage the numbers of players who can register for a particular team. Limits (i.e., numbers of registered players which a team can have) are to be enforced which may result in applicants being placed on a waiting list. The use of boundary value analysis is relevant for testing these limits.\n\nd) Is not correct. The required functionality of the app is to remain relatively simple. Use case testing could be applied, but it is less appropriate than state transition testing (answer a) and boundary value analysis (answer c). Note that the mention of usability testing in the scenario does not imply that use case testing should be applied as a test technique\n\ne) Is not correct. Nothing in the scenario indicates that pairwise testing would be appropriate. There is no explicit mention of combinatorial logic to be applied"
+  },
+  {
+    "id": 20,
+    "lo": "TA-3.2.8",
+    "k": "K4",
+    "pts": 3,
+    "text": "A system is being specified for use by automotive dealers. The system will provide the ability to configure a vehicle’s optional characteristics (e.g., engine size, external trim, color), visualize the configured vehicle and generate the retail price of the vehicle. An existing system can provide a visual model of any single configuration, but it does not enable the user to modify the configuration in the same session. This system is being used as a development prototype from which it is expected that the required functionality can be generated more quickly than working from scratch, and time scales have been adjusted for a rapid delivery.\n\nWhich of the following test techniques would together give the best chance of achieving acceptable coverage in the available time frame?\n\nSelect TWO options.",
+    "options": [
+      "a) State transition testing",
+      "b) Classification tree",
+      "c) Boundary value analysis",
+      "d) Use case testing",
+      "e) Equivalence partitioning"
+    ],
+    "answer": [
+      1,
+      4
+    ],
+    "explanation": "a) Is not correct. Although the system may be state-based there is no  information about this in the scenario and the approach of building from an existing system suggests there may be minimal definition of state changes\n\nb) Is correct. Classification trees offer the opportunity to manage combinations of inputs effectively\n\nc) Is not correct. Some of the inputs are likely to be in partitions (e.g., colors) but these are unlikely to be ordered partitions because they identify alternatives, so boundary value analysis is not appropriate\n\nd) Is not correct. User case testing is appropriate to the likely development approach but would be based more on overall functional flow than on detailed combinations of inputs\n\ne) Is correct. The inputs exist in partitions (options) that are combined, so the combination of classification trees with equivalence partitioning would be an ideal choice"
+  },
+  {
+    "id": 21,
+    "lo": "TA-3.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements BEST explains experience-based testing?\n\nSelect ONE option.",
+    "options": [
+      "a) If the testers are experienced and have good knowledge of the system under test, experience-based techniques are a viable alternative to more formal techniques if there are problems with the quality of the documentation or if the project is under a tight schedule",
+      "b) Experience-based techniques should generally be used if there are no suitable formal techniques or if it takes too much time and effort to use them",
+      "c) Experience-based techniques rely on the tester’s knowledge and experience and can therefore be used to increase the coverage as the tester knows which areas need more testing",
+      "d) If checklists are used, experience-based testing can be more systematic and efficient and can replace black-box test techniques"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. Experience-based techniques can be used as an option of  more formal test techniques if the testers have enough experience and information about the system under test. Typically, this can happen in situations when there is time pressure, or the quality of documentation is poor or there is no documentation available\n\nb) Is not correct. Experience-based techniques can be used if no formal test techniques can be used, but it is not the only situation – they should be used to complement formal testing whenever it is possible\n\nc) Is not correct. Experience helps the tester to decide where to test more, but experience-based techniques do not necessarily improve the coverage since they are informal and coverage measurement is not always possible while using these techniques\n\nd) Is not correct. With the use of checklists, experience-based testing can be made more systematic and efficient, but if there is a requirement for the use of black-box test techniques, experience-based techniques cannot replace them. Even though this is partially correct, the question asks for the BEST option and thus this is not the correct answer"
+  },
+  {
+    "id": 22,
+    "lo": "TA-3.3.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are a Test Analyst on a new project. The requirements documents are on a very high level, containing little detail about the problem the software should address. As a result, your manager has decided that exploratory testing will be a primary test technique used for this project. You have been given the task of specifying, executing, and recording the test sessions.\n\nWhich of the options below define what you will need or will use for these tasks?\n\nSelect TWO options.",
+    "options": [
+      "a) Use debriefing sessions with the test manager or a test lead to record the results of the test sessions",
+      "b) Log defects into the defect management system but do not record a pass/fail for the exploratory session because duplicating the results could be difficult",
+      "c) Ask end users to execute some ad-hoc testing and note down their actions for future use as exploratory sessions",
+      "d) Procure domain knowledge to be applied during the exploratory session",
+      "e) Record the results in email and send the email to the test manager and test lead"
+    ],
+    "answer": [
+      0,
+      3
+    ],
+    "explanation": "a) Is correct. Per the syllabus as a way to record results \n\nb) Is not correct. The pass/fail status of the session per the test charter should also be recorded\n\nc) Is not correct. Test cases are not normally defined for exploratory sessions\n\nd) Is correct. Per the syllabus as you will need this knowledge to figure out what to test since the problem is not defined\n\ne) Is not correct. This is likely to lead to lost results and no overall tracking"
+  },
+  {
+    "id": 23,
+    "lo": "TA-3.3.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following describes typical characteristics of defect-based test techniques?\n\nSelect ONE option.",
+    "options": [
+      "a) Defect-based techniques are based on the analysis and classification of previously found defects",
+      "b) Defect-based techniques are mainly used at the component test level",
+      "c) Defect-based techniques concentrate on defects found during the analysis of the documentation of a system",
+      "d) Defect-based techniques are a sub-category of black-box test techniques"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. The defect-based test technique uses the typical defects  identified for different types of software and programs as the source of test cases in order to find those specific type defects in the software under test\n\nb) Is not correct. Defect-based test techniques are mainly used in system testing, not in component testing\n\nc) Is not correct. Test cases are created by analyzing the defects typical for the system under test, not by analyzing the documentation of the system\n\nd) Is not correct. Defect-based testing is not a sub-category of black-box testing, since the specifications are not the basis of the test cases"
+  },
+  {
+    "id": 24,
+    "lo": "TA-3.4.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "The marketing department of insurance company, SecureLife, has started a project called HIPPOS (Health Insurance Product Public Order Sales). The purpose of the project is to create a new Internet application where potential customers can calculate insurance premiums and bonuses based on age and different health factors. The new application will also make it possible for individual customers to order health insurance products online. The new application created by project HIPPOS will be developed and tested by SecureLife’s Agile development team. The Agile development team has worked together and with the marketing team for the last three years, developing web applications. The Agile team consists of well-trained testers and developers. They have implemented test automation for configuration and regression testing, and they have built taxonomies of common defects and common security problems. In Project HIPPOS the Product Owner from Marketing has presented the following user stories to the Agile team before the first release planning meeting. US1: The Web health insurance calculator shall calculate insurance premiums and bonuses according to the rules described by the actuary and insurance calculation business section US2: The user interface of the HIPPOS application shall follow the same standards as the other marketing web applications and use a predefined setup of page frames and dialogs that have been used for the last two years US3: The Web applications shall support the latest 3 versions of different types of web browsers Internet Explorer, Google Chrome, Firefox, and Safari US4: Security must be at the same level as for other marketing web applications The Agile team has been asked to prepare a test approach. The Product Owner asks the team to present their proposal for the use of test techniques at the release planning meeting.\n\nWhich of the following proposals best supports the given scenario?\n\nSelect ONE option.",
+    "options": [
+      "a) The Agile team will use exploratory testing as the primary test technique. For user story US1 equivalence partitioning and boundary value analysis will also be used, and an additional black-box test technique will be used for user story US4",
+      "b) The Agile team will use exploratory testing and defect-based testing as the primary test techniques. For user story US1 decision table testing will also be used. Adaptability testing for user story US3 and attack-based testing using a checklist will be used extra for user story US4",
+      "c) The Agile team will use exploratory testing as the primary test technique. For user story US1 interoperability testing will also be used. Adaptability testing will be used for user story US3 and attack-based testing will also be used for user story US4",
+      "d) The Agile team will use black-box test techniques as the primary test techniques. For user story US1 state transition testing and boundary value analysis will also be used, and exploratory testing will also be used in addition for user story US4"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Defect-based testing is not mentioned at all. The team  should use the taxonomy of common defect they built. For no 1 EP and BVA are mentioned while decision table would be more likely. Further black-box test techniques are proposed for security testing in no 4 where attack based, or defect-based test technique would be more suitable based on the scenario\n\nb) Is correct. This is the most likely proposal blending a number of techniques: It mentions both exploratory and defect-based testing, the latter of which is directly supported by the scenario, that states “the team …has as part of their retrospectives-built checklists of common defects…” and because the organization should have experience with the types of defects this type of application will exhibit. Further decision table testing is proposed which matches what is written in the scenario for no 1. Automated configuration testing is supported by the scenario for no 3 and so is checklist-based attacks for security testing in no 4\n\nc) Is not correct. It is primarily wrong because there is no interoperability characteristics described in US1, but it could also have mentioned defect-based testing, since the scenario explicitly mentioned that the team has built a list of common defects\n\nd) Is not correct. It is not likely that black-box testing is applicable for no 1- 4 in the scenario further there is nothing in no 1 that supports the use of state transition testing, instead decision table testing ought to have been mentioned"
+  },
+  {
+    "id": 25,
+    "lo": "TA-4.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are working on a project testing a new application that handles foreign currency exchange transactions. Much of the software which handles calculations and money transfers has been reused from a similar application which has been used for over 3 years. Several new functions are to be added to the new application to improve the user experience and display graphical information better. The users have not been fully involved in the definition of these new aspects and new functions have therefore been implemented according to the developer’s expectations. As a Test Analyst, which of the following quality characteristics would you focus the MOST on when testing the new application?\n\nSelect ONE option.",
+    "options": [
+      "a) Functional correctness",
+      "b) Functional completeness",
+      "c) Replaceability",
+      "d) Recoverability"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Functional correctness is not the main focus because  functionality which must be correct and accurate has been re-used from a similar application which has been in use for over 3 years. There is low risk that functional correctness is incorrect in the new application\n\nb) Is correct. A lack of functional completeness can be considered a risk because new functions are to be implemented and the users have not been involved in their definition. There is a risk that some required functionality has not been implemented\n\nc) Is not correct. Replaceability: this sub-characteristic of portability is clearly not appropriate\n\nd) Is not correct: Recoverability should be covered by a Technical Test Analyst and does not seem to be a main concern in this scenario"
+  },
+  {
+    "id": 26,
+    "lo": "TA-4.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You work in Agile software development in the telecommunications industry. The application offers a new interface to allow customers to modify their mobile phone plan directly via the web application. You are performing system tests and work particularly on the screen used to change the mobile phone plan. The user story you are testing is: US-34: As a customer, I want to be able to select a new mobile phone plan online so that I can adapt it to my needs. As part of these tests, you and the product owner invite a business expert to perform an exploratory test on this screen and indicate if they have any comments on whether the proposed solution allows them to make all the possible changes.\n\nWhat kind of test are you performing?\n\nSelect ONE option.",
+    "options": [
+      "a) Functional correctness testing",
+      "b) Accessibility testing",
+      "c) Adaptability testing",
+      "d) Functional appropriateness testing"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. When the business expert could indicate correctness  issues, this is not the aim of this exploratory testing session\n\nb) Is not correct. Accessibility is not mentioned as an objective of this test session, and business expert is probably not the best person to find accessibility issues\n\nc) Is not correct. Exploratory testing with a business expert is not the best way to check adaptability\n\nd) Is correct. The business expert can validate the appropriateness of the developed screen to allow a customer to choose a new mobile phone plan"
+  },
+  {
+    "id": 27,
+    "lo": "TA-4.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements is correct regarding quality sub-characteristics and the defects they target?\n\nSelect ONE option.",
+    "options": [
+      "a) Functional completeness testing discovers indications that the system will not be able to meet the needs of the user in a way that will be considered acceptable",
+      "b) Functional reliability testing ensures that the functions are available when called",
+      "c) Functional appropriateness may focus on the coverage of high-level business cases by the implemented functionality",
+      "d) Functional correctness testing involves detecting incorrect handling of data or situations"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. The description relates to functional appropriateness \n\nb) Is not correct. Functional reliability testing is not a quality (sub-) characteristic\n\nc) Is not correct. The description relates to functional completeness\n\nd) Is correct. Functional correctness testing involves detecting incorrect handling of data or situations"
+  },
+  {
+    "id": 28,
+    "lo": "TA-4.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Assume you work for a company that has developed software to help users trade currencies. A new version of the software is being developed. The main feature of this version is the ability to calculate different amounts of commission depending on the volume of the trades. In addition, different categories of users (beginner, intermediate, expert) are defined, and different functions are provided to them according to their category. You are the Test Analyst responsible for creating functional suitability tests.\n\nWhich of the following statements correctly defines the level in the software development lifecycle at which functional suitability tests should be performed earliest?\n\nSelect TWO options.",
+    "options": [
+      "a) Testing that commissions have been calculated correctly for low-volume trades should be performed during component testing",
+      "b) Testing the appropriateness of functions assigned to different user categories should be performed during acceptance testing",
+      "c) The interoperability of the new functions with other trading systems should be conducted in system testing",
+      "d) Testing that commissions have been calculated correctly for high-volume trades should be performed during system testing",
+      "e) Required coverage of high-level business processes should be determined for system integration testing"
+    ],
+    "answer": [
+      0,
+      4
+    ],
+    "explanation": "a) Is correct. Functional correctness tests can be conducted at any stage,  and component testing is the earliest one\n\nb) Is not correct. Appropriateness testing is usually conducted during system testing but may also be conducted during the later stages of integration testing. Testing Appropriateness during acceptance testing is too late\n\nc) Is not correct. We are considering functional suitability, not interoperability\n\nd) Is not correct. Functional correctness tests can be conducted at any test level, so system testing is not the earliest one\n\ne) Is correct. Functional completeness for system integration testing may focus on the coverage of high-level business processes"
+  },
+  {
+    "id": 29,
+    "lo": "TA-4.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "When is functional appropriateness testing usually conducted?\n\nSelect ONE option.",
+    "options": [
+      "a) During component and integration testing",
+      "b) During integration and system testing",
+      "c) During system and user acceptance testing",
+      "d) During acceptance testing, especially alpha and beta testing"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Functional appropriateness is generally difficult to  evaluate at a component level when you can only evaluate a small part of the system\n\nb) Is correct. Functional appropriateness testing is usually conducted during system testing, but may also be conducted during the later stages of integration testing\n\nc) Is not correct. Functional appropriateness testing should be conducted before acceptance tests when it could lead to huge coding rework\n\nd) Is not correct. Functional appropriateness should not be part of alpha or beta testing objectives. During alpha and beta testing, users will be more focused on usability and completeness issues (for instance)"
+  },
+  {
+    "id": 30,
+    "lo": "TA-4.2.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements is correct regarding usability testing?\n\nSelect ONE option.",
+    "options": [
+      "a) The usability should be verified against the requirements and validated by the real users",
+      "b) Validation of the usability requirements should be done after release to enable real users to participate",
+      "c) Heuristic evaluation can be used to survey the users and find usability problems",
+      "d) Usability can be verified by running a comparison with the existing unacceptable product"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Is correct. The usability should be verified against the requirements and  validated by the real users\n\nb) Is not correct. Validation should be done before release and by real users\n\nc) Is not correct. Heuristic evaluation is not a form of usability survey\n\nd) Is not correct. Usability cannot be verified by running a comparison with the existing unacceptable product"
+  },
+  {
+    "id": 31,
+    "lo": "TA-4.2.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "Assume you work for a company that has developed a software component to help users securely and easily manage all the passwords they have defined for different websites. This component is integrated into hundreds of websites, used by millions of people world-wide. A new software version of the component is being developed. The main feature of this version is the integration with a specific operating system that does not currently support this component.\n\nWhich of the following does not qualify as an interoperability failure?\n\nSelect ONE option.",
+    "options": [
+      "a) Passwords are not saved for all websites which integrate with the component",
+      "b) 5% of the websites do not run on a specific operating system",
+      "c) Passwords are truncated on some browsers",
+      "d) Saving the passwords becomes too complicated for some users"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Is not correct. This is an interoperability issue with some websites \n\nb) Is not correct. This is an interoperability issue with a specific OS\n\nc) Is not correct. This is an interoperability issue with some browsers\n\nd) Is correct. This is a usability defect, not an interoperability defect"
+  },
+  {
+    "id": 32,
+    "lo": "TA-4.2.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "You work as a Test Analyst in the team developing a system for managing rented electric scooters. The system consists of the following three parts:\n\n1. A client application for mobile phones\n\n2. Scooter monitoring\n\n3. A server application that supervises the work of the whole The most important target for your team is to ensure the cooperation between modules. Based on this description only, which quality characteristic is the most important for you, and should be tested first?\n\nSelect ONE option.",
+    "options": [
+      "a) Usability",
+      "b) Interoperability",
+      "c) Security",
+      "d) Performance"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. While usability is an important nonfunctional  characteristic, especially in the client application, most of the electric scooter’s users are young people and they usually have no problems with the application with the typical interface\n\nb) Is correct. It is easy to observe that the system must work in different environments: each part must cooperate with the other one; Therefore, interoperability is very important for this system\n\nc) Is not correct. As a Test Analyst, security testing should not be under your responsibility\n\nd) Is not correct. Performance may be a desired quality characteristic but there is no stated requirement and it would be anyhow less important than interoperability"
+  },
+  {
+    "id": 33,
+    "lo": "TA-4.2.6",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements define types of defect you would NOT typically consider in portability testing?\n\nSelect TWO options.",
+    "options": [
+      "a) An application does not function correctly in all intended target environments",
+      "b) Software cannot be installed for particular configurations",
+      "c) Users with disabilities cannot interact with the application",
+      "d) Certain software components within a system cannot be exchanged for others",
+      "e) Incorrect data exchange between interacting components"
+    ],
+    "answer": [
+      2,
+      4
+    ],
+    "explanation": "a) Is not correct. This is a typical portability/adaptability defect \n\nb) Is not correct. This is a typical portability/installability defect\n\nc) Is correct. This is a typical accessibility defect\n\nd) Is not correct. This is a typical portability/ replaceability defect\n\ne) Is correct. This is a typical interoperability defect"
+  },
+  {
+    "id": 34,
+    "lo": "TA-4.2.7",
+    "k": "K4",
+    "pts": 3,
+    "text": "The HeatWell mobile application shall enable homeowners to control and monitor the heating of their home. The following requirements have been identified as the most important for the HeatWell app: Requirement 1: The user must be provided with an interface with which they can easily set required heating times and temperatures and monitor the temperature in different parts of the house. Requirement 2: An efficiency function shall calculate the energy consumed and help the user to optimize their needs. You are the Test Analyst on the HeatWell team.\n\nWhich of the following test conditions would you consider to be the most appropriate for verifying the functional and/or non-functional quality characteristics of the stated requirements?\n\nSelect TWO options.",
+    "options": [
+      "a) The user can install the app on an Android device",
+      "b) The user can effectively set target temperatures with a minimum number of steps",
+      "c) The efficiency function accurately calculates heat consumption",
+      "d) Energy consumption data can be saved on the HeatWell database server for iOS and Android devices",
+      "e) Monitoring data can be displayed for the previous 30 days"
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "explanation": "a) Is not correct. This addresses installability, which does not relate to the  requirements\n\nb) Is correct. This test condition relates to usability aspects of requirement\n\n1. “The user must be provided with an interface with which they can easily (do things) with the minimum number of steps” – this target in particular the efficiency aspects of usability\n\nc) Is correct. This test condition addresses the functional accuracy of the app’s efficiency function, as stated in requirement 2\n\nd) Is not correct. This addresses interoperability, which does not relate to the requirements\n\ne) Is not correct. This test condition addresses functionality which is not requested"
+  },
+  {
+    "id": 35,
+    "lo": "TA-4.2.7",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are a Test Analyst working on a brand-new project. The customer is a state social welfare administration that wants to improve its website. The website will contain information, news, and documentation on social welfare. It will allow any citizen to interact online in order to view their current status as well as ongoing and past reimbursements. A team of business analysts, requirement engineers and user experience specialists have worked with the client to gather a comprehensive list of the requirements for the new website, based on the existing website, new needs, new best practices, and user feedback. The project follows the V-model as software development lifecycle. The requirements have been reviewed and approved by all the stakeholders. You are now about to start the test design based on requirements and a draft of detailed specifications. Here is a selection of some requirements: R003 – The entire website must be accessible to users with visual disabilities, according to WCAG 2.0 R004 – The website must work properly on the devices presently utilized by users of the existing website, covering at least 80% of these users R005 – The response time of the website must not exceed 5 seconds under the load created by 5.000 simultaneous users R006 – The new system must keep all the non-technical data used in the previous system R007 – Only the owner and authorized state agents must be able to access personal data in the system\n\nWhich of the requirements above should you, according to your responsibilities, consider for your test design?\n\nSelect ONE option.",
+    "options": [
+      "a) R003, R005, R006",
+      "b) R003, R004",
+      "c) R003, R004, R007",
+      "d) R004, R006, R007"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. R005 is a performance requirement and R006 is a  technical portability requirement. Both must be taken in charge by a technical test analyst\n\nb) Is correct. R003 is an accessibility requirement and R004 is an adaptability requirement. All are in test analyst scope\n\nc) Is not correct. R007 is a security requirement. It must be taken in charge by a technical test analyst specialized in software security\n\nd) Is not correct. R004 is in the test analyst scope, but not R006 or R007 (see above justifications for details)"
+  },
+  {
+    "id": 36,
+    "lo": "TA-5.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are reviewing the following requirements specification document: [[asset:p31-1]] The following is the checklist you are using for this review:\n\n1. Is each requirement testable?\n\n2. Does each requirement have acceptance criteria listed?\n\n3. Does each requirement have a defined priority level?\n\n4. Are the requirements uniquely identified?\n\n5. Is the specification versioned?\n\n6. Is there traceability visible from each requirement to the business/marketing requirements?\n\n7. Is there traceability between the requirements and the use cases (if applicable)? You are reviewing the specification above with the provided checklist. Assume you have access to the document that provides more information about the screen layout. Which of the items on the checklist are NOT met by the specification?\n\nSelect ONE option.",
+    "options": [
+      "a) 1, 2, 3",
+      "b) 4, 6, 7",
+      "c) 3, 5, 7",
+      "d) 4, 5, 6"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Evaluation of checklist items: \n\n1. Is each requirement testable? YES\n\n2. Does each requirement have acceptance criteria NO listed?\n\n3. Does each requirement have a defined priority NO level?\n\n4. Are the requirements uniquely identified? NO\n\n5. Is the specification versioned? YES\n\n6. Is there traceability visible from each requirement to NO the business/marketing requirements?\n\n7. Is there traceability between the requirements and NO the use cases? The question asks which of the items on the checklist are NOT met by the specification. Thus:\n\na) Is not correct. Checklist item 1 is met\n\nb) Is correct. The set of checklist items [4, 6, 7] all three are not met\n\nc) Is not correct. Checklist item 5 is met\n\nd) Is not correct. Checklist item 5 is met"
+  },
+  {
+    "id": 37,
+    "lo": "TA-5.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are a Test Analyst assigned to a project for the development of a new online banking application. You were asked to participate in the requirements review. For your individual preparation you are given a checklist to help you to check basics rules in requirements writing. The following is one of the requirements: R034 – Even a person unfamiliar with software applications must be able to make a bank transfer The following is an extract of the checklist: I. The requirement must be testable II. The requirement must have an identifier III. The requirement must always show its version number IV. The requirement must show traceability to one or more business/marketing requirements Without further information on this requirement. Which of the following four checklist items are correct with respect to the requirement?\n\nSelect ONE option.",
+    "options": [
+      "a) All the items are respected",
+      "b) I and II are respected",
+      "c) Only II is respected",
+      "d) Only I is respected"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Is not correct. The requirement is not testable as there is no  measurable criteria to determine if the requirement is met or not. The requirement has an identifier, but we cannot see its version number and there is no traceability to business or marketing requirement\n\nb) Is not correct. The requirement is not testable as there is no measurable criteria to determine if the requirement is met or not\n\nc) Is correct. There is an identifier, but none of the other items are respected\n\nd) Is not correct. The requirement is not testable"
+  },
+  {
+    "id": 38,
+    "lo": "TA-5.2.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "Easytravel is a card which is used to paying for journeys on buses and subways. The user can store credit to the card at the Easytravel Loading Machines and the system automatically deducts the journey fee when the user presents the card to the card reader on a bus or at the subway station. You are a member of the Easytravel project team, and the following user story has been given to you for reviewing. USER STORY: Add credit to the Easytravel card Priority: 1 As a bus passenger, I want to add credit to my Easytravel card so that I can pay for bus rides using the card FEATURE [[asset:p33-1]] User selects “exit”. Consider the following checklist for a good user story. Which of these criteria are NOT achieved regarding this user story?\n\nSelect TWO options.",
+    "options": [
+      "a) Is the story written entirely from the view of the person who is requesting it?",
+      "b) Is the feature clearly defined and distinct?",
+      "c) Are the acceptance criteria defined and testable?",
+      "d) Is the story prioritized?",
+      "e) Does the story follow the commonly used format?"
+    ],
+    "answer": [
+      0,
+      2
+    ],
+    "explanation": "a) Is correct. The story is not entirely written from the user’s view. There  are parts of the story which relate to what the loading machine does\n\nb) Is not correct. The feature is defined and distinct\n\nc) Is correct. “Loading machine is ready” cannot be tested because it is not stated what to check. Perhaps the cash entry slot for cash notes flashes. Perhaps the current balance is shown\n\nd) Is not correct. Priority 1 is explicitly stated\n\ne) Is not correct. The user story conforms to the standard structure"
+  },
+  {
+    "id": 39,
+    "lo": "TA-6.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "A business application is in the maintenance phase and several changes to the business logic have either already been implemented or are expected be implemented in the next release. Test automation is used to ensure that business cases are regression tested whenever a change is made. A keyword-driven approach is used for the test automation. Since the last release, some emergency fixes were necessary, and the test automation reports are now highlighting anomalies.\n\nWhich of the following steps should now be conducted by the Test Analyst?\n\nSelect TWO options.",
+    "options": [
+      "a) Update the keywords and data to reflect changes made",
+      "b) Modularize the automation scripts",
+      "c) Analyze anomalies to determine if the problem is with the keywords, the input data, the automation script itself or with the application being tested",
+      "d) Ask the developer to manually step through the failed automated test with the same data to see if the failure is in the application itself",
+      "e) If the cause of the anomaly cannot be found remove the test from the automated regression testing pack"
+    ],
+    "answer": [
+      0,
+      2
+    ],
+    "explanation": "a) Is correct. The Test Analyst maintains the keywords and data to reflect  changes made\n\nb) Is not correct. The Test Analyst does not modularize the automation scripts\n\nc) Is correct. The Test Analyst analyzes anomalies to determine if the problem is with the keywords, the input data, the automation script itself or with the application being tested\n\nd) Is not correct. The Test Analyst manually steps through the failed automated test with the same data to see if the failure is in the application itself\n\ne) Is not correct. If the cause of the anomaly cannot be found, the test is not removed from the automated regression testing pack"
+  },
+  {
+    "id": 40,
+    "lo": "TA-6.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements does NOT describe a benefit from using testing tools?\n\nSelect ONE option.",
+    "options": [
+      "a) Test data preparation tools can “anonymize” data while still maintaining the internal integrity of that data",
+      "b) Test execution tools enable fewer tests to be run, which reduces costs and the efficiency of regression tests",
+      "c) Test design tools can help the Test Analyst to choose the types of tests that are needed to obtain a targeted level of coverage",
+      "d) Test execution tools enable the same tests to be repeated in many environments"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Is not correct. Test data preparation tools can “anonymize” data while  still maintaining the internal integrity of that data\n\nb) Is correct. Test execution tools enable more tests to be run (not fewer)\n\nc) Is not correct. Test design tools can help the Test Analyst to choose the types of tests that are needed to obtain a targeted level of coverage\n\nd) Is not correct. Test execution tools enable the same tests to be repeated in many environments"
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 120 * 60;
+      const EXT_SECONDS = 150 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "150"
+          : "120";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 150:00 (120 minutes + 25% practice time). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 120:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {"p13-1": {"src": "assets/ISTQB-CTAL-TA-v3.1_Sample-Exam-A-Questions_v2.6/p13-1.png", "alt": "ID Conditions R1 R2 R3 R4\nC1 Registered customer T T T F\nC2 Credit card expired F T - -\nC3 Purchase amount <= 500 € T T F -\nActions\nA1 Credit card option offered Y N Y N\nA2 Instant transfer option offered Y Y Y Y\nA3 Direct debit option offered Y Y N N", "page": 13, "kind": "table"}, "p14-1": {"src": "assets/ISTQB-CTAL-TA-v3.1_Sample-Exam-A-Questions_v2.6/p14-1.png", "alt": "ID Conditions R1 R2 R3 R4 R5\nC1 Mobile cellular < 2 bars >= 2 bars 2 bars 2 bars >= 3 bars\nconnection strength\nC2 Data volume available N/A not insufficient sufficient enough\nenough buffer buffer room\nroom\nActions\nA1 Download the file N N N Y Y\nA2 Message “Insufficient\nN Y N N N\ndata volume available”\nA3 Message “Insufficient\nY N Y N N\nconnectivity”", "page": 14, "kind": "table"}, "p15-1": {"src": "assets/ISTQB-CTAL-TA-v3.1_Sample-Exam-A-Questions_v2.6/p15-1.png", "alt": "Diagram from the source question", "page": 15, "kind": "diagram"}, "p19-1": {"src": "assets/ISTQB-CTAL-TA-v3.1_Sample-Exam-A-Questions_v2.6/p19-1.png", "alt": "User System\n1. User inserts the Easytravel 2. The system asks what the user wishes to do:\ncard into the card (Exception E1)\nreader/writer of the • Query card balance ( separate use case)\nEasytravel Loading Machine • Add to balance of the card\n• Check latest card transactions ( separate use case)\n3. User chooses “Add balance” 4. System asks the amount. (Exception E1)\n5. User selects the amount 6. System asks for the payment method: (Exception E1)\n• Cash ( separate use case)\n• Credit card\n7. User selects credit card 8. System asks the user to insert credit card into the credit\ncard reader (Exception E1)\n9. User inserts the credit card 10. System shows the amount to be charged from the\ncredit card and asks for confirmation (Exception E2)\n11. User confirms the amount 12. System makes the credit card transaction and adds the\namount to the Easytravel card balance\n13. User removes the credit card 14. System prints out a receipt of the transaction\nand the Easytravel card\n15. System returns to the main screen", "page": 19, "kind": "table"}, "p19-2": {"src": "assets/ISTQB-CTAL-TA-v3.1_Sample-Exam-A-Questions_v2.6/p19-2.png", "alt": "Exception Action\nE1 User can stop the process by removing the Easytravel card from the card\nreader/writer\nE2 If the user does not accept the amount to be charged, he; can cancel the\noperation by pressing the Cancel button on the credit card reader", "page": 19, "kind": "table"}, "p20-1": {"src": "assets/ISTQB-CTAL-TA-v3.1_Sample-Exam-A-Questions_v2.6/p20-1.png", "alt": "Step Action\n1 The ITP launches SP\n2 SP displays its home page and requests a voucher code from the ITP\n3 The ITP enters the voucher code (Exception E1)\n4 SP lists the dates, locations and current number of registered participants for the\ncourse indicated in the voucher code. (Exception E2)\n5 The ITP selects a date and location\n6 SP shows an overview of the selected course’s contents\n7 The ITP confirms selection of this course by pressing the ”Register” button\n8 SP places the ITP onto the list of participants and a message shown “You are\nregistered for the course”\n9 The ITP logs out", "page": 20, "kind": "table"}, "p20-2": {"src": "assets/ISTQB-CTAL-TA-v3.1_Sample-Exam-A-Questions_v2.6/p20-2.png", "alt": "Step Action\n3a The ITP may log out from the application’s home page\n8a If the course already has 12 participants SP places the ITP onto a waiting list\nand a message shown “you are on the waiting list”.\nSP updates the waiting list", "page": 20, "kind": "table"}, "p20-3": {"src": "assets/ISTQB-CTAL-TA-v3.1_Sample-Exam-A-Questions_v2.6/p20-3.png", "alt": "Exception Action\nE1 If an invalid voucher code is entered, SP shows a message “Voucher not known\n– please try again“ is issued. SP returns to the home page (step 2)\nE2 If no courses are available SP shows a message “sorry- no courses available –\nplease log out and talk to your manager “. SP returns to the home page (step 2)", "page": 20, "kind": "table"}, "p31-1": {"src": "assets/ISTQB-CTAL-TA-v3.1_Sample-Exam-A-Questions_v2.6/p31-1.png", "alt": "Document: Req. spec 101-A\nObject: Transaction screen\nAuthor: Susie Specifier Date written: 2019-03-15\nVersion: 0.23 System: Bookkeeping TA-AB1\nSubsystem: 2a15 Use cases applicable to project? Yes\nDescription:\nUser must be able to browse customer’s transactions on the customer’s account. It must be\npossible to view the transactions either chronologically from the oldest to the newest or the\nopposite way, or by their transaction ID. The field containing the detailed transaction information\nmust be long enough to contain the name of the transaction counterparty (maximum 20\ncharacters), their ID number (6 digits) and the transaction identifier (8 digits).\nIt must be possible to change between the Transaction screen and User information screen with\nthe “Swap screen” –button.\nThe layout of the Transaction screen is described in more detail in a separate document.\n• The retrieval time of new data must be less than 3 seconds per screen. The number of\nsimultaneous users will vary between 20 and 40 and is expected to increase to 60 within\na year\n• More details about the performance requirements can be found in a separate\nperformance requirements specification document", "page": 31, "kind": "table"}, "p33-1": {"src": "assets/ISTQB-CTAL-TA-v3.1_Sample-Exam-A-Questions_v2.6/p33-1.png", "alt": "Action Acceptance Criteria\nUser puts the Easytravel card into a card The loading machine displays an option to top up\nreader on the Easytravel Loading Machine. funds on the card ‘s balance.\nLoading machine checks card credentials Card rejected if invalid\nUser selects “top up card”. Loading machine is ready\nUser puts in one or more cash notes. The loading machine shows an increase to the\ncard’s balance according to note(s) entered.\nLoading machine contacts back-end system Back-end system is updated\nwith update.\nUser selects “exit”. User is prompted to remove their Easytravel card.", "page": 33, "kind": "table"}};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Open to enlarge</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagram for Question ${q.id}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

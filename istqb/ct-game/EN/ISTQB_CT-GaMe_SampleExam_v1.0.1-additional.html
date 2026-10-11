@@ -1,0 +1,842 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>CT-GaMe v1.0.1 — Additional exercises 1.0.1</title><style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.practice-card { border:1px solid var(--border);border-radius:14px;background:var(--card);padding:1.5rem;margin:1rem 0; } .practice-card h2{font-size:1rem;color:var(--accent);margin-bottom:1rem} .practice-answer{margin-top:1.25rem;border-top:1px solid var(--border);padding-top:1rem} .practice-answer summary{cursor:pointer;color:var(--accent);margin-bottom:1rem} textarea{width:100%;padding:.8rem;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);font:inherit;resize:vertical} .practice-head{max-width:900px;margin:2rem auto;padding:0 1.5rem} .practice-head h1{font-size:2rem;color:var(--heading)} .practice-head a{color:var(--accent)} input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px} .practice-card .option-row:has(input:checked){border-color:var(--accent);background:rgba(56,189,248,.08)} .practice-card .q-text{margin-bottom:1rem}</style><link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head><body><div class="practice-head"><a href="../../../index.html">← Back to catalogue</a><h1>CT-GaMe v1.0.1 — Additional exercises 1.0.1</h1><p>Appendix exercises · Self-check practice without a time limit or exam score. Write or select your answer, then open the source rationale.</p><p class="source-credit">Source: ISTQB® — ISTQB_CT-GaMe_SampleExam_v1.0.1.pdf; ISTQB_CT-GaMe_SampleExam-Answers_v1.0.1.pdf. Copyright © ISTQB®. Questions, tables, diagrams and rationales follow these sources. Authors are acknowledged in the source PDFs.</p><button class="btn-secondary" onclick="resetPractice()">Reset practice</button></div><main><section class="practice-card"><h2 id="q-0">A1 · GaMe-1.2.1 (K1)</h2><div class="q-text">Which of the following options is NOT the responsibility of a game tester?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-0"><label class="option-row"><input type="radio" name="q0" value="0"> <span class="option-text">a) Specification review</span></label><label class="option-row"><input type="radio" name="q0" value="1"> <span class="option-text">b) Test model development</span></label><label class="option-row"><input type="radio" name="q0" value="2"> <span class="option-text">c) Create game design documentation</span></label><label class="option-row"><input type="radio" name="q0" value="3"> <span class="option-text">d) Create test data</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: c)</p><div>a) Is not correct. Game testing includes specification review.<br><br>b) Is not correct. A game tester develops a test model.<br><br>c) Is correct. Game design documentation is created by a designer or technical writer.<br><br>d) Is not correct. A game tester creates test data along with the test model.</div></details></section><section class="practice-card"><h2 id="q-1">A2 · GaMe-1.3.1 (K1)</h2><div class="q-text">At which stage of software development lifecycle a game prototype is usually being reviewed by testing team?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-1"><label class="option-row"><input type="radio" name="q1" value="0"> <span class="option-text">a) Concept stage</span></label><label class="option-row"><input type="radio" name="q1" value="1"> <span class="option-text">b) Pre-production stage</span></label><label class="option-row"><input type="radio" name="q1" value="2"> <span class="option-text">c) Production stage</span></label><label class="option-row"><input type="radio" name="q1" value="3"> <span class="option-text">d) Post-production stage</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: b)</p><div>a) Is not correct. Game prototype is not ready at this stage.<br><br>b) Is correct. Exactly at this stage the game prototype appears and implements main gameplay which is to be tested.<br><br>c) Is not correct. At this stage the game prototype may be reviewed but not for the first time and usually a working version of a game product is ready for testing.<br><br>d) Is not correct. Post-production stage is the maintenance stage where the game product is already published.</div></details></section><section class="practice-card"><h2 id="q-2">A3 · GaMe-1.1.2 (K2)</h2><div class="q-text">What of the following risks is the MOST specific exactly for video games?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-2"><label class="option-row"><input type="radio" name="q2" value="0"> <span class="option-text">a) Low video performance</span></label><label class="option-row"><input type="radio" name="q2" value="1"> <span class="option-text">b) Illegal advantage over other users</span></label><label class="option-row"><input type="radio" name="q2" value="2"> <span class="option-text">c) Usage of new development frameworks</span></label><label class="option-row"><input type="radio" name="q2" value="3"> <span class="option-text">d) Incorrect saving of current state</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: b)</p><div>a) Is not correct. This is a common risk for any type of application.<br><br>b) Is correct. Unfair advantage over other users may lead to loss of interest to the game product from those.<br><br>c) Is not correct. This is a common risk for any type of application.<br><br>d) Is not correct. This is a common risk for any type of application.</div></details></section><section class="practice-card"><h2 id="q-3">A4 · GaMe-2.1.2 (K2)</h2><div class="q-text">Which of the following is a gameplay mechanics?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-3"><label class="option-row"><input type="radio" name="q3" value="0"> <span class="option-text">a) Recording information about the date of the player&#x27;s entry into the game into the database</span></label><label class="option-row"><input type="radio" name="q3" value="1"> <span class="option-text">b) The game crashes when a player joins to a battle</span></label><label class="option-row"><input type="radio" name="q3" value="2"> <span class="option-text">c) Getting a new level in the game after gaining the required amount of experience points</span></label><label class="option-row"><input type="radio" name="q3" value="3"> <span class="option-text">d) Logging player actions</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: c)</p><div>a) Is not correct. This is non-gameplay mechanics.<br><br>b) Is not correct. This is a defect, not a mechanics.<br><br>c) Is correct. Gaining experience and leveling up in the game is part of the gameplay.<br><br>d) Is not correct. This is non-gameplay mechanics.</div></details></section><section class="practice-card"><h2 id="q-4">A5 · GaMe-2.1.5 (K2)</h2><div class="q-text">Which of the following is a game mechanics defect?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-4"><label class="option-row"><input type="radio" name="q4" value="0"> <span class="option-text">a) Inability to change the type of weapon in the game</span></label><label class="option-row"><input type="radio" name="q4" value="1"> <span class="option-text">b) Lack of a visual model of the building in the game</span></label><label class="option-row"><input type="radio" name="q4" value="2"> <span class="option-text">c) Slow loading of the game on a certain computer configuration</span></label><label class="option-row"><input type="radio" name="q4" value="3"> <span class="option-text">d) Lack of translation of a part of the text of the game into another language</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: a)</p><div>a) Is correct. Changing weapons is the core game mechanics.<br><br>b) Is not correct. This is a visual defect.<br><br>c) Is not correct. This is a defect in system performance and compatibility.<br><br>d) Is not correct. This is a localization defect.</div></details></section><section class="practice-card"><h2 id="q-5">A6 · GaMe-2.2.3 (K2)</h2><div class="q-text">What problems in the game development process can be prevented by reviewing the documentation describing the game mechanics?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-5"><label class="option-row"><input type="radio" name="q5" value="0"> <span class="option-text">a) Uninteresting game mechanics</span></label><label class="option-row"><input type="radio" name="q5" value="1"> <span class="option-text">b) Incompatibility of new game mechanics with existing ones</span></label><label class="option-row"><input type="radio" name="q5" value="2"> <span class="option-text">c) Incorrect functioning of the game mechanics in the game</span></label><label class="option-row"><input type="radio" name="q5" value="3"> <span class="option-text">d) Misunderstanding of how game mechanics work by players</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: b)</p><div>a) Is not correct. It is a problem related to player perception of game mechanics.<br><br>b) Is correct. Understanding of compatibility of existing game mechanics and new ones is possible already at the review stage.<br><br>c) Is not correct. This is a problem with the game mechanics or the game not with the game development process.<br><br>d) Is not correct. This is not a problem with the game development process.</div></details></section><section class="practice-card"><h2 id="q-6">A7 · GaMe-3.2.3 (K2)</h2><div class="q-text">Which of the following options are included in the gameplay testing?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-6"><label class="option-row"><input type="radio" name="q6" value="0"> <span class="option-text">a) Configuring internal logic</span></label><label class="option-row"><input type="radio" name="q6" value="1"> <span class="option-text">b) Verification of the conformity of the Health Points of the object with the effort required to destroy it</span></label><label class="option-row"><input type="radio" name="q6" value="2"> <span class="option-text">c) Testing the hardware resources required for calculating the models by the video adapter processor</span></label><label class="option-row"><input type="radio" name="q6" value="3"> <span class="option-text">d) Testing the correctness of the restoration of the game state and the values of all game parameters after loading</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: b)</p><div>a) Is not correct. Setting up internal logic is not part of gameplay testing.<br><br>b) Is correct. Checking the correctness of the reduction from the character&#x27;s hits, the NPC health points, is part of the gameplay testing.<br><br>c) Is not correct. Checking hardware resources is not part of gameplay testing.<br><br>d) Is not correct. Verifying that the game state is correctly restored belongs to a different area of testing.</div></details></section><section class="practice-card"><h2 id="q-7">A8 · GaMe-4.4.2 (K1)</h2><div class="q-text">Which of the following is more efficient to test before integrating audio into the client?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-7"><label class="option-row"><input type="radio" name="q7" value="0"> <span class="option-text">a) Turning audio on and off in the client</span></label><label class="option-row"><input type="radio" name="q7" value="1"> <span class="option-text">b) Reviewing documentation describing sound effects</span></label><label class="option-row"><input type="radio" name="q7" value="2"> <span class="option-text">c) System performance testing</span></label><label class="option-row"><input type="radio" name="q7" value="3"> <span class="option-text">d) Compatibility of the played sounds on different audio system variants</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: b)</p><div>a) Is not correct. This is tested after integrating audio into the client.<br><br>b) Is correct. This is tested before integrating audio into the client, because sound design can also affect overall system performance.<br><br>c) Is not correct. It is more efficient to test documentation before development begins<br><br>d) Is not correct. A tester cannot effectively check the compatibility of the reproduced sounds on different versions of the audio system before integrating the audio into the client.</div></details></section><section class="practice-card"><h2 id="q-8">A9 · GaMe-4.4.3 (K1)</h2><div class="q-text">What is the profession of a specialist who possesses the utmost completeness of sound expertise and determines the final vision of the sound picture of each object, game scene and the entire video game as a whole?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-8"><label class="option-row"><input type="radio" name="q8" value="0"> <span class="option-text">a) Sound engineer</span></label><label class="option-row"><input type="radio" name="q8" value="1"> <span class="option-text">b) Foliarist</span></label><label class="option-row"><input type="radio" name="q8" value="2"> <span class="option-text">c) Voice actor</span></label><label class="option-row"><input type="radio" name="q8" value="3"> <span class="option-text">d) Tester</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: a)</p><div>a) Is correct. The sound engineer is in charge of all these things.<br><br>b) Is not correct. Foliarist makes the sounds that exist in reality more vivid and rich and is responsible for creating sound effects that do not exist in reality.<br><br>c) Is not correct. Voice actor plays the voice in order to breathe life into the character, which will have the player&#x27;s audible lines in the game.<br><br>d) Is not correct. Tester checks the finished sound picture and whether the new sound changes are correctly tucked into the client.</div></details></section><section class="practice-card"><h2 id="q-9">A10 · GaMe-4.4.1 (K2)</h2><div class="q-text">Which of the following statements about testing audio-music content is true?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-9"><label class="option-row"><input type="radio" name="q9" value="0"> <span class="option-text">a) Audio-music content cannot be tested without a game client</span></label><label class="option-row"><input type="radio" name="q9" value="1"> <span class="option-text">b) Audio-music content testing is done only by testers</span></label><label class="option-row"><input type="radio" name="q9" value="2"> <span class="option-text">c) Audio-music content is tested either only before, or only after adding it to the game client</span></label><label class="option-row"><input type="radio" name="q9" value="3"> <span class="option-text">d) Audio-music content testing can occur late in the game&#x27;s content development</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: d)</p><div>a) Is not correct. It can be tested during creation, for example with a sound engine.<br><br>b) Is not correct. At the development stage, the sound samples are checked by the specialists (audio designers, foliarists, sound effects specialists) who create the final sounds for the game project.<br><br>c) Is not correct. Audio content is usually tested both during creation and after integration into the client.<br><br>d) Is correct. When a developer creates content for a game, the sound component is worked out at a later stage in the process. And only after that testing begins.</div></details></section><section class="practice-card"><h2 id="q-10">A11 · GaMe-6.3.1 (K2)</h2><div class="q-text">What tool is BEST for usage to analyze joystick related defects?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-10"><label class="option-row"><input type="radio" name="q10" value="0"> <span class="option-text">a) Screen recorder</span></label><label class="option-row"><input type="radio" name="q10" value="1"> <span class="option-text">b) Keylogger</span></label><label class="option-row"><input type="radio" name="q10" value="2"> <span class="option-text">c) Gamepad Tester</span></label><label class="option-row"><input type="radio" name="q10" value="3"> <span class="option-text">d) Web Browser</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: c)</p><div>a) Is not correct. Screen recorder provides information about the reaction of the system under test but not the controller usage.<br><br>b) Is not correct. Keylogger cannot provide any sensor data.<br><br>c) Is correct. This site allows checking the controller input and deflection degree of gamepad sticks as well as controller vibration performance.<br><br>d) Is not correct. Web browser itself provides no controller specific information.</div></details></section><section class="practice-card"><h2 id="q-11">A12 · GaMe-7.3.1 (K1)</h2><div class="q-text">When is partial localization testing used?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-11"><label class="option-row"><input type="radio" name="q11" value="0"> <span class="option-text">a) When text changes within localizations that were previously tested</span></label><label class="option-row"><input type="radio" name="q11" value="1"> <span class="option-text">b) When there are no high-level translators available</span></label><label class="option-row"><input type="radio" name="q11" value="2"> <span class="option-text">c) When a very simple game is developed</span></label><label class="option-row"><input type="radio" name="q11" value="3"> <span class="option-text">d) When a game original language is the same that the one of a targeted region</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: a)</p><div>a) Is correct. Partial localization is performed when text changes within localizations that were previously tested.<br><br>b) Is not correct. Localization includes translation but is not limited to it.<br><br>c) Is not correct. Any game targeted to different markets should go through the process of full localization.<br><br>d) Is not correct. Localization is a process of cultural adaptation. There may be serious cultural, religious and legal differences in the regions speaking the same language.</div></details></section><section class="practice-card"><h2 id="q-12">A13 · GaMe-7.1.3 (K2)</h2><div class="q-text">Which of the following statements is FALSE?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-12"><label class="option-row"><input type="radio" name="q12" value="0"> <span class="option-text">a) Localization can be performed at any stage of game development</span></label><label class="option-row"><input type="radio" name="q12" value="1"> <span class="option-text">b) Localization involves translators with a large amount of additional knowledge</span></label><label class="option-row"><input type="radio" name="q12" value="2"> <span class="option-text">c) Internationalization creates opportunities to support regional, linguistic or cultural references</span></label><label class="option-row"><input type="radio" name="q12" value="3"> <span class="option-text">d) Internationalization is performed to create opportunities to use elements that cannot be used prior to the localization process</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: a)</p><div>a) Is correct. Localization can only be performed at later stages of game development.<br><br>b) Is not correct. Localization involves a lot of additional knowledge in different areas.<br><br>c) Is not correct. The internationalization&#x27;s main objective is to create opportunities to support regional, linguistic or cultural references.<br><br>d) Is not correct. Internationalization is performed to create opportunities to use elements that cannot be used prior to the localization process.</div></details></section><section class="practice-card"><h2 id="q-13">A14 · GaMe-7.3.3 (K2)</h2><div class="q-text">What is the objective of a localization tester?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-13"><label class="option-row"><input type="radio" name="q13" value="0"> <span class="option-text">a) Testing the text for compliance with cultural characteristics, moral and ethical aspects of the target language</span></label><label class="option-row"><input type="radio" name="q13" value="1"> <span class="option-text">b) Testing the correctness of the translation (context and meaning of remarks, coherence of the text, compliance with the style of play)</span></label><label class="option-row"><input type="radio" name="q13" value="2"> <span class="option-text">c) Development of a localization strategy and plan</span></label><label class="option-row"><input type="radio" name="q13" value="3"> <span class="option-text">d) Text translation</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: b)</p><div>a) Is not correct. This is one of the responsibilities of an editor.<br><br>b) Is correct. Testing the correctness of the translation is one of the tasks of a localization tester.<br><br>c) Is not correct. This is a task of a writer or narrative designer.<br><br>d) Is not correct. This is the main task of a translator.</div></details></section></main><script>function resetPractice(){document.querySelectorAll("input").forEach(e=>e.checked=false);document.querySelectorAll("textarea").forEach(e=>e.value="");document.querySelectorAll("details").forEach(e=>e.open=false);}</script><script src="../../../assets/exam-ui.js"></script>
+</body></html>

@@ -1,0 +1,11 @@
+:root { --muted: #94a3b8 !important; }
+.catalogue-nav { font: 400 .8rem 'DM Sans', sans-serif; margin: .6rem 0; }
+.catalogue-nav a, .source-credit a { color: var(--accent, #818cf8); }
+.header-inner > .catalogue-nav { width: 100%; margin: 0; }
+.catalogue-note { color: var(--muted); font-size: .85rem; margin: 1rem 0; }
+.option-row:focus-within, button:focus-visible, a:focus-visible,
+summary:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--accent, #818cf8); outline-offset: 3px;
+}
+.source-credit { overflow-wrap: anywhere; }
+.q-text, .option-row > span, .opt-text { min-width: 0; overflow-wrap: anywhere; }

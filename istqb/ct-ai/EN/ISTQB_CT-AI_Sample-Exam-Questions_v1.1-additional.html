@@ -1,0 +1,842 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>CT-AI v1.0 — Additional exercises 1.1 (answers 1.2)</title><style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.practice-card { border:1px solid var(--border);border-radius:14px;background:var(--card);padding:1.5rem;margin:1rem 0; } .practice-card h2{font-size:1rem;color:var(--accent);margin-bottom:1rem} .practice-answer{margin-top:1.25rem;border-top:1px solid var(--border);padding-top:1rem} .practice-answer summary{cursor:pointer;color:var(--accent);margin-bottom:1rem} textarea{width:100%;padding:.8rem;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);font:inherit;resize:vertical} .practice-head{max-width:900px;margin:2rem auto;padding:0 1.5rem} .practice-head h1{font-size:2rem;color:var(--heading)} .practice-head a{color:var(--accent)} input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px} .practice-card .option-row:has(input:checked){border-color:var(--accent);background:rgba(56,189,248,.08)} .practice-card .q-text{margin-bottom:1rem}</style><link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head><body><div class="practice-head"><a href="../../../index.html">← Back to catalogue</a><h1>CT-AI v1.0 — Additional exercises 1.1 (answers 1.2)</h1><p>Appendix exercises · Self-check practice without a time limit or exam score. Write or select your answer, then open the source rationale.</p><p class="source-credit">Source: ISTQB® — ISTQB_CT-AI_Sample-Exam-Questions_v1.1.pdf; ISTQB_CT-AI_Sample-Exam-Answers_v1.2.pdf. Copyright © ISTQB®. Questions, tables, diagrams and rationales follow these sources. Authors are acknowledged in the source PDFs.</p><button class="btn-secondary" onclick="resetPractice()">Reset practice</button></div><main><section class="practice-card"><h2 id="q-0">A1 · AI-1.2.1 (K2)</h2><div class="q-text">Which of the following statements about AI is MOST likely to be CORRECT?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-0"><label class="option-row"><input type="radio" name="q0" value="0"> <span class="option-text">a) An autonomous robot that can act as a worker in a house, shop or office is an example of general AI</span></label><label class="option-row"><input type="radio" name="q0" value="1"> <span class="option-text">b) A robot exhibiting similar skill levels as a human is considered to have achieved singularity</span></label><label class="option-row"><input type="radio" name="q0" value="2"> <span class="option-text">c) AI-based systems that support a range of test management functions are considered to possess general AI</span></label><label class="option-row"><input type="radio" name="q0" value="3"> <span class="option-text">d) An AI-based system that cannot access the internet is said to exhibit narrow AI</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: a)</p><div>a) Is correct. General AI exhibits intelligent behavior comparable to a human and an autonomous robot that has a wide enough range of skills to perform as a worker in quite different environments is likely to be general AI<br><br>b) Is not correct. Singularity is that point when AI has surpassed humans – not when they are at similar levels<br><br>c) Is not correct. Performing test management would be considered by most as a single specialized set of tasks and would be classed as narrow AI<br><br>d) Is not correct. Narrow AI is being able to perform a single specialized task; it is not relevant whether the AI has access to the internet or not</div></details></section><section class="practice-card"><h2 id="q-1">A2 · AI-1.3.1 (K2)</h2><div class="q-text">Which of the following statements is MOST likely to be describing a conventional system (as opposed to an AI-based system)?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-1"><label class="option-row"><input type="radio" name="q1" value="0"> <span class="option-text">a) This system assigns customers into groups, based on their historical buying patterns</span></label><label class="option-row"><input type="radio" name="q1" value="1"> <span class="option-text">b) This system controls the braking of the car dependent on its speed</span></label><label class="option-row"><input type="radio" name="q1" value="2"> <span class="option-text">c) This system taught itself to recognize different words by listening to recordings</span></label><label class="option-row"><input type="radio" name="q1" value="3"> <span class="option-text">d) This system detects anomalies from its experience of seeing anomalies in many X-rays</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: b)</p><div>a) is not correct. This system appears to be describing clustering of customers as would be performed by an unsupervised learning system; therefore, it is likely to be AI-based<br><br>b) Is correct. There is no evidence that this system implements AI<br><br>c) Is not correct. This system appears to have programmed itself by listening to recordings; therefore, it is likely to be AI-based<br><br>d) Is not correct. This system appears to be describing a form of supervised learning based on anomalies in X-rays; therefore, it is likely to be AI- based</div></details></section><section class="practice-card"><h2 id="q-2">A3 · AI-1.5.1 (K1)</h2><div class="q-text">Which of the following options is NOT a framework used to develop AI-based software?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-2"><label class="option-row"><input type="radio" name="q2" value="0"> <span class="option-text">a) scikit-learn</span></label><label class="option-row"><input type="radio" name="q2" value="1"> <span class="option-text">b) CNTK</span></label><label class="option-row"><input type="radio" name="q2" value="2"> <span class="option-text">c) MxNet</span></label><label class="option-row"><input type="radio" name="q2" value="3"> <span class="option-text">d) EZPy-AI</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: d)</p><div>a) Is not correct. This is a free software machine learning library for the Python programming language<br><br>b) Is not correct. This is the Microsoft Cognitive Toolkit (CNTK), an open- source deep-learning toolkit<br><br>c) Is not correct. this is a deep-learning open-source framework used by Amazon for AWS<br><br>d) Is correct. There is currently no AI development framework with this name</div></details></section><section class="practice-card"><h2 id="q-3">A4 · AI-1.7.1 (K2)</h2><div class="q-text">Which of the following statements is MOST likely to be describing a system that includes the use of AI as a Service (AIaaS)?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-3"><label class="option-row"><input type="radio" name="q3" value="0"> <span class="option-text">a) The image classifier identifies defects in the gyroscope casings produced by the company and was built using a transfer learning approach so that it is of high accuracy</span></label><label class="option-row"><input type="radio" name="q3" value="1"> <span class="option-text">b) The underwater AI-based vehicle steering system uses a third-party obstacle avoidance component based on decision trees and Bayesian optimization</span></label><label class="option-row"><input type="radio" name="q3" value="2"> <span class="option-text">c) The contract checker uses an exclusive algorithm for determining levels of legal liability, but the pricing part of the contract is separately checked by a generic contract pricing AI component</span></label><label class="option-row"><input type="radio" name="q3" value="3"> <span class="option-text">d) The car rental pricing system is built using AI to support a demand-based algorithm and is hosted in the cloud and made available to all of the company’s car rental offices</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: c)</p><div>a) Is not correct. The image classifier seems to be built for a highly specific problem area and is unlikely to be made widely available as AIaaS<br><br>b) Is not correct. Although the obstacle avoidance system is provided by a third party, it is highly likely to be embedded within the vehicle and it also appears to be a specialist component, so it is unlikely to be AIaaS<br><br>c) Is correct. The exclusive algorithm cannot be AIaaS, however the pricing part is generic and could well be provided as AIaaS<br><br>d) Is not correct. The described situation suggests that the system is made available across the web, but only internally to their own car rental offices, so it does not appear to be AIaaS</div></details></section><section class="practice-card"><h2 id="q-4">A5 · AI-1.9.1 (K2)</h2><div class="q-text">Which of the following options is the MOST likely use of a regulatory standard/regulation for an AI- based system?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-4"><label class="option-row"><input type="radio" name="q4" value="0"> <span class="option-text">a) Use of ISO/PAS 21448 (SOTIF) for an unmanned autonomous submarine</span></label><label class="option-row"><input type="radio" name="q4" value="1"> <span class="option-text">b) Use of GDPR for a bank loan decision-making system</span></label><label class="option-row"><input type="radio" name="q4" value="2"> <span class="option-text">c) Use of ISO 26262 for a fully self-driving car</span></label><label class="option-row"><input type="radio" name="q4" value="3"> <span class="option-text">d) Use of GDPR for a drone collision-avoidance system</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: b)</p><div>a) Is not correct. SOTIF is for road vehicles, not submarines<br><br>b) Is correct. A bank loan decision-making system will work with personal data and this is covered by GDPR<br><br>c) Is not correct. A fully self-driving car is likely to include non-deterministic systems, which are not allowed by ISO 26262<br><br>d) Is not correct. Drone collision systems are unlikely to include any personal data, which is the focus of GDPR</div></details></section><section class="practice-card"><h2 id="q-5">A6 · AI-2.1.1 (K2)</h2><div class="q-text">Which of the following statements about flexibility and adaptability is MOST likely to be CORRECT?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-5"><label class="option-row"><input type="radio" name="q5" value="0"> <span class="option-text">a) Adaptability is important in unsupervised learning as it allows the ML model to learn from data without labels</span></label><label class="option-row"><input type="radio" name="q5" value="1"> <span class="option-text">b) Flexibility is important in supervised learning as it allows the ML model to recognize meaning even when data is poorly labelled</span></label><label class="option-row"><input type="radio" name="q5" value="2"> <span class="option-text">c) Adaptability is important in reinforcement learning systems as such systems must adapt themselves to optimize their reward function</span></label><label class="option-row"><input type="radio" name="q5" value="3"> <span class="option-text">d) Flexibility is important in self-learning systems as it allows them to adapt themselves to unexpected changes in their environment</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: d)</p><div>a) Is not correct. In unsupervised learning the system is expected to learn from unlabeled data and adaptability as a characteristic is associated with a system being changed rather than changing itself<br><br>b) Is not correct. Supervised learning is dependent on labelled data, but flexibility is not a characteristic associated with reading poorly labelled data<br><br>c) Is not correct. Reinforcement learning systems are expected to optimize the reward function, and adaptability as a characteristic is associated with a system that can be changed rather than a system that changes itself<br><br>d) Is correct. Flexibility is a characteristic associated with the ability of systems to be used in contexts outside the original requirements</div></details></section><section class="practice-card"><h2 id="q-6">A7 · AI-2.3.1 (K2)</h2><div class="q-text">Which of the following statements about the evolution of AI-based systems is CORRECT?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-6"><label class="option-row"><input type="radio" name="q6" value="0"> <span class="option-text">a) Self-learning AI-based systems that continue to work in the same operational environment are not expected to change their behavior</span></label><label class="option-row"><input type="radio" name="q6" value="1"> <span class="option-text">b) Side effects are not a concern for AI-based systems that change themselves to cope with changes in their environment</span></label><label class="option-row"><input type="radio" name="q6" value="2"> <span class="option-text">c) AI-based systems must change themselves to cope with changes in system requirements during development</span></label><label class="option-row"><input type="radio" name="q6" value="3"> <span class="option-text">d) Self-learning systems that physically interact with people, need to be managed to ensure system changes are not dangerous</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: d)</p><div>a) Is not correct. Self-learning systems that work in the same operational environment could still optimize themselves and so change their behavior<br><br>b) Is not correct. AI-based systems that change themselves to adapt to changes in their environment could still cause negative side-effects<br><br>c) Is not correct. Evolution as a characteristic is not about system development, but about how an AI-based system changes after deployment in its operational environment<br><br>d) Is correct. If the self-learning system physically interacts with people, then any changes it makes to itself could potentially harm people</div></details></section><section class="practice-card"><h2 id="q-7">A8 · AI-2.5.1 (K2)</h2><div class="q-text">Which of the following examples of an AI-based system is LEAST likely to require special attention with regard to ethical issues?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-7"><label class="option-row"><input type="radio" name="q7" value="0"> <span class="option-text">a) A computer game that teaches children the benefits of democracy by challenging them to become president</span></label><label class="option-row"><input type="radio" name="q7" value="1"> <span class="option-text">b) An application that uses data available on social media to provide a trustworthiness rating for job applicants</span></label><label class="option-row"><input type="radio" name="q7" value="2"> <span class="option-text">c) An autonomous self-powered underwater marine mapping system to create a map of the seabed in international waters</span></label><label class="option-row"><input type="radio" name="q7" value="3"> <span class="option-text">d) A mobile app that monitors each employee’s daily exercise and rewards them with health insurance benefits</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: c)</p><div>a) Is not correct. This game is aimed at children, a vulnerable group, and may give them an unfavorable view of democracy<br><br>b) Is not correct. The application may pick up private and/or biased information from social media, which adversely affects the job prospects of applicants<br><br>c) Is correct. The ethical principles of respect for human autonomy, prevention of harm, fairness and explicability are unlikely to be affected by an underwater marine mapping system<br><br>d) Is not correct. Such an app has the potential to be unfair to vulnerable groups, such as those with disabilities and it may also create unwanted pressure on employees</div></details></section><section class="practice-card"><h2 id="q-8">A9 · AI-2.7.1 (K2)</h2><div class="q-text">Which of the following statements about the transparency, interpretability and explainability for AI- based systems is MOST likely to be CORRECT?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-8"><label class="option-row"><input type="radio" name="q8" value="0"> <span class="option-text">a) The search engine algorithm used for training students on search engine technology was selected as it was considered to be the most explainable</span></label><label class="option-row"><input type="radio" name="q8" value="1"> <span class="option-text">b) The loan system was considered transparent as for each loan application it was clear to users how it decided whether to approve agree to the loan or not</span></label><label class="option-row"><input type="radio" name="q8" value="2"> <span class="option-text">c) The doctors were happy with the level of interpretability of the rule-based oncology system as they could understand how the given rules were implemented in the system</span></label><label class="option-row"><input type="radio" name="q8" value="3"> <span class="option-text">d) The drone operators were happy with the transparency of the control system as they felt that the system responded correctly to their instructions</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: c)</p><div>a) Is not correct. Understanding the underlying technology is considered to be interpretability rather than explainability<br><br>b) Is not correct. Understanding how the loan system made a decision is more likely to be explainability<br><br>c) Is correct. Understanding the technology underlying the oncology system is likely to be interpretability<br><br>d) Is not correct. The system responding correctly is simply referring to functional correctness – not transparency, interpretability or explainability</div></details></section><section class="practice-card"><h2 id="q-9">A10 · AI-3.1.2 (K2)</h2><div class="q-text">Which of the following BEST describes the unsupervised approach to machine learning?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-9"><label class="option-row"><input type="radio" name="q9" value="0"> <span class="option-text">a) Data and labels are analyzed to group them into clusters</span></label><label class="option-row"><input type="radio" name="q9" value="1"> <span class="option-text">b) A system automatically learns by satisfying a fitness function</span></label><label class="option-row"><input type="radio" name="q9" value="2"> <span class="option-text">c) A system teaches itself to meet objectives based on rewards</span></label><label class="option-row"><input type="radio" name="q9" value="3"> <span class="option-text">d) Data are analyzed to identify patterns in the data</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: d)</p><div>a) Is not correct. With unsupervised machine learning there are no labels<br><br>b) Is not correct. A reinforcement learning system uses a fitness function to drive its learning<br><br>c) Is not correct. A self-learning reinforcement system uses rewards to teach itself<br><br>d) Is correct. With unsupervised machine learning there are no labels and patterns are determined from the data itself</div></details></section><section class="practice-card"><h2 id="q-10">A11 · AI-3.2.1 (K2)</h2><div class="q-text">Given the following descriptions:<br><br>I. Model performance is checked using validation data<br><br>II. The origin of test data used to test the model is identified<br><br>III. The tuned model is made ready for its target hardware<br><br>IV. Test data are used to ensure the agreed ML functional performance criteria are met<br><br>V. The model is created from source code<br><br>VI. The critical data features are identified<br><br>Which of the following options BEST matches the descriptions with the activities in the ML workflow?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-10"><label class="option-row"><input type="radio" name="q10" value="0"> <span class="option-text">a) III - Build &amp; Compile Model / II - Prepare the Data / IV - Evaluate the Model</span></label><label class="option-row"><input type="radio" name="q10" value="1"> <span class="option-text">b) V - Build &amp; Compile Model / II - Prepare the Data / I - Evaluate the Model</span></label><label class="option-row"><input type="radio" name="q10" value="2"> <span class="option-text">c) V - Build &amp; Compile Model / VI - Prepare the Data / IV - Evaluate the Model</span></label><label class="option-row"><input type="radio" name="q10" value="3"> <span class="option-text">d) III - Build &amp; Compile Model / VI - Prepare the Data / I - Evaluate the Model</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: b)</p><div>Considering the given descriptions:<br><br>I. Model performance is checked using validation data. This is carried out during model evaluation<br><br>II. The origin of the test data used to test the model is identified. This is carried out as part of data preparation<br><br>III. The tuned model is made ready for its target hardware. This is carried out as part of deployment<br><br>IV. Test data are used to ensure the agreed performance criteria are met. This is carried out as part of testing the model<br><br>V. The model is created from source code. This is carried out as part of the build and compile model activity<br><br>VI. The critical data features are identified. This is carried out as part of data preparation Thus:<br><br>a) Is not correct<br><br>b) Is correct<br><br>c) Is not correct<br><br>d) Is not correct</div></details></section><section class="practice-card"><h2 id="q-11">A12 · AI-3.4.1 (K2)</h2><div class="q-text">Which of the following statements is LEAST likely to be used as a rationale for selecting an ML algorithm?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-11"><label class="option-row"><input type="radio" name="q11" value="0"> <span class="option-text">a) The amount of memory available for training the translation system in the mobile device</span></label><label class="option-row"><input type="radio" name="q11" value="1"> <span class="option-text">b) The maximum time allowed for retraining the embedded health monitoring system</span></label><label class="option-row"><input type="radio" name="q11" value="2"> <span class="option-text">c) The number of measured characteristics used as the basis for a sports prediction system</span></label><label class="option-row"><input type="radio" name="q11" value="3"> <span class="option-text">d) The number of expected clusters of customer types for a retail marketing system</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: a)</p><div>a) Is correct. It is unlikely that the ML algorithm will be trained on the mobile device<br><br>b) Is not correct. If the health monitoring system is embedded and needs to be retrained, we would likely set a maximum duration for this as the patient must either attend a facility for it to happen or be unmonitored while it is being done remotely<br><br>c) Is not correct. The number of features expected to be used by the model will affect the choice of model<br><br>d) Is not correct. Knowing the number of classes for clustering is a useful input when choosing the ML model</div></details></section><section class="practice-card"><h2 id="q-12">A13 · AI-4.2.1 (K2)</h2><div class="q-text">Which of the following statements about the test dataset is CORRECT?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-12"><label class="option-row"><input type="radio" name="q12" value="0"> <span class="option-text">a) The test dataset comes from a source totally different from the validation dataset</span></label><label class="option-row"><input type="radio" name="q12" value="1"> <span class="option-text">b) The format of the test dataset is different from the format of the validation dataset</span></label><label class="option-row"><input type="radio" name="q12" value="2"> <span class="option-text">c) The test dataset can be used as the validation dataset but not as the training dataset</span></label><label class="option-row"><input type="radio" name="q12" value="3"> <span class="option-text">d) The test dataset should not be exposed to the model during the training process</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: d)</p><div>a) Is not correct. The test dataset typically comes from the same source as the validation dataset<br><br>b) Is not correct. The test dataset and the validation dataset should both have the same format<br><br>c) Is not correct. The test dataset is used for neither training nor for validation<br><br>d) Is correct. Incorporation of the test dataset in training will lead to bias in the evaluation of model</div></details></section><section class="practice-card"><h2 id="q-13">A14 · AI-4.5.2 (K1)</h2><div class="q-text">Which of the following options would MOST likely be a reason for poor labeling of data?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-13"><label class="option-row"><input type="radio" name="q13" value="0"> <span class="option-text">a) Insufficient data</span></label><label class="option-row"><input type="radio" name="q13" value="1"> <span class="option-text">b) Synthetic data</span></label><label class="option-row"><input type="radio" name="q13" value="2"> <span class="option-text">c) Translation errors</span></label><label class="option-row"><input type="radio" name="q13" value="3"> <span class="option-text">d) Algorithm chosen for the ML model</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: c)</p><div>a) Is not correct. Having insufficient data doesn’t determine the likelihood of data mislabeling<br><br>b) Is not correct. Synthetic data does not lead to poor labeling<br><br>c) Is correct. Translation errors may lead to correctly labeled data in one language being mislabeled in a second language<br><br>d) Is not correct. Data labeling is not related to the choice of ML algorithm</div></details></section><section class="practice-card"><h2 id="q-14">A15 · AI-5.3.1 (K2)</h2><div class="q-text">An ML team asserts that the ML functional performance metrics based on validation data collected as part of training an ML model are sufficient for determining the quality of the system.<br><br>Which of the following statements is a valid reason to show that this may be INCORRECT?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-14"><label class="option-row"><input type="radio" name="q14" value="0"> <span class="option-text">a) The ML functional performance metrics may not work well if the ground truth is not correct</span></label><label class="option-row"><input type="radio" name="q14" value="1"> <span class="option-text">b) The ML functional performance metrics cannot be used for measuring quality as these are tool dependent</span></label><label class="option-row"><input type="radio" name="q14" value="2"> <span class="option-text">c) Validation data is biased resulting in skewed functional performance measurements</span></label><label class="option-row"><input type="radio" name="q14" value="3"> <span class="option-text">d) Data may need to be transformed prior to training the model, so the functional performance measurements do not reflect the quality of the model</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: a)</p><div>a) Is correct. The model quality depends on labeling quality. Wrong labeling leads to wrong ground truth. For incorrectly labeled data the functional performance measurements may indicate a good quality model but it would be producing wrong outputs<br><br>b) Is not correct. Values of the ML functional performance metrics are not dependent on the tool used to measure them<br><br>c) Is not correct. Validation data may or may not have bias in it<br><br>d) Is not correct. Data transformation is often performed and it does not necessarily impact the quality of the model. Wrong transformations may result in data quality issues and subsequent model quality issues, but a general statement relating data transformation to poor model quality cannot be made</div></details></section><section class="practice-card"><h2 id="q-15">A16 · AI-5.5.1 (K2)</h2><div class="q-text">Which of the following options regarding benchmark suites, BEST completes the following statement?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-15"><label class="option-row"><input type="radio" name="q15" value="0"> <span class="option-text">a) ML benchmark suites help choose a particular model by indicating the time it takes to train</span></label><label class="option-row"><input type="radio" name="q15" value="1"> <span class="option-text">b) ML benchmark suites help choose a particular model by indicating the time it takes to test</span></label><label class="option-row"><input type="radio" name="q15" value="2"> <span class="option-text">c) ML benchmark suites help choose a particular model by indicating the time it takes to validate</span></label><label class="option-row"><input type="radio" name="q15" value="3"> <span class="option-text">d) ML benchmark suites help choose a particular model by indicating the time it takes to deploy</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: a)</p><div>a) Is correct. Benchmark suites indicate the training time<br><br>b) Is not correct. Benchmark suites do not indicate the test time<br><br>c) Is not correct. Benchmark suites do not indicate the validation time<br><br>d) Is not correct. Benchmark suites do not indicate the deployment time</div></details></section><section class="practice-card"><h2 id="q-16">A17 · AI-7.2.1 (K2)</h2><div class="q-text">Which of the following test levels provides the BEST choice for performing bias-related testing?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-16"><label class="option-row"><input type="radio" name="q16" value="0"> <span class="option-text">a) Component testing</span></label><label class="option-row"><input type="radio" name="q16" value="1"> <span class="option-text">b) Input data testing</span></label><label class="option-row"><input type="radio" name="q16" value="2"> <span class="option-text">c) System testing</span></label><label class="option-row"><input type="radio" name="q16" value="3"> <span class="option-text">d) Model testing</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: b)</p><div>a) Is not correct. Component testing is applied to non-model components and is conventional testing<br><br>b) Is correct. Input data testing is performed for testing bias, among other things<br><br>c) Is not correct. While independent bias testing can be also done as part of system testing, ideally it should be done before training the model<br><br>d) Is not correct. Model testing is used to check that the model alone meets any specified requirements, e.g., ML functional performance criteria and non-functional criteria</div></details></section><section class="practice-card"><h2 id="q-17">A18 · AI-7.5.1 (K2)</h2><div class="q-text">Which of the following statements about the documentation of AI components is CORRECT?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-17"><label class="option-row"><input type="radio" name="q17" value="0"> <span class="option-text">a) Because non-functional requirements are not a part of the documentation of an AI component, non-functional testing cannot be performed</span></label><label class="option-row"><input type="radio" name="q17" value="1"> <span class="option-text">b) White-box testing of the interaction of AI and non-AI components is not possible if the interfaces are a part of the documentation</span></label><label class="option-row"><input type="radio" name="q17" value="2"> <span class="option-text">c) Checking for bias in the data is made possible by including the source of the data in the documentation</span></label><label class="option-row"><input type="radio" name="q17" value="3"> <span class="option-text">d) Self-adapting AI systems require each change made by the system to be fully documented</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: c)</p><div>a) Is not correct because non-functional requirements are a part of the documentation<br><br>b) Is not correct because the documentation of interfaces supports the white-box testing of component interactions<br><br>c) Is correct because bias testing on the data on the basis of its source and meta-data is possible<br><br>d) Is not correct because self-adapting AI systems rarely provide the documentation of the changes they make to themselves</div></details></section><section class="practice-card"><h2 id="q-18">A19 · AI-7.6.1 (K2)</h2><div class="q-text">An ecommerce application recommends products to the user on the basis of their purchase history and purchases being made by other people using the site, among other factors. As the tester, you have been asked to measure the current conversion rate of recommendations to compare with the original required conversion rate.<br><br>Which of the following is the MOST likely underlying reason for this request?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-18"><label class="option-row"><input type="radio" name="q18" value="0"> <span class="option-text">a) AI effect</span></label><label class="option-row"><input type="radio" name="q18" value="1"> <span class="option-text">b) Adversarial attacks</span></label><label class="option-row"><input type="radio" name="q18" value="2"> <span class="option-text">c) Concept drift</span></label><label class="option-row"><input type="radio" name="q18" value="3"> <span class="option-text">d) Lack of fairness</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: c)</p><div>a) Is not correct as AI effect refers to change in the perception of what is AI over time and not the accuracy of a given solution<br><br>b) Is not correct. An adversarial attack is where an attacker subtly perturbs valid inputs that are passed to the trained model to cause it to provide incorrect predictions. In this case the data is being gathered from the purchase history and not direct inputs from the users. Hence the chances of this being an adversarial attack are low<br><br>c) Is correct. This is an example of a model providing reduced accuracy because of changes in customer behavior<br><br>d) Is not correct. Fairness is using positively biased data for training which is not true in this case as we are dealing with a live system which was performing well in the past</div></details></section><section class="practice-card"><h2 id="q-19">A20 · AI-8.2.1 (K2)</h2><div class="q-text">Which of the following options is MOST likely to be relevant when testing a system’s autonomy?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-19"><label class="option-row"><input type="radio" name="q19" value="0"> <span class="option-text">a) Testing over a sustained period of time</span></label><label class="option-row"><input type="radio" name="q19" value="1"> <span class="option-text">b) Testing the accuracy of system predictions</span></label><label class="option-row"><input type="radio" name="q19" value="2"> <span class="option-text">c) Testing how quickly the system can adapt</span></label><label class="option-row"><input type="radio" name="q19" value="3"> <span class="option-text">d) Static analysis of training data</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: a)</p><div>a) Is correct. This is relevant to testing a system’s autonomy because it may be required to test over a specific period of time to check how often the system requires intervention<br><br>b) Is not correct. A system can be autonomous and very inaccurate<br><br>c) Is not correct. A system can be autonomous and not adaptable<br><br>d) Is not correct. Static analysis of training data is unlikely to be related to testing for autonomy.</div></details></section><section class="practice-card"><h2 id="q-20">A21 · AI-8.2.1 (K2)</h2><div class="q-text">Which of the following statements demonstrates how non-deterministic systems can create challenges in testing?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-20"><label class="option-row"><input type="radio" name="q20" value="0"> <span class="option-text">a) Non-deterministic systems produce a different result each time, normally preventing the generation of expected results</span></label><label class="option-row"><input type="radio" name="q20" value="1"> <span class="option-text">b) Non-deterministic systems are difficult to test because they are not explainable, which hinders the investigation and fixing of defects</span></label><label class="option-row"><input type="radio" name="q20" value="2"> <span class="option-text">c) A system that is given the same inputs and initial state may produce different outputs, so can require multiple test executions</span></label><label class="option-row"><input type="radio" name="q20" value="3"> <span class="option-text">d) Non-deterministic systems are usually biased and require additional tests to allow this bias to be excluded from the results</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: c)</p><div>a) Is not correct. It is normally possible to specify expected results, but this may require the inclusion of a tolerance or making multiple test runs<br><br>b) Is not correct. Non-deterministic systems do not necessarily have explainability problems<br><br>c) Is correct. This is a valid description of a non-deterministic system, and, as a result tests may need to be run several times to give a statistically valid test result<br><br>d) Is not correct. There is no correlation between bias and non-deterministic systems</div></details></section><section class="practice-card"><h2 id="q-21">A22 · AI-8.6.1 (K2)</h2><div class="q-text">When testing a deep neural network, which of the following characteristics can be evaluated without using dynamic testing?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-21"><label class="option-row"><input type="radio" name="q21" value="0"> <span class="option-text">a) Explainability</span></label><label class="option-row"><input type="radio" name="q21" value="1"> <span class="option-text">b) Transparency</span></label><label class="option-row"><input type="radio" name="q21" value="2"> <span class="option-text">c) Automation bias</span></label><label class="option-row"><input type="radio" name="q21" value="3"> <span class="option-text">d) Accuracy</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: b)</p><div>a) Is not correct. Methods for testing explainability of deep neural networks, which are complex to understand, require execution of the system<br><br>b) Is correct. Testing transparency does not require execution of the system under test, as it only requires comparing the documentation to the implementation<br><br>c) Is not correct. Automation bias requires execution to provide results, and determine how they are processed by users<br><br>d) Is not correct. Accuracy cannot be verified without executing the system under test</div></details></section><section class="practice-card"><h2 id="q-22">A23 · AI-8.7.1 (K2)</h2><div class="q-text">Which of the following characteristics of an example AI-based system might cause a test oracle problem?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-22"><label class="option-row"><input type="radio" name="q22" value="0"> <span class="option-text">a) It is not known where the training data was obtained</span></label><label class="option-row"><input type="radio" name="q22" value="1"> <span class="option-text">b) The output of the system is a prediction for which the ground truth is unknown</span></label><label class="option-row"><input type="radio" name="q22" value="2"> <span class="option-text">c) The system runs with no human intervention and is considered to be autonomous</span></label><label class="option-row"><input type="radio" name="q22" value="3"> <span class="option-text">d) There is a lack of transparency into how the system was implemented</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: b)</p><div>a) Is not correct. Data does not cause a test oracle problem because it does not mean it is difficult to determine the expected result<br><br>b) Is correct. If the ground truth of a predicted system is unknown, that is likely to cause a test oracle problem<br><br>c) Is not correct. Autonomy is unrelated to test oracles<br><br>d) Is not correct. Knowing how the system was implemented is not generally required to determine the expected result</div></details></section><section class="practice-card"><h2 id="q-23">A24 · AI-9.4.1 (K2)</h2><div class="q-text">Which of the following statements is CORRECT with regards to A/B testing?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-23"><label class="option-row"><input type="radio" name="q23" value="0"> <span class="option-text">a) A/B testing is also known as differential testing because two different programs are used for this type of testing</span></label><label class="option-row"><input type="radio" name="q23" value="1"> <span class="option-text">b) A/B testing is mostly useful for testing simple ML models as it does not produce accurate results for complex models</span></label><label class="option-row"><input type="radio" name="q23" value="2"> <span class="option-text">c) A/B testing requires multiple expected results from the same inputs to be compared to identify significant differences in tested models</span></label><label class="option-row"><input type="radio" name="q23" value="3"> <span class="option-text">d) A/B testing is a good technique for writing test cases for various types of ML models, especially self-learning systems</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: c)</p><div>a) Is not correct. Back-to-back testing, and not A/B testing, is known as differential testing<br><br>b) Is not correct. A/B testing can be used for both simple and complex ML models<br><br>c) Is correct. A/B testing requires well-defined acceptance criteria to choose between the two models being tested<br><br>d) Is not correct. A/B testing doesn’t help in writing test cases</div></details></section><section class="practice-card"><h2 id="q-24">A25 · AI-10.2.1 (K2)</h2><div class="q-text">Which of the following statements is LEAST likely to be an example of a benefit provided by virtual test environments in the testing of an AI-based system?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-24"><label class="option-row"><input type="radio" name="q24" value="0"> <span class="option-text">a) A smart city application is tested in a virtual test environment to allow scenarios that very rarely happen (e.g., crowd control at a new year event) to be tested</span></label><label class="option-row"><input type="radio" name="q24" value="1"> <span class="option-text">b) An AI-based money market trading system is tested in a virtual test environment as it would be impractical to test on real money markets due to the potential costs</span></label><label class="option-row"><input type="radio" name="q24" value="2"> <span class="option-text">c) A smart fruit picker is tested in a virtual test environment to allow many picking scenarios to be run in an accelerated timeframe to check that fruit is not damaged</span></label><label class="option-row"><input type="radio" name="q24" value="3"> <span class="option-text">d) An autonomous car is tested in a virtual test environment to allow potentially dangerous test scenarios to be run safely</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: c)</p><div>a) Is not correct. Running rare scenarios in a virtual test environment is useful, especially when the cost of running the tests in the real world would be prohibitive<br><br>b) Is not correct. Running tests for a money market trading system on a virtual test environment is sensible as we could not run these tests on the real market due to the potential for losing money<br><br>c) Is correct. Running a fruit picker faster in a virtual environment will not help to determine if fruit is undamaged in real-time production because checking damage to fruit in the virtual environment would be far more difficult than checking on damage to real fruit in a real (non-virtual) environment<br><br>d) Is not correct. It is good practice to run dangerous test scenarios for an autonomous car in a virtual test environment on safety grounds</div></details></section><section class="practice-card"><h2 id="q-25">A26 · AI-11.1.1 (K2)</h2><div class="q-text">It is possible to use an AI-assisted test automation tool to recognize objects through image processing, rather than using references to their location. To which type of AI software engineering technology is this example MOST likely referring?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-25"><label class="option-row"><input type="radio" name="q25" value="0"> <span class="option-text">a) Classification, Learning and Prediction</span></label><label class="option-row"><input type="radio" name="q25" value="1"> <span class="option-text">b) Probabilistic Software Engineering</span></label><label class="option-row"><input type="radio" name="q25" value="2"> <span class="option-text">c) Search-based Software Engineering</span></label><label class="option-row"><input type="radio" name="q25" value="3"> <span class="option-text">d) Clustering</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: a)</p><div>a) Is correct. Image recognition in the form of classification models is used to recognize objects in GUIs<br><br>b) Is not correct. Probabilistic software engineering can be used for estimating the probability of certain things occurring<br><br>c) Is not correct. Search-based software engineering techniques are used for reducing a large problem space. These may be useful for guessing where the image objects are located, but not recognizing them as images<br><br>d) Is not correct. Clustering is a type of algorithm, not a type of AI software engineering technology</div></details></section><section class="practice-card"><h2 id="q-26">A27 · AI-11.6.1 (K2)</h2><div class="q-text">Which of the following statements is CORRECT with respect to visual testing?<br><br>Select ONE option.</div><div class="options" role="group" aria-labelledby="q-26"><label class="option-row"><input type="radio" name="q26" value="0"> <span class="option-text">a) Visual testing makes use of object IDs to determine changes</span></label><label class="option-row"><input type="radio" name="q26" value="1"> <span class="option-text">b) Visual testing uses images to do pixel-by-pixel comparisons</span></label><label class="option-row"><input type="radio" name="q26" value="2"> <span class="option-text">c) Visual testing helps find overlapping user interface elements</span></label><label class="option-row"><input type="radio" name="q26" value="3"> <span class="option-text">d) Visual testing fails when the screen layout changes</span></label></div><details class="practice-answer"><summary>Show answer and rationale</summary><p>Correct answer: c)</p><div>a) Is not correct. Visual testing makes use of images and does not use object IDs<br><br>b) Is not correct. Visual testing makes use of images but does not perform pixel by pixel comparison. It uses AI to do the comparison<br><br>c) Is correct. Visual Testing can find overlapping user interface elements similar to a human tester<br><br>d) Is not correct. Visual testing works even when the layout changes</div></details></section></main><script>function resetPractice(){document.querySelectorAll("input").forEach(e=>e.checked=false);document.querySelectorAll("textarea").forEach(e=>e.value="");document.querySelectorAll("details").forEach(e=>e.open=false);}</script><script src="../../../assets/exam-ui.js"></script>
+</body></html>

@@ -1,0 +1,1045 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CTAL-AT v2.0 · Advanced Level Agile Tester</title><link rel="stylesheet" href="../../../assets/fonts/fonts.css"><link rel="stylesheet" href="../../../assets/exam-ui.css"><link rel="stylesheet" href="../../../assets/exam-engine.css"></head><body><main><section class="start-card" id="start-screen"><p>ISTQB · EN</p><h1>CTAL-AT v2.0 · Advanced Level Agile Tester</h1><p>40 questions · 52 points · 90 min · Pass mark 34</p><label><input id="extended-time" type="checkbox"> Time extension for non-native speakers (+25%)</label><p><button class="btn-start" onclick="startExam()">Start exam</button></p></section><section id="exam-screen" hidden><header><h1>CTAL-AT v2.0 · Advanced Level Agile Tester</h1><p><span id="timer" role="timer"></span> · <span id="progress"></span></p><button onclick="confirmSubmit()">Submit</button> <button onclick="confirmReset()">Restart</button></header><section id="results" hidden aria-live="polite"><h2 id="grade-badge"></h2><p><span id="final-score-raw"></span> · <span id="final-score-pct"></span></p></section><div id="questions-container"></div></section><footer><p>Source: ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1.pdf / ISTQB-CTAL-AT-Sample-Exam-Answers-v2.0-EN-1.pdf. © ISTQB®. Original questions, answer keys and rationales remain the property of their respective owners.</p><p><a href="../../../THIRD_PARTY_NOTICES.md">Third-party notices</a></p></footer></main><div class="confirm-overlay" id="confirm-overlay"><div class="confirm-card"><h2 id="confirm-title"></h2><p id="confirm-text"></p><button id="confirm-cancel" onclick="closeConfirm()">Cancel</button> <button id="confirm-ok" onclick="doConfirm()">OK</button></div></div><script>const questions = [
+  {
+    "id": 1,
+    "answer": [
+      3
+    ],
+    "lo": "CTAL-AT-1.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which comparison of test types is MOST accurate in Agile software development?",
+    "options": [
+      "Non-functional testing is performed only after the iteration, while white-box testing is performed only after system testing is complete.",
+      "Black-box testing is mainly performed before coding begins, while white-box testing is primarily used for regression testing after the iteration.",
+      "Exploratory testing is typically started after the iteration, while usability testing supplements functional testing activities.",
+      "Functional testing during the iteration focuses on verifying user story acceptance criteria, while broader functional and integration testing may occur after the iteration."
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. Basic non-functional testing (e.g., performance, usability, security) is performed during the iteration on new features. White- box testing (e.g., TDD) occurs during development, not only post- system testing.\nb) Incorrect. Black-box testing focuses mainly on verifying acceptance criteria during the iteration. White-box testing supports early defect detection (e.g., TDD) during coding. It is not primarily a post-iteration regression technique.\nc) Incorrect. Exploratory testing plays a critical role during the iteration.\nIt complements structured black-box and white-box testing. It helps uncover unknown risks early.\nd) Correct. Functional testing primarily verifies that implemented features meet user story acceptance criteria and defined functional requirements. Once multiple features are completed, broader functional testing may occur, including integration testing across features (including those developed by other teams). This reflects that each iteration focuses on incremental functionality while broader validation occurs after the iteration, and often requires integrated environments.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q1-5.png",
+        "alt": "Source question 1, page 5"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 2,
+    "answer": [
+      3,
+      4
+    ],
+    "lo": "CTAL-AT-1.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which test types are examples of black-box testing typically performed after the iteration?",
+    "options": [
+      "Usability testing.",
+      "Security testing.",
+      "Performance testing.",
+      "Regression testing.",
+      "End-to-end testing."
+    ],
+    "multi": true,
+    "explanation": "a) Incorrect. Usability testing is non-functional, and can also be performed during the iteration.\nb) Incorrect. Security testing is non-functional, and can also be performed during the iteration.\nc) Incorrect. Performance testing is non-functional, and can also be performed during the iteration.\nd) Correct. Regression testing is an example of black-box testing performed after the iteration.\ne) Correct. End-to-end testing is an example of black-box testing performed after the iteration.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q2-5.png",
+        "alt": "Source question 2, page 5"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 3,
+    "answer": [
+      1,
+      4
+    ],
+    "lo": "CTAL-AT-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which statements reflect the recommended use of end-to-end (E2E) testing in Agile software development?",
+    "options": [
+      "End-to-end (E2E) testing should be the primary test type to ensure completeness",
+      "A number of critical flows should be verified during end-to-end (E2E) testing",
+      "End-to-end (E2E) testing provides fast, detailed diagnostic feedback during coding",
+      "All regression testing should be performed during end-to-end (E2E) testing for simplicity",
+      "End-to-end (E2E) testing complements but does not replace testing of the lower areas in the test pyramid"
+    ],
+    "multi": true,
+    "explanation": "a) Incorrect. Making end-to-end (E2E) testing the primary type is too costly and slow.\nb) Correct. End-to-end (E2E) testing is reserved for critical flows that provide the most value.\nc) Incorrect. End-to-end (E2E) testing is slow and provides limited diagnostic feedback.\nd) Incorrect. Regression testing is primarily addressed at lower test levels, not fully shifted to the higher test levels, which typically contain end-to-end (E2E) testing.\ne) Correct. End-to-end (E2E) testing is used in addition to unit tests and e.g. API tests, not as a substitute.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q3-6.png",
+        "alt": "Source question 3, page 6"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 4,
+    "answer": [
+      0,
+      1,
+      0,
+      1
+    ],
+    "lo": "CTAL-AT-1.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Assign each of the following pitfalls (1–4) to ONE of the categories (A–B) while not leaving any group empty.",
+    "options": [
+      "Pitfalls mainly associated with formal testing",
+      "Pitfalls mainly associated with holistic testing"
+    ],
+    "multi": false,
+    "explanation": "(1) Narrow focus and delayed discovery → A: formal testing often emphasizes predefined test results, which risks overlooking unexpected defects until late.\n(2) Subjective quality evaluation → B: holistic testing lacks fixed metrics, so stakeholder trust may be challenged.\n(3) Heavy emphasis on formal work products → A: formal testing relies on extensive documentation and formality, making adaptation harder.\n(4) Dependency on shared ownership and maturity → B: holistic testing requires a supportive culture; without it, adoption falters.\nTherefore, the correct grouping is:\n(1,3) → A and (2,4) → B.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q4-6.png",
+        "alt": "Source question 4, page 6"
+      }
+    ],
+    "type": "matching",
+    "items": [
+      "Testing may focus narrowly on predefined test results and delay discovery of critical defects.",
+      "Quality evaluation becomes subjective and hard to quantify, making stakeholder trust difficult.",
+      "Heavy emphasis on formal work products reduces responsiveness to changes in real system\nbehavior.",
+      "Success depends on shared ownership and cultural maturity, which not all software development\nteams achieve."
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 5,
+    "answer": [
+      1
+    ],
+    "lo": "CTAL-AT-1.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Match the regression testing approaches (1–4) with the scenario where they add the MOST value (A–D):\n1. Incremental regression testing\n2. Risk-based regression testing\n3. DevOps-oriented regression testing\n4. Collaborative regression testing\nA. Detecting unintended defects when test automation coverage is incomplete\nB. Ensuring rapid feedback after each code integration\nC. Validating stability of a deployment in pre-production or production with monitoring\nD. Deciding which regression areas need attention after frequent changes to high-risk features",
+    "options": [
+      "1A, 2C, 3B, 4D",
+      "1B, 2D, 3C, 4A",
+      "1B, 2A, 3D, 4C",
+      "1D, 2B, 3A, 4C"
+    ],
+    "multi": false,
+    "explanation": "1 → B. Incremental regression testing provides rapid feedback by running subsets after code integrations.\n2 → D. Risk-based regression testing identifies high-risk areas to focus regression testing effort.\n3 → C. DevOps regression testing validates deployments with smoke tests and test monitoring in (pre-)production.\n4 → A. Collaborative regression testing (e.g., bug bashes) adds value when test automation is incomplete, uncovering defects.\nb) is correct.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q5-7.png",
+        "alt": "Source question 5, page 7"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 6,
+    "answer": [
+      1
+    ],
+    "lo": "CTAL-AT-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "In Agile software development teams, what is the main benefit of combining generalization with specialization?",
+    "options": [
+      "It eliminates the need for experts in specialized areas such as usability or test automation.",
+      "It enables flexibility across tasks while keeping deep expertise where required.",
+      "It reduces overlap between roles, ensuring developers and testers stay separate.",
+      "It preserves strict role boundaries, making ownership of work clearer."
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. Specialized expertise is still needed for complex or critical tasks.\nb) Correct. Generalizing specialists provide flexibility while retaining deep expertise, reducing bottlenecks and supporting collaboration.\nc) Incorrect. Agile software development promotes overlap and collaboration, not strict separation.\nd) Incorrect. Agile software development values adaptability over rigid role boundaries.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q6-7.png",
+        "alt": "Source question 6, page 7"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 7,
+    "answer": [
+      0,
+      3
+    ],
+    "lo": "CTAL-AT-2.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which practices are MOST likely to strengthen a Product Owner’s (PO) motivation to engage in test activities?",
+    "options": [
+      "Providing transparency through dashboards that show quality risks in relation to release readiness.",
+      "Shifting responsibility for component testing directly to the Product Owner (PO).",
+      "Handling acceptance criteria solely within the test team to ensure consistency.",
+      "Involving the Product Owner (PO) in collaborative test execution (e.g. bug bashes).",
+      "Delegating ownership of regression testing to the Product Owner (PO) without Agile software development team support."
+    ],
+    "multi": true,
+    "explanation": "a) Correct. Dashboards that connect testing with business risks and readiness make quality visible and meaningful for Product Owners (PO).\nb) Incorrect. Verification during component testing is a developer responsibility, not motivating or aligned with the Product Owner’s (PO) role.\nc) Incorrect. Excluding the Product Owner (PO) from acceptance criteria discussions reduces their engagement and weakens shared responsibility.\nd) Correct. Participating in collaborative test activities like bug bashes ties testing to user experience and business value, motivating Product Owners (PO).\ne) Incorrect. Assigning regression testing to Product Owners (PO) alone is neither efficient nor aligned with their role.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q7-8.png",
+        "alt": "Source question 7, page 8"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 8,
+    "answer": [
+      1
+    ],
+    "lo": "CTAL-AT-2.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following BEST explains how the whole team approach helps developers when working on evolving code?",
+    "options": [
+      "It allows developers to finalize features before acceptance criteria are discussed",
+      "It provides continuous testing feedback that enables safe refactoring and quicker corrections",
+      "It shifts most testing responsibilities to testers so developers can focus solely on coding",
+      "It prevents business representatives from influencing technical decisions"
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. Acceptance criteria should be clarified early, not after code is finalized.\nb) Correct. Continuous collaborative testing feedback gives developers confidence to refactor and correct defects earlier, lowering cost.\nc) Incorrect. Whole team testing removes silos; developers are expected to participate in testing, not avoid it.\nd) Incorrect. Business representatives help shape acceptance criteria and quality goals; excluding them contradicts the whole team approach.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q8-8.png",
+        "alt": "Source question 8, page 8"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 9,
+    "answer": [
+      2
+    ],
+    "lo": "CTAL-AT-2.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is BEST shows how the whole team approach assists developers?",
+    "options": [
+      "Developers can start up production-like environments locally or in test.",
+      "Developers can work independently and in parallel and can experiment safely with code.",
+      "Developers gain clear, testable acceptance criteria before implementing a user story.",
+      "Developers know instantly if new code breaks existing behavior."
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. This is an example of how Infrastructure as Code supports developers.\nb) Incorrect. This is an example of how version control systems support developers.\nc) Correct. Testers working closely with developers help clarify acceptance criteria through examples, leading to better alignment between the code and business expectations, which gives a clear, testable definition of \"done\" for user stories.\nd) Incorrect. This is an example of how test-driven development supports developers.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q9-8.png",
+        "alt": "Source question 9, page 8"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 10,
+    "answer": [
+      2
+    ],
+    "lo": "CTAL-AT-2.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which situation BEST illustrates an appropriate use of a tissue tester?",
+    "options": [
+      "After a release, asking end users to run acceptance tests in production.",
+      "Midway through development, running a full usability test session in a usability lab with recruited customers.",
+      "Early in feature design, briefly showing a colleague from another team to spot usability defects.",
+      "After finalizing the infrastructure, running a performance test with performance testers."
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. Acceptance testing with actual users is a structured activity, not tissue testing.\nb) Incorrect. Formal usability test sessions in a usability lab go beyond the quick and informal purpose of tissue testing.\nc) Correct. Tissue testers are temporary, unbiased colleagues used early for quick feedback.\nd) Incorrect. Performance testing is unrelated to the informal nature of tissue testing.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q10-9.png",
+        "alt": "Source question 10, page 9"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 11,
+    "answer": [
+      1,
+      4
+    ],
+    "lo": "CTAL-AT-3.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which situations BEST illustrate effective iteration-level test planning in Agile software development?",
+    "options": [
+      "A tester documents all possible test cases for the release before development starts.",
+      "The team collaborates to refine acceptance criteria during backlog refinement.",
+      "Developers schedule the test environment setup for the time when unit testing is about to begin.",
+      "Test automation is prioritized to the extent that manual testing is avoided.",
+      "The team agrees on which test techniques to apply for the selected user stories."
+    ],
+    "multi": true,
+    "explanation": "a) Incorrect. Agile test planning avoids heavy documentation; it is adaptive and ongoing.\nb) Correct. Refining acceptance criteria collaboratively during backlog or iteration planning is a key Agile software development practice.\nc) Incorrect. Agile software development requires test environments and test data to be ready from day one of the iteration.\nd) Incorrect. Agile software development values both test automation (e.g., automated regression testing) and manual testing (e.g., exploratory, usability).\ne) Correct. Iteration planning includes selecting suitable test techniques for current user stories.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q11-9.png",
+        "alt": "Source question 11, page 9"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 12,
+    "answer": [
+      3
+    ],
+    "lo": "CTAL-AT-3.1.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are working on a project for a new mobile app. The product is in its early stage and undergoing rapid prototyping due to high change frequency. The delivery approach uses one-week iterations with continuous integration, but features are still evolving based on user feedback. The team concentrates on tests that are business-facing. The product is not yet feature complete, so the focus is on validating ideas and learning quickly rather than fully auditable compliance.\nYou develop a project test strategy for the next few iterations by mapping test techniques, test types, test levels and test appraoches to test quadrants.\nWhich potential elements of a project test strategy will be MOST useful in the scenario described above?",
+    "options": [
+      "Perform component testing",
+      "Perform user acceptance testing (UAT)",
+      "Perform security testing",
+      "Perform exploratory testing"
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. Component testing is in Quadrant 1, which is technology- facing, not business-facing.\nb) Incorrect. Although UAT is in the correct quadrant (3), it is too early for acceptance testing. The product is in its early stage, undergoes rapid prototyping, and there is a high change frequency.\nc) Incorrect. Security testing is in Quadrant 4, which is technology, not business-facing.\nd) Correct. In early-stage products or systems undergoing rapid prototyping, strategy typically favors low-overhead, high-value feedback mechanisms. Exploratory testing from Quadrant 3 takes precedence over formal modeling or extensive coverage.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q12-9.png",
+        "alt": "Source question 12, page 9"
+      }
+    ],
+    "showFigure": true
+  },
+  {
+    "id": 13,
+    "answer": [
+      1
+    ],
+    "lo": "CTAL-AT-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which statement BEST describes the difference between test monitoring in Agile software development and approaches that are considered more sequential?",
+    "options": [
+      "Agile test monitoring focuses on documenting test completion percentages across phases.",
+      "Agile test monitoring emphasizes continuous visibility through lightweight metrics and trends.",
+      "Test monitoring in approaches that are considered more sequential relies on real-time dashboards updated throughout the iteration.",
+      "Monitoring in both approaches uses identical metrics but at different project phases."
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. Completion percentages are linked to phase-based test monitoring.\nb) Correct. Agile software development emphasizes lightweight, continuous feedback with charts, dashboards, and trend tracking.\nc) Incorrect. Real-time dashboards are a characteristic of Agile software development, where more sequential approaches favor periodic reporting. Also, sequential approaches typically do not have iterations.\nd) Incorrect. Metrics differ in purpose: Agile software development uses value-driven, actionable feedback instead of compliance measures.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q13-10.png",
+        "alt": "Source question 13, page 10"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 14,
+    "answer": [
+      0
+    ],
+    "lo": "CTAL-AT-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is an example of performing test monitoring in an Agile software development?",
+    "options": [
+      "A burndown chart showing the remaining test effort over time",
+      "A retrospective resulting with concrete actions to improve test practices",
+      "An iteration review deciding on adjustments to test scope or priorities",
+      "Iteration planning defining test objectives and test tasks estimations"
+    ],
+    "multi": false,
+    "explanation": "a) Correct. In Agile software development, test monitoring uses lightweight information such as burn-down charts to track test progress and product quality continuously.\nb) Incorrect. This example shows how retrospectives support test process improvement, not test monitoring.\nc) Incorrect. This example shows how iteration reviews support test control, not test monitoring.\nd) Incorrect. This example shows how iteration planning supports test planning, not test monitoring.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q14-10.png",
+        "alt": "Source question 14, page 10"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 15,
+    "answer": [
+      1
+    ],
+    "lo": "CTAL-AT-3.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements about coverage in Agile test reporting are TRUE?\ni. Code coverage alone is not sufficient to demonstrate overall product quality.\nii. Requirements coverage links automated tests to user stories and acceptance criteria.\niii. Exploratory testing coverage can be reported through session-based test management.\niv. Test type coverage ensures that acceptance criteria for individual user stories are verified.\nv. Infrastructure coverage is calculated by linking automated acceptance tests to user stories.",
+    "options": [
+      "i, ii, and iv",
+      "i, ii, and iii",
+      "ii, iii, and v",
+      "i, iv, and v"
+    ],
+    "multi": false,
+    "explanation": "i) True. High code coverage does not guarantee meaningful testing or product quality.\nii) True. Requirements coverage connects tests directly to user stories or acceptance criteria.\niii) True. Exploratory testing coverage is reported with test charters or session-based test management.\niv) False. Test type coverage is about balance across Agile testing quadrants, not acceptance criteria verification.\nv) False. This is a description of requirements coverage, not infrastructure coverage. Therefore, b is correct.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q15-10.png",
+        "alt": "Source question 15, page 10"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 16,
+    "answer": [
+      3
+    ],
+    "lo": "CTAL-AT-3.4.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "During the last three iterations, your Agile software development team observed a high cycle time for resolving defects, with defects often lingering in the backlog for multiple days before being addressed. Failure rate and defect detection percentage were observed to be steady at expected levels. The number of flaky tests remains very low. Statement coverage and branch coverage are within acceptable thresholds for critical paths. Automated test pass rates were consistently high. Test environment stability was low due to a few environment-related failures reported.\nWhich of the following improvement measures is MOST appropriate to address the issue described in the scenario?",
+    "options": [
+      "Strengthen automated testing to increase coverage during component integration testing",
+      "Refactor tests which are hard to maintain or redundant, using design patterns like page objects",
+      "Schedule time in each iteration for applying test automation refactoring practices",
+      "Adopt a whole team approach to defect triage to strengthen collaboration across roles"
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. Coverage is OK. There is no need to strengthen the test automation\nb) Incorrect. This is done when the failure rate is high, with low defect yield, which is not the case in this scenario.\nc) Incorrect. Test automation refactoring practices are helpful when the number of flaky tests is high, but this metric is at the expected level.\nd) Correct. High cycle time for resolving defects often points to weak collaboration across roles. A possible improvement is to adopt a whole-team approach to defect triage.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q16-11.png",
+        "alt": "Source question 16, page 11"
+      }
+    ],
+    "showFigure": true
+  },
+  {
+    "id": 17,
+    "answer": [
+      3
+    ],
+    "lo": "CTAL-AT-3.4.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Match each item (1–4) with the purpose it serves (A–D) when initiating test process improvement in Agile software development.\n1. Test-focused retrospectives\n2. Agile testing self-assessments\n3. Joint risk workshops\n4. Test-first approaches (ATDD/BDD)\nA. Establish a baseline and identify gaps in the current test approach\nB. Provide earlier and more actionable feedback in the continuous integration/continuous delivery pipeline\nC. Create shared ownership of quality goals through reflection\nD. Align test process improvement efforts with business risks and product risks",
+    "options": [
+      "1C, 2A, 3B, 4D",
+      "1B, 2C, 3D, 4A",
+      "1A, 2D, 3C, 4B",
+      "1C, 2A, 3D, 4B"
+    ],
+    "multi": false,
+    "explanation": "1 → C: Test-focused retrospectives identify testing challenges and build shared ownership.\n2 → A: Self-assessments help establish a baseline and identify gaps.\n3 → D: Risk workshops ensure alignment with business risks and product risks.\n4 → B: Test-first approaches (ATDD/BDD) strengthen feedback loops.\nCorrect option: d.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q17-11.png",
+        "alt": "Source question 17, page 11"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 18,
+    "answer": [
+      0,
+      1,
+      0,
+      1
+    ],
+    "lo": "CTAL-AT-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Assign each of the following testware (1–4) to ONE of the categories (A–B) without leaving any category empty.",
+    "options": [
+      "Items that provide a clear and stable description of expected behavior",
+      "Items that capture insights and understanding that change over time"
+    ],
+    "multi": false,
+    "explanation": "Automated acceptance tests belong to category A because they act as executable specifications of behavior.\nTest charters belong to category B because they guide exploratory testing based on emerging risks or questions.\nVisual models belong to category A because diagrams define flows or states that act as reference points for development.\nExploratory test session sheets belong to category B because they document observations that refine requirements as the Agile software development team learns.\nTherefore: 1 and 3 → A; 2 and 4 → B.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q18-12.png",
+        "alt": "Source question 18, page 12"
+      }
+    ],
+    "type": "matching",
+    "items": [
+      "Automated acceptance tests",
+      "Test charters",
+      "Visual models such as process flows or state diagrams",
+      "Exploratory test session sheets"
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 19,
+    "answer": [
+      0
+    ],
+    "lo": "CTAL-AT-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which testware can be used as a form of requirements and, at the same time, documented in a format that allows its automated execution as a test?",
+    "options": [
+      "Examples in behavior-driven development",
+      "Test charters in session-based exploratory testing",
+      "Build scripts in continuous delivery",
+      "Defect reports created during test execution"
+    ],
+    "multi": false,
+    "explanation": "a) Correct. Examples are derived from conversations between the team and business stakeholders, and they are often documented in a format that can be executed as tests.\nb) Incorrect. Test charters are used in exploratory testing which is typically manual, not automated.\nc) Incorrect. Build scripts are used to build the release, not to test it.\nd) Incorrect. Defect reports are not a basis for automated testing.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q19-12.png",
+        "alt": "Source question 19, page 12"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 20,
+    "answer": [
+      1,
+      3
+    ],
+    "lo": "CTAL-AT-4.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "How can storyboarding and testboarding increase the quality of the test basis?",
+    "options": [
+      "By ensuring that testers do not contribute until coding is complete.",
+      "By visualizing user journeys to highlight missing steps and risks.",
+      "By requiring that acceptance criteria remain unchanged throughout iterations.",
+      "By mapping scenarios in a visible way that improves alignment among roles.",
+      "By focusing exclusively on regression testing automation."
+    ],
+    "multi": true,
+    "explanation": "a) Incorrect. Storyboarding and testboarding promote early collaboration, not late involvement.\nb) Correct. Storyboarding reveals gaps, risks, and assumptions.\nc) Incorrect. Storyboarding and testboarding are iterative and adapt to scope changes.\nd) Correct. Testboarding maps scenarios, aligning testers, developers, and product owners.\ne) Incorrect. Regression testing automation is not the purpose of storyboarding and testboarding.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q20-12.png",
+        "alt": "Source question 20, page 12"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 21,
+    "answer": [
+      2
+    ],
+    "lo": "CTAL-AT-4.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following BEST describes how example mapping improves the quality of the test basis?",
+    "options": [
+      "By enforcing that every user story has detailed test scripts before coding begins",
+      "By documenting only functional requirements without addressing hidden assumptions",
+      "By linking user stories to concrete examples that reduce ambiguity and clarify acceptance criteria",
+      "By ensuring acceptance criteria are finalized before refinement sessions begin"
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. Example mapping does not require detailed test scripts; it fosters shared discovery instead.\nb) Incorrect. Example mapping goes beyond functional requirements by surfacing hidden assumptions and conflicts.\nc) Correct. Concrete examples help align understanding, clarify acceptance criteria, and strengthen the test basis.\nd) Incorrect. Example mapping is used during refinement to evolve acceptance criteria, not to finalize them.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q21-13.png",
+        "alt": "Source question 21, page 13"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 22,
+    "answer": [
+      0,
+      1,
+      1,
+      0
+    ],
+    "lo": "CTAL-AT-4.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Assign each of the following examples (1–4) to ONE of the bias types (A–B) while not leaving any category empty.",
+    "options": [
+      "Confirmation bias",
+      "Anchoring effect"
+    ],
+    "multi": false,
+    "explanation": "Confirmation bias → Examples 1 and 4. Designing only happy-path tests, verifying expected results.\nAnchoring effect → Examples 2 and 3. Fixation on early requirements, sticking to dominant interpretations.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q22-13.png",
+        "alt": "Source question 22, page 13"
+      }
+    ],
+    "type": "matching",
+    "items": [
+      "A tester only designs tests for the \"happy path\" and ignores error handling.",
+      "Testers continue to focus on the first interpretation of a requirement even when new insights arise.",
+      "An agile software development team overlooks edge case scenarios because initial user stories\nwere focused on happy paths only.",
+      "Testers rely only on verifying expected behaviors, leaving unusual test conditions untested."
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 23,
+    "answer": [
+      3
+    ],
+    "lo": "CTAL-AT-4.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is an example of a CONFIRMATION bias?",
+    "options": [
+      "The team assumes the initial design of a checkout process is final and fails to test alternate payment flows or error handling, resulting in undetected transaction failures",
+      "Testers follow the lead of a senior developer who claims a new feature is “low risk,” skipping exploratory testing that could have revealed critical edge-case defects",
+      "Testers avoid reporting a recurring performance issue because the majority believes it is \"not important,\" allowing a critical bottleneck to persist into production",
+      "A tester only verifies that the login feature works with valid credentials, ignoring attempts with invalid or expired credentials, allowing authentication defects to go undetected"
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. This is an example of an anchoring effect, not a confirmation bias.\nb) Incorrect. This is an example of a conformity bias, not a confirmation bias.\nc) Incorrect. This is an example of a conformity bias, not a confirmation bias.\nd) Correct. Confirmation bias may lead to designing and executing tests that only verify expected behavior, neglecting potential failure paths or unusual conditions.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q23-13.png",
+        "alt": "Source question 23, page 13"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 24,
+    "answer": [
+      1
+    ],
+    "lo": "CTAL-AT-4.1.5",
+    "k": "K3",
+    "pts": 2,
+    "text": "Which of the following statements about applying user story slicing to achieve testable user stories are TRUE?\ni. Splitting a user story into tasks such as “enter data,” “upload document,” and “submit form” is workflow slicing that creates testable increments.\nii. Starting with the simplest happy-path example makes the user story immediately verifiable and builds a foundation for edge cases later.\niii. Separating backend processing logic from the UI enables testing outputs via APIs before UI workflows exist.\niv. Beginning with rare exception cases ensures maximum coverage early in development.\nv. Creating a thin slice that spans database, logic, and UI should be used for every user story to ensure testability.",
+    "options": [
+      "i, ii, and iv",
+      "i, ii, and iii",
+      "ii, iii, and v",
+      "iii, iv, and v"
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. Statement iv contradicts the syllabus guidance that slicing by scenario should start with the most common scenario and only later cover rare or complex cases.\nb) Correct. Statement i reflects workflow slicing where each step produces observable behavior with clear acceptance criteria.\nStatement ii reflects slicing by data complexity where a simple happy path is created first. Statement iii reflects slicing by interface where backend logic is validated before UI workflows.\nc) Incorrect. Statement v overgeneralizes vertical slicing. The syllabus states vertical slices are useful but only where appropriate, and if end-to-end scope becomes unmanageable, Agile software development teams should revert to slicing by scenario or workflow slicing.\nd) Incorrect. Statement iv is wrong because rare exceptions should not be the starting point, and statement v is wrong because vertical slicing is not required for every user story.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q24-14.png",
+        "alt": "Source question 24, page 14"
+      }
+    ],
+    "showFigure": true
+  },
+  {
+    "id": 25,
+    "answer": [
+      3
+    ],
+    "lo": "CTAL-AT-4.1.5",
+    "k": "K3",
+    "pts": 2,
+    "text": "The original user story (too large for one iteration):\n\"As a customer, I want to search for products, view product details, and add items to my shopping cart so that I can complete an online purchase.\"\nwas split into two following testable user stories:\n1. \"As a customer, I want to search for products and view product details so that I can decide which items I am interested in.\"\n2. \"As a customer, I want to add products to my shopping cart so that I can prepare for purchase.\" Which slicing type was used in this scenario?",
+    "options": [
+      "Slicing by data complexity",
+      "Slicing based on constraints",
+      "Slicing by interface",
+      "Vertical slicing"
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. Slicing by data complexity begins with a single happy path example using the simplest data and defers alternative data conditions or edge cases to separate user stories. The two sliced user stories do not use any alternative data conditions or edge cases.\nb) Incorrect. Slicing based on constraints focuses first on general assumptions and then considers conditions derived from known constraints. The scenario provides no constraints.\nc) Incorrect. Slicing by interface separates backend processing logic from UI concerns when they can be tested independently. The two sliced user stories do not separate backend logic from UI.\nd) Correct. Vertical slicing ensures that each user story includes a complete thin slice of functionality across layers, from database to UI, where appropriate. First sliced user story focuses on the search and product detail workflow across backend (search API) and frontend (product detail page). Second one focuses on the add-to-cart functionality across backend (cart API) and frontend (cart UI).",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q25-14.png",
+        "alt": "Source question 25, page 14"
+      }
+    ],
+    "showFigure": true
+  },
+  {
+    "id": 26,
+    "answer": [
+      1
+    ],
+    "lo": "CTAL-AT-4.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Match the requirements documentation techniques 1–4 with the way they support clarity and testability in Agile software development teams A–D.\n1. User stories\n2. BPMN (Business Process Model and Notation)\n3. State transition diagrams\n4. Glossaries\nA. Provide consistent terminology that avoids misunderstandings in acceptance criteria\nB. Capture functionality in a concise narrative format focused on user value\nC. Show structured workflows and responsibilities for analyzing process consistency\nD. Visualize system behavior across different states to validate edge cases",
+    "options": [
+      "1D, 2B, 3C, 4A",
+      "1B, 2C, 3D, 4A",
+      "1C, 2A, 3B, 4D",
+      "1A, 2D, 3C, 4B"
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. User stories are described in the syllabus as free-form text capturing user value, not state transition diagrams. BPMN is noted for process modeling, not narrative description.\nb) Correct. User stories capture user value in a concise narrative (B). BPMN shows structured workflows for process consistency (C). State transition diagrams visualize system behavior under different conditions (D). Glossaries ensure consistent terminology in acceptance criteria (A).\nc) Incorrect. Glossaries are not process models; they are explicitly mentioned as tools to ensure shared understanding of domain terms. User stories are not structured workflows, and state transition diagrams are not narrative descriptions.\nd) Incorrect. User stories do not serve as glossaries. BPMN diagrams are for workflows, not state transitions. State transition diagrams, not BPMN, model conditional system behavior.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q26-15.png",
+        "alt": "Source question 26, page 15"
+      }
+    ],
+    "showFigure": true
+  },
+  {
+    "id": 27,
+    "answer": [
+      1
+    ],
+    "lo": "CTAL-AT-5.0.0",
+    "k": "K2",
+    "pts": 1,
+    "text": "Consider the following document:\n• Test mission: Explore the login feature to uncover usability defects and authentication failures.\n• Focus Areas:\n– Valid and invalid credentials\n– Password reset functionality\n– Session timeout behavior\n• Resources: Test account credentials, pre-production environment\n• Timebox: 60 minutes\nWhat does it represent?",
+    "options": [
+      "Test heuristic",
+      "Test charter",
+      "Test tour",
+      "Test mnemonic"
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. Test heuristic is a generally recognized rule of thumb that helps to achieve a test objective.\nb) Correct. Test charter is a documentation of the test objective for a test session. It usually covers test mission, focus areas, resources and timebox.\nc) Incorrect. Test tour is a set of exploratory tests organized around a special focus. This document is not a set of tests, but an example of a test charter, which is a basis for designing such tests.\nd) Incorrect. Test mnemonic is a memory aid in the form of an abbreviation, used to help testers remember key concepts or test practices.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q27-16.png",
+        "alt": "Source question 27, page 16"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 28,
+    "answer": [
+      2
+    ],
+    "lo": "CTAL-AT-5.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Match each test heuristic type (1–4) with the description (A–D).\n1. Guidelines\n2. Generic checklists\n3. Rules of thumb\n4. Analogies/metaphors\nA. A tester compares the application to a familiar environment, such as a city tour, to generate diverse test conditions.\nB. A tester recalls the principle that defects often reappear in components where they were previously found.\nC. A tester relies on structured reminders of common quality characteristics, such as usability and security\nD. A tester follows a principle like “test early” to avoid late discovery of defects.",
+    "options": [
+      "1D, 2C, 3A, 4B",
+      "1B, 2D, 3A, 4C",
+      "1D, 2C, 3B, 4A",
+      "1C, 2B, 3D, 4A"
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. This option mismatches checklists and guidelines.\nAccording to the syllabus, guidelines are general principles such as “test early,” while checklists are structured prompts.\nb) Incorrect. This option incorrectly places guidelines as rules of thumb.\nThe syllabus defines rules of thumb as experiential insights, such as defects clustering in components, not general guiding principles.\nc) Correct. Guidelines are broad principles like “test early.” Generic checklists are structured lists such as usability or security risk reminders. Rules of thumb include insights like “if it broke before, it will probably break again.” Analogies and metaphors include test tours that simulate familiar scenarios such as traveling through a city.\nd) Incorrect. This option incorrectly associates guidelines with checklists. Checklists are reusable prompts across areas such as quality characteristics, not broad general principles.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q28-17.png",
+        "alt": "Source question 28, page 17"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 29,
+    "answer": [
+      1,
+      3
+    ],
+    "lo": "CTAL-AT-5.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following illustrate the use of test mnemonics in Agile testing?",
+    "options": [
+      "Reporting a login defect found during a test session",
+      "Selecting regression testing areas such as recent, core, or parts with high risk levels",
+      "Writing test session sheets from an exploratory testing session on a new feature",
+      "Exploring a system by focusing on data, interfaces, and operations",
+      "Running automated tests for core business flows"
+    ],
+    "multi": true,
+    "explanation": "a) Incorrect. Reporting a defect is documentation, not test mnemonic usage.\nb) Correct. Choosing regression testing focus areas (e.g., recent, core, risky) is an example of applying a regression test mnemonic RCRCRC.\nc) Incorrect. Test session sheets from an exploratory testing session are outputs of testing, not test mnemonic-based activities.\nd) Correct. Exploring system dimensions like data and interfaces reflects the use of a system-analysis test mnemonic SFDIPOT.\ne) Incorrect. Automated tests are regression testing assets, not test mnemonic usage.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q29-17.png",
+        "alt": "Source question 29, page 17"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 30,
+    "answer": [
+      1
+    ],
+    "lo": "CTAL-AT-5.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Consider the following test scenario:\n\"First-time user completes the product onboarding tutorial\".\nWhich test tour was used to design this scenario?",
+    "options": [
+      "Business district",
+      "Tourist district",
+      "Historical district",
+      "Seedy district"
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. Business district relates to core features most relied upon by customers.\nb) Correct. Tourist district relates to functions attractive to novice users but less useful for experts.\nc) Incorrect. Historical district relates to legacy code and defect-prone functions.\nd) Incorrect. Areas related to negative testing and vulnerabilities.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q30-18.png",
+        "alt": "Source question 30, page 18"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 31,
+    "answer": [
+      0
+    ],
+    "lo": "CTAL-AT-5.1.4",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are reviewing the following user story and its acceptance criteria:\n\"As an online shopper, I want to be able to save items in a wishlist so that I can purchase them later.\"\nAcceptance criteria\n1. The user can add any product to the wishlist from the product page.\n2. The user can view all items saved in the wishlist.\n3. The user can remove items from the wishlist.\n4. The wishlist is persistent across sessions when the user is logged in.\nWhich of the following test charter fragments is MOST appropriate for this user story?",
+    "options": [
+      "Actor: online shopper. Purpose: save items in a wishlist. Scope: verify adding/removing items from the wishlist. Data: logged-in/logged-out scenarios.",
+      "Actor: online shopper. Purpose: save items in a wishlist. Scope: test payment gateway integration during checkout. Data: credit card and billing information.",
+      "Actor: online shopper. Purpose: save items in a wishlist. Scope: verify stock updates and inventory levels. Data: out-of-stock and back-ordered products.",
+      "Actor: admin. Purpose: manage users’ wishlists. Scope: test backend user management. Data: user accounts and access permissions."
+    ],
+    "multi": false,
+    "explanation": "a) Correct. This test charter correctly reflects the user story and all acceptance criteria: it focuses on the online shopper, the wishlist functionality (add/remove), and considers session persistence (logged-in/logged-out scenarios).\nb) Incorrect. This test charter focuses on checkout/payment, not wishlist functionality.\nc) Incorrect. This test charter focuses on inventory/stock, which is outside the scope of the wishlist story.\nd) Incorrect. This test charter focuses on admin tasks, not the user- facing wishlist behavior.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q31-18.png",
+        "alt": "Source question 31, page 18"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 32,
+    "answer": [
+      2
+    ],
+    "lo": "CTAL-AT-5.1.5",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are given the following test charter:\nExplore the password-reset workflow for first-time users, focusing on clarity of instructions, error messages, and successful completion using the email reset link.\nWhich exploratory testing scenario BEST follows this charter?",
+    "options": [
+      "Change the password from the Account Settings page while logged in as an existing user and verify password-strength validation rules.",
+      "Attempt multiple incorrect password logins on the sign-in page using a registered account, continue until the system locks the account after repeated failures, and verify the lockout message and recovery instructions are displayed correctly.",
+      "Request a password reset, open the reset email, click the reset link, set a new password that meets the requirements, and verify login succeeds with the new password.",
+      "Verify that the password-reset email is delivered within five seconds under heavy server load using automated performance tests."
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. The charter explicitly targets first-time users and password reset via email. Password change and password reset are different workflows with different risks and UI paths.\nb) Incorrect. This test focuses on failed login attempts, account lockout behavior, and lockout messaging. While related to authentication, it does not test password reset via email or the first-time reset experience described in the charter. This is closer to a security or login-protection test, not a password-reset workflow exploration.\nc) Correct. This scenario directly exercises the end-to-end password- reset flow described in the charter.\nd) Incorrect. This option tests system performance, not exploratory workflow behavior.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q32-19.png",
+        "alt": "Source question 32, page 19"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 33,
+    "answer": [
+      0
+    ],
+    "lo": "CTAL-AT-5.1.5",
+    "k": "K3",
+    "pts": 2,
+    "text": "You prepare for the exploratory testing session. Its test mission is to explore the shopping cart feature to identify functional and boundary defects. You were asked to focus on the three following features: adding items to the cart, removing items from the cart, updating item quantities. You have at your disposal a test user account, a database of sample products, and pre-production environment. The session should last 45 minutes.\nWhich of the following is BEST example of an exploratory testing session suitable for this scenario?",
+    "options": [
+      "Tester adds multiple products to the cart, changes quantities, removes items, and verifies that the cart updates correctly and totals are accurate",
+      "Tester explores the checkout payment options using different payment methods without interacting with the cart itself",
+      "Tester navigates the product catalog to test product filtering and product sorting, using metamorphic testing due to the test oracle problem",
+      "Tester spends 30 minutes for preparing test cases (list of products) and then in 30 minutes verifies the cart features for each of these test cases"
+    ],
+    "multi": false,
+    "explanation": "a) Correct. This exploratory testing session follows the test charter exactly.\nb) Incorrect. This exploratory testing session does not follow the test charter – it is similar, but has different focus (payment method verification, not the cart features verification).\nc) Incorrect. This exploratory testing session does not follow the test charter – it is about filtering and sorting, not about the cart features.\nd) Incorrect. This exploratory testing session follows the test charter goal, but it does not follow the timebox (the session should last 45 minutes, but in fact it lasts 1 hour).",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q33-19.png",
+        "alt": "Source question 33, page 19"
+      }
+    ],
+    "showFigure": true
+  },
+  {
+    "id": 34,
+    "answer": [
+      1,
+      3
+    ],
+    "lo": "CTAL-AT-5.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements correctly describe mob testing?",
+    "options": [
+      "The Driver makes final testing decisions while typing at the keyboard",
+      "The Navigator directs the testing, taking input from the mob but deciding the next test steps",
+      "The Moderator rotates with the mob and types when it is their turn",
+      "Retrospectives follow mob testing sessions to collect observations and identify improvements",
+      "The Mob works individually on different parts of the system and shares test results at the end"
+    ],
+    "multi": true,
+    "explanation": "a) Incorrect. According to the syllabus, the Driver’s role is to act as the typist and perform “no thinking.” The Driver does not make decisions — this responsibility belongs to the Navigator.\nb) Correct. The syllabus defines the Navigator as the “main tester,” who considers insights from the mob but has the final decision on what action to take.\nc) Incorrect. The syllabus specifies that the Moderator “sits in the back and does not rotate.” They ensure the mob testing approach is followed and may pause the test session if needed, but they do not type.\nd) Correct. After a mob testing session, the Moderator collects feedback on sticky notes, groups them on a whiteboard, and helps the Agile software development team identify patterns for continuous improvement. This retrospective is an essential part of mob testing.\ne) Incorrect. The syllabus emphasizes that mob testing is a collaborative test approach where everyone works together on the same system at the same time. Working individually contradicts the concept of swarming and mobbing.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q34-20.png",
+        "alt": "Source question 34, page 20"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 35,
+    "answer": [
+      1
+    ],
+    "lo": "CTAL-AT-5.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following BEST explains the benefit of pair testing in Agile software development teams?",
+    "options": [
+      "It speeds up testing by letting testers split the work",
+      "It finds defects sooner by using two viewpoints together",
+      "It ensures test work is checked by a senior tester",
+      "It replaces exploratory testing with prepared test steps"
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. Pair testing does not involve splitting work; both testers focus on the same task at the same time.\nb) Correct. Pair testing improves detection and coverage because two testers bring different perspectives and react to findings instantly.\nc) Incorrect. Pair testing is not a review step led by senior staff; it is a collaborative activity between partners.\nd) Incorrect. Pair testing often enhances exploratory work and does not replace it with scripted test steps.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q35-20.png",
+        "alt": "Source question 35, page 20"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 36,
+    "answer": [
+      1
+    ],
+    "lo": "CTAL-AT-5.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following BEST explains the focus of vibe testing?",
+    "options": [
+      "Writing detailed scripted test cases before coding begins",
+      "Testing whether system behavior aligns with user intent",
+      "Reviewing the generated code line by line for compliance with standards",
+      "Focusing on running automated unit tests produced by the AI model"
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. Vibe testing is not about creating detailed scripted tests in advance; it emphasizes intent-first validation rather than predefined test scripts.\nb) Correct. Vibe testing ensures the system aligns with what users intend, not just what the AI-generated code outputs.\nc) Incorrect. Code reviews may still occur, but vibe testing focuses on intent-first behavior validation, not line-by-line inspection.\nd) Incorrect. Automated unit tests can help but do not capture the intent-driven essence of vibe testing.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q36-20.png",
+        "alt": "Source question 36, page 20"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 37,
+    "answer": [
+      1
+    ],
+    "lo": "CTAL-AT-5.3.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "A tester reviews the following manual test case:\nTest Case: Verify customer profile display Preconditions: User is logged into the application. Steps:\n1. Navigate to the Customer Search page.\n2. Enter customer ID C-10245.\n3. Click Search. Expected result: The system displays the profile information for customer C-10245. The tester notices that this test case has a Hidden Dependencies smell.\nWhich corrective action is MOST appropriate?",
+    "options": [
+      "Combine the setup and verification into one single test step.",
+      "Explicitly document the required data in the preconditions.",
+      "Add extra test steps to test that the database record is present.",
+      "Merge the test case with another that creates the required data."
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. Combining setup and verification into one test step does not address the missing dependency documentation.\nb) Correct. This is a “Hidden Dependencies” smell; the fix is to make dependencies explicit in the preconditions.\nc) Incorrect. Adding test steps to test the database record creates unnecessary complexity instead of clarifying dependencies.\nd) Incorrect. Merging test cases introduces interdependence (“Interdependent Tests”), not a solution to hidden dependencies.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q37-21.png",
+        "alt": "Source question 37, page 21"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 38,
+    "answer": [
+      2
+    ],
+    "lo": "CTAL-AT-5.3.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You want to run the following two test cases in a test cycle. A test cycle is always performed on an initial version of the software with an empty user database, and there is no separate setup that creates user ‘alice’ before Test Case 2.\nTest Case 1: Create a New User\nPurpose: Verify that a new user can be successfully created in the system.\nSteps:\n• Open the application.\n• Enter a unique username and password.\n• Submit the registration form.\nExpected Result: The user account is created and a confirmation message is shown.\nTest Case 2: Log In as an Existing User\nPurpose: Verify that an existing user can log in successfully.\nPreconditions: User \"alice\" exists.\nSteps:\n• Open the application.\n• Enter the username \"alice\" and the corresponding password.\n• Click the login button.\nExpected Result: The user is successfully logged in.\nWhich test smell can be identified for this test suite?",
+    "options": [
+      "One More Step",
+      "Call on Me",
+      "Interdependent Tests",
+      "Hotstepper"
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. One More Step smell means that expected results contain more test steps (e.g., using words such as \"check\", \"verify\", \"see\").\nThis is not the case, since each test case has an atomic test step for the expected results.\nb) Incorrect. Call on Me smell means extensive calling of other test cases or parameters. This is not the case, because none of the two test cases call any other.\nc) Correct. Interdependent Tests smell means that one test’s success depends on another having run first (or having left data behind).\nThe second test case’s success depends on the first one, otherwise the user database would be empty and the second test case couldn’t be successfully run.\nd) Incorrect. Hotstepper smell means separate test step for every action where an action has no effect. This is not the case, because all actions described in the test steps have effects and can be verified.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q38-21.png",
+        "alt": "Source question 38, page 21"
+      },
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q38-22.png",
+        "alt": "Source question 38, page 22"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 39,
+    "answer": [
+      2
+    ],
+    "lo": "CTAL-AT-6.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements correctly distinguishes between test automation approaches applicable to Agile software development?",
+    "options": [
+      "Exploratory testing is best automated early in the iteration using a test-first approach, because this ensures continuous verification and reduces reliance on manual testing.",
+      "End-to-end UI tests should form the largest part of the automated test suite to ensure full system coverage, while unit and API tests are minimized to reduce maintenance effort.",
+      "Most automation effort should focus on fast, low-level tests, with only a limited number of end-to-end UI tests, while exploratory and one-off tests are typically executed manually.",
+      "Test automation is primarily introduced after the iteration is completed, focusing on automating all tests equally to maximize regression coverage before release."
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. Exploratory testing depends on human insight and emergent behavior, making it unsuitable for automation.\nb) Incorrect. Although the statement sounds plausible (system coverage argument), it reverses the pyramid strategy.\nc) Correct. This option correctly distinguishes the automation strategy used in Agile and described in the syllabus.\nd) Incorrect. Regression automation may evolve later, but automation is not primarily introduced after the iteration, and not all tests should be automated.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q39-22.png",
+        "alt": "Source question 39, page 22"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 40,
+    "answer": [
+      3
+    ],
+    "lo": "CTAL-AT-6.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A product owner requests real-world usage data to refine priorities for upcoming iterations. Which tool would provide the MOST relevant input to support this decision-making in Agile software development?",
+    "options": [
+      "Exploratory testing capture/playback tool",
+      "Task tracking board",
+      "Defect management tool",
+      "Monitoring and analytics platform"
+    ],
+    "multi": false,
+    "explanation": "a) Incorrect. Exploratory tools provide test session sheets but not production usage data.\nb) Incorrect. Task boards show planned work but not actual customer behavior.\nc) Incorrect. Defect management tools focus on internal quality defects, not customer usage.\nd) Correct. Monitoring and analytics tools capture production-level metrics such as usage patterns, defect rates, and performance data, which help refine backlog priorities.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1/q40-22.png",
+        "alt": "Source question 40, page 22"
+      }
+    ],
+    "showFigure": false
+  }
+];
+const examConfig = {"title": "CTAL-AT v2.0 · Advanced Level Agile Tester", "language": "en", "minutes": 90, "pass": 34, "sourceQuestion": "ISTQB-CTAL-AT-Sample-Exam-Questions-v2.0-EN-1.pdf", "sourceAnswer": "ISTQB-CTAL-AT-Sample-Exam-Answers-v2.0-EN-1.pdf"};</script><script src="../../../assets/exam-engine.js"></script><script src="../../../assets/exam-ui.js"></script></body></html>

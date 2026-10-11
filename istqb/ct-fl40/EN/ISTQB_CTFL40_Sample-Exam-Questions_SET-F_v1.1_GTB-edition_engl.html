@@ -1,0 +1,1972 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CTFL v4.0 — Sample Exam Set F</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #475569;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+    </style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Foundation Level</div>
+        <h1>CTFL v4.0<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">
+          ISTQB® Certified Tester Foundation Level v4.0 ·
+          Sample Exam Set F v1.1 · GTB Edition · CTFL Syllabus v4.0. The
+          timer starts as soon as you click "Start Exam".
+        </p>
+        <p class="start-subtitle source-credit">Source: ISTQB_CTFL_Sample-Exam-Questions_SET-F_v1.1_GTB-edition_engl.pdf; ISTQB_CTFL_Sample-Exam-Answers_SET-F_v1.1_GTB-edition_engl.pdf. © ISTQB®. Authors and translators are acknowledged in the source PDFs.</p>
+    <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">60</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">60 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">75 min</span>
+            <span class="time-opt-lbl">+15 min extension</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">
+          &#9432;&nbsp; The 15-minute extension applies to candidates who are
+          not sitting the exam in their native language (per ISTQB rules).
+        </div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 60:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CTFL v4.0 · Sample Exam Set F v1.1 · GTB Edition</span
+            >
+            <span class="exam-title">Certified Tester Foundation Level</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 answered
+            </div>
+            <div class="timer" id="timer">60:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 questions · <strong>65% (≥ 26 of 40 points)</strong> to
+            pass · all questions single-select (1 point each)
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "FL-1.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following statements does NOT describe a typical test objective?",
+    "options": [
+      "a) Detect defects and triggering failures",
+      "b) Create confidence in the quality level of the test object",
+      "c) Reduce the risk of an inadequate testing environment",
+      "d) Meet contractual, legal or regulatory requirements"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "CORRECT: c) — Reducing the risk of an inadequate testing environment is not a typical test objective listed in the syllabus; instead the syllabus describes reducing the risk of inadequate software quality. a), b) and d) are all typical test objectives explicitly listed in [CTFL 4.0], section 1.1.1."
+  },
+  {
+    "id": 2,
+    "lo": "FL-1.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "A phone ringing in a neighboring cubicle distracts a software developer causing him to improperly code the logic that checks the upper boundary of an input variable. Later, during system testing, a tester notices that this input field accepts invalid input values. Which of the following terms accurately describes the incorrectly coded check of the upper boundary in this scenario?",
+    "options": [
+      "a) root cause",
+      "b) failure",
+      "c) error",
+      "d) defect"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "CORRECT: d) — The problem in the code itself is a defect. a) FALSE: the distraction is the root cause. b) FALSE: accepting invalid input is the failure. c) FALSE: the mistaken thinking that led to the defect is the error."
+  },
+  {
+    "id": 3,
+    "lo": "FL-1.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following takes place during the \"Test analysis\" activity of the test process?",
+    "options": [
+      "a) Identify the required infrastructure and tools",
+      "b) Creating test suites based on the test script",
+      "c) Analyze the \"lessons learned\" for process improvement",
+      "d) Evaluate the test basis in terms of testability"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "CORRECT: d) — Test analysis involves analyzing the test basis to identify testable characteristics, including evaluating testability. a) is part of Test design, b) is part of Test realization, c) is part of Test completion."
+  },
+  {
+    "id": 4,
+    "lo": "FL-1.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "In general according to the Pareto principle, an above-average number of defects are often found in a few areas of a system. The corresponding failures often result in the system being unusable. Which of the following principles of testing does this describe?",
+    "options": [
+      "a) Testing is context dependent.",
+      "b) Defects cluster together.",
+      "c) Tests wear out.",
+      "d) Absence of defects fallacy."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "CORRECT: b) — \"Defects cluster together\" states that a small number of components typically contain most of the defects, matching the Pareto-principle description given. a), c) and d) describe different testing principles not matched by the scenario."
+  },
+  {
+    "id": 5,
+    "lo": "FL-1.5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following general competencies is particularly important for passing on discovered failures to the affected developers?",
+    "options": [
+      "a) Test knowledge",
+      "b) Critical thinking",
+      "c) Care",
+      "d) Communication skills"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "CORRECT: d) — Communication skills are important for the effective dissemination of information to stakeholders such as developers. a) test knowledge increases testing effectiveness, b) critical thinking helps question assumptions, c) care helps detect hard-to-find defects."
+  },
+  {
+    "id": 6,
+    "lo": "FL-1.4.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Match the correct description from A to D: A. A set of test cases or test scripts to be executed in a particular test cycle. B. A sequence of instructions for the execution of a test. C. Contains the expected results. D. The documentation of a goal and the agenda of a test session. to its corresponding test resource (test work results) 1 to 4: 1. test suite. 2. test case. 3. test script. 4. test charter.",
+    "options": [
+      "a) 1A, 2C, 3B, 4D",
+      "b) 1D, 2B, 3A, 4C",
+      "c) 1A, 2C, 3D, 4B",
+      "d) 1D, 2C, 3B, 4A"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "CORRECT: a) — Test suite = a set of test scripts/procedures to be executed in a particular test run (1A). Test case = preconditions, inputs, actions, expected results and postconditions (2C). Test script = a sequence of instructions for performing a test (3B). Test charter = documentation of an objective and agenda for a test session (4D)."
+  },
+  {
+    "id": 7,
+    "lo": "FL-1.4.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is the BEST example of how traceability between test basis, test assets, test results and defects supports testing?",
+    "options": [
+      "a) Conducting an impact analysis provides information about the quality of the system under test.",
+      "b) The analysis of traceability between test cases and test results provides information about the completeness of test cases.",
+      "c) The analysis of traceability by conducting an impact analysis helps in selecting appropriate test cases for regression testing.",
+      "d) Analyzing the traceability between the requirements and the test cases helps in analyzing the residual risks."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "CORRECT: c) — Performing a change impact analysis best helps select appropriate test cases for regression testing by showing which parts of the test object are affected by a change. a) impact analysis does not assess quality, only impact. b) traceability between requirements and test cases (not test results) shows completeness. d) traceability of test results on risks shows residual risk, not requirements-to-test-case traceability."
+  },
+  {
+    "id": 8,
+    "lo": "FL-1.5.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following statements is an advantage of the whole-team approach?",
+    "options": [
+      "a) Each team member can take on any task they wish.",
+      "b) Every team member is responsible for quality.",
+      "c) Each team member works separately on their own task.",
+      "d) Each team member has a fixed role and a defined responsibility."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "CORRECT: b) — The whole-team approach promotes shared responsibility for quality among all team members. a) is incorrect: members take on tasks they are competent for, not simply whatever they wish. c) is incorrect: members work closely together, not separately. d) is incorrect: roles are flexible, not fixed."
+  },
+  {
+    "id": 9,
+    "lo": "FL-2.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are working as a tester on a team that follows a sequential software development lifecycle (SDLC). How does the choice of this SDLC model impact the timing of testing?",
+    "options": [
+      "a) Dynamic tests (unit tests) cannot be carried out in the early phases of the SDLC",
+      "b) Static testing cannot be performed early phases in this SDLC",
+      "c) Test planning cannot be performed early phases in this SDLC",
+      "d) Acceptance testing can be performed early phases in this SDLC"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "CORRECT: a) — In sequential models, executable code is usually created in later phases, so dynamic testing cannot take place early. b) static testing (e.g. reviews) can always be performed early. c) test planning should be done early, before the test project begins. d) acceptance testing requires a working product, usually delivered late in sequential SDLC."
+  },
+  {
+    "id": 10,
+    "lo": "FL-2.1.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is a good testing practice that applies to all software development life cycles (SDLC)?",
+    "options": [
+      "a) Testers must accompany developers, especially in software development activities for which there are no associated testing activities.",
+      "b) Testers should define different test objectives for each test level to customize the scope and depth of testing.",
+      "c) Testers should only start the test analysis and test design once the requirements and specifications are completely implemented.",
+      "d) Testers should not perform reviews of work results in order to focus on test execution."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "CORRECT: b) — Defining different test objectives per test level is one of the good testing practices described in the syllabus, allowing testers to tailor activities to each stage's needs and risks. a) is false because every development activity has a corresponding testing activity. c) contradicts early testing principles. d) contradicts the shift-left approach, since testers should perform reviews."
+  },
+  {
+    "id": 11,
+    "lo": "FL-2.1.3",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following test-first approaches uses the given/if/then format to express the desired response of an application?",
+    "options": [
+      "a) Test-driven application (TDD)",
+      "b) Acceptance test-driven development (ATDD)",
+      "c) Behavior-driven development (BDD)",
+      "d) Continuous Integration / Continuous Delivery (CI/CD)"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "CORRECT: c) — BDD uses the given/if/then (given/when/then) format to describe application behavior from the stakeholder's perspective using natural language. a) TDD guides coding through test cases written in natural language form but not the given/if/then format specifically. b) ATDD derives tests from acceptance criteria without necessarily using that format. d) CI/CD are technical practices, not test-first approaches."
+  },
+  {
+    "id": 12,
+    "lo": "FL-2.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following are benefits of DevOps?",
+    "options": [
+      "a) Faster product release and faster time to market",
+      "b) Fast feedback by focusing exclusively on functional testing",
+      "c) Shift-Left can minimize the number of regression tests",
+      "d) Cost-effective implementation of the test automation framework."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "CORRECT: a) — DevOps enables the entire team to collaborate and deliver new features and stable software quickly, leading to faster releases and time to market. b) is false, since DevOps increases focus on non-functional quality, not exclusively functional testing. c) is false, since shift-left minimizes risk through automated regression, not the number of regression tests. d) is false, since setting up test automation always requires investment."
+  },
+  {
+    "id": 13,
+    "lo": "FL-2.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "You work as a tester on a project on a mobile application for ordering food. A high priority client requirement states: \"The order must be processed in less than 10 seconds 95% of the time.\" You created a set of test cases in which a number of random orders were made, the processing time measured, and the test results were checked against the requirements. What test type did you perform?",
+    "options": [
+      "a) Functional, because the test cases cover the user's business requirements for the system.",
+      "b) Non-functional, because the test cases measure the system's performance.",
+      "c) Exploratory because the exact processing time has not been defined",
+      "d) Structural, because we need to know the internal structure of the program to measure the order processing time."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "CORRECT: b) — This is an example of a performance test, a type of non-functional testing, evaluating how well the system performs under conditions. a) is false since the test checks \"how\" (speed), not the functional \"what\". c) is false since exploratory testing applies when specification is insufficient, which is not the case here. d) is false since performance testing does not require knowledge of internal code structure."
+  },
+  {
+    "id": 14,
+    "lo": "FL-2.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements related to confirmation and regression test is CORRECT?",
+    "options": [
+      "a) Regression tests increase in number as the project progresses, whereas the number of confirmation tests decreases as the project progresses.",
+      "b) Regression tests are created and run when the test object is fixed, whereas confirmation tests are run whenever the test object is enhanced.",
+      "c) Regression testing is concerned with checking that the operational environment remains unchanged, whereas confirmation testing is concerned with testing changes to the test object.",
+      "d) Regression testing is concerned with possible adverse effects in unchanged code, whereas confirmation testing is concerned with the positive effects of corrective changes."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "CORRECT: d) — A regression test confirms that changes (including bug fixes) have no adverse effect on unchanged code, while a confirmation test confirms that an original defect has been successfully corrected. a) is false: confirmation test numbers relate to defects fixed, not progress alone. b) reverses the terms' meanings. c) incorrectly limits regression testing to the operational environment and confirmation testing to only changes."
+  },
+  {
+    "id": 15,
+    "lo": "FL-3.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following list of work products can NOT be checked with a static testing technique?",
+    "options": [
+      "a) Test cases and executable test scripts",
+      "b) Requirements specification and acceptance criteria",
+      "c) Proprietary third-party executable code",
+      "d) Project documentation and models"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "CORRECT: c) — Third-party executable code (e.g. from legally protected operating systems, databases, frameworks) may not be examined with a static test. a), b) and d) are all work products that can be checked with static testing techniques (review or static analysis)."
+  },
+  {
+    "id": 16,
+    "lo": "FL-3.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements applies to the differences between static and dynamic testing?",
+    "options": [
+      "a) During static testing, failures are found",
+      "b) Static testing measures inadequate software performance",
+      "c) The exclusive goal of static testing is to detect defects as early as possible",
+      "d) A lack of coverage of critical safety requirements can be revealed during static testing"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "CORRECT: d) — A gap in traceability or test basis coverage, such as missing coverage of critical safety requirements, is more easily found during static testing. a) failures are found through dynamic testing, not static. b) performance can only be measured while the software is running (dynamic testing). c) both static and dynamic testing aim to detect defects early, so this is not exclusive to static testing."
+  },
+  {
+    "id": 17,
+    "lo": "FL-3.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements about formal reviews (e.g. inspections) is TRUE?",
+    "options": [
+      "a) The technical review is led by the author",
+      "b) The review process consists of several activities, such as planning, communication and analysis, troubleshooting and reporting.",
+      "c) Work products to be reviewed are distributed during the review meeting",
+      "d) Defects found during the review are not reported since they are found during dynamic testing anyway"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "CORRECT: b) — Formal reviews follow a structured process consisting of several activities: planning, kick-off, individual review, review meeting, communication and analysis, remediation and reporting. a) is false, since a technical review is led by a moderator, not the author. c) is false, work products should be distributed as early as possible, not during the meeting. d) is false, defects found during review must be reported."
+  },
+  {
+    "id": 18,
+    "lo": "FL-3.2.3",
+    "k": "K1",
+    "pts": 1,
+    "text": "What task may management take on during a formal review (e.g. inspection)?",
+    "options": [
+      "a) Doing the post-review rework for a review object, if necessary",
+      "b) Deciding what is to be reviewed",
+      "c) Ensuring the effective running of review meetings, and mediating, if necessary",
+      "d) Recording review information such as review decisions"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "CORRECT: b) — Management decides what to review by selecting and prioritizing work products based on requirements, risks and business objectives. a) is typically the author's task. c) is typically the facilitator's task. d) is typically the note taker's task."
+  },
+  {
+    "id": 19,
+    "lo": "FL-4.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following statements describes an advantage of black box testing over white box testing?",
+    "options": [
+      "a) Black box test techniques can check the internal structure and processing of the test object.",
+      "b) Black box test techniques can be created regardless of the implementation of the software.",
+      "c) Black box test techniques better utilize the knowledge and experience of the testers.",
+      "d) Black box testing techniques can be performed without adjustment even though the required behavior of the test object has changed."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "CORRECT: b) — Black box techniques can be carried out regardless of the implementation, requiring no knowledge of source code or internal structure. a) describes white box testing instead. c) describes experience-based testing. d) is false, since black box test cases must be adjusted whenever the specified behavior changes."
+  },
+  {
+    "id": 20,
+    "lo": "FL-4.2.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "A fitness app measures the number of steps taken daily and provides feedback to motivate the user to stay fit. The feedback for different step counts should be as follows: Up to and including 1000: Couch Potato! Over 1000, up to and including 2000: Get moving! Over 2000, up to and including 4000: On the right track! Over 4000, up to and including 6000: Well done! Over 6000: Super! Which of the following groups of test input values would provide the HIGHEST coverage of equivalence classes?",
+    "options": [
+      "a) 0, 1000, 2000, 3000, 4000",
+      "b) 1000, 2001, 4000, 4001, 6000",
+      "c) 123, 2345, 3456, 4567, 5678",
+      "d) 666, 999, 2222, 5555, 6666"
+    ],
+    "answer": [
+      3
+    ],
+    "image": "SET-F_v1.1_GTB/image_20.png",
+    "explanation": "CORRECT: d) — 666 (class 1), 999 (class 1), 2222 (class 3), 5555 (class 4), 6666 (class 5) covers 4 out of 5 classes = 80% coverage, the highest among the options. a) covers classes 1,1,2,3,3 = 3/5 = 60%. b) covers classes 1,3,3,4,4 = 3/5 = 60%. c) covers classes 1,3,3,4,4 = 3/5 = 60%."
+  },
+  {
+    "id": 21,
+    "lo": "FL-4.2.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "You are testing a system that calculates the final grade for course participants. The final grade is determined based on the total number of points between 0 and 100, according to the following rules: 0 - 50 points: failed; 51 - 70 points: sufficient; 71 - 90 points: good; 91 - 100 points: very good. You have prepared the following set of test cases. Given these test cases, what percentage coverage is achieved when using 2-value boundary analysis?",
+    "options": [
+      "a) 60%",
+      "b) 75%",
+      "c) 33,3%",
+      "d) 100%"
+    ],
+    "answer": [
+      0
+    ],
+    "image": "SET-F_v1.1_GTB/image_21.png",
+    "explanation": "CORRECT: a) 60% — The boundary values are 0, 50, 51, 70, 71, 90, 91 and 100, and for 2-value boundary analysis the closest neighbor of each is also a coverage element (i.e. -1, 51, 71, 91, 101 are already covered by the adjacent boundaries except -1 and 101). The 6 test cases each cover one boundary value, covering 6 out of 10 possible coverage elements = 60%."
+  },
+  {
+    "id": 22,
+    "lo": "FL-4.2.3",
+    "k": "K3",
+    "pts": 1,
+    "text": "You are testing a new customer relationship management system for a daily bike rental company. The system requirements are as follows: Anyone can rent a bike, but only members receive a 20% discount. However, if the return deadline is missed, the discount can no longer be claimed. After 15 rentals, members receive a T-shirt as a gift. A tester designs the following decision table to test the requirements (T=true, F=false, X=execute action). Which rule (combination of conditions and actions) does not meet the above requirements?",
+    "options": [
+      "a) R4",
+      "b) R2",
+      "c) R6",
+      "d) R8"
+    ],
+    "answer": [
+      3
+    ],
+    "image": "SET-F_v1.1_GTB/image_22.png",
+    "explanation": "CORRECT: d) R8 — R8 is a non-member (is a member = F) who has reached 15 rentals, but a gift T-shirt action is assigned; only members can receive a gift T-shirt, so this combination is incorrect. a) R4 is correct: a member who hasn't missed the deadline and reached 15 rentals gets both discount and T-shirt. b) R2 is correct: a member who hasn't missed the deadline but hasn't reached 15 rentals gets the discount only. c) R6 is correct: a non-member gets no discount, even without missing the deadline."
+  },
+  {
+    "id": 23,
+    "lo": "FL-4.2.4",
+    "k": "K3",
+    "pts": 1,
+    "text": "You are testing a system whose life cycle is modeled by the state transition diagram shown below. The system starts in the INIT state and ends its operation in the OFF state. What is the MINIMUM number of test cases to achieve 100% coverage of valid transitions (0-switch coverage)?",
+    "image": "SET-F_v1.1_GTB/image_23.png",
+    "options": [
+      "a) 2",
+      "b) 3",
+      "c) 4",
+      "d) 7"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "CORRECT: b) 3 — The \"test\" and \"error\" transitions cannot occur in the same test case. After 'run' there are two exits towards the 'OFF' state, once via 'error' and once via 'done'. Therefore at least three test cases are required to achieve 100% valid transition coverage, for example: TF1: test, done; TF2: run, error, done; TF3: run, pause, resume, pause, done."
+  },
+  {
+    "id": 24,
+    "lo": "FL-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Your test suite achieves 100% statement coverage. What does it mean?",
+    "options": [
+      "a) Any selected instruction in the code has been executed at least once.",
+      "b) Any test suite that contains more test cases than your test suite also achieves 100% statement coverage.",
+      "c) Each branch in the code has been executed at least once.",
+      "d) Every combination of input values in the code was tested."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "CORRECT: a) — 100% statement coverage means every statement has been executed and evaluated at least once. b) is false, since coverage depends on what is tested, not on the number of test cases. c) is false, since 100% statement coverage does not guarantee 100% branch coverage. d) is false, since exhaustive testing of every input combination is not possible."
+  },
+  {
+    "id": 25,
+    "lo": "FL-4.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements about branch testing is CORRECT?",
+    "options": [
+      "a) If a program contains only unconditional control transitions, 100% branch coverage can be achieved without having to execute a single test case.",
+      "b) When a branch with a test case is executed, all defects in it are revealed.",
+      "c) If 100% statement coverage is achieved, then 100% branch coverage is also achieved.",
+      "d) If 100% branch coverage is achieved, then all decision results of each conditional control transition of the code are executed."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "CORRECT: d) — 100% branch coverage means every branch, and therefore every possible decision result of a conditional control transition, has been executed by the test cases. a) is false since at least one test case is still needed to cover the unconditional branch. b) is false since executing a branch does not guarantee revealing all defects within it. c) is false since 100% branch coverage implies 100% statement coverage, not the reverse."
+  },
+  {
+    "id": 26,
+    "lo": "FL-4.4.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is the purpose of a test charter in session-based exploratory testing?",
+    "options": [
+      "a) The test charter specifies the test objectives for the test session.",
+      "b) The test charter documents the steps taken and the findings made.",
+      "c) The test charter is often formulated in the form of questions.",
+      "d) The test charter evaluates the test results after the test session."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "CORRECT: a) — A test charter defines the test objectives and possible test ideas for a test session. b) is false, since test session sheets document steps taken and findings. c) is false, since questions can be part of a charter but are not its defining function. d) is false, since test results are discussed in the debriefing, not evaluated by the charter."
+  },
+  {
+    "id": 27,
+    "lo": "FL-4.4.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements is MOST LIKELY an advantage of checklist-based testing?",
+    "options": [
+      "a) It enables high repeatability of the tests.",
+      "b) It provides a structured approach to testing without requiring detailed test cases.",
+      "c) It covers all requirements for the test object.",
+      "d) It supports functional and non-functional testing."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "CORRECT: d) — Checklists can support different types of tests including non-functional tests. a) is false, since testers can work through checklists differently, making identical repeatability unlikely. b) checklist items are formulated based on experience, not necessarily providing structure without detailed cases in the sense implied. c) is false, since checklists only cover what's in the checklist, which may be incomplete or outdated."
+  },
+  {
+    "id": 28,
+    "lo": "FL-4.5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements does NOT describe the collaborative approach to writing user stories?",
+    "options": [
+      "a) User stories include technicality, development and testing aspects.",
+      "b) User stories are created by business representatives, developers, and testers together.",
+      "c) Acceptance criteria for user stories must be created specifically by testers to ensure independence of testing.",
+      "d) User stories are created in a sprint or interation in such a way that they are independent, negotiable, valuable, estimable, small, and testable."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "CORRECT: c) — Acceptance criteria result from discussions among all involved, not created specifically by testers alone; this contradicts the collaborative approach. a), b) and d) all correctly describe the collaborative approach, where business representatives, developers and testers work together to create clear, realistic and testable user stories, following the INVEST principle."
+  },
+  {
+    "id": 29,
+    "lo": "FL-4.5.3",
+    "k": "K3",
+    "pts": 1,
+    "text": "You are using acceptance test-driven development and designing test cases based on the following user story: As a Regular or Special user, I want to be able to use my electronic floor card, to access specific floors. Acceptance Criteria: AC1: Regular users have access to floors 1 to 3. AC2: Floor 4 is only accessible to Special users. AC3: Special users have all the access rights of Regular users. Which test case is the MOST reasonable one to test AC3?",
+    "options": [
+      "a) Check that a Regular user can access floors 1 and 3",
+      "b) Check that a Regular user cannot access floor 4",
+      "c) Check that a Special user can access floor 5",
+      "d) Check that a Special user can access floors 1, 2 and 3"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "CORRECT: d) — AC3 states Special users have all access rights of Regular users, so checking that a Special user can access floors 1, 2 and 3 (the Regular user floors) directly tests AC3. a) and b) test Regular user access, not Special. c) tests a floor 5 which isn't described in the acceptance criteria at all."
+  },
+  {
+    "id": 30,
+    "lo": "FL-5.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Consider the following statement from a test plan: \"The correct functioning of components is verified using component tests and component integration tests. Evidence must be provided that 100% branch coverage is achieved for each component classified as critical.\" Which part of the test plan does this definition belong to?",
+    "options": [
+      "a) Test environment",
+      "b) Risk register",
+      "c) Context of testing",
+      "d) Test approach"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "CORRECT: d) — The test approach part of a test plan contains information about test levels, metrics to be collected, and exit criteria, matching this statement. a) test environment describes hardware/software/network needs. b) risk register lists and evaluates identified risks. c) context of testing describes background, purpose and stakeholders."
+  },
+  {
+    "id": 31,
+    "lo": "FL-5.1.4",
+    "k": "K3",
+    "pts": 1,
+    "text": "Given the following user story: \"As the chairman, none of the data that I upload should be viewable by any other user of the system, so that no confidential information can be viewed.\" During the first poker planning session, the following effort estimations were given based on risk, effort and proper extent of testing: Customers: 5, Developers: 5, Testers: 20. What is the BEST outcome following this planning session?",
+    "options": [
+      "a) Since the customers' and developers' estimates agree, the team can assume that they are good. The planning poker for this user story ends.",
+      "b) The team discusses together why consensus on the estimates has not been reached. Another round of planning poker follows.",
+      "c) Since the customer ultimately receives the system, his estimate is crucial in such conflicts. The planning poker ends.",
+      "d) The planning poker continues until all estimates from the stakeholders involved have exactly the same value."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "CORRECT: b) — Planning poker should continue until the entire team is satisfied with and reaches consensus on the estimated effort, discussing deviations. a) is false, since both customer and developer estimates could still have missed something. c) is false, since the customer alone cannot decide the estimate. d) is false, since exact matching values are not required; a rule for handling deviations can be defined instead."
+  },
+  {
+    "id": 32,
+    "lo": "FL-5.1.6",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is true regarding the test pyramid?",
+    "options": [
+      "a) The testing pyramid focuses on a small number of tests at the lower test levels.",
+      "b) The closer you get to the top of the pyramid, the less granular the testing should be.",
+      "c) The test pyramid has exactly 3 test layers and always includes unit tests, integration tests and end-to-end tests.",
+      "d) High-level end-to-end tests are user-friendly and therefore usually faster than tests at the lower levels."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "CORRECT: b) — The syllabus states \"the higher the level, the lower the test granularity.\" a) is false, since the pyramid emphasizes a larger number of tests at lower levels, not a small number. c) is false, since the number and names of layers can vary. d) is false, since high-level tests are typically slower, not faster, than lower-level tests."
+  },
+  {
+    "id": 33,
+    "lo": "FL-5.1.5",
+    "k": "K3",
+    "pts": 1,
+    "text": "The following priorities and dependencies of test cases are given. Which of the following test execution plans BEST addresses the priorities, technical and logical dependencies?",
+    "options": [
+      "a) TC1 – TC3 – TC4 – TC6 – TC2 – TC5",
+      "b) TC4 – TC3 – TC1 – TC2 – TC5 – TC6",
+      "c) TC4 – TC1 – TC3 – TC5 – TC6 – TC2",
+      "d) TC4 – TC2 – TC5 – TC1 – TC3 – TC6"
+    ],
+    "answer": [
+      1
+    ],
+    "image": "SET-F_v1.1_GTB/image_33.png",
+    "explanation": "CORRECT: b) — The two highest-priority test cases (TC1 and TC3) both depend on TC4, so the first three must be run as TC4-TC1-TC3 or TC4-TC3-TC1. TC6 depends on TC5, which depends on TC2, so those three must run in order TC2-TC5-TC6. This gives two optimal plans: TC4-TC1-TC3-TC2-TC5-TC6 or TC4-TC3-TC1-TC2-TC5-TC6; option b) matches the second."
+  },
+  {
+    "id": 34,
+    "lo": "FL-5.1.7",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following test types belongs to quadrant Q2 – \"Business-oriented, support for the team\" in the test quadrant model?",
+    "options": [
+      "a) Component integration tests",
+      "b) User story-based tests",
+      "c) Nonfunctional tests",
+      "d) Exploratory tests"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "CORRECT: b) — User story-based tests are business-oriented tests that support the team, matching quadrant Q2. a) component integration tests belong to Q1 (technology-oriented, supports the team). c) nonfunctional tests belong to Q4 (technology-oriented, critical thinking about the product). d) exploratory tests belong to Q3 (business-oriented, critical thinking about the product)."
+  },
+  {
+    "id": 35,
+    "lo": "FL-5.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements represents a project risk?",
+    "options": [
+      "a) Management transfers two experienced testers to another project",
+      "b) The system does not comply with functional safety standards",
+      "c) System response time exceeds user requirements",
+      "d) Disabled persons have difficulties using the system"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "CORRECT: a) — Project risks are uncertain events that can impact the project outcome, such as reducing available testing resources by transferring experienced testers away. b), c) and d) are all product risks, concerning the quality of the software product itself rather than the project's outcome."
+  },
+  {
+    "id": 36,
+    "lo": "FL-5.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You are working as a project manager on an internal bank software project. To avoid rework and excessive \"find/fix/retest\" cycles, the following process has been introduced to fix a bug as soon as it is found in the test lab: a. The assigned developer finds and fixes the bug and then creates an experimental build; b. A peer developer reviews, tests and confirms the bug fix; c. A tester confirms the fix by testing it in the development environment; d. Once a day, a new release with all confirmed bug fixes is installed in the test environment; e. The same tester from step c tests the bug fix in the test environment. Nevertheless, a large number of defects confirmed as fixed in step c somehow fail the post-deployment tests in step e. You have eliminated errors or omissions in step c. Which part of the process should be checked next?",
+    "options": [
+      "a) The activity of developers that who may not have sufficiently tested the fix in step b.",
+      "b) The activity of testers who may be unclear about what to test in step e.",
+      "c) Configuration management, which may not maintain the integrity of the product in step d.",
+      "d) The activity of developers who may not correctly fix the errors in step a."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "CORRECT: c) — Configuration management preserves the integrity of the software between environments; since a test that passes in step c fails later in step e, something differs between those steps, most likely due to configuration management not maintaining product integrity during the daily release in step d. a) and d) are false, since inadequate developer testing or incorrect fixes would already cause step c to fail. b) is false, since the same tester who performed the successful test in step c repeats the same test in step e."
+  },
+  {
+    "id": 37,
+    "lo": "FL-5.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements from a weekly test progress report is NOT relevant for the stakeholders in regards to test monitoring and test control?",
+    "options": [
+      "a) The downtime of the test environment during the reporting period has increased by 20% to 25 hours.",
+      "b) The time for providing statistics on the coverage metrics was reduced by 35% to 72 minutes during the reporting period.",
+      "c) The execution of the test cases is currently 6 days behind schedule, as many failures are being found and there are problems with the test environment.",
+      "d) New product risks were derived from the results of the test execution, which still need to be assessed."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "CORRECT: b) — The effort or time spent determining metrics is not relevant for test monitoring and control reports; the metrics themselves matter, not the effort of producing them. a) test environment downtime is a critical impediment relevant to stakeholders. c) schedule status is directly relevant for ongoing test management. d) new product risks directly affect test management and must be reported."
+  },
+  {
+    "id": 38,
+    "lo": "FL-5.5.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "After running a set of test cases, a colleague has created the following bug report and asked you for a review. Defect report: ID: br00_23_12; Title: Error message on login with empty name not correct; Author: Lisa van der Vaart (Test Engineer); Test object: build v00812; Test environment: cfg_full_02; Revealing test case: sys_128; Description: After a login attempt with an empty name, the system returns the error message \"wrong password\". Instead, \"Name must not be empty\" should have appeared; Severity of the error effect: low; Priority for correction: medium; Defect status: new. Which of the following suggestions for improvement would you MOST like to give to your colleague?",
+    "options": [
+      "a) The title does not describe the content correctly.",
+      "b) Severity and priority should be the same, as the first determines the second.",
+      "c) You have not yet observed this defect. Therefore, the status is not \"new\".",
+      "d) The following entry is missing: Date of the defect report: 19.12.2023"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "CORRECT: d) — The date of the defect report is missing and should be included, as it indicates (along with the tested software version) how current the observation is. a) is false, since the title correctly describes the observation. b) is false, since severity and priority can legitimately differ (e.g. a cosmetic defect with low severity but high correction priority). c) is false, since \"new\" correctly describes the status of a freshly created defect report."
+  },
+  {
+    "id": 39,
+    "lo": "FL-6.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following testing tools is most useful for reporting the number of defects in the test object?",
+    "options": [
+      "a) Management tool",
+      "b) Static test tool",
+      "c) Test coverage tool",
+      "d) Tool to support scalability"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "CORRECT: a) — Management tools support activities related to the efficiency of the testing process, including overviews of defect states. b) static test tools support reviews and static analyses, not defect reporting. c) test coverage tools measure coverage (e.g. of code), not defect counts. d) scalability support tools (e.g. virtualization, containers) support operational testing, not defect management."
+  },
+  {
+    "id": 40,
+    "lo": "FL-6.2.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following statements is a potential benefit of test automation?",
+    "options": [
+      "a) Test automation enables more objective evaluation and delivery of measurements that are too complicated for humans to derive.",
+      "b) For test automation, you can estimate very precisely the effort required for introduction, maintenance and training.",
+      "c) Test automation increases confidence in test results because it eliminates human critical thinking.",
+      "d) Test automation always complies with regulatory requirements and security standards."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "CORRECT: a) — Test automation enables more objective assessment and the delivery of measurements too complicated for humans to derive, a benefit explicitly listed in the syllabus. b), c) and d) are all listed as potential risks of test automation, not benefits: inaccurate effort estimates, over-reliance on tools neglecting human critical thinking, and choosing tools that don't meet regulatory/security requirements."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 60 * 60;
+      const EXT_SECONDS = 75 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let examDeadline = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "75"
+          : "60";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 75:00 (60 min + 15 min extension). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 60:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${escHtml(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${escHtml(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagram for Question ${q.id}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(parseInt(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      function tickTimer() {
+        if (examSubmitted || examDeadline === null) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        const el = document.getElementById("timer");
+        el.textContent = fmtTime(secondsLeft);
+        if (secondsLeft <= 300) el.className = "timer danger";
+        else if (secondsLeft <= 900) el.className = "timer warn";
+        else el.className = "timer";
+        if (secondsLeft === 0) doSubmit(true);
+      }
+
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) tickTimer();
+      });
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            document.getElementById("inp-" + qi + "-" + oi).disabled = true;
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = pct >= 65;
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

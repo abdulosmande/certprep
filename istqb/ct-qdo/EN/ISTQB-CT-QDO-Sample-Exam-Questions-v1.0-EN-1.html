@@ -1,0 +1,1978 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CT-QDO v1.0 — Sample Exam 1.0</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Specialist Level</div>
+        <h1>CT-QDO v1.0<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">ISTQB® Certified Tester Quality in DevOps · Sample Exam 1.0 · Syllabus v1.0. The timer starts when you begin the exam.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">60</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">45</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Source: ISTQB® — ISTQB-CT-QDO-Sample-Exam-Questions-v1.0-EN-1.pdf; ISTQB-CT-QDO-Sample-Exam-Answers-v1.0-EN-1.pdf. Copyright © ISTQB®. Questions, tables, diagrams and rationales follow these sources. Authors are acknowledged in the source PDFs.</p>
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">60 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">75 min</span>
+            <span class="time-opt-lbl">+25% practice time</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optional practice allowance: 25% extra time (15 minutes).</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 60:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CT-QDO v1.0 · Sample Exam 1.0</span
+            >
+            <span class="exam-title">Certified Tester – Quality in DevOps</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 answered
+            </div>
+            <div class="timer" id="timer">60:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 questions (45 points) · <strong>65% (≥ 30 of 45 points)</strong>
+            to pass · points vary per question (1–2) and some questions are
+            multi-select (see marking on each question)
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "QDO-1.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is a core principle of DevOps?\n\nSelect ONE option.",
+    "options": [
+      "a) To create software through the individual effort of professionals",
+      "b) To promote collaboration, communication, and continuous improvement among teams",
+      "c) To ensure that one team works on the entire software development lifecycle (SDLC)",
+      "d) To prioritize business goals over customer needs"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. While individual effort is a part of software development, DevOps emphasizes teamwork and collaboration.\n\nb) Correct. This statement accurately reflects the core principles of DevOps, which prioritize collaboration, communication, and continuous improvement among teams.\n\nc) Incorrect. DevOps encourages cross-functional autonomous teams, but it does not emphasize that only one team works on the entire software development lifecycle (SDLC).\n\nd) Incorrect. While customer needs are indeed a crucial aspect of DevOps, prioritizing them is not its primary focus."
+  },
+  {
+    "id": 2,
+    "lo": "QDO-1.1.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following ways may DevOps use to break down the wall of confusion between development (Dev) and operations (Ops) teams?\n\nSelect ONE option.",
+    "options": [
+      "a) Creating a separate team responsible for quality assurance (QA)",
+      "b) Integrating teams to work together and increase communication",
+      "c) Automating everything the team could automate",
+      "d) Defining clear roles to improve collaboration and prevent the blame game"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. DevOps aims to integrate teams, not create separate ones for quality assurance (QA).\n\nb) Correct. The syllabus states that DevOps breaks down the wall of confusion by integrating teams to work together and increase communication.\n\nc) Incorrect. While automation is important in DevOps, the wall of confusion is broken down through integration and communication, not just automation.\n\nd) Incorrect. While defining clear roles is important, the primary way DevOps aims to make testing a key factor in breaking down the wall of confusion, is by integrating teams and improving communication."
+  },
+  {
+    "id": 3,
+    "lo": "QDO-1.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "A DevOps team wants to improve their efficiency and reduce delays in successful deployment to production.\n\nWhich metric is MOST suitable to achieve these goals?\n\nSelect ONE option.",
+    "options": [
+      "a) Failed deployment recovery time",
+      "b) Deployment frequency",
+      "c) Change fail percentage",
+      "d) Change lead time"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Incorrect. Failed deployment recovery time measures the time it takes to recover from a failed deployment, indicating the fault tolerance and responsiveness of the software.\n\nb) Incorrect. Deployment frequency is the frequency of software changes deployed to production, reflecting the agility and responsiveness of the delivery process.\n\nc) Incorrect. Change fail percentage indicates the reliability of the delivery process by measuring the percentage of deployments that cause failures in production.\n\nd) Correct. Change lead time measures the duration from a code commit to a successful deployment to production, reflecting the efficiency of the delivery pipeline."
+  },
+  {
+    "id": 4,
+    "lo": "QDO-1.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Match each CALMS framework element (1-4) to its appropriate example (A-D):\n\n1. Culture\n\n2. Automation\n\n3. Lean\n\n4. Measurement\n\nA. Pipeline stages for all types of tests are created in a continuous integration/continuous delivery (CI/CD) pipeline.\n\nB. Various test reports for different test types are consolidated to provide insights on specific aspects of product quality.\n\nC. A cross-functional team delivers the fully tested feature to extend product potential for customers.\n\nD. Shift left is performed to prevent release delays caused by late regression testing.\n\nSelect ONE option.",
+    "options": [
+      "a) 1B, 2A, 3C, 4D",
+      "b) 1C, 2B, 3D, 4A",
+      "c) 1D, 2C, 3A, 4B",
+      "d) 1C, 2A, 3D, 4B"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "The DevOps culture is about teams having the autonomy to deliver value to customers but keeping the ownership of quality, so testing is not done outside of the DevOps team. Therefore, 1C. Automation refers to automating as much as possible in the continuous integration/continuous delivery (CI/CD) pipeline. Therefore, 2A. Lean means streamlining processes and removing waste (e.g., removing bottlenecks in test activities). Therefore, 3D. Measurement provides data for decisions related to how software is used and how the software development lifecycle works. Therefore, 4B."
+  },
+  {
+    "id": 5,
+    "lo": "QDO-1.1.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "How can QA contribute to the principles in \"three ways of DevOps\"?\n\nSelect TWO options.",
+    "options": [
+      "a) QA should focus on detailed documentation, a separate test phase, and post-release defect analysis.",
+      "b) QA can enhance flow with a test-first approach, enable getting faster feedback by automating tests, and foster learning by implementing quality hunting.",
+      "c) QA’s role is to ensure all code meets requirements via manual testing, which improves flow, gives feedback after development, and learns from defects found in operation.",
+      "d) QA can contribute to flow with automated testing, provide feedback through static analysis, and learn from continuous regression testing.",
+      "e) QA supports flow by minimizing the number of tests, providing fast feedback by relying on tests done by a developer, and promoting learning by collecting user feedback after release."
+    ],
+    "answer": [
+      1,
+      3
+    ],
+    "explanation": "a) Incorrect. This option suggests a sequential development model, which does not reflect the continuous and integrated nature of QA in DevOps.\n\nb) Correct. This option accurately describes how QA supports the three ways of DevOps: Flow: A test-first approach contributes to a smooth and efficient process. Feedback loop: Automated testing within the CI/CD pipeline supports rapid feedback loops. Continuous learning: Quality hunting encourages teams to explore new ways to test and improve software.\n\nc) Incorrect. While manual testing is relevant in DevOps, manual testing cannot cover all code, and because of that, this statement is wrong.\n\nd) Correct. This option accurately describes how QA supports the three ways of DevOps: Flow: By focusing on automated testing, QA supports predictable value delivery. Feedback loop: By using static analysis, QA provides early feedback about the code quality. Continuous learning: Continuous regression testing provides assurance of the system’s quality.\n\ne) Incorrect. This option incorrectly suggests that minimizing testing is part of the flow and that relying solely on tests done by a developer is sufficient."
+  },
+  {
+    "id": 6,
+    "lo": "QDO-1.1.6",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements about the benefits, risks, and pitfalls of DevOps are true?\n\ni. DevOps culture is implemented as an extension to Agile software development.\n\nii. DevOps may create silos of self-organized teams throughout the software development lifecycle (SDLC).\n\niii. DevOps can lead to faster recovery from failures in production.\n\niv. Focusing only on CI/CD pipeline tools may lead to neglecting the DevOps cultural change.\n\nv. The goal of DevOps is to define a flow transferring the product from the development team to the operations team.\n\nSelect ONE option.",
+    "options": [
+      "a) i, iii, and v",
+      "b) i, iii, and iv",
+      "c) ii, iii, and iv",
+      "d) i, ii, and iv"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "i is true. The syllabus says that there is a risk that DevOps will replace Agile software development instead of extending it. ii is false. DevOps enhances collaboration within teams throughout the software development lifecycle (SDLC). iii is true, as per the list of benefits in the syllabus. iv is true. Implementing CI/CD pipeline tools is not enough to make a change. A cultural change is needed. v is false. The primary goal of DevOps is to unify development (Dev) and operations (Ops), not to maintain strict separation."
+  },
+  {
+    "id": 7,
+    "lo": "QDO-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following describes how a cross-functional DevOps team minimizes the impact of a temporarily unavailable team member?\n\nSelect ONE option.",
+    "options": [
+      "a) Assigning tasks that require specialized skills to a platform team",
+      "b) Sharing knowledge and skills among team members",
+      "c) Documenting all tasks in an internal task management tool",
+      "d) Assigning specialized tasks to specific team members"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. Cross-functional teams have all the knowledge and skills needed to perform any task that is common for DevOps teams. Some specialized tasks beyond team skills can be assigned to specialized teams within the organization.\n\nb) Correct. Knowledge and responsibilities are shared to ensure that no part of the knowledge and skills should be with just one team member.\n\nc) Incorrect. Internal documentation may support task tracking but is not sufficient to fully minimize the impact of an inavailable team member.\n\nd) Incorrect. Members of a cross-functional DevOps team may have multiple roles simultaneously and can take on any task for which they have the knowledge."
+  },
+  {
+    "id": 8,
+    "lo": "QDO-1.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which activity exemplifies how site reliability engineering (SRE) contributes to a DevOps team?\n\nSelect ONE option.",
+    "options": [
+      "a) The team dedicates a sprint to improving the system aesthetics to be more appealing to users.",
+      "b) The team prioritizes exploratory testing over automation in CI/CD pipelines.",
+      "c) The team creates an automated feedback loop of the system’s behaviour in production.",
+      "d) The team replaces DevOps practices with new ones."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect. Improving system aesthetics is not a goal of site reliability engineering (SRE).\n\nb) Incorrect. SRE emphasizes automation and continuous monitoring rather than prioritizing exploratory testing.\n\nc) Correct. SRE contributes to DevOps by implementing automated feedback loops to optimize efficiency.\n\nd) Incorrect. SRE complements DevOps by bridging the gap between development and operations. It does not replace DevOps practices."
+  },
+  {
+    "id": 9,
+    "lo": "QDO-2.1.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are a tester in a DevOps team that plans to follow a test-first approach in a new project, thus leveraging a CI/CD pipeline for frequent deployments. Analyzing the retrospectives from a previous project, the team identifies inefficiencies in providing built-in quality and consistent quality reports.\n\nWhich TWO actions should you prioritize to effectively implement quality assurance (QA) activities in this DevOps environment?\n\nSelect TWO options.",
+    "options": [
+      "a) Align with the organizational quality policy and test policy that includes automated testing, static testing, and collaborative practices like pair programming.",
+      "b) Perform exploratory testing in production environments to identify and fix critical defects that will impact user experience (UX).",
+      "c) Set up a dashboard to monitor CI/CD pipeline runtimes, build durations, and resource utilization to support continuous improvement.",
+      "d) Rely on testing in production to measure system quality and determine software reliability after production releases.",
+      "e) Implement integrated monitoring, reporting, and alerting for indicators related to business value and software quality."
+    ],
+    "answer": [
+      0,
+      4
+    ],
+    "explanation": "a) Correct. A quality policy and test policy are the major work products to promote consistent implementation of preventive measures like static testing, automation, and pair programming to achieve built-in quality.\n\nb) Incorrect. Relying on exploratory testing in production delays defect detection and contradicts the DevOps focus on early testing.\n\nc) Incorrect. While useful for tracking CI/CD pipeline performance, this option does not directly address embedding quality assurance (QA) or improving built-in quality. It only provides the build with artifacts and data to produce quality reports.\n\nd) Incorrect. Testing in production focuses on reactive quality tests, whereas DevOps emphasizes proactive test activities earlier in the software development lifecycle (SDLC).\n\ne) Correct. Integrated monitoring and reporting provide visibility into key quality and business metrics, ensuring consistent quality reports and supporting continuous improvement in line with DevOps principles."
+  },
+  {
+    "id": 10,
+    "lo": "QDO-2.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which statement correctly compares the test objectives in DevOps, Agile software development, and sequential development models?\n\nSelect ONE option.",
+    "options": [
+      "a) Sequential development models use exploratory testing to detect late phase defects, while Agile and DevOps focus exclusively on automated test execution.",
+      "b) DevOps focuses on automating testing in production, while Agile and sequential development models prioritize manual regression testing.",
+      "c) In Agile and DevOps, testing is integrated throughout software development cycles, while testing in sequential models is performed in separate test levels.",
+      "d) Testing in DevOps requires manual effort to adapt to deployment needs, whereas Agile and sequential models rely entirely on automated tests for quality."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect. There is no correlation between a software development lifecycle (SDLC) and the use of either exploratory testing or automation.\n\nb) Incorrect. DevOps emphasizes continuous testing during development, not just post-deployment. Agile software development also integrates testing throughout sprints. Sequential development models do not prioritize manual regression testing early on.\n\nc) Correct. In DevOps, testing is integrated into every phase of development and deployment, emphasizing continuous feedback and quality. Agile software development similarly incorporates testing throughout the software development cycle and values early and continuous feedback. Sequential development models, however, organize testing in distinct test levels. Testing is handled by specialized teams.\n\nd) Incorrect. DevOps leverages extensive automation to support CI/CD pipelines while also allowing for manual testing in specific scenarios. Agile software development does not rely only on automated tests."
+  },
+  {
+    "id": 11,
+    "lo": "QDO-2.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "A DevOps team is adopting continuous testing to improve software quality and increase delivery speed.\n\nWhich of the following BEST describes the concept of continuous testing in this context?\n\nSelect ONE option.",
+    "options": [
+      "a) An activity focused on monitoring systems for defects in production",
+      "b) The ongoing execution of regression test suites during the development process",
+      "c) An approach that embeds testing across all phases to provide continuous quality feedback",
+      "d) A practice of running automated tests during the build stage of the CI/CD pipeline"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect. This describes only the production monitoring aspect of continuous testing. While observability is part of the approach, continuous testing spans the entire SDLC, not just in production.\n\nb) Incorrect. This is partially true. The syllabus emphasizes that continuous testing includes regression testing but also involves early testing, collaboration, adaptive improvement, and production monitoring. It is not limited to regression testing.\n\nc) Correct. This directly reflects the syllabus: “Continuous testing integrates test activities throughout the SDLC . . . verifying and validating the software at every phase.”\n\nd) Incorrect. The answer is incomplete, as integrating automated tests into the CI/CD pipeline is only one of the aspects of continuous testing. Continuous testing spans planning, coding, deployment, and production."
+  },
+  {
+    "id": 12,
+    "lo": "QDO-2.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "What is the primary role of a pull request (PR) in maintaining quality in a DevOps workflow?\n\nSelect ONE option.",
+    "options": [
+      "a) To prevent junior developers from making changes to the codebase without senior approval",
+      "b) To enforce pre-merge quality checks through collaborative code reviews and automated testing",
+      "c) To speed up deployments by reducing code reviews and relying on testing in production",
+      "d) To enforce testers to manually review the code changes before merging them into the main branch"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. A pull request (PR) is not about restricting contributions based on seniority; they provide consistent quality through structured reviews and automated tests for all developers.\n\nb) Correct. A PR enforces pre-merge quality checks by enabling collaborative reviews, triggering automated tests, and incorporating feedback before integrating code changes.\n\nc) Incorrect. A PR aims to prevent low-quality code from being merged by enforcing tests, not by reducing reviews or relying on testing in production.\n\nd) Incorrect. A PR does not rely exclusively on manual reviews by a tester. It involves team collaboration and automation to provide efficiency and scalability."
+  },
+  {
+    "id": 13,
+    "lo": "QDO-2.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "How does continuous discovery help support alignment with customer needs and business goals?\n\nSelect ONE option.",
+    "options": [
+      "a) By discussing new features with the stakeholders and developing UX prototypes.",
+      "b) By requiring acceptance criteria to be finalized before idea exploration.",
+      "c) By focusing test efforts on the technical feasibility of features.",
+      "d) By focusing on validating functional requirements during the design phase."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Correct. Continuous discovery focuses on communicating with the stakeholders to get a shared understanding of new features. User experience (UX) prototypes help clarify stakeholder needs.\n\nb) Incorrect. Finalizing acceptance criteria before idea exploration contradicts continuous discovery principles. This practice is iterative and dynamic, allowing for adjustments based on experiments and feedback during the exploration process.\n\nc) Incorrect. Continuous discovery does not focus just on technical feasibility. It also evaluates customer value, usability, and business alignment, ensuring that solutions meet broader goals beyond technical implementation.\n\nd) Incorrect. Continuous discovery involves validating a wide range of assumptions, including non-functional requirements, customer value, and business impact, not just functional requirements, during the design phase. This provides a more comprehensive alignment with goals."
+  },
+  {
+    "id": 14,
+    "lo": "QDO-2.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following does NOT align with continuous integration (CI) practices?\n\nSelect ONE option.",
+    "options": [
+      "a) Including the necessary work product assets in configuration management to support consistency",
+      "b) Automating build and test steps in the CI/CD pipeline to enable auditing in case of failures",
+      "c) Running manual build verification steps before triggering automated tests in the CI/CD pipeline",
+      "d) Committing small, incremental code changes and stopping to fix defects when tests fail"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect. Per syllabus section 2.2.2: ’Include everything in configuration management (e.g., automated test scripts, automated deployment scripts, test data, and environment configurations).\n\nb) Incorrect. Per syllabus section 2.2.2: ’The automation scripts for the build steps or test steps in the CI/CD pipeline should facilitate investigation in case of build failures’.\n\nc) Correct. Tests should automatically trigger on a commit to the shared codebase. Requiring manual approval before running tests creates an unnecessary bottleneck and contradicts CI practices of rapid feedback and automation.\n\nd) Incorrect. Per syllabus section 2.2.2: ’DevOps teams check in small, incremental code changes, and wait for the tests to pass or follow a stop-and-fix approach if any test failed’."
+  },
+  {
+    "id": 15,
+    "lo": "QDO-2.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following does NOT help achieve quality in continuous delivery (CD)?\n\nSelect ONE option.",
+    "options": [
+      "a) Using deployment automation tools to ensure consistency and provide an audit trail for compliance",
+      "b) Maintaining a standardized test environment and test data to support reliable and repeatable testing",
+      "c) Implementing infrastructure as code (IaC) to standardize configurations for consistency and repeatability",
+      "d) Allowing deployment processes to vary slightly for different environments to meet specific requirements"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Incorrect. Per syllabus section 2.2.3: quality is achieved by \"deployment automation using automation tools for consistency, compliance, and to provide an audit trail\".\n\nb) Incorrect. Per syllabus section 2.2.3: quality is achieved by \"standardized test environment and test data management\".\n\nc) Incorrect. Per syllabus section 2.2.3: quality is achieved by infrastructure as code (IaC) \"to manage infrastructure configuration using code for consistency and repeatability\".\n\nd) Correct. Allowing deployment processes to vary introduces inconsistencies and risks, contradicting Continuous Delivery’s (CD) emphasis on automation, repeatability, and standardization across environments."
+  },
+  {
+    "id": 16,
+    "lo": "QDO-2.2.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Match each testing term (1-4) to its BEST matching description (A-D):\n\n1. Dark launch\n\n2. Blue-green deployment\n\n3. Canary release\n\n4. A/B testing\n\nA. A small subset of users is exposed to a software change to validate quality before expanding to the entire user base.\n\nB. Two identical environments - \"current live\" and \"new version\" - are used to minimize downtime and risk, allowing additional testing on the \"new version\" while the \"current live\" remains live.\n\nC. A new feature runs in production alongside existing functionalities, enabling monitoring, testing, and system impact analysis without exposing it to users.\n\nD. Variants of a feature are presented to different user segments to compare performance metrics and determine the most effective version to keep.\n\nSelect ONE option.",
+    "options": [
+      "a) 1C, 2B, 3A, 4D",
+      "b) 1A, 2C, 3B, 4D",
+      "c) 1D, 2B, 3C, 4A",
+      "d) 1C, 2D, 3A, 4B"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "Dark launch: A new feature runs in production alongside existing functionalities, enabling monitoring, testing, and system impact analysis without exposing it to users. Therefore, 1C. Blue-green deployment: Two identical environments - \"current live\" and \"new version\" - are used to minimize downtime and risk, allowing additional testing on the \"new version\" while the \"current\" remains live. Therefore, 2B. Canary release: A small subset of users is exposed to a software change to validate quality before expanding to the entire user base. Therefore, 3A. A/B testing: Variants of a feature are presented to different user segments to compare performance metrics and determine the most effective version to keep. Therefore, 4D."
+  },
+  {
+    "id": 17,
+    "lo": "QDO-2.2.6",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are reviewing a CI/CD pipeline where the build, test, and deployment processes are automated. When the build and test pipeline ends, deployment is triggered. Developers are reporting frequent failures in the test environment due to missing configurations and inconsistent data.\n\nWhich action should you recommend for improving the reliability of the test environment?\n\nSelect ONE option.",
+    "options": [
+      "a) Add a manual verification step after each deployment",
+      "b) Extend automation to provide consistent setup and test data",
+      "c) Configure the pipeline to skip deployments when tests failed",
+      "d) Increase the frequency of deployments to catch defects earlier"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect: While this might help in the short term, it introduces manual steps that reduce the speed, consistency, and scalability of the CI/CD pipeline. It goes against the principle of full automation in modern DevOps practices.\n\nb) Correct. This option directly addresses the root cause - inconsistent environments and test data - by recommending an enhancement to the existing automation. It aligns with CI/CD best practices, where automated, reproducible environments and test data provisioning are essential for reliability and quality assurance (QA).\n\nc) Incorrect. This is a good safeguard, but it does not address the underlying issue of environment instability. Skipping deployments on test failure is reactive. It does not prevent the failures caused by misconfigured or inconsistent environments.\n\nd) Incorrect. Deployment is connected to the build. Running a deployment more often will re-deploy the same build artifacts without actually building the source code, which is not helpful in this situation. Running builds and deployments more often will not solve the issue either, as the defect lies in the configuration and test data of the deployed environment."
+  },
+  {
+    "id": 18,
+    "lo": "QDO-3.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Match each single source of truth system (1-4) to the benefit (A-D) it provides for DevOps teams.\n\n1. Information management system\n\n2. Version control system\n\n3. Artifact management system\n\n4. Observability system\n\nA. Supports controlled change management for source code, test automation code, and CI/CD pipeline definitions.\n\nB. Provides lifecycle management for backlog items, such as requirements and defect reports.\n\nC. Enables traceability and access management for monitoring, traces, and logs.\n\nD. Facilitates the reusability of built executables, dependencies, and test data.\n\nSelect ONE option.",
+    "options": [
+      "a) 1D, 2B, 3C, 4A",
+      "b) 1A, 2C, 3B, 4D",
+      "c) 1B, 2A, 3D, 4C",
+      "d) 1A, 2B, 3D, 4C"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "Information management system: Provides lifecycle management for backlog items such as requirements and defect reports. Therefore, 1B. Version control system: Supports controlled change management for source code, test automation code, and CI/CD pipeline definitions. Therefore, 2A. Artifact management system: Facilitates the reusability of build artifacts, dependencies, and test data. Therefore, 3D. Observability system: Enables traceability and access management for monitoring, traces, and logs. Therefore, 4C."
+  },
+  {
+    "id": 19,
+    "lo": "QDO-3.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following explains how automation supports traceability between the test basis and testware in a DevOps environment?\n\nSelect ONE option.",
+    "options": [
+      "a) Automation tools reduce the need for traceability effort by generating test cases and linking them to requirements.",
+      "b) Automation improves traceability by providing accurate, up-to-date links between work products.",
+      "c) Automation transfers the responsibility for maintaining traceability to developers.",
+      "d) Automation simplifies communication, making collaboration between teams less important."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. Test case generation is not part of traceability and does not substitute for the maintenance of traceable links between the test basis and testware.\n\nb) Correct. Automation helps maintain accurate and current relationships between requirements, code, and testware, which is essential for traceability.\n\nc) Incorrect. Traceability is a shared responsibility across DevOps roles, not just developers. Automation of traceability does not change the responsibility in any way.\n\nd) Incorrect. Automation enhances collaboration by making relationships between work products transparent and auditable."
+  },
+  {
+    "id": 20,
+    "lo": "QDO-3.1.3",
+    "k": "K3",
+    "pts": 2,
+    "text": "A DevOps team has implemented an automated quality reporting system in the CI/CD pipeline. However, stakeholders have reported that the dashboard is frequently outdated, missing manual test results, and does not provide a complete view of software quality.\n\nWhat should be the NEXT steps to improve the reporting process?\n\nSelect ONE option.",
+    "options": [
+      "a) Ensure automated scripts collect data from all CI/CD stages, integrate test results from manual test execution immediately, and enable the dashboard’s real-time updates.",
+      "b) Reconfigure the dashboard to focus on key deployment metrics while collecting manual test results separately in a different system to avoid delays.",
+      "c) Focus on automated test results, as manual test data is difficult to track in real-time, and use production monitoring tools for quality assessment instead.",
+      "d) Rely on static reports instead of a CI/CD pipeline dashboard to provide quality insights at scheduled intervals, so that stakeholders receive structured updates."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Correct: The dashboard must integrate automated and manual test results to provide a complete quality view. Automating data gathering and providing real-time updates improve visibility and decision-making.\n\nb) Incorrect: Per syllabus section 3.1.3: \"Create a single source of truth by combining the metrics information from various sources into a single, accessible location\". Storing manual test results separately fragments quality reporting and reduces transparency.\n\nc) Incorrect: Per syllabus section 3.1: \"Quality reporting integrated with the CI/CD pipeline provides real-time insights through dashboards, combining automated and manual test results for comprehensive analysis and alerting\". Automated tests alone do not completely capture software quality. Using only production monitoring tools is insufficient, as multiple tools must be integrated for complete reporting.\n\nd) Incorrect: Static reports lack real-time updates, making them ineffective for tracking trends in the CI/CD pipeline. Dashboards enable continuous monitoring and better alignment across teams."
+  },
+  {
+    "id": 21,
+    "lo": "QDO-3.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT a benefit of test data management automation?\n\nSelect ONE option.",
+    "options": [
+      "a) It reduces storage needs and accelerates test data provisioning by selecting a smaller, representative subset of production data.",
+      "b) It improves coverage by generating diverse sets of data, including valid and invalid data, edge cases, and boundary values.",
+      "c) It organizes and stores test data in a structured way in version control, making it available on demand within the CI/CD pipeline or for manual testing.",
+      "d) It eliminates security concerns by masking test data and protect the identity and personal details of individuals."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Incorrect: Per syllabus section 3.1.4: \"Test data subsetting: Select a smaller, representative subset of production data for testing, while keeping references between data items, to reduce storage needs and accelerate test data provisioning.\"\n\nb) Incorrect: Per syllabus section 3.1.4: \"Data generation: Create or update test data to ensure comprehensive coverage and a variety of inputs (e.g., valid and invalid data, edge cases, and boundary values).\"\n\nc) Incorrect: Per syllabus section 3.1.4: \"Data organization: Organize and store test data in a structured way in a VCS and make it available on demand within the CI/CD pipeline or for manual testing.\"\n\nd) Correct: While test data masking reduces risk, it does not completely eliminate the risk of security breaches. Improper masking can still expose sensitive data."
+  },
+  {
+    "id": 22,
+    "lo": "QDO-3.1.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT a benefit of statistical analysis in software testing?\n\nSelect ONE option.",
+    "options": [
+      "a) It helps identify trends in software quality by analyzing the current state and predicting potential future defects.",
+      "b) It automates test results analysis, removing the need for human interpretation and reviews of test results.",
+      "c) It supports decision-making by providing key metrics like defect density, code coverage, and mean time between failures (MTBF).",
+      "d) It provides a broader picture of software quality, including insights into processes and team performance."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. Statistical analysis helps identify trends and patterns in software quality and residual risks. Additionally, AI-based tools can predict future test results.\n\nb) Correct. While statistical test results analysis enhances automation, human interpretation remains necessary to validate findings, assess software behavior, and detect issues such as defective tests and process inefficiencies.\n\nc) Incorrect. Metrics such as defect density, code coverage, and mean time between failures (MTBF) help stakeholders establish confidence in the business value of the software, ensuring better risk assessment and decision-making.\n\nd) Incorrect. Statistical analysis provides information that gives a broader picture of the quality of the software, but also of the processes applied and the people involved."
+  },
+  {
+    "id": 23,
+    "lo": "QDO-3.1.6",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which approach is the BEST to utilize resources in a controlled test environment?\n\nSelect ONE option.",
+    "options": [
+      "a) Resources are kept allocated at all times so that test environments are always available when needed.",
+      "b) A fixed amount of resources is assigned to all test environments to maintain consistency across different test cases.",
+      "c) Resources are provisioned dynamically based on actual testing needs, preventing both over- and under-provisioning.",
+      "d) The maximum available resources are allocated to every test environment to avoid potential performance issues."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect. Keeping resources allocated at all times leads to unnecessary consumption and higher costs, whereas controlled environments use resources only when needed.\n\nb) Incorrect. Assigning a fixed amount of resources to all environments is inefficient, as different tests have varying requirements, leading to a waste of resources or performance issues.\n\nc) Correct. Controlled test environments allocate resources dynamically, ensuring that each test gets exactly what it needs, optimizing costs and performance.\n\nd) Incorrect. Allocating the maximum available resources to every test is wasteful, as controlled environments optimize resource usage based on specific testing requirements."
+  },
+  {
+    "id": 24,
+    "lo": "QDO-3.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is THE BEST example of integrating regression tests into the CI/CD pipeline?\n\nSelect ONE option.",
+    "options": [
+      "a) All tests are regression tests after their first use as tests that cover new functionality, and all tests are run in every CI/CD pipeline.",
+      "b) Regression testing scope is set dynamically based on the file changes in a feature branch, but risk- based selection of regression tests are run before the release.",
+      "c) Regression tests are excluded from the feature branch CI/CD pipelines due to complexity, but they are run before every release.",
+      "d) CI/CD pipelines primarily rely on feature specific tests, and there is no need to run regression tests when newly added code is well tested."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. Although feature specific tests become regression tests, running all regression tests for every CI/CD pipeline is wasteful. Regression tests should be optimized for scope based on code changes and risks.\n\nb) Correct. Regression tests are a crucial part of a CI/CD pipeline, and their scope should be optimized for file changes and risks. Ideally, all regression tests should be run before a release, but many times it would be bad for business viability and sustainability as it consumes unnecessary resources, so risk-based selection of regression tests is run instead.\n\nc) Incorrect. Regression tests should follow tests of a specific feature to confirm no new defects are introduced into the software.\n\nd) Incorrect. Regression tests are a crucial part of a CI/CD pipeline. Testing only new code will not reveal its impact on the existing code."
+  },
+  {
+    "id": 25,
+    "lo": "QDO-3.2.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are joining a DevOps team that is preparing to test a third-party payment API. The team wants to avoid production failures caused by mismatched expectations between the third-party application’s API and your application.\n\nWhich of the following steps would help you prepare for this test effort?\n\nSelect ONE option.",
+    "options": [
+      "a) Set up performance benchmarks to measure API response times under load.",
+      "b) Define and validate a contract that specifies expected request and response formats.",
+      "c) Focus on acceptance testing to simulate user interactions with the payment system.",
+      "d) Use integration testing to verify the API behavior after connecting all components."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. Performance testing is non-functional testing, which does not validate API contracts but builds on them, assuming they work correctly.\n\nb) Correct. Contract testing determines that both the provider and consumer adhere to a defined API structure, format, and set of expectations for request and response payloads, headers, status codes, and data types. It can be done without deploying the components.\n\nc) Incorrect. Acceptance testing, which validates high-level requirements late in the process, does not prevent defects in the API.\n\nd) Incorrect. Integration testing is useful, but it occurs later in the software development lifecycle. It does not provide the early, isolated validation that contract testing offers, which is essential for preventing defects before full integration."
+  },
+  {
+    "id": 26,
+    "lo": "QDO-3.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements about test automation are specific to Agile software development, and which to sequential development models?\n\ni. Test automation, beyond unit testing, provides a limited feedback loop between development and testing\n\nii. Test automation, beyond unit testing, requires detailed planning in earlier phases before actual test implementation\n\niii. Tests, beyond unit testing, are designed and implemented as a collaboration of developers, testers, and product owners\n\niv. Automated testing is done in a distinct test phase of the software development lifecycle (SDLC)\n\nv. Automated tests have broader coverage on lower test levels\n\nSelect ONE option.",
+    "options": [
+      "a) i, iv, v are specific to sequential; ii, iii are specific to Agile",
+      "b) ii, iii are specific to sequential; i, iv, v, v are specific to Agile",
+      "c) i, ii, iv are specific to sequential; iii, v are specific to Agile",
+      "d) iv, v are specific to sequential; i, ii iii are specific to Agile"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "iii and v are specific to Agile software development, where tests are developed throughout the SDLC phases, allowing it to be close to development and focus on lower-level unit tests and component integration tests. i, ii, and iv are specific to sequential development models, where automated testing is done in a test phase after the development is done; it provides limited feedback and requires upfront planning."
+  },
+  {
+    "id": 27,
+    "lo": "QDO-3.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following manual tests gives the LEAST value of information for stakeholders on the overall quality of the software?\n\nSelect ONE option.",
+    "options": [
+      "a) Manually reproducing automated tests during acceptance testing to increase validation scope.",
+      "b) Exploratory testing on specific features before the release to increase confidence in quality.",
+      "c) Code reviews on pull requests (PRs) to assess code quality and design defects.",
+      "d) Accessibility testing validating fulfillment of desired standards and requirements."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) Correct. Manually reproducing automated test scripts is the least valuable since exploratory testing can achieve greater validation with less effort.\n\nb) Incorrect. Exploratory testing can significantly extend coverage and increase the overall confidence in the software.\n\nc) Incorrect. Code reviews are part of static testing and are an important type of manual testing to prevent defects in the product.\n\nd) Incorrect. Accessibility testing can be done automatically only to a limited extent, so manual testing is required most of the time."
+  },
+  {
+    "id": 28,
+    "lo": "QDO-3.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which statement is TRUE regarding exploratory testing in the CI/CD pipeline?\n\nSelect ONE option.",
+    "options": [
+      "a) Exploratory tests are not part of the CI/CD pipeline.",
+      "b) Exploratory tests are executed only in test environments where the software is fully deployed.",
+      "c) Exploratory tests allow the use of tools to support test execution and test reporting.",
+      "d) Exploratory tests have their design, execution, and evaluation spread across different SDLC phases."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect. Although exploratory tests are manually executed, they can be triggered from the CI/CD pipeline.\n\nb) Incorrect. Exploratory tests can be executed in any test environment.\n\nc) Correct. Tools can support exploratory testing in designing test charters, recording test results, reporting defects, and storing test artifacts.\n\nd) Incorrect. Exploratory tests are designed, executed, and evaluated in one test session, except for planning and preparing the test charter beforehand."
+  },
+  {
+    "id": 29,
+    "lo": "QDO-3.3.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "What feedback on quality can crowd testing bring to the DevOps team?\n\nSelect ONE option.",
+    "options": [
+      "a) Information obtained during acceptance testing and requirements coverage by automated tests",
+      "b) The security level of a product’s component and its compliance with required security standards",
+      "c) Adoption rate of the beta release version across users who are part of the beta program.",
+      "d) Product compatibility with different versions of the operating system in real-world usage."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Incorrect. This is a benefit provided by test automation and traceability, not crowd testing.\n\nb) Incorrect. This is a benefit provided by security testing, not crowd testing, because its focus is on low-level testing.\n\nc) Incorrect. This is a part of release management and quality monitoring, not crowd testing.\n\nd) Correct. Crowd testing is focused on breadth first (e.g., used in beta testing after a canary release), to collect feedback from production, and in real-world device testing."
+  },
+  {
+    "id": 30,
+    "lo": "QDO-3.3.4",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are about to organize a quality hunting event.\n\nWhat is the BEST way to implement a good quality hunting event?\n\nSelect ONE option.",
+    "options": [
+      "a) Stakeholders are assigned different test conditions to gain personal experience with the test object while competing for the best assessment of the test object’s quality level from a business perspective.",
+      "b) Small teams of various roles using fresh test approaches assess the test object’s quality level while competing to bring the most valuable quality insights for stakeholders.",
+      "c) A group of testers executes automated and manual tests to confirm the test results and assess the scope of the tests according to the business requirements that are important to the stakeholders.",
+      "d) Teams of internal and external people use innovative ways to find as many defects in the software as possible in the pre-release or beta version of the software, and the best team is awarded."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. Although stakeholders derive the most benefits from a quality hunting event, a wider variety of roles participate, extending beyond business requirements.\n\nb) Correct. Quality hunting is an event where teams, about half the size of an Agile team, compete to give the most valuable assessment of their test object’s quality level. These teams are challenged to create fresh and innovative approaches to assess quality. Stakeholders benefit from getting many ideas about and new angles for relevant quality aspects of the software product.\n\nc) Incorrect. It is not only testers but also other stakeholders who participate and extend the information obtained from testing using innovative approaches.\n\nd) Incorrect. Quality hunting, unlike bug hunting, is about finding defects and assessing the overall test object’s quality."
+  },
+  {
+    "id": 31,
+    "lo": "QDO-4.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "What capability does a build artifact management tools provide?\n\nSelect ONE option.",
+    "options": [
+      "a) Test data generation",
+      "b) Scanning for vulnerabilities",
+      "c) Automated build pipelines",
+      "d) Project document sharing"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. Test data generation is a capability of test data and test management tools. Test data can be stored in build artifact management tools, but they cannot generate test data.\n\nb) Correct. Scanning for vulnerabilities is a key capability of build artifact management tools.\n\nc) Incorrect. Automated build pipelines are the capability of CI or CD tools. Outputs of CI/CD pipelines can be uploaded to the build artifact management tool.\n\nd) Incorrect. Document sharing is a capability of collaboration and communication tools. Build artifact management tools primarily involves handling build executables, libraries, and other deliverables rather than project documents."
+  },
+  {
+    "id": 32,
+    "lo": "QDO-4.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Match each tool type (1-4) to its corresponding quality assurance (QA) and testing function (A-D).\n\n1. Static analysis tools\n\n2. Continuous testing tools\n\n3. Configuration management tools\n\n4. Continuous monitoring tools\n\nA. Detect defects early by enabling automated testing at every SDLC phase and test level\n\nB. Ensure consistent environments across development, testing, and production\n\nC. Identify deviations from coding standards, vulnerabilities, and potential defects before test execution\n\nD. Provide real-time feedback on system health and user behavior\n\nSelect ONE option.",
+    "options": [
+      "a) 1C, 2A, 3B, 4D",
+      "b) 1A, 2D, 3C, 4B",
+      "c) 1C, 2A, 3D, 4B",
+      "d) 1D, 2B, 3A, 4C"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "Static code analysis and code quality tools evaluate source code without execution, helping to enforce coding standards, detect potential defects, and identify code smells or security vulnerabilities. Therefore, 1C. Continuous testing tools enable automated tests at every SDLC phase and test level, catching defects early and minimizing disruptions. Therefore, 2A. Configuration management tools provide consistent environments across development, testing, and production by automating configuration provisioning and management. Therefore, 3B. Continuous monitoring tools provide real-time insights into system health and user behavior, so that defects are quickly identified and resolved. Therefore, 4D."
+  },
+  {
+    "id": 33,
+    "lo": "QDO-4.2.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which activities in a CI/CD pipeline support developers to effectively manage feature development and code integration with minimal risks?\n\nSelect ONE option.",
+    "options": [
+      "a) Source code management",
+      "b) Branching and merging",
+      "c) Monitoring and feedback",
+      "d) Release management"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. Although source code management organizes code commits and version control, it does not directly support managing feature development and minimizing code integration risks.\n\nb) Correct. Branching and merging support efficient management of feature development and code integration by using feature branches and code reviews for specific code changes related to a feature, which helps reduce code integration and other potential issues later.\n\nc) Incorrect. Monitoring and feedback focus on observing application health and performance in production, not on managing feature development or code integration processes.\n\nd) Incorrect. While release management manages release coordination and deployment strategies, it is not specifically about minimizing code integration defects during feature development."
+  },
+  {
+    "id": 34,
+    "lo": "QDO-4.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Match following DevOps release strategies (1-4) to its correct descriptions (A–D).\n\n1. Rolling release\n\n2. Hotfix deployment\n\n3. Dark launching\n\n4. Phased rollout\n\nA. Features are deployed but inaccessible to users.\n\nB. Gradually replaces system instances with updated versions.\n\nC. Urgent release to resolve critical defects.\n\nD. Updates are deployed incrementally by region or user group.\n\nSelect ONE option.",
+    "options": [
+      "a) 1B, 2C, 3D, 4A",
+      "b) 1C, 2B, 3D, 4A",
+      "c) 1A, 2D, 3C, 4B",
+      "d) 1B, 2C, 3A, 4D"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "Rolling releases gradually replace system instances with updated versions, supporting continuous service availability. Therefore, 1B. Hotfix deployment is an urgent release to resolve critical defects in production, prioritizing speed over thorough testing. Therefore, 2C. Dark launching deploys features to the production environment, but they are inaccessible to users. This allows teams to test and monitor performance without affecting UX. Therefore, 3A. Phased rollout deploys updates incrementally by region, user group, or other segmentation criteria. Therefore, 4D."
+  },
+  {
+    "id": 35,
+    "lo": "QDO-4.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following are key principles of infrastructure as code (IaC)?\n\nSelect TWO options.",
+    "options": [
+      "a) Idempotency ensures a consistent environment when a product is deployed repeatedly.",
+      "b) IaC primarily relies on graphical user interfaces to configure infrastructure efficiently.",
+      "c) Declarative and imperative approaches define the state of the infrastructure and steps to achieve it.",
+      "d) IaC depends on manual configuration to support infrastructure stability over time.",
+      "e) IaC eliminates the need for version control in infrastructure management."
+    ],
+    "answer": [
+      0,
+      2
+    ],
+    "explanation": "a) Correct. Idempotency ensures that IaC scripts produce the same results even when applied multiple times, preventing configuration deviations.\n\nb) Incorrect. IaC is managed through code, not graphical user interfaces. IaC is done using a descriptive model, leveraging the same version control practices that DevOps teams use.\n\nc) Correct. IaC uses declarative and imperative approaches. The declarative approach focuses on the desired state, while the imperative approach specifies the steps to achieve it.\n\nd) Incorrect. IaC reduces the need for manual intervention by automating infrastructure changes. IaC eliminates the need for repetitive manual tasks, ensuring consistency and reducing human error.\n\ne) Incorrect. IaC does not eliminate version control. It integrates seamlessly with configuration management systems, allowing teams to track changes, collaborate efficiently, and roll back to earlier configurations if needed."
+  },
+  {
+    "id": 36,
+    "lo": "QDO-4.2.4",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following BEST describes feature toggles?\n\nSelect ONE option.",
+    "options": [
+      "a) A technique to modify system behavior by changing code dynamically",
+      "b) A method to manage features by permanently enabling or disabling them in production",
+      "c) An approach that allows teams to modify system behavior without changing code",
+      "d) A strategy that replaces the need for branching in version control"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) Incorrect. Feature toggles allow the modification of system behavior without changing code.\n\nb) Incorrect. Feature toggles provide temporary control rather than permanent feature enablement.\n\nc) Correct. Feature toggles are an approach that allows teams to modify system behavior without changing code.\n\nd) Incorrect. Feature toggles do not replace branching strategies."
+  },
+  {
+    "id": 37,
+    "lo": "QDO-4.2.5",
+    "k": "K1",
+    "pts": 1,
+    "text": "Match each DevOps term (1-4) to its correct description (A–D):\n\n1. Trunk-based development\n\n2. Feature branches\n\n3. Pull request\n\n4. Merge conflict\n\nA. Used to merge code changes from one branch to any other branch, while providing feedback on code changes by other team members.\n\nB. When the same section of the code is modified in both branches.\n\nC. Every code change is pushed directly to the main branch after successful tests during the commit stage.\n\nD. Code changes are developed on branches created specifically for these changes and deleted after merging.\n\nSelect ONE option.",
+    "options": [
+      "a) 1C, 2D, 3A, 4B",
+      "b) 1A, 2C, 3D, 4B",
+      "c) 1C, 2D, 3B, 4A",
+      "d) 1B, 2A, 3D, 4C"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "Trunk-based development means that every code change is pushed directly to the main branch after successful tests during the commit stage. Therefore, 1C. Feature branches are created for specific code changes and deleted after merging. Therefore, 2D. A pull request (PR) merges code changes from one branch to another and allows DevOps teams or peers to provide feedback on the code changes. Therefore, 3A. A merge conflict happens when the same part of the code in both branches is to be changed during merging. Therefore, 4B."
+  },
+  {
+    "id": 38,
+    "lo": "QDO-4.2.6",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which TWO of the following describe aspects of chaos engineering?\n\nSelect TWO options.",
+    "options": [
+      "a) A method for optimizing cloud usage",
+      "b) A practice that does not require a reliable CI/CD pipeline",
+      "c) A practice to determine fault tolerance and reliability",
+      "d) A way to experiment without triggering real failures",
+      "e) A technique to uncover hidden defects"
+    ],
+    "answer": [
+      2,
+      4
+    ],
+    "explanation": "a) Incorrect. Chaos engineering focuses on fault tolerance, not cloud efficiency.\n\nb) Incorrect. Chaos engineering is made possible by a reliable CI/CD pipeline, which supports deploying changes to production and rollback painlessly.\n\nc) Correct. Chaos engineering is crucial for determining fault tolerance and reliability of software systems by intentionally injecting failures and observing how the system responds.\n\nd) Incorrect. Chaos engineering involves intentionally injecting failures and observing how the system responds.\n\ne) Correct. DevOps teams use chaos engineering to uncover hidden defects that may not be apparent during normal operation or when testing in a test environment."
+  },
+  {
+    "id": 39,
+    "lo": "QDO-4.2.8",
+    "k": "K1",
+    "pts": 1,
+    "text": "What information is required by the software bill of materials (SBoM)?\n\nSelect ONE option.",
+    "options": [
+      "a) Licensing information for the whole system",
+      "b) CPU and memory usage statistics for production environments",
+      "c) Deployment automation configurations and rollback mechanisms",
+      "d) Component dependencies on other components"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) Incorrect. A software bill of materials (SBoM) includes details of components’ licensing conditions, not licensing for the whole software system.\n\nb) Incorrect. CPU and memory usage statistics pertain to telemetry for monitoring the production environment, not to the SBoM.\n\nc) Incorrect. Deployment automation and rollback mechanisms are part of continuous delivery and continuous deployment activities, not SBoM.\n\nd) Correct. SBoM requires the dependencies of the component on other components."
+  },
+  {
+    "id": 40,
+    "lo": "QDO-4.2.9",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is a benefit of using containerization in software development?\n\nSelect ONE option.",
+    "options": [
+      "a) It eliminates the need for security measures when using third-party components.",
+      "b) It support consistent environments across all development phases and test levels.",
+      "c) It replaces traditional virtualization technologies.",
+      "d) It guarantees zero resource usage when containers are inactive."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) Incorrect. Containerization does not eliminate the need for security measures; diligent dependency management is still necessary when using third-party components.\n\nb) Correct. Containerization allows for consistent environments across development, testing, and production, thereby solving issues like \"it works on my machine.\"\n\nc) Incorrect. Containerization does not entirely replace traditional virtualization technologies; it is a lightweight alternative used in specific conditions.\n\nd) Incorrect. While containers are efficient and can be removed after use, they do not guarantee zero resource usage when inactive."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 60 * 60;
+      const EXT_SECONDS = 75 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "75"
+          : "60";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 75:00 (60 minutes + 25% practice time). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 60:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          if (asset.html) return `<div class="q-table-wrap">${asset.html}</div>`;
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Open to enlarge</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagram for Question ${q.id}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

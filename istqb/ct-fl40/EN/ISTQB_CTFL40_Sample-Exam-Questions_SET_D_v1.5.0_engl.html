@@ -1,0 +1,1980 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISTQB CTFL v4.0 — Sample Exam Set D</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #475569;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+    </style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Foundation Level</div>
+        <h1>CTFL v4.0<br /><em>Sample Exam</em></h1>
+        <p class="start-subtitle">
+          ISTQB® Certified Tester Foundation Level v4.0 ·
+          Sample Exam Set D v1.5.0 · CTFL Syllabus v4.0. The
+          timer starts as soon as you click "Start Exam".
+        </p>
+        <p class="start-subtitle source-credit">Source: ISTQB_CTFL40_Sample-Exam-Questions_SET_D_v1.5.0_engl.pdf; ISTQB_CTFL40_Sample-Exam-Answer_SET_D_v1.5.0_engl.pdf. © ISTQB®. Authors and translators are acknowledged in the source PDFs.</p>
+    <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Questions</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">60</span>
+            <div class="meta-lbl">Minutes</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Points</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Pass mark</div>
+          </div>
+        </div>
+
+        <div class="time-option-label">Time allowance</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">60 min</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">75 min</span>
+            <span class="time-opt-lbl">+15 min extension</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">
+          &#9432;&nbsp; The 15-minute extension applies to candidates who are
+          not sitting the exam in their native language (per ISTQB rules).
+        </div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Start Exam
+        </button>
+        <p class="start-note" id="start-note-txt">
+          The timer counts down from 60:00. The exam is submitted
+          automatically when time runs out.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >ISTQB CTFL v4.0 · Sample Exam Set D v1.5.0</span
+            >
+            <span class="exam-title">Certified Tester Foundation Level</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 answered
+            </div>
+            <div class="timer" id="timer">60:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Reset
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 questions · <strong>65% (≥ 26 of 40 points)</strong> to
+            pass · all questions single-select (1 point each)
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Exam Complete</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Time used: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Correct</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Wrong</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Skipped</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Restart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Submit exam?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Cancel
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "FL-1.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is a typical test objective?\n\nSelect ONE option.",
+    "options": [
+      "a) Finding and fixing defects in the test object.",
+      "b) Maintaining effective communication with developers.",
+      "c) Validating that legal requirements have been met.",
+      "d) Building confidence in the quality of the test object."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) INCORRECT – Finding defects is a test objective, but fixing them is a debugging activity, not testing (CTFL Syllabus V4.0, Section 1.1.1).\nb) INCORRECT – Useful for achieving other objectives, but not itself a primary reason for testing.\nc) INCORRECT – Checking legal requirements are met is a form of verification, not validation.\nd) CORRECT – Building confidence in the quality of the test object is achieved by executing tests that pass (CTFL Syllabus V4.0, Section 1.1.1)."
+  },
+  {
+    "id": 2,
+    "lo": "FL-1.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "A designer documents a design for a user interface that does not suitably address disabled users because the designer is tired. The programmer implements the user interface in line with the design but as they are working under severe time pressure, they do not include suitable exception handling in their program code for bonus calculations. When the operational system is used, complaints are made by some disabled users about the interface and the company is subsequently fined by the relevant regulatory authority. No one notices that bonus calculations are sometimes incorrect.\n\nWhich of the following statements is CORRECT?\n\nSelect ONE option.",
+    "options": [
+      "a) The miscalculation of bonuses is a defect that occasionally occurs.",
+      "b) The fine received for failing to address some disabled users is a failure.",
+      "c) The programmer working under severe time pressure is a root cause.",
+      "d) The design of the user interface contains a failure caused directly by the designer."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) INCORRECT – The miscalculation of bonuses is a failure by the system, not a defect.\nb) INCORRECT – The failure is the system not suitably supporting disabled users; the fine is a consequence, not itself a failure.\nc) CORRECT – The error was made by the programmer, caused by working under severe time pressure, which is the root cause of the subsequent defect (CTFL Syllabus V4.0, Section 1.2.3).\nd) INCORRECT – A design document is a static work product and contains a defect, not a failure; the failure appears later during operation."
+  },
+  {
+    "id": 3,
+    "lo": "FL-1.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Test conditions are being used by testers to generate test cases and execute tests. Even though the test conditions remain the same, the test cases are varied each time.\n\nWhich of the following ‘principles of testing’ is addressed through the variation of test cases?\n\nSelect ONE option.",
+    "options": [
+      "a) Tests wear out.",
+      "b) Absence-of-defects fallacy.",
+      "c) Early testing saves time and money.",
+      "d) Defects cluster together."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) CORRECT – Repeating identical tests on unaltered code is unlikely to uncover new defects, so varying test cases each time reduces the risk of tests wearing out (CTFL Syllabus V4.0, Section 1.3.1).\nb) INCORRECT – That principle concerns validating users’ needs even when many tests pass; varying test cases does not address it.\nc) INCORRECT – That principle concerns fixing defects as early as possible, unrelated to varying test cases.\nd) INCORRECT – That principle concerns the uneven distribution of defects, typically addressed by risk-based testing, not varying test cases."
+  },
+  {
+    "id": 4,
+    "lo": "FL-1.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Given the following test tasks:\n1. Derive test cases from test conditions.\n2. Identify reusable testware.\n3. Organize test cases into test procedures.\n4. Evaluate test basis and test object.\n\nAnd the following test activities:\nA. Test analysis\nB. Test design\nC. Test implementation\nD. Test completion\n\nWhich of the following BEST matches the tasks with the activities?\n\nSelect ONE option.",
+    "options": [
+      "a) 1B, 2A, 3D, 4C",
+      "b) 1B, 2D, 3C, 4A",
+      "c) 1C, 2A, 3B, 4D",
+      "d) 1C, 2D, 3A, 4B"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Test design derives test cases from test conditions (1B); test completion identifies reusable testware (2D); test implementation organizes test cases into test procedures (3C); test analysis evaluates the test basis and test object (4A) (CTFL Syllabus V4.0, Section 1.4.1).\nb) CORRECT – 1B, 2D, 3C, 4A.\na), c), d) INCORRECT – mismatched activity/task pairs."
+  },
+  {
+    "id": 5,
+    "lo": "FL-1.4.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following BEST shows the testware produced as a result of performing test implementation?\n\nSelect ONE option.",
+    "options": [
+      "a) Test completion report",
+      "b) Data held in a database used for test inputs and expected results.",
+      "c) The list of elements needed to build the test environment.",
+      "d) Test cases"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) INCORRECT – The test completion report is produced during test completion, not test implementation.\nb) CORRECT – Test data, such as data held in a database for test inputs and expected results, is produced during test implementation (CTFL Syllabus V4.0, Section 1.4.3).\nc) INCORRECT – Test environment requirements are produced during test design.\nd) INCORRECT – Test cases are produced during test design, not test implementation."
+  },
+  {
+    "id": 6,
+    "lo": "FL-1.4.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is MOST likely to describe a task performed by someone in a test management role?\n\nSelect ONE option.",
+    "options": [
+      "a) Evaluate test basis and test object.",
+      "b) Define test environment requirements.",
+      "c) Assess testability of test object.",
+      "d) Create test completion report."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a), c) INCORRECT – These are part of test analysis, a testing-role responsibility.\nb) INCORRECT – Defining test environment requirements is part of test design, a testing-role responsibility.\nd) CORRECT – Creating the test completion report is a key task of the test management role during test closure (CTFL Syllabus V4.0, Section 1.4.5)."
+  },
+  {
+    "id": 7,
+    "lo": "FL-1.5.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is an advantage of the whole team approach?\n\nSelect ONE option.",
+    "options": [
+      "a) Improved communication between team members.",
+      "b) Decreased individual accountability for quality.",
+      "c) Faster deployment of deliverables to the end users.",
+      "d) Reduced collaboration with external business users."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) CORRECT – The whole-team approach fosters strong communication and collaboration between team members (CTFL Syllabus V4.0, Section 1.5.2).\nb) INCORRECT – The approach emphasizes collective, not decreased, responsibility for quality.\nc) INCORRECT – It focuses on higher-quality outcomes, not necessarily faster delivery.\nd) INCORRECT – Testers collaborate closely with business representatives under this approach, not less."
+  },
+  {
+    "id": 8,
+    "lo": "FL-1.5.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which following benefits and drawbacks of the independence of testing are TWO likely to be considered benefit?\n\nSelect TWO options.",
+    "options": [
+      "a) The testers work in a different location from the developers.",
+      "b) Testers question the assumptions programmers make while writing code.",
+      "c) A confrontational dynamic has been established between testers and developers.",
+      "d) Developers have convinced themselves that testers are mostly accountable for quality.",
+      "e) Testers have different biases than those held by the developers."
+    ],
+    "answer": [
+      1,
+      4
+    ],
+    "explanation": "a) INCORRECT – Physical separation is a drawback, hindering collaboration.\nb) CORRECT – Questioning assumptions increases the likelihood of detecting defects (CTFL Syllabus V4.0, Section 1.5.3).\nc) INCORRECT – A confrontational dynamic is a drawback of independence.\nd) INCORRECT – Shifting quality responsibility onto testers is a drawback of independence.\ne) CORRECT – Different cognitive biases let testers detect issues developers might miss."
+  },
+  {
+    "id": 9,
+    "lo": "FL-2.1.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is a good testing practice that applies to all software development lifecycles?\n\nSelect ONE option.",
+    "options": [
+      "a) Each test level has specific and distinct test objectives.",
+      "b) Test implementation and execution for a given test level should start during the corresponding development phase.",
+      "c) Testers should start test design as soon as drafts of the relevant work products become available.",
+      "d) Every dynamic testing activity has a corresponding static testing activity."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) CORRECT – Each test level has specific and unique objectives to avoid unnecessary duplication of effort (CTFL Syllabus V4.0, Section 2.1.2).\nb) INCORRECT – Test implementation usually starts later than analysis/design, and execution occurs during the test level, not necessarily during the matching development phase.\nc) INCORRECT – Test design should be based on a stable, agreed-upon test basis, not early drafts.\nd) INCORRECT – There is no direct symmetry between dynamic and static testing activities."
+  },
+  {
+    "id": 10,
+    "lo": "FL-2.1.3",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is an example of a test-first approach to development?\n\nSelect ONE option.",
+    "options": [
+      "a) Behavior-Driven Development",
+      "b) Test Level Driven Development",
+      "c) Function-Driven Development",
+      "d) Performance-Driven Development"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) CORRECT – Behavior-Driven Development (BDD) is a well-known example of a test-first approach (CTFL Syllabus V4.0, Section 2.1.3).\nb), c), d) INCORRECT – Not recognized examples of test-first approaches."
+  },
+  {
+    "id": 11,
+    "lo": "FL-2.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is MOST likely to be a challenge encountered when implementing DevOps?\n\nSelect ONE option.",
+    "options": [
+      "a) Making sure that non-functional quality characteristics are not overlooked.",
+      "b) Managing continuously changing test environments.",
+      "c) The need for more manual testers with suitable experience.",
+      "d) Setting up the test automation as part of the delivery pipeline."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) INCORRECT – DevOps increases visibility of non-functional attributes, reducing this concern.\nb) INCORRECT – CI/CD automation in DevOps helps stabilize test environments.\nc) INCORRECT – DevOps typically reduces the need for manual testing due to automation.\nd) CORRECT – A significant DevOps challenge is setting up and maintaining test automation as part of the delivery pipeline (CTFL Syllabus V4.0, Section 2.1.4)."
+  },
+  {
+    "id": 12,
+    "lo": "FL-2.1.6",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following BEST describes retrospectives?\n\nSelect ONE option.",
+    "options": [
+      "a) Retrospectives allow team members to identify other team members who did not fully contribute to achieving quality as required by the whole-team approach.",
+      "b) Retrospectives give testers an opportunity to identify activities that were successful so that these are retained when potential improvements are made in the future.",
+      "c) Retrospectives are venues where agile team members are allowed to voice their concerns about management and customers in a blame-free environment.",
+      "d) Retrospectives give agile team members a forum where they focus on discussing the plan and technical decisions for the next iteration."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) INCORRECT – Retrospectives support team bonding and collaboration, not naming individuals who underperformed.\nb) CORRECT – Retrospectives let teams discuss successful aspects to retain and areas for improvement (CTFL Syllabus V4.0, Section 2.1.6).\nc) INCORRECT – Retrospectives focus on process improvement, not venting about management or customers.\nd) INCORRECT – Planning and technical decisions belong to iteration planning, not retrospectives."
+  },
+  {
+    "id": 13,
+    "lo": "FL-2.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following tests is MOST likely to be performed as part of functional testing?\n\nSelect ONE option.",
+    "options": [
+      "a) The test checks that the sort function puts the elements of the list or array in ascending order.",
+      "b) The test checks whether the sort function completes sorting within one second of starting.",
+      "c) The test checks how easily the sort function can be changed from sorting ascending to sorting descending.",
+      "d) The test checks that the sort function still functions correctly when moved from a 32-bit to a 64-bit architecture."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) CORRECT – Verifying correct sorting evaluates functional correctness, part of functional testing (CTFL Syllabus V4.0, Section 2.2.2).\nb) INCORRECT – A speed requirement is a performance test, part of non-functional testing.\nc) INCORRECT – Ease of modification is a maintainability test, part of non-functional testing.\nd) INCORRECT – Correctness across architectures is a portability test, part of non-functional testing."
+  },
+  {
+    "id": 14,
+    "lo": "FL-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is MOST likely to be a trigger that leads to maintenance testing of a currency exchange system?\n\nSelect ONE option.",
+    "options": [
+      "a) The developers reported that changing the currency exchange system was difficult and the testers decided to check if this was true.",
+      "b) The refund option of the currency exchange system was removed as it did not always repay the correct amount to customers.",
+      "c) The agile team has started developing a user story that adds a new customer loyalty feature to the currency exchange system.",
+      "d) The language support option of the currency exchange system was used to enable both English and local language currency transactions."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) INCORRECT – Checking ease of modification is maintainability testing, not a maintenance-testing trigger.\nb) CORRECT – A system correction (removing a faulty feature) is a typical trigger for maintenance testing (CTFL Syllabus V4.0, Section 2.3.1).\nc) INCORRECT – Adding a new feature leads to functional and regression testing, not maintenance testing.\nd) INCORRECT – Using an existing option is not a system change, environment change, or retirement."
+  },
+  {
+    "id": 15,
+    "lo": "FL-3.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following CANNOT be examined by static testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Contract",
+      "b) Test plan",
+      "c) Encrypted code",
+      "d) Test charter"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a), b), d) INCORRECT – These are human-interpretable work products that can be reviewed via static testing methods.\nc) CORRECT – Properly encrypted code cannot be effectively interpreted by humans or tools and so cannot be examined by static testing (CTFL Syllabus V4.0, Section 3.1.1)."
+  },
+  {
+    "id": 16,
+    "lo": "FL-3.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements about the value of static testing is CORRECT?\n\nSelect ONE option.",
+    "options": [
+      "a) The defect types found by static testing are different from the defect types that can be found by dynamic testing",
+      "b) Dynamic testing can detect the defect types that can be found by static testing plus some additional defect types",
+      "c) Dynamic testing can identify some of the defects that can be found by static testing but not all of them",
+      "d) Static testing can identify the defect types that can be found by dynamic testing as well as some extra defect types"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "Some defects can only be found by static testing (e.g., unreachable code), some only by dynamic testing (e.g., performance issues), and some by both (CTFL Syllabus V4.0, Section 3.1.2).\na) INCORRECT – Some defect types overlap between the two.\nb) INCORRECT – Dynamic testing cannot find all defect types static testing can, e.g. unreachable code.\nc) CORRECT – Dynamic testing can find some, but not all, of the defects that static testing can find.\nd) INCORRECT – Static testing cannot find all defect types dynamic testing can, e.g. performance issues."
+  },
+  {
+    "id": 17,
+    "lo": "FL-3.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Given the following descriptions of review activities:\n\nDetected anomalies are deliberated upon, and determinations are reached regarding their status, ownership, and any further steps needed\n\n1. Issues are recorded, and any needed updates are addressed prior to the acceptance of the work product.\n2. Reviewers employ techniques to come up with suggestions and questions about the work product and to spot anomalies.\n3. The objective of the review and its schedule are established to ensure a focused and efficient review.\n4. Participants are provided with access to the item being reviewed.\n\nWhich of the following is the CORRECT sequence in the review process of the activities that correspond to the descriptions?\n\nSelect ONE option.",
+    "options": [
+      "a) 4–3–5–2–1",
+      "b) 4–5–3–1–2",
+      "c) 5–4–1–3–2",
+      "d) 5–4–3–2–1"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "The generic review process sequence is: Planning (4) – Review initiation (5) – Individual review (3) – Communication and analysis (1) – Rework and reporting (2) (CTFL Syllabus V4.0, Section 3.2.2).\nb) CORRECT – 4–5–3–1–2.\na), c), d) INCORRECT – Planning must precede initiation, and individual review must precede communication and analysis."
+  },
+  {
+    "id": 18,
+    "lo": "FL-3.2.3",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which participant in the review process is responsible for ensuring that the review meetings run effectively and that everyone at the meetings can voice their opinions freely?\n\nSelect ONE option.",
+    "options": [
+      "a) Manager",
+      "b) Moderator",
+      "c) Chairperson",
+      "d) Review Leader"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) INCORRECT – The manager decides what is reviewed and provides resources.\nb) CORRECT – The moderator (facilitator) ensures meetings run effectively, manages time, and creates a safe environment for open discussion (CTFL Syllabus V4.0, Section 3.2.3).\nc) INCORRECT – Not a recognized review role in the syllabus.\nd) INCORRECT – The review leader oversees the whole review process, including planning and team selection."
+  },
+  {
+    "id": 19,
+    "lo": "FL-4.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You perform system testing of an e-commerce web application and are provided with the following requirement:\n\nREQ 05-017. If the total cost of purchases exceeds 100 $, the customer gets a 5% discount on subsequent purchases. Otherwise, the customer does not receive a discount.\n\nWhich test techniques will be MOST helpful in designing test cases based on this requirement?\n\nSelect ONE option.",
+    "options": [
+      "a) White-box test techniques.",
+      "b) Black-box test techniques.",
+      "c) Experience-based test techniques.",
+      "d) Risk-based test techniques."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) INCORRECT – The requirement describes behavior, not internal code structure, so white-box techniques are unsuitable.\nb) CORRECT – The requirement contains a clear business rule (\"exceeds $100\"), well-suited to black-box techniques such as boundary value analysis or decision table testing (CTFL Syllabus V4.0, Section 4.1.1).\nc) INCORRECT – Less suitable, since the precise rules are better handled by black-box techniques.\nd) INCORRECT – Risk-based testing is a strategy for prioritizing tests, not a technique for designing them from a requirement."
+  },
+  {
+    "id": 20,
+    "lo": "FL-4.2.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "The system for selling cinema tickets calculates the discount type based on the client’s birth year (BY) and on the current year (CY) as follows:\n\nLet D be the difference between CY and BY, that is, D = CY – BY\n• If D < 0, then print the error message “birth year cannot be greater than current year”\n• If 0 ≤ D < 18, then apply the student discount\n• If 18 ≤ D < 65, then apply no discount\n• If D ≥ 65, then apply the pensioner discount\n\nYour test suite already contains two test cases:\n• BY = 1990, CY = 2020, expected result: no discount\n• BY = 2030, CY = 2029, expected result: print the error message\n\nWhich of the following test data sets should be added to achieve full valid equivalence partitioning coverage for the discount type?\n\nSelect TWO options.",
+    "options": [
+      "a) BY = 2001, CY=2065",
+      "b) BY = 1900, CY=1965",
+      "c) BY = 1965, CY=1900",
+      "d) BY = 2011, CY=2029",
+      "e) BY = 2000, CY=2000"
+    ],
+    "answer": [
+      1,
+      4
+    ],
+    "explanation": "a) INCORRECT – D = 64, already covered by the \"no discount\" partition.\nb) CORRECT – D = 65, covers the not-yet-covered \"pensioner discount\" partition.\nc) INCORRECT – D = −65, already covered by the \"error message\" partition.\nd) INCORRECT – D = 18, already covered by the \"no discount\" partition.\ne) CORRECT – D = 0, covers the not-yet-covered \"student discount\" partition (CTFL Syllabus V4.0, Section 4.2.1)."
+  },
+  {
+    "id": 21,
+    "lo": "FL-4.2.2",
+    "k": "K3",
+    "pts": 1,
+    "text": "You are testing a temperature control system for a horticultural cold storage facility. The system receives the temperature (in full degrees Celsius) as the input. If the temperature is between 0 and 2 degrees inclusive, the system displays the message “temperature OK”. For lower temperatures, the system displays the message \"temperature too low\" and for higher temperatures it displays the message “temperature too high”.\n\nUsing two-value boundary value analysis, which of the following sets of test inputs provides the highest level of boundary value coverage?\n\nSelect ONE option.",
+    "options": [
+      "a) –1, 3",
+      "b) 0, 2",
+      "c) –1, 0, 2, 3",
+      "d) –2, 0, 2, 4"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "The equivalence partitions are {…,–2,–1}, {0,1,2}, {3,4,…}, with boundary values –1, 0, 2 and 3.\na) INCORRECT – Covers only the \"too low\"/\"too high\" boundaries, missing 0 and 2.\nb) INCORRECT – Covers only the \"OK\" boundaries, missing –1 and 3.\nc) CORRECT – Covers all relevant boundaries: –1, 0, 2, 3 (CTFL Syllabus V4.0, Section 4.2.2).\nd) INCORRECT – Missing –1 and 3, the actual boundary values."
+  },
+  {
+    "id": 22,
+    "lo": "FL-4.2.3",
+    "k": "K3",
+    "pts": 1,
+    "text": "You are designing test cases based on the following decision table.\n\nSo far you have designed the following test cases:\n• TC1: 19-year-old, unregistered man with no experience; expected result: category A\n• TC2: 65-year-old, unregistered woman with 5 years of experience; expected result: category B\n• TC3: 66-year-old, registered man with no experience; expected result: category C\n• TC4: 65-year-old, registered woman with 4 years of experience; expected result: category D\n\nWhich of the following test cases, when added to the existing set of test cases, will increase the decision table coverage?\n\nSelect ONE option.",
+    "image": "SET_D_v1.5.0_GTB/image_22.png",
+    "options": [
+      "a) 66-year-old, unregistered man with no experience; expected result: category B.",
+      "b) 55-year-old, unregistered woman with 2 years of experience; expected result: category A.",
+      "c) 19-year-old, registered woman with 5 years of experience; expected result: category D.",
+      "d) No additional test case can increase the already achieved decision table coverage."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "TC1, TC2, TC3 and TC4 cover rules R2, R3, R7 and R6 respectively.\na) CORRECT – \"66 years old, unregistered, no experience\" corresponds to rule R4, not yet covered, so this increases coverage (CTFL Syllabus V4.0, Section 4.2.3).\nb) INCORRECT – Corresponds to rule R2, already covered by TC1.\nc) INCORRECT – Corresponds to rule R6, already covered by TC4.\nd) INCORRECT – Only 4 of 7 rules are covered so far; rules such as R1, R4 or R5 can still be added."
+  },
+  {
+    "id": 23,
+    "lo": "FL-4.2.4",
+    "k": "K3",
+    "pts": 1,
+    "text": "You are applying state transition testing to the hotel room reservation system modeled by the following state transition table, with 4 states and 5 different events:\n\nAssuming all test cases start in the ‘Requesting’ state, which of the following test cases, represented as sequences of events, achieves the highest valid transitions coverage?\n\nSelect ONE option.",
+    "image": "SET_D_v1.5.0_GTB/image_23.png",
+    "options": [
+      "a) NotAvailable, Available, ChangeRoom, NotAvailable, Cancel",
+      "b) Available, ChangeRoom, NotAvailable, Available, Pay",
+      "c) Available, ChangeRoom, Available, ChangeRoom, NotAvailable",
+      "d) NotAvailable, Cancel, ChangeRoom, Available, Pay"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) INCORRECT – Covers 4 different valid transitions out of 7 (both \"NotAvailable\" events are the same S1→S3 transition).\nb) CORRECT – Covers 5 different valid transitions out of 7 (the two \"Available\" events correspond to different transitions: S1→S2 and S3→S2), achieving the highest coverage (CTFL Syllabus V4.0, Section 4.2.4).\nc) INCORRECT – Covers only 3 different transitions, since both \"Available\" and both \"ChangeRoom\" events repeat the same transitions.\nd) INCORRECT – Not feasible: after \"Cancel\" the system reaches the End state, so no further valid transitions can follow."
+  },
+  {
+    "id": 24,
+    "lo": "FL-4.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Your test suite S for a program P achieves 100% statement coverage. It consists of three test cases, each of which achieves 50% statement coverage.\n\nWhich of the following statements is CORRECT?\n\nSelect ONE option.",
+    "options": [
+      "a) Executing S will cause all possible failures in P.",
+      "b) S achieves 100% branch coverage for P.",
+      "c) Every executable statement in P containing a defect has been run at least once during the execution of S.",
+      "d) After removing one test case from S, the remaining two test cases will still achieve 100% statement coverage."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) INCORRECT – Executing a defective statement does not guarantee a failure occurs, e.g. a division by zero only fails for specific inputs.\nb) INCORRECT – 100% statement coverage does not guarantee 100% branch coverage.\nc) CORRECT – 100% statement coverage means every executable statement, including any containing a defect, was executed at least once (CTFL Syllabus V4.0, Section 4.3.1).\nd) INCORRECT – The removed test case may have been the only one covering certain statements."
+  },
+  {
+    "id": 25,
+    "lo": "FL-4.3.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Why does white-box testing facilitate defect detection even when the software specification is vague, outdated or incomplete?\n\nSelect ONE option.",
+    "options": [
+      "a) Test cases are designed based on the structure of the test object rather than the specification.",
+      "b) For each white-box test technique the coverage can be well-defined and easily measured.",
+      "c) White-box test techniques are very well designed to detect omissions in the requirements.",
+      "d) White-box test techniques can be used in both static testing and dynamic testing."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) CORRECT – White-box testing considers the actual implementation, enabling defect detection even with a poor specification (CTFL Syllabus V4.0, Section 4.3.3).\nb) INCORRECT – True, but not the reason it helps when the specification is poor.\nc) INCORRECT – White-box testing identifies implementation defects, not requirement omissions.\nd) INCORRECT – True, but unrelated to coping with a vague specification."
+  },
+  {
+    "id": 26,
+    "lo": "FL-4.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT anticipated by the tester while applying error guessing?\n\nSelect ONE option.",
+    "options": [
+      "a) The developer misunderstood the formula in the user story for calculating the interest.",
+      "b) The developer wrote “FA = A*(1+IR^N)” instead of “FA = A*(1+IR)^N” in the source code.",
+      "c) The developer missed the seminar on new compound interest rate legislation.",
+      "d) The accuracy of the interest calculated by the system is not precise enough."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) INCORRECT – An example of a predictable developer error, anticipated through intuitive test case design.\nb) INCORRECT – An example of a predictable coding defect, anticipated through intuitive test case design.\nc) CORRECT – This is a potential root cause, not a direct prediction of an error, defect or failure, so it lies outside the scope of error guessing (CTFL Syllabus V4.0, Section 4.4.1).\nd) INCORRECT – An example of a predictable failure, anticipated through intuitive test case design."
+  },
+  {
+    "id": 27,
+    "lo": "FL-4.4.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is true about exploratory testing?\n\nSelect ONE option.",
+    "options": [
+      "a) Test cases are designed before the exploratory testing session starts.",
+      "b) The tester can perform test execution but cannot perform test design.",
+      "c) Exploratory testing results are good predictors of the number of remaining defects.",
+      "d) During exploratory testing the tester may use black-box test techniques."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) INCORRECT – Test cases are typically created during the session itself.\nb) INCORRECT – Design, execution and evaluation happen simultaneously as the tester learns more.\nc) INCORRECT – Results depend heavily on tester experience and are not reliable predictors of remaining defects.\nd) CORRECT – Testers may apply any useful technique during exploratory testing, including black-box techniques (CTFL Syllabus V4.0, Section 4.4.2)."
+  },
+  {
+    "id": 28,
+    "lo": "FL-4.5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which collaborative user story writing practice enables the team to achieve a collective understanding of what needs to be delivered?\n\nSelect ONE option.",
+    "options": [
+      "a) Planning poker, so that a team can achieve consensus on the effort needed to implement a user story.",
+      "b) Reviews, so that a team can detect inconsistencies and contradictions in a user story.",
+      "c) Iteration planning, so that user stories with the highest business value for a customer can be prioritized for implementation.",
+      "d) Conversation, so that team members can understand how the software will be used."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) INCORRECT – Planning poker estimates effort for an already-written story, not shared understanding.\nb) INCORRECT – Reviews check existing artifacts rather than collaboratively creating stories.\nc) INCORRECT – Iteration planning prioritizes work, not clarifies requirements.\nd) CORRECT – Conversations build a shared understanding of requirements, helping define acceptance criteria and resolve ambiguities (CTFL Syllabus V4.0, Section 4.5.1)."
+  },
+  {
+    "id": 29,
+    "lo": "FL-4.5.3",
+    "k": "K3",
+    "pts": 1,
+    "text": "You have just started designing test cases for the following user story.\n\nAs a customer, I want to be able to filter search results by price range, so that I can find products within my budget more easily.\n\nAcceptance criteria:\n1. The filter should work for all versions of the application from version 3.0 upwards\n2. The filter should allow the customer to set a price range with a minimum and a maximum price\n3. The search results should update dynamically as the customer adjusts the price range filter\n\nIn all test cases the precondition is as follows: there are only two products available, products A and B. Product A costs 100 $ and product B costs 110 $.\n\nWhich of the following is the BEST example of a test case for this user story?\n\nSelect ONE option.",
+    "options": [
+      "a) Enter the webpage and set filter to show prices between 90 $ and 100 $. Expected result: results show product A only. Set maximum price to 110 $. Expected result: results now include both products A and B.",
+      "b) Enter webpage. Expected result: the default minimum and maximum prices are 100 $ and 110 $ respectively. Add product C to stock, with price 120 $. Refresh the client’s webpage. Expected result: the default maximum price changes to 120 $.",
+      "c) Enter webpage and set filter to show prices between 90 $ and 115 $. Expected result: results show both products A and B. Change currency from USD to EUR. Expected result: the filter range changes correctly to EUR values, according to the current exchange rate.",
+      "d) Enter webpage with three different browsers: Edge, Chrome and Opera. In each browser set filter between 90 $ and 110 $. Expected result: results include both products A and B and the results’ layout is the same in all three browsers."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) CORRECT – Addresses acceptance criteria 2 (setting a price range) and 3 (results update dynamically as the range is adjusted) (CTFL Syllabus V4.0, Section 4.5.3).\nb) INCORRECT – Tests a default-value behavior not specified in the user story.\nc) INCORRECT – Tests currency conversion, not mentioned in the user story.\nd) INCORRECT – Tests browser compatibility, not part of the user story."
+  },
+  {
+    "id": 30,
+    "lo": "FL-5.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following BEST define EXIT criteria in a testing project?\n\nSelect TWO options.",
+    "options": [
+      "a) The budget is approved.",
+      "b) Budget runs out.",
+      "c) Test basis is available.",
+      "d) Test cases achieved at least 80% statement coverage.",
+      "e) All test analysts are ISTQB certified at the Foundation Level."
+    ],
+    "answer": [
+      1,
+      3
+    ],
+    "explanation": "a) INCORRECT – Budget approval is an entry criterion.\nb) CORRECT – Exhausting the budget is an exit criterion, preventing further activities (CTFL Syllabus V4.0, Section 5.1.3).\nc) INCORRECT – Test basis availability is an entry criterion.\nd) CORRECT – Coverage is a typical exit criterion used to assess whether testing is complete.\ne) INCORRECT – Certification of staff is an entry criterion."
+  },
+  {
+    "id": 31,
+    "lo": "FL-5.1.4",
+    "k": "K3",
+    "pts": 1,
+    "text": "The team wants to estimate the time needed for one tester to execute four test cases for a software component. The team has gathered the following measures of the effort used to execute a single test case:\n• Best-case scenario: 1 hour\n• Worst-case scenario: 8 hours\n• Most likely scenario: 3 hours\n\nGiven that the three-point estimation technique is being used, what is the final estimate of the time needed to execute all four test cases?\n\nSelect ONE option.",
+    "options": [
+      "a) 14 hours",
+      "b) 3.5 hours",
+      "c) 16 hours",
+      "d) 12 hours"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "Three-point estimate: E = (a + 4m + b) / 6 = (1 + 4×3 + 8) / 6 = 21 / 6 = 3.5 hours per test case.\nFor four test cases: 3.5 × 4 = 14 hours.\na) CORRECT (CTFL Syllabus V4.0, Section 5.1.4).\nb) INCORRECT – That is the estimate for one test case, not four.\nc), d) INCORRECT – Do not match the three-point estimation formula."
+  },
+  {
+    "id": 32,
+    "lo": "FL-5.1.5",
+    "k": "K3",
+    "pts": 1,
+    "text": "The table shows the traceability matrix from test cases to requirements. “X” means that a given test case covers the corresponding requirement.\n\nYou want to prioritize the test cases following the additional coverage prioritization technique. You execute all four test cases.\n\nWhich test case should be executed as the LAST one?\n\nSelect ONE option.",
+    "image": "SET_D_v1.5.0_GTB/image_32.png",
+    "options": [
+      "a) TC1",
+      "b) TC2",
+      "c) TC3",
+      "d) TC4"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "TC1 covers the most requirements (Req1, Req3, Req4, Req7), so it is executed first. Of the remaining uncovered requirements (Req2, Req5, Req6), TC3 covers the most (Req5, Req6), so it is executed next. TC4 then covers the last uncovered requirement (Req2). TC2 (Req1, Req5, Req7) adds no new coverage at that point and is executed last (CTFL Syllabus V4.0, Section 5.1.5).\nb) CORRECT – TC2 is executed last.\na), c), d) INCORRECT – Do not match the derived prioritization order."
+  },
+  {
+    "id": 33,
+    "lo": "FL-5.1.7",
+    "k": "K2",
+    "pts": 1,
+    "text": "How can the testing quadrants be beneficial for testing?\n\nSelect ONE option.",
+    "options": [
+      "a) They help in test planning by dividing the test process into four stages, corresponding to the four basic test levels: component, integration, system, and acceptance testing.",
+      "b) They help in assessing the high-level coverage (e.g., requirements coverage) based on low-level coverage (e.g., code coverage).",
+      "c) They help non-technical stakeholders to understand the different types of tests and that some test types are more relevant to certain test levels than others.",
+      "d) They help agile teams to develop a communication strategy based on classifying people according to four basic psychological types, and on modelling the relations between them."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) INCORRECT – Quadrants classify test types and purposes, not test levels as stages.\nb) INCORRECT – Quadrants classify test types by goal and orientation, not to assess coverage levels.\nc) CORRECT – Quadrants provide a structured way to explain the relationship between test types and their roles, helpful for non-technical stakeholders (CTFL Syllabus V4.0, Section 5.1.7).\nd) INCORRECT – The quadrants are a test model, not a psychological model."
+  },
+  {
+    "id": 34,
+    "lo": "FL-5.2.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "For a given risk, its risk level is 1,000 $ and its risk likelihood is estimated as 50%.\n\nWhat is the impact of the risk?\n\nSelect ONE option.",
+    "options": [
+      "a) 500 $",
+      "b) 2,000 $",
+      "c) 50,000 $",
+      "d) 200 $"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "Risk level = Risk likelihood × Risk impact, so Risk impact = Risk level / Risk likelihood = 1,000 $ / 0.5 = 2,000 $.\nb) CORRECT (CTFL Syllabus V4.0, Section 5.2.1).\na), c), d) INCORRECT – Do not match the calculated impact."
+  },
+  {
+    "id": 35,
+    "lo": "FL-5.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following are product risks?\n\nSelect TWO options.",
+    "options": [
+      "a) Scope creep",
+      "b) Poor architecture",
+      "c) Cost-cutting",
+      "d) Poor tool support",
+      "e) Response time too long"
+    ],
+    "answer": [
+      1,
+      4
+    ],
+    "explanation": "a) INCORRECT – Scope creep is a project risk, related to organizational/technical issues.\nb) CORRECT – Poor architecture directly affects the product’s internal structure and quality, a product risk (CTFL Syllabus V4.0, Section 5.2.2).\nc) INCORRECT – Cost-cutting is a project risk, financial/organizational in nature.\nd) INCORRECT – Poor tool support is a project risk, affecting the development/testing process.\ne) CORRECT – Long response times impact product performance and usability, a product risk."
+  },
+  {
+    "id": 36,
+    "lo": "FL-5.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following is NOT a valid purpose for a test report?\n\nSelect ONE option.",
+    "options": [
+      "a) Tracking test progress and identifying areas that require further attention.",
+      "b) Providing information on the tests executed, their results, and any issues or defects found.",
+      "c) Providing information about each defect, such as the steps to reproduce it.",
+      "d) Providing information on testing planned for the next period."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a), b), d) INCORRECT – These are all valid purposes of a test report.\nc) CORRECT – Detailed defect reproduction steps are the purpose of a defect report, not a test report (CTFL Syllabus V4.0, Section 5.3.2)."
+  },
+  {
+    "id": 37,
+    "lo": "FL-5.4.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "The user reported a software failure. An engineer from the support team asked the user for the software version number where the failure was observed. Based on the version number, the team reassembled all the files that made up the release. This later allowed a developer to perform analysis, find the defect, and fix it.\n\nWhich of the following enabled the above activity to be performed by the team?\n\nSelect ONE option.",
+    "options": [
+      "a) Risk management",
+      "b) Test monitoring and control",
+      "c) Whole-team approach",
+      "d) Configuration management"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) INCORRECT – Risk management concerns identifying and managing risks, not reassembling release files.\nb) INCORRECT – Test monitoring and control concerns guiding and adjusting the testing process, not tracking versions.\nc) INCORRECT – The whole-team approach concerns collaboration, not configuration tracking.\nd) CORRECT – Configuration management identifies, controls and tracks work products, allowing the team to reassemble a specific release to reproduce and fix the defect (CTFL Syllabus V4.0, Section 5.4.1)."
+  },
+  {
+    "id": 38,
+    "lo": "FL-5.5.1",
+    "k": "K3",
+    "pts": 1,
+    "text": "Consider the following defect report for a Book Lending System.\n\nDefect ID: 001 | Title: Unable to Return a Book\nSeverity: High | Priority: [empty]\nEnvironment: Windows 11, Google Chrome\n\nDescription: When attempting to return a book using the Book Return feature, the system does not register the return and the book remains checked out to the user.\n\nSteps to Reproduce:\nLogin to the Book Lending System as a user who has checked out a book.\nClick on the \"Book Return\" button for the book that has been checked out.\nSystem does not register the return and the book remains checked out.\n\nExpected Result: The book should be returned and no longer appear as checked out to the user.\nActual Result: The book remains checked out to the user and is not registered as returned in the system.\n\nAttachments: [empty list]\n\nWhich of the following is MOST likely to help the developer reproduce the failure quickly?\n\nSelect ONE option.",
+    "options": [
+      "a) Adding information about which users and which books the issue affects to the “Description” section.",
+      "b) Filling in the missing value for the “Priority” field.",
+      "c) Adding memory dumps and database snapshots taken after each step described in the “Steps to Reproduce” section to the “Attachments” section.",
+      "d) Repeating the same test case for different environments and writing defect reports for each of them separately."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) CORRECT – Specific user and book data lets the developer reproduce the issue with the same input data, speeding up resolution (CTFL Syllabus V4.0, Section 5.5.1).\nb) INCORRECT – Priority helps planning, not reproduction.\nc) INCORRECT – Excessive attachments clutter the report and slow analysis rather than help reproduce it.\nd) INCORRECT – Duplicated reports for different environments do not help reproduce the defect in the reported environment."
+  },
+  {
+    "id": 39,
+    "lo": "FL-6.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which tools from which of the category are MOST likely to facilitate test execution?\n\nSelect TWO options.",
+    "options": [
+      "a) Collaboration tools",
+      "b) DevOps tools",
+      "c) Management tools",
+      "d) Non-functional testing tools",
+      "e) Test design and implementation tools"
+    ],
+    "answer": [
+      1,
+      3
+    ],
+    "explanation": "a) INCORRECT – Collaboration tools facilitate communication, not test execution.\nb) CORRECT – DevOps tools support the delivery pipeline and CI/CD, which includes test execution such as component testing for CI (CTFL Syllabus V4.0, Section 6.1.1).\nc) INCORRECT – Management tools facilitate management of the SDLC, requirements, tests, defects and configuration, not execution itself.\nd) CORRECT – Non-functional testing tools let testers perform non-functional testing, including test execution, that is difficult or impossible to do manually.\ne) INCORRECT – Test design and implementation tools facilitate generating testware, not executing it."
+  },
+  {
+    "id": 40,
+    "lo": "FL-6.2.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Which of the following is MOST likely to be a risk of test automation?\n\nSelect ONE option.",
+    "options": [
+      "a) The detection of additional high-severity defects.",
+      "b) Providing measures that are too complicated for humans to derive.",
+      "c) Incompatibility with the development platform.",
+      "d) Substantially reduced test execution times."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) INCORRECT – A benefit, not a risk, of test automation.\nb) INCORRECT – A benefit, not a risk, of test automation.\nc) CORRECT – Incompatibility with the development platform is a common risk of test automation, hindering integration and data exchange (CTFL Syllabus V4.0, Section 6.2.1).\nd) INCORRECT – A benefit, not a risk, of test automation."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 60 * 60;
+      const EXT_SECONDS = 75 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let examDeadline = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "75"
+          : "60";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "The timer counts down from 75:00 (60 min + 15 min extension). The exam is submitted automatically when time runs out."
+          : "The timer counts down from 60:00. The exam is submitted automatically when time runs out.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${escHtml(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} pt${q.pts > 1 ? "s" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${escHtml(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="Diagram for Question ${q.id}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${escHtml(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(parseInt(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      function tickTimer() {
+        if (examSubmitted || examDeadline === null) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        const el = document.getElementById("timer");
+        el.textContent = fmtTime(secondsLeft);
+        if (secondsLeft <= 300) el.className = "timer danger";
+        else if (secondsLeft <= 900) el.className = "timer warn";
+        else el.className = "timer";
+        if (secondsLeft === 0) doSubmit(true);
+      }
+
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) tickTimer();
+      });
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Submit exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `You still have <strong style="color:var(--warn)">${unanswered} unanswered question${unanswered > 1 ? "s" : ""}</strong>. Unanswered questions score 0 points.<br><br>Submit anyway?`
+            : `All ${questions.length} questions answered. Submit the exam now?`;
+        document.getElementById("confirm-yes-btn").textContent = "Submit";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Restart the exam?";
+        document.getElementById("confirm-msg").innerHTML =
+          "All answers will be lost. The timer will reset to " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Are you sure?";
+        document.getElementById("confirm-yes-btn").textContent = "Restart";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            document.getElementById("inp-" + qi + "-" + oi).disabled = true;
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Not answered &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Correct (+" + q.pts + (q.pts > 1 ? " pts)" : " pt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Incorrect &middot; Correct: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = pct >= 65;
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (time expired)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " of " + totalPoints + " points (" + correctCount + " of " + questions.length + " questions correct)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? "✓ PASS (≥ 65%)"
+          : "✗ FAIL (< 65%)";
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

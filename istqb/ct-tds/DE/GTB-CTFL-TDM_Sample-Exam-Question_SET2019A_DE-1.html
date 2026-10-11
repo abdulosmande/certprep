@@ -1,0 +1,1973 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GTB CTFL-TDS · 2017 v1.0.16 — Probeprüfung Set 2019 A</title>
+    
+    <style>
+      :root {
+        --bg: #080c12;
+        --surface: #0e1420;
+        --card: #111827;
+        --border: #1e2840;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --correct: #34d399;
+        --incorrect: #f87171;
+        --warn: #fbbf24;
+        --text: #cbd5e1;
+        --muted: #94a3b8;
+        --heading: #f1f5f9;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      #start-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 0%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+      }
+      .start-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 3.5rem 3rem;
+        max-width: 540px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .start-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(56, 189, 248, 0.03) 0%,
+          transparent 50%,
+          rgba(129, 140, 248, 0.03) 100%
+        );
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .start-badge {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 99px;
+        display: inline-block;
+        margin-bottom: 1.6rem;
+      }
+      .start-card h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--heading);
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .start-card h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .start-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+      .start-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+      .meta-item {
+        background: var(--surface);
+        padding: 1.1rem 0.5rem;
+        text-align: center;
+      }
+      .meta-val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--heading);
+        display: block;
+      }
+      .meta-lbl {
+        font-size: 0.63rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+      }
+      .btn-start {
+        font-family: "DM Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s;
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+      }
+      .start-note {
+        font-size: 0.73rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .time-option-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.65rem;
+        font-family: "DM Mono", monospace;
+      }
+      .time-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+      .time-opt {
+        background: var(--surface);
+        padding: 0.85rem 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        border: none;
+        width: 100%;
+        font-family: "DM Mono", monospace;
+        color: var(--muted);
+      }
+      .time-opt:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .time-opt.active {
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--heading);
+      }
+      .time-opt-val {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: inherit;
+        display: block;
+        line-height: 1.2;
+      }
+      .time-opt-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 0.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+      .time-opt.active .time-opt-val {
+        color: var(--accent);
+      }
+      .time-ext-note {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        padding: 0.6rem 0.9rem;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.15);
+        border-radius: 8px;
+      }
+
+      #exam-screen {
+        display: none;
+      }
+      header {
+        background: rgba(11, 16, 28, 0.96);
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+      }
+      .header-inner {
+        max-width: 920px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .header-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .exam-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .exam-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .timer-block {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .timer {
+        font-family: "DM Mono", monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+        min-width: 95px;
+        text-align: right;
+      }
+      .timer.warn {
+        color: var(--warn);
+      }
+      .timer.danger {
+        color: var(--incorrect);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .answered-count {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: right;
+        line-height: 1.5;
+      }
+      .answered-count span {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .progress-bar-wrap {
+        max-width: 920px;
+        margin: 0.5rem auto 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 99px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .exam-toolbar {
+        margin-bottom: 1.5rem;
+      }
+      .toolbar-info {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .toolbar-info strong {
+        color: var(--text);
+      }
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1.2rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+      }
+      .btn-secondary {
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .btn-secondary:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      .question-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.25s;
+        animation: fadeUp 0.2s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .question-card.correct-card {
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .question-card.incorrect-card {
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .q-header {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        margin-bottom: 1.1rem;
+      }
+      .q-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
+      .q-num {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 5px;
+        padding: 0.18rem 0.5rem;
+        white-space: nowrap;
+      }
+      .q-lo {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-pts {
+        font-family: "DM Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent2);
+        background: rgba(129, 140, 248, 0.08);
+        border: 1px solid rgba(129, 140, 248, 0.18);
+        border-radius: 4px;
+        padding: 0.14rem 0.4rem;
+        white-space: nowrap;
+      }
+      .q-text {
+        font-size: 0.92rem;
+        color: var(--heading);
+        line-height: 1.7;
+        flex: 1;
+        white-space: pre-wrap;
+      }
+
+      /* Optional image per question */
+      .q-image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0 1.1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      /* Optional table per question */
+      .q-table-wrap {
+        margin: 1rem 0 1.1rem;
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .q-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .q-table-wrap th {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--heading);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 0.55rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .q-table-wrap td {
+        color: var(--text);
+        padding: 0.5rem 0.85rem;
+        border-bottom: 1px solid rgba(30, 40, 64, 0.5);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .q-table-wrap tr:last-child td {
+        border-bottom: none;
+      }
+      .q-table-wrap tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.7rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+      .option-row:hover:not(.disabled) {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.03);
+      }
+      .option-row:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .option-row.disabled {
+        cursor: default;
+      }
+      .option-marker {
+        flex-shrink: 0;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        background: transparent;
+        margin-top: 2px;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .option-marker::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .option-row.selected {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .option-row.selected .option-marker {
+        border-color: var(--accent);
+      }
+      .option-row.selected .option-marker::after {
+        opacity: 1;
+      }
+      .option-row.reveal-correct {
+        border-color: var(--correct) !important;
+        background: rgba(52, 211, 153, 0.07) !important;
+      }
+      .option-row.reveal-correct .option-marker {
+        border-color: var(--correct);
+        background: rgba(52, 211, 153, 0.15);
+      }
+      .option-row.reveal-correct .option-marker::after {
+        background: var(--correct);
+        opacity: 1;
+      }
+      .option-row.reveal-wrong {
+        border-color: var(--incorrect) !important;
+        background: rgba(248, 113, 113, 0.07) !important;
+      }
+      .option-row.reveal-wrong .option-marker {
+        border-color: var(--incorrect);
+        background: rgba(248, 113, 113, 0.15);
+      }
+      .option-row.reveal-wrong .option-marker::after {
+        background: var(--incorrect);
+        opacity: 1;
+      }
+      .option-text {
+        font-size: 0.87rem;
+        line-height: 1.55;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .result-tag {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-top: 1rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+      }
+      .result-tag.show {
+        display: flex;
+      }
+      .result-tag.correct {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+      }
+      .result-tag.incorrect {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.85rem;
+        padding: 0.85rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--accent2);
+        border-radius: 0 6px 6px 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      #summary {
+        display: none;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 3rem 2.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeUp 0.4s ease;
+      }
+      #summary h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.02em;
+      }
+      .big-score {
+        font-family: "DM Mono", monospace;
+        font-size: 4.8rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1;
+        margin: 1rem 0 0.2rem;
+      }
+      .sub {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 0.6rem;
+      }
+      .time-taken {
+        font-family: "DM Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .time-taken span {
+        color: var(--text);
+      }
+      .grade-badge {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        margin-bottom: 2rem;
+      }
+      .grade-badge.pass {
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--correct);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .grade-badge.fail {
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--incorrect);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .stat .val {
+        font-family: "DM Mono", monospace;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: var(--heading);
+      }
+      .stat .lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.1rem;
+      }
+
+      #confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      #confirm-overlay.show {
+        display: flex;
+      }
+      .confirm-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        max-width: 420px;
+        width: 90%;
+        text-align: center;
+        animation: fadeUp 0.22s ease;
+      }
+      .confirm-box h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--heading);
+        margin-bottom: 0.75rem;
+      }
+      .confirm-box p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 1.75rem;
+        line-height: 1.65;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .btn-confirm-yes {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: var(--accent);
+        color: #080c12;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-yes:hover {
+        transform: translateY(-1px);
+      }
+      .btn-confirm-no {
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        padding: 0.65rem 1.5rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-confirm-no:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0.75rem 1rem;
+        }
+        main {
+          padding: 1.25rem 0.9rem 3rem;
+        }
+        .question-card {
+          padding: 1.1rem 0.9rem;
+        }
+        .start-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .timer {
+          font-size: 1.4rem;
+          min-width: 75px;
+        }
+        .stat-row {
+          gap: 1.5rem;
+        }
+        .start-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .header-buttons {
+          gap: 0.35rem;
+        }
+        .btn-submit,
+        .btn-secondary {
+          font-size: 0.7rem;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+      .q-text, .option-text, .header-left { min-width: 0; overflow-wrap: anywhere; }
+      .meta-lbl { overflow-wrap: anywhere; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+      .start-subtitle, .q-text, .option-text { overflow-wrap: anywhere; min-width: 0; }
+      @media (max-width: 640px) { .timer-block { flex-wrap: wrap; max-width: 100%; } }
+    
+      .source-figure { margin: 1rem 0; max-width: 100%; }
+      .source-figure img { max-width: 100%; height: auto; display: block; background: white; border-radius: 5px; }
+      .source-figure a { display: inline-block; max-width: 100%; }
+      .source-figure figcaption { font-size: .72rem; color: #94a3b8; margin-top: .3rem; }
+      .source-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+  <link rel="stylesheet" href="../../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../../../assets/exam-ui.css">
+</head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start-screen">
+      <div class="start-card">
+        <div class="start-badge">ISTQB Advanced Level</div>
+        <h1>CTFL-TDS · 2017 v1.0.16<br /><em>Probeprüfung</em></h1>
+        <p class="start-subtitle">GTB® Certified Tester Test Data Specialist · Probeprüfung Set 2019 A · Lehrplan v2017 v1.0.16. Der Timer startet mit der Prüfung.</p>
+        <div class="start-meta">
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Fragen</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val" id="meta-minutes">60</span>
+            <div class="meta-lbl">Minuten</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">40</span>
+            <div class="meta-lbl">Punkte</div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">65%</span>
+            <div class="meta-lbl">Bestehen</div>
+          </div>
+        </div>
+
+        <p class="start-subtitle source-credit">Quelle: GTB® / German Testing Board — GTB-CTFL-TDM_Sample-Exam-Question_SET2019A_DE-1.pdf; GTB-CTFL-TDM_Sample-Exam-Answers_SET2019A_DE-1.pdf. Copyright © GTB® / German Testing Board e.V.. Fragen, Tabellen, Diagramme und Begründungen wurden aus diesen Quellen übernommen. Autoren und Übersetzer sind in den Quell-PDFs genannt.</p>
+        <div class="time-option-label">Prüfungsdauer</div>
+        <div class="time-toggle">
+          <button
+            class="time-opt active"
+            id="opt-standard"
+            onclick="selectTime(false)"
+          >
+            <span class="time-opt-val">60 Min.</span>
+            <span class="time-opt-lbl">Standard</span>
+          </button>
+          <button class="time-opt" id="opt-extended" onclick="selectTime(true)">
+            <span class="time-opt-val">75 Min.</span>
+            <span class="time-opt-lbl">+25 % Übungszeit</span>
+          </button>
+        </div>
+        <div class="time-ext-note" id="ext-note" style="display: none">Optionale Verlängerung der Übungszeit um 25 %: 15 Minuten zusätzlich.</div>
+
+        <button class="btn-start" onclick="startExam()">
+          &#9654; Prüfung starten
+        </button>
+        <p class="start-note" id="start-note-txt">
+          Der Timer zählt von 60:00 herunter. Nach Ablauf der Zeit wird
+          die Prüfung automatisch abgegeben.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="exam-screen">
+      <header>
+        <div class="header-inner">
+          <div class="header-left">
+            <span class="exam-label"
+              >GTB CTFL-TDS · 2017 v1.0.16 · Probeprüfung Set 2019 A</span
+            >
+            <span class="exam-title">Certified Tester – Test Data Specialist</span>
+          </div>
+          <div class="timer-block">
+            <div class="answered-count">
+              <span id="answered-num">0</span>/40 beantwortet
+            </div>
+            <div class="timer" id="timer">60:00</div>
+            <div class="header-buttons">
+              <button class="btn-secondary" onclick="confirmReset()">
+                &#8635; Zurücksetzen
+              </button>
+              <button class="btn-submit" onclick="confirmSubmit()">
+                Abgeben
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="exam-toolbar">
+          <div class="toolbar-info">
+            40 Fragen (40 Punkte) · <strong>Bestanden ab 26 von 40 Punkten (65 %)</strong>
+            · Jede Frage ist einen Punkt wert. Die Anzahl der auszuwählenden Antworten
+            steht bei jeder Frage.
+          </div>
+        </div>
+        <div id="questions-container"></div>
+        <div id="summary">
+          <h2>Prüfung abgeschlossen</h2>
+          <div class="big-score" id="final-score-pct">—</div>
+          <div class="sub" id="final-score-raw"></div>
+          <div class="time-taken">
+            Benötigte Zeit: <span id="time-used">—</span>
+          </div>
+          <div class="grade-badge" id="grade-badge"></div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="val" id="stat-correct">—</div>
+              <div class="lbl">Richtig</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-wrong">—</div>
+              <div class="lbl">Falsch</div>
+            </div>
+            <div class="stat">
+              <div class="val" id="stat-skipped">—</div>
+              <div class="lbl">Unbeantwortet</div>
+            </div>
+          </div>
+          <button class="btn-secondary" onclick="confirmReset()">
+            &#8635; Neustart
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- CONFIRM OVERLAY -->
+    <div id="confirm-overlay">
+      <div class="confirm-box">
+        <h3 id="confirm-title">Prüfung abgeben?</h3>
+        <p id="confirm-msg"></p>
+        <div class="confirm-btns">
+          <button class="btn-confirm-no" onclick="closeConfirm()">
+            Abbrechen
+          </button>
+          <button
+            class="btn-confirm-yes"
+            id="confirm-yes-btn"
+            onclick="doConfirm()"
+          >
+            Abgeben
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const questions = [
+  {
+    "id": 1,
+    "lo": "TDM-1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen beschreibt eines der Ziele des Testdatenmanagements am BESTEN? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Ein effizientes Testdatenmanagement wird es einer Testabteilung ermöglichen, alle Tests automatisiert durchzuführen.",
+      "b) Ein erfolgreiches methodisches Testdatenmanagement wird es einem Unternehmen ermöglichen, Testdatenbestände zielgerechter bereitzustellen.",
+      "c) Ein zielgerichtetes effizientes Testdatenmanagement sorgt in Unternehmen für eine strenge Trennung nach Projekten, um dem Datenschutz nachzukommen.",
+      "d) Ein erfolgreiches methodisches Testdatenmanagement wird es einem Unternehmen ermöglichen, Produktivdaten auch ohne Einverständnis der betroffenen Personen bereitzustellen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – durch ein effizientes Testdatenmanagement kann nicht garantiert werden, dass auch wirklich alle Tests automatisiert durchgeführt werden können. Das Ziel des Testdatenmanagements ist die Bereitstellung von Testdaten – die Testdurchführung ist davon unberührt (siehe Lehrplan Kapitel 1.1, Absatz 1).\n\nb) KORREKT– diese Aussage ist im Kapitel 1.1, Absatz 1 des Lehrplans zu finden.\n\nc) FALSCH – ein Ziel des Testdatenmanagements ist das Heben von projektübergreifenden Synergien. (siehe Lehrplan Kapitel 1.1, Absatz 1, Zeile 2).\n\nd) FALSCH – es ist explizit gefordert, dass das Testdatenmanagement den rechtlichen Anforderungen genügen muss (siehe Lehrplan Kapitel 1.1 Ende Absatz 1)."
+  },
+  {
+    "id": 2,
+    "lo": "TDM-1.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Die Definition, Bereitstellung und der Umgang mit Testdaten stellen das Testdatenmanagement vor zahlreiche Herausforderungen. Welche der folgenden Optionen beschreibt KEINE solche Herausforderung? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Schaffung von Wissensmonopolen",
+      "b) Verknüpfung von Testfall und Testdaten",
+      "c) Verbindung zwischen Testumgebung und Testdatenanforderung",
+      "d) Wiederverwendbarkeit von Testdaten"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – die Schaffung von Wissensmonopolen ist keine Herausforderung. Im Gegenteil ist die Auflösung solcher eine Herausforderung (siehe Lehrplan Kapitel 1.2, 6. Aufzählungspunkt).\n\nb) FALSCH – siehe Lehrplan Kapitel 1.2, 5. Aufzählpunkt.\n\nc) FALSCH – siehe Lehrplan Kapitel 1.2, 4. Aufzählpunkt.\n\nd) FALSCH – siehe Lehrplan Kapitel 1.2, 7. Aufzählpunkt."
+  },
+  {
+    "id": 3,
+    "lo": "TDM-1.3.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Optionen stellt einen Nutzen des Testdatenmanagements dar? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Die Evaluierung der Werkzeuge zur Unterstützung des Testdatenmanagements.",
+      "b) Die manuelle Anonymisierung der Testdaten resultiert in höherer Effizienz beim Regressionstest.",
+      "c) Die unverfälschte Nutzung personenbezogener Echtdaten führt zu realitätsnahen Testfällen.",
+      "d) Werkzeuge zur Generierung von Testdaten können den Testprozess deutlich beschleunigen."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – diese Evaluation verursacht zunächst Kosten: siehe Lehrplan Kapitel 1.3.2, zweite Aufzählung, erster Punkt. Des Weiteren ist das kein Nutzen, sondern eine Vorbedingung / Möglichkeit der Unterstützung des TDM.\n\nb) FALSCH – die höhere Effizienz beim Regressionstest wird u.a. durch eine effiziente Ablage der Testdaten erreicht (siehe Lehrplan Kapitel 1.3.1.1, Absatz 1). Weiterhin ist mit der Anonymisierung noch kein Test durchgeführt – es besteht kein direkter Zusammenhang zur Effizienzerhöhung beim Regressionstest, da hierzu die Daten auch bereits vorliegen müssen.\n\nc) FALSCH – personenbezogene Testdaten dürfen beim Test gar nicht oder nur anonymisiert verwendet werden (siehe Lehrplan Kapitel 1.3.1.2, Absatz 1).\n\nd) KORREKT – siehe Lehrplan Kapitel 1.3.1.1, Absatz 3."
+  },
+  {
+    "id": 4,
+    "lo": "TDM-1.3.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Was sind Folgekosten beim Testdatenmanagement? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Kosten für personellen Mehraufwand",
+      "b) Kosten für Lizenzen",
+      "c) Kosten für Hardware",
+      "d) Kosten für Bereitstellung und Wartung der Testinfrastruktur"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – dies sind (Selbst-) Kosten des Prozesses (siehe Lehrplan Kapitel 1.3.2, erster Absatz).\n\nb) FALSCH – dies ist ein Kostenfaktor im Bereich der Werkzeugkosten (siehe Lehrplan Kapitel 1.3.2, zweiter Absatz).\n\nc) FALSCH – dies ist ein direkter Kostenfaktor (siehe Lehrplan Kapitel 1.3.2, dritter Absatz).\n\nd) KORREKT – dies ist im Lehrplan explizit als mögliche Folgekosten aufgeführt, die einerseits durch ineffizientes TDM entstehen (z.B. werden Testdatenbestände in mehreren Umgebungen vorgehalten), und andererseits durch ein effizientes Testdatenmanagement reduziert werden können, indem z.B. eine zentrale Verwaltung implementiert wird (siehe Lehrplan Kapitel 1.3.2, letzter Satz)."
+  },
+  {
+    "id": 5,
+    "lo": "TDM-1.4",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen bzgl. der Risiken im Testdatenmanagement ist korrekt? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Interne Regelungen zum Umgang mit Daten beseitigen das Risiko einer Sicherheitslücke für sensible Daten.",
+      "b) Wenn Datenschutzrichtlinien nicht eingehalten werden, kann das zu Vertrauensverlust und Geldstrafen führen.",
+      "c) Die Verwendung synthetischer Testdaten kann die für den Negativtest notwendige Realitätsnähe gefährden.",
+      "d) Die Verwendung manuell erstellter Testdaten gefährdet die Wiederverwendbarkeit der Testdaten im Regressionstest."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – siehe Lehrplan Kapitel 1.4.2, Satz 2: Das Risiko lässt sich nur reduzieren, nicht ganz ausschalten.\n\nb) KORREKT – siehe Lehrplan Kapitel 1.4.1.\n\nc) FALSCH – siehe Lehrplan Kapitel 1.4.4, letzter Absatz: Gerade synthetische Daten sind geeignet für Negativtests, gerade für Negativtests ist Realitätsnähe eher hinderlich als förderlich.\n\nd) FALSCH – siehe Lehrplan Kapitel 1.4.3: Die Wiederverwendung ist nur gefährdet, wenn nicht auf ein strukturiertes Vorgehen geachtet wird. Die Art der Erzeugung ist unabhängig davon. Die aufgezeigte Kausalität existiert also nicht."
+  },
+  {
+    "id": 6,
+    "lo": "TDM-2.2 a",
+    "k": "K3",
+    "pts": 1,
+    "text": "Sie arbeiten für eine Bank in der Abteilung für Immobilienkredite und sollen eine neue Anwendung testen, die Ihnen die Bewertung von möglichen Kreditangeboten abnimmt. Dazu werden von dem angesparten Vermögen eines Kunden erst die Gebühren für den Kauf einer Immobilie abgezogen (hier vereinfacht mit 10% vom Kaufpreis angenommen) und dann der restliche Betrag als Anzahlung verwendet. Als Akzeptanzkriterien gelten, dass die Anzahlung mindestens 10% betragen muss und dass die monatliche Rate nicht mehr als 50% vom Nettomonatseinkommen betragen darf.\n\nWelcher der folgenden Testfälle ist besonders geeignet für die erfolgreiche Vergabe eines Kredits wenn die Anwendung der Grenzwertanalyse mit gültigen Grenzwerten für BEIDE Akzeptanzkriterien vorausgesetzt wird? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Kaufpreis: 100.000€, Vermögen: 15.000€, monatliche Rate: 1.500€, Nettomonatseinkommen: 3.000€",
+      "b) Kaufpreis: 50.000€, Vermögen: 20.000€, monatliche Rate: 500€, Nettomonatseinkommen: 2.000€",
+      "c) Kaufpreis: 70.000€, Vermögen: 14.000€, monatliche Rate: 1.350€, Nettomonatseinkommen: 2.700€",
+      "d) Kaufpreis: 100.000€, Vermögen: 20.000€, monatliche Rate: 1.900€, Nettomonatseinkommen: 4.800€"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – da von dem Vermögen nach Abzug der Gebühren weniger als 10% des Kaufpreises für Anzahlung übrig bleibt.\n\nb) FALSCH – da der Kredit zwar vergeben wird, jedoch keine Grenzwerte genutzt werden.\n\nc) KORREKT – das Vermögen nach Abzug der Gebühren ist exakt 10% des Kaufpreises und die monatliche Rate entspricht ebenfalls exakt 50% des Nettoeinkommens.\n\nd) FALSCH – da der Kredit zwar vergeben wird, zumindest für die monatliche Rate aber kein Grenzwert genutzt wird."
+  },
+  {
+    "id": 7,
+    "lo": "TDM-2.2 b",
+    "k": "K3",
+    "pts": 1,
+    "text": "Sie müssen vorhandene Testdaten analysieren. Diese kommen in einem Testfall im Versicherungswesen mit Fokus auf gesunde Lebensweise zum Einsatz. Hierbei geht es um regelmäßige Sportaktivitäten (min. 1 x pro Woche). Als Testdaten werden die persönlichen Daten eines Versicherungsnehmers verwendet, die durch ein Regelwerk in drei Testschritten geprüft werden:\n\n1) Wenn eine Person nicht beim Unternehmen versichert ist, älter als 45 Jahre alt ist und nachweislich keinen Sport treibt, dann bekommt sie keinen vergünstigten Tarif angeboten.\n\n2) Wenn eine Person beim Unternehmen versichert ist, älter als 45 Jahre alt ist und nachweislich min. 1 x pro Woche Sport treibt, dann bekommt sie Rabattangebote.\n\n3) Wenn eine Person beim Unternehmen versichert ist, jünger als 46 Jahre alt ist und nachweislich keinen Sport treibt, dann bekommt sie Broschüren zu gesunder Lebensweise zugeschickt. Für welche der folgenden Personen gibt es KEINE Regel in den oben aufgeführten Testschritten 1, 2 oder 3? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Peter ist beim Unternehmen versichert, 33 Jahre alt und unsportlich.",
+      "b) Susann ist nicht beim Unternehmen versichert, 72 Jahre alt und treibt gelegentlich Sport.",
+      "c) Heinz ist beim Unternehmen versichert, 42 Jahre alt und hat noch nie Sport getrieben.",
+      "d) Angela ist beim Unternehmen versichert, 46 Jahre alt und geht 3 * pro Woche ins Fitnesscenter."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – erfüllt Testschritt 3.\n\nb) KORREKT – nur Aussage 1 dreht sich um nicht versicherte Personen. Diese treiben aber keinen Sport. Das tut Susann aber.\n\nc) FALSCH – erfüllt Testschritt 3.\n\nd) FALSCH – erfüllt Testschritt 2."
+  },
+  {
+    "id": 8,
+    "lo": "TDM-2.2 b",
+    "k": "K3",
+    "pts": 1,
+    "text": "Eine Software für die Bilanzerstellung soll getestet werden. Mehrere IT- Systeme stellen hierzu Daten für die Software bereit. Als Ausgabe erstellt die Software die Handelsbilanz des Unternehmens und die Gewinn-und- Verlust-Rechnung. Der Fachbereich, der die Software abnehmen soll, besteht darauf, mit Produktionsdaten zu testen, um die Testergebnisse der bereits vorhandenen Testfälle mit den manuell errechneten Ergebnissen auf Basis der Produktionsdaten vergleichen zu können. Im zu testenden neuen Release der Software sind nicht nur vorhandene Funktionen korrigiert worden, sondern auch Funktionen mit neuen Datenfeldern, die ausgefüllt werden müssen, hinzugekommen. Die Anpassung der Datenbereitstellung durch die anfangs erwähnten IT- Systeme muss noch implementiert werden.\n\nWelche der folgenden Vorgehensweisen zur Bereitstellung der Testdaten für das beschriebene Szenario eignet sich am BESTEN? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Die Testdaten können als 1:1-Kopie der Produktionsdaten abgezogen und für den Test eingesetzt werden, damit die Tester die Testergebnisse mit den Produktionsergebnissen vergleichen können.",
+      "b) Bei der Bereitstellung der Testdaten müssen für die neu hinzugekommenen Datenfelder Testdaten für die vorhandenen Testfälle ergänzt werden.",
+      "c) Die Testdaten sollten synthetisch erzeugt werden, da hier die neuen Datenfelder der Datenbank automatisch gefüllt werden können.",
+      "d) Für die neuen Funktionen sind Testfälle zu entwerfen, die die vorhandenen Testdaten nutzen."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – da laut Szenario neue Datenfelder als Mussfelder hinzugekommen sind, die auch noch nicht durch die IT-Systeme unterstützt werden. Damit ist eine Produktionskopie nicht mehr „1:1“ einsetzbar!\n\nb) KORREKT – da im Szenario eindeutig beschrieben ist, dass neue Datenfelder für Funktionen aufgenommen wurden. Bei bestehenden Testfällen können diese noch nicht ausgefüllt sein – daher sind auch die bestehenden Testfälle um die Datenfelder und entsprechenden Testdaten zu erweitern.\n\nc) FALSCH – der explizite Wunsch der testenden Fachabteilung war die Verwendung von Produktionsdaten. Hierin besteht auch ein Kernpunkt in der Wahl von Testdaten: Künstlich oder Real?\n\nd) FALSCH – da sich für die Testfälle, egal ob alt (falls die Anforderungen gleichgeblieben sind) oder neu, die Datenstruktur verändert hat. Ein valider Test mit alten Testdaten ist damit nicht mehr möglich. Hierfür sind neue Testdaten zu erstellen. Der Passus „vorhandene Testdaten nutzen“ ist daher nicht korrekt."
+  },
+  {
+    "id": 9,
+    "lo": "TDM-2.3.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Für die Steuerung von Geschäftsverarbeitungsabläufen werden im Testverlauf Daten innerhalb der zu testenden Software automatisiert ermittelt. Dabei wird auch auf weitere Systeme zugegriffen, um mittels eindeutiger Schlüsselwerte bestimmte Verarbeitungsparameter zu ermitteln. Um welche Testdatenart handelt es sich? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Eingabedaten",
+      "b) Zustandsdaten",
+      "c) Ausgabedaten",
+      "d) Soll-Daten"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – da die beschriebenen Daten nicht eingegeben bzw. erfasst werden (siehe Lehrplan Kapitel 2.3.1).\n\nb) KORREKT – da die beschriebenen Daten für die Steuerung innerhalb des Testobjekts eingesetzt werden und somit den inneren Zustand des Testobjekts enthalten (siehe Lehrplan Kapitel 2.3.1).\n\nc) FALSCH – da nicht erwähnt ist, dass die beschriebenen Daten ausgegeben, gedruckt, gesendet oder auf eine andere Weise übertragen werden (siehe Lehrplan Kapitel 2.3.1).\n\nd) FALSCH – da die Daten nicht vor dem Testablauf als erwartetes Ergebnis bereitgestellt werden (siehe Lehrplan Kapitel 2.3.1)."
+  },
+  {
+    "id": 10,
+    "lo": "TDM-2.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Sie erhalten zu Testzwecken eine Liste von E-Mail-Adressen im Format „vorname.nachname@localhost“, bei denen die Namen aus einer produktiven Datenbank stammen. Die Domain wurde durch \"@localhost\" ersetzt, ferner wurden die Nachnamen bis auf den Anfangsbuchstaben durch eine fortlaufende Nummer ersetzt, z.B. „erika.m0815@localhost“.\n\nWelche Testdaten-Gewinnungsart wurde hier verwendet? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Synthetische Daten",
+      "b) Produktivdaten",
+      "c) Absolut anonymisierte Daten",
+      "d) Pseudonymisierte Daten"
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – die Daten wurden nicht separat erstellt, sondern aus einer produktiven Datenbank kopiert. Es besteht somit ein inhaltlicher Bezug zu Produktivdaten, was bei synthetischer Testdatengewinnung nicht der Fall ist (siehe Lehrplan Kapitel 2.3.2 „Synthetische Testdaten“).\n\nb) FALSCH – die Daten wurden verändert. Produktivdaten sind jedoch „unveränderte Daten, die aus dem produktiven Einsatz eines Systems stammen, oder in produktiven Systemen verwendet werden“ (siehe Lehrplan Kapitel 2.3.2 „Produktivdaten“).\n\nc) FALSCH – bei absolut anonymisierten Daten ist eine Identifizierung nicht mehr möglich. Im vorliegenden Beispiel-Szenario ist der Vornamensbestandteil der E-Mail-Adresse nicht anonymisiert worden und eine Deanonymisierung bzw. Identifikation nicht gänzlich ausgeschlossen (siehe Lehrplan Kapitel 2.3.2 „Anonymisierte Daten“).\n\nd) KORREKT – bei pseudonymisierten Testdaten ist es möglich, die Verknüpfung mit dem echten Namen wiederherzustellen (Deanonymisierung bzw. Identifikation) (siehe Lehrplan Kapitel 2.3.2. „Pseudonymisierte Daten“)."
+  },
+  {
+    "id": 11,
+    "lo": "TDM-2.3",
+    "k": "K4",
+    "pts": 1,
+    "text": "Ihr Unternehmen bietet ein Forum für Radfahrer an, dessen 2. Version sich im Beta-Test mit Referenzkunden befindet. Die wesentliche Funktion der Webapplikation ist der Austausch von Radtouren. Die registrierten Benutzer können:\n\n1. Routen in Form von GPS-Koordinaten mit Datums- und Zeitstempeln hochladen, diese mit beschreibenden Texten und Bildern versehen und veröffentlichen. Das System erstellt daraus automatisch Routen, mit der Angabe der Namen der Autoren und weiterer Fahrer die GPS-Daten geliefert haben. (Hinweis: Die erforderlichen Einwilligungen zur Verwendung der Bilder liegen vor.)\n\n2. Über verschiedene Suchfunktionen Routen von anderen Nutzern finden und sich diese in verschiedenen Formaten herunterladen, um diese dann selbst abfahren zu können.\n\n3. Routen von anderen registrierten Benutzern bewerten und kommentieren. Die anderen Benutzer können darüber per Mail informiert werden.\n\n4. Weitere GPS-Daten mit Datums- und Zeitstempeln zu einer bestehenden Route hochladen, um diese zu verifizieren und zu verbessern. Sie sollen ein Konzept für den Aufbau und die Pflege einer Testdatenbank erstellen.\n\nWelche der folgenden Optionen beschreibt eine Verwendung der möglichen Testdatenarten korrekt? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Für das Anmelden der Tester am zu testenden System werden aus Produktivdaten abgeleitete Zustandsdaten in Form von Benutzerkonten benötigt.",
+      "b) Die im Test verwendeten Namen der Benutzer müssen pseudonymisiert sein, da über die Routen ein Bezug zu einer natürlichen Person hergestellt werden kann.",
+      "c) Die Bilder zu den Routendaten sind Eingabedaten, sie werden bei einer Bildagentur beschafft und sind synthetische Testdaten.",
+      "d) Für die Kommentare zu den Routen sind Produktivdaten zu verwenden, da Routen und Kommentare zusammengehören."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – da zwar Benutzerdaten benötigt werden, um die Anmeldung an der Webapplikation testen zu können, aber die Verwendung von Produktivdaten aus verschiedenen Gründen nicht zu empfehlen ist. Da es in den Anforderungen keine Information hinsichtlich Besonderheiten zur Verteilung der Benutzerkonten bezüglich Geschlechts, Herkunft oder anderer Merkmale gibt, ist die Nutzung von synthetischen Testdaten hier den Daten aus Produktion vorzuziehen.\n\nb) KORREKT – da die GPS-Koordinaten/Routen auf eine natürliche Person schließen lassen. Die eingegebenen Routenvorschläge sind immer mit dem Nutzer, der sie ins System gegeben hat, verknüpft. Die GPS-Koordinaten werden im Testsystem mit pseudonymisierten Benutzerkonten verknüpft. Damit kann kein Bezug zu einer natürlichen Person hergestellt werden. Soll ein Fehler reproduziert werden, haben Sie jedoch die Möglichkeit ihren Tester zu kontaktieren, indem Sie mittels einer Zuordnungsliste die Pseudonyme den natürlichen Personen zuordnen.\n\nc) FALSCH – da wie oben erwähnt, die Einwilligungen zur Verwendung der Bilder bereits vorliegen. Alle Nutzer haben bei ihren fotografierten natürlichen Personen eine Einwilligung zur Veröffentlichung eingeholt, die Daten sind bereits im Internet für alle verfügbar.\n\nd) FALSCH – in dem Moment wo ein Benutzer einen Kommentar erfasst, wird dieser technisch über eine Referenz mit der Route in Beziehung gesetzt, die kommentiert wurde. Es gibt aber keine inhaltliche Referenz und für das Verhalten der Webapplikation ist auch nicht erforderlich, dass nur bestimmte Texte ganz bestimmten Routen zugeordnet werden müssen. Die Kommentare, die Tester erfassen sollen, um den Mailversand zu testen, können beliebige „Lorem ipsum“-Texte sein, die sich leicht generieren lassen und somit als synthetische Testdaten bereitgestellt werden sollen. Hinzu kommt, dass Nutzer in Foren nicht selten persönliche Angaben machen und damit kann von dem reinen Kommentar auf eine natürliche Person geschlossen werden, was aus Gründen des Datenschutz vermieden werden soll."
+  },
+  {
+    "id": 12,
+    "lo": "TDM-2.4a",
+    "k": "K2",
+    "pts": 1,
+    "text": "Eine Anwendung verarbeitet Bestellungen der Privat- und Geschäftskunden eines Unternehmens. Sie verwendet Datentabellen mit detaillierten Produktplänen, aus denen der genaue Materialbedarf der bestellten Produkte ermittelt werden kann. In anderen Tabellen werden Kundendaten, unter anderem Privatadressen mit Telefonnummern für Rückfragen, verwaltet. Für den Systemtest des neuen Releases der Software, als letzte Teststufe vor der Abnahme, werden Testdaten benötigt. Die Testfälle decken alle relevanten Geschäftsprozesse ab.\n\nWelche der folgenden Aussagen über die Erzeugung der benötigten Testdaten ist am BESTEN geeignet, um eine ausreichende und effiziente Testabdeckung unter Einhaltung des Bundesdatenschutzgesetzes (BDSG) zu erreichen? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Alle für die Testfälle benötigten Testdaten müssen verfremdet werden, da personenbezogene Daten der Kunden im Test verwendet werden.",
+      "b) Mit Hilfe synthetischer Testdaten für die Bestellvorgänge kann sichergestellt werden, dass eine ausreichende Testabdeckung erreicht wird.",
+      "c) Die Verwendung eines kompletten Produktionsdatenabzuges aller offenen Bestellungen stellt sicher, dass eine ausreichende Testabdeckung bei der Materialbedarfsermittlung erreicht wird.",
+      "d) Für die detaillierten Produktpläne müssen synthetische Testdaten verwendet werden, damit eine ausreichende Testabdeckung bei der Materialbedarfsermittlung sichergestellt wird."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – da nicht alle benötigten Testdaten personenbezogene Daten sind. So können die im Szenario erwähnten Produktpläne ohne Verfremdung eingesetzt werden.\n\nb) KORREKT – da durch geeignete Erfassung von synthetisch erzeugten Bestellungen sichergestellt werden kann, dass eine geeignete Testabdeckung unter Einhaltung datenschutzrechtlicher Aspekte erreicht werden kann (es sind keine personenbezogenen Daten vorhanden). Alle bestellbaren Produkte werden mindestens einmal bestellt und deren Produktpläne kommen dabei im Test zum Einsatz.\n\nc) FALSCH – da hier datenschutzrechtliche Aspekte nicht berücksichtigt werden (fehlende Anonymisierung von personenbezogen Daten) und auch nicht sichergestellt ist, dass in den offenen Bestellungen aus dem laufenden Betrieb der Anwendung wirklich alle Produktpläne zum Einsatz kommen. Die benötigte Testabdeckung wird dadurch nicht erreicht.\n\nd) FALSCH – da Produktpläne in der Regel keine personenbezogenen Daten enthalten, ist es nicht zwingend notwendig, für diese synthetische Testdaten zu erstellen (Einhaltung des Gebots der Datensparsamkeit). Außerdem kann keine Aussage darüber getroffen werden, ob die abgebildeten detaillierten Produktpläne alle erwünschten Konstellationen der Materialbedarfsermittlung abdecken oder nicht. Eine geeignete Testabdeckung kann auch hier nicht erreicht werden."
+  },
+  {
+    "id": 13,
+    "lo": "TDM-2.4b",
+    "k": "K3",
+    "pts": 1,
+    "text": "Für den Systemtest wurden Testdaten aus dem Bestand der Produktion ausgewählt und anonymisiert. Datentabelle im produktiven System [[asset:p12-1]] Datentabelle im Testsystem [[asset:p12-2]]\n\nWelche der folgenden Aussagen sind bezogen auf die Anonymisierung korrekt? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Die Kundennummer darf, wenn sie Primärschlüssel ist, nie anonymisiert werden, da ansonsten Referenzen zu Daten in anderen Tabellen verloren gehen.",
+      "b) Vornamen dürfen bei der Anonymisierung nicht durchmischt werden, da ansonsten die Anrede der Person nicht mehr stimmt.",
+      "c) Die Maskierung der Nachnamen kann im Test dazu führen, dass Fehler nicht gefunden werden, da im Testsystem keine Umlaute enthalten sind.",
+      "d) Durch die Anwendung von unterschiedlichen Verfahren zur Anonymisierung können die Daten im Testsystem als synthetische Testdaten bezeichnet werden."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – da über die Kundennummer ein Bezug zu einer realen Person hergestellt werden kann. Der Tester muss sich nur am Produktionssystem anmelden und kann über die Kundennummer alle personenbezogenen Daten erhalten. Auch wenn er keinen Zugriff auf das Produktionssystem hat, können Rückschlüsse durch Schriftstücke gezogen werden, die im Unternehmen in Papierform oder digitaler Form genutzt werden und die Kundennummer nutzen. Die Anonymisierung soll auch Primärschlüssel umfassen. Die richtige Ersetzung der wichtigen Referenzen kann komplex sein, darf aber kein Argument dafür sein, nicht zu anonymisieren.\n\nb) FALSCH – da in allen Anwendungen, bei denen das Geschlecht keine Rolle spielt die Durchmischung der Vornamen keine Auswirkung auf die Funktion hat. Da es viele Beispiele gibt, bei denen das Geschlecht unerheblich ist, ist die Aussage, dass es nie angewendet werden darf widerlegt. Es ist zudem auch sehr fraglich, ob das Verhalten einer Applikation verändert oder beeinträchtigt wird, wenn Anrede und Vorname nicht dem gleichen Geschlecht zugeordnet werden können.\n\nc) KORREKT – da durch Verwendung der Maskierung alle kleinen Umlaute aus den Nachnamen entfernt werden. Im Zusammenhang mit der Anzeige oder Verarbeitung von Zeichenketten kann es zu Fehlern z.B. wegen unterschiedlichen Zeichenformaten kommen, die unentdeckt bleiben, wenn diese Zeichen nicht im Testsystem verwendet werden.\n\nd) FALSCH – da durch Anonymisierung keine synthetischen Testdaten entstehen können. Synthetische Testdaten beruhen nicht auf Produktionsdaten. Zur Erzeugung werden in vielen Fällen Metadaten herangezogen, die Informationen zu Inhalt und Abhängigkeiten der Daten liefern, um möglichst realitätsnahe Daten zu erzeugen. (vgl. Definitionen im Lehrplan Kapitel 2.4, S. 20f.)"
+  },
+  {
+    "id": 14,
+    "lo": "TDM-2.4b",
+    "k": "K3",
+    "pts": 1,
+    "text": "Eine Anwendung verarbeitet Bestellungen der Privat- und Geschäftskunden eines Unternehmens. Sie verwendet Datentabellen mit detaillierten Produktplänen, aus denen der genaue Materialbedarf der bestellten Produkte ermittelt werden kann. In anderen Tabellen werden Kundendaten, unter anderem Privatadressen mit Telefonnummern für Rückfragen, verwaltet. Für den Systemtest des neuen Releases der Software als letzte Teststufe vor der Abnahme werden Testdaten benötigt. Die Testfälle decken alle relevanten Geschäftsprozesse ab.\n\nWelche der folgenden Aussagen trifft für eine korrekte Datenmaskierung am BESTEN zu? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Bei der Übertragung von Daten aus der Produktions- in die Testumgebung kann mittels Datenmaskierung der Produktpläne sichergestellt werden, dass ein Personenbezug von echten Bestelldaten nicht mehr hergestellt werden kann.",
+      "b) Die Daten des produktiven Kundendatenbestands können über eine Datenmaskierung aller Felder mit Personenbezug anonymisiert werden, so dass sie dann als Testdaten einsetzbar sind.",
+      "c) Eine Maskierung der im Produktivsystem gespeicherten Telefonnummern für die Bereitstellung als Testdaten ist nicht erforderlich, wenn stattdessen die Kundennamen ausreichend verfremdet wurden.",
+      "d) Bei der Verwendung von Produktionsdaten als Testdaten ist es ausreichend, die Privatkundendaten zu maskieren, eine Anonymisierung der Geschäftskundendaten ist nicht erforderlich."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – da dann zwar die Bestelldaten teilweise verfremdet sind (über andere Produktzusammenstellungen kommen eventuell andere Mengen etc. zustande), der Personenbezug von Bestellungen und anderen Elementen ohne Maskierung der personenbezogenen Daten aber bestehen bleibt. Dies ist nicht ausreichend.\n\nb) KORREKT – da das in der Antwortmöglichkeit geschilderte Vorgehen sicherstellt, dass die personenbezogenen Daten maskiert und damit anonymisiert werden.\n\nc) FALSCH – da die Telefonnummer selbst und alleine stehend auch bereits eine personenbezogene Information ist (z.B. die sog. Rückwärtssuche von Telefonnummern) und somit maskiert werden sollte (siehe Lehrplan Kapitel 2.4).\n\nd) FALSCH – da auch Geschäftskundendaten personenbezogen sein können (Stichwort Einzelunternehmer) und somit ebenfalls anonymisiert werden sollten."
+  },
+  {
+    "id": 15,
+    "lo": "TDM-3.1.1",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen zum Bundesdatenschutzgesetz (BDSG) ist korrekt? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Das BDSG gilt nur für produktiv genutzte Daten, nicht aber für Testdaten.",
+      "b) Das BDSG fokussiert lediglich auf den Schutz personenbezogener Daten.",
+      "c) Das BDSG erlaubt die unbeschränkte Verarbeitung personenbezogener Daten durch öffentliche und nichtöffentliche Stellen.",
+      "d) Das BDSG ist die einzige gesetzliche Grundlage, die beim Umgang mit Testdaten verbindlich beachtet werden muss."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – da das BDSG personenbezogene Daten schützen soll und dabei keine Unterscheidung bzgl. des verwendeten Datentyps erfolgt (siehe Lehrplan Kapitel 3.1.1).\n\nb) KORREKT – siehe Lehrplan Kapitel 3.1.1, letzter Absatz, erster Satz.\n\nc) FALSCH – da das BSDG die Nutzung personenbezogener Daten über Rechtsvorschriften und Einwilligung Betroffener regelt (siehe Lehrplan Kapitel 3.1.1, 4. Absatz).\n\nd) FALSCH – da es eine Vielzahl von weiteren gesetzlichen Regelungen gibt, wie z.B. die Datenschutz-Grundverordnung DSGVO oder das Telekommunikationsgesetz (TKG) (siehe Lehrplan Kapitel 3.1.1, erster Satz: „In mehr als 100 Gesetzen….“)."
+  },
+  {
+    "id": 16,
+    "lo": "TDM-3.1.2",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen ist in Bezug auf den Datenschutz in Deutschland korrekt? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Das Bundesdatenschutzgesetz (BDSG) ist das einzige und zentrale Gesetz zum Schutz vor Missbrauch von persönlichen Daten.",
+      "b) Das Verwenden von Produktivdaten für den Test verletzt die Zweckbestimmung von Daten und ist untersagt.",
+      "c) Jede Person ist jederzeit selbst für die Kontrolle der Verwendung ihrer Daten verantwortlich.",
+      "d) Ein Verstoß gegen das Bundesdatenschutzgesetz (BDSG) kann zu empfindlichen Strafen führen."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – siehe Lehrplan Kapitel 3.1.2 Absatz 2: es gibt noch Grundgesetz Art.2, Abs.1, das TKG, etc..\n\nb) FALSCH – siehe Lehrplan Kapitel 3.1.2 Absatz 5: es ist in Ausnahmefällen zulässig.\n\nc) FALSCH – siehe Lehrplan Kapitel 3.1.2 Absatz 4: Verantwortlich ist, […] wer die Daten erhoben hat.\n\nd) KORREKT – das zentrale Gesetz ist das Bundesdatenschutzgesetz und neben diesem existieren auch weiter Gesetze, die bei Verstößen empfindliche Strafen vorsehen (siehe Lehrplan Kapitel 3.1.2 3. Absatz)."
+  },
+  {
+    "id": 17,
+    "lo": "TDM-3.1.3",
+    "k": "K1",
+    "pts": 1,
+    "text": "Ihre Firma arbeitet nach der ISO 27001 IT-Sicherheitsrichtline. Welche Frage ist im Hinblick auf die Sicherstellung von Datensicherheit im Testdatenmanagement relevant? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Sind ausschließlich personenbezogene Daten vor unbefugtem Zugriff geschützt?",
+      "b) Werden Entwicklungs- und Testumgebungen von Produktivsystemen getrennt?",
+      "c) Ist die Betriebssystemversion in Test- und Produktionsumgebungen identisch?",
+      "d) Gibt es Wartungsverträge, die eine Bereitstellung von Softwareupdates sichern?"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – siehe Glossar zum Lehrplan: Im Unterschied zum Datenschutz befasst sich die Datensicherheit mit dem Schutz von Daten, unabhängig davon, ob diese einen Personenbezug aufweisen oder nicht. Unter den Begriff Datensicherheit fallen daher grundsätzlich auch Daten, die keinen Personenbezug haben.\n\nb) KORREKT – Eine Trennung der Umgebungen ist wichtig um das Risiko nichtautorisierter Zugriffe oder versehentlicher Änderungen in produktiven Systemen zu minimieren (siehe Lehrplan Kapitel 3.1.3).\n\nc) FALSCH – Dies wäre von Relevanz im Hinblick auf die Aussagekraft von Testergebnissen und dem damit zu bewertenden Risiko.\n\nd) FALSCH – Die Bereitstellung von Softwareupdates über Wartungsverträge ist primär keine Frage der Datensicherheit, sondern eher von Kostenmodellen und dem Bedarf für Updates im konkreten Fall."
+  },
+  {
+    "id": 18,
+    "lo": "TDM-3.1.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen über ein Audit des Prozesses zum Testdatenmanagement ist korrekt? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Es wird geprüft, ob die Sollergebnisse der Testfälle zu den verwendeten Testdaten passen.",
+      "b) Es wird geprüft, ob der erforderliche Anonymisierungsgrad bei der Verwendung von Testdaten aus der Produktion eingehalten wird.",
+      "c) Es wird geprüft, ob die Tester die Testdaten gemäß Testspezifikation verwendet haben.",
+      "d) Es wird geprüft, ob die Testdaten eines Projekts alle vorhandenen Testfälle abdecken."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – da sich ein Audit auf den Prozess und dessen qualitative Eigenschaften und nicht auf Prüfungen inhaltlicher Art im Rahmen des Testobjekts bezieht (siehe Lehrplan Kapitel 3.1.4).\n\nb) KORREKT – da die Einhaltung des Anonymisierungsgrades ein Element der gesetzlichen bzw. regulatorischen und / oder datenschutzrechtlichen Aspekte des TDM ist und damit eine besondere Anforderung an den Prozess darstellt (siehe Lehrplan Kapitel 3.1.4).\n\nc) FALSCH – da die konkrete Testdurchführung nicht Gegenstand des TDM- Audits ist. Ein Audit bezieht sich auf den Prozess an sich, z.B. ob die Verwendung von Testdaten dokumentiert ist, nicht auf die Durchführung des konkreten Tests (siehe Lehrplan Kapitel 3.1.4).\n\nd) FALSCH – da die Zielsetzung des TDM-Audits keine Prüfung der Vollständigkeit von Testdaten im konkreten Projekt untersucht, sondern Aspekte des TDM-Prozesses (siehe Lehrplan Kapitel 3.1.4)."
+  },
+  {
+    "id": 19,
+    "lo": "TDM-3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Mit wem sollten Sie als Testdatenmanager der „ABC“-Bankengruppe im Hinblick auf die Sicherstellung der rechtlichen Konformität von individuellen Testdatenbeständen AM EHESTEN zusammenarbeiten?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Vorgesetzten",
+      "b) Branchenfachkraft",
+      "c) Geschäftsführung",
+      "d) Marketing"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – dies mag zwar in Einzelfällen Sinn machen, jedoch ist gerade in Bezug auf Konformität mit branchenindividuellen Regelungen das Fachwissen einer Branchenfachkraft über diese Regelungen, welches ein Vorgesetzter in der Regel nicht hat, dringender.\n\nb) KORREKT – aufgrund der Vielzahl von branchenindividuellen Regelungen empfiehlt sich die Zusammenarbeit mit einer Branchenfachkraft. Knowhow aus beiden Domänen kann so im Sinne eines branchen- oder unternehmensspezifischen Testdatenmanagements eingebracht werden (siehe Lehrplan Kapitel 3.2).\n\nc) FALSCH – die Geschäftsführung hat in der Regel weder die erforderlichen branchenindividuellen Fachkenntnisse zu rechtlicher Konformität, noch die Zeit, mit Ihnen zusammen zu arbeiten.\n\nd) FALSCH – hier geht es um rechtliche Konformität, nicht um Marketing."
+  },
+  {
+    "id": 20,
+    "lo": "TDM-3.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen trifft auf die IT-Governance beim Testdatenmanagement zu? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Das Testdatenmanagement ist regelmäßig einem Audit zu unterziehen, um die erforderlichen Gesetze einzuhalten.",
+      "b) IT-Governance wird eingehalten, wenn im Testdatenmanagement eine geeignete Organisationsstruktur vorliegt.",
+      "c) Im Testdatenkonzept wird die Einhaltung der Regeln der IT-Governance dokumentiert und bestätigt.",
+      "d) Risikobegrenzende Maßnahmen müssen gemäß den unternehmensinternen Regeln implementiert und protokolliert werden."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – ein regelmäßiges Audit ist zwar durchaus sinnvoll, jedoch nicht zwingend im Hinblick auf die Einhaltung von Regeln der IT-Governance. Außerdem beinhaltet die Aussage auch keinen Bezug zur IT-Governance (siehe Glossar und Lehrplan Kapitel 3.3).\n\nb) FALSCH – siehe Definition zu IT-Governance im Glossar: „Die Verantwortung des Vorstands und der Geschäftsführung für die Sicherstellung, dass die IT des Unternehmens die Unternehmensstrategie und die Unternehmensziele unterstützt, wahrgenommen durch die Leitung, die Organisationsstruktur und die Prozesse. [ISACA]“. Das bedeutet, ohne entsprechende Prozesse und die Leitung ist eine Einhaltung der IT-Governance nicht/kaum möglich.\n\nc) FALSCH – im Testdatenkonzept können Aktivitäten und Prozesse definiert, und diese in der Steuerung überwacht werden, das Testdatenkonzept dient jedoch nicht dazu, die Einhaltung von Regeln zur IT-Governance zu bestätigen oder zu dokumentieren (siehe auch Definition von Testdatenkonzept im Glossar: „ Ein Dokument, das die Prozesse des Testdatenmanagements, die Schnittstellen zu anderen Prozessen, die Ressourcen und die Zeitplanung der Aktivitäten in einem konkreten Projekt beschreibt“).\n\nd) KORREKT – zu Risikofaktoren müssen risikobegrenzende Maßnahmen mit Nachweis/Angabe der autorisierenden Personen/Stellen protokolliert werden (siehe Lehrplan Kapitel 3.3)."
+  },
+  {
+    "id": 21,
+    "lo": "TDM-4.1 a",
+    "k": "K1",
+    "pts": 1,
+    "text": "Ordnen Sie die Phasen des fundamentalen Testdatenprozesses der Reihe nach!\n\n1. Testdaten bereitstellen\n\n2. Testdaten archivieren\n\n3. Testdaten spezifizieren\n\n4. Testdatenabschlussbericht erstellen\n\n5. Planung und Steuerung\n\n6. Testdatenerzeugung konzipieren\n\nWelche Antwort zeigt die richtige Reihenfolge? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) 5, 3, 6, 1, 4, 2",
+      "b) 5, 6, 3, 1, 2, 4",
+      "c) 5, 3, 1, 6, 4, 2",
+      "d) 5, 3, 1, 4, 2, 6"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – dies ist die Reihenfolge nach Lehrplan Kapitel 4.1.\n\nb) FALSCH – die Konzipierung der Testdatenerzeugung ist der 3. Schritt.\n\nc) FALSCH – die Bereitstellung kann erst nach der Konzipierung erfolgen.\n\nd) FALSCH – die Bereitstellung kann erst nach der Konzipierung erfolgen."
+  },
+  {
+    "id": 22,
+    "lo": "TDM-4.1 b",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen zum fundamentalen Testdatenmanagement-Prozess ist korrekt? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Er ist vollständig in die Phase „Testrealisierung und -durchführung“ des fundamentalen Testprozesses eingebettet.",
+      "b) Es gibt keine Verbindung vom Testdatenmanagement-Prozess zu Testanalyse und -design.",
+      "c) Die Phase „Testdatenabschlussbericht erstellen“ ist nicht erforderlich, der Testbericht enthält stets automatisch alle notwendigen Informationen.",
+      "d) Der Testdatenabschlussbericht kann in den Testabschlussbericht integriert werden."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – da das Testdatenmanagement mit mehreren Phasen des fundamentalen Testprozesses nach ISTQB ® in Verbindung steht. Die Verbindung zur Testrealisierung und Durchführung ist die Phase „Testdaten bereitstellen“ (siehe Lehrplan Kapitel 4.1).\n\nb) FALSCH – da das Testdatenmanagement mit mehreren Phasen des fundamentalen Testprozesses nach ISTQB ® in Verbindung steht. Die Verbindung zu Testanalyse und -design sind die Phasen „Testdaten spezifizieren“ und „Testdatenerzeugung konzipieren“ (siehe Lehrplan Kapitel 4.1).\n\nc) FALSCH – ein Testbericht enthält nicht notwendigerweise alle Informationen, die in einem Testdatenabschlussbericht erwartet werden.\n\nd) KORREKT – siehe Lehrplan Kapitel 4.3.8"
+  },
+  {
+    "id": 23,
+    "lo": "TDM-4.2 a",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche Aussage hinsichtlich der Aktivitäten im Testdatenmanagementprozess ist korrekt? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) In der „Planung (TDM)“ wird das Testdatenkonzept auf Basis der Testdatenspezifikation erstellt.",
+      "b) Beim „Testdaten spezifizieren“ werden die Testbedingungen identifiziert und priorisiert.",
+      "c) Beim „Testdatenerzeugung konzipieren“ werden die Skripte zur Erzeugung von Testdaten entwickelt.",
+      "d) Beim „Testdaten bereitstellen“ werden die Skripte zur Erzeugung der Testdaten geprüft und ausgeführt."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – da das Testdatenkonzept auf Basis des Testkonzepts erstellt wird. Dieses ist ein Eingangsartefakt für diese Phase (siehe Lehrplan Kapitel 4.2.1). Weiterhin ist klar, dass die Erstellung der Testdaten erst NACH der Planung erfolgt.\n\nb) FALSCH – da die Testbedingungen im Rahmen von „Analyse und Design“ des fundamentalen Testprozesses identifiziert und priorisiert werden (siehe Lehrplan CTFL 2011, Kapitel 1.4.2).\n\nc) KORREKT – siehe Lehrplan Kapitel 4.2.4.\n\nd) FALSCH – da die Skripte bereits in der Phase „Testdatenerzeugung konzipieren“ geprüft werden. Wenn das erst währen der Bereitstellung der Testdaten gemacht würde, müssten unter Umständen noch Änderungen gemacht werden, die zu Verzögerungen in der Bereitstellung und der abhängigen Testdurchführung führen können. Siehe auch richtige Antwort c."
+  },
+  {
+    "id": 24,
+    "lo": "TDM-4.2 b",
+    "k": "K2",
+    "pts": 1,
+    "text": "Auf welchen wichtigen Aspekt müssen Sie achten, wenn Sie Testdaten spezifizieren? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Dass das Testkonzept in das Ergebnisartefakt aufgenommen wird.",
+      "b) Dass den Testdaten nur ein Testdatenkonzept zugrunde liegt.",
+      "c) Dass Sie die abstrakten Testfälle genau beschreiben.",
+      "d) Dass Sie auch eine Datenerzeugungsstrategie spezifizieren"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – das Testkonzept ist neben der Testdatenrichtlinie Input für das Testdatenkonzept, welches während der Planung erstellt wird (siehe Lehrplan Kapitel 4.2.1).\n\nb) KORREKT – eine Testdatenspezifikation referenziert immer nur auf ein Testdatenkonzept, allerdings kann ein Projekt mehrere Testdatenspezifikationen haben (siehe Lehrplan Kapitel 4.3.3, 2. Absatz).\n\nc) FALSCH – die abstrakten Testfälle dienen als Input für die Testdatenspezifikation (siehe Lehrplan 4.3.2 Eingangsartefakte).\n\nd) FALSCH – Die Strategie zur Erzeugung der Daten erfolgt im Rahmen der Aktivität ‚Testdaten bereitstellen‘ (siehe Lehrplan Kapitel 4.2.5)."
+  },
+  {
+    "id": 25,
+    "lo": "TDM-4.3 a",
+    "k": "K2",
+    "pts": 1,
+    "text": "In welchem Ergebnisartefakt des TDM-Prozesses erfolgt die Bewertung von benötigten Ressourcen, Personal und Zeitbedarf? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Testdatenbewertungsbericht",
+      "b) Testdatenbereitstellungsbericht",
+      "c) Testdatenabschlussbericht",
+      "d) Testdatenrichtlinie"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – der Testdatenbewertungsbericht enthält die Bewertung der Qualität der bereitgestellten Testdaten (siehe Lehrplan Kapitel 4.3.9).\n\nb) FALSCH – der Testdatenbereitstellungsbericht dient der Mitteilung einer erfolgten Testdatenbereitstellung und welche Freigaben für die Daten vorliegen. Dies können beispielsweise Einschränkungen auf bestimmte Personenkreise sein (siehe Lehrplan Kapitel 4.3.7).\n\nc) KORREKT – dies ist korrekt, siehe Lehrplan Kapitel 4.3.8.\n\nd) FALSCH – die Testdatenrichtlinie wird organisationsweit, projektübergreifend eingesetzt und ist auf einem abstrakteren Level (siehe Lehrplan Kapitel 4.3.1)."
+  },
+  {
+    "id": 26,
+    "lo": "TDM-4.3 b",
+    "k": "K3",
+    "pts": 1,
+    "text": "Im Folgenden ist ein Ausschnitt aus einem Dokument abgedruckt. Welchem Artefakt lässt sich dieser Ausschnitt zuordnen und welche Information fehlt Ihrer Meinung nach? „Die für den Test benötigten Benutzerkonten werden in einer csv- Datei gepflegt und mit Hilfe der Testautomatisierung über das Webfrontend angelegt. Nach der erfolgten Anlage ist durch ‚IT- Betrieb‘ auf dem Server der Job „Rechte verteilen“ zu starten. Nach Abschluss des Jobs können die Benutzerkonten von den Testern verwendet werden. Die Benutzerkonten werden vom System 6 Monate nach Anlage automatisch deaktiviert. Eine Verlängerung dieses Zeitraums ist vom Testdatenmanager bei ‚IT-Betrieb‘ zu beantragen.“\n\nWählen Sie die BESTE Antwort! \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Dokument: Testdatenspezifikation Es fehlen Angaben zur Löschung der Testdaten.",
+      "b) Dokument: Testdatenrichtlinie Es fehlt eine Aussage, wie die Tester ungestört arbeiten können.",
+      "c) Dokument: Testdatenkonzept Es fehlen Angaben zur Löschung der Testdaten.",
+      "d) Dokument: Testdatenspezifikation Es fehlt eine Aussage, wie die Tester ungestört arbeiten können."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – der Inhalt kann so in einer Testdatenspezifikation stehen (siehe Lehrplan Kapitel 4.3.3). Angaben zur Löschung von Testdaten sind im Testdatenkonzept (siehe Lehrplan Kapitel 4.3.2, 3.Absatz, 3. Aufzählpunkt) dokumentiert und fehlen hier daher nicht.\n\nb) FALSCH – da dieser Ausschnitt so nicht in einer Testdatenrichtlinie zu finden sein wird. In der Testdatenrichtlinie stehen organisationsweite und projektübergreifende Aussagen zum Testdatenmanagement (siehe Lehrplan Kapitel 4.3.1). Angaben darüber, wie Tester ungestört arbeiten können, werden in der Testdatenspezifikation gemacht.\n\nc) FALSCH – da das Testdatenkonzept die Prozesse und Schnittstellen zu anderen Prozessen beschreibt (siehe Lehrplan Kapitel 4.3.2), was hier nicht der Fall ist. (Allerdings wahr: auch Regelungen über die Löschung der Testdaten, siehe a.) werden erwartet).\n\nd) KORREKT – in dem Ausschnitt wird beschrieben, wie Testdaten in Form von Benutzerkonten bereitgestellt werden und wie lange die Benutzerkonten genutzt werden können (siehe Lehrplan Kapitel 4.3.3). Allerdings gibt es keine Information darüber, wie die Tester ungestört arbeiten können. Dies wird aber für eine Testdatenspezifikation verlangt (siehe Lehrplan Kapitel 4.3.3, 3. Absatz 4. Aufzählpunkt)."
+  },
+  {
+    "id": 27,
+    "lo": "TDM-4.3 b",
+    "k": "K3",
+    "pts": 1,
+    "text": "Mit Programm K412 wurden 1.200 Datensätze vom 1.12.2018 aus der Produktion exportiert (PLZ-Gebiet 70178). Dieser Bestand wurde auf die „INT“ geladen. Die Felder für Name, Vorname, eMail und Telefon wurden nach dem Verfahren XQB verfremdet. Aus der „INT“ exportierte man eine Datei im .csv Format zum Import in die „INT2“. Mit Hilfe automatisierter Tests wurde dort die Datenqualität geprüft und 12 Fehler gefunden. Nach Behebung der Fehler und erfolgreicher Prüfung der Schnittstelle zwischen „INT“ und „INT2“ wird die Umgebung für den Integrationstest frei gegeben. Aus welchem Artefakt stammt dieser Text und an wen richtet er sich?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Aus der Testdatenrichtlinie, die sich an den Testdatenrealisierer und die Projektleitung richtet.",
+      "b) Aus der Testdatenspezifikation, die sich an den Testdatenrealisierer und die Tester richtet.",
+      "c) Aus dem Testdatenabschlussbericht, der sich an das Testdatenmanagement und die Testdatenmodellierer richtet.",
+      "d) Aus dem Testdatenbereitstellungsbericht, der sich an Testdatenmanager, - Realisierer und -Modellierer richtet."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – da die Testdatenrichtlinie sich an die Projektleitung, das Test(daten)management und die Stakeholder richtet. Darüber hinaus ist es organisationsweit gültig, während der Text sehr spezifisch für den Integrationstest geschrieben wurde (siehe Lehrplan Kapitel 4.3.1).\n\nb) FALSCH – die Testdatenspezifikation richtet sich an den Testdatenrealisierer und den Tester aber es wird über Ergebnisse einer bereits erfolgten Testdatenbreitstellung berichtet und nicht nur über die Vorgaben zur Bereitstellung (siehe Lehrplan Kapitel 4.3.3).\n\nc) FALSCH – da der Testdatenabschlussbericht sich an die Projektleitung, Testmanager und Stakeholder richtet. Darüber hinaus bezieht sich der Text nur auf einen Integrationstest und nicht auf eine ganze Testphase (siehe Lehrplan Kapitel 4.3.8).\n\nd) KORREKT – siehe Lehrplan Kapitel 4.3.7."
+  },
+  {
+    "id": 28,
+    "lo": "TDM-4.3 c",
+    "k": "K3",
+    "pts": 1,
+    "text": "Sie arbeiten als Testdatenmanager für ein großes Projekt und sollen eine Testdatenspezifikation erstellen. Sie wissen auch, welche Informationen für Ihren Prozess wichtig sind und bringen Sie in die gewünschte Form.\n\nWelche der folgenden Informationen ist hierbei NICHT Bestandteil der Testdatenspezifikation? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Die Testergebnisse müssen vom Zeitpunkt des Projektabschlusses noch 3 Jahre lang aufbewahrt werden.",
+      "b) Testdaten werden durch einen Testdatengenerator automatisch erzeugt auf Grundlage eines zuvor definierten Zielformats.",
+      "c) Da die Testdaten vor jeder Verwendung automatisch generiert werden, gelten sie danach als verbrannt und werden gelöscht.",
+      "d) Die Testdaten werden auf Grundlage eines Zielformats erstellt, das aus der Spezifikation der durchzuführenden Tests abgeleitet wird."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Aufbewahrungsfristen sind nicht Bestandteil der Testdatenspezifikation, sondern des Testdatenkonzepts (siehe Lehrplan Kapitel 4.3.2, fünfter Aufzählpunkt).\n\nb) FALSCH – da die Art der Testdatenbereitstellung Bestandteil der Testdatenspezifikation ist (siehe Lehrplan Kapitel 4.3.3, erster Aufzählpunkt).\n\nc) FALSCH – da dieser Punkt ebenfalls Bestandteil der Testdatenspezifikation ist (siehe Lehrplan Kapitel 4.3.3, fünfter Aufzählpunkt).\n\nd) FALSCH – die Abhängigkeit von Tests und Testdaten ist ebenfalls Bestandteil der Testdatenspezifikation (siehe Lehrplan Kapitel 4.3.3, zweiter Aufzählpunkt)."
+  },
+  {
+    "id": 29,
+    "lo": "TDM-4.4 a",
+    "k": "K1",
+    "pts": 1,
+    "text": "Welche der hier genannten Rollen ist eine Rolle aus dem Testdatenmanagement? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Testdatencontroller",
+      "b) Testdatenanalyst",
+      "c) Testdatenrealisierer",
+      "d) Testdatenautomatisierer"
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – da es sich bei diesem Begriff um einen frei erfundenen Begriff handelt, der im Lehrplan nicht vorkommt\n\nb) FALSCH – da es sich bei diesem Begriff um einen frei erfundenen Begriff handelt, der im Lehrplan nicht vorkommt.\n\nc) KORREKT – der Testdatenrealisierer ist als Rolle im Lehrplan im Kapitel 4.4. mit Aufgaben, Verantwortlichkeiten, Kompetenzstufe und Qualifikation enthalten (siehe Lehrplan Kapitel. 4.4.3).\n\nd) FALSCH – da es sich bei diesem Begriff um einen frei erfundenen Begriff handelt, der im Lehrplan nicht vorkommt."
+  },
+  {
+    "id": 30,
+    "lo": "TDM-4.4 b",
+    "k": "K2",
+    "pts": 1,
+    "text": "Für welche Rolle/Rollen eignet sich eine Person mit guten Kenntnissen in der Programmierung am BESTEN? \n\ni. Testdatenrealisierer\n\nii. Testdatenmanager\n\niii. Testdatenmodellierer\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) i",
+      "b) ii",
+      "c) iii",
+      "d) i und iii"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – das ist eine notwendige Qualifikation des Testdatenrealisierers (siehe Lehrplan Kapitel 4.4.3, insbesondere Abschnitt ‚Qualifikation‘).‘\n\nb) FALSCH – dies ist keine benötigte Qualifikation des Testdatenmanagers (siehe Lehrplan Kapitel 4.4.1).\n\nc) FALSCH – dies ist keine benötigte Qualifikation des Testdatenmodellierers (siehe Lehrplan Kapitel 4.4.1).\n\nd) FALSCH – siehe Antwort c) und Lehrplan Kapitel 4.4.1."
+  },
+  {
+    "id": 31,
+    "lo": "TDM-4.4 b",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen zur notwendigen Qualifikation von Personen, die Rollen im Testdatenmanagement ausfüllen, ist korrekt?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Der Testdatenmanager benötigt detaillierte Kenntnisse über die Datenstrukturen der Testobjekte.",
+      "b) Der Testdatenmodellierer benötigt Kenntnisse in der Programmierung von Upload-Programmen.",
+      "c) Der Testdatenrealisierer benötigt Kenntnisse über die Erstellung von Testdatenspezifikationen.",
+      "d) Der Testdatenmanager benötigt detaillierte Kenntnisse von Methoden zur Bereitstellung und Erzeugung von Testdaten."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – da dies eine Qualifikation des Testdatenrealisierers sowie des Testdatenmodellierers ist (siehe Lehrplan Kapitel 4.4.1).\n\nb) FALSCH – da der Testdatenmodellierer zwar Muster für Testdaten erzeugt, aber nicht Testdaten z.B. mit Softwareprogrammen generieren muss. Das ist Aufgabe des Testdatenrealisierers (siehe Lehrplan Kapitel 4.3.2 und 4.4.3).\n\nc) FALSCH – da dies eine Qualifikation des Testdatenmodellierers ist. Der Testdatenrealisierer setzt darauf auf (siehe Kapitel 4.4.3, Absatz 1, Satz 2).\n\nd) KORREKT – da der Testdatenmanager unter anderem das Testdatenkonzept schreibt und in diesem Konzept die erwähnten Methoden zur Bereitstellung und Erzeugung von Testdaten festgelegt werden (siehe Lehrplan Kapitel 4.3.2 und 4.4.1)."
+  },
+  {
+    "id": 32,
+    "lo": "TDM-5.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welches Ziel wird mit dem Einbinden des Testdatenmanagementprozesses in eine Organisation verfolgt? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Der TDM-Prozess läuft in der Organisation unabhängig vom Testprozess.",
+      "b) Der TDM-Prozess soll existierende Prozesse unterstützen und verbessern.",
+      "c) Der TDM-Prozess ist damit in das vorhandene Projektmanagement integriert.",
+      "d) Der TDM-Prozess adaptiert Phasen des übergeordneten Testprozesses."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – TDM kann nur mit guter Einbindung in die Unternehmens- und Projektorganisation, sowie in den Testprozess funktionieren. Der TDM- Prozess muss in die Organisation passen, dort eingeführt, regelmäßig angepasst und kommuniziert werden und ist nur in Zusammenhang mit anderen Prozessen effektiv (siehe Lehrplan Abschnitt 5.1), siehe auch Begründung unter d).\n\nb) KORREKT – dies ist korrekt, siehe Lehrplan Abschnitt 5.1\n\nc) FALSCH – Testdatenmanagement soll die existierenden Prozesse im Projektmanagement, in der Softwareentwicklung und im Test unterstützen und verbessern, und ist nicht automatisch durch die Integration in die Organisation in das vorhandene Projektmanagement integriert, sondern eigenständig.\n\nd) FALSCH – Laut Lehrplan läuft der TDM-Prozess parallel zum Testprozess und ist mit diesem verknüpft (siehe Lehrplan Abschnitt 4.1)."
+  },
+  {
+    "id": 33,
+    "lo": "TDM-5.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen zu den Verantwortlichkeiten für die Einbindung des Testdatenmanagements in die Organisation ist korrekt?\n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Die Verantwortlichkeit im Testdatenmanagement beginnt beim Testdatenmanager.",
+      "b) Der Testdatenmanager ist für die Erstellung einer allgemeingültigen Testdatenrichtlinie verantwortlich.",
+      "c) Die Verantwortlichkeiten des Testdatenmodellierers werden projektspezifisch vom Testdatenmanager festgelegt.",
+      "d) Für die Prüfung und Freigabe der verwendeten Testdaten ist der Testdatenrealisierer verantwortlich."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – Testdatenmanager sind für die jeweiligen Ergebnisse ihrer Aktivitäten verantwortlich, tragen jedoch nicht die Gesamtverantwortung (Lehrplan Kapitel 5.2). Diese trägt das obere Management (siehe Lehrplan Kapitel 5.2, Satz 1).\n\nb) KORREKT – siehe Lehrplan Kapitel 5.2, Absatz 1, Satz 2.\n\nc) FALSCH – im konkreten Projekt sind die Personen im Rahmen ihrer Rollen für die Ergebnisse verantwortlich (siehe Lehrplan Kapitel 5.2 und Kapitel 4.4.2).\n\nd) FALSCH – das ist nicht in Stein gemeißelt. Dafür müssen Verantwortliche benannt werden. Das können Datenschutzbeauftragte, Betriebsräte, Personalräte, … sein (siehe Lehrplan Kapitel 5.2, letzter Absatz)."
+  },
+  {
+    "id": 34,
+    "lo": "TDM-5.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Sie unterstützen als Testdatenmanager den Test eines Systems, dessen neue Version durch zusätzliche Felder im Datenmodell und mit neuen Funktionalitäten erweitert wird. Wem sollten Sie nun VORRANGIG Ihre Aufmerksamkeit schenken, um die passenden Testdaten bereitzustellen? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Dem Konfigurationsmanagement, denn es verzeichnet die Änderungen im Datenmodell, den Wertebereichen und der Funktionalität.",
+      "b) Dem Projektmanagement, denn es verknüpft das Testdatenmanagement mit den anderen Projektprozessen.",
+      "c) Dem Testmanagement, weil damit die Planung und Durchführung der Testaktivitäten abgestimmt werden kann.",
+      "d) Dem Archivierungsprozess, denn es muss sichergestellt werden, dass die Testdaten kompatibel mit diesem Verfahren sind."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Siehe Lehrplan Kapitel 5.3 Absatz 3 Satz 1.\n\nb) FALSCH – die Aussage unter b) ist zwar ein Prozess mit dem das Testdatenmanagement verzahnt ist, hat jedoch keinen inhaltlichen Zusammenhang zur konkreten Fragestellung was zu tun ist, wenn sich das Datenmodell ändert.\n\nc) FALSCH – zwar spielt die Planung und Durchführung der Testphase auch eine große Rolle bei der Einbindung des Testdatenmanagements in die Prozesse. Jedoch stellt das Testmanagement keine Angaben für spezielle, in diesem Fall neue Systemkonfigurationen, verursacht durch geänderte Datenmodelle, zur Verfügung (siehe auch Lehrplan Kapitel 5.3 Absatz 3 Satz 1).\n\nd) FALSCH – der Prozess der Archivierung ist ein Empfänger von Testdaten, jedoch kein Inputgeber (siehe auch Lehrplan Kapitel 4.2.7)."
+  },
+  {
+    "id": 35,
+    "lo": "TDM-5.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welcher Aspekt ist besonders relevant für die Einbindung des Testdatenmanagements in die IT? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Einsatz von Werkzeugen im Testdatenmanagement",
+      "b) Fachwissen bei der Erstellung von Testdaten",
+      "c) Verantwortung der IT für das Testdatenmanagement",
+      "d) Einhaltung von Regeln und Normen"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – Werkzeuge müssen in die IT-Landschaft eines Unternehmens passen und dort integriert werden (siehe Lehrplan Kapitel 5.4).\n\nb) FALSCH – dies ist eine Eigenschaft des Testdatenrealisierers und nicht des Testdatenmanagements (siehe Lehrplan Kapitel 4.4.3).\n\nc) FALSCH – die Verantwortung trägt das Management der Organisation, nicht die IT (siehe Lehrplan Kapitel 5.2, Satz 1).\n\nd) FALSCH – dies ist eine Verantwortlichkeit des Testdatenmanagers im Umgang mit Testdaten (siehe Lehrplan Kapitle 4.4.1)."
+  },
+  {
+    "id": 36,
+    "lo": "TDM-5.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welches Dokument sollte projektübergreifend erstellt werden, um die Planung und Durchführung des Testdatenmanagements in konkreten Projekten effektiv und standardisiert zu unterstützen? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Das Testdatenkonzept. Es beschreibt die Einführung eines TDM-Prozesses für das aktuelle Projekt.",
+      "b) Das Testkonzept. Es beschreibt alle im TDM-Prozess benötigten Prozesse und enthält Vorlagen/Templates zur Testdatenerstellung.",
+      "c) Die Testdatenrichtlinie. Sie definiert Ziele und Anforderungen, und berücksichtigt Erkenntnisse eines Pilotprojekts.",
+      "d) Der Testdatenbereitstellungsplan. Er beschreibt anhand von Pilotprojekten wie Testdaten kostengünstig bereitgestellt werden."
+    ],
+    "answer": [
+      2
+    ],
+    "explanation": "a) FALSCH – das Testdatenkonzept beschreibt nicht projektübergreifende Regeln, sondern Prozesse, Schnittstellen etc. für ein konkretes Projekt (siehe Lehrplan Kapitel 4.3.2).\n\nb) FALSCH – das Testkonzept ist ein Artefakt des Testmanagements und nicht des TDM und ist damit dem TDM übergeordnet. Ferner enthält es keine Templates für Testdaten (siehe Lehrplan Kapitel 4.1).\n\nc) KORREKT – der Testdatenmanagementprozess muss in der Organisation eingeführt werden. Dazu sollten projektunabhängig die generellen Ziele und Anforderungen an das Testdatenmanagement in einer Testdatenrichtlinie festgelegt werden (siehe Lehrplan Kapitel 5.5).\n\nd) FALSCH – der Testdatenbereitstellungsplan wird auf konkreter Projektebene erstellt und legt fest wer, wann welche Bereitstellungsroutinen startet (siehe Lehrplan Kapitel 4.3.5)."
+  },
+  {
+    "id": 37,
+    "lo": "TDM-6.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welches Werkzeug wird im Folgenden vom Testmanager beschrieben? „Seitdem wir das neue Tool im Einsatz haben, nimmt das Thema der Testdatenspezifikation weniger Zeit in Anspruch! Es generiert aus unseren Use Cases Testfälle inklusive der benötigten Testdaten.“ \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Testentwurfswerkzeug",
+      "b) Testdateneditor und –generator",
+      "c) Data Profiling Werkzeug",
+      "d) Testkomparator"
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – siehe Lehrplan Kapitel 6.2.2 3. Absatz: Testentwurfswerkzeuge sind Werkzeuge, die Testeingaben oder ausführbare Tests aus Benutzungsschnittstellen, Entwurfsmodellen oder Code generieren. Im Glossar des ISTQB® findet sich sogar der Begriff Testdaten in der Definition des Testentwurfswerkzeugs: „Ein Werkzeug zur Erzeugung von Testdaten entweder (a) auf Basis einer Spezifikation, die in einem CASE Repository (z.B. in einem Anforderungsmanagementwerkzeug) abgelegt sein kann, oder (b) aus spezifizierten Testbedingungen, die im Testentwurfswerkzeug selbst abgelegt sind, oder (c) aus dem Code selbst.\n\nb) FALSCH – sie unterstützen nur die Erzeugung von Testdaten (Lehrplan Kapitel 6.2.3) und nicht die der Testfälle.\n\nc) FALSCH – sie bieten Unterstützung bei der Ermittlung von Datenstrukturen und Inhalten (Lehrplan Kapitel 6.2.2).\n\nd) FALSCH – sie sind Vergleichswerkzeuge und ermitteln Unterschiede zwischen Dateien, Datenbanken und Testergebnissen (Lehrplan Kapitel 6.2.4 vorletzter Absatz)."
+  },
+  {
+    "id": 38,
+    "lo": "TDM-6.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Welche der folgenden Aussagen zum Einsatz von Testwerkzeugen im TDM ist korrekt? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Komparatoren sind Werkzeuge, die eingesetzt werden um mehr Transparenz über Datenstrukturen in der Phase „Testdaten spezifizieren“ zu gewinnen.",
+      "b) ETL-Werkzeuge werden bei der Planung und Steuerung von Testdaten benötigt, um Testdatenspezifikationen in ein Testmanagementwerkzeug zu laden.",
+      "c) Data Profiling Werkzeuge werden zur Anonymisierung von Testdaten bei der Konzeption von Testdaten eingesetzt.",
+      "d) Werkzeuge zum Konfigurationsmanagement können in der Spezifikation und der Archivierung von Testdaten eingesetzt werden."
+    ],
+    "answer": [
+      3
+    ],
+    "explanation": "a) FALSCH – da Komparatoren dazu dienen, Datenbestände miteinander zu vergleichen. Für die Spezifikation von Testdaten sind andere Werkzeuge erforderlich, Komparatoren werden eher in der Phase „Testdaten bereitstellen“ benötigt (siehe Lehrplan Kapitel 6.2.4).\n\nb) FALSCH – da eine Testdatenspezifikation unter anderem formale Beschreibungen von Ein- oder Ausgabewerten für Testobjekte enthält. ETL- Werkzeuge dienen dazu, Datenbestände auszulesen, zu separieren, zu manipulieren, zu anonymisieren und zu laden. Eine Testdatenspezifikation ist kein Datenbestand (siehe Lehrplan Kapitel 6.2.3).\n\nc) FALSCH – da Data Profiling Werkzeuge dazu dienen, vorhandene Datenstrukturen und ihre Inhalte zu analysieren sowie deren Beziehungen bzw. Abhängigkeiten zu ermitteln. Die Bereitstellung und Anonymisierung von Daten selbst, erfolgt z.B. mit ETL-Werkzeugen (siehe Lehrplan Kapitel 6.2.2 und 6.2.3).\n\nd) KORREKT – da zusammen mit der Speicherung der Konfiguration eines Testobjekts auch dazu gehörige Testfälle und Testdaten gespeichert und archiviert werden sollten (siehe Lehrplan Kapitel 6.2.6). Auch in der Spezifikation von Testdaten, z.B. zur Verwaltung von Metadaten über Testdaten kommen diese Werkzeuge zum Einsatz (siehe Lehrplan Kapitel 6.2.2)."
+  },
+  {
+    "id": 39,
+    "lo": "TDM-6.2 a",
+    "k": "K2",
+    "pts": 1,
+    "text": "Warum ist eine Interaktion zwischen Testausführungswerkzeugen und Testkomparatoren sinnvoll? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Testkomparatoren ermitteln bereits während oder nach der Testausführung die Unterschiede zwischen Testergebnissen.",
+      "b) Testkomparatoren protokollieren die Schritte der Testausführung und weisen deren Ergebnisse aus.",
+      "c) Nach der Testausführung stellen die Testkomparatoren geeignete Daten für spätere Regressionstests bereit.",
+      "d) Testkomparatoren führen Soll-Ist-Vergleiche durch und archivieren die Datenbestände nach der Testausführung."
+    ],
+    "answer": [
+      0
+    ],
+    "explanation": "a) KORREKT – die Interaktion mit Vergleichswerkzeugen (Testkomparatoren) ist eine wesentliche Anforderung an Testausführungswerkzeuge (siehe Lehrplan Kapitel 6.2.4).\n\nb) FALSCH – Testkomparatoren sind keine Berichtswerkzeuge sondern zeigen Unterschiede von Daten auf, die Protokollierung erfolgt im Testausführungstool und wird dem Testmanagementtool übergeben (siehe Lehrplan Kapitel 6.2.4).\n\nc) FALSCH – die Testdateneditoren oder -Generatoren erstellen Daten, Komparatoren führen einen IST/SOLL-Vergleich durch aber stellen keine Daten zur Verfügung (siehe Lehrplan Kapitel 6.2.3 und 6.3.4.).\n\nd) FALSCH – Die Komparatoren führen zwar Soll-Ist-Vergleiche durch, allerdings erfolgt die Archivierung und Versionierung mit Hilfe von Konfigurationsmanagementwerkzeugen (siehe Lehrplan Kapitel 6.2.6)."
+  },
+  {
+    "id": 40,
+    "lo": "TDM-6.2 b",
+    "k": "K2",
+    "pts": 1,
+    "text": "Was ist der WICHTIGSTE Grund, warum Sie einen Testdatengenerator für ein Anwendungssystem in anderen Projekten wiederverwenden sollten? \n\nWählen Sie genau EINE Antwort.",
+    "options": [
+      "a) Die Aufwände für Administration und Wartung des Werkzeugs können an die IT auslagert werden.",
+      "b) Es ist bereits eine Testdatenstruktur konfiguriert, die projektübergreifend genutzt werden kann.",
+      "c) Die Verantwortung für den Datenschutz und die Anonymisierung der Testdaten liegt außerhalb des Projektes.",
+      "d) Die Testdatenbereitstellungspläne werden dadurch nicht mehr für jedes einzelne Projekt erstellt."
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "a) FALSCH – das Nutzen projektübergreifender Synergien ist ein großer Nutzen eines ausgelagerten TDM. Ob aber durch eine projektübergreifende Nutzung auch die Kosten für Administration und Wartung an die IT ausgelagert werden können ist nicht klar geregelt und im Hinblick auf die Antwortoptionen auch nicht der wichtigste Grund.\n\nb) KORREKT – einmal im Testdatengenerator spezifizierte Testdaten lassen sich so projektübergreifend und projektunabhängig nutzen (siehe Lehrplan Kapitel 6.2.3: Erzeugung eines Testdatenpools).\n\nc) FALSCH – der Testdatenmanager ist für die Einhaltung der regulatorischen Vorgaben innerhalb des TDM-Prozesses verantwortlich und trägt somit die Verantwortung für die Verwendung der Testdaten (siehe Lehrplan Kapitel 4.4.1).\n\nd) FALSCH – Testdatenbereitstellungspläne werden in jedem Projekt benötigt und zwar in der Phase ‚Testdatenerzeugung konzipieren‘ (Syllabus Kapitel 6.2.3, 1. Aufzählpunkt)."
+  }
+];
+
+
+      // ── STATE ──────────────────────────────────────────────────────────────────
+      const BASE_SECONDS = 60 * 60;
+      const EXT_SECONDS = 75 * 60;
+      let timeExtended = false;
+      let TOTAL_SECONDS = BASE_SECONDS;
+      let userAnswers = questions.map(() => []);
+      let timerInterval = null;
+      let secondsLeft = TOTAL_SECONDS;
+      let examDeadline = null;
+      let examSubmitted = false;
+      let pendingAction = null;
+
+      function fmtTime(totalSec) {
+        const m = Math.floor(totalSec / 60),
+          s = totalSec % 60;
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function selectTime(extended) {
+        timeExtended = extended;
+        TOTAL_SECONDS = extended ? EXT_SECONDS : BASE_SECONDS;
+        document
+          .getElementById("opt-standard")
+          .classList.toggle("active", !extended);
+        document
+          .getElementById("opt-extended")
+          .classList.toggle("active", extended);
+        document.getElementById("meta-minutes").textContent = extended
+          ? "75"
+          : "60";
+        document.getElementById("ext-note").style.display = extended
+          ? "block"
+          : "none";
+        document.getElementById("start-note-txt").textContent = extended
+          ? "Der Timer zählt von 75:00 herunter (60 Minuten + 25 % Übungszeit). Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben."
+          : "Der Timer zählt von 60:00 herunter. Nach Ablauf der Zeit wird die Prüfung automatisch abgegeben.";
+      }
+
+      function startExam() {
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("exam-screen").style.display = "block";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+      }
+
+      function escHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/\n/g, "<br>");
+      }
+
+
+      const sourceAssets = {"p12-1": {"src": "assets/GTB-CTFL-TDM_Sample-Exam-Question_SET2019A_DE-1/p12-1.png", "alt": "KdNr. Vorname Nachname PLZ Ort E-Mail\n73010 Volkward Völker 55278 Dolgesheim v o l k w ard.voel@google.de\n34539 Edelinde Hild 06922 Labrun h il d 8 8@google.de\n93942 Janine Möllers 22415 Hamburg j m o e l l ers@google.fr\n97805 Toralf Knabe 91604 Flachslanden t . k n a b e @gmx.com\n82671 Adelheid Sieg 71729 Erdmannhausen a s i e g @ a rcor.de", "page": 12, "kind": "table"}, "p12-2": {"src": "assets/GTB-CTFL-TDM_Sample-Exam-Question_SET2019A_DE-1/p12-2.png", "alt": "KdNr. Vorname Nachname PLZ Ort E-Mail\n73010 Adelheid Vnnnnn 92272 Freudenberg t e s t . n a m e@intern.de\n34539 Volkward Hnnn 93092 Barbing t e s t . n ame@intern.de\n93942 Edelinde Mnnnnnn 96142 Hollfeld t e s t .name@intern.de\n97805 Janine Knnnn 98617 Stepfershausen t e s t . n a m e@intern.de\n82671 Toralf Snnn 99880 Leinatal t e s t . name@intern.de", "page": 12, "kind": "table"}};
+      function renderContent(text) {
+        return escHtml(text).replace(/\[\[asset:([^\]]+)\]\]/g, (_, id) => {
+          const asset = sourceAssets[id];
+          if (!asset) throw new Error('Missing source asset: ' + id);
+          if (asset.html) return `<div class="q-table-wrap">${asset.html}</div>`;
+          return `<figure class="source-figure"><a href="${escHtml(asset.src)}" target="_blank" rel="noopener"><img src="${escHtml(asset.src)}" alt="${escHtml(asset.alt)}" loading="lazy"></a><figcaption>Zum Vergrößern öffnen</figcaption></figure>`;
+        });
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+        questions.forEach((q, qi) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.id = "card-" + qi;
+          card.style.animationDelay = qi * 0.012 + "s";
+          const isMulti = q.answer.length > 1;
+          const opts = q.options
+            .map(
+              (opt, oi) => `
+                  <label class="option-row" id="opt-${qi}-${oi}" for="inp-${qi}-${oi}">
+                    <input type="${isMulti ? "checkbox" : "radio"}" name="q${qi}" id="inp-${qi}-${oi}" data-qi="${qi}"
+                           style="position:absolute;opacity:0;width:1px;height:1px;">
+                    <span class="option-marker"></span>
+                    <span class="option-text">${renderContent(opt)}</span>
+                  </label>`,
+            )
+            .join("");
+          card.innerHTML = `
+                  <div class="q-header">
+                    <div class="q-meta">
+                      <span class="q-num">Q${q.id}</span>
+                      <span class="q-lo">${q.lo} (${q.k})</span>
+                      <span class="q-pts">${q.pts} Punkt${q.pts > 1 ? "e" : ""}</span>
+                    </div>
+                    <div class="q-text" id="q-text-${qi}">${renderContent(q.text)}</div>
+                  </div>
+                  ${q.image ? `<center><img class="q-image" src="${q.image}" alt="${escHtml(q.imageAlt || ('Abbildung zu Frage ' + q.id))}"></center>` : ""}
+                  ${q.table ? `<div class="q-table-wrap">${q.table}</div>` : ""}
+                  ${q.sourceNote ? `<p class="q-text">${escHtml(q.sourceNote)}</p>` : ""}
+                  <div class="options" role="group" aria-labelledby="q-text-${qi}">${opts}</div>
+                  <div class="result-tag" id="result-${qi}"></div>
+                  <div class="explanation" id="expl-${qi}">${renderContent(q.explanation)}</div>`;
+          container.appendChild(card);
+        });
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.addEventListener("change", function () {
+            tickTimer();
+            if (examSubmitted) return;
+            syncAnswer(Number(this.dataset.qi));
+          });
+        });
+      }
+
+      function syncAnswer(qi) {
+        userAnswers[qi] = [];
+        questions[qi].options.forEach((_, oi) => {
+          if (document.getElementById("inp-" + qi + "-" + oi).checked)
+            userAnswers[qi].push(oi);
+        });
+        questions[qi].options.forEach((_, oi) => {
+          document
+            .getElementById("opt-" + qi + "-" + oi)
+            .classList.toggle("selected", userAnswers[qi].includes(oi));
+        });
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        document.getElementById("answered-num").textContent = answered;
+        document.getElementById("progress-fill").style.width =
+          (answered / questions.length) * 100 + "%";
+      }
+
+      // tickTimer is provided by assets/exam-timer.js.
+
+      function confirmSubmit() {
+        const answered = userAnswers.filter((a) => a.length > 0).length;
+        const unanswered = questions.length - answered;
+        document.getElementById("confirm-title").textContent =
+          "Prüfung abgeben?";
+        document.getElementById("confirm-msg").innerHTML =
+          unanswered > 0
+            ? `Es sind noch <strong style="color:var(--warn)">${unanswered} Frage${unanswered > 1 ? "n" : ""} unbeantwortet</strong>. Unbeantwortete Fragen ergeben 0 Punkte.<br><br>Trotzdem abgeben?`
+            : `Alle ${questions.length} Fragen sind beantwortet. Prüfung jetzt abgeben?`;
+        document.getElementById("confirm-yes-btn").textContent = "Abgeben";
+        pendingAction = "submit";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function confirmReset() {
+        document.getElementById("confirm-title").textContent =
+          "Prüfung neu starten?";
+        document.getElementById("confirm-msg").innerHTML =
+          "Alle Antworten gehen verloren. Der Timer wird zurückgesetzt auf " +
+          fmtTime(TOTAL_SECONDS) +
+          ".<br><br>Möchten Sie fortfahren?";
+        document.getElementById("confirm-yes-btn").textContent = "Neu starten";
+        pendingAction = "reset";
+        document.getElementById("confirm-overlay").classList.add("show");
+      }
+
+      function closeConfirm() {
+        document.getElementById("confirm-overlay").classList.remove("show");
+        pendingAction = null;
+      }
+
+      function doConfirm() {
+        if (pendingAction === "submit") doSubmit(false);
+        else if (pendingAction === "reset") doReset();
+        closeConfirm();
+      }
+
+      function doSubmit(timedOut) {
+        if (examSubmitted) return;
+        secondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+        timedOut = timedOut || secondsLeft === 0;
+        examSubmitted = true;
+        document.querySelectorAll(".option-row input").forEach((input) => {
+          input.disabled = true;
+        });
+        clearInterval(timerInterval);
+        closeConfirm();
+
+        let correctCount = 0,
+          wrong = 0,
+          skipped = 0,
+          earnedPoints = 0;
+        const totalPoints = questions.reduce((sum, q) => sum + q.pts, 0);
+
+        questions.forEach((q, qi) => {
+          const given = userAnswers[qi];
+          const givenSorted = [...given].sort();
+          const answerSorted = [...q.answer].sort();
+          const isCorrect =
+            given.length > 0 &&
+            givenSorted.length === answerSorted.length &&
+            givenSorted.every((v, i) => v === answerSorted[i]);
+          const correctLabel = q.answer
+            .map((a) => String.fromCharCode(97 + a) + ")")
+            .join(", ");
+          if (given.length === 0) skipped++;
+          else if (isCorrect) {
+            correctCount++;
+            earnedPoints += q.pts;
+          } else wrong++;
+
+          q.options.forEach((_, oi) => {
+            const row = document.getElementById("opt-" + qi + "-" + oi);
+            if (!row) return;
+            row.classList.add("disabled");
+            row.classList.remove("selected");
+            if (q.answer.includes(oi)) row.classList.add("reveal-correct");
+            else if (given.includes(oi)) row.classList.add("reveal-wrong");
+          });
+
+          const rt = document.getElementById("result-" + qi);
+          const expl = document.getElementById("expl-" + qi);
+          const card = document.getElementById("card-" + qi);
+          rt.classList.add("show");
+          expl.classList.add("show");
+
+          if (given.length === 0) {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&mdash; Unbeantwortet &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          } else if (isCorrect) {
+            rt.classList.add("correct");
+            rt.innerHTML =
+              "&#10003; Richtig (+" + q.pts + (q.pts > 1 ? " Punkte)" : " Punkt)");
+            card.classList.add("correct-card");
+          } else {
+            rt.classList.add("incorrect");
+            rt.innerHTML =
+              "&#10007; Falsch &middot; Richtige Antwort: " + correctLabel;
+            card.classList.add("incorrect-card");
+          }
+        });
+
+        const pct = Math.round((earnedPoints / totalPoints) * 100);
+        const pass = earnedPoints >= Math.ceil(totalPoints * 0.65);
+        const usedSec = TOTAL_SECONDS - secondsLeft;
+        const totalLabel = fmtTime(TOTAL_SECONDS);
+        const timeStr = timedOut
+          ? totalLabel + " (Zeit abgelaufen)"
+          : fmtTime(usedSec);
+
+        if (timedOut) {
+          const el = document.getElementById("timer");
+          el.textContent = "00:00";
+          el.className = "timer danger";
+        }
+
+        document.getElementById("final-score-pct").textContent = pct + "%";
+        document.getElementById("final-score-raw").textContent =
+          earnedPoints + " von " + totalPoints + " Punkten (" + correctCount + " von " + questions.length + " Fragen richtig)";
+        document.getElementById("time-used").textContent = timeStr;
+        const badge = document.getElementById("grade-badge");
+        badge.textContent = pass
+          ? `✓ BESTANDEN (≥ ${Math.ceil(totalPoints * 0.65)} Punkte)`
+          : `✗ NICHT BESTANDEN (< ${Math.ceil(totalPoints * 0.65)} Punkte)`;
+        badge.className = "grade-badge " + (pass ? "pass" : "fail");
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrong;
+        document.getElementById("stat-skipped").textContent = skipped;
+
+        document.getElementById("summary").style.display = "block";
+        document
+          .getElementById("summary")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function doReset() {
+        examSubmitted = false;
+        userAnswers = questions.map(() => []);
+        secondsLeft = TOTAL_SECONDS;
+        examDeadline = Date.now() + TOTAL_SECONDS * 1000;
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = fmtTime(TOTAL_SECONDS);
+        document.getElementById("timer").className = "timer";
+        document.getElementById("answered-num").textContent = "0";
+        document.getElementById("progress-fill").style.width = "0%";
+        document.getElementById("summary").style.display = "none";
+        renderQuestions();
+        timerInterval = setInterval(tickTimer, 1000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  <script src="../../../assets/exam-timer.js"></script>
+<script src="../../../assets/exam-ui.js"></script>
+</body>
+</html>

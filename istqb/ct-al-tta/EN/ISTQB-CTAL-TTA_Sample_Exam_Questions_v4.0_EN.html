@@ -1,0 +1,1142 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CTAL-TTA v4.0 · Technical Test Analyst · Sample v4.0</title><link rel="stylesheet" href="../../../assets/fonts/fonts.css"><link rel="stylesheet" href="../../../assets/exam-ui.css"><link rel="stylesheet" href="../../../assets/exam-engine.css"></head><body><main><section class="start-card" id="start-screen"><p>ISTQB · EN</p><h1>CTAL-TTA v4.0 · Technical Test Analyst · Sample v4.0</h1><p>45 questions · 78 points · 120 min · Pass mark 51</p><label><input id="extended-time" type="checkbox"> Time extension for non-native speakers (+25%)</label><p><button class="btn-start" onclick="startExam()">Start exam</button></p></section><section id="exam-screen" hidden><header><h1>CTAL-TTA v4.0 · Technical Test Analyst · Sample v4.0</h1><p><span id="timer" role="timer"></span> · <span id="progress"></span></p><button onclick="confirmSubmit()">Submit</button> <button onclick="confirmReset()">Restart</button></header><section id="results" hidden aria-live="polite"><h2 id="grade-badge"></h2><p><span id="final-score-raw"></span> · <span id="final-score-pct"></span></p></section><div id="questions-container"></div></section><footer><p>Source: ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN.pdf / ISTQB_CTAL-TTA_Sample_Exam_Answers_v4.0_EN.pdf. © ISTQB®. Original questions, answer keys and rationales remain the property of their respective owners.</p><p><a href="../../../THIRD_PARTY_NOTICES.md">Third-party notices</a></p></footer></main><div class="confirm-overlay" id="confirm-overlay"><div class="confirm-card"><h2 id="confirm-title"></h2><p id="confirm-text"></p><button id="confirm-cancel" onclick="closeConfirm()">Cancel</button> <button id="confirm-ok" onclick="doConfirm()">OK</button></div></div><script>const questions = [
+  {
+    "id": 1,
+    "answer": [
+      0,
+      1
+    ],
+    "lo": "TTA-1.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which TWO of the following are examples of risks that should be considered by the Technical Test Analyst?",
+    "options": [
+      "A high number of reliability defects were found compared with the previous version",
+      "Required updates to the security testing tool database are poorly configured",
+      "Documentation from the legacy system to verify the accuracy of computations is lacking",
+      "The budget allocated to the testing on the project has been reduced",
+      "The change rate of business use cases is higher than expected"
+    ],
+    "multi": true,
+    "explanation": "a) Is correct. A large number of defects relating to technical quality characteristics is a generic risk factor.\nb) Is correct. Tools and technology is a generic risk factor.\nc) Is incorrect. Accuracy of the computations is a concern for the TA, not the TTA.\nd) Is incorrect. Budgetary issues should be handled by the TM, not the TTA.\ne) Is incorrect. High change rates in business use cases affect the functionality testing.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q1-7.png",
+        "alt": "Source question 1, page 7"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 2,
+    "answer": [
+      3
+    ],
+    "lo": "TTA-1.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "When participating in a risk analysis, the Technical Test Analyst is expected to work closely with which of the following sets of people?",
+    "options": [
+      "Users",
+      "Business analysts",
+      "Project sponsors",
+      "Developers"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. The TA would be expected to work with users.\nb) Is incorrect. The TA would be expected to work with business analysts.\nc) Is incorrect. The TA would be expected to work with project sponsors.\nd) Is correct. The TTA is expected to work with the technical stakeholders on the project, including the developers.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q2-7.png",
+        "alt": "Source question 2, page 7"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 3,
+    "answer": [
+      0
+    ],
+    "lo": "TTA-2.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Consider the simplified logic of a tea-making machine:\n```\nTurn on the machine\nIF enough water THEN\n    Boil water\n    Add tea\n    Show message “milk?”\n    IF milk = yes THEN\n        Show message “low fat?”\n        IF low fat = yes THEN\n            Add low fat milk\n        ELSE\n            Add normal milk\n        ENDIF\n    ENDIF\n    Show message “sugar?”\n    IF sugar = yes THEN\n        Add sugar\n    ENDIF\n    Stir\n    Wait 3 minutes\n    Show message “please take your tea”\nELSE\n    Show message “please fill up water”\nENDIF\n```\nWhat is the minimum number of test cases required to achieve 100% statement coverage of the logic for the tea-making machine?",
+    "options": [
+      "3",
+      "2",
+      "5",
+      "6"
+    ],
+    "multi": false,
+    "explanation": "a) Is correct. The three test cases are defined by the following inputs:\n• Enough water, low fat milk, sugar\n• Enough water, normal milk, sugar or not sugar\n• Not enough water\nb) Is incorrect. With two tests, one of the paths covered by the tests of answer (a) will be missed, and the lines of code in this path will not be tested – failing to achieve 100% statement coverage.\nc) Is incorrect. The question asked for the minimal number of tests to achieve 100% statement coverage. This can be achieved with 3 tests, as shown in (a).\nd) Is incorrect. The question asked for the minimal number of tests to achieve 100% statement coverage. This can be achieved with 3 tests, as shown in (a).",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q3-8.png",
+        "alt": "Source question 3, page 8"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 4,
+    "answer": [
+      2
+    ],
+    "lo": "TTA-2.3.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "The simplified logic of a program is as follows:\n```\nStatement P\nIF A THEN\n    IF B THEN\n        Statement Q\n    ELSE\n        Statement R\n    ENDIF\nELSE\n    Statement S\n    IF C THEN\n        Statement T\n    ELSE\n        Statement U\n    ENDIF\nENDIF\nStatement V\n```\nAssume that decisions B and C are independent of each other. What is the minimum number of test cases required to achieve 100% decision coverage?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. As shown in (c), 4 tests are needed to achieve 100% decision coverage.\nb) Is incorrect. As shown in (c), 4 tests are needed to achieve 100% decision coverage.\nc) Is correct. The following conditions ensure that all decision outcomes are tested:\n1) A = true, B = true\n2) A = true, B = false\n3) A = false, C = true\n4) A = false, C= false\nd) Is incorrect. As shown in (c), 4 tests are enough to achieve 100% decision coverage.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q4-9.png",
+        "alt": "Source question 4, page 9"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 5,
+    "answer": [
+      0
+    ],
+    "lo": "TTA-2.3.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are testing code whose control flow graph is presented below. Node 1 is the entry point and node 9 is the exit point.\nAssuming that all decisions in this code are independent, what is the minimum number of test cases required to achieve 100% decision coverage?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "multi": false,
+    "explanation": "a) Is correct. There are 4 decision points in the graph, in nodes 1, 2, 4 and\n6. Hence, we need to cover 8 decision outcomes: TRUE and FALSE for each of the four decisions. These correspond to the branches 1→2, 1→5, 2→3, 2→4, 4→2, 4→6, 6→7 and 6→8. One test is not enough, because it will not be able to cover both 1→2 and 1→5. Two tests, however, will be enough; for example, the first one can go along the path 1→2→3→4→2→4→6→7→9 and the second one along the path 1→5→6→8→9. The first test exercises decision outcomes 1→2, 2→3, 2→4, 4→2, 4→6 and 6→7. The second one exercises the decision outcomes 1→5 and 6→8. Hence, both tests cover all eight decision outcomes, achieving 100% decision coverage.\nb) Is incorrect. Two tests are enough, see a).\nc) Is incorrect. Two tests are enough, see a).\nd) Is incorrect. Two tests are enough, see a).",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q5-10.png",
+        "alt": "Source question 5, page 10"
+      }
+    ],
+    "showFigure": true
+  },
+  {
+    "id": 6,
+    "answer": [
+      2
+    ],
+    "lo": "TTA-2.4.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are testing a photo-enforcement system for traffic control at an intersection. The requirements state a photo shall be taken if the signal light is red (RED), or the car is speeding (SPEED), and if the front wheels of the car are over the line marking the beginning of the intersection (WHEELS).\n\nThe logic in the code looks like the following:\n```\nIF ((RED OR SPEED) AND WHEELS) THEN\n    Take the photo\nELSE\n    Do not take the photo\nENDIF\n```\nConsider these test input values:\n1. RED + SPEED + WHEELS\n2. RED + SPEED + not WHEELS\n3. RED + not SPEED + WHEELS\n4. RED + not SPEED + not WHEELS\n5. not RED + SPEED + WHEELS\n6. not RED + SPEED + not WHEELS\n7. not RED + not SPEED + WHEELS\n8. not RED + not SPEED + not WHEELS\n\nAssuming there is no short-circuiting, which set of test input values is required to achieve full modified condition/decision coverage?",
+    "options": [
+      "1, 3, 8",
+      "2, 6, 8",
+      "3, 4, 5, 7",
+      "1, 5, 7, 8"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. Covers the outcomes but not the atomic conditions that affect the decision outcome. Also, for three independent atomic conditions, then four tests are needed to achieve MC/DC level of coverage.\nb) Is incorrect. Does not sufficiently cover the atomic conditions affecting the decision outcome. Also, for three independent atomic conditions, then four tests are needed to achieve MC/DC level of coverage.\nc) Is correct. This answer provides the following:\nTest inputs for (RED or SPEED) and WHEELS OUTCOME\n3. RED + not SPEED + WHEELS TRUE\n4. RED + not SPEED + not WHEELS FALSE\n5. not RED + SPEED + WHEELS TRUE\n7. not RED + not SPEED + WHEELS FALSE\n#3 and #7 show that RED can independently affect the overall outcome.\n#5 and #7 show that SPEED can independently affect the overall outcome.\n#3 and #4 show that WHEELS can independently affect the outcome.\nd) Is incorrect. Does not sufficiently cover the atomic conditions affecting the decision outcome. #1 combined with any of the other three (#5, #7, #8) cannot show that any single condition can independently affect the overall outcome.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q6-11.png",
+        "alt": "Source question 6, page 11"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 7,
+    "answer": [
+      0
+    ],
+    "lo": "TTA-2.5.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are testing a photo-enforcement system for traffic control at an intersection. The requirements state a photo shall be taken if the signal light is red (RED), or the car is speeding (SPEED), and if the front wheels of the car are over the line marking the beginning of the intersection (WHEELS).\n\nThe logic in the code looks like the following:\n```\nIF ((RED OR SPEED) AND WHEELS) THEN\n    Take the photo\nELSE\n    Do not take the photo\nENDIF\n```\nConsider these test input values:\n1. RED + SPEED + WHEELS\n2. RED + SPEED + not WHEELS\n3. RED + not SPEED + WHEELS\n4. RED + not SPEED + not WHEELS\n5. not RED + SPEED + WHEELS\n6. not RED + SPEED + not WHEELS\n7. not RED + not SPEED + WHEELS\n8. not RED + not SPEED + not WHEELS\n\nAssuming no short-circuiting, which set of test input values is required to achieve 50% multiple condition coverage?",
+    "options": [
+      "3, 4, 5, 8",
+      "1, 3, 5",
+      "2, 4, 6, 7, 8",
+      "2, 7"
+    ],
+    "multi": false,
+    "explanation": "a) Is correct. Multiple condition testing requires testing the entire truth table (all combinations of true and false possible which equals 2N, where N is the number of uncoupled atomic conditions). So, this example requires 8 tests. 50% coverage is achieved with any 4 separate tests from the list.\nb) Is incorrect. This answer provides 3/8 (37.5%) coverage of the multiple condition testing.\nc) Is incorrect. This answer provides 5/8 (62.5%) coverage of the multiple condition testing.\nd) Is incorrect. This answer provides 2/8 (20%) coverage of the multiple condition testing.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q7-12.png",
+        "alt": "Source question 7, page 12"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 8,
+    "answer": [
+      0,
+      2
+    ],
+    "lo": "TTA-2.7.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which TWO of the following are examples of defects targeted by API testing?",
+    "options": [
+      "Issues in transaction processing of HTTP requests",
+      "Committed code violates the project’s coding standards",
+      "System web service reacting incorrectly to different data in requests",
+      "Division by zero errors",
+      "Functional errors occurring on the GUI"
+    ],
+    "multi": true,
+    "explanation": "a) Is correct. Transaction issues are listed under types of defects found by API testing\nb) Is incorrect. Code standards violations are targeted by maintainability testing.\nc) Is correct. Data handling issues are listed under types of defects found by API testing\nd) Is incorrect. This low-level programming issues are addressed by unit testing.\ne) Is incorrect. Issues on GUI cannot be targeted by API testing since it is executed on lower levels of system architecture than GUI.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q8-13.png",
+        "alt": "Source question 8, page 13"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 9,
+    "answer": [
+      3
+    ],
+    "lo": "TTA-2.8.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are the Technical Test Analyst working on the testing of software that will control the movement of the roof on a new national sports stadium that seats 100,000 spectators. A failure analysis has shown that if the software system fails it may cause the roof to break up and fall on the spectators. The government has requested that the level of testing for this software exceeds that required by the IEC 61508 standard.\nWhich level of test coverage would you expect to be achieved in the testing of the control software for the stadium roof?",
+    "options": [
+      "Decision coverage + Modified Condition/Decision coverage",
+      "Decision coverage + Statement coverage",
+      "Modified Condition/Decision coverage",
+      "Multiple Condition coverage"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. This is the same as MC/DC, because decision coverage is subsumed by MC/DC.\nb) Is incorrect. This is the same as decision coverage because statement coverage is subsumed by decision coverage. Decision coverage, however, provides a lower level of rigor than MC/DC or multiple condition coverage.\nc) Is incorrect. MC/DC is required for the highest-level criticality software according to IEC 61508, but this scenario requires the level of testing to exceed this, so this is not a correct option.\nd) Is correct. MC/DC is required for the highest-level criticality software according to IEC 61508, which is presumably because several thousand spectators could be killed/injured. Multiple condition coverage provides a higher level of coverage than MC/DC and as this ‘exceeds’ that provided by MC/DC this is the correct option for this scenario.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q9-13.png",
+        "alt": "Source question 9, page 13"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 10,
+    "answer": [
+      1
+    ],
+    "lo": "TTA-2.8.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "You work for a software house that provides software solutions for medical systems. Currently you are testing a software component that operates the defibrillator machine controlling the dose of electric current delivered to the heart. During the code review, the reviewers noticed that one decision in the module under test consists of 20 independent atomic conditions. You are obliged to perform white-box testing for this module and you are expected to finish it in one month. Which white-box test technique should you choose for this scenario?",
+    "options": [
+      "Multiple condition testing",
+      "MC/DC testing",
+      "Decision testing",
+      "API testing"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. Multiple condition testing is the most thorough technique, but for a decision with 20 independent atomic conditions we would have to design 220 = 1,048,576 tests to achieve full multiple condition coverage, which would be impossible to finish in one month (if at all).\nb) Is correct. This is a medical, safety-critical system, whose failure or malfunction may result in death or serious injury to people. Therefore, it must be tested thoroughly. Full multiple condition coverage is impossible to achieve (see answer a), hence, MC/DC is the most reasonable choice as it is stronger than decision testing, but, compared to multiple condition testing, requires only a linear number of test cases\n– for example, the decision with 20 conditions requires only 21 test cases to achieve full MC/DC coverage.\nc) Is incorrect. Decision testing is a relatively weak criterion compared to MC/DC, and so not suitable for a safety-critical system.\nd) Is incorrect. There is no information about API in this scenario. Also, this would not guarantee the thorough level of testing required for such a safety-critical system.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q10-13.png",
+        "alt": "Source question 10, page 13"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 11,
+    "answer": [
+      1
+    ],
+    "lo": "TTA-3.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "Below is the pseudo-code for a TRICKY program:\n```\n 0  program TRICKY\n 1  var1, var2, var3 : integer\n 2  begin\n 3      read(var2)\n 4      read(var1)\n 5      while var2 < 10 loop\n 6          var3 = var2 + var1\n 7          var2 = 4\n 8          var1 = var2 + 1\n 9          print(var3)\n10          if var1 = 5 then\n11              print(var1)\n12          else\n13              print(var1+1)\n14          endif\n15          var2 = var2 + 1\n16      endloop\n17      print(“Wow – that was tricky!”)\n18      print(“But the answer is...”)\n19      print(var2+var1)\n20  end program TRICKY\n```\nWhich of the following statements about the TRICKY program MOST correctly describes any control flow anomalies in it?",
+    "options": [
+      "The TRICKY program contains no control flow anomalies",
+      "The TRICKY program contains unreachable code and an infinite loop",
+      "The TRICKY program contains unreachable code and no infinite loop",
+      "The TRICKY program contains a loop with multiple entry points"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. See the correct justification for details.\nb) Is correct. The decision at line 10 will always be true as var1 will always be 5 at line 10, thus line 13 is unreachable. The loop at line 5 can only be left if var2 is 10 or more, but each time through the loop var2 is reset at line 7 back to 4 and only incremented by 1 in the loop at line 15, so it only ever reaches 5\nc) Is incorrect. See the correct justification for details.\nd) Is incorrect. There is only one entry point to the WHILE loop (with the control flow 4 → 5).",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q11-14.png",
+        "alt": "Source question 11, page 14"
+      }
+    ],
+    "showFigure": true
+  },
+  {
+    "id": 12,
+    "answer": [
+      1
+    ],
+    "lo": "TTA-3.2.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "The programmers have designed three versions of a function that finds the largest number among three integers: findMax1, findMax2 and findMax3. One of them must be chosen for the next release. The codes look as follows:\n```\nint findMax1(int n1, int n2, int n3) {\n    int max;\n    if (n1 >= n2 && n1 >= n3)\n        max = n1;\n    if (n2 >= n1 && n2 >= n3)\n        max = n2;\n    if (n3 >= n1 && n3 >= n2)\n        max = n3;\n    return max;\n}\n\nint findMax2(int n1, int n2, int n3) {\n    int max;\n    if (n1 >= n2 && n1 >= n3)\n        max = n1;\n    else if (n2 >= n1 && n2 >= n3)\n        max = n2;\n    else\n        max = n3;\n    return max;\n}\n\nint findMax3(int n1, int n2, int n3) {\n    int max;\n    if (n1 >= n2) {\n        if (n1 >= n3)\n            max = n1;\n        else\n            max = n3;\n    } else {\n        if (n2 >= n3)\n            max = n2;\n        else\n            max = n3;\n    }\n    return max;\n}\n```\nYou were asked to select the one with the lowest cyclomatic complexity. Which ONE should you choose?",
+    "options": [
+      "findMax1",
+      "findMax2",
+      "findMax3",
+      "You can choose any of them, because all three functions have the same cyclomatic complexity"
+    ],
+    "multi": false,
+    "explanation": "The control flow graphs of all three functions are presented in the figure.\nOne can see that findMax2 has 2 decision points (marked with symbol “D”), so its cyclomatic complexity equals 3, while findMax1 and findMax2 have 3 decision points, so their cyclomatic complexity equals 4. Hence:\na) Is incorrect.\nb) Is correct.\nc) Is incorrect.\nd) Is incorrect.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q12-15.png",
+        "alt": "Source question 12, page 15"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 13,
+    "answer": [
+      0
+    ],
+    "lo": "TTA-3.2.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "Below is the pseudo-code for a program that calculates and prints sales commissions:\n```\n 0  program Calculate Commission\n 1  total, number : integer\n 2  commission_hi, commission_lo : real\n 3  begin\n 4      read(number)\n 5      while (number ≠ -1) loop\n 6          total = total + number\n 7          read(number)\n 8      endloop\n 9      if (total > 1000) then\n10          commission_hi = 100 + 0.2 * ( total – 1000 )\n11      else\n12          commission_lo = 0.15 * total\n13      endif\n14      write(“This salesman’s commission is:”)\n15      write(commission_hi)\n16  end program Calculate Commission\n```\nThe code contains data flow anomalies on lines 6 and 12 (highlighted text). Which examples of data flow anomalies can be found on these lines?",
+    "options": [
+      "line 6: variable “total” is not assigned a value before using it\nline 12: variable “commission_lo” is defined but subsequently not used",
+      "line 6: an invalid value is assigned to variable “total”\nline 12: variable “commission_lo” is redefined before it is used",
+      "line 6: variable “total” is out of scope\nline 12: the “hard-coded” value “0.15” should not be used",
+      "line 6: the variable “number” is undefined\nline 12: the variable “total” is redefined before it is used"
+    ],
+    "multi": false,
+    "explanation": "a) Is correct. The variable ‘total’ is used at line 6 before it is defined.\nThe variable ‘commission_lo’ is defined at line 12 with no subsequent use.\nb) Is incorrect. The variable ‘number’ is a valid value to assign to the variable ‘total’.\nThe variable ‘commission_lo’ is not defined before line 12.\nc) Is incorrect. The variable ‘total’ is in scope at line 6.\nUse of the “hard-coded” value “0.15” is not a data flow anomaly.\nd) Is incorrect. The variable ‘number’ is defined at line 4. The variable ‘total’ is defined at line 6, and not redefined before line 12.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q13-16.png",
+        "alt": "Source question 13, page 16"
+      }
+    ],
+    "showFigure": true
+  },
+  {
+    "id": 14,
+    "answer": [
+      3
+    ],
+    "lo": "TTA-3.2.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "You have been asked to analyze the following program that calculates a sales commission:\n```\n    PROGRAM Commission\n    barrels, totalBarrels : INTEGER\n    price, sales, commission : REAL\n 1  price = 35.0\n 2  totalBarrels = 0\n 3  INPUT(barrels)\n 4  WHILE NOT(barrels == -1) DO\n 5      totalBarrels = totalBarrels + barrels\n 6      INPUT(barrels)\n 7  ENDWHILE\n 8  sales = price * totalBarrels\n 9  IF (sales > 1800.0)\n10          commission = 0.10 * 1000.0 + 0.15 * 800.0\n11          commission = commission + 0.20 * (sales – 1800.0)\n12  ELSE IF (sales > 1000.0)\n13          commission = 0.10 * 1000.0\n14          commission = 0.15 * (sales – 1000)\n15  ELSE\n16          commission = 0.10 * sales\n17  ENDIF\n18  totalBarrels = 0\n19  barrels = 0\n20  OUTPUT(“Total commission = “,commission)\n    END PROGRAM\n```\nWhich pair of lines represents a data flow anomaly?",
+    "options": [
+      "8–9",
+      "3–19",
+      "2–18",
+      "13–14"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. This pair represents a correct definition-use (du) sequence for sales.\nb) Is incorrect. Barrels is defined at line 3 and used at line 4, so the definition at line 19 takes place after a use. A use then definition sequence is not an anomaly.\nc) Is incorrect. totalBarrels is defined at line 2, then may be used at line 5, and is used at line 8, so the definition at line 18 takes place after a use of totalBarrels – a use then definition sequence is not an anomaly.\nd) Is correct. At line 13 commission is defined and then in line 14 it is defined again, without any use between these two definitions. This is a definition-definition sequence, which is an anomaly.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q14-17.png",
+        "alt": "Source question 14, page 17"
+      }
+    ],
+    "showFigure": true
+  },
+  {
+    "id": 15,
+    "answer": [
+      2
+    ],
+    "lo": "TTA-3.2.3",
+    "k": "K3",
+    "pts": 2,
+    "text": "You have been provided with the following system-wide average measures for the four systems, W, X, Y and Z, using static code analysis.\n```\n                                                                   SYSTEM\n\n                                                       W        X        Y        Z\n                 Cyclomatic Complexity (CC)            23       8        12       7\n                 Cohesion (CH)                        High    Medium    Low      High\nMetric           Coupling (CP)                        Low      High    Medium   Medium\n                 Commented Code (CO)                  60%      10%      45%      8%\n                 Repeated code instances                9       2        3        12\n                 (RE)\n```\nBudget is available to improve the maintainability of the code in each of the four systems by applying the results of static analysis to the individual components.\n\nWhich of the following is the BEST way to improve maintainability of the code if you can address only two metrics per system?",
+    "options": [
+      "W – CO, RE X – CC, CH Y – CP, CO Z – CC, RE",
+      "W – CC, CP X – CH, CO Y – CC, CH Z – CO, RE",
+      "W – CC, RE X – CP, CO Y – CC, CH Z – CO, RE",
+      "W – CH, CO X – CC, RE Y – CP, RE Z – CC, CH"
+    ],
+    "multi": false,
+    "explanation": "Cyclomatic Complexity (CC) indicates the number of independent paths tough the code. The higher the CC number, the worse code maintainability is likely to be, hence system W and Y should be addressed in this area.\nCohesion (CH) is a measure to which a module is self-contained and focused on a single task. The lower it is, the worse the code maintainability is likely to be. Hence system Y should be addressed in this area.\nCoupling (CP) is a measure of the degree to which modules rely on each other. The higher it is, the worse the code maintainability is likely to be.\nHence system X should be addressed in this area.\nCommented Code (CO) indicates how much of the code is documented by comments. Less comments indicates worse code maintainability. Hence systems X and Z should be addressed in this area.\nRepeated code instances (RE) count how many code instances are duplicated. The higher the number, the worse the code maintainability is likely to be. Hence systems W and Z should be addressed in this area.\nHence:\na) Is incorrect.\nb) Is incorrect.\nc) Is correct (W – CC & RE, X – CP & CO, Y – CC & CH, Z – CO & RE).\nd) Is incorrect.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q15-18.png",
+        "alt": "Source question 15, page 18"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 16,
+    "answer": [
+      1,
+      3
+    ],
+    "lo": "TTA-3.2.3",
+    "k": "K3",
+    "pts": 2,
+    "text": "Below is the pseudo-code for a TRICKY program:\n```\n 0  program TRICKY\n 1  var1, var2, var3 : integer\n 2  begin\n 3      read(var2)\n 4      read(var1)\n 5      while (var2 < 10) loop\n 6          var3 = var2 + var1\n 7          var2 = 4\n 8          var1 = var2 + 1\n 9          print(var3)\n10          if (var1 == 5) then\n11              print(var1)\n12          else\n13              print(var1+1)\n14          endif\n15          var2 = var2 + 1\n16      endloop\n17      print(“Wow – that was tricky!”)\n18      print(“But the answer is...”)\n19      print(var2+var1)\n20  end program TRICKY\n```\nWhich TWO fixes to improve code maintainability would MOST likely be proposed after performing static analysis?",
+    "options": [
+      "Restructuring the code",
+      "Improving the naming of variables",
+      "Reduce program coupling",
+      "Improving the amount of comments",
+      "Improving the indentation of code"
+    ],
+    "multi": true,
+    "explanation": "a) Is incorrect. The code is clearly structured with control elements (e.g., loop, if-then-else). Static analysis is unlikely to identify any improvements to the control structure.\nb) Is correct. Variable naming used in the program does not clearly indicate what the variable represents. Static analysis can apply naming convention rules which would identify these maintenance issues in the program and recommend that the variables be given names that are readable and conform to any applicable naming rules.\nc) Is incorrect. There are no global variables defined and no other programs called. Coupling is not an improvement area.\nd) Is correct. Static analysis identifies code which has a low level of commenting compared to executable code. Since the program has no comments at all, this would be highlighted as an area for improving code maintainability.\ne) Is incorrect. Static analysis can apply indentation rules but in the case of the TRICKY program there is already adequate indentation.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q16-19.png",
+        "alt": "Source question 16, page 19"
+      }
+    ],
+    "showFigure": true
+  },
+  {
+    "id": 17,
+    "answer": [
+      2
+    ],
+    "lo": "TTA-3.3.1",
+    "k": "K3",
+    "pts": 2,
+    "text": "You are the Technical Test Analyst working on a project developing a new Ambulance Dispatch System (ADS). This ADS assists operators in taking calls about incidents, identifying available ambulances, and mobilizing ambulances to handle the incidents. You know that the ADS was designed using an object-oriented approach and implemented using a language with automated garbage collection. During system and acceptance testing the system has been perceived to be generally performing correctly, but also rather slowly, and it has also occasionally ‘crashed’; the subsequent (brief) investigations were inconclusive.\nWhich of the following statements would BEST justify the use of dynamic analysis in this situation?",
+    "options": [
+      "Dynamic analysis could be used to measure response times on user actions to identify efficiency bottlenecks",
+      "Dynamic analysis could be used to generate control flow graphs of the system to allow targeted performance enhancement",
+      "Dynamic analysis could identify memory access violations caused by a wild pointer that result in the occasional ‘crashes’",
+      "Dynamic analysis could be used to determine if programmers introduced defects by not properly releasing allocated memory"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. Dynamic analysis is not typically used for measuring response times (it requires instrumentation and so makes response time measurement impractical). Response times on user actions also cannot identify bottlenecks in the system. Dynamic analysis instead provides lower-level performance metrics to be used for performance tuning.\nb) Is incorrect. Control flow graphs are generated by static analysis.\nc) Is correct. Dynamic analysis can identify memory access violations caused by a wild pointer and these could be causing the ‘occasional’ crashes.\nd) Is incorrect. The scenario tells us that automated garbage collection was used, so it is unlikely programmers will need to release memory.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q17-20.png",
+        "alt": "Source question 17, page 20"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 18,
+    "answer": [
+      2
+    ],
+    "lo": "TTA-4.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Assume you are working as a Technical Test Analyst on a project where a new banking system is being developed. This system will store customer financial data, including personal information, account numbers, balances, and transaction histories, but no real customer data will become available until after the system is deployed operationally.\nBased on this information, which of the following topics are you MOST likely to include in the system test plan?",
+    "options": [
+      "Test data anonymization",
+      "Coordination of distributed components",
+      "Testing of data encryption",
+      "Testing in production"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. While subsequent releases of this system may be tested with real customer data, this is a new system and no existing customer data is available.\nb) Is incorrect. There is no indication this is a distributed system.\nc) Is correct. It is highly likely the bank is required by regulation to encrypt the customer financial data, which has testing implications.\nd) Is incorrect. It is not clear whether this system will be used in-house (thus a production environment might be available) or sold to customers (thus production environments would likely not be available).",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q18-20.png",
+        "alt": "Source question 18, page 20"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 19,
+    "answer": [
+      0,
+      3
+    ],
+    "lo": "TTA-4.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "Assume you are working as a Technical Test Analyst on the system integration testing of the baggage handling system for a major airport. Most of the system components are developed by a main contractor, but the system components for baggage redirection and for handling outsized items are being developed off-shore by separate organizations. The airport operator is the customer for the project and has indicated that the system must run fast even under peak morning and evening loads. A fully representative test environment has been made available for the system integration tests and a specialist tools team has been set up to support the functional and non- functional testing. Some of the functional tests for systems integration have already been implemented but progress is slow.\nBased on this information, which TWO of the following topics are you MOST likely to identify as risks in the system integration test plan?",
+    "options": [
+      "Stakeholder requirements",
+      "Required tool acquisition and training",
+      "Test environment requirements",
+      "Organizational considerations",
+      "Data security considerations"
+    ],
+    "multi": true,
+    "explanation": "a) Is correct. The requirements stated by the customer for performance efficiency are vague and must be made more precise before the specialist tools team can implement the tests.\nb) Is incorrect. A specialist tools team can be assumed to have issues of tool acquisition and training under control.\nc) Is incorrect. A fully representative test environment has been made available.\nd) Is correct. If components are distributed across different sites and organizations, the effort required to plan and co-ordinate the system integration tests may be significant and must be addressed in the test planning.\ne) Is incorrect. Data security considerations are not mentioned in the scenario.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q19-21.png",
+        "alt": "Source question 19, page 21"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 20,
+    "answer": [
+      0
+    ],
+    "lo": "TTA-4.2.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "Consider the following product risk: Abnormal application termination due to network connection failure.\nWhich of the following is the MOST appropriate test type to address this risk?",
+    "options": [
+      "Reliability testing",
+      "Performance testing",
+      "Operability testing",
+      "Portability testing"
+    ],
+    "multi": false,
+    "explanation": "a) Is correct. Fault-tolerance testing is part of reliability.\nb) Is incorrect. We are not worried about response time, throughput, or resource utilization here.\nc) Is incorrect. This risk does not relate to usability.\nd) Is incorrect. A change of to a different environment is not in question here.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q20-21.png",
+        "alt": "Source question 20, page 21"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 21,
+    "answer": [
+      1
+    ],
+    "lo": "TTA-4.2.2",
+    "k": "K3",
+    "pts": 2,
+    "text": "Consider the following product risk: “The new database is not suitable for replacing the current one”.\nWhich of the following is the MOST appropriate test type to address this risk?",
+    "options": [
+      "Adaptability testing",
+      "Replaceability testing",
+      "Capacity testing",
+      "Co-existence testing"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. Adaptability testing checks whether a given application can function correctly in all intended target environments.\nb) Is correct. Replaceability testing focuses on the ability of software components (such as databases) to replace existing components.\nc) Is incorrect. Capacity testing relates to exercising the maximum limits of a system.\nd) Is incorrect. Co-existence testing considers the degree to which a test item can function satisfactorily alongside other independent products in a shared environment.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q21-21.png",
+        "alt": "Source question 21, page 21"
+      }
+    ],
+    "showFigure": true
+  },
+  {
+    "id": 22,
+    "answer": [
+      3
+    ],
+    "lo": "TTA-4.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements is CORRECT?",
+    "options": [
+      "It is desirable to conduct end-to-end turnaround time tests as early as possible, even if a production-like environment is not yet available",
+      "Availability testing using operational profiles is performed both before and after entering operational service",
+      "Security testing should start with component testing and go on through integration and system testing as security issues can be introduced anytime during development",
+      "Maintainability can be evaluated early in the lifecycle without having to wait for a complete and running system"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. Performing turnaround time tests before a production-like test environment is available is not practical as any times recorded will be unlikely to be representative of the operational turnaround times.\nb) Is incorrect. Once the system is operational, the operational data can be used to determine availability, and so availability testing using operational profiles is unnecessary.\nc) Is incorrect. Security testing may be scheduled for the unit, integration and system testing levels, but for many projects it should start earlier with reviews and static analysis.\nd) Is correct. Since maintainability is built into the code and the documentation for each individual code component, maintainability can be evaluated early in the lifecycle without having to wait for a completed and running system.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q22-22.png",
+        "alt": "Source question 22, page 22"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 23,
+    "answer": [
+      0
+    ],
+    "lo": "TTA-4.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements is CORRECT?",
+    "options": [
+      "Reliability tests are commonly done as part of system testing",
+      "Co-existence testing is normally performed immediately after component testing has been completed",
+      "Adaptability tests are often performed in conjunction with security tests",
+      "Replaceability testing is normally only performed once the overall system and potential replaceable components are available"
+    ],
+    "multi": false,
+    "explanation": "a) Is correct. Because reliability tests often require use of the entire system, reliability testing is most commonly performed as part of system testing.\nb) Is incorrect. Co-existence issues should be analyzed when planning the targeted production environment, but the actual tests are normally performed after system and user acceptance testing have been successfully completed.\nc) Is incorrect. Adaptability tests may be performed in conjunction with installability tests and are typically followed by functional tests to detect any faults which may have been introduced in adapting the software to a different environment.\nd) Is incorrect. Replaceability may also be evaluated by technical review or inspection at the architecture and design levels, where the emphasis is placed on the clear definition of interfaces to potential replaceable components.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q23-22.png",
+        "alt": "Source question 23, page 22"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 24,
+    "answer": [
+      2
+    ],
+    "lo": "TTA-4.2.4",
+    "k": "K3",
+    "pts": 2,
+    "text": "Assume that you are working for a start-up company with big ambitions but with limited initial funding. They are creating a system that will provide customized loyalty and rewards programs for small- and medium-sized businesses selling to customers on the web. These companies enroll themselves on the system’s web store. This allows the companies to create customized buttons, to be placed on their websites, that let customers enroll in the companies’ loyalty and rewards program. Each subsequent purchase earns points, and both companies and their customers can manage the program; for example, companies can determine the number of points required for customers to receive a free product or service, and customers can monitor their points. Your employer’s marketing staff is heavily promoting the system, offering aggressive discounts on the first year’s fees to sign up new companies. The marketing materials state that the service will be highly reliable and extremely fast for companies and their customers.\nAt this time, the requirements are complete, and development of the software has just begun. The current schedule will allow companies and their customers to start enrolling in three months. Your employer intends to use cloud computing resources to host this service, and to have no hardware resources other than ordinary office computers for its developers, testers, and other engineers and managers. Industry-standard web-based application software components will be used to build the system.\nAssume that you are executing security tests against the system.\nWhich of the following types of defect would you expect to find during this testing?",
+    "options": [
+      "System clears screen too quickly after login",
+      "System removes user temporary files after logout",
+      "System allows unauthorized access to data",
+      "System allows access from unsupported browser"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. This is a usability failure, not a security defect.\nb) Is incorrect. This is a security feature, not a security defect.\nc) Is correct. A typical security defect.\nd) Is incorrect. If it is a defect at all, is a portability defect.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q24-23.png",
+        "alt": "Source question 24, page 23"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 25,
+    "answer": [
+      1
+    ],
+    "lo": "TTA-4.2.4",
+    "k": "K3",
+    "pts": 2,
+    "text": "The system integration testing for a new version of a stocks trading system is being planned. You are planning the performance efficiency tests as part of this testing. The new version has increased functionality, but the basic architecture remains the same.\nThe current system has so far received a positive response and the number of users has steadily increased. It enables users to trade individual stocks with a simple transaction consisting only of the user identity, stock number, quantity, and action (buy or sell).\nThe current system’s response time to user inputs is regularly monitored by conducting performance tests supported by a tool and using a fully representative test environment. At present the system runs reliably and response times to user trading transactions are just below the maximum specified.\nThe marketing department anticipates that with the new functionality being introduced in the next version, the number of users is expected to double over the next 12 months. You have included scalability tests into your performance testing strategy.\nWhen planning the performance efficiency tests, which of the following types of defects would you target in the system integration test plan as being the MOST likely to occur?",
+    "options": [
+      "The simulated increase in the number of users will result in data volumes exceeding the bandwidth of the test environment",
+      "The system fails to meet future response time requirements for the anticipated numbers of users",
+      "The disk capacity requirements will exceed the resources available once more users are added",
+      "The system’s response time will degrade when running the system for a long time under a nominal load"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. The test plan does not target defects in the test environment, but it targets defects in the product.\nb) Is correct. Scalability testing focuses on the ability of a system to meet future performance efficiency requirements, which may be beyond those currently required. The scenario states that the current system’s response to user inputs is just below the maximum specified time, but that the number of users is expected to double over the next 12 months. There is a high risk that the planned scalability tests will show that the system fails to meet future requirements for the expected numbers of users.\nc) Is incorrect. There is no indication in the scenario that the system uses disk capacity resources. Compared to option b this is less likely to be a source of defects.\nd) Is incorrect. The scenario states that “At present the system runs reliably” - which suggests it does not have issues related to long time operation under nominal load and it is unlikely that the increase in the number of users will cause a degradation in response times when the system is run for a long time.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q25-24.png",
+        "alt": "Source question 25, page 24"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 26,
+    "answer": [
+      0
+    ],
+    "lo": "TTA-4.3.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "By entering the following phrase into the username field of the login form:\n```\nabcd OR 1=1\n```\na tester performed an SQL injection attack and consequently obtained a list of all valid usernames for the system.\n\nWhich of the following security aspects was MOST likely to have been addressed by this test?",
+    "options": [
+      "Confidentiality",
+      "Non-repudiation",
+      "Accountability",
+      "Availability"
+    ],
+    "multi": false,
+    "explanation": "a) Is correct. This is an example of compromising confidentiality by gaining access to sensitive data by an unauthorized user.\nb) Is incorrect. We do not know if the event of gaining access to sensitive data can be proven to have taken place. To test for non-repudiation test steps concerning the server log-files are typically required.\nc) Is incorrect. We do not know if such an SQL injection attack can be traced uniquely to the person that performed it. To test for accountability, log-files must typically be checked against specific actions by authorized and non-authorized users.\nd) Is incorrect. Availability tests in the security context are typically performed by simulating denial-of-service scenarios.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q26-25.png",
+        "alt": "Source question 26, page 25"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 27,
+    "answer": [
+      1
+    ],
+    "lo": "TTA-4.4.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "You work as the TTA on an agile project and you have been asked to calculate the mean time to failure (MTTF) for the system under test under a normal load.\nWhich of the following sources of information is MOST likely to provide you with the necessary information about the load that you should generate in your tests?",
+    "options": [
+      "Product owner",
+      "Operational profile",
+      "Scrum master",
+      "Test environment requirements"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. The Product owner may have provided input on what the load is expected to be, but they are unlikely to know the expected load in sufficient detail.\nb) Is correct. The operational profile should define how the system is expected to be used in normal conditions.\nc) Is incorrect. The Scrum Master may not be a subject matter expert on reliability and is unlikely to know the expected load in sufficient detail.\nd) Is incorrect. Although the test environment requirements will include the ability to generate loads based on the operational profile, they will not define those loads.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q27-25.png",
+        "alt": "Source question 27, page 25"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 28,
+    "answer": [
+      1
+    ],
+    "lo": "TTA-4.5.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements about code reviews in the context of planning performance efficiency testing is CORRECT?",
+    "options": [
+      "Code reviews are not useful in performance efficiency testing, because performance can be measured only with dynamic testing on a running system",
+      "Code reviews are useful in performance efficiency testing, because they may detect inefficient algorithm implementation that may cause performance issues",
+      "Code reviews are not useful in performance efficiency testing, because performance efficiency testing usually requires the entire system to be implemented, so it is typically performed as part of system testing, which requires dynamic testing, not static testing",
+      "Code reviews are useful in performance efficiency testing, because static testing is not dependent on the test environment, so the testers do not need to spend time on defining and building the test environment"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. Code reviews are useful in performance efficiency testing (see the justification for the correct answer).\nb) Is correct. According to syllabus (4.5.7) reviews are of particular relevance when planning performance efficiency tests. Performance issues may result from poorly designed code, for example from inefficient algorithms. Code reviews can detect such issues.\nc) Is incorrect. Code reviews are useful in performance efficiency testing (see the justification for the correct answer).\nd) Is incorrect. The test environment has nothing to do with the fact that code reviews are useful in performance efficiency testing. Hence, although the statement that test environments do not need to be designed for code reviews is correct, this is not the reason that code reviews are useful for performance efficiency testing.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q28-26.png",
+        "alt": "Source question 28, page 26"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 29,
+    "answer": [
+      3
+    ],
+    "lo": "TTA-4.6.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements provides the BEST rationale for including maintainability testing in a test approach?",
+    "options": [
+      "Analyzability should be considered if you expect a lot of combinations need to be tested",
+      "Modifiability should be considered if you expect several problems to be identified within the system",
+      "Modularity should be considered if you are testing a system provided as commercial off-the- shelf (COTS) software",
+      "Reusability should be considered if you expect different versions of the same product to be developed"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. Analyzability should be considered if you do expect a lot of problems identified within the system.\nb) Is incorrect. Analyzability should be considered if you do expect several problems to be identified within the system.\nc) Is incorrect. Modularity should be considered in the context of changes to components, while the responsibility for the maintainability of a COTS system normally lies with the providers of the system, who will have to maintain it.\nd) Is correct. Reusability addresses the degree to which an asset can be used in more than one system, or in building other assets.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q29-26.png",
+        "alt": "Source question 29, page 26"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 30,
+    "answer": [
+      2
+    ],
+    "lo": "TTA-4.7.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "You work as a tester in a company that develops a desktop financial application for accountants. The users reported problems with the following scenario, and you have been tasked with testing the fix.\n• Download app from the producer website\n• Install it using the installation wizard\n• Check if the app is installed properly\n• Uninstall the app\n• Check if everything was uninstalled properly\nWhat is the reason for performing this test?",
+    "options": [
+      "To test maintainability",
+      "To test reliability",
+      "To test portability",
+      "To test compatibility"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. The test appears to be for installability, which is not a form of maintainability testing, it is a type of portability testing.\nb) Is incorrect. The test appears to be for installability, which is not a form of reliability testing, it is a type of portability testing.\nc) Is correct. The test appears to be for installability, which is a type of portability testing.\nd) Is incorrect. The test appears to be for installability, which is not a form of compatibility testing, it is a type of portability testing.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q30-27.png",
+        "alt": "Source question 30, page 27"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 31,
+    "answer": [
+      2
+    ],
+    "lo": "TTA-5.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "A Technical Test Analyst has been invited to the formal review of an architectural design specification. The review has been called at short notice for the following day and although there is nothing in the analyst’s diary for that time, there is no time to prepare.\nWhich of the following would be the most appropriate response to the invitation?",
+    "options": [
+      "I am free at that time, so I have no problem in attending",
+      "I do not have time to prepare but I will attend rather than cause a delay",
+      "I do not have time to prepare so I suggest the review is postponed",
+      "I do not have time to prepare, but I still might contribute some useful input"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. This response indicates a willingness to co-operate in getting the review done but the analyst will be unable to make a full contribution without preparation and the review would therefore be less effective than it should be.\nb) Is incorrect. This response flags up the lack of preparation time but does not insist on allowing time for adequate preparation.\nc) Is correct. The reviewer has raised the lack of preparation time and has suggested a solution to solve this issue.\nd) Is incorrect. This response is accurate, but preparation is about making a review as effective and efficient as possible. This is a requirement and an advantage of formal reviews.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q31-27.png",
+        "alt": "Source question 31, page 27"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 32,
+    "answer": [
+      2
+    ],
+    "lo": "TTA-5.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are participating in an architectural review of a new product design. This is an embedded product that has severe memory restrictions. Consider the following programming practices and problems that can result from using those practices.\nProgramming Practices:\n1. Connection pooling\n2. Data caching\n3. Lazy instantiation\n4. Transaction concurrency\nProblems:\nA. Performance impact when the instantiation is needed\nB. Transaction loss due to processor unavailability\nC. Errors in multi-threading logic\nD. Stale data\nWhich of the above programming practices could be used to reduce unnecessary memory use in this scenario and what are the possible problems in using this practice?",
+    "options": [
+      "Practice 2, Problem D",
+      "Practice 4, Problem C",
+      "Practice 3, Problem A",
+      "Practice 1, Problem B"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. Data caching helps with performance, not memory use.\nb) Is incorrect. Transaction concurrency uses more memory than running transactions sequentially.\nc) Is correct. This would reduce unnecessary memory use but does have the possible problem of a delayed response when instantiation is performed.\nd) Is incorrect. Connection pooling can help memory and performance, but the possible problem is running out of connections, not losing a transaction.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q32-28.png",
+        "alt": "Source question 32, page 28"
+      }
+    ],
+    "showFigure": true
+  },
+  {
+    "id": 33,
+    "answer": [
+      0
+    ],
+    "lo": "TTA-5.2.1",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are participating in an architectural design review of a new product design. This is a web- based currency trading product that provides real-time information on prices for currencies selected by the user.\nThe following list of practices are mentioned in the design as options for ensuring response times of less than 1 second and real-time data accuracy under maximum expected loads.\nWhich of the following practices would you highlight as the MOST promising for achieving the requirement?",
+    "options": [
+      "Load balancing",
+      "Data caching",
+      "Object orientation",
+      "Data replication"
+    ],
+    "multi": false,
+    "explanation": "a) Is correct. Load balancing should ensure that peak volumes of traffic can be handled by spreading the load among available servers.\nb) Is incorrect. Caching data may provide fast response times but may not guarantee that rapidly changing currency rates are accurately shown in real-time.\nc) Is incorrect. Object orientation practices do not target performance efficiency.\nd) Is incorrect. Data replication may not guarantee that the constantly changing currency rates are accurately shown in real-time.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q33-29.png",
+        "alt": "Source question 33, page 29"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 34,
+    "answer": [
+      2
+    ],
+    "lo": "TTA-5.2.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are participating in a code review and have noticed a problem in the following section of pseudo-code (assume *** indicates a comment).\n```\n*** this code checks for the validity of a card type ***\n    if credit card is type “Discover” then\n        Display error message 437\n    else if credit card is type “Visa” or “MasterCard” then\n        Process purchase\n    else if credit card is type “AmericanExpress” then\n        Display error message 439\n    else\n        Display error message 440\n    end if\n```\nWhich of the following problems is demonstrated in this section of code and why should it be corrected?",
+    "options": [
+      "The comment in the code is incorrect, resulting in a maintainability impact",
+      "An external library should be used to validate the credit card; thus, the code is inefficient because it does not re-use existing components",
+      "The most likely case is not tested first, resulting in a potential performance impact",
+      "There is no default clause, resulting in potential cases not being handled"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. The comment is correct – the code does check the validity of the card.\nb) Is incorrect. It is unlikely that there is an external library available that provides this functionality.\nc) Is correct. It is unlikely that invalid ‘Discover’ cards will be entered more often than valid cards, so it is most likely the card will be Visa or MasterCard, and so that check should be performed first.\nd) Is incorrect. The ‘else’ handles all conditions not met by the preceding ‘if’ statements.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q34-29.png",
+        "alt": "Source question 34, page 29"
+      }
+    ],
+    "showFigure": true
+  },
+  {
+    "id": 35,
+    "answer": [
+      1
+    ],
+    "lo": "TTA-5.2.2",
+    "k": "K4",
+    "pts": 3,
+    "text": "You are participating in a code review and have noticed a problem in the following section of pseudo-code (assume *** indicates a comment).\n```\n    *** this pseudo-code calculates the average sales per month achieved by an\n    organization ***\n 0  program SALES\n 1  month_counter, sales_in_month, total_sales, fileID: integer\n 2  average_sales: float\n 3  begin\n 4      *** open the sales file***\n 5      fileID = open file ( “Sales” )\n 6      if (fileID = 0) then\n 7          *** File cannot be opened***\n 8          Display error message 333\n 9      else\n10          *** get the number of months you want to consider\n11          Read (number_of_months)\n12          month_counter = 1\n13          while month_counter <= number_of_months loop\n14              *** get sales for month from sales file using the\n    GetSales function***\n15              sales_in_month = GetSales (month_counter, FileID)\n16              *** add the sales to the total***\n17              total_sales = total_sales + sales_in_month\n18              month_counter = month_counter + 1\n19          endloop\n20          *** calculate the average monthly sales and output that\n    value***\n21          average_sales = total_sales / number_of_months\n22          Write (average_sales)\n23      endif\n24  end program SALES\n```\nWhich of the following problems is demonstrated in this section of code?",
+    "options": [
+      "Files are not checked for existence before attempting to access",
+      "Divisors are not tested for zero",
+      "Comments are inconsistent with the code",
+      "There are unused variables"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. The variable “fileID” is checked before attempting to access the sales file (see lines 6, 7 and 8)\nb) Is correct. On line 21 the divisor “number_of_months” is not checked for\n0. This should be checked before line 21 is executed.\nc) Is incorrect. Comments and code are consistent.\nd) Is incorrect. All declared variables (lines 1 and 2) are used in the code.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q35-30.png",
+        "alt": "Source question 35, page 30"
+      }
+    ],
+    "showFigure": true
+  },
+  {
+    "id": 36,
+    "answer": [
+      1,
+      4
+    ],
+    "lo": "TTA-6.1.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following are typical activities performed by a Technical Test Analyst when setting up a test automation project?",
+    "options": [
+      "Designing the test data for the automated test cases",
+      "Reserving time for working on the test automation project in agreement with the test manager",
+      "Writing the test scripts based on keywords and data provided by Test Analysts",
+      "Determining who will be responsible for the analysis and design of test cases to be automated",
+      "Defining how the project’s test management tool will communicate with the new test automation tool"
+    ],
+    "multi": true,
+    "explanation": "a) Is incorrect. Test data design is normally the responsibility of the test analysts or business analysts.\nb) Is correct. Scheduling the automation project and allocating time for maintenance are typically the responsibility of the TTA.\nc) Is incorrect. Writing test scripts is not part of the set-up of a test automation project.\nd) Is incorrect. Who performs test analysis and design (even of automated test cases) is not decided by the TTA.\ne) Is correct. Defining the interface requirements between the automation tool and the existing test management tool is typically the responsibility of the TTA.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q36-31.png",
+        "alt": "Source question 36, page 31"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 37,
+    "answer": [
+      0
+    ],
+    "lo": "TTA-6.1.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements BEST captures the difference between data-driven and keyword-driven test automation?",
+    "options": [
+      "Keyword-driven test automation can extend data-driven automation by defining keywords corresponding to actions in business processes",
+      "Data-driven test automation extends keyword-driven automation by storing test data in spreadsheets or databases",
+      "Data-driven test automation is more maintainable than keyword-driven test automation",
+      "Keyword-driven test automation requires fewer skills to develop than data-driven test automation"
+    ],
+    "multi": false,
+    "explanation": "a) Is correct. Keyword-driven tests can use a data-driven approach, but also have process-based keywords.\nb) Is incorrect. Data-driven test automation is not keyword-driven and so does not extend it. Keyword-driven testing requires test scripts that contain high-level keywords and supporting files (e.g., also data files) that contain low-level scripts, whereas data-driven testing only uses data files to contain the test data and expected results.\nc) Is incorrect. Keyword-driven tests are typically easier to maintain (due to the additional separation of business logic from test script implementation).\nd) Is incorrect. Additional skills in the implementation of keywords as test automation code and the design of the keyword-driven framework mean that keyword-driven test automation typically requires more skills than data-driven test automation.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q37-31.png",
+        "alt": "Source question 37, page 31"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 38,
+    "answer": [
+      3
+    ],
+    "lo": "TTA-6.1.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following describes a common technical issue that causes test automation projects to fail to achieve the planned return on investment?",
+    "options": [
+      "Elimination of duplication of information across tools",
+      "Removal of manual checking of data exchanges between tools",
+      "Use of an integrated development environment to simplify integration between tools",
+      "Failure to include software that automatically handles test failures"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. The elimination of duplicated information across tools is a positive for a toolset.\nb) Is incorrect. Ideally data should be exchanged between tools with no manual intervention.\nc) Is incorrect. Using an IDE is often worthwhile if the tools ‘fit’ the IDE.\nd) Is correct. In any test automation design, it is important to anticipate and handle software failures.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q38-31.png",
+        "alt": "Source question 38, page 31"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 39,
+    "answer": [
+      2,
+      3
+    ],
+    "lo": "TTA-6.1.4",
+    "k": "K3",
+    "pts": 2,
+    "text": "Assume that you are involved in testing a mature application. This application is an online dating service that allows users: to enter a profile of themselves; to meet orientation-appropriate people who would be a good match for them; to arrange social events with those people; and, to block people they do not want to contact them.\nDefects and test cases are managed in an existing commercial test management tool, which is working well. Source code and other project work products are stored in an open-source configuration management system.\nYour manager directs you to help her select a test execution automation tool to automate most of the regression testing.\nAssume you are using a keyword-driven automation approach. Which TWO of the options would be the MOST LIKELY keywords for this application?",
+    "options": [
+      "Enter_Test_Data",
+      "Remove_Test_Data",
+      "Enter_Profile",
+      "Find_Match",
+      "Pay_Bill"
+    ],
+    "multi": true,
+    "explanation": "a) Is incorrect. The keywords are supposed to be about the business process supported by the application, not the test process.\nb) Is incorrect. The keywords are supposed to be about the business process supported by the application, not the test process.\nc) Is correct. It is explicitly mentioned in the scenario as being a capability of the application.\nd) Is correct. It is explicitly mentioned in the scenario as being a capability of the application.\ne) Is incorrect. This might be a capability of the application, but it is not mentioned in the scenario, so it is not the most likely keyword on the list, and also since there was no mention that the product charges its customers.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q39-32.png",
+        "alt": "Source question 39, page 32"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 40,
+    "answer": [
+      2
+    ],
+    "lo": "TTA-6.2.1",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements about fault seeding tools is correct?",
+    "options": [
+      "These tools insert defects into the source code to test the input checking capabilities of the software",
+      "These tools insert defects into the source code to check the level of fault tolerance of the software",
+      "These tools insert defects into the source code to test the effectiveness of the test suite",
+      "These tools are generally used by the test analyst to measure the coverage achieved by specified tests"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. Input checking can be done by mutating test inputs, but to test input checking the inputs would need to be mutated.\nb) Is incorrect. This is the task of the fault injection tools.\nc) Is correct. The mutated code is executed against the test suite to determine how well the test suite can detect the mutations (defects).\nd) Is incorrect. These tools are generally used by the technical test analyst, or the developer when testing newly developed code.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q40-32.png",
+        "alt": "Source question 40, page 32"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 41,
+    "answer": [
+      1
+    ],
+    "lo": "TTA-6.2.2",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements about performance testing tools is CORRECT?",
+    "options": [
+      "These tools drive the application at the communications protocol level rather than through its user interface to measure response times more accurately",
+      "These tools generate a load by simulating many virtual users using operational profiles to generate input test data",
+      "These tools capture a script from one individual user interaction and multiple identical copies of this script are then replayed in parallel to represent the full range of possible users",
+      "These tools take a wide range of measurements after test execution to enable the analysis of the most significant performance characteristics of the test object"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. If the accurate measurement of response times was an issue, then the tools would have to drive the application using its user interface.\nb) Is correct. Performance testing tools are used to generate defined loads based on operational profiles.\nc) Is incorrect. The script needs to be changed to take account of the variability of different users and their transactions.\nd) Is incorrect. Measurements need to be taken during execution.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q41-33.png",
+        "alt": "Source question 41, page 33"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 42,
+    "answer": [
+      3,
+      4
+    ],
+    "lo": "TTA-6.2.3",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which TWO of the following CORRECTLY describe the objectives of tools supporting web-based testing?",
+    "options": [
+      "To generate test cases by executing a model of the test object’s required behavior",
+      "To isolate faults in the user interface by changing variable values during line-by-line code execution",
+      "To measure the quality of a test suite by injecting defects into the test object",
+      "To check for accessibility standards violations",
+      "To check for orphaned files by scanning through the server"
+    ],
+    "multi": true,
+    "explanation": "a) Is incorrect. This describes an MBT tool.\nb) Is incorrect. This describes a debugger.\nc) Is incorrect. This describes a fault seeding tool.\nd) Is correct. Tools for testing websites may include the functionality to check for violations of accessibility standards, such as Section 508 in the U.S. or M/376 in Europe.\ne) Is correct. Tools for testing websites may include the functionality to scan through server code, checking for orphaned (unlinked) files previously accessed by the website.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q42-33.png",
+        "alt": "Source question 42, page 33"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 43,
+    "answer": [
+      0
+    ],
+    "lo": "TTA-6.2.4",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following BEST describes how tools can support the practice of model-based testing (MBT)?",
+    "options": [
+      "MBT tools are used to generate test cases that reflect the required behavior presented in a model of the test object",
+      "MBT tools execute the model of the test object’s behavior to identify defects rather than executing tests on the test object",
+      "MBT tools provide an internal view of the test object and are used to automatically generate white-box test cases",
+      "MBT tools automatically generate test cases to achieve a required level of coverage of the test object source code"
+    ],
+    "multi": false,
+    "explanation": "a) Is correct. The required behavior represented in the model (e.g., state model, Petri Net) is typically used to automatically generate many test cases corresponding to the required behavior.\nb) Is incorrect. MBT tools do execute the model of the test object’s behavior, but they do this to generate test cases which are then executed on the test object to identify defects.\nc) Is incorrect. MBT tools use a model of required behavior, not an internal view of the test object, to generate test cases.\nd) Is incorrect. MBT tools generate test cases to achieve a level of coverage of the model of required behavior, rather than of the test object source code (to which they have no access).",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q43-33.png",
+        "alt": "Source question 43, page 33"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 44,
+    "answer": [
+      2
+    ],
+    "lo": "TTA-6.2.5",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements about component testing tools and build automation tools is TRUE?",
+    "options": [
+      "An xUnit framework can be used to automate component testing; build automation tools execute automated component tests",
+      "A JUnit framework can simplify automation of component testing in a Java environment;\nbuild automation tools automatically trigger the component tests whenever a component changes in a build",
+      "Component testing frameworks can simplify automation of component testing; build automation tools cause a new build to be triggered when a component is changed",
+      "Component testing tools can be used against multiple programming languages; build automation tools are triggered when a component is tested"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. According to the syllabus, component tests are executed by other tools after build is completed.\nb) Is incorrect. The statement about component test tools is true, especially with Java. The statement about build automation tools is not correct. Component test execution is triggered after build completion, by other tools.\nc) Is correct. Both statements are true.\nd) Is incorrect. Most component testing tools are language-specific, and the build must be done before component test execution.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q44-34.png",
+        "alt": "Source question 44, page 34"
+      }
+    ],
+    "showFigure": false
+  },
+  {
+    "id": 45,
+    "answer": [
+      3
+    ],
+    "lo": "TTA-6.2.6",
+    "k": "K2",
+    "pts": 1,
+    "text": "Which of the following statements BEST captures the purpose of an emulator when used to support mobile application testing?",
+    "options": [
+      "A mobile emulator is used to replace real mobile devices in testing but is limited to initial functional testing",
+      "A mobile emulator is used to replace real mobile devices in testing but does not allow early- on usability testing such as evaluating user interface aesthetics",
+      "A mobile emulator is used to test different features of a mobile application early on, using specially compiled versions of the software, that would not run on a real device",
+      "A mobile emulator allows dynamic testing of a mobile application that has been compiled and packaged for a specific platform without installing it on a real device"
+    ],
+    "multi": false,
+    "explanation": "a) Is incorrect. An emulator is not restricted to initial functional tests – it can also be used for tests later in the life cycle, and for non-functional tests.\nb) Is incorrect. An emulator may allow functional as well as non-functional tests. Although most usability testing will and should be done on real devices, early usability tests such as a heuristic evaluation might be done using an emulator.\nc) Is incorrect. Versions that run on an emulator should also run on the real device.\nd) Is correct. The purpose of an emulator is to test device-specific behaviour of an application as early as possible – even if the device is not available to the tester.",
+    "figures": [
+      {
+        "src": "assets/ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN/q45-34.png",
+        "alt": "Source question 45, page 34"
+      }
+    ],
+    "showFigure": false
+  }
+];
+const examConfig = {"title": "CTAL-TTA v4.0 · Technical Test Analyst · Sample v4.0", "language": "en", "minutes": 120, "pass": 51, "sourceQuestion": "ISTQB-CTAL-TTA_Sample_Exam_Questions_v4.0_EN.pdf", "sourceAnswer": "ISTQB_CTAL-TTA_Sample_Exam_Answers_v4.0_EN.pdf"};</script><script src="../../../assets/exam-engine.js"></script><script src="../../../assets/exam-ui.js"></script></body></html>
